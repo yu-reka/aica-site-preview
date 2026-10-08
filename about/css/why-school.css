@@ -1,0 +1,93 @@
+/* 선택 이유: 핵심 강점과 세 가지 프로젝트 지원 카드 */
+.school-about:has(#why-school:target) { scroll-padding-top: calc(var(--hdr) + var(--about-subnav, 0px)); }
+.why-school-section { position: relative; margin: 72px -40px 0; padding: 58px 40px 54px; background: #f5f7f9; scroll-margin-top: 24px; }
+.why-school-heading { text-align: center; }
+.school-about .why-school-heading h3 { color: #13203c; font-size: clamp(30px, 3vw, 42px); font-weight: 900; line-height: 1.4; letter-spacing: -.055em; }
+.school-about .why-school-heading > p { margin-top: 16px; color: #657087; font-size: 16px; line-height: 1.8; word-break: keep-all; }
+.why-school-highlights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; max-width: 900px; padding: 0; margin: 38px auto 36px; list-style: none; text-align: center; }
+.why-school-highlight-label { display: flex; align-items: center; justify-content: center; gap: 7px; color: #536078; font-size: 14px; line-height: 1.6; }
+.why-school-highlight-label svg { width: 24px; height: 24px; flex-shrink: 0; }
+.why-school-highlights strong { display: block; margin-top: 11px; color: #13203c; font-size: clamp(23px, 2.15vw, 32px); line-height: 1.35; letter-spacing: -.045em; font-weight: 900; }
+.why-school-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.why-school-card { display: flex; flex-direction: column; min-width: 0; min-height: 488px; padding: 32px 28px 0; background: #fff; border-radius: 23px; box-shadow: 0 10px 38px #15223b08; overflow: hidden; }
+.why-school-card-category { display: block; color: #244cd2; font-size: 13px; font-weight: 700; line-height: 1.6; margin-bottom: 15px; }
+.school-about .why-school-card h4 { font-size: clamp(22px, 1.8vw, 26px); line-height: 1.45; font-weight: 700; color: #13203c; letter-spacing: -.035em; word-break: keep-all; }
+.school-about .why-school-card > p { margin-top: 15px; font-size: 15px; line-height: 1.85; color: #657087; word-break: keep-all; }
+.why-school-visual { position: relative; flex: 0 0 235px; min-height: 235px; margin-top: auto; }
+.why-school-monitor { position: absolute; top: 35px; left: 24px; width: calc(100% - 10px); height: 188px; padding: 8px; background: #17223b; border-radius: 11px 11px 3px 3px; box-shadow: 0 12px 24px #14244a1f; }
+.why-school-monitor-bar { display: flex; align-items: center; gap: 4px; height: 15px; color: #b9c4dd; }
+.why-school-monitor-bar i { width: 4px; height: 4px; background: #6a7797; border-radius: 50%; }
+.why-school-monitor-bar span { margin-left: 6px; font-size: 7px; letter-spacing: .04em; }
+.why-school-monitor img { display: block; width: 100%; height: 156px; object-fit: cover; object-position: center 40%; border-radius: 2px; }
+.why-school-monitor-base { position: absolute; bottom: 5px; height: 8px; left: 8px; right: -24px; background: linear-gradient(#c7cfdd, #737e94); border-radius: 1px 1px 50% 50%; }
+.why-school-feedback { position: absolute; top: 73px; left: -9px; display: inline-flex; align-items: center; gap: 7px; padding: 10px 13px; font-size: 12px; font-weight: 700; color: #fff; background: #244cd2; border: 5px solid #e7edff; border-radius: 30px; box-shadow: 0 8px 16px #14244a0f; }
+.why-school-feedback > span { font-size: 16px; }
+.why-school-visual--resources { display: grid; grid-template-columns: 96px 96px; grid-template-rows: 92px 92px; gap: 14px; align-content: center; justify-content: center; }
+.why-school-resource-tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border: 1px solid #f5f6fa; border-radius: 18px; background: #fff; box-shadow: 0 7px 24px #15223b0b; color: #6b7284; font-size: 12px; }
+.why-school-resource-tile:nth-child(n+3) { transform: translateX(14px); }
+.why-school-resource-icon { display: flex; align-items: center; justify-content: center; width: 43px; height: 39px; }
+.why-school-resource-icon svg { display: block; width: 43px; height: 39px; }
+.why-school-resource-icon--code { font-size: 25px; color: #8b75db; font-weight: 900; letter-spacing: -.08em; }
+.why-school-demo-window { position: absolute; top: 29px; left: 9px; right: 5px; height: 186px; border: 1px solid #eef1f6; border-radius: 9px; background: #fff; box-shadow: 0 7px 28px #15223b0c; }
+.why-school-demo-toolbar { display: flex; align-items: center; gap: 4px; height: 21px; padding: 0 9px; border-bottom: 1px solid #f0f3f7; }
+.why-school-demo-toolbar i { width: 4px; height: 4px; border-radius: 50%; background: #c3ccd9; }
+.why-school-demo-toolbar span { margin-left: 6px; color: #9aa4b6; font-size: 7px; letter-spacing: .04em; }
+.why-school-card--curriculum .why-school-card-category { color: #ff6238; }
+.why-school-visual--curriculum .why-school-demo-window { top: 28px; left: 3px; right: 3px; height: 190px; }
+.why-school-visual--curriculum .why-school-demo-toolbar i:first-child { background: #f18e89; }
+.why-school-visual--curriculum .why-school-demo-toolbar i:nth-child(2) { background: #f3d67d; }
+.why-school-visual--curriculum .why-school-demo-toolbar i:nth-child(3) { background: #83c69e; }
+.why-school-stack-viewport { position: absolute; top: 87px; left: -28px; right: -28px; overflow: hidden; }
+.why-school-stack-track { display: flex; width: max-content; animation: why-school-stack-flow 20s linear infinite; }
+.why-school-stack-group { display: flex; flex: none; gap: 28px; padding-right: 28px; }
+.why-school-stack-icon { display: flex; align-items: center; justify-content: center; flex: 0 0 64px; width: 64px; height: 64px; background: #202238; border-radius: 19px; }
+.why-school-stack-icon img { display: block; width: 40px; height: 40px; object-fit: contain; }
+@keyframes why-school-stack-flow { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .why-school-stack-track { animation: none; } }
+@media (max-width: 1199px) {
+  .why-school-section { scroll-margin-top: 88px; }
+  .why-school-cards { gap: 18px; }
+  .why-school-card { padding-inline: 23px; }
+  .school-about .why-school-card h4 { font-size: 23px; }
+}
+@media (max-width: 1000px) {
+  .why-school-section { margin-inline: -24px; padding: 46px 24px; }
+  .why-school-highlights { gap: 16px; }
+  .why-school-card { padding: 26px 18px 0; min-height: 480px; }
+  .school-about .why-school-card h4 { font-size: 21px; }
+  .school-about .why-school-card > p { font-size: 14px; }
+  .why-school-cards { gap: 16px; }
+  .why-school-visual--resources { grid-template-columns: 85px 85px; grid-template-rows: 86px 86px; gap: 11px; }
+  .why-school-resource-tile { font-size: 11px; }
+}
+@media (max-width: 760px) {
+  .why-school-section { margin-inline: -20px; padding: 44px 20px; }
+  .why-school-highlights { margin-top: 29px; gap: 10px; }
+  .why-school-highlight-label { font-size: 12px; gap: 4px; }
+  .why-school-highlight-label svg { width: 20px; height: 20px; }
+  .why-school-highlights strong { font-size: 20px; }
+  .why-school-cards { grid-template-columns: 1fr; gap: 20px; max-width: 480px; margin-inline: auto; }
+  .why-school-card { padding: 29px 28px 0; min-height: 446px; }
+  .school-about .why-school-card h4 { font-size: 25px; }
+  .school-about .why-school-card > p { font-size: 15px; }
+  .why-school-visual { flex-basis: 224px; min-height: 224px; }
+  .why-school-visual--resources { grid-template-columns: 96px 96px; grid-template-rows: 88px 88px; gap: 14px; }
+}
+@media (max-width: 640px) {
+  .why-school-section { margin-top: 52px; }
+  .school-about .why-school-heading h3 { font-size: 29px; }
+  .school-about .why-school-heading > p { margin-top: 14px; font-size: 15px; }
+  .why-school-highlights { grid-template-columns: 1fr; gap: 0; text-align: left; margin: 25px 0 28px; }
+  .why-school-highlights li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 0; border-bottom: 1px solid #e2e7ef; }
+  .why-school-highlight-label { justify-content: start; font-size: 13px; }
+  .why-school-highlights strong { margin-top: 0; font-size: 21px; }
+  .why-school-card { min-height: 467px; }
+  .why-school-card-category { font-size: 13px; }
+}
+@media (max-width: 360px) {
+  .school-about .why-school-heading h3 { font-size: 26px; }
+  .why-school-highlights strong { font-size: 18px; }
+  .why-school-highlight-label { font-size: 12px; }
+  .why-school-card { padding-inline: 22px; }
+  .school-about .why-school-card h4 { font-size: 23px; }
+}

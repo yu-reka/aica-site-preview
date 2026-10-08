@@ -1,0 +1,265 @@
+/* =========================================================
+   지원 전 체크(check/index.html) 본문 스타일
+   출처: AICA_인사교_프로토타입 styles.css(2026-10-07)에서 이 화면 본문에 쓰이던 규칙.
+   2026-10-07 정리: 시안이 같은 선택자를 뒤에서 다시 덮어쓰던 층을 한 규칙으로 합치고 화면 순서로 묶음(화면 그대로).
+   2026-10-08 사이트 기준 맞춤(세 카테고리 페이지가 한 사이트로): 본문 글꼴 --ff-text, 강조색은 카테고리 색(연두) 하나 —
+     시안의 파랑 강조(장식 영문 · 단계 숫자 · 탭 · 체크 · 막대 · 링크)는 연두 또는 잉크로. 버튼은 공통 .btn(site.css),
+     카드 모서리 --r-card, 페이지 끝은 공통 '다음으로' 띠(.next-band). 레이아웃 · 히어로 구성은 시안 그대로
+   모든 선택자는 .check-page(main) 범위. 헤더 · 하위 메뉴 바 · 푸터 · 맨 위로 · 토스트 · 버튼 · '다음으로' 띠,
+   기본 요소(box-sizing · a · button · :focus-visible · .wrap)는 ../common/css/
+   글꼴: 본문 --ff-text("Paperlogy Text", common/css/tokens.css), 큰 제목 · 숫자 "Giants"
+   순서: 바탕 · 공통 조각 → 스크롤 등장 → 히어로 → 섹션 머리 → 모집 대상 → 모집 프로세스 → 지원 혜택 → 자주 묻는 질문 → 페이지 끝
+   ========================================================= */
+
+/* ---------- 바탕 · 공통 조각 ---------- */
+/* 카테고리 색(연두): --c 큰 글자 · 그림(바탕 대비 3:1 이상), --c-ink 작은 글(4.5:1 이상), --c-soft 연한 면(히어로 바탕과 같음), --c-mark 형광펜 */
+.check-page{
+  --ff-title:"Giants","Paperlogy Text",sans-serif;   /* 큼직한 타이틀 · 숫자 */
+  --c:#4C9A1A;
+  --c-ink:#3A7A12;
+  --c-soft:#EAF5DC;
+  --c-mark:#DDEFC6;
+  font-family:var(--ff-text);
+  letter-spacing:0;     /* Paperlogy 자간(공통 body는 -.01em) */
+  padding-bottom:var(--sec-y);   /* 끝에 '다음으로' 띠가 있으면 공통 site.css가 0으로 */
+}
+.check-page :is(h2,h3,h4){text-wrap:balance}
+.check-page p{text-wrap:pretty}
+/* 확인 필요 표시 — 확정 전 정보는 숨기지 않고 표시(강조색 대신 중립 회색) */
+.check-page .tbd{display:inline-block;font-size:12px;line-height:1;padding:4px 7px;border-radius:4px;background:var(--paper-2);color:var(--graphite);font-weight:600;vertical-align:.15em;margin-left:6px;letter-spacing:0;white-space:nowrap}
+/* 글 안 링크: 잉크 · 굵게 · 밑줄(글줄에 붙어 흐름이 끊기지 않게 inline). 화살표가 붙는 링크만 .is-arrow */
+.check-page .text-link{font-weight:700;color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;text-decoration-color:color-mix(in srgb,var(--ink) 40%,transparent);transition:color .2s,text-decoration-color .2s}
+.check-page .text-link:hover{color:var(--c-ink);text-decoration-color:currentColor}
+.check-page .text-link.is-arrow{display:inline-flex;align-items:center;gap:8px}
+.check-page .text-link svg{width:14px;height:14px;flex:none;stroke:currentColor;fill:none;stroke-width:2;transition:transform .25s var(--ease)}
+.check-page .text-link:hover svg{transform:translateX(2px)}
+
+/* ---------- 스크롤 등장(.rv: 옅게 떠오름) ---------- */
+/* 숨김은 js/check.js가 main에 .rv-ready를 붙일 때만. 붙이는 순간(.rv-init)은 전환 없이 바로 숨김 → 첫 화면 요소도 0에서 떠오름 */
+.check-page.rv-ready .rv{opacity:0;transform:translateY(18px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.check-page.rv-ready .rv.is-in{opacity:1;transform:none}
+.check-page.rv-init .rv{transition:none}
+@media (prefers-reduced-motion:reduce){
+.check-page.rv-ready .rv{opacity:1;transform:none;transition:none}
+}
+
+/* ---------- 히어로: 이미지 없이 제목 한 줄 + 해시태그 ---------- */
+/* 바탕은 2026-10-07 사용자 결정(후보 B) — 시안의 차콜 대신 카테고리 색(연두)을 연하게. 세 카테고리(체크 연두 · 라이프 청록 · 이야기 분홍) 같은 방식.
+   밝은 바탕이라 제목은 잉크 · 해시태그는 그래파이트, 'Check' 외곽선(--c)은 읽히게 진한 연두 */
+.check-page .t-hero{position:relative;overflow:hidden;padding:var(--hero-y) 0;background:var(--c-soft);color:var(--ink)}
+.check-page .t-titlerow{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:clamp(18px,2.4vw,32px);row-gap:4px}
+.check-page .t-hero h1{margin:0;font-family:var(--ff-title);font-weight:400;font-size:clamp(36px,4.4vw,68px);line-height:1.1;letter-spacing:-.02em;color:var(--ink);white-space:nowrap;text-wrap:nowrap}
+.check-page .t-ol{font-style:normal;font-family:inherit;font-weight:inherit;letter-spacing:inherit;color:transparent;-webkit-text-stroke:1.8px var(--c)}
+.check-page .t-chips{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 22px}
+.check-page .t-chips span{display:inline-block;padding:0;border:0;background:none;color:var(--graphite);font:inherit;font-size:clamp(17px,1.45vw,21px);font-weight:700;cursor:default}
+@media (max-width:860px){
+.check-page .t-hero h1{white-space:normal;text-wrap:balance}
+}
+
+/* ---------- 섹션 · 섹션 머리: 영문 포인트 단어(외곽선) + 한글 제목 한 줄, 아래 설명 ---------- */
+/* 세로 여백은 공통 토큰(--sec-y · --sec-y-first, common/css/tokens.css) — 이 시안 값을 사이트 기준으로 삼음
+   제목 위계(h1 > h2 > 카드 제목): 장식 영문 단어는 히어로 'Check'처럼 연두 외곽선, 크기는 어느 폭에서나 h1보다 작게(시안 86px 파랑 채움 → 1440 56px) */
+.check-page .sec{padding:var(--sec-y) 0 0}
+.check-page .t-hero+section.sec{padding-top:var(--sec-y-first)}
+.check-page .s-head{margin-bottom:clamp(28px,3.4vw,44px)}
+.check-page .s-row{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 16px}
+.check-page .s-head .s-word{margin:0;font-family:var(--ff-title);font-weight:400;font-size:clamp(36px,4vw,56px);line-height:1;letter-spacing:-.01em;color:transparent;-webkit-text-stroke:1.5px var(--c)}
+.check-page .s-head h2{margin:0;font-size:clamp(28px,2.8vw,38px);font-weight:700;letter-spacing:-.035em;line-height:1.25}
+.check-page .s-head .s-desc{margin:10px 0 0;max-width:60ch;font-size:15.5px;line-height:1.7;color:var(--graphite)}
+.check-page .s-sub{margin:48px 0 16px;font-size:clamp(20px,1.7vw,22px);font-weight:700;letter-spacing:-.02em}
+.check-page .s-head+.s-sub{margin-top:0}
+@media (max-width:860px){
+.check-page .s-head .s-word{font-size:clamp(30px,7.4vw,34px);-webkit-text-stroke-width:1.2px}
+}
+
+/* ---------- 모집 대상: 기본 대상(나이 · 학력 · 전공) ---------- */
+.check-page .chk-crit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink)}
+.check-page .chk-crit>div{padding:30px 28px 34px 0}
+.check-page .chk-crit>div+div{padding-left:clamp(20px,3vw,40px);border-left:1px solid var(--line)}
+.check-page .chk-crit-label{display:inline-block;margin:0 0 20px;padding:5px 16px;border-radius:30px;background:var(--ink);color:var(--paper);font-weight:700;font-size:14px}
+.check-page .chk-crit-main{margin:0 0 12px;font-family:var(--ff-title);font-size:clamp(24px,2.4vw,34px);line-height:1.22;letter-spacing:-.025em;text-wrap:balance}
+.check-page .chk-crit-main mark{background:linear-gradient(transparent 60%,var(--c-mark) 60%);color:inherit;padding:0 2px}
+.check-page .chk-crit-sub{margin:0;font-size:clamp(15px,1.2vw,17px);line-height:1.6;color:var(--graphite)}
+.check-page .chk-crit-note{margin:16px 0 0;font-size:14.5px;line-height:1.6;color:var(--graphite)}
+@media (max-width:860px){
+.check-page .chk-crit{grid-template-columns:1fr}
+.check-page .chk-crit>div,
+.check-page .chk-crit>div+div{padding:24px 0;border-left:0}
+.check-page .chk-crit>div+div{border-top:1px solid var(--line)}
+}
+
+/* ---------- 모집 대상: 다른 정부지원사업 안내(중요 내용이라 글씨 키움 · 잉크 테두리 유지) ---------- */
+/* '!'는 시안 노랑 → 잉크(노랑은 사이트에서 지원하기 버튼 색) */
+.check-page .chk-notice{display:flex;gap:16px;align-items:flex-start;margin-top:26px;padding:26px 30px;background:var(--surface);border:1.5px solid var(--ink);border-radius:var(--r-card)}
+.check-page .chk-notice-ico{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-size:16px;font-weight:800;line-height:1}
+.check-page .chk-notice h4{margin:2px 0 8px;font-size:clamp(18px,1.5vw,20px);line-height:1.4;letter-spacing:-.02em}
+.check-page .chk-notice p{margin:0;font-size:clamp(16px,1.25vw,17.5px);line-height:1.75;color:var(--ink)}
+/* 좁은 폭: '!'는 제목 줄 앞에, 본문은 상자 전체 폭(시안은 아이콘 칸 때문에 글 칸이 236px로 좁아 6줄) */
+@media (max-width:560px){
+.check-page .chk-notice{display:grid;grid-template-columns:26px minmax(0,1fr);column-gap:10px;padding:20px}
+.check-page .chk-notice>div{display:contents}
+.check-page .chk-notice-ico{width:26px;height:26px;font-size:14px}
+.check-page .chk-notice h4{align-self:center;margin:0}
+.check-page .chk-notice p{grid-column:1/-1;margin-top:10px}
+}
+
+/* ---------- 모집 대상: 스스로 체크(체크 목록 + 진행 막대) ---------- */
+.check-page .chk-self{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(28px,5vw,72px);align-items:start}
+.check-page .chk-list{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+.check-page .chk-list li{border-bottom:1px solid var(--line)}
+.check-page .chk-list label{display:flex;gap:16px;align-items:flex-start;padding:18px 4px;cursor:pointer}
+.check-page .chk-box{position:absolute;opacity:0;pointer-events:none}
+.check-page .chk-mark{flex:none;width:26px;height:26px;border:2px solid var(--ink);border-radius:6px;background:var(--surface);position:relative;margin-top:1px;transition:background .2s,transform .3s cubic-bezier(.34,1.56,.64,1)}
+.check-page .chk-mark::after{content:"";position:absolute;left:7px;top:1px;width:7px;height:14px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(40deg) scale(0);transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+.check-page .chk-box:checked+.chk-mark{background:var(--c);border-color:var(--c);transform:scale(1.06)}
+.check-page .chk-box:checked+.chk-mark::after{transform:rotate(40deg) scale(1)}
+.check-page .chk-box:focus-visible+.chk-mark{outline:2px solid var(--blue);outline-offset:3px}
+.check-page .chk-text{font-size:16.5px;line-height:1.6}
+.check-page .chk-box:checked~.chk-text{color:var(--graphite)}
+/* 진행 상자: 목록 첫 줄(잉크 선)과 같은 높이에서 시작 */
+.check-page .chk-progress{position:sticky;top:calc(var(--hdr) + var(--sub) + 32px);padding:26px 28px 28px;border:1px solid var(--line);border-radius:var(--r-card);background:var(--surface)}
+.check-page .chk-progress p{margin:0 0 14px;font-size:17px}
+.check-page .chk-progress b{font-family:var(--ff-title);font-weight:400;font-size:38px;margin-right:2px}
+.check-page .chk-bar{height:10px;border-radius:10px;background:var(--paper-2);overflow:hidden}
+.check-page .chk-bar i{display:block;height:100%;width:0;border-radius:inherit;background:var(--c);transition:width .45s var(--ease)}
+.check-page .chk-go{margin-top:20px}   /* 공통 .btn.is-sm */
+.check-page .chk-go[hidden]{display:none}
+@media (max-width:860px){
+.check-page .chk-self{grid-template-columns:1fr}
+.check-page .chk-progress{position:static}
+}
+@media (prefers-reduced-motion:reduce){
+.check-page .chk-bar i,
+.check-page .chk-mark,
+.check-page .chk-mark::after{transition:none}
+}
+
+/* ---------- 모집 프로세스: 4단계(넓으면 가로 선, 1000px 이하 세로 선) ---------- */
+.check-page .proc{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));position:relative}
+.check-page .proc::before{content:"";position:absolute;top:13px;left:12.5%;right:12.5%;height:2px;background:var(--ink)}
+.check-page .proc-step{position:relative;padding:44px clamp(14px,1.8vw,26px) 8px;text-align:center}
+.check-page .proc-step::after{content:"";position:absolute;left:50%;top:6px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--surface);border:3px solid var(--ink)}
+.check-page .proc-step:last-child::after{background:var(--c)}
+.check-page .proc-no{display:block;font-family:var(--ff-title);font-size:clamp(34px,3.6vw,52px);line-height:1;color:var(--c);margin-bottom:14px}
+.check-page .proc-step h3{margin:0 0 14px;font-size:clamp(20px,1.9vw,25px);letter-spacing:-.03em;line-height:1.3}
+.check-page .proc-step p{margin:0;font-size:15.5px;line-height:1.75;color:var(--graphite)}
+.check-page .proc-step dl{margin:0;display:flex;flex-direction:column;gap:16px}
+.check-page .proc-step dt{font-weight:700;font-size:15px;color:var(--ink);margin-bottom:4px}
+.check-page .proc-step dd{margin:0;font-size:15.5px;line-height:1.75;color:var(--graphite)}
+.check-page .proc-step .proc-note{margin-top:18px;padding:14px 16px;border-radius:12px;background:var(--c-soft);color:var(--ink);font-size:14.5px;line-height:1.65}
+.check-page .proc-note b{display:block;margin-bottom:4px;font-size:13.5px;color:var(--c-ink)}
+@media (max-width:1000px){
+.check-page .proc{grid-template-columns:1fr}
+.check-page .proc::before{top:6px;bottom:30px;left:7px;right:auto;width:2px;height:auto}
+.check-page .proc-step{padding:0 0 36px 44px;text-align:left}
+.check-page .proc-step::after{left:0;top:0;margin-left:0}
+.check-page .proc-step:last-child{padding-bottom:0}
+.check-page .proc-no{font-size:34px}
+}
+
+/* ---------- 지원 혜택: 카드 8장(4 → 2열, 560px 이하는 아이콘 왼쪽 가로 카드) + 아래 안내 ---------- */
+/* 카드는 누르는 곳이 아니라 hover 움직임 없음 */
+.check-page .ben-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.check-page .ben-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:24px 22px 26px}
+.check-page .ben-ico{display:grid;place-items:center;width:58px;height:58px;border-radius:12px;border:1px solid var(--line);background:var(--paper);margin-bottom:18px}
+.check-page .ben-ico svg{width:38px;height:38px;fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.check-page .ben-ico .accent{stroke:var(--c)}
+.check-page .ben-no{margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--graphite)}
+.check-page .ben-card h3{margin:0 0 8px;font-size:18.5px;font-weight:700;letter-spacing:-.025em;line-height:1.4}
+.check-page .ben-desc,
+.check-page .ben-sub{margin:0;font-size:14.5px;line-height:1.7;color:var(--graphite)}
+.check-page .ben-sub{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;line-height:1.6}
+.check-page .ben-sub small{font-size:inherit}
+.check-page .ben-card b{color:var(--ink);font-weight:700;background:linear-gradient(transparent 62%,var(--c-mark) 62%)}
+@media (max-width:1000px){
+.check-page .ben-grid{grid-template-columns:1fr 1fr}
+}
+/* 좁은 폭: 한 장 274px × 8 = 섹션 2,357px(390)이던 것을 가로 카드로 — 아이콘 왼쪽 · 제목 · 설명 오른쪽, 'BENEFIT 0n' 줄은 숨김 */
+@media (max-width:560px){
+.check-page .ben-grid{grid-template-columns:1fr;gap:10px}
+.check-page .ben-card{display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:14px;align-items:start;padding:16px 18px 18px}
+.check-page .ben-ico{grid-row:span 3;width:44px;height:44px;margin:0;border-radius:10px}
+.check-page .ben-ico svg{width:30px;height:30px}
+.check-page .ben-no{display:none}
+.check-page .ben-card h3{margin:1px 0 4px;font-size:17px}
+.check-page .ben-desc{font-size:14.5px;line-height:1.65}
+}
+.check-page .ben-foot{margin-top:28px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;font-size:15px;line-height:1.6;color:var(--graphite)}
+.check-page .ben-foot p{margin:0}
+.check-page .ben-foot .text-link{margin-top:4px}
+.check-page .ben-foot small{font-size:13.5px}
+
+/* ---------- 자주 묻는 질문: 분류 · 검색 · 하나씩 펼치기 + 카카오톡 문의 ---------- */
+/* 분류 칩: 눌린 것은 잉크로 채운 알약(공통 주 버튼과 같은 결), 나머지는 그래파이트 글자. 분류 칩 묶음과 검색 칸은 같은 높이 48 */
+.check-page .faq-tools{display:flex;flex-wrap:wrap;gap:16px 24px;align-items:center;justify-content:space-between}
+.check-page .faq-tabs{display:flex;flex-wrap:wrap;gap:4px;padding:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px}
+.check-page .faq-tab{height:38px;padding:0 22px;border:0;border-radius:999px;background:transparent;color:var(--graphite);font-weight:700;font-size:15.5px;line-height:1;cursor:pointer;transition:background .2s,color .2s}
+.check-page .faq-tab:hover{background:var(--paper);color:var(--ink)}
+.check-page .faq-tab[aria-pressed="true"]{background:var(--ink);color:#fff}
+.check-page .faq-search{position:relative;flex:1 1 280px;max-width:380px}
+.check-page .faq-search svg{position:absolute;left:18px;top:50%;width:20px;height:20px;margin-top:-10px;stroke:var(--graphite);fill:none;stroke-width:2;stroke-linecap:round;pointer-events:none}
+.check-page .faq-search input{width:100%;height:48px;padding:0 48px 0 48px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font:inherit;font-size:16px;color:var(--ink);outline:none;transition:border-color .2s,box-shadow .2s}
+.check-page .faq-search input::placeholder{color:var(--graphite)}
+.check-page .faq-search input:hover{border-color:color-mix(in srgb,var(--ink) 40%,var(--line))}
+.check-page .faq-search input:focus{border-color:var(--ink);box-shadow:0 0 0 3px color-mix(in srgb,var(--ink) 12%,transparent)}
+.check-page .faq-search input::-webkit-search-cancel-button{display:none}
+/* 지우기: 보이는 원 28px, 누르는 곳 44px */
+.check-page .faq-search button{position:absolute;right:2px;top:50%;width:44px;height:44px;margin-top:-22px;border:0;border-radius:50%;background:radial-gradient(circle,var(--paper-2) 13.5px,transparent 14.5px);color:var(--ink);font-size:20px;line-height:1;cursor:pointer}
+.check-page .faq-search button:hover{background:radial-gradient(circle,var(--line) 13.5px,transparent 14.5px)}
+.check-page .faq-count{margin:22px 0 0;min-height:22px;font-size:14.5px;color:var(--graphite)}
+.check-page .faq-list{list-style:none;margin:6px 0 0;padding:0;border-top:2px solid var(--ink)}
+.check-page .faq-item{border-bottom:1px solid var(--line)}
+.check-page .faq-item[hidden]{display:none}
+.check-page .faq-item h3{margin:0}
+.check-page .faq-q{width:100%;display:grid;grid-template-columns:34px minmax(0,1fr) 36px;gap:10px;align-items:center;padding:26px 6px;background:none;border:0;text-align:left;cursor:pointer;color:var(--ink);font:inherit}
+.check-page .faq-qa{font-family:var(--ff-title);font-size:22px;line-height:1;color:var(--ink)}
+.check-page .faq-qt{font-size:clamp(17px,1.5vw,20px);font-weight:700;letter-spacing:-.02em;line-height:1.5;transition:color .2s}
+.check-page :is(.faq-qt,.faq-at) mark{background:var(--c-mark);color:inherit;border-radius:3px;padding:0 1px}
+.check-page .faq-arrow{display:grid;place-items:center;transition:transform .35s var(--ease)}
+.check-page .faq-arrow svg{width:26px;height:26px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:stroke .2s}
+.check-page .faq-q:hover .faq-qt{color:var(--c-ink)}
+.check-page .faq-q:hover .faq-arrow svg,
+.check-page .faq-item.is-open .faq-arrow svg{stroke:var(--c-ink)}
+.check-page .faq-item.is-open .faq-arrow{transform:rotate(-90deg)}
+/* 답: 닫혀 있으면 높이 0 + visibility:hidden(안의 링크도 초점이 안 감) */
+.check-page .faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ease);visibility:hidden}
+.check-page .faq-a>div{overflow:hidden;display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;padding:0 6px;background:var(--surface)}
+.check-page .faq-item.is-open .faq-a{grid-template-rows:1fr;visibility:visible}
+.check-page .faq-a .faq-qa{color:var(--c-ink);padding:28px 0}
+.check-page .faq-at{padding:26px 36px 28px 0;font-size:16.5px;line-height:1.85;color:var(--graphite)}
+.check-page .faq-empty{padding:44px 0;text-align:center;color:var(--graphite);border-bottom:1px solid var(--line)}
+.check-page .faq-empty p{margin:0 0 6px}
+.check-page .faq-empty b{color:var(--ink)}
+.check-page .faq-empty[hidden]{display:none}
+/* 카카오톡 문의: 질문 목록 끝의 보조 안내(버튼은 공통 .btn.is-line — 노랑은 지원하기에만) */
+.check-page .faq-cta{margin-top:40px;display:flex;flex-wrap:wrap;gap:18px 32px;align-items:center;justify-content:space-between;padding:26px 28px;border:1px solid var(--line);border-radius:var(--r-card);background:var(--surface)}
+.check-page .faq-cta h3{margin:0 0 4px;font-size:clamp(18px,1.5vw,20px);letter-spacing:-.03em;line-height:1.4}
+.check-page .faq-cta p{margin:0;color:var(--graphite)}
+@media (max-width:860px){
+.check-page .faq-tabs{flex-wrap:nowrap}
+.check-page .faq-tab{padding:0 16px;font-size:15px}
+.check-page .faq-search{max-width:none;flex-basis:100%}
+.check-page .faq-q{grid-template-columns:28px minmax(0,1fr) 28px;padding:22px 0}
+.check-page .faq-a>div{grid-template-columns:28px minmax(0,1fr);padding:0}
+.check-page .faq-at{padding-right:0}
+.check-page .faq-cta{padding:22px}
+}
+/* 좁은 폭: 분류 6개를 3 × 2 같은 폭 칩으로(시안은 둥근 틀 안 4 + 2로 줄바꿈되며 둘째 줄 칩이 반폭으로 늘어남) */
+@media (max-width:560px){
+.check-page .faq-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;width:100%;padding:0;border:0;border-radius:0;background:none}
+.check-page .faq-tab{height:40px;padding:0 6px;border:1px solid var(--line);background:var(--surface)}
+.check-page .faq-tab[aria-pressed="true"]{border-color:var(--ink)}
+}
+@media (prefers-reduced-motion:reduce){
+.check-page .faq-a,
+.check-page .faq-arrow{transition:none}
+}
+
+/* ---------- 페이지 끝: 공통 '다음으로' 띠(common/css/site.css .next-band) 앞 마지막 섹션 아래 여백 ---------- */
+.check-page>.sec:has(+.next-band){padding-bottom:var(--sec-y)}
+
+/* ---------- #위치 자리(사이트 연결) ---------- */
+/* 주소 #위치로 열 때(헤더 메뉴 · 하위 메뉴 바 · 다른 페이지 링크) 브라우저가 직접 스크롤해도 js/check.js의 jumpTo와 같은 자리 —
+   섹션 머리가 헤더 + 하위 메뉴 바 아래 32px. scroll-margin = 24px(32 - base.css scroll-padding의 8) - 섹션 위 여백 */
+.check-page section.sec[id]{scroll-margin-top:calc(24px - var(--sec-y))}
+.check-page .t-hero+section.sec[id]{scroll-margin-top:calc(24px - var(--sec-y-first))}

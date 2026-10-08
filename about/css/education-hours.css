@@ -1,0 +1,83 @@
+.school-about:has(#education-hours:target) { scroll-padding-top: calc(var(--hdr) + var(--about-subnav, 0px)); }
+.education-hours { margin-top: 76px; padding-top: 58px; border-top: 1px solid #d8dfeb; scroll-margin-top: 24px; }
+.education-hours-heading { display: flex; justify-content: space-between; align-items: end; gap: 32px; margin-bottom: 30px; }
+.education-hours .education-hours-heading h3 { font-size: clamp(28px, 3vw, 40px); line-height: 1.35; font-weight: 900; letter-spacing: -.05em; }
+.education-hours .education-hours-heading .micro-label { margin-bottom: 14px; font-size: 13px; }
+.education-hours-year { flex-shrink: 0; font-size: 14px; color: #657087; padding-bottom: 6px; }
+.education-hours-summary { display: grid; grid-template-columns: 1.1fr .75fr 1.25fr; align-items: center; gap: 32px; padding: 28px 36px; color: #fff; background: #13203c; border-radius: 14px; }
+.education-hours-stat { min-width: 0; }
+.education-hours-stat > span { display: block; margin-bottom: 9px; font-size: 13px; color: #bdcbea; }
+.education-hours-stat strong { display: flex; align-items: baseline; gap: 10px; font-size: clamp(46px, 4.5vw, 64px); font-weight: 900; line-height: 1.05; letter-spacing: -.045em; font-variant-numeric: tabular-nums; }
+.education-hours-stat strong small { flex-shrink: 0; white-space: nowrap; font-size: 20px; font-weight: 700; letter-spacing: -.03em; }
+.education-hours-duration { padding-left: 32px; border-left: 1px solid #ffffff30; }
+.education-hours-duration strong { color: #abcaff; }
+.education-hours .education-hours-summary > p { color: #d0dcf3; font-size: 16px; line-height: 1.85; word-break: keep-all; }
+.education-hours-calendar { margin-top: 42px; }
+.education-month-axis { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); padding: 0; margin: 0 0 12px; list-style: none; color: #657087; font-size: 13px; text-align: center; }
+.education-time-stages { display: grid; grid-template-columns: 2fr 3fr 5fr; padding: 0; margin: 0; list-style: none; }
+.education-time-stages > li { min-width: 0; }
+.education-phase-band { display: flex; align-items: center; gap: 12px; padding: 20px; min-height: 78px; }
+.education-hours .education-phase-band h4 { font-size: 20px; font-weight: 700; letter-spacing: -.035em; line-height: 1.4; }
+.education-phase-prep .education-phase-band { background: #e4edff; color: #244cd2; border-radius: 10px 0 0 10px; }
+.education-phase-growth .education-phase-band { background: #4b6ee5; color: #fff; }
+.education-phase-project .education-phase-band { background: #244cd2; color: #fff; border-radius: 0 10px 10px 0; }
+.education-phase-body { margin-top: 28px; padding-right: 25px; }
+.education-phase-growth .education-phase-body { padding-inline: 28px; border-left: 1px solid #d8dfeb; }
+.education-phase-project .education-phase-body { padding: 0 12px 0 36px; border-left: 1px solid #d8dfeb; }
+.education-phase-period { font-size: 14px; color: #657087; }
+.education-phase-hours { display: block; margin-top: 10px; font-size: 44px; color: #13203c; line-height: 1.2; letter-spacing: -.04em; font-weight: 900; }
+.education-phase-hours small { margin-left: 6px; font-size: 17px; font-weight: 700; }
+.education-hours .education-phase-body > p { margin-top: 14px; max-width: 440px; font-size: 16px; line-height: 1.85; color: #536078; word-break: keep-all; }
+.education-hours .education-phase-body .education-phase-mentor { margin-top: 20px; color: #244cd2; font-size: 13px; font-weight: 700; }
+.education-growth-breakdown { margin: 18px 0 0; font-size: 14px; color: #536078; }
+.education-growth-breakdown > div { display: flex; justify-content: space-between; gap: 14px; padding: 6px 0; }
+.education-growth-breakdown dt, .education-growth-breakdown dd { margin: 0; }
+.education-growth-breakdown dd { color: #244cd2; font-weight: 700; white-space: nowrap; }
+.education-project-options { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 0; padding: 0; list-style: none; }
+.education-project-options li { padding: 5px 12px; border: 1px solid #d5dff4; border-radius: 20px; font-size: 13px; color: #244cd2; }
+.education-hours .education-hours-source { margin-top: 20px; color: #687180; font-size: 12px; line-height: 1.85; word-break: keep-all; }
+/* #위치 도착: 1200px 미만은 why-school · institution-profile과 같은 여백(하위 메뉴 바 아래) */
+@media (max-width: 1199px) {
+  .education-hours { scroll-margin-top: 88px; }
+}
+@media (max-width: 1100px) {
+  .education-hours-summary { grid-template-columns: 1fr .7fr 1fr; padding: 26px; gap: 22px; }
+  .education-hours-duration { padding-left: 22px; }
+  .education-hours .education-hours-summary > p { font-size: 14px; }
+  .education-phase-band { padding: 16px; gap: 9px; }
+  .education-hours .education-phase-band h4 { font-size: 18px; }
+  .education-phase-growth .education-phase-body { padding-inline: 20px; }
+  .education-phase-project .education-phase-body { padding-left: 24px; }
+}
+@media (max-width: 900px) {
+  .education-hours-heading { display: block; }
+  .education-hours-year { display: block; margin-top: 14px; padding: 0; }
+  .education-month-axis { display: none; }
+  .education-time-stages { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .education-phase-hours { font-size: 36px; }
+  .education-hours .education-phase-body > p { font-size: 15px; }
+}
+@media (max-width: 680px) {
+  .education-hours { margin-top: 54px; padding-top: 40px; scroll-margin-top: 88px; }
+  .education-hours .education-hours-heading h3 { font-size: 28px; }
+  .education-hours-summary { grid-template-columns: 1.1fr .9fr; gap: 22px 16px; padding: 25px 22px; }
+  .education-hours-stat strong { font-size: clamp(32px, 10vw, 40px); gap: 5px; }
+  .education-hours-stat strong small { font-size: 16px; }
+  .education-hours-duration { padding-left: 20px; }
+  .education-hours-summary > p { grid-column: 1 / -1; padding-top: 20px; border-top: 1px solid #ffffff30; }
+  .education-hours-summary > p br { display: none; }
+  .education-hours-calendar { margin-top: 30px; }
+  .education-time-stages { display: block; }
+  .education-time-stages > li + li { margin-top: 28px; }
+  .education-phase-band { min-height: 64px; padding: 16px 18px; }
+  .education-time-stages .education-phase-band { border-radius: 8px; }
+  .education-time-stages .education-phase-body { margin-top: 20px; padding: 0 0 0 18px; border-left: 2px solid #e0e8f8; }
+  .education-hours .education-phase-body > p { max-width: none; }
+  .education-growth-breakdown { max-width: 360px; }
+}
+@media (max-width: 360px) {
+  .education-hours-summary { padding-inline: 18px; column-gap: 12px; }
+  .education-hours-stat strong { font-size: 32px; }
+  .education-hours-stat strong small { font-size: 14px; }
+  .education-hours-duration { padding-left: 14px; }
+}

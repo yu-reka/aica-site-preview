@@ -1,0 +1,926 @@
+<!doctype html>
+<html lang="ko" data-menu="life" data-theme="light">
+<head>
+<meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>인사교 라이프 — 인공지능사관학교</title>
+<meta name="description" content="시설 둘러보기(강의실 · AI 카페 · 구내식당 등) · 생활 꿀팁(주거 · 근처 식당 · 문화·여가 · 생활 적응) · 오시는 길(주소 · 교통 · 실제 통학 시간 · 주차)">
+<meta property="og:type" content="website">
+<meta property="og:title" content="인사교 라이프 — 인공지능사관학교">
+<meta property="og:description" content="시설 둘러보기(강의실 · AI 카페 · 구내식당 등) · 생활 꿀팁(주거 · 근처 식당 · 문화·여가 · 생활 적응) · 오시는 길(주소 · 교통 · 실제 통학 시간 · 주차)">
+<link rel="icon" type="image/png" href="../common/assets/brand/symbol-blue.png">
+<!-- 본문 글꼴은 공통 tokens.css의 "Paperlogy Text"(이야기 · 지원 전 체크와 같음) · 큰 제목 자이언츠체도 공통. Google Fonts는 숫자 Anton · 꿀팁 히어로 손글씨 Nanum Pen Script만(2026-10-08: Noto Sans KR · Bricolage Grotesque · IBM Plex Mono 뺌) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Nanum+Pen+Script&display=swap">
+<link rel="stylesheet" href="../common/css/tokens.css">
+<link rel="stylesheet" href="../common/css/base.css">
+<link rel="stylesheet" href="../common/css/site.css">
+<link rel="stylesheet" href="css/life.css">
+<script src="../common/js/menu.js" defer></script>
+<script src="../common/js/site.js" defer></script>
+<script src="js/life.js" defer></script>
+</head>
+<body>
+<header class="site-header" id="siteHeader"></header>
+
+<!-- 본문: 박지원 시안8의 인사교 라이프 세 화면(div.page 셋). 주소 #facilities(기본) · #tips · #directions로 바꿔 보여 줌(js/life.js). 헤더 · 하위 메뉴 바 · 푸터는 common/이 그림.
+     반복 단위(DB 값 자리는 data-field): 유형별 시세 카드(.hsc) · 동별 비교 줄(.hdr) · 식당(.fd2i) · 문화·여가 장소 목록(.lmli — 지도 핀 .lmp와 data-i로 짝).
+     층 · 공간(.fxg · .fxs)은 엘리베이터 사진(.fxv) · 아래 막대(.fxbar)와 data-k="층-공간"으로 짝 -->
+<main id="main" class="life-page" tabindex="-1">
+
+<!-- ===== 시설 둘러보기 (#facilities) ===== -->
+<div class="page" id="pg-facility" data-page="facility">
+  <header class="fh8">
+    <div class="fh8-g">
+      <div class="fh8-t">
+        <p class="fh8-k"><span aria-hidden="true"></span>03 · 인사교 라이프<em aria-hidden="true">FACILITY</em></p>
+        <h1>시설 둘러보기</h1>
+        <p class="fh8-s">1년 가까이 매일 나오는 건물이에요. 사진을 누르면 그&nbsp;공간 안내로 바로 가요.</p>
+        <ul class="fh8-f" aria-label="건물 한눈에">
+          <li><b>1~3F</b>교육장</li>
+          <li><b>8F</b>구내식당</li>
+          <li><b>4~7F</b>다른 기관</li>
+          <li><b>9~18시</b>평일 수업</li>
+        </ul>
+        <p class="fh8-n">사진 일부 예시</p>
+      </div>
+      <div class="fh8-b" role="group" aria-label="공간 사진 · 누르면 그 공간 안내로 이동">
+        <button type="button" class="btl tl1" data-hf="1" data-ht="0"><span class="btl-i im-building" aria-hidden="true"></span><span class="btl-c"><i>건물 외관</i><b>1~3F 교육장 · 8F 구내식당</b></span><span class="btl-go" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"></path></svg></span></button>
+        <button type="button" class="btl tl2" data-hf="1" data-ht="1"><span class="btl-i im-cafe_k" aria-hidden="true"></span><span class="btl-c"><i>1F</i><b>AI 카페</b></span><span class="btl-go" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"></path></svg></span></button>
+        <button type="button" class="btl tl3" data-hf="23" data-ht="0"><span class="btl-i im-classroom" aria-hidden="true"></span><span class="btl-c"><i>2·3F</i><b>강의실</b></span><span class="btl-go" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"></path></svg></span></button>
+        <button type="button" class="btl tl4" data-hf="23" data-ht="1"><span class="btl-i im-rest_tmp" aria-hidden="true"></span><em>임시 사진</em><span class="btl-c"><i>2·3F</i><b>휴게 공간</b></span><span class="btl-go" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"></path></svg></span></button>
+      </div>
+    </div>
+  </header>
+  <section class="sec">
+    <div class="wrap">
+      <div class="sh">
+        <div><h2>층별 · 공간별 안내</h2><p>광주광역시 동구 제봉로 92</p></div>
+        <div class="r"><span class="bdg ex">사진 일부 예시</span></div>
+      </div>
+      <div class="fx e8on">
+        <div class="e8" role="group" aria-label="엘리베이터 · 층 버튼을 누르면 그 층 사진으로 바뀌어요">
+          <div class="e8-disp" aria-live="polite"><span class="e8-arw" aria-hidden="true"></span><b class="e8-num">2F</b><span class="e8-name">2F 교육장</span></div>
+          <div class="e8-body">
+            <div class="e8-car"><div class="fxv" tabindex="0" aria-roledescription="사진 넘김" aria-label="정문(입구) 사진 3장" hidden data-k="1-0">
+                <div class="fxtr">
+                  <div class="fxsl im-building" role="img" aria-label="교육장 건물 외관"></div>
+                  <div class="fxsl im-entrance" role="img" aria-label="입구 안쪽 사인"></div>
+                  <div class="fxsl im-building" style="--bs:220%;--bp:30% 78%;" role="img" aria-label="건물 정문 쪽"></div>
+                </div>
+                <span class="bx-ex">사진 예시</span>
+                <button type="button" class="fxa prev" aria-label="이전 사진">‹</button>
+                <button type="button" class="fxa next" aria-label="다음 사진">›</button>
+              </div><div class="fxv" tabindex="0" aria-roledescription="사진 넘김" aria-label="AI 카페 사진 3장" hidden data-k="1-1">
+                <div class="fxtr">
+                  <div class="fxsl im-cafe_k" role="img" aria-label="1층 AI 카페"></div>
+                  <div class="fxsl im-b_cafe" style="--bs:230%;--bp:70% 40%;" role="img" aria-label="테이블 좌석"></div>
+                  <div class="fxsl im-x3_table" role="img" aria-label="스크린 · 회의 테이블"></div>
+                </div>
+                <span class="bx-ex">사진 예시</span>
+                <button type="button" class="fxa prev" aria-label="이전 사진">‹</button>
+                <button type="button" class="fxa next" aria-label="다음 사진">›</button>
+              </div><div class="fxv" tabindex="0" aria-roledescription="사진 넘김" aria-label="회의실 사진 3장" hidden data-k="1-2">
+                <div class="fxtr">
+                  <div class="fxsl im-x2_room" role="img" aria-label="회의실 전경"></div>
+                  <div class="fxsl im-x3_table" style="--bs:220%;--bp:70% 60%;" role="img" aria-label="회의 테이블"></div>
+                  <div class="fxsl im-x2_room" style="--bs:230%;--bp:78% 30%;" role="img" aria-label="발표 스크린"></div>
+                </div>
+                <span class="bx-ex">사진 예시</span>
+                <button type="button" class="fxa prev" aria-label="이전 사진">‹</button>
+                <button type="button" class="fxa next" aria-label="다음 사진">›</button>
+              </div><div class="fxv" tabindex="0" aria-roledescription="사진 넘김" aria-label="강의실 사진 3장" data-k="23-0">
+                <div class="fxtr">
+                  <div class="fxsl im-classroom" role="img" aria-label="강의실 전경"></div>
+                  <div class="fxsl im-b_class" style="--bs:240%;--bp:28% 72%;" role="img" aria-label="개인 모니터 · 노트북 자리"></div>
+                  <div class="fxsl im-classroom" style="--bs:230%;--bp:14% 18%;" role="img" aria-label="앞쪽 화이트보드 · 창가"></div>
+                </div>
+                <button type="button" class="fxa prev" aria-label="이전 사진">‹</button>
+                <button type="button" class="fxa next" aria-label="다음 사진">›</button>
+              </div><div class="fxv" tabindex="0" aria-roledescription="사진 넘김" aria-label="휴게 공간 사진 3장" hidden data-k="23-1">
+                <div class="fxtr">
+                  <div class="fxsl im-rest_tmp" style="--bp:left bottom;" role="img" aria-label="휴게 공간 전경"></div>
+                  <div class="fxsl im-rest_tmp" style="--bs:210%;--bp:78% 72%;" role="img" aria-label="창가 바 좌석"></div>
+                  <div class="fxsl im-rest_tmp" style="--bs:230%;--bp:4% 72%;" role="img" aria-label="소파 · 테이블 좌석"></div>
+                </div>
+                <span class="bx-ex tmp">임시 사진</span>
+                <button type="button" class="fxa prev" aria-label="이전 사진">‹</button>
+                <button type="button" class="fxa next" aria-label="다음 사진">›</button>
+              </div><div class="fxv" tabindex="0" aria-roledescription="사진 넘김" aria-label="프로젝트 공간 사진 3장" hidden data-k="23-2">
+                <div class="fxtr">
+                  <div class="fxsl im-project" role="img" aria-label="팀 프로젝트 모습"></div>
+                  <div class="fxsl im-x3_table" role="img" aria-label="회의 테이블 · 스크린"></div>
+                  <div class="fxsl im-b_project" style="--bs:230%;--bp:62% 88%;" role="img" aria-label="노트북 협업"></div>
+                </div>
+                <span class="bx-ex">사진 예시</span>
+                <button type="button" class="fxa prev" aria-label="이전 사진">‹</button>
+                <button type="button" class="fxa next" aria-label="다음 사진">›</button>
+              </div><div class="fxv" tabindex="0" aria-roledescription="사진 넘김" aria-label="구내식당 사진 2장" hidden data-k="8-0">
+                <div class="fxtr">
+                  <div class="fxsl im-cafe8_tmp" role="img" aria-label="구내식당 전경"></div>
+                  <div class="fxsl im-counter_tmp" role="img" aria-label="배식대"></div>
+                </div>
+                <span class="bx-ex tmp">임시 사진</span>
+                <button type="button" class="fxa prev" aria-label="이전 사진">‹</button>
+                <button type="button" class="fxa next" aria-label="다음 사진">›</button>
+              </div></div>
+            <div class="e8-pan" role="group" aria-label="층 버튼">
+              <button type="button" class="fxf act" data-g="8" aria-pressed="false"><b>8F</b><span>구내식당</span></button>
+              <div class="fxf dim"><b>4~7F</b><span>다른 기관 · 교육장 아님</span></div>
+              <button type="button" class="fxf act on" data-g="23" aria-pressed="true"><b>3F</b><span>교육장</span></button>
+              <button type="button" class="fxf act on cur" data-g="23" aria-pressed="true"><b>2F</b><span>교육장</span></button>
+              <button type="button" class="fxf act" data-g="1" aria-pressed="false"><b>1F</b><span>정문 · 공용</span></button>
+            </div>
+          </div>
+          <div class="e8-bars">
+            <div class="fxbar" hidden data-k="1-0">
+              <p class="fxcap">교육장 건물 외관</p>
+              <div class="fxdots">
+                <button type="button" class="fxd on" aria-label="1번째 사진 보기" aria-current="true"></button>
+                <button type="button" class="fxd" aria-label="2번째 사진 보기"></button>
+                <button type="button" class="fxd" aria-label="3번째 사진 보기"></button>
+              </div>
+              <span class="fxn"><b>1</b> / 3</span></div>
+            <div class="fxbar" hidden data-k="1-1">
+              <p class="fxcap">1층 AI 카페</p>
+              <div class="fxdots">
+                <button type="button" class="fxd on" aria-label="1번째 사진 보기" aria-current="true"></button>
+                <button type="button" class="fxd" aria-label="2번째 사진 보기"></button>
+                <button type="button" class="fxd" aria-label="3번째 사진 보기"></button>
+              </div>
+              <span class="fxn"><b>1</b> / 3</span></div>
+            <div class="fxbar" hidden data-k="1-2">
+              <p class="fxcap">회의실 전경</p>
+              <div class="fxdots">
+                <button type="button" class="fxd on" aria-label="1번째 사진 보기" aria-current="true"></button>
+                <button type="button" class="fxd" aria-label="2번째 사진 보기"></button>
+                <button type="button" class="fxd" aria-label="3번째 사진 보기"></button>
+              </div>
+              <span class="fxn"><b>1</b> / 3</span></div>
+            <div class="fxbar" data-k="23-0">
+              <p class="fxcap">강의실 전경</p>
+              <div class="fxdots">
+                <button type="button" class="fxd on" aria-label="1번째 사진 보기" aria-current="true"></button>
+                <button type="button" class="fxd" aria-label="2번째 사진 보기"></button>
+                <button type="button" class="fxd" aria-label="3번째 사진 보기"></button>
+              </div>
+              <span class="fxn"><b>1</b> / 3</span></div>
+            <div class="fxbar" hidden data-k="23-1">
+              <p class="fxcap">휴게 공간 전경</p>
+              <div class="fxdots">
+                <button type="button" class="fxd on" aria-label="1번째 사진 보기" aria-current="true"></button>
+                <button type="button" class="fxd" aria-label="2번째 사진 보기"></button>
+                <button type="button" class="fxd" aria-label="3번째 사진 보기"></button>
+              </div>
+              <span class="fxn"><b>1</b> / 3</span></div>
+            <div class="fxbar" hidden data-k="23-2">
+              <p class="fxcap">팀 프로젝트 모습</p>
+              <div class="fxdots">
+                <button type="button" class="fxd on" aria-label="1번째 사진 보기" aria-current="true"></button>
+                <button type="button" class="fxd" aria-label="2번째 사진 보기"></button>
+                <button type="button" class="fxd" aria-label="3번째 사진 보기"></button>
+              </div>
+              <span class="fxn"><b>1</b> / 3</span></div>
+            <div class="fxbar" hidden data-k="8-0">
+              <p class="fxcap">구내식당 전경</p>
+              <div class="fxdots">
+                <button type="button" class="fxd on" aria-label="1번째 사진 보기" aria-current="true"></button>
+                <button type="button" class="fxd" aria-label="2번째 사진 보기"></button>
+              </div>
+              <span class="fxn"><b>1</b> / 2</span></div>
+          </div>
+        </div>
+        <div class="fxp" aria-live="polite">
+          <section class="fxg" data-g="1" hidden aria-label="1F 정문 · 공용 공간">
+            <header class="fxh"><span class="fln">1F</span>
+              <div><h3>정문 · 공용 공간</h3><p>건물에 들어오면 처음 만나는 층이에요. 정문과 AI 카페, 회의실이 있어요.</p></div>
+            </header>
+            <div class="fxtabs" role="tablist" aria-label="공간" style="--n: 3;">
+              <button type="button" role="tab" class="fxt" data-s="0" aria-selected="true"><span class="fxt-th im-building" aria-hidden="true"></span><span class="fxt-l"><b>정문(입구)</b><i aria-hidden="true">3장</i></span></button>
+              <button type="button" role="tab" class="fxt" data-s="1" aria-selected="false"><span class="fxt-th im-cafe_k" aria-hidden="true"></span><span class="fxt-l"><b>AI 카페</b><i aria-hidden="true">3장</i></span></button>
+              <button type="button" role="tab" class="fxt" data-s="2" aria-selected="false"><span class="fxt-th im-x2_room" aria-hidden="true"></span><span class="fxt-l"><b>회의실</b><i aria-hidden="true">3장</i></span></button>
+            </div>
+            <div class="fxs" data-s="0" data-k="1-0">
+              <div class="fxinfo">
+                <h4>정문(입구)</h4>
+                <ul><li>교육장 건물로 들어오는 입구</li><li>출입 방법 ○○</li><li>엘리베이터로 2 · 3층 교육장 이동</li></ul>
+              </div>
+            </div>
+            <div class="fxs" data-s="1" hidden data-k="1-1">
+              <div class="fxinfo">
+                <h4>AI 카페</h4>
+                <ul><li>1층에도 있는 카페 공간</li><li>이용 시간 ○○</li><li>전자레인지 · 냉장고 · 도시락 가능</li></ul>
+              </div>
+            </div>
+            <div class="fxs" data-s="2" hidden data-k="1-2">
+              <div class="fxinfo">
+                <h4>회의실</h4>
+                <ul><li>팀 회의 · 발표 연습을 하는 공간</li><li>예약 방법 · 이용 시간 ○○</li><li>수용 인원 ○○명</li></ul>
+              </div>
+            </div>
+          </section>
+          <section class="fxg" data-g="23" aria-label="2·3F 교육장">
+            <header class="fxh"><span class="fln">2·3F</span>
+              <div><h3>교육장</h3><p>2층과 3층은 같은 구성이에요. 하루 대부분을 이 층에서 보내요.</p></div>
+            </header>
+            <div class="fxtabs" role="tablist" aria-label="공간" style="--n: 3;">
+              <button type="button" role="tab" class="fxt" data-s="0" aria-selected="true"><span class="fxt-th im-classroom" aria-hidden="true"></span><span class="fxt-l"><b>강의실</b><i aria-hidden="true">3장</i></span></button>
+              <button type="button" role="tab" class="fxt" data-s="1" aria-selected="false"><span class="fxt-th im-rest_tmp" aria-hidden="true" style="--bp: left bottom;"></span><span class="fxt-l"><b>휴게 공간</b><i aria-hidden="true">3장</i></span></button>
+              <button type="button" role="tab" class="fxt" data-s="2" aria-selected="false"><span class="fxt-th im-project" aria-hidden="true"></span><span class="fxt-l"><b>프로젝트 공간</b><i aria-hidden="true">3장</i></span></button>
+            </div>
+            <div class="fxs" data-s="0" data-k="23-0">
+              <div class="fxinfo">
+                <h4>강의실</h4>
+                <ul><li>수업과 실습이 이뤄지는 주 공간</li><li>평일 9시 ~ 18시 오프라인 수업</li><li>교육 기간 동안 개인 노트북 · 모니터 대여</li></ul>
+              </div>
+            </div>
+            <div class="fxs" data-s="1" hidden data-k="23-1">
+              <div class="fxinfo"><h4>휴게 공간</h4><ul><li>수업 사이 잠깐 쉬어 가는 공간</li><li>층마다 같은 구성</li></ul></div>
+            </div>
+            <div class="fxs" data-s="2" hidden data-k="23-2">
+              <div class="fxinfo"><h4>프로젝트 공간</h4><ul><li>도약과정 팀 프로젝트를 하는 공간</li><li>이용 시간 · 예약 방법 ○○</li></ul></div>
+            </div>
+          </section>
+          <section class="fxg" data-g="8" hidden aria-label="8F 구내식당">
+            <header class="fxh"><span class="fln">8F</span>
+              <div><h3>구내식당</h3><p>점심은 건물 안 구내식당에서 먹을 수 있어요.</p></div>
+            </header>
+            <div class="fxs" data-s="0" data-k="8-0">
+              <div class="fxinfo">
+                <h4>구내식당</h4>
+                <ul>
+                  <li>점심을 건물 안에서 해결</li>
+                  <li>이용 방법 · 가격 ○○</li>
+                  <li><a href="../check/index.html#benefits">식비 지원은 지원 혜택에서 →</a></li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="fsx">
+          <a href="../stories/index.html#reviews"><b>이용해 본 느낌이 궁금하다면</b><span>선배 후기 · 생활</span><i aria-hidden="true">→</i></a>
+          <a href="../about/index.html#career"><b>취 · 창업 라운지</b><span>인사교 알아보기 › 취업 · 창업 지원</span><i aria-hidden="true">→</i></a>
+        </div>
+      </div>
+      <p class="note">층수는 개략 · 교육장 1~3층(7기 자료) · 8층 구내식당(생활 원고) · 휴게 공간 · 구내식당 · 배식대 사진은 분위기 확인용 임시 사진(실제 교육장 아님 · 휴게 공간 사진 © GOOD N COMPANY)</p>
+    </div>
+  </section>
+  <nav class="next-band" aria-label="다음으로 볼 페이지">
+    <div class="wrap">
+      <a href="#tips"><small>다음으로</small><b>생활 꿀팁</b><span>주거 · 근처 식당 · 문화·여가 · 생활 적응</span></a>
+      <a href="../stories/index.html#reviews"><small>함께 보면 좋은</small><b>선배 후기</b><span>생활 · 공간을 써 본 이야기</span></a>
+      <a href="#directions"><small>함께 보면 좋은</small><b>오시는 길</b><span>주소 · 교통 · 실제 통학 시간 · 주차</span></a>
+    </div>
+  </nav>
+</div>
+
+<!-- ===== 생활 꿀팁 (#tips) ===== -->
+<div class="page" id="pg-tips" data-page="tips" hidden>
+  <header class="h5 h5-tip">
+    <div class="h5g">
+      <div class="h5t">
+        <p class="h5k"><span aria-hidden="true"></span>03 · 인사교 라이프<em aria-hidden="true">TIPS</em></p>
+        <h1><mark>선배만 아는</mark> 인사교 생활 꿀팁</h1>
+        <p class="h5s">강의장 밖에서 부딪히는 것들을 한곳에 모았어요. 주거&nbsp;· 근처 식당&nbsp;· <span class="nw">문화·여가</span>&nbsp;· 생활 적응 순서로 볼 수 있어요.</p>
+        <p class="h5n">업소 · 시세는 참고용 예시</p>
+      </div>
+      <div class="scrap">
+        <p class="scrap-hand" aria-hidden="true">수업 끝나고 여기!</p>
+        <div class="pols">
+          <a class="pol" href="#tp-fun" style="--r:-4deg"><span class="pol-i im-trailp" role="img" aria-label="푸른길 산책"></span><span class="pol-t">푸른길 산책</span></a>
+          <a class="pol" href="#tp-fun" style="--r:2.5deg"><span class="pol-i im-cafest" role="img" aria-label="카페거리"></span><span class="pol-t">카페거리</span></a>
+          <a class="pol" href="#tp-fun" style="--r:-1.5deg"><span class="pol-i im-cj_tmp" role="img" aria-label="충장로"></span><span class="pol-t">충장로</span></a>
+        </div>
+        <nav class="stks" aria-label="생활 꿀팁 바로가기">
+          <a class="stk s1" href="#tp-house" style="--r:-2deg"><i>01</i><b>주거</b><span>동별 시세 · 통학 시간</span></a>
+          <a class="stk s2" href="#tp-food" style="--r:1.5deg"><i>02</i><b>근처 식당</b><span>혼밥 · 여럿이 · 가격대</span></a>
+          <a class="stk s3" href="#tp-fun" style="--r:-1deg"><i>03</i><b>문화·여가</b><span>가볼 곳 · 산책길</span></a>
+          <a class="stk s4" href="#tp-adapt" style="--r:2deg"><i>04</i><b>생활 적응</b><span>오기 전 · 첫 주</span></a>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <nav class="lnb" aria-label="생활 꿀팁 안 위치">
+    <div class="wrap" data-scroll-fade>
+      <div class="lnb-s">
+        <a href="#tp-house" aria-current="location"><i aria-hidden="true">01</i>주거</a>
+        <a href="#tp-food"><i aria-hidden="true">02</i>근처 식당</a>
+        <a href="#tp-fun"><i aria-hidden="true">03</i>문화·여가</a>
+        <a href="#tp-adapt"><i aria-hidden="true">04</i>생활 적응 정보</a>
+      </div>
+    </div>
+  </nav>
+  <section class="sec alt tp-sec" id="tp-house">
+    <div class="wrap">
+      <div>
+        <div class="sh"><div><h2>주거</h2></div><div class="r"><span class="bdg base">조사 기준 2026년 ○월</span></div></div>
+        <h3 class="hst"><span>01</span>유형별 시세</h3>
+        <div class="hsg">
+          <article class="hsc">
+            <div class="hsch">
+              <span class="hsi" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11z"></path><path d="M9 20v-6h6v6"></path></svg></span>
+              <h3 data-field="name">원룸</h3>
+            </div>
+            <p class="hsk">월세</p>
+            <p class="hsv" data-field="price">○○ ~ ○○만 원</p>
+            <p class="hss" data-field="deposit">보증금 ○○ ~ ○○만 원</p>
+            <p class="hsd" data-field="summary">교육생이 가장 많이 구하는 형태</p>
+          </article>
+          <article class="hsc">
+            <div class="hsch">
+              <span class="hsi" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="17" rx="1"></rect><path d="M8.5 7.5h2M13.5 7.5h2M8.5 11h2M13.5 11h2M8.5 14.5h2M13.5 14.5h2"></path></svg></span>
+              <h3 data-field="name">고시원</h3>
+            </div>
+            <p class="hsk">월세</p>
+            <p class="hsv" data-field="price">○○ ~ ○○만 원</p>
+            <p class="hss" data-field="deposit">보증금 ○○ · 관리비 포함 여부 ○○</p>
+            <p class="hsd" data-field="summary">짧게 지내거나 보증금이 부담될 때</p>
+          </article>
+          <article class="hsc">
+            <div class="hsch">
+              <span class="hsi" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="4.5"></circle><path d="M12 13.5V21M9 18h6"></path></svg></span>
+              <h3 data-field="name">여성 전용 주거</h3>
+            </div>
+            <p class="hsk">있는 동</p>
+            <p class="hsv" data-field="price">○○동 · ○○동</p>
+            <p class="hss" data-field="deposit">원룸형 · 고시원형 ○○</p>
+            <p class="hsd" data-field="summary">동 단위까지만 표시해요</p>
+          </article>
+        </div>
+        <h3 class="hst"><span>02</span>동별 비교<em>교육장에서 가까운 순</em></h3>
+        <div class="hdg">
+          <figure class="hmw">
+            <svg class="hmap" viewBox="0 0 300 220" role="img" aria-label="교육장 주변 동 위치 개념도">
+              <rect width="300" height="220" class="hmbg"></rect>
+              <circle cx="150" cy="112" r="62" class="hmr"></circle>
+              <circle cx="150" cy="112" r="104" class="hmr"></circle>
+              <g class="hmd">
+                <circle cx="88" cy="62" r="15"></circle>
+                <text x="88" y="67" text-anchor="middle" class="hmn">2</text>
+                <text x="88" y="94" text-anchor="middle" class="hml">충장동</text>
+              </g>
+              <g class="hmd">
+                <circle cx="212" cy="58" r="15"></circle>
+                <text x="212" y="63" text-anchor="middle" class="hmn">3</text>
+                <text x="212" y="90" text-anchor="middle" class="hml">동명동</text>
+              </g>
+              <g class="hmd">
+                <circle cx="140" cy="182" r="15"></circle>
+                <text x="140" y="187" text-anchor="middle" class="hmn">4</text>
+                <text x="140" y="214" text-anchor="middle" class="hml">학동</text>
+              </g>
+              <g class="hmd">
+                <circle cx="258" cy="124" r="15"></circle>
+                <text x="258" y="129" text-anchor="middle" class="hmn">5</text>
+                <text x="258" y="156" text-anchor="middle" class="hml">지산1동</text>
+              </g>
+              <g class="hme">
+                <rect x="112" y="96" width="76" height="32" rx="2"></rect>
+                <text x="150" y="117" text-anchor="middle">교육장</text>
+              </g>
+              <text x="150" y="146" text-anchor="middle" class="hml">1 서남동</text>
+              <g class="hmno" transform="translate(24 26)">
+                <path d="M0 -12 L6 6 L0 2 L-6 6Z"></path>
+                <text y="22" text-anchor="middle">북</text>
+              </g>
+            </svg>
+            <figcaption>방향만 나타낸 개념도 · 실제 경계 · 거리와 다름</figcaption>
+          </figure>
+          <ol class="hdl">
+            <li class="hdr here"><span class="hdn">1</span>
+              <div class="hdt"><b data-field="name">서남동</b><small>교육장이 있는 동</small></div>
+              <dl>
+                <div><dt>교육장까지</dt><dd>도보 5분 안팎</dd></div>
+                <div><dt>원룸 월세</dt><dd>○○~○○만</dd></div>
+                <div><dt>고시원 월세</dt><dd>○○~○○만</dd></div>
+              </dl>
+            </li>
+            <li class="hdr"><span class="hdn">2</span>
+              <div class="hdt"><b data-field="name">충장동</b></div>
+              <dl>
+                <div><dt>교육장까지</dt><dd>도보 약 9분</dd></div>
+                <div><dt>원룸 월세</dt><dd>○○~○○만</dd></div>
+                <div><dt>고시원 월세</dt><dd>○○~○○만</dd></div>
+              </dl>
+            </li>
+            <li class="hdr"><span class="hdn">3</span>
+              <div class="hdt"><b data-field="name">동명동</b></div>
+              <dl>
+                <div><dt>교육장까지</dt><dd>도보 약 14분</dd></div>
+                <div><dt>원룸 월세</dt><dd>○○~○○만</dd></div>
+                <div><dt>고시원 월세</dt><dd>○○~○○만</dd></div>
+              </dl>
+            </li>
+            <li class="hdr"><span class="hdn">4</span>
+              <div class="hdt"><b data-field="name">학동</b></div>
+              <dl>
+                <div><dt>교육장까지</dt><dd>도보 약 21분</dd></div>
+                <div><dt>원룸 월세</dt><dd>○○~○○만</dd></div>
+                <div><dt>고시원 월세</dt><dd>○○~○○만</dd></div>
+              </dl>
+            </li>
+            <li class="hdr"><span class="hdn">5</span>
+              <div class="hdt"><b data-field="name">지산1동</b><small>버스로 가면 더 짧아요</small></div>
+              <dl>
+                <div><dt>교육장까지</dt><dd>도보 약 30분</dd></div>
+                <div><dt>원룸 월세</dt><dd>○○~○○만</dd></div>
+                <div><dt>고시원 월세</dt><dd>○○~○○만</dd></div>
+              </dl>
+            </li>
+          </ol>
+        </div>
+        <h3 class="hst"><span>03</span>주거비 지원</h3>
+        <div class="hag">
+          <a class="hac main" href="../check/index.html#benefits"><span class="hak">공식 지원 · 7기 기준</span><b>주거지원비</b><span class="hav">최대 35만 원</span><span class="had">광주 밖에서 광주로 거주지를 옮긴 교육생에게 추가로 지원해요</span><span class="hago">지원 혜택 보기 →</span></a>
+          <div class="hac"><span class="hak">공공 제도</span><b>청년 월세 지원</b>
+            <span class="had">정부 · 지자체 제도로, 대상과 금액이 공고마다 달라요. 해당 기관 공고를 확인하세요.</span>
+          </div>
+          <a class="hac" href="../stories/index.html#reviews"><span class="hak">선배 후기</span><b>실제로 받아 본 이야기</b><span class="had">월세 지원을 받아 본 경험담은 선배 후기(생활)에 모았어요</span><span class="hago">생활 후기 보기 →</span></a>
+        </div>
+        <p class="note">교육장까지 시간은 각 동 행정복지센터에서 교육장까지의 직선거리에 실제 걷는 길을 감안해 1.3배를 곱하고, 분속 75m로 나눈 추정값이에요(같은 동이라도 집 위치에 따라 달라요) · 동 단위까지만 표시(구체 주소 · 건물명 제외) · 금액은 서포터즈 · 수료생 조사 후 채우며, 조사 5건 미만인 칸은 「자료 부족」으로 표시합니다 · 주거지원비 금액은 지원 혜택(2026 · 7기 모집설명회) 기준</p>
+      </div>
+    </div>
+  </section>
+  <section class="sec tp-sec" id="tp-food">
+    <div class="wrap">
+      <div>
+        <div class="sh">
+          <div><h2>근처 식당</h2></div>
+          <div class="r">
+            <div class="chips" role="group" aria-label="거르기">
+              <button type="button" class="chip" data-fg2="all" aria-pressed="true">전체</button>
+              <button type="button" class="chip" data-fg2="solo" aria-pressed="false">혼밥</button>
+              <button type="button" class="chip" data-fg2="group" aria-pressed="false">여럿이</button>
+              <span class="chip-sep" aria-hidden="true"></span>
+              <button type="button" class="chip tg" id="fdNear" aria-pressed="false">도보 10분 안</button>
+              <button type="button" class="chip tg" id="fdCheap" aria-pressed="false">1만 원 이하</button>
+            </div>
+          </div>
+        </div>
+        <p class="fdleg"><span><b>₩</b>1인 1만 원 이하</span><span><b>₩₩</b>1인 1~2만 원</span><span>대표 메뉴 기준 · 추정값</span></p>
+        <div class="fd2">
+          <section class="fd2c solo" aria-label="혼밥하기 편한 곳">
+            <header>
+              <span class="fd2ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26"><circle cx="12" cy="8" r="4" fill="currentColor"></circle><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="currentColor"></path></svg></span>
+              <div><h3>혼밥하기 편한 곳<em>7곳</em></h3><p>한 그릇 메뉴라 혼자 가도 부담 없어요</p></div>
+            </header>
+            <ul>
+              <li class="fd2i" data-p="1" data-g="solo" data-w="4" data-c="한식"><span class="no" aria-hidden="true"></span>
+                <div><b data-field="name">첨단공원국밥 동명직영점</b>
+                  <p><span class="fct" data-field="category">한식</span>국밥&nbsp;· 동명동</p>
+                  <span class="fpr" data-field="price"><i>₩<s>₩</s></i>1만 원 이하</span></div>
+                <span class="walk" data-field="walk">도보 약 4분</span></li>
+              <li class="fd2i" data-p="2" data-g="solo" data-w="7" data-c="면"><span class="no" aria-hidden="true"></span>
+                <div><b data-field="name">싱푸미엔관</b><p><span class="fct" data-field="category">면</span>우육면&nbsp;· 동명동</p><span class="fpr" data-field="price"><i>₩₩</i>1~2만 원</span></div>
+                <span class="walk" data-field="walk">도보 약 7분</span></li>
+              <li class="fd2i" data-p="2" data-g="solo" data-w="8" data-c="한식"><span class="no" aria-hidden="true"></span>
+                <div><b data-field="name">충장옥 구시청본점</b>
+                  <p><span class="fct" data-field="category">한식</span>돼지 맑은 국밥&nbsp;· 장동</p>
+                  <span class="fpr" data-field="price"><i>₩₩</i>1~2만 원</span></div>
+                <span class="walk" data-field="walk">도보 약 8분</span></li>
+              <li class="fd2i" data-p="1" data-g="solo" data-w="12" data-c="분식"><span class="no" aria-hidden="true"></span>
+                <div><b data-field="name">모두가</b>
+                  <p><span class="fct" data-field="category">분식</span>고기완탕&nbsp;· 튀김만두&nbsp;· 지산동</p>
+                  <span class="fpr" data-field="price"><i>₩<s>₩</s></i>1만 원 이하</span></div>
+                <span class="walk" data-field="walk">도보 약 12분</span></li>
+              <li class="fd2i" data-p="1" data-g="solo" data-w="13" data-c="한식"><span class="no" aria-hidden="true"></span>
+                <div><b data-field="name">해남식당</b>
+                  <p><span class="fct" data-field="category">한식</span>조개해장국&nbsp;· 충장로</p>
+                  <span class="fpr" data-field="price"><i>₩<s>₩</s></i>1만 원 이하</span></div>
+                <span class="walk" data-field="walk">도보 약 13분</span></li>
+              <li class="fd2i" data-p="2" data-g="solo" data-w="14" data-c="면"><span class="no" aria-hidden="true"></span>
+                <div><b data-field="name">쿠로시로</b><p><span class="fct" data-field="category">면</span>일본식 라멘&nbsp;· 금남로2가</p><span class="fpr" data-field="price"><i>₩₩</i>1~2만 원</span></div>
+                <span class="walk" data-field="walk">도보 약 14분</span></li>
+              <li class="fd2i" data-p="1" data-g="solo" data-w="15" data-c="중식"><span class="no" aria-hidden="true"></span>
+                <div><b data-field="name">제일반점</b>
+                  <p><span class="fct" data-field="category">중식</span>짜장면&nbsp;· 금남로5가</p>
+                  <span class="fpr" data-field="price"><i>₩<s>₩</s></i>1만 원 이하</span></div>
+                <span class="walk" data-field="walk">도보 약 15분</span></li>
+            </ul>
+            <p class="fdmore" aria-live="polite" hidden></p>
+          </section>
+          <section class="fd2c group" aria-label="여럿이 함께">
+            <header>
+              <span class="fd2ic" aria-hidden="true"><svg viewBox="0 0 32 24" width="32" height="26">
+                  <circle cx="10" cy="8" r="3.4" fill="currentColor"></circle>
+                  <circle cx="22" cy="8" r="3.4" fill="currentColor"></circle>
+                  <circle cx="16" cy="6.5" r="3.8" fill="currentColor"></circle>
+                  <path d="M3 21c0-3.6 3-5.8 7-5.8 1.4 0 2.6.3 3.6.8M29 21c0-3.6-3-5.8-7-5.8-1.4 0-2.6.3-3.6.8M8 22c0-4 3.6-6.6 8-6.6s8 2.6 8 6.6" fill="currentColor"></path>
+                </svg></span>
+              <div><h3>여럿이 함께<em>6곳</em></h3><p>나눠 먹는 메뉴라 동기들과 같이 가기 좋아요</p></div>
+            </header>
+            <ul>
+              <li class="fd2i" data-p="1" data-g="group" data-w="4" data-c="한식"><span class="no" aria-hidden="true"></span>
+                <div><b data-field="name">시골집</b>
+                  <p><span class="fct" data-field="category">한식</span>백반&nbsp;· 김치찜&nbsp;· 동명동</p>
+                  <span class="fpr" data-field="price"><i>₩<s>₩</s></i>1만 원 이하</span></div>
+                <span class="walk" data-field="walk">도보 약 4분</span></li>
+              <li class="fd2i" data-p="2" data-g="group" data-w="4" data-c="고기"><span class="no" aria-hidden="true"></span>
+                <div><b data-field="name">초필살 돼지구이</b>
+                  <p><span class="fct" data-field="category">고기</span>오겹살&nbsp;· 뒷고기&nbsp;· 동명동</p>
+                  <span class="fpr" data-field="price"><i>₩₩</i>1~2만 원</span></div>
+                <span class="walk" data-field="walk">도보 약 4분</span></li>
+              <li class="fd2i" data-p="2" data-g="group" data-w="4" data-c="양식"><span class="no" aria-hidden="true"></span>
+                <div><b data-field="name">페이즈</b>
+                  <p><span class="fct" data-field="category">양식</span>뇨끼&nbsp;· 오리 스테이크&nbsp;· 동명동</p>
+                  <span class="fpr" data-field="price"><i>₩₩</i>1~2만 원</span></div>
+                <span class="walk" data-field="walk">도보 약 4분</span></li>
+              <li class="fd2i" data-p="2" data-g="group" data-w="7" data-c="일식"><span class="no" aria-hidden="true"></span>
+                <div><b data-field="name">규슈 동명점</b>
+                  <p><span class="fct" data-field="category">일식</span>샤브샤브&nbsp;· 비빔밥&nbsp;· 동명동</p>
+                  <span class="fpr" data-field="price"><i>₩₩</i>1~2만 원</span></div>
+                <span class="walk" data-field="walk">도보 약 7분</span></li>
+              <li class="fd2i" data-p="2" data-g="group" data-w="7" data-c="한식"><span class="no" aria-hidden="true"></span>
+                <div><b data-field="name">동국</b>
+                  <p><span class="fct" data-field="category">한식</span>국물 요리(맑은&nbsp;· 하얀&nbsp;· 빨간 국)&nbsp;· 동명동</p>
+                  <span class="fpr" data-field="price"><i>₩₩</i>1~2만 원</span></div>
+                <span class="walk" data-field="walk">도보 약 7분</span></li>
+              <li class="fd2i" data-p="2" data-g="group" data-w="9" data-c="한식"><span class="no" aria-hidden="true"></span>
+                <div><b data-field="name">오감탄 본점</b>
+                  <p><span class="fct" data-field="category">한식</span>불고기 한상&nbsp;· 청국장&nbsp;· 동명동</p>
+                  <span class="fpr" data-field="price"><i>₩₩</i>1~2만 원</span></div>
+                <span class="walk" data-field="walk">도보 약 9분</span></li>
+            </ul>
+            <p class="fdmore" aria-live="polite" hidden></p>
+          </section>
+        </div>
+        <p class="fdisc"><span class="bdg part">시안 예시 · 확인 전</span> 식당 이름&nbsp;· 주소&nbsp;· 메뉴는 공개 맛집 소개 자료에서 골랐고, 특정 가게가 도드라지지 않도록 여러 곳을 함께 실었어요. 「혼밥 / 여럿이」 구분은 메뉴로 짐작했고, 영업 여부&nbsp;· 좌석&nbsp;· 가격대&nbsp;· 도보 시간은 확인 전 추정값이에요. 참고용이며 특정 업소를 추천하지 않습니다.</p>
+      </div>
+    </div>
+  </section>
+  <section class="sec alt tp-sec" id="tp-fun">
+    <div class="wrap">
+      <div>
+        <div class="sh">
+          <div><h2>문화 · 여가</h2></div>
+          <div class="r">
+            <div class="chips" role="group" aria-label="거르기">
+              <button type="button" class="chip" data-lw="all" aria-pressed="true">전체</button>
+              <button type="button" class="chip" data-lw="eve" aria-pressed="false">평일 저녁</button>
+              <button type="button" class="chip" data-lw="wkd" aria-pressed="false">주말</button>
+              <span class="chip-sep" aria-hidden="true"></span>
+              <button type="button" class="chip tg" id="lmFree" aria-pressed="false">무료만</button>
+            </div>
+          </div>
+        </div>
+        <div class="lmap">
+          <p class="lmhint"><span aria-hidden="true">⤢</span>장소나 목록을 누르면 사진과 설명을 크게 볼 수 있어요</p>
+          <div class="lmrow">
+            <div class="lmw2">
+              <div class="lmm one">
+                <svg viewBox="0 0 800 700" class="gmmap lmbase" aria-hidden="true">
+                  <rect width="800" height="700" class="gmbg"></rect>
+                  <circle cx="470" cy="440" r="285" class="lmzone"></circle>
+                  <path d="M150 600 C230 586 300 640 360 720" class="lmriver"></path>
+                  <text x="196" y="624" class="lmrt">광주천</text>
+                  <path d="M470 155 V725" class="gmrd"></path>
+                  <text x="478" y="690" class="rdn">제봉로</text>
+                  <path d="M470 440 L262 253" class="gmrd sm"></path>
+                  <text x="300" y="300" class="rdn" transform="rotate(42 300 300)">금남로</text>
+                  <path d="M188 452 C330 446 600 432 752 428" class="gmrd sm"></path>
+                  <circle cx="470" cy="440" r="190" class="lmring"></circle>
+                  <circle cx="470" cy="440" r="250" class="lmring"></circle>
+                  <text x="522" y="638" class="lmrl">500m</text>
+                  <text x="650" y="628" class="lmrl">1km</text>
+                  <circle cx="470" cy="440" r="285" class="lmedge"></circle>
+                  <text x="24" y="684" class="lmrl">점선 원 밖은 줄여서 표시 · 파란 선 = 지하철 1호선</text>
+                  <polyline points="498,420 440,432 330,452 220,470 120,478 71,474" class="lmsub1"></polyline>
+                  <circle cx="71" cy="474" r="7" class="stn"></circle>
+                  <text x="71" y="503" class="lbl" text-anchor="middle">광주송정역</text>
+                  <path d="M690 540 L728 494 L746 512 L764 486 L806 540Z" class="lmmt"></path>
+                  <circle cx="498" cy="420" r="8" class="stn"></circle>
+                  <text x="486" y="410" class="lbl" text-anchor="end">문화전당역</text>
+                  <g class="edu">
+                    <rect x="420" y="422" width="100" height="36" rx="11"></rect>
+                    <text x="470" y="446" text-anchor="middle">교육장</text>
+                  </g>
+                  <g class="lmnorth" transform="translate(44 44)">
+                    <circle r="22"></circle>
+                    <path d="M0 -14 L7 6 L0 2 L-7 6Z"></path>
+                    <text y="40" text-anchor="middle">북</text>
+                  </g>
+                </svg>
+                <button type="button" class="lmp eve" data-i="11" data-w="eve" data-f="free" style="--ox:100%;--oy:100%;left:76%;top:86.4%" aria-label="푸른길 공원"><span class="lmc"><span class="lmi im-trailp"></span><b>푸른길</b><em>폐선된 철길을 공원으로 바꾼 약 8km 산책로예요. 나무가 우거져 수업 끝나고 걷거나 달리기 좋아요.<span class="lmgo" aria-hidden="true">눌러서 크게 <b>⤢</b></span></em></span><i class="lmd" aria-hidden="true">7</i></button>
+                <button type="button" class="lmp eve" data-i="12" data-w="eve" data-f="free" style="--ox:50%;--oy:100%;left:54.1%;top:93.1%" aria-label="광주천 산책로"><span class="lmc"><span class="lmi im-riverp"></span><b>광주천</b><em>도심을 가로지르는 하천을 따라 걷는 길이에요. 양림마을 · 사직공원과 이어서 걷기 좋고, 가을엔 코스모스가 펴요.<span class="lmgo" aria-hidden="true">눌러서 크게 <b>⤢</b></span></em></span><i class="lmd" aria-hidden="true">8</i></button>
+                <button type="button" class="lmp dn eve" data-i="0" data-w="eve" data-f="free" style="--ox:100%;--oy:0%;left:76.15%;top:49.94%" aria-label="국립아시아문화전당(ACC)"><span class="lmc"><span class="lmi im-acc_tmp"></span><b>ACC</b><em>교육장에서 가까운 복합문화시설이에요. 전시 · 공연 일정은 ACC 홈페이지에서 확인하세요.<span class="lmgo" aria-hidden="true">눌러서 크게 <b>⤢</b></span></em></span><i class="lmd" aria-hidden="true">1</i></button>
+                <button type="button" class="lmp eve tp" data-i="1" data-w="eve" data-f="free" style="--ox:100%;--oy:0%;left:70.6%;top:45.52%" aria-label="5·18민주광장 · 옛 전남도청"><span class="lmc"><span class="lmi im-plaza_tmp"></span><b>5·18민주광장</b><em>1980년 5·18 최후 항쟁지예요. 원형 복원을 마친 옛 전남도청 앞 광장이에요.<span class="lmgo" aria-hidden="true">눌러서 크게 <b>⤢</b></span></em></span><i class="lmd" aria-hidden="true">2</i></button>
+                <button type="button" class="lmp dn eve" data-i="2" data-w="eve" data-f="paid" style="--ox:50%;--oy:0%;left:40.6%;top:51.36%" aria-label="충장로"><span class="lmc"><span class="lmi im-cj_tmp"></span><b>충장로</b><em>광주의 대표 번화가예요. 매년 10월에는 추억의 충장축제가 열려요.<span class="lmgo" aria-hidden="true">눌러서 크게 <b>⤢</b></span></em></span><i class="lmd" aria-hidden="true">3</i></button>
+                <button type="button" class="lmp eve tp" data-i="3" data-w="eve" data-f="paid" style="--ox:100%;--oy:0%;left:85.9%;top:48.4%" aria-label="동명동 카페거리"><span class="lmc"><span class="lmi im-cafest"></span><b>카페거리</b><em>개성 있는 카페와 골목 벽화가 모여 있는 동네예요. 수업 끝나고 동기들과 들르기 좋아요.<span class="lmgo" aria-hidden="true">눌러서 크게 <b>⤢</b></span></em></span><i class="lmd" aria-hidden="true">4</i></button>
+                <button type="button" class="lmp wkd" data-i="4" data-w="wkd" data-f="free" style="--ox:50%;--oy:100%;left:39.51%;top:91.0%" aria-label="양림역사문화마을"><span class="lmc"><span class="lmi im-yl_tmp"></span><b>양림마을</b><em>근대 서양 건축물과 한옥이 어우러진 남구의 마을이에요. 펭귄마을 · 정율성 음악거리가 있어요.<span class="lmgo" aria-hidden="true">눌러서 크게 <b>⤢</b></span></em></span><i class="lmd" aria-hidden="true">5</i></button>
+                <button type="button" class="lmp wkd tp" data-i="5" data-w="wkd" data-f="paid" style="--ox:50%;--oy:0%;left:55.33%;top:25.63%" aria-label="대인시장"><span class="lmc"><span class="lmi im-mkt_tmp"></span><b>대인시장</b><em>1959년에 문을 연 전통시장이에요. 토요일 저녁에는 예술야시장으로 붐벼요.<span class="lmgo" aria-hidden="true">눌러서 크게 <b>⤢</b></span></em></span><i class="lmd" aria-hidden="true">6</i></button>
+                <button type="button" class="lmp dn eve" data-i="6" data-w="eve" data-f="paid" style="--ox:0%;--oy:0%;left:29.95%;top:33.22%" aria-label="광주-기아 챔피언스 필드"><span class="lmc"><span class="lmi im-std_tmp"></span><b>챔피언스 필드<small class="lmkm">약 4km</small></b><em>KIA 타이거즈의 홈구장이에요. 경기 일정 · 예매는 구단 홈페이지에서 확인하세요.<span class="lmgo" aria-hidden="true">눌러서 크게 <b>⤢</b></span></em></span><i class="lmd" aria-hidden="true">10</i></button>
+                <button type="button" class="lmp wkd tp" data-i="7" data-w="wkd" data-f="free" style="--ox:50%;--oy:0%;left:35.9%;top:21.06%" aria-label="중외공원 문화예술벨트"><span class="lmc"><span class="lmi im-park_tmp"></span><b>중외공원<small class="lmkm">약 5km</small></b><em>광주비엔날레 전시관 · 광주시립미술관 · 국립광주박물관이 모여 있어요. 2026 광주비엔날레는 9월 5일 ~ 11월 15일이에요.<span class="lmgo" aria-hidden="true">눌러서 크게 <b>⤢</b></span></em></span><i class="lmd" aria-hidden="true">11</i></button>
+                <button type="button" class="lmp wkd" data-i="8" data-w="wkd" data-f="free" style="--ox:100%;--oy:72%;left:92.99%;top:71.17%" aria-label="무등산국립공원"><span class="lmc"><span class="lmi im-mud_tmp"></span><b>무등산<small class="lmkm">약 7km</small></b><em>광주 동쪽의 국립공원이에요. 탐방로 · 통제 여부는 국립공원공단 안내를 확인하세요.<span class="lmgo" aria-hidden="true">눌러서 크게 <b>⤢</b></span></em></span><i class="lmd" aria-hidden="true">12</i></button>
+                <button type="button" class="lmp eve" data-i="9" data-w="eve" data-f="free" style="--ox:0%;--oy:100%;left:21.4%;top:82.7%" aria-label="사직공원 빛의 숲 · 전망타워"><span class="lmc"><span class="lmi im-sajikp"></span><b>사직공원<small class="lmkm">약 1.7km</small></b><em>밤에 미디어아트 산책길 「빛의 숲」이 켜지고, 전망타워에서 시내 야경을 볼 수 있어요. 모두 무료예요.<span class="lmgo" aria-hidden="true">눌러서 크게 <b>⤢</b></span></em></span><i class="lmd" aria-hidden="true">9</i></button>
+                <button type="button" class="lmp wkd" data-i="10" data-w="wkd" data-f="paid" style="--ox:0%;--oy:72%;left:8.87%;top:66.84%" aria-label="1913송정역시장"><span class="lmc"><span class="lmi im-sj_tmp"></span><b>송정역시장<small class="lmkm">약 12km</small></b><em>1913년부터 이어 온 광주송정역 앞 시장이에요. 2016년 새로 단장해 먹거리 골목으로 붐벼요.<span class="lmgo" aria-hidden="true">눌러서 크게 <b>⤢</b></span></em></span><i class="lmd" aria-hidden="true">13</i></button>
+              </div>
+              <p class="gmdisc">방향은 실제 기준 · 1km 안쪽은 늘리고 점선 원 밖(버스 · 지하철 거리)은 줄여서 한 화면에 담은 안내도 · 실제 거리는 목록 참고(대략값) · 노선 · 하천 · 도로는 단순화 · 장소 정보는 2026년 10월 확인 기준 · 운영 시간 · 요금 · 경기 일정은 각 기관 안내 확인 · ACC 사진 © 광주 동구청(사진 속 표기 기준 · 저해상도 원본을 확대) · 5·18민주광장 사진 © 연합뉴스(사진 속 표기 기준) · 충장로 사진 © 한국향토문화전자대전(사진 속 표기 기준) · 푸른길 사진 © 여행스케치(사진 속 표기 기준) · 광주천 사진은 개인 블로그(사진 속 표기 기준) · 사직공원 정보는 공개 여행 안내 기준 · 참고용이며 특정 업소를 추천하지 않습니다</p>
+            </div>
+            <div class="lmlw">
+              <p class="lmlh">가볼 곳<em aria-live="polite">13곳</em></p>
+              <ol class="lml" id="lmList">
+                <li class="lmli" data-i="0" data-w="eve" data-f="free" tabindex="0" role="button"><span class="lmn">1</span>
+                  <div>
+                    <div class="lmt"><span class="lmw eve">평일 저녁</span><span class="lmk" data-field="category">전시 · 공연</span><span class="bdg ok">무료 전시 있음</span></div>
+                    <b data-field="name">국립아시아문화전당(ACC)</b><small class="lmdist" data-field="distance">교육장에서 북동쪽 · 약 300m</small>
+                    <p data-field="summary">교육장에서 가까운 복합문화시설이에요. 전시 · 공연 일정은 ACC 홈페이지에서 확인하세요.</p>
+                  </div>
+                </li>
+                <li class="lmli" data-i="1" data-w="eve" data-f="free" tabindex="0" role="button"><span class="lmn">2</span>
+                  <div>
+                    <div class="lmt"><span class="lmw eve">평일 저녁</span><span class="lmk" data-field="category">역사 · 광장</span><span class="bdg ok">무료</span></div>
+                    <b data-field="name">5·18민주광장 · 옛 전남도청</b><small class="lmdist" data-field="distance">교육장에서 북동쪽 · 약 200m</small>
+                    <p data-field="summary">1980년 5·18 최후 항쟁지예요. 원형 복원을 마친 옛 전남도청 앞 광장이에요.</p>
+                  </div>
+                </li>
+                <li class="lmli" data-i="2" data-w="eve" data-f="paid" tabindex="0" role="button"><span class="lmn">3</span>
+                  <div>
+                    <div class="lmt"><span class="lmw eve">평일 저녁</span><span class="lmk" data-field="category">번화가 · 쇼핑</span><span class="bdg end">상가별 요금</span></div>
+                    <b data-field="name">충장로</b><small class="lmdist" data-field="distance">교육장에서 북서쪽 · 약 300m</small>
+                    <p data-field="summary">광주의 대표 번화가예요. 매년 10월에는 추억의 충장축제가 열려요.</p>
+                  </div>
+                </li>
+                <li class="lmli" data-i="3" data-w="eve" data-f="paid" tabindex="0" role="button"><span class="lmn">4</span>
+                  <div>
+                    <div class="lmt"><span class="lmw eve">평일 저녁</span><span class="lmk" data-field="category">카페 · 골목 산책</span><span class="bdg end">가게별 요금</span></div>
+                    <b data-field="name">동명동 카페거리</b><small class="lmdist" data-field="distance">교육장에서 북동쪽 · 약 500m</small>
+                    <p data-field="summary">개성 있는 카페와 골목 벽화, 작은 공원이 모여 있는 동네예요. 수업 끝나고 동기들과 들르거나 주말에 공부하러 가기 좋아요.</p>
+                  </div>
+                </li>
+                <li class="lmli" data-i="4" data-w="wkd" data-f="free" tabindex="0" role="button"><span class="lmn">5</span>
+                  <div>
+                    <div class="lmt"><span class="lmw wkd">주말</span><span class="lmk" data-field="category">근대 건축 · 마을 산책</span><span class="bdg ok">상시 개방</span></div>
+                    <b data-field="name">양림역사문화마을</b><small class="lmdist" data-field="distance">교육장에서 남서쪽 · 약 1km</small>
+                    <p data-field="summary">근대 서양 건축물과 한옥이 어우러진 남구의 마을이에요. 펭귄마을 · 정율성 음악거리가 있어요.</p>
+                  </div>
+                </li>
+                <li class="lmli" data-i="5" data-w="wkd" data-f="paid" tabindex="0" role="button"><span class="lmn">6</span>
+                  <div>
+                    <div class="lmt"><span class="lmw wkd">주말</span><span class="lmk" data-field="category">전통시장 · 예술시장</span><span class="bdg end">유료</span></div>
+                    <b data-field="name">대인시장</b><small class="lmdist" data-field="distance">교육장에서 북쪽 · 약 1km</small>
+                    <p data-field="summary">1959년에 문을 연 전통시장이에요. 토요일 저녁에는 예술야시장으로 붐벼요.</p>
+                  </div>
+                </li>
+                <li class="lmli" data-i="11" data-w="eve" data-f="free" tabindex="0" role="button"><span class="lmn">7</span>
+                  <div>
+                    <div class="lmt"><span class="lmw eve">평일 저녁</span><span class="lmk" data-field="category">산책 · 러닝</span><span class="bdg ok">무료 · 상시 개방</span></div>
+                    <b data-field="name">푸른길 공원</b><small class="lmdist" data-field="distance">교육장에서 동쪽 · 약 1km</small>
+                    <p data-field="summary">폐선된 철길을 공원으로 바꾼 약 8km 산책로예요. 나무가 우거져 수업 끝나고 걷거나 달리기 좋아요.</p>
+                  </div>
+                </li>
+                <li class="lmli" data-i="12" data-w="eve" data-f="free" tabindex="0" role="button"><span class="lmn">8</span>
+                  <div>
+                    <div class="lmt"><span class="lmw eve">평일 저녁</span><span class="lmk" data-field="category">하천변 산책</span><span class="bdg ok">무료 · 상시 개방</span></div>
+                    <b data-field="name">광주천 산책로</b><small class="lmdist" data-field="distance">교육장에서 남쪽 · 약 1km</small>
+                    <p data-field="summary">도심을 가로지르는 하천을 따라 걷는 길이에요. 양림마을 · 사직공원과 이어서 걷기 좋고, 가을엔 코스모스가 펴요.</p>
+                  </div>
+                </li>
+                <li class="lmsep" aria-hidden="true">더 멀리 · 버스 · 지하철로</li>
+                <li class="lmli" data-i="9" data-w="eve" data-f="free" tabindex="0" role="button"><span class="lmn">9</span>
+                  <div>
+                    <div class="lmt"><span class="lmw eve">평일 저녁</span><span class="lmk" data-field="category">야경 · 밤 산책</span><span class="bdg ok">무료</span></div>
+                    <b data-field="name">사직공원 빛의 숲 · 전망타워</b><small class="lmdist" data-field="distance">교육장에서 남서쪽 · 약 1.7km · 양림마을 옆</small>
+                    <p data-field="summary">830m 미디어아트 산책길 「빛의 숲」이 저녁마다 켜지고(11~3월 18:30, 4~10월 19:30부터), 전망타워(09:00~22:00)에서 시내 야경을 볼 수 있어요. 모두 무료예요.</p>
+                  </div>
+                </li>
+                <li class="lmli" data-i="6" data-w="eve" data-f="paid" tabindex="0" role="button"><span class="lmn">10</span>
+                  <div>
+                    <div class="lmt"><span class="lmw eve">평일 저녁</span><span class="lmk" data-field="category">프로야구 관람</span><span class="bdg end">경기별 요금</span></div>
+                    <b data-field="name">광주-기아 챔피언스 필드</b><small class="lmdist" data-field="distance">교육장에서 북서쪽 · 약 4km</small>
+                    <p data-field="summary">KIA 타이거즈의 홈구장이에요. 경기 일정 · 예매는 구단 홈페이지에서 확인하세요.</p>
+                  </div>
+                </li>
+                <li class="lmli" data-i="7" data-w="wkd" data-f="free" tabindex="0" role="button"><span class="lmn">11</span>
+                  <div>
+                    <div class="lmt"><span class="lmw wkd">주말</span><span class="lmk" data-field="category">미술관 · 박물관 · 비엔날레</span><span class="bdg ok">무료 전시 있음</span></div>
+                    <b data-field="name">중외공원 문화예술벨트</b><small class="lmdist" data-field="distance">교육장에서 북서쪽 · 약 5km</small>
+                    <p data-field="summary">광주비엔날레 전시관 · 광주시립미술관 · 국립광주박물관이 모여 있어요. 2026 광주비엔날레는 9월 5일 ~ 11월 15일이에요.</p>
+                  </div>
+                </li>
+                <li class="lmli" data-i="8" data-w="wkd" data-f="free" tabindex="0" role="button"><span class="lmn">12</span>
+                  <div>
+                    <div class="lmt"><span class="lmw wkd">주말</span><span class="lmk" data-field="category">등산</span><span class="bdg ok">무료</span></div>
+                    <b data-field="name">무등산국립공원</b><small class="lmdist" data-field="distance">교육장에서 동쪽 · 정상까지 약 7km</small>
+                    <p data-field="summary">광주 동쪽의 국립공원이에요. 탐방로 · 통제 여부는 국립공원공단 안내를 확인하세요.</p>
+                  </div>
+                </li>
+                <li class="lmli" data-i="10" data-w="wkd" data-f="paid" tabindex="0" role="button"><span class="lmn">13</span>
+                  <div>
+                    <div class="lmt"><span class="lmw wkd">주말</span><span class="lmk" data-field="category">전통시장 · 먹거리</span><span class="bdg end">유료</span></div>
+                    <b data-field="name">1913송정역시장</b><small class="lmdist" data-field="distance">교육장에서 서쪽 · 약 12km · 지하철 1호선 광주송정역 앞</small>
+                    <p data-field="summary">1913년부터 이어 온 광주송정역 앞 시장이에요. 2016년 새로 단장해 먹거리 골목으로 붐벼요.</p>
+                  </div>
+                </li>
+              </ol>
+              <div class="lmempty" hidden>조건에 맞는 곳이 없어요<button type="button" class="btn is-line is-sm" data-lmreset>거르기 풀기</button></div>
+              <div class="lmmore" hidden><button type="button" class="btn is-line is-sm" aria-expanded="false" aria-controls="lmList">나머지 8곳 더 보기</button></div>
+              <p class="fdmore" aria-live="polite" hidden></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="sec tp-sec" id="tp-adapt">
+    <div class="wrap">
+      <div class="sh"><div><h2>생활 적응 정보</h2></div><div class="r"></div></div>
+      <div class="adtl">
+        <section class="adt">
+          <header><span class="adtn">01</span><div><h3>오기 전</h3><em>BEFORE</em></div></header>
+          <ul>
+            <li><i aria-hidden="true"></i>
+              <div><b>집 구하는 시기 정하기</b>
+                <p>입교 한두 달 전부터 교육장 주변 동의 시세와 거리를 비교해 보세요. 동별 시세는 주거에 정리했어요.</p>
+                <a class="more" href="#tp-house">주거 보기</a></div>
+            </li>
+            <li><i aria-hidden="true"></i>
+              <div><b>입교 전 준비하기</b><p>입교 전 2박 3일 사전 오리엔테이션이 있어요. 일정과 준비물은 합격 안내를 확인하세요.</p></div>
+            </li>
+          </ul>
+        </section>
+        <section class="adt">
+          <header><span class="adtn">02</span><div><h3>첫 주</h3><em>FIRST WEEK</em></div></header>
+          <ul>
+            <li><i aria-hidden="true"></i>
+              <div><b>전입신고 하기</b>
+                <p>이사한 날부터 14일 안에 주민센터나 정부24에서 신고해요. 주거지원비는 광주로 전입한 교육생이 대상이에요.</p>
+                <a class="more" href="../check/index.html#benefits">지원 혜택 보기</a></div>
+            </li>
+            <li><i aria-hidden="true"></i>
+              <div><b>교통카드 · 시내 이동</b>
+                <p>광주 시내버스와 지하철 1호선은 교통카드로 탈 수 있어요. 버스 도착 정보는 광주 버스 정보 시스템(BIS)에서 볼 수 있어요.</p>
+                <a class="more" href="#directions">오시는 길 보기</a></div>
+            </li>
+            <li><i aria-hidden="true"></i>
+              <div><b>장보기 · 생활 편의</b><p>마트 · 시장 · 세탁 · 은행처럼 이사 직후 바로 필요한 곳을 교육장 근처 동 단위로 정리해요.</p></div>
+            </li>
+          </ul>
+        </section>
+        <section class="adt">
+          <header><span class="adtn">03</span><div><h3>지내면서</h3><em>LIVING</em></div></header>
+          <ul>
+            <li><i aria-hidden="true"></i>
+              <div><b>병원 · 약국</b><p>갑자기 아플 때 갈 수 있는 곳을 동 단위로 정리해요. 휴일 · 야간에 문 연 병원과 약국은 응급의료포털(E-gen)에서 찾을 수 있어요.</p></div>
+            </li>
+            <li><i aria-hidden="true"></i>
+              <div><b>청년 지원 제도 찾기</b><p>월세 지원 말고도 받을 수 있는 청년 정책은 온통청년과 광주광역시 청년 정책 안내에서 찾을 수 있어요.</p></div>
+            </li>
+          </ul>
+        </section>
+      </div>
+      <a class="adlk" href="../stories/index.html#reviews"><span class="adtn">+</span><div><b>선배들은 처음 한 달을 어떻게 보냈을까</b><p>타지에서 온 선배들의 적응 이야기는 선배 후기(생활 · #타지출신)에 있어요.</p></div><span class="adlkgo" aria-hidden="true">→</span></a>
+      <p class="note">정리형 정보만 싣고 개인 경험담은 선배 후기(생활)로 연결 · 생활 편의 · 병원 항목은 동 단위까지만 표기하며 특정 업소 · 기관을 추천하지 않습니다</p>
+    </div>
+  </section>
+  <aside class="disc inset">
+    <div class="wrap"><b>안내</b><p>생활 가이드의 업소 · 매물 정보는 참고용이며 특정 업소 · 매물을 추천하지 않습니다.</p></div>
+  </aside>
+  <nav class="next-band" aria-label="다음으로 볼 페이지">
+    <div class="wrap">
+      <a href="#directions"><small>다음으로</small><b>오시는 길</b><span>주소 · 교통 · 실제 통학 시간 · 주차</span></a>
+      <a href="../stories/index.html#reviews"><small>함께 보면 좋은</small><b>선배 후기</b><span>생활 · 공간을 써 본 이야기</span></a>
+      <a href="../check/index.html#benefits"><small>함께 보면 좋은</small><b>지원 혜택</b><span>지원 내용 · 조건 · 유의사항</span></a>
+    </div>
+  </nav>
+  <dialog class="lbx" aria-label="장소 크게 보기">
+    <div class="lbxp">
+      <button type="button" class="lbxx2" aria-label="닫기">×</button>
+      <div class="lbxi" role="img"></div>
+      <div class="lbxb">
+        <div class="lbxh"><span class="lbxn"></span><h3></h3></div>
+        <div class="lbxt"></div>
+        <p class="lbxd"></p>
+        <p class="lbxx"></p>
+        <div class="lbxf">
+          <button type="button" class="btn is-line is-sm" data-go="-1">← 이전</button>
+          <span class="lbxc"></span>
+          <button type="button" class="btn is-line is-sm" data-go="1">다음 →</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+</div>
+
+<!-- ===== 오시는 길 (#directions) ===== -->
+<div class="page" id="pg-way" data-page="way" hidden>
+  <header class="pt7">
+    <div class="pt7-w">
+      <p class="fh8-k"><span aria-hidden="true"></span>03 · 인사교 라이프<em aria-hidden="true">DIRECTIONS</em></p>
+      <h1>오시는 길</h1>
+      <p class="fh8-s">광주광역시 동구 제봉로 92, 1~3층. 지하철 문화전당역에서 걸어서 약&nbsp;5분이에요.</p>
+    </div>
+  </header>
+  <section class="sec">
+    <div class="wrap">
+      <div class="sh"><div><h2>위치 · 교통</h2></div></div>
+      <div class="way">
+        <div class="wmap">
+          <svg viewBox="0 0 560 400" role="img" aria-label="교육장 주변 개념도">
+            <rect width="560" height="400" fill="var(--paper)"></rect>
+            <path d="M0 250 L560 205" stroke="var(--card)" stroke-width="30"></path>
+            <path d="M0 250 L560 205" stroke="var(--line-s)" stroke-width="1" stroke-dasharray="8 8"></path>
+            <path d="M150 0 L205 400" stroke="var(--card)" stroke-width="22"></path>
+            <path d="M40 70 C170 110 300 120 520 90" stroke="#2E6FD0" stroke-width="6" fill="none" stroke-linecap="round"></path>
+            <circle cx="330" cy="116" r="11" fill="#fff" stroke="#2E6FD0" stroke-width="4"></circle>
+            <text x="330" y="96" text-anchor="middle" font-size="14" font-weight="800" fill="var(--ink)">문화전당역</text>
+            <path d="M330 128 L330 190 L372 208" stroke="var(--ink)" stroke-width="3" fill="none" stroke-dasharray="2 7" stroke-linecap="round"></path>
+            <rect x="352" y="196" width="112" height="46" rx="10" fill="var(--citron)" stroke="#0A1020" stroke-width="2"></rect>
+            <text x="408" y="224" text-anchor="middle" font-size="15" font-weight="900" fill="#0A1020">교육장</text>
+            <rect x="440" y="300" width="96" height="60" rx="10" fill="var(--card)" stroke="var(--line-s)"></rect>
+            <text x="488" y="326" text-anchor="middle" font-size="12" font-weight="800" fill="var(--ink2)">ACC</text>
+            <text x="488" y="344" text-anchor="middle" font-size="11" fill="var(--ink3)">공영주차장</text>
+            <text x="36" y="236" font-size="12" fill="var(--ink3)">제봉로</text>
+            <text x="14" y="386" font-size="11" fill="var(--ink3)">축척 · 위치는 실제와 다른 개념도</text>
+          </svg>
+          <div class="ad">
+            <div><small class="src">주소</small><b>광주광역시 동구 제봉로 92, 1~3층</b></div>
+            <div class="ad-b">
+              <button type="button" class="btn is-line is-sm" id="copyAd">주소 복사</button>
+              <a class="btn is-line is-sm" href="https://map.kakao.com/?q=%EA%B4%91%EC%A3%BC%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%8F%99%EA%B5%AC%20%EC%A0%9C%EB%B4%89%EB%A1%9C%2092" target="_blank" rel="noopener" aria-label="지도에서 보기(카카오맵, 새 창)">지도에서 보기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
+            </div>
+          </div>
+        </div>
+        <div class="mp4">
+          <div class="mpanel">
+            <h3>지하철로 오는 길</h3>
+            <ol class="route">
+              <li><i>1</i>
+                <div><b>광주송정역 · 시내에서</b><span>도시철도 1호선 소태 방면 탑승 · 교통카드 1,250원</span></div>
+                <em>약 25분 · 13정거장</em></li>
+              <li><i>2</i>
+                <div><b>문화전당역 하차</b><span>출구마다 개찰구가 나뉘어 있어요(1·2번 / 3·4번 / 5·6번). 내리기 전에 나갈 출구를 정하세요.</span></div>
+                <em>—</em></li>
+              <li><i>3</i><div><b>교육장</b><span>출구에서 걸어서</span></div><em>도보 약 5분</em></li>
+            </ol>
+          </div>
+          <div class="mpanel">
+            <h3>버스로 오는 길</h3>
+            <ol class="route">
+              <li><i>1</i><div><b>시내 어디서나</b><span>금남58 · 금남59 · 금호36 · 송정98 · 수완12 등</span></div><em>출발지마다 달라요</em></li>
+              <li><i>2</i><div><b>국립아시아문화전당(구 도청) 정류장 하차</b><span>대부분의 노선은 문화전당역 정류장에도 서요</span></div><em>—</em></li>
+              <li><i>3</i><div><b>교육장</b><span>정류장에서 걸어서</span></div><em>도보 약 5분</em></li>
+            </ol>
+          </div>
+          <p class="note">소요 시간은 정거장 수 · 거리로 계산한 추정값 · 요금은 2025년 5월 성인 교통카드 기준 · 버스 노선은 바뀔 수 있으니 광주 버스 정보 시스템(BIS)에서 확인하세요</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="sec alt">
+    <div class="wrap">
+      <div class="sh"><div><h2>주요 이동 경로</h2></div></div>
+      <div class="rt3">
+        <article>
+          <h3>광주송정역</h3>
+          <small>KTX · SRT로 도착</small>
+          <ol>
+            <li><i>1</i><b>광주송정역에서 도시철도 1호선(소태 방면)</b><span>약 25분</span></li>
+            <li><i>2</i><b>문화전당역 하차</b><span>13정거장</span></li>
+            <li><i>3</i><b>걸어서 교육장</b><span>도보 약 5분</span></li>
+          </ol>
+          <p class="rtr"><span>예상 · 도시철도 1호선</span><b>약 35분</b><em>기다리는 시간 포함 추정</em></p>
+        </article>
+        <article>
+          <h3>광주종합버스터미널</h3>
+          <small>고속 · 시외버스로 도착</small>
+          <ol>
+            <li><i>1</i><b>터미널에서 농성역까지 걸어서</b><span>도보 약 10분 · 농성역 4번 출구 쪽</span></li>
+            <li><i>2</i><b>농성역에서 도시철도 1호선(소태 방면)</b><span>약 10분 · 5정거장</span></li>
+            <li><i>3</i><b>문화전당역에서 걸어서 교육장</b><span>도보 약 5분</span></li>
+          </ol>
+          <p class="rtr"><span>예상 · 도보 + 도시철도 1호선</span><b>약 30분</b><em>기다리는 시간 포함 추정</em></p>
+        </article>
+        <article>
+          <h3>광주 시내</h3>
+          <small>집에서 매일 통학</small>
+          <ol>
+            <li><i>1</i><b>도보권 동이라면 걸어서</b><span>5~15분 · 서남동 · 충장동 · 동명동</span></li>
+            <li><i>2</i><b>그 밖이라면 버스 · 지하철</b><span>20~40분</span></li>
+            <li><i>3</i><b>교육장 도착</b><span>9시 전</span></li>
+          </ol>
+          <p class="rtr"><span>예상 · 도보 · 버스 · 지하철</span><b>도보권 5~15분 · 다른 구 20~40분</b><em>주거의 동별 시간과 같은 기준</em></p>
+        </article>
+      </div>
+      <p class="note">시간은 정거장 수(1정거장 약 2분) · 거리로 계산한 추정값이며, 교육생이 실제로 재 본 통학 시간으로 바꿀 예정이에요</p>
+      <div class="rlx">
+        <div class="sh"><div><h2>주차 안내(방문객)</h2></div></div>
+        <div class="park"><span class="P" aria-hidden="true">P</span>
+          <div><h3>교육생 전용 주차 공간은 없습니다</h3><p>방문객은 ACC · KT 등 주변 공영주차장을 이용해 주세요. 매일 차로 다니기보다는 대중교통이나 도보를 권합니다.</p></div>
+          <a class="btn is-line" href="#tp-house">도보권 주거 보기</a></div>
+      </div>
+    </div>
+  </section>
+  <nav class="next-band" aria-label="다음으로 볼 페이지">
+    <div class="wrap">
+      <a href="../check/index.html#eligibility"><small>다음으로</small><b>지원 전 체크</b><span>자격 · 일정 · 혜택 · 자주 묻는 질문</span></a>
+      <a href="#facilities"><small>함께 보면 좋은</small><b>시설 둘러보기</b><span>강의실 · AI 카페 · 구내식당 등</span></a>
+      <a href="#tips"><small>함께 보면 좋은</small><b>생활 꿀팁</b><span>주거 · 근처 식당 · 문화·여가 · 생활 적응</span></a>
+    </div>
+  </nav>
+</div>
+</main>
+<footer class="site-footer" id="siteFooter" data-note="페이지 시안 · 사진 · 인물 · 금액 일부는 배치 확인용 예시"></footer>
+</body>
+</html>

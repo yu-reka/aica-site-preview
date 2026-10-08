@@ -1,0 +1,951 @@
+/* =========================================================
+   인사교 라이프 — 시설 둘러보기 · 생활 꿀팁 · 오시는 길
+   박지원 시안8(2026-10-07 전달) assets/css/style.css에서 이 세 화면 · 크게 보기 창에 쓰이는 규칙만 옮김.
+   - 모든 선택자 앞에 .life-page(우리 main) 범위. 시안 :root 색 · 글꼴 변수와 body 기본값은 맨 앞 .life-page 한 곳에(공통 틀 토큰과 섞이지 않게)
+   - 시안은 글자 크기를 html font-size(rem)로 맞춤 → 공통 틀에 영향이 없게 rem을 var(--lr)(시안 html font-size와 같은 값)로 바꿈
+   - 사진은 ../assets/(이름은 시안 그대로: .im-이름 ↔ 이름.webp), 자이언츠체는 공통 tokens.css의 "Giants"
+   - 순서는 시안 그대로(뒤 규칙이 앞 규칙을 덮음): 기본 컴포넌트 · 화면별 블록 → 시안이 나중에 덧댄 손질(카드 틀 · 글꼴 · 색, 1) ~ 4))
+     → 히어로 · 엘리베이터(시안5 · 7 · 8) → 맨 끝 '사이트 통합 조정'(시안 밖, 우리가 더한 것)
+   - 2026-10-07 정리(화면 그대로): 같은 선택자로 흩어진 규칙은 앞 규칙 하나로 합치고, 어떤 폭 · 상태에서도 덮여 쓰이지 않던 선언,
+     시안의 다른 화면 이름(헤더 · 메뉴 · 지원 전 체크 등), 떼도 결과가 같은 !important를 뺌. 남은 !important는 떼면 화면이 바뀌는 것만
+   ========================================================= */
+/* ---------- 변수 · 기본값: 시안 :root 변수 · body 기본값(시안 마지막 값)을 .life-page(우리 main) 하나에 모음 ---------- */
+.life-page{--lr:clamp(9.2px,.78vw,10px);   /* 시안 html font-size(rem) 대신 쓰는 크기 단위. 1024 · 600px 이하 값은 아래.
+     1025px 이상: 시안 clamp(8.6px,.5208vw,10px)는 1920 기준이라 1440에서 8.6px(본문 12.9px)로 작아, 1024px 이하 최댓값 9.2px에서 이어 1280px부터 시안 1920 크기 10px(본문 15px)(2026-10-08 사용자 결정, 후보 C) */
+  /* 색(2026-10-08 사이트 디자인 기준 2): 글자 --ink · 바탕 --paper · 선 --line은 공통 tokens.css 값 그대로(여기서 다시 정하지 않음).
+     시안의 미색 바탕(#F6F4EF) · 미색 카드(#FFFDF9) · 차콜 글자(#2B2F38) · 따뜻한 회색을 공통 값으로, 강조는 카테고리 청록(--nc) 하나.
+     시안이 남색(--navy) · 차콜(--ax*)로 칠하던 자리는 잉크로 낮춤 */
+  --card:var(--surface);--ice:color-mix(in srgb,#6FC3D1 18%,#fff);
+  --ink2:var(--graphite);--ink3:var(--graphite);   /* 보조 글: 공통 --graphite #566175(바탕 대비 5.8 : 1) */
+  --line-s:#BCC5D0;--bline:var(--line);
+  --navy:var(--ink);--navy-l:var(--ink);--citron:var(--nc);
+  --ny:#EFD06A;--nc:#6FC3D1;--wkd:#1B7686;   /* --wkd: 문화·여가 '주말'(평일 저녁은 잉크). 흰 글자 대비 5.3 : 1 */
+  --axl:var(--ink);--axbg:var(--ink);--axb:var(--ink);--axsh:var(--ink);
+  --soft:0 calc(.2*var(--lr)) calc(.8*var(--lr)) calc(-.5*var(--lr)) rgba(20,35,63,.1);
+  --next-accent:#6FC3D1;   /* 공통 '다음으로' 띠(.next-band) 첫 카드의 작은 글 · 화살표 원 = 카테고리 청록 */
+  /* 글꼴(디자인 기준 1): 본문 "Paperlogy Text"(공통 --ff-text, 이야기 · 지원 전 체크와 같음) · 큰 제목 자이언츠체 · 숫자 Anton · 꿀팁 히어로 사진 손글씨만 Nanum Pen Script */
+  --sans:var(--ff-text);--mono:var(--sans);
+  --anton:"Anton","Paperlogy Text",sans-serif;--pen:"Nanum Pen Script",cursive;
+  --jua:"Giants","Paperlogy Text",sans-serif;
+  --lnb-h:49px;   /* 꿀팁 바로가기 막대 높이(48 + 아래 선 1). 860px 이하는 붙지 않아 0 */
+  background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:calc(1.5*var(--lr));font-weight:400;line-height:1.8;letter-spacing:0;
+  word-break:keep-all;font-feature-settings:"tnum";-webkit-font-smoothing:antialiased;
+  font-synthesis-weight:auto}   /* 공통 html의 가짜 굵기 끔(none)을 시안 기본값으로 */
+@media (max-width:1024px){
+.life-page{--lr:clamp(7.8px,.92vw,9.2px)}
+}
+@media (max-width:860px){
+.life-page{--lnb-h:0px}
+}
+@media (max-width:600px){
+.life-page{--lr:clamp(8.2px,2.7vw,11px)}
+}
+.life-page *{box-sizing:border-box}
+.life-page h1,
+.life-page h2,
+.life-page h3,
+.life-page h4{margin:0;font-weight:900;letter-spacing:-.035em;line-height:1.3;text-wrap:balance}
+.life-page p{margin:0;text-wrap:pretty}   /* 줄 끝에 한 낱말만 남지 않게(지원 안 되는 브라우저는 그대로) */
+.life-page ul{margin:0;padding:0;list-style:none}
+.life-page a{color:inherit;text-decoration:none}
+.life-page [hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){
+.life-page *{transition:none!important;animation:none!important}
+}
+.life-page ol{margin:0;padding:0;list-style:none}
+.life-page button{font:inherit;color:inherit;cursor:pointer}
+.life-page :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:calc(.4*var(--lr))}   /* 초점 테두리: 사이트 공통(base.css)과 같은 색 · 굵기 */
+.life-page .wrap{width:100%;margin:0 auto;max-width:var(--wrap);padding-inline:var(--gutter)}
+/* ---------- 버튼 · 칩 · 배지 ----------
+   버튼은 사이트 공용 .btn(common/css/site.css: 잉크 알약 · .is-line 흰 바탕 + 선 · .is-cta 노랑 · .is-sm 40)을 그대로 씀(2026-10-08 디자인 기준 3) — 시안 .btn · .btn.line · .btn.pri 규칙은 뺌.
+   거르기 칩도 같은 결: 알약, 꺼짐 = 흰 바탕 + 선, 켜짐 = 잉크로 채움. 하나만 고르는 칩과 켜고 끄는 칩(.tg, 켜지면 ✓) 사이는 .chip-sep */
+.life-page .chips{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.life-page .chip{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 16px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font-size:14.5px;font-weight:600;line-height:1;white-space:nowrap;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.life-page .chip:hover{border-color:var(--ink)}
+.life-page .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.life-page .chip.tg[aria-pressed="true"]::before{content:"✓";font-size:13px;font-weight:700}
+.life-page .chip:focus-visible{border-radius:999px}
+.life-page .chip-sep{width:1px;height:22px;margin:0 6px;background:var(--line)}
+@media (max-width:600px){
+.life-page .chip-sep{flex-basis:100%;width:auto;height:0;margin:0}   /* 좁은 화면: 두 묶음을 각각 한 줄로(한 칩만 다음 줄로 떨어지지 않게) */
+}
+.life-page .bdg{display:inline-flex;align-items:center;gap:calc(.4*var(--lr));font-size:calc(1.1*var(--lr));padding:calc(.2*var(--lr)) calc(.8*var(--lr));line-height:1.6;white-space:nowrap}
+.life-page .bdg.ex{background:transparent;border:1px dashed var(--ink3);color:var(--ink3)}
+.life-page .bdg.ok{background:color-mix(in srgb,var(--nc) 22%,var(--surface));color:var(--ink)}   /* '무료' 표시: 초록 대신 카테고리 청록을 연하게 */
+.life-page .bdg.end{background:var(--paper);color:var(--ink2);border:1px solid var(--line-s)}
+/* ---------- 화면(div.page 셋 중 지금 화면만 보임) ---------- */
+.life-page .page{min-height:60vh}
+/* ---------- 섹션 공통 ---------- */
+.life-page .sec.alt{background:var(--card);background:color-mix(in srgb,var(--paper) 55%,var(--card))!important}
+.life-page .sh{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:calc(1.2*var(--lr)) calc(3*var(--lr));margin-bottom:calc(3.2*var(--lr))}
+.life-page .sh h2{text-wrap:balance}
+.life-page .sh p{font-size:calc(1.5*var(--lr));color:var(--ink2);max-width:52ch;margin-top:calc(1*var(--lr))}
+.life-page .sh .r{display:flex;gap:calc(.8*var(--lr));flex-wrap:wrap}
+.life-page .note{font-size:calc(1.2*var(--lr));margin-top:calc(2*var(--lr))}
+.life-page .src{font-size:calc(1.15*var(--lr));color:var(--ink3)}
+/* 면책(꿀팁 끝 안내). 화면 끝 '다음으로' 띠는 사이트 공용 nav.next-band(common/css/site.css, 디자인 기준 4) — 시안 .next 규칙은 뺌 */
+.life-page .disc .wrap{padding-block:calc(1.8*var(--lr));font-size:calc(1.3*var(--lr));color:var(--ink2);display:flex;gap:calc(1*var(--lr));align-items:center}
+.life-page .disc b{flex:none;font-family:var(--mono);font-size:calc(1.1*var(--lr));letter-spacing:.04em;padding:calc(.2*var(--lr)) calc(.8*var(--lr));border-radius:calc(.4*var(--lr));background:var(--ink);color:#fff}
+.life-page .act{overflow:hidden;flex-direction:column}
+.life-page .walk{font-size:calc(1.25*var(--lr));padding:calc(.2*var(--lr)) calc(.8*var(--lr))}
+.life-page .way{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:calc(2.4*var(--lr));align-items:start}   /* 개념도 : 지하철 · 버스 = 1 : 1(시안 1.2 : 1은 1440에서 경로 칸이 245px로 좁아 정류장 이름이 줄바꿈) */
+.life-page .wmap{background:var(--card);overflow:hidden}
+.life-page .wmap svg{width:100%;height:auto;display:block}
+.life-page .wmap .ad{display:flex;justify-content:space-between;gap:calc(1.2*var(--lr));align-items:center;padding:calc(1.8*var(--lr)) calc(2*var(--lr));border-top:1px solid var(--line);flex-wrap:wrap}
+.life-page .wmap .ad b{font-size:calc(1.6*var(--lr))}
+.life-page .wmap .ad small{display:block}
+.life-page .wmap .ad-b{display:flex;flex-wrap:wrap;gap:8px}   /* 주소 복사 · 지도에서 보기(공용 .btn.is-line.is-sm) */
+.life-page .mpanel{background:var(--card)}
+.life-page .route{display:grid;gap:0}
+.life-page .route li{display:grid;align-items:start;position:relative}
+.life-page .route li::before{content:"";position:absolute;width:2px;background:var(--line-s)}
+.life-page .route li:last-child::before{display:none}
+.life-page .route i{width:calc(3.2*var(--lr));height:calc(3.2*var(--lr));border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:900;font-size:calc(1.3*var(--lr));position:relative;z-index:1}
+.life-page .route b{display:block}
+.life-page .route span{color:var(--ink2)}
+.life-page .route em{white-space:nowrap}
+.life-page .park{background:var(--ink);color:var(--paper);padding:calc(2.8*var(--lr)) calc(3.2*var(--lr));display:grid;grid-template-columns:auto 1fr auto;gap:calc(2.4*var(--lr));align-items:center}
+.life-page .park .P{width:calc(6.4*var(--lr));height:calc(6.4*var(--lr));border-radius:calc(1.4*var(--lr));background:var(--paper);color:var(--ink);display:grid;place-items:center;font-weight:800;font-size:calc(3.6*var(--lr));position:relative}
+.life-page .park .P::after{content:"";position:absolute;width:130%;height:4px;background:#E5484D;transform:rotate(-40deg);border-radius:2px}
+.life-page .park h3{font-size:calc(2.2*var(--lr))}
+.life-page .park p{color:color-mix(in srgb,var(--paper) 75%,transparent);margin-top:calc(.4*var(--lr))}
+@media (max-width:760px){
+.life-page .way{grid-template-columns:1fr}
+.life-page .park{grid-template-columns:auto 1fr}
+.life-page .park .btn{grid-column:1/-1}
+}
+@media (max-width:600px){   /* 폰: 주차 상자 글 칸이 좁아 줄마다 끊기던 것 → P 표시 위, 글 아래로 쌓음 */
+.life-page .park{grid-template-columns:1fr;gap:16px;padding:24px 20px}
+.life-page .park .P{width:48px;height:48px;border-radius:12px;font-size:28px}
+}
+.life-page .bx-ex{background:rgba(6,16,36,.72);color:#fff;font-size:calc(1.15*var(--lr));font-weight:700;border-radius:calc(.6*var(--lr));padding:calc(.3*var(--lr)) calc(.9*var(--lr))}
+/* 소메뉴 바(사이트에서는 생활 꿀팁 화면의 바로가기 막대만 남음). 861px 이상: 공통 하위 메뉴 바 바로 아래에 붙음.
+   860px 이하: 붙지 않음 — 폰 위 고정 막대는 헤더 + 하위 메뉴 바 두 겹까지(2026-10-08 디자인 기준 6) */
+.life-page .lnb{position:sticky;z-index:25;background:var(--surface);box-shadow:none;border-bottom:1px solid var(--line);top:calc(var(--hdr) + var(--sub))}
+.life-page .lnb .wrap{display:flex;align-items:center}
+@media (max-width:860px){
+.life-page .lnb{position:static}
+}
+/* 링크 버튼 */
+.life-page .more{display:inline-flex;align-items:center;gap:calc(.6*var(--lr));color:var(--ink);transition:.15s;align-self:flex-start}
+.life-page .more::after{transition:transform .15s}
+.life-page .more:hover::after{transform:translateX(calc(.3*var(--lr)))}
+.life-page .im-b_cafe{background-image:url(../assets/b_cafe.webp)}
+.life-page .im-b_class{background-image:url(../assets/b_class.webp)}
+.life-page .im-b_project{background-image:url(../assets/b_project.webp)}
+.life-page .im-building{background-image:url(../assets/building.webp)}
+.life-page .im-cafe_k{background-image:url(../assets/cafe_k.webp)}
+.life-page .im-classroom{background-image:url(../assets/classroom.webp)}
+.life-page .im-entrance{background-image:url(../assets/entrance.webp)}
+.life-page .im-project{background-image:url(../assets/project.webp)}
+.life-page .im-x2_room{background-image:url(../assets/x2_room.webp)}
+.life-page .im-x3_table{background-image:url(../assets/x3_table.webp)}
+/* ===== 화면 끝 블록: 오시는 길 주차 안내(.rlx) · 시설 둘러보기 관련 페이지 링크(.fsx) ===== */
+.life-page .rlx{margin-top:clamp(calc(5.6*var(--lr)),7vw,calc(8*var(--lr)));padding-top:clamp(calc(4*var(--lr)),5vw,calc(5.6*var(--lr)));border-top:1px dashed var(--line-s)}
+.life-page .fsx{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(1.4*var(--lr));margin-top:calc(2*var(--lr))}
+.life-page .fsx a{display:flex;align-items:center;gap:calc(1.4*var(--lr));background:var(--card);border:1px solid var(--line);padding:calc(1.8*var(--lr)) calc(2.2*var(--lr));transition:.15s}
+.life-page .fsx a:hover{border-color:var(--navy)}
+.life-page .fsx b{font-size:calc(1.6*var(--lr))}
+.life-page .fsx span{color:var(--ink3);font-size:calc(1.3*var(--lr));flex:1}
+.life-page .fsx i{font-style:normal;font-weight:800;color:var(--navy)}
+@media (max-width:640px){
+.life-page .fsx{grid-template-columns:1fr}
+.life-page .fsx a{display:grid;grid-template-columns:1fr auto;row-gap:calc(.3*var(--lr))}
+.life-page .fsx span{grid-column:1;grid-row:2}
+.life-page .fsx i{grid-column:2;grid-row:1/3}
+}
+.life-page .nw{white-space:nowrap}
+.life-page .fln{font-size:calc(2.4*var(--lr));font-weight:800;color:#fff;background:var(--navy);border-radius:calc(1*var(--lr));padding:calc(.6*var(--lr)) calc(1.2*var(--lr));line-height:1;white-space:nowrap}
+/* 오시는 길 */
+.life-page .mp4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.life-page .mp4 .route em{font-style:normal}
+.life-page .rt3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(1.4*var(--lr))}
+.life-page .rt3 article{background:var(--card);padding:calc(2.2*var(--lr)) calc(2.4*var(--lr));display:flex;flex-direction:column}
+.life-page .rt3 h3{font-size:calc(1.9*var(--lr))}
+.life-page .rt3 small{color:var(--ink3);font-size:calc(1.25*var(--lr))}
+.life-page .rt3 ol{display:grid;gap:calc(1*var(--lr));margin-top:calc(1.6*var(--lr));margin-bottom:calc(1.6*var(--lr))}
+.life-page .rt3 li{display:grid;grid-template-columns:calc(2.6*var(--lr)) 1fr;column-gap:calc(1*var(--lr))}
+.life-page .rt3 li i{grid-row:1/3;width:calc(2.6*var(--lr));height:calc(2.6*var(--lr));border-radius:50%;background:var(--ice);color:var(--navy);display:grid;place-items:center;font-style:normal;font-weight:900;font-size:calc(1.2*var(--lr))}
+.life-page .rt3 li:last-child i{background:var(--citron);color:#0A1020}
+.life-page .rt3 li b{font-size:calc(1.45*var(--lr))}
+.life-page .rt3 li span{font-size:calc(1.25*var(--lr));color:var(--ink3)}
+@media (max-width:1100px){
+.life-page .mp4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:860px){
+.life-page .rt3{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+.life-page .mp4{grid-template-columns:1fr}
+.life-page .fln{font-size:calc(1.9*var(--lr))}
+}
+.life-page .rt3 article,
+.life-page .mp4 .mpanel{transition:border-color .15s,box-shadow .15s,transform .15s}
+.life-page .rt3 article:hover{border-color:var(--ink);box-shadow:0 calc(1.2*var(--lr)) calc(2.4*var(--lr)) calc(-1.8*var(--lr)) rgba(20,35,63,.35);transform:translateY(-2px)}
+@media (prefers-reduced-motion:reduce){
+.life-page .rt3 article:hover{transform:none}
+}
+.life-page .gmmap{display:block;border-radius:calc(1.4*var(--lr));background:#EEF2F7;user-select:none}
+.life-page .gmbg{fill:#EEF2F7}
+.life-page .gmmap .gmrd{fill:none;stroke:#fff;stroke-width:16;stroke-linecap:round}
+.life-page .gmmap .gmrd.sm{stroke-width:10}
+.life-page .gmmap .rdn{font-size:13px;fill:#6B7587}
+.life-page .gmmap .stn{fill:#fff;stroke:#2E6FD0;stroke-width:4}
+.life-page .gmmap .lbl{font-size:14px;font-weight:800;fill:#0A1020;font-family:var(--sans);paint-order:stroke;stroke:#EEF2F7;stroke-width:4px}
+.life-page .gmmap .edu rect{fill:var(--nc);stroke:var(--ink);stroke-width:2.5}
+.life-page .gmmap .edu text{font-size:16px;font-weight:900;fill:var(--ink);font-family:var(--sans)}
+.life-page .gmdisc{font-size:calc(1.15*var(--lr));margin-top:calc(1*var(--lr))}
+/* 생활 꿀팁 바로가기 버튼(.lnb-s, 좁은 화면에서 가로 스크롤) */
+/* 링크(<a href="#tp-…">) · 지금 보는 부분은 aria-current="location"(life.js spy). 모양은 공통 하위 메뉴 바와 같은 결: 15px 회색 글자, 지금 = 잉크 600 + 2px 밑줄.
+   첫 링크 글자를 정렬선(--gutter)에 맞춤(왼쪽 안쪽 여백 0) */
+.life-page .lnb-s{display:flex;gap:4px;flex:none;height:48px}
+.life-page .lnb-s a{position:relative;display:flex;align-items:center;gap:6px;height:100%;padding:0 14px;font-size:15px;font-weight:500;color:var(--graphite);white-space:nowrap;transition:color .2s}
+.life-page .lnb-s a:first-child{padding-left:0}
+.life-page .lnb-s a i{font-style:normal;font-family:var(--anton);font-size:12px;letter-spacing:.04em;opacity:.7}
+.life-page .lnb-s a:hover{color:var(--ink)}
+.life-page .lnb-s a[aria-current]{color:var(--ink);font-weight:600}
+.life-page .lnb-s a::after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:2px;background:var(--ink);transform:scaleX(0);transition:transform .3s var(--ease)}
+.life-page .lnb-s a:first-child::after{left:0}
+.life-page .lnb-s a[aria-current]::after{transform:none}
+.life-page .lnb-s a:focus-visible{outline-offset:-2px}
+@media (max-width:860px){
+.life-page .lnb-s a{padding:0 12px;font-size:14.5px}
+.life-page .lnb-s a::after{left:12px;right:12px}
+}
+.life-page #pg-tips .lnb .wrap{overflow-x:auto;scrollbar-width:none}
+.life-page #pg-tips .lnb .wrap::-webkit-scrollbar{display:none}
+/* 이동 경로 카드 속 실제 통학 시간(.rtr) · 꿀팁 끝 안내문(.disc.inset) */
+.life-page .rtr{margin-top:auto;padding-top:calc(1.4*var(--lr));border-top:1px dashed var(--line-s);display:grid;gap:calc(.2*var(--lr))}
+.life-page .rtr span{font-size:calc(1.15*var(--lr));color:var(--ink3);font-weight:700}
+.life-page .rtr b{font-size:calc(1.8*var(--lr));color:var(--navy)}
+.life-page .rtr em{font-style:normal;font-size:calc(1.1*var(--lr));color:var(--ink3)}
+.life-page .disc.inset{background:none;border-top:0;padding-inline:var(--gutter)}
+.life-page .disc.inset .wrap{border-left:calc(.6*var(--lr)) solid var(--line-s);padding:calc(1.2*var(--lr)) 0 calc(1.2*var(--lr)) calc(1.8*var(--lr));max-width:calc(var(--wrap) - 2*var(--gutter));margin-block:calc(2.4*var(--lr)) var(--sec-y)}
+/* ===== 문화 · 여가 지도 ===== */
+.life-page .lmap{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:calc(2.4*var(--lr));align-items:start;display:block}
+.life-page .lmm{position:relative;background:var(--card)}
+.life-page .lmbase .lmring{fill:none;stroke:#9DB3D6;stroke-width:1.5;stroke-dasharray:4 6}
+.life-page .lmbase .lmrl{font-size:13px;fill:#6A7D99;font-weight:700}
+.life-page .lmbase .lmriver{fill:none;stroke:#BFD8F2;stroke-width:26;stroke-linecap:round}
+.life-page .lmbase .lmrt{font-size:13px;fill:#5A86B8;font-weight:700}
+.life-page .lmbase .lmnorth circle{fill:#fff;stroke:#C9D3E3}
+.life-page .lmbase .lmnorth path{fill:#0B3C7B}
+.life-page .lmbase .lmnorth text{font-size:12px;font-weight:800;fill:#0B3C7B}
+.life-page .lmdist{display:block;font-size:calc(1.2*var(--lr));color:var(--ink2);font-weight:700;margin-top:calc(.1*var(--lr))}
+.life-page .lmm svg{position:absolute;inset:0;width:100%;height:100%}
+.life-page .lmp{all:unset;position:absolute;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;z-index:2;transition:opacity .2s,transform .2s}
+.life-page .lmc{display:flex;flex-direction:column;background:var(--card);box-shadow:0 calc(1*var(--lr)) calc(2*var(--lr)) calc(-1.2*var(--lr)) rgba(10,20,40,.55);overflow:hidden;transform-origin:var(--ox,50%) var(--oy,100%);transition:transform .28s cubic-bezier(.2,.7,.2,1),box-shadow .28s,border-color .15s;border-radius:0;border:1px solid rgba(15,23,41,.18)!important}
+.life-page .lmi{display:grid;place-items:center;background-size:cover;font-size:calc(1.05*var(--lr));color:var(--ink3);background-color:#E7ECF4;position:relative;filter:none}
+.life-page .lmc b{font-size:calc(1.2*var(--lr));padding:calc(.5*var(--lr)) calc(.7*var(--lr));line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.life-page .lmd{font-style:normal;margin-top:calc(.4*var(--lr));width:calc(2.4*var(--lr));height:calc(2.4*var(--lr));border-radius:50%;border:2px solid #fff;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:calc(1.15*var(--lr));font-weight:800;font-family:var(--sans);box-shadow:0 0 0 2px var(--axl)}
+.life-page .lmp.wkd .lmd{background:var(--wkd)}
+.life-page .lmp.on{z-index:5}
+.life-page .lmp.on .lmc{border-color:var(--citron);transform:translateY(-4px)}
+.life-page .lmp.off,
+.life-page .lmli.off{opacity:.18}
+.life-page .lmp.off{pointer-events:none}
+.life-page .lml{display:grid;gap:calc(.8*var(--lr))}
+.life-page .lmli{display:grid;grid-template-columns:calc(3*var(--lr)) minmax(0,1fr);gap:calc(1.2*var(--lr));background:var(--card);padding:calc(1.4*var(--lr)) calc(1.6*var(--lr));transition:border-color .15s,opacity .2s}
+.life-page .lmli.on{border-color:var(--ink)}
+.life-page .lmn{width:calc(2.6*var(--lr));height:calc(2.6*var(--lr));border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800;font-size:calc(1.2*var(--lr))}
+.life-page .lmli[data-w="wkd"] .lmn{background:var(--wkd)}
+.life-page .lmt{display:flex;flex-wrap:wrap;gap:calc(.5*var(--lr));align-items:center;margin-bottom:calc(.4*var(--lr))}
+.life-page .lmw{font-size:calc(1.1*var(--lr));font-weight:800;color:var(--navy)}
+.life-page .lmw.wkd{color:var(--wkd)}
+.life-page .lmk{font-size:calc(1.1*var(--lr));color:var(--ink3);font-weight:700}
+.life-page .lmli b{font-size:calc(1.55*var(--lr))}
+.life-page .lmli p{font-size:calc(1.3*var(--lr));margin-top:calc(.2*var(--lr))}
+@media (max-width:860px){
+.life-page .lmap{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+.life-page .lmi{font-size:calc(.9*var(--lr))}
+.life-page .lmc b{font-size:calc(1*var(--lr));padding:calc(.3*var(--lr)) calc(.4*var(--lr));display:none}
+.life-page .lmd{width:calc(2*var(--lr));height:calc(2*var(--lr));font-size:calc(1*var(--lr))}
+}
+/* 지도 핀: 아래쪽 핀(.dn)은 설명을 위로, 올리면 설명 펼침 */
+.life-page .lmp.dn{transform:translate(-50%,calc(-1.4*var(--lr)));flex-direction:column-reverse}
+.life-page .lmp.dn .lmd{margin:0 0 calc(.4*var(--lr))}
+.life-page .lmc em{display:block;max-height:0;opacity:0;overflow:hidden;font-style:normal;font-size:calc(.95*var(--lr));line-height:1.4;color:var(--ink2);padding:0 calc(.7*var(--lr));transition:max-height .25s,opacity .2s,padding .25s}
+.life-page .lmp:hover,
+.life-page .lmp.on,
+.life-page .lmp:focus-visible{z-index:6}
+.life-page .lmp:hover .lmc,
+.life-page .lmp.on .lmc,
+.life-page .lmp:focus-visible .lmc{transform:scale(1.85);border-color:var(--citron);box-shadow:0 calc(2*var(--lr)) calc(4*var(--lr)) calc(-1.6*var(--lr)) rgba(10,20,40,.6)}
+.life-page .lmp:hover .lmc em,
+.life-page .lmp.on .lmc em,
+.life-page .lmp:focus-visible .lmc em{max-height:calc(9*var(--lr));opacity:1;padding:0 calc(.7*var(--lr)) calc(.6*var(--lr))}
+.life-page .lmm:has(.lmp:hover,.lmp.on) .lmp:not(:hover):not(.on){opacity:.45}
+.life-page .lmm:has(.lmp:hover,.lmp.on) .lmp.off{opacity:.12}
+@media (max-width:640px){
+.life-page .lmp:hover .lmc,
+.life-page .lmp.on .lmc{transform:scale(1.45)}
+.life-page .lmc em{display:none}
+}
+.life-page .fdisc{margin-top:calc(1.2*var(--lr));font-size:calc(1.25*var(--lr))}
+.life-page .fdisc .bdg{margin-right:calc(.4*var(--lr))}
+/* ===== 근처 식당: 상황별 ===== */
+.life-page .fd2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(1.6*var(--lr));align-items:start}
+.life-page .fd2.one{grid-template-columns:1fr}
+.life-page .fd2c{background:var(--card);display:flex;flex-direction:column}
+.life-page .fd2c header{display:flex;gap:calc(1.2*var(--lr));align-items:center;padding:calc(1.8*var(--lr)) calc(2*var(--lr));border-bottom:1px solid var(--line)}
+.life-page .fd2c header{background:var(--paper)}
+.life-page .fd2ic{width:calc(4.4*var(--lr));height:calc(4.4*var(--lr));border-radius:50%;display:grid;place-items:center;background:#fff;color:var(--navy);flex:none}
+.life-page .fd2c h3{font-size:calc(1.8*var(--lr));display:flex;align-items:baseline;gap:calc(.8*var(--lr))}
+.life-page .fd2c h3 em{font-style:normal;font-size:calc(1.15*var(--lr));color:var(--ink3)}
+.life-page .fd2c header p{font-size:calc(1.3*var(--lr));color:var(--ink2);margin-top:calc(.2*var(--lr))}
+.life-page .fd2c ul{display:grid}
+.life-page .fd2i{display:grid;grid-template-columns:calc(3*var(--lr)) minmax(0,1fr) auto;gap:calc(1.2*var(--lr));align-items:center;padding:calc(1.3*var(--lr)) calc(2*var(--lr));border-top:1px solid var(--line)}
+.life-page .fd2i:first-child{border-top:0}
+.life-page .fd2i .no{width:calc(2.8*var(--lr));height:calc(2.8*var(--lr));border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:700;font-size:calc(1.25*var(--lr))}
+/* 번호 = 그 목록에서 가까운 순(거른 뒤 보이는 것만 1 ~ n). 시안은 두 목록을 합친 순위라 1 · 6 · 8 …로 건너뛰었음(2026-10-08) */
+.life-page .fd2c ul{counter-reset:fd}
+.life-page .fd2i:not([hidden]){counter-increment:fd}
+.life-page .fd2i .no::before{content:counter(fd)}
+.life-page .fd2i b{font-size:calc(1.55*var(--lr))}
+.life-page .fd2i p{font-size:calc(1.3*var(--lr));color:var(--ink2)}
+.life-page .fd2i .walk{white-space:nowrap}
+@media (max-width:860px){
+.life-page .fd2{grid-template-columns:1fr}
+}
+/* ===== 문화 · 여가: 한 장의 지도 ===== */
+.life-page .lmrow{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:calc(2.4*var(--lr));align-items:start}
+.life-page .lmap .lmp:hover .lmc em,
+.life-page .lmap .lmp.on .lmc em,
+.life-page .lmap .lmp:focus-visible .lmc em{max-height:calc(16*var(--lr))}
+.life-page .lmm.one{aspect-ratio:800/700}
+.life-page .lmap .lmm{overflow:visible}
+.life-page .lmm.one .lmc{width:calc(9.6*var(--lr))}
+.life-page .lmm.one .lmi{height:calc(5.2*var(--lr))}
+.life-page .lmkm{display:block;font-size:calc(.95*var(--lr));font-weight:700;color:var(--ink2);margin-top:calc(.1*var(--lr))}
+.life-page .lmsep{list-style:none;display:flex;align-items:center;gap:calc(1*var(--lr));font-size:calc(1.25*var(--lr));font-weight:800;color:var(--ink3);margin:calc(1*var(--lr)) 0 calc(.2*var(--lr))}
+.life-page .lmsep::after{content:"";flex:1;height:1px;background:var(--line)}
+.life-page .lmbase .lmzone{fill:#F7F9FD}
+.life-page .lmbase .lmedge{fill:none;stroke:#7F98C2;stroke-width:2;stroke-dasharray:10 6}
+.life-page .lmbase .lmsub1{fill:none;stroke:#2E6FD0;stroke-width:5;stroke-linejoin:round;stroke-linecap:round;opacity:.75}
+.life-page .lmbase .lmmt{fill:#B9D5BE;stroke:#8FBF9A;stroke-width:2;stroke-linejoin:round}
+@media (min-width:861px){
+.life-page .lmap .lmw2{position:sticky;top:calc(15*var(--lr))}
+}
+@media (max-width:860px){
+.life-page .lmrow{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+.life-page .lmm.one .lmc{width:calc(4.8*var(--lr))}
+.life-page .lmm.one .lmi{height:calc(3.2*var(--lr))}
+}
+.life-page #pg-facility,
+.life-page #pg-tips,
+.life-page #pg-way{--cat:var(--nc);--citron:var(--nc)}
+/* 섹션 제목(자이언츠체): 페이지 제목(h1)보다 작게 — 시안 clamp(3.4 ~ 4.8 × --lr)는 1440에서 48px로 오시는 길 제목(36px)보다 크고, 390에서 꿀팁 제목과 같았음.
+   2026-10-08 디자인 기준 5(h1 > h2 > 카드 제목): 1440 36 · 1100 29 · 860 22 · 390 27px(지원 전 체크 섹션 제목 28 ~ 38px과 같은 범위) */
+.life-page #pg-facility .sh h2,
+.life-page #pg-tips .sh h2,
+.life-page #pg-way .sh h2{font-size:clamp(calc(2.6*var(--lr)),2.6vw,calc(3.6*var(--lr)));color:var(--ink)}
+/* 카드 모서리: 사이트 공통 --r-card(16px, 공용 '다음으로' 띠와 같음) · 목록 안 작은 칸 10px · 작은 표시는 알약 */
+.life-page :is(#pg-facility,#pg-tips,#pg-way) :is(.fd2c,.lmm,.wmap,.park,.mpanel,.fsx a){border-radius:var(--r-card)!important}
+.life-page :is(#pg-facility,#pg-tips,#pg-way) .walk{border-radius:999px}
+.life-page :is(#pg-facility,#pg-tips,#pg-way) :is(.lmli,.walk,.park){box-shadow:none}
+.life-page :is(#pg-facility,#pg-tips,#pg-way) :is(.fd2c){transition:transform .25s,box-shadow .25s}
+.life-page .lmap .lmm svg{clip-path:inset(0)}
+.life-page .lmp:hover .lmc,
+.life-page .lmp.on .lmc{border-color:var(--cat,#6FC3D1)!important}
+/* 배지 · 버튼 · 칩: 스티커 */
+.life-page :is(#pg-facility,#pg-tips,#pg-way) .bdg{border-radius:calc(.4*var(--lr));font-weight:700}
+.life-page :is(#pg-facility,#pg-tips,#pg-way) .bdg.base{background:var(--axl);color:var(--cat);font-family:var(--anton);font-weight:400}
+.life-page :is(#pg-facility,#pg-tips,#pg-way) .bdg.part{background:var(--ny);color:var(--ink);border:1.5px solid var(--axl)}
+.life-page :is(#pg-facility,#pg-tips,#pg-way) :is(.fd2c h3),
+.life-page #pg-facility .sh h2,
+.life-page #pg-tips .sh h2,
+.life-page #pg-way .sh h2{font-family:var(--jua);font-weight:700}
+/* 고정 지도: 커진 카드가 헤더 아래로 숨지 않게 */
+.life-page .lmap .lmw2{z-index:5}
+/* 위쪽 핀: 설명을 카드 아래로 */
+.life-page .lmp.tp .lmc{overflow:visible}
+.life-page .lmp.tp .lmc em{position:absolute;left:-2px;right:-2px;top:100%;background:var(--card);border:2px solid transparent;border-top:0}
+.life-page .lmp.tp:hover .lmc em,
+.life-page .lmp.tp.on .lmc em,
+.life-page .lmp.tp:focus-visible .lmc em{border-color:var(--cat,#6FC3D1)}
+/* 휴게 공간 임시 사진 */
+.life-page .im-rest_tmp{background-image:url("../assets/rest_tmp.webp");background-position:left bottom!important}
+.life-page .bx-ex.tmp{background:var(--ny)!important;color:var(--ink)}
+/* 구내식당 임시 사진 */
+.life-page .im-cafe8_tmp{background-image:url("../assets/cafe8_tmp.webp")}
+/* 배식대 임시 사진 */
+.life-page .im-counter_tmp{background-image:url("../assets/counter_tmp.webp")}
+/* ACC 사진(확대) */
+.life-page .im-acc_tmp{background-image:url("../assets/acc_tmp.webp");background-position:40% 50%}
+/* 무등산 임시 사진 */
+.life-page .im-mud_tmp{background-image:url("../assets/mud_tmp.webp");background-position:60% 30%}
+/* 5·18민주광장 사진 */
+.life-page .im-plaza_tmp{background-image:url("../assets/plaza_tmp.webp");background-position:50% 45%}
+/* 대인시장 사진 */
+.life-page .im-mkt_tmp{background-image:url("../assets/mkt_tmp.webp");background-position:40% 35%}
+/* 중외공원 사진 */
+.life-page .im-park_tmp{background-image:url("../assets/park_tmp.webp");background-position:50% 55%}
+/* 챔피언스 필드 사진 */
+.life-page .im-std_tmp{background-image:url("../assets/std_tmp.webp");background-position:50% 55%}
+/* 충장로 사진 */
+.life-page .im-cj_tmp{background-image:url("../assets/cj_tmp.webp");background-position:50% 50%}
+/* 양림마을 사진 */
+.life-page .im-yl_tmp{background-image:url("../assets/yl_tmp.webp");background-position:45% 45%}
+/* 송정역시장 사진 */
+.life-page .im-sj_tmp{background-image:url("../assets/sj_tmp.webp");background-position:30% 45%}
+/* ===== 생활 적응: 시간 순서 체크리스트 ===== */
+.life-page .adtl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(2*var(--lr));position:relative;counter-reset:adt}
+.life-page .adt{background:var(--card);display:flex;flex-direction:column}
+.life-page .adt header{display:flex;align-items:center;gap:calc(1.2*var(--lr));padding:calc(1.6*var(--lr)) calc(1.8*var(--lr))}
+.life-page .adtn{width:calc(4.6*var(--lr));height:calc(4.6*var(--lr));flex:none;border-radius:50%;display:grid;place-items:center;background:var(--cat,#6FC3D1);color:var(--ink);font-size:calc(2*var(--lr))}
+.life-page .adt header h3{font-size:calc(2.2*var(--lr));line-height:1.1;color:var(--ink)}
+.life-page .adt header em{display:block;font-style:normal;font-size:calc(1.15*var(--lr));letter-spacing:.14em;margin-top:calc(.3*var(--lr));color:var(--ink3)}
+.life-page .adt ul{display:grid;padding:calc(.6*var(--lr)) calc(1.8*var(--lr)) calc(1.4*var(--lr))}
+.life-page .adt li{display:grid;grid-template-columns:calc(1.8*var(--lr)) minmax(0,1fr);gap:calc(1*var(--lr));padding:calc(1.4*var(--lr)) 0;border-bottom:1px dashed var(--line-s)}
+.life-page .adt li:last-child{border-bottom:0}
+.life-page .adt li>i{width:calc(.8*var(--lr));height:calc(.8*var(--lr));margin:calc(.95*var(--lr)) 0 0 calc(.4*var(--lr));border-radius:50%;background:var(--cat,#6FC3D1)}   /* 장식 점: 시안의 빈 네모는 눌리는 체크박스처럼 보였음(눌리지 않음) */
+.life-page .adt li b{display:block;font-size:calc(1.6*var(--lr));color:var(--ink)}
+.life-page .adt li p{font-size:calc(1.35*var(--lr));margin-top:calc(.3*var(--lr))}
+.life-page .adt li .more{background:none;padding:0 0 calc(.1*var(--lr))!important;box-shadow:none;min-height:0;margin-top:calc(.6*var(--lr));font-size:calc(1.25*var(--lr));font-weight:800;border-bottom:2px solid var(--cat,#6FC3D1)}
+.life-page .adt li .more::after{content:" →"}
+.life-page .adlk{display:flex;align-items:center;gap:calc(1.4*var(--lr));margin-top:calc(2.4*var(--lr));padding:calc(1.8*var(--lr)) calc(2*var(--lr));background:color-mix(in srgb,var(--cat,#6FC3D1) 18%,var(--card));color:var(--ink);transition:transform .25s,box-shadow .25s}
+.life-page .adlk:hover{transform:translate(calc(-.3*var(--lr)),calc(-.3*var(--lr)));box-shadow:calc(.6*var(--lr)) calc(.6*var(--lr)) 0 var(--axsh)}
+.life-page .adlk b{font-size:calc(1.9*var(--lr))}
+.life-page .adlk p{font-size:calc(1.35*var(--lr));color:var(--ink2);margin-top:calc(.2*var(--lr))}
+.life-page .adlk>div{flex:1}
+.life-page .adlkgo{font-size:calc(2.4*var(--lr));font-weight:900}
+@media (max-width:960px){
+.life-page .adtl{grid-template-columns:1fr}
+}
+/* ===== 오시는 길: 지하철 · 버스 카드 여백 정리 ===== */
+.life-page #pg-way .mp4{gap:calc(2*var(--lr))}
+.life-page #pg-way .mp4 .mpanel{padding:calc(2.4*var(--lr)) calc(2.4*var(--lr)) calc(2*var(--lr))!important}
+.life-page #pg-way .mpanel h3{font-size:calc(2*var(--lr));padding-bottom:calc(1.4*var(--lr));border-bottom:2px solid var(--axb)}
+.life-page #pg-way .route{border:0;box-shadow:none;background:none;padding:0;margin-top:calc(1.8*var(--lr))}
+.life-page #pg-way .route li{grid-template-columns:calc(3.2*var(--lr)) minmax(0,1fr);gap:calc(.2*var(--lr)) calc(1.4*var(--lr));padding-bottom:calc(2.4*var(--lr))}
+.life-page #pg-way .route li:last-child{padding-bottom:0}
+.life-page #pg-way .route li::before{left:calc(1.5*var(--lr));top:calc(3.6*var(--lr));bottom:calc(.4*var(--lr))}
+.life-page #pg-way .route i{background:var(--card);color:var(--ink)}
+.life-page #pg-way .route li:last-child i{background:var(--cat,#6FC3D1);color:var(--ink)}
+.life-page #pg-way .route b{font-size:calc(1.6*var(--lr));line-height:1.35}
+.life-page #pg-way .route span{display:block;margin-top:calc(.3*var(--lr));font-size:calc(1.35*var(--lr));line-height:1.5}
+.life-page #pg-way .route em{grid-column:2;margin-top:calc(.8*var(--lr));justify-self:start;font-family:var(--sans);font-size:calc(1.2*var(--lr));font-weight:700;color:var(--ink);background:color-mix(in srgb,var(--cat,#6FC3D1) 22%,var(--card));padding:calc(.15*var(--lr)) calc(.7*var(--lr))}
+.life-page #pg-way .route li:nth-child(2) em{display:none}
+.life-page #pg-way .way .note{margin-top:calc(.4*var(--lr))}
+/* 근처 식당 가격대 */
+.life-page .fd2i .fpr{display:inline-flex;align-items:center;gap:calc(.5*var(--lr));margin-top:calc(.3*var(--lr));font-size:calc(1.2*var(--lr));font-weight:600;color:var(--ink2)}   /* 가격대: 바탕 · 테두리 없이 ₩ 기호 + 글(시안의 연두 · 흰 뱃지 대신) */
+.life-page .fd2i .fpr i{font-style:normal;font-family:var(--anton);letter-spacing:.04em;color:var(--ink)}
+.life-page .fd2i .fpr i s{text-decoration:none;opacity:.25}
+.life-page .fdleg{display:flex;flex-wrap:wrap;gap:calc(.6*var(--lr)) calc(1.6*var(--lr));margin:0 0 calc(1.4*var(--lr));font-size:calc(1.25*var(--lr));color:var(--ink2)}
+.life-page .fdleg b{font-family:var(--anton);letter-spacing:.04em;color:var(--ink);margin-right:calc(.4*var(--lr))}
+/* ===== 주거: 요약 → 동별 비교 → 지원 ===== */
+.life-page .hst{display:flex;align-items:center;flex-wrap:wrap;gap:calc(.4*var(--lr)) calc(1*var(--lr));margin:calc(3.6*var(--lr)) 0 calc(1.6*var(--lr));font-size:calc(1.9*var(--lr))}
+.life-page .hst:first-of-type{margin-top:0}
+.life-page .hst span{width:calc(3.8*var(--lr));height:calc(3.8*var(--lr));border-radius:50%;display:grid;place-items:center;background:var(--cat,#6FC3D1);color:var(--ink);font-weight:400;font-size:calc(1.6*var(--lr))}
+.life-page .hst em{font-style:normal;font-size:calc(1.3*var(--lr));font-weight:700;color:var(--ink3)}
+.life-page .hsg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(2*var(--lr))}
+.life-page .hsc{background:var(--card);padding:calc(2*var(--lr)) calc(2.2*var(--lr)) calc(2.2*var(--lr));display:flex;flex-direction:column}
+.life-page .hsch{display:flex;align-items:center;gap:calc(1*var(--lr));padding-bottom:calc(1.4*var(--lr));border-bottom:2px solid var(--axb);margin-bottom:calc(1.4*var(--lr));border-bottom-width:1px}
+.life-page .hsi{width:calc(4.4*var(--lr));height:calc(4.4*var(--lr));background:color-mix(in srgb,var(--cat,#6FC3D1) 25%,var(--card));display:grid;place-items:center;flex:none}
+.life-page .hsi svg{width:calc(2.4*var(--lr));height:calc(2.4*var(--lr));fill:none;stroke:#111;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.life-page .hsch h3{font-size:calc(1.9*var(--lr))}
+.life-page .hsk{font-size:calc(1.2*var(--lr));font-weight:800;color:var(--ink3)}
+.life-page .hsv{margin-top:calc(.2*var(--lr));font-weight:800;font-size:calc(2.4*var(--lr));letter-spacing:-.03em}
+.life-page .hss{font-size:calc(1.35*var(--lr));margin-top:calc(.4*var(--lr))}
+.life-page .hsd{margin-top:auto;padding-top:calc(1.4*var(--lr));font-size:calc(1.25*var(--lr));color:var(--ink3)}
+.life-page .hdg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:calc(2.4*var(--lr));align-items:start}
+.life-page .hmw{margin:0;background:var(--card)}
+.life-page .hmap{display:block;width:100%;height:auto}
+.life-page .hmbg{fill:color-mix(in srgb,var(--paper) 70%,var(--card))}
+.life-page .hmr{fill:none;stroke:var(--line-s);stroke-dasharray:4 5}
+.life-page .hmd circle{fill:var(--card);stroke:var(--axl);stroke-width:2}
+.life-page .hmn{font-family:var(--anton);font-size:14px;fill:var(--ink)}
+.life-page .hml{font-size:12px;font-weight:800;fill:var(--ink)}
+.life-page .hme rect{fill:var(--cat,#6FC3D1);stroke:var(--axl);stroke-width:2}
+.life-page .hme text{font-size:13px;font-weight:900;fill:#111}
+.life-page .hmno path{fill:var(--ink)}
+.life-page .hmno text{font-size:10px;font-weight:800;fill:var(--ink)}
+.life-page .hmw figcaption{font-size:calc(1.15*var(--lr));color:var(--ink3);padding:calc(.8*var(--lr)) calc(1.2*var(--lr));border-top:2px solid var(--axb)}
+.life-page .hdl{list-style:none;margin:0;padding:0;background:var(--card)}
+.life-page .hdr{display:grid;grid-template-columns:calc(3.4*var(--lr)) minmax(calc(8*var(--lr)),.9fr) minmax(0,3fr);gap:calc(1.4*var(--lr));align-items:center;padding:calc(1.4*var(--lr)) calc(1.8*var(--lr));border-bottom:1px dashed var(--line-s)}
+.life-page .hdr:last-child{border-bottom:0}
+.life-page .hdr.here{background:color-mix(in srgb,var(--cat,#6FC3D1) 16%,var(--card))}
+.life-page .hdn{width:calc(3*var(--lr));height:calc(3*var(--lr));border-radius:50%;display:grid;place-items:center;font-size:calc(1.4*var(--lr));background:var(--card)}
+.life-page .hdr.here .hdn{background:var(--cat,#6FC3D1);color:var(--ink);border-color:transparent!important}
+.life-page .hdt b{display:block;font-size:calc(1.7*var(--lr))}
+.life-page .hdt small{display:block;font-size:calc(1.15*var(--lr));color:var(--ink3);font-weight:700}
+.life-page .hdr dl{margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(1*var(--lr))}
+.life-page .hdr dt{font-size:calc(1.1*var(--lr));color:var(--ink3);font-weight:700}
+.life-page .hdr dd{margin:0;font-size:calc(1.5*var(--lr))}
+.life-page .hag{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:calc(2*var(--lr))}
+.life-page .hac{display:flex;flex-direction:column;gap:calc(.4*var(--lr));background:var(--card);border:2px solid var(--axb);padding:calc(1.8*var(--lr)) calc(2*var(--lr));color:var(--ink)}
+.life-page .hac.main{background:var(--axbg);color:#fff}
+.life-page a.hac{transition:transform .25s,box-shadow .25s}
+.life-page a.hac:hover{transform:translate(calc(-.3*var(--lr)),calc(-.3*var(--lr)))}
+.life-page .hak{font-size:calc(1.15*var(--lr));font-weight:800;opacity:.75}
+.life-page .hac b{font-size:calc(2*var(--lr))}
+.life-page .hav{font-weight:700;font-size:calc(2.6*var(--lr));color:var(--nc);line-height:1.2}
+.life-page .had{font-size:calc(1.32*var(--lr));line-height:1.55;opacity:.9}
+.life-page .hago{margin-top:auto;padding-top:calc(.8*var(--lr));font-size:calc(1.25*var(--lr));font-weight:800}
+.life-page .hac:not(.main) .hago{border-bottom:2px solid var(--cat,#6FC3D1);align-self:flex-start}
+@media (max-width:960px){
+.life-page .hsg,
+.life-page .hag{grid-template-columns:1fr}
+.life-page .hdg{grid-template-columns:1fr}
+.life-page .hmw{max-width:calc(44*var(--lr))}
+}
+@media (max-width:600px){
+.life-page .hdr{grid-template-columns:calc(3*var(--lr)) minmax(0,1fr);row-gap:calc(.8*var(--lr));padding:calc(1.4*var(--lr))}
+.life-page .hdr dl{grid-column:1/-1;background:var(--paper);padding:calc(1*var(--lr));gap:calc(.6*var(--lr))}
+.life-page .hdr.here dl{background:var(--card)}
+.life-page .hdr dd{font-size:calc(1.35*var(--lr))}
+}
+/* 근처 식당: 메뉴 종류 태그 */
+.life-page .fd2i .fct{display:inline-block;margin-right:calc(.6*var(--lr));font-size:calc(1.1*var(--lr));font-weight:700;line-height:1.5;padding:0 calc(.55*var(--lr));border-radius:calc(.4*var(--lr));vertical-align:calc(.1*var(--lr));background:var(--paper-2);color:var(--ink)}   /* 음식 갈래: 시안의 갈래별 7색 대신 한 결(강조색은 카테고리 청록 하나) */
+/* ===== 문화·여가 크게 보기 ===== */
+.life-page dialog.lbx{border:0;padding:0;background:transparent;max-width:none;max-height:none;width:min(calc(92*var(--lr)),calc(100vw - calc(4*var(--lr))));overflow:visible}
+.life-page dialog.lbx::backdrop{backdrop-filter:blur(3px);background:rgba(27,30,36,.6)}
+.life-page .lbxp{position:relative;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);background:var(--card);color:var(--ink);border:3px solid var(--axl);max-height:calc(100vh - calc(6*var(--lr)))}
+.life-page .lbxi{position:relative;min-height:calc(42*var(--lr));background-color:var(--ink);background-size:cover;background-position:center;border-right:3px solid var(--axl)}
+.life-page .lbxb{display:flex;flex-direction:column;gap:calc(1*var(--lr));padding:calc(2.8*var(--lr)) calc(2.8*var(--lr)) calc(2.2*var(--lr));overflow:auto}
+.life-page .lbxh{display:flex;align-items:center;gap:calc(1.2*var(--lr));padding-right:calc(4.4*var(--lr))}
+.life-page .lbxn{width:calc(4.4*var(--lr));height:calc(4.4*var(--lr));flex:none;border-radius:50%;display:grid;place-items:center;background:var(--axl);color:var(--cat,#6FC3D1);font-size:calc(1.9*var(--lr))}
+.life-page .lbxn.wkd{background:var(--wkd);color:#fff}
+.life-page .lbxh h3{font-weight:700;font-size:calc(2.8*var(--lr));line-height:1.2}
+.life-page .lbxt{display:flex;flex-wrap:wrap;gap:calc(.6*var(--lr));align-items:center}
+.life-page .lbxt .lmw,
+.life-page .lbxt .lmk{font-size:calc(1.3*var(--lr))}
+.life-page .lbxd{font-size:calc(1.4*var(--lr));font-weight:700;color:var(--ink2)}
+.life-page .lbxp p.lbxx{font-size:calc(1.6*var(--lr));color:var(--ink2)}
+.life-page .lbxf{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:calc(1*var(--lr));padding-top:calc(1.6*var(--lr));border-top:2px solid var(--axb)}
+.life-page .lbxc{font-size:calc(1.25*var(--lr));color:var(--ink3);font-weight:700}
+.life-page .lbxx2{position:absolute;right:calc(1.2*var(--lr));top:calc(1.2*var(--lr));z-index:2;width:calc(4*var(--lr));height:calc(4*var(--lr));display:grid;place-items:center;font-size:calc(2.2*var(--lr));line-height:1;background:var(--ink);color:#fff;border:0;border-radius:50%;cursor:pointer;transition:background .2s}
+.life-page .lbxx2:hover{background:color-mix(in srgb,var(--ink) 84%,#fff)}
+.life-page .lbxx2:focus-visible{border-radius:50%}
+.life-page .lmli:focus-visible{outline:3px solid var(--cat,#6FC3D1);outline-offset:2px}
+@media (max-width:760px){
+.life-page dialog.lbx{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;margin:0}
+.life-page .lbxp{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);height:100dvh;max-height:100dvh;border:0}
+.life-page .lbxi{min-height:0;aspect-ratio:4/3;border-right:0;border-bottom:3px solid var(--axl)}
+.life-page .lbxb{padding:calc(2*var(--lr)) calc(1.8*var(--lr)) calc(2*var(--lr))}
+.life-page .lbxh h3{font-size:calc(2.4*var(--lr))}
+}
+@media (prefers-reduced-motion:no-preference){
+.life-page dialog.lbx[open] .lbxp{animation:lbxin .22s cubic-bezier(.2,.7,.2,1)}
+}
+/* 크게 보기 유도 */
+.life-page .lmm .lmp,
+.life-page .lmap .lmli{cursor:zoom-in}
+.life-page .lmgo{display:flex;align-items:center;justify-content:center;gap:calc(.3*var(--lr));white-space:nowrap;margin:calc(.4*var(--lr)) calc(-.7*var(--lr)) calc(-.6*var(--lr));padding:calc(.2*var(--lr)) calc(.5*var(--lr));background:var(--axl);color:#fff;font-size:calc(.85*var(--lr));font-weight:800;letter-spacing:-.01em}
+.life-page .lmgo b{color:var(--cat,#6FC3D1);font-size:calc(1*var(--lr))}
+.life-page .lmhint{display:inline-flex;align-items:center;gap:calc(.8*var(--lr));margin:0 0 calc(1.4*var(--lr));font-size:calc(1.35*var(--lr));font-weight:700;color:var(--ink2)}
+.life-page .lmhint span{width:calc(2.6*var(--lr));height:calc(2.6*var(--lr));display:grid;place-items:center;background:var(--axl);color:var(--cat,#6FC3D1);font-size:calc(1.5*var(--lr));font-weight:900}
+/* 동명동 카페거리 사진 */
+.life-page .im-cafest{background-image:url("../assets/cafest.webp");background-position:25% 55%}
+/* 푸른길 사진 */
+.life-page .im-trailp{background-image:url("../assets/trailp.webp");background-position:45% 50%}
+/* 광주천 사진 */
+.life-page .im-riverp{background-image:url("../assets/riverp.webp");background-position:40% 55%}
+/* 사직공원 사진 */
+.life-page .im-sajikp{background-image:url("../assets/sajikp.webp");background-position:30% 55%}
+/* 1) 카드 · 표 · 지도 틀: 굵은 검정 테두리 + 하드 그림자 → 얇은 회색 선 + 옅은 그림자 */
+.life-page :is(#pg-facility,#pg-tips,#pg-way) :is(.fd2c,.lmm,.wmap,.mpanel,.lmli,.adt,.hsc,.hmw,.hdl,.hac:not(.main),.adlk,.rt3 article){border:1px solid var(--bline)!important;box-shadow:var(--soft)!important;border-radius:var(--r-card)!important}
+.life-page :is(#pg-facility,#pg-tips,#pg-way) .hac.main{border-radius:var(--r-card)}
+.life-page :is(#pg-facility,#pg-tips,#pg-way) .lmlw .lmli{border-radius:10px!important}
+.life-page :is(#pg-facility,#pg-tips,#pg-way) :is(.hsc,.adlk,a.hac):hover{transform:translateY(calc(-.2*var(--lr)));border-color:var(--ink)!important;box-shadow:0 calc(.8*var(--lr)) calc(1.6*var(--lr)) calc(-1*var(--lr)) rgba(20,35,63,.28)!important}
+.life-page .adt,
+.life-page .hsc,
+.life-page .hmw,
+.life-page .hdl,
+.life-page .fd2c,
+.life-page .mpanel{overflow:hidden}
+.life-page .hsch,
+.life-page .adt header,
+.life-page .hmw figcaption,
+.life-page #pg-way .mpanel h3,
+.life-page .lbxf{border-color:var(--bline)!important}
+/* 2) 카드 안 제목: 자이언츠체 → 본문 굵은 글꼴 (자이언츠체는 첫 화면 · 섹션 제목에만) */
+.life-page :is(#pg-facility,#pg-tips,#pg-way) :is(.fd2c h3,.hsch h3,.adt header h3,.hac b,.adlk b,.hst,#pg-way .mpanel h3){font-family:var(--sans)}
+/* 3) 어두운 띠 · 검정 칩 → 옅은 색 */
+.life-page .adt header{background:color-mix(in srgb,var(--cat,#6FC3D1) 12%,var(--card))!important;color:var(--ink);border-bottom:1px solid var(--bline)!important}
+.life-page .adtn,
+.life-page .hst span{box-shadow:none}
+.life-page .hsi,
+.life-page .hdn{border:1px solid var(--bline)!important;box-shadow:none}
+.life-page #pg-way .route i,
+.life-page .route i{border:1.5px solid var(--bline)!important}
+.life-page #pg-way .route em{border:1px solid var(--bline)!important}
+.life-page :is(#pg-facility,#pg-tips,#pg-way) .chip:not([aria-pressed="true"]){border:1px solid var(--bline)!important}
+/* 4) 본문 글자 위계: 설명은 한 톤 옅게, 줄 간격 여유 */
+.life-page :is(#pg-facility,#pg-tips,#pg-way) :is(.adt li p,.hss,.had,.lmli p){color:var(--ink2)}
+.life-page :is(#pg-facility,#pg-tips,#pg-way) :is(.adt li p,.lmli p,.fd2i p){line-height:1.65}
+.life-page .hdr dd,
+.life-page .hdt b,
+.life-page .fd2i b{font-weight:700}
+.life-page :is(#pg-facility,#pg-tips,#pg-way) :is(.walk){border:0;background:var(--paper);color:var(--ink2)}
+.life-page :is(#pg-facility,#pg-tips,#pg-way) :is(.park){border:0}
+.life-page #pg-tips .hac.main .had{color:rgba(255,255,255,.85)}
+/* 섹션 제목 자간 · 본문 줄 간격 · 보조 글 색 */
+.life-page :is(#pg-facility,#pg-tips,#pg-way) .sh h2{letter-spacing:-.015em;margin-top:0}
+.life-page :is(#pg-facility,#pg-tips,#pg-way) p,
+.life-page :is(#pg-facility,#pg-tips,#pg-way) li{line-height:1.75}
+.life-page .note,
+.life-page .gmdisc,
+.life-page .fdisc{color:var(--ink3)}
+/* 크게 보기 창 · '다음으로' 카드 · 버튼: 얇은 선 · 옅은 그림자 */
+.life-page .lbxp{border-width:1px;border-color:var(--line);border-radius:var(--r-card);overflow:hidden;box-shadow:0 calc(2*var(--lr)) calc(4*var(--lr)) calc(-2*var(--lr)) rgba(0,0,0,.45)}
+.life-page #pg-tips .hdr.here :is(dt,small){color:var(--ink2)}
+/* 본문 · 설명 · 표 · 버튼 · 메뉴 */
+.life-page :is(#pg-facility,#pg-tips,#pg-way,.lnb,dialog.lbx) :is(p,li,dd,dt,small,span,a,button,em,figcaption){font-family:var(--sans)}
+/* 카드 제목 · 굵은 글씨: 너무 두껍지 않게 */
+.life-page :is(#pg-facility,#pg-tips,#pg-way) :is(b){font-weight:700}
+.life-page :is(#pg-facility,#pg-tips,#pg-way) :is(.fd2c h3,.hsch h3,.adt header h3,.hac b,.adlk b,.hst,#pg-way .mpanel h3,.lmli b,.hdt b,.fd2i b){font-weight:700;letter-spacing:-.02em}
+/* 작은 라벨(예전 모노 글꼴)은 자간을 풀어 읽기 쉽게 */
+.life-page :is(#pg-facility,#pg-tips,#pg-way) :is(.walk,.bdg,.lmw,.lmk,.src,.fdleg,.hsk){letter-spacing:0}
+/* 중요한 글자는 그대로: 첫 화면 · 큰 숫자 · 스티커 · 손글씨 */
+.life-page .lbxn,
+.life-page .adtn,
+.life-page .hst span,
+.life-page .hdn{font-family:var(--anton)!important}
+.life-page .hav,
+.life-page .lbxh h3{font-family:var(--jua)!important}
+/* ===== 근처 식당 목록 안 스크롤 ===== */
+/* 861px 이상에서만(5곳이 넘으면 목록 안 스크롤, life.js [16]). 860px 이하는 모두 펼침 — 폰에서 목록 안에 스크롤이 갇히던 것(2026-10-08).
+   목록 끝에 닿으면 페이지가 이어서 스크롤(시안의 overscroll-behavior:contain 뺌) */
+.life-page .fd2c ul.fdsc{overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--line-s) transparent}
+.life-page .fd2c ul.fdsc::-webkit-scrollbar{width:calc(.6*var(--lr))}
+.life-page .fd2c ul.fdsc::-webkit-scrollbar-thumb{background:var(--line-s);border-radius:calc(99*var(--lr))}
+.life-page .fdmore{position:relative;margin:0;padding:calc(.9*var(--lr)) calc(1.6*var(--lr));font-size:calc(1.25*var(--lr));font-weight:700;color:var(--ink2);text-align:center;border-top:1px solid var(--bline);background:var(--card)}
+.life-page .fdmore::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:calc(3.2*var(--lr));background:linear-gradient(to bottom,transparent,var(--card));pointer-events:none}
+.life-page .fdmore.end::before{display:none}
+.life-page .fdmore b{color:var(--ink)}
+/* ===== 문화·여가 목록: 머리(가볼 곳 · n곳) + 목록 + 아래 줄 =====
+   861px 이상: 상자 높이 = 옆 지도 칸(life.js [17]), 목록만 안에서 스크롤 · 아래 줄 '↓ n곳 더'. 860px 이하: 안 스크롤 없이 처음 5곳 + '나머지 n곳 더 보기'(2026-10-08) */
+.life-page .lmlw{display:flex;flex-direction:column;border:1px solid var(--bline);border-radius:var(--r-card);background:var(--card);box-shadow:var(--soft);overflow:hidden}
+.life-page .lmlh{display:flex;align-items:baseline;gap:calc(.8*var(--lr));margin:0;padding:calc(1.6*var(--lr)) calc(2*var(--lr)) calc(.4*var(--lr));font-size:calc(1.8*var(--lr));font-weight:700;letter-spacing:-.02em;line-height:1.3}
+.life-page .lmlh em{font-style:normal;font-size:calc(1.2*var(--lr));font-weight:600;color:var(--ink2)}
+.life-page .lmlw .lml{flex:1 1 auto;min-height:0;padding:calc(.8*var(--lr))}
+@media (min-width:861px){
+.life-page .lmlw .lml{overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--line-s) transparent}
+}
+.life-page .lmmore{display:flex;justify-content:center;padding:calc(.4*var(--lr)) calc(1.6*var(--lr)) calc(1.6*var(--lr))}
+.life-page .lmempty{margin:0;padding:calc(3.2*var(--lr)) calc(2*var(--lr));display:grid;justify-items:center;gap:calc(1.2*var(--lr));text-align:center;color:var(--ink2);font-weight:600}
+.life-page .lmlw .lml::-webkit-scrollbar{width:calc(.6*var(--lr))}
+.life-page .lmlw .lml::-webkit-scrollbar-thumb{background:var(--line-s);border-radius:calc(99*var(--lr))}
+.life-page .lmlw .fdmore{border-top:1px solid var(--bline)}
+@media (min-width:861px){
+.life-page .lmap .lmrow{align-items:start}
+}
+/* ===== 층별 · 공간별 안내(층 버튼 · 공간 · 사진 넘김 표시) ===== */
+.life-page .fx{display:grid}
+.life-page .fxf{width:100%;font:inherit}
+.life-page .fxf b{font-family:var(--anton);letter-spacing:.02em}
+.life-page .fxf.dim{padding-block:calc(2*var(--lr))}
+.life-page .fxf.act{cursor:pointer;transition:background .2s}
+.life-page .fxf.act:hover{background:color-mix(in srgb,var(--cat,#6FC3D1) 32%,var(--card))}
+.life-page .fxg{animation:fxin .3s ease both}
+.life-page .fxh{display:flex;align-items:flex-start;gap:calc(1.2*var(--lr))}
+.life-page .fxh h3{font-family:var(--jua);font-weight:700;font-size:calc(2.4*var(--lr));line-height:1.2}
+.life-page .fxh p{font-size:calc(1.4*var(--lr));color:var(--ink2);margin-top:calc(.2*var(--lr))}
+.life-page .fxtabs{flex-wrap:wrap}
+.life-page .fxt{font:inherit;cursor:pointer}
+.life-page .fxv{overflow:hidden;background:#222;outline:none;touch-action:pan-y}
+.life-page .fxv:focus-visible{box-shadow:0 0 0 3px var(--cat,#6FC3D1)}
+.life-page .fxtr{display:flex;height:100%;transition:transform .45s cubic-bezier(.22,.61,.36,1)}
+.life-page .fxsl{flex:0 0 100%;height:100%;background-size:var(--bs,cover);background-position:var(--bp,center)!important;background-repeat:no-repeat}
+.life-page .fxv .bx-ex{position:absolute;left:calc(1*var(--lr));top:calc(1*var(--lr));z-index:2}
+.life-page .fxa{position:absolute;top:50%;z-index:2;width:calc(4.4*var(--lr));height:calc(4.4*var(--lr));margin-top:calc(-2.2*var(--lr));border:0;border-radius:50%;background:rgba(255,255,255,.9);color:var(--ink);font-size:calc(2.6*var(--lr));line-height:1;display:grid;place-items:center;cursor:pointer;box-shadow:0 calc(.4*var(--lr)) calc(1*var(--lr)) calc(-.4*var(--lr)) rgba(0,0,0,.35);opacity:0;transition:opacity .2s}
+.life-page .fxa.prev{left:calc(1.2*var(--lr))}
+.life-page .fxa.next{right:calc(1.2*var(--lr))}
+.life-page .fxv:hover .fxa,
+.life-page .fxv:focus-within .fxa{opacity:1}
+@media (hover:none){
+.life-page .fxa{opacity:1;width:calc(3.8*var(--lr));height:calc(3.8*var(--lr));font-size:calc(2.2*var(--lr))}
+}
+.life-page .fxbar{grid-template-columns:minmax(0,1fr) auto auto}
+.life-page .fxcap{font-size:calc(1.4*var(--lr));font-weight:700;color:var(--ink)}
+.life-page .fxdots{display:flex;align-items:center;gap:calc(.6*var(--lr));padding:calc(.7*var(--lr)) calc(1*var(--lr));border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.life-page .fxd{width:calc(.9*var(--lr));height:calc(.9*var(--lr));padding:0;border:0;border-radius:calc(99*var(--lr));background:var(--line-s);cursor:pointer;transition:width .3s,background .3s}
+.life-page .fxd.on{width:calc(2.6*var(--lr));background:var(--cat,#6FC3D1)}
+.life-page .fxn{font-size:calc(1.25*var(--lr));color:var(--ink3);font-variant-numeric:tabular-nums}
+.life-page .fxn b{color:var(--ink)}
+.life-page .fxinfo{padding-top:calc(1.6*var(--lr));border-top:1px solid var(--bline)}
+.life-page .fxinfo h4{font-size:calc(1.9*var(--lr));font-weight:700;letter-spacing:-.02em}
+.life-page .fxinfo ul{margin-top:calc(.8*var(--lr));display:grid;gap:calc(.5*var(--lr))}
+.life-page .fxinfo li{position:relative;padding-left:calc(1.2*var(--lr));font-size:calc(1.45*var(--lr));color:var(--ink2)}
+.life-page .fxinfo li::before{content:"";position:absolute;left:0;top:.75em;width:calc(.5*var(--lr));height:calc(.5*var(--lr));border-radius:50%;background:var(--cat,#6FC3D1)}
+.life-page .fxinfo a{color:var(--ink);font-weight:700;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--nc);text-decoration-thickness:2px}
+@media (max-width:860px){
+.life-page .fxf.dim{padding-block:calc(.9*var(--lr))}
+}
+@media (max-width:520px){
+.life-page .fxbar{grid-template-columns:1fr auto}
+.life-page .fxcap{grid-column:1/-1}
+}
+/* 층 버튼 · 760px 이하: 비활성 층 글을 세로 가운데로 */
+@media (max-width:760px){
+.life-page #pg-facility .fxf.dim{align-content:center}
+}
+/* ===== 층 안내 · 한 화면 맞춤 ===== */
+.life-page #pg-facility .fxg{scroll-margin-top:140px}
+@media (min-width:761px){
+.life-page #pg-facility .fxs{max-width:max(calc(36*var(--lr)),calc((100svh - 300px)*1.6))}
+}
+/* ===== 층 버튼 · 낮은 화면(861px 이상 · 높이 640px 이하): 버튼 위아래 여백 줄임 ===== */
+@media (min-width:861px) and (max-height:640px){
+.life-page #pg-facility .fxf{padding-block:calc(.8*var(--lr))}
+.life-page #pg-facility .fxf.dim{padding-block:calc(1.2*var(--lr))}
+}
+@media (min-width:861px){
+.life-page #pg-facility .fxs{max-width:none;container-type:inline-size}
+}
+/* ===== 생활 꿀팁 히어로(.h5 · .h5-tip, 시안5 '카테고리별 히어로') ===== */
+.life-page .h5{position:relative;overflow:hidden}
+.life-page .h5g{position:relative;margin:0 auto;display:grid;gap:calc(3.2*var(--lr)) calc(5.6*var(--lr));align-items:center}
+.life-page .h5t{min-width:0;position:relative;z-index:1}
+.life-page .h5k{display:flex;align-items:center;gap:calc(1*var(--lr));margin-top:0;font-family:var(--anton)!important;font-size:calc(1.3*var(--lr));letter-spacing:.14em;color:var(--graphite)}   /* 머리글: 시설 둘러보기 .fh8-k와 같은 모양(이동경로를 빼서 히어로 첫 줄) */
+.life-page .h5k span{width:calc(3.2*var(--lr));height:calc(.3*var(--lr));background:var(--nc)}
+.life-page .h5k em{font-style:normal;color:var(--h5a);margin-left:calc(.4*var(--lr))}
+.life-page .h5k em::before{content:"/";margin-right:calc(1*var(--lr));color:#9AA3AE}
+.life-page .h5 h1{font-family:var(--jua);font-weight:700;line-height:1.12;letter-spacing:-.01em;margin-top:calc(1*var(--lr));text-wrap:balance}
+.life-page .h5s{margin-top:calc(1.6*var(--lr));font-size:calc(1.5*var(--lr));max-width:44ch}
+.life-page .h5n{margin-top:calc(1.4*var(--lr));display:inline-block;font-size:calc(1.2*var(--lr));font-weight:700;border:1.5px dashed currentColor;padding:calc(.3*var(--lr)) calc(.8*var(--lr));opacity:.85}
+/* --- 생활 꿀팁 : 스크랩북 --- */
+.life-page .h5-tip{color:var(--ink);border-bottom:1px solid var(--line);--lc:var(--nc,#6FC3D1);--lcd:#1B7686;--h5a:var(--lcd)}
+.life-page .h5-tip .h5g{background-size:calc(2.2*var(--lr)) calc(2.2*var(--lr));background-image:none}
+.life-page .h5-tip .h5s{color:var(--graphite)}
+.life-page .h5-tip h1{font-size:clamp(calc(3.8*var(--lr)),3.5vw,calc(5.2*var(--lr)))}
+.life-page .h5-tip h1 mark{background:linear-gradient(transparent 58%,#F4D35E 58% 92%,transparent 92%);color:inherit;padding:0 calc(.2*var(--lr));background:linear-gradient(transparent 58%,color-mix(in srgb,var(--lc) 55%,transparent) 58% 92%,transparent 92%)}
+.life-page .scrap{position:relative;min-width:0}
+.life-page .scrap-hand{position:absolute;right:calc(.4*var(--lr));top:calc(-.6*var(--lr));z-index:3;font-family:var(--pen)!important;font-size:clamp(calc(2.4*var(--lr)),2.2vw,calc(3.2*var(--lr)));transform:rotate(-5deg);pointer-events:none;color:var(--lcd)}
+.life-page .pols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(1.6*var(--lr));padding-top:calc(4.4*var(--lr))}
+.life-page .pol{position:relative;display:block;background:#fff;padding:calc(.9*var(--lr)) calc(.9*var(--lr)) calc(1.2*var(--lr));box-shadow:0 calc(.6*var(--lr)) calc(1.4*var(--lr)) rgba(20,35,63,.16);transform:rotate(var(--r));transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s}
+.life-page .pol::before{content:"";position:absolute;left:50%;top:calc(-1*var(--lr));width:calc(6.4*var(--lr));height:calc(1.8*var(--lr));transform:translateX(-50%) rotate(-3deg);background:rgba(255,255,255,.6);border:1px solid rgba(43,47,56,.08)}
+.life-page .pol-i{display:block;aspect-ratio:1/1;background-size:cover;background-position:center}
+.life-page .pol-t{display:block;margin-top:calc(.8*var(--lr));font-family:var(--pen)!important;font-size:calc(2*var(--lr));line-height:1.1;text-align:center;color:var(--ink)}
+.life-page .pol:hover,
+.life-page .pol:focus-visible{transform:rotate(0) translateY(calc(-.4*var(--lr)));box-shadow:0 calc(1*var(--lr)) calc(2*var(--lr)) rgba(43,47,56,.22);outline:none}
+.life-page .pol:focus-visible{box-shadow:0 0 0 3px var(--ink)}
+.life-page .stks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(1.2*var(--lr));margin-top:calc(2.4*var(--lr))}
+.life-page .stk{display:flex;flex-direction:column;gap:calc(.2*var(--lr));padding:calc(1.1*var(--lr)) calc(1.2*var(--lr)) calc(1.2*var(--lr));background:var(--nb);color:var(--ink);box-shadow:calc(.3*var(--lr)) calc(.4*var(--lr)) 0 rgba(43,47,56,.14);transform:rotate(var(--r));transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+.life-page .stk i{font-style:normal;font-family:var(--anton);font-size:calc(1.2*var(--lr));opacity:.7}
+.life-page .stk b{font-size:calc(1.6*var(--lr))}
+.life-page .stk span{font-size:calc(1.2*var(--lr));font-weight:600;line-height:1.4}
+.life-page .stk:hover,
+.life-page .stk:focus-visible{transform:rotate(0) translateY(calc(-.3*var(--lr)));outline:none}
+.life-page .stk:focus-visible{box-shadow:0 0 0 3px var(--ink)}
+@media (max-width:960px){
+.life-page .h5g{grid-template-columns:1fr;gap:calc(2.4*var(--lr))}
+}
+@media (max-width:760px){
+.life-page .stks{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:600px){
+.life-page .h5 h1{font-size:calc(3.4*var(--lr))}
+.life-page .h5s{font-size:calc(1.4*var(--lr))}
+.life-page .pols{gap:calc(1*var(--lr))}
+.life-page .pol{padding:calc(.6*var(--lr)) calc(.6*var(--lr)) calc(.8*var(--lr))}
+.life-page .pol-t{font-size:calc(1.6*var(--lr))}
+.life-page .scrap-hand{display:none}
+}
+/* --- 인사교 라이프 색(청록 --nc) 기준으로 맞춤 --- */
+.life-page .stk.s1{--nb:#9ED3DC}
+.life-page .stk.s2{--nb:#C9E8ED}
+.life-page .stk.s3{--nb:#7CC8D5}
+.life-page .stk.s4{--nb:#E2F3F6}
+/* ===== 오시는 길 제목 줄(.pt7, 시안7 · 히어로 없는 페이지) ===== */
+.life-page .pt7{border-bottom:1px solid var(--line)}
+.life-page .pt7-w{margin:0 auto}
+/* 2026-10-08: 머리글(.fh8-k) · 제목 · 설명(.fh8-s)을 시설 둘러보기 히어로와 같은 모양으로 — 제목이 아래 섹션 제목보다 작던 것(36 < 48px, 1440)을 페이지 제목 크기로(규칙은 아래 .fh8 h1과 같이 씀) */
+/* ===== 층 안내 엘리베이터(.e8, 시안8) ===== */
+.life-page .e8-arw{color:var(--nc,#6FC3D1);line-height:1;text-align:center}
+.life-page .e8-arw.up::before{content:"▲"}
+.life-page .e8-arw.dn::before{content:"▼"}
+.life-page .e8-num{font-family:var(--anton);line-height:1;color:var(--nc,#6FC3D1);text-shadow:0 0 calc(.8*var(--lr)) color-mix(in srgb,var(--nc,#6FC3D1) 70%,transparent);text-align:center}
+.life-page .e8-name{margin-left:auto;font-size:calc(1.25*var(--lr));font-weight:800;color:#BFE6EC;text-align:right;line-height:1.3}
+.life-page #pg-facility .fx .fxf{display:grid;align-items:center;border:0;border-radius:calc(.8*var(--lr));font-weight:800}
+.life-page #pg-facility .fx .fxf b{display:grid;place-items:center;width:calc(4.6*var(--lr));height:calc(4.6*var(--lr));border-radius:50%;border:3px solid #D5DAE0;background:radial-gradient(circle at 35% 30%,#F5F6F8,#B9BEC6);color:#2B2F38;font-size:calc(1.5*var(--lr));box-shadow:0 calc(.3*var(--lr)) 0 #3A3F47;transition:box-shadow .2s,border-color .2s,transform .1s}
+.life-page #pg-facility .fx .fxf.act:hover{background:rgba(255,255,255,.18)}
+.life-page #pg-facility .fx .fxf.act:active b{transform:translateY(calc(.2*var(--lr)));box-shadow:0 calc(.1*var(--lr)) 0 #3A3F47}
+.life-page #pg-facility .fx .fxf.act.on b{color:#2B2F38}
+.life-page #pg-facility .fx .fxf.cur b{border-color:var(--nc,#6FC3D1);box-shadow:0 calc(.3*var(--lr)) 0 #3A3F47,0 0 0 4px color-mix(in srgb,var(--nc,#6FC3D1) 40%,transparent),0 0 calc(1.4*var(--lr)) color-mix(in srgb,var(--nc,#6FC3D1) 60%,transparent)}
+.life-page #pg-facility .fx .fxf:focus-visible{outline:3px solid #20242B;outline-offset:2px}
+.life-page #pg-facility .fx .fxf.dim{cursor:default}
+.life-page #pg-facility .fx .fxf.dim b{background:#9AA0A8;border-color:#8A9099;box-shadow:none;font-size:calc(1.15*var(--lr));color:#3E434B}
+.life-page #pg-facility .fx .fxf.dim span{color:#3E434B;font-weight:700;font-size:calc(1.2*var(--lr))}
+/* 사진 = 엘리베이터 문 */
+.life-page #pg-facility .fx .fxv::before,
+.life-page #pg-facility .fx .fxv::after{content:"";position:absolute;top:0;bottom:0;width:50%;z-index:6;background:linear-gradient(90deg,#8E949C,#C9CED5 45%,#9AA0A8);transition:transform .45s cubic-bezier(.4,0,.2,1);pointer-events:none;display:none}
+.life-page #pg-facility .fx .fxv::before{left:0;transform:translateX(-101%);box-shadow:inset -2px 0 0 #6C7178}
+.life-page #pg-facility .fx .fxv::after{right:0;transform:translateX(101%);box-shadow:inset 2px 0 0 #6C7178}
+.life-page #pg-facility .fx.e8-closed .fxv::before,
+.life-page #pg-facility .fx.e8-closed .fxv::after{transform:none}
+@media (prefers-reduced-motion:reduce){
+.life-page #pg-facility .fx .fxv::before,
+.life-page #pg-facility .fx .fxv::after{transition:none}
+}
+/* ===== 엘리베이터 안 사진(.fx.e8on, 시안8 v2) ===== */
+.life-page #pg-facility .fx.e8on{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:calc(3.6*var(--lr));align-items:start}
+.life-page .e8{background:linear-gradient(90deg,#7E848D,#B9BEC6 18%,#9399A2 40%,#C3C8CF 62%,#8A9099 85%,#A5AAB2);border-radius:calc(1.6*var(--lr));padding:calc(1.4*var(--lr));box-shadow:0 calc(1.6*var(--lr)) calc(3.4*var(--lr)) rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.35);display:grid;grid-template-columns:minmax(0,1fr) calc(8.4*var(--lr));column-gap:calc(1.2*var(--lr))}
+.life-page .e8-body{display:grid;grid-template-columns:minmax(0,1fr) calc(8.4*var(--lr));gap:calc(1.2*var(--lr))}
+.life-page .e8-car{position:relative;aspect-ratio:4/3;border-radius:calc(.6*var(--lr));overflow:hidden;background:#1B1D22;box-shadow:inset 0 0 0 4px #5E636B}
+.life-page #pg-facility .e8-car .fxv{position:absolute;inset:0;height:auto;min-height:0;max-height:none;aspect-ratio:auto;border-radius:0}
+.life-page .e8-car::before,
+.life-page .e8-car::after{content:"";position:absolute;top:0;bottom:0;width:50%;z-index:8;background:linear-gradient(90deg,#8E949C,#C9CED5 45%,#9AA0A8);transition:transform .45s cubic-bezier(.4,0,.2,1);pointer-events:none}
+.life-page .e8-car::before{left:0;transform:translateX(-101%);box-shadow:inset -2px 0 0 #6C7178}
+.life-page .e8-car::after{right:0;transform:translateX(101%);box-shadow:inset 2px 0 0 #6C7178}
+.life-page #pg-facility .fx.e8-closed .e8-car::before,
+.life-page #pg-facility .fx.e8-closed .e8-car::after{transform:none}
+.life-page .e8-pan{display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:calc(.6*var(--lr));background:linear-gradient(180deg,#5C626B,#454A52);border-radius:calc(.8*var(--lr));padding:calc(1*var(--lr)) calc(.6*var(--lr));box-shadow:inset 0 0 0 2px rgba(0,0,0,.25)}
+.life-page #pg-facility .e8-pan .fxf{grid-template-columns:1fr;justify-items:center;text-align:center;gap:calc(.3*var(--lr))!important;padding:calc(.2*var(--lr))!important;color:#E6E8EC;font-size:calc(1.1*var(--lr));background:transparent}
+.life-page #pg-facility .e8-pan .fxf span{font-size:calc(1.05*var(--lr));line-height:1.25}
+.life-page #pg-facility .e8-pan .fxf.dim span{display:none}
+.life-page #pg-facility .e8-pan .fxf.cur{color:#BFE6EC!important}
+.life-page #pg-facility .e8-pan .fxf.act:hover{background:rgba(255,255,255,.08)}
+.life-page #pg-facility .e8-pan .fxf:focus-visible{outline:3px solid var(--nc,#6FC3D1)}
+.life-page .e8-bars{margin-top:calc(1.2*var(--lr));background:var(--paper);border-radius:calc(.8*var(--lr));padding:calc(.7*var(--lr)) calc(1.2*var(--lr))}
+.life-page #pg-facility .e8-bars .fxbar{margin:0;padding:0;display:flex;align-items:center;justify-content:center;gap:calc(1.4*var(--lr))}
+.life-page #pg-facility .fx.e8on .fxs .fxinfo{display:block;margin-top:calc(2*var(--lr))}
+.life-page #pg-facility .fx.e8on .fxp{padding-top:calc(.4*var(--lr))}
+/* 861px 이상: 관련 링크 두 개를 엘리베이터 옆 안내 칸 아래로 옮겨 엘리베이터 아랫선에 맞춤(폰 · 태블릿은 순서 그대로 아래) */
+@media (min-width:861px){
+.life-page #pg-facility .fx.e8on{grid-template-rows:auto 1fr;row-gap:0}
+.life-page #pg-facility .fx.e8on .e8{grid-row:1/3}
+.life-page #pg-facility .fx.e8on .fsx{grid-column:2;grid-row:2;align-self:end;grid-template-columns:1fr;gap:calc(1*var(--lr));margin-top:calc(1.4*var(--lr))}
+.life-page #pg-facility .fx.e8on .fsx a{padding:calc(1.2*var(--lr)) calc(2*var(--lr))}
+}
+@media (max-width:860px){
+.life-page #pg-facility .fx.e8on{grid-template-columns:1fr;gap:calc(2*var(--lr))}
+.life-page .e8{padding:calc(1*var(--lr));grid-template-columns:minmax(0,1fr) calc(6.4*var(--lr));column-gap:calc(.8*var(--lr))}
+.life-page .e8-body{grid-template-columns:minmax(0,1fr) calc(6.4*var(--lr));gap:calc(.8*var(--lr))}
+.life-page .e8-car{aspect-ratio:3/4}
+.life-page #pg-facility .e8-pan .fxf b{width:max(40px,calc(3.8*var(--lr)));height:max(40px,calc(3.8*var(--lr)));font-size:max(12px,calc(1.2*var(--lr)))!important}   /* 601 ~ 860px(태블릿)에서 폰보다 작아지지 않게(860: 30 → 40px) */
+.life-page #pg-facility .e8-pan .fxf span{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+.life-page .e8-car::before,
+.life-page .e8-car::after{transition:none}
+}
+/* 층 표시창: 문 위 가운데 */
+.life-page .e8 .e8-body,
+.life-page .e8 .e8-bars{grid-column:1/-1}
+.life-page .e8 .e8-disp{grid-column:1;justify-self:center;display:flex;align-items:center;gap:calc(.8*var(--lr));width:auto;min-width:calc(12*var(--lr));justify-content:center;margin:0 0 calc(1*var(--lr));padding:calc(.6*var(--lr)) calc(1.8*var(--lr));border-radius:calc(.8*var(--lr));background:#0B0C0F;box-shadow:inset 0 0 0 2px #2A2D33,0 2px 0 rgba(255,255,255,.35)}
+.life-page .e8 .e8-num{font-size:calc(3.4*var(--lr));min-width:0;letter-spacing:.06em}
+.life-page .e8 .e8-arw{width:calc(1.6*var(--lr));font-size:calc(1.5*var(--lr))}
+.life-page .e8 .e8-arw:not(.up):not(.dn){display:none}
+.life-page .e8 .e8-name{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:860px){
+.life-page .e8 .e8-num{font-size:calc(2.8*var(--lr))}
+.life-page .e8 .e8-disp{min-width:calc(9*var(--lr));padding:calc(.5*var(--lr)) calc(1.2*var(--lr))}
+}
+/* ===== 시설 둘러보기 히어로: 공간 사진 벤토(.fh8, 시안8 v4) ===== */
+.life-page .fh8{color:var(--ink);border-bottom:1px solid var(--line)}
+.life-page .fh8-g{margin:0 auto;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.2fr);gap:calc(3.2*var(--lr)) calc(5.6*var(--lr));align-items:center}
+.life-page .fh8-k{display:flex;align-items:center;gap:calc(1*var(--lr));margin-top:0;font-family:var(--anton)!important;font-size:calc(1.3*var(--lr));letter-spacing:.14em;color:var(--graphite)}
+.life-page .fh8-k span{width:calc(3.2*var(--lr));height:calc(.3*var(--lr));background:var(--nc,#6FC3D1)}
+.life-page .fh8-k em{font-style:normal;color:#1B7686;margin-left:calc(.4*var(--lr))}
+.life-page .fh8-k em::before{content:"/";margin-right:calc(1*var(--lr));color:#9AA3AE}
+.life-page :is(.fh8,.pt7) h1{margin-top:calc(1*var(--lr));font-family:var(--jua);font-weight:700;font-size:clamp(calc(4.4*var(--lr)),4.8vw,calc(6.8*var(--lr)));line-height:1.08;letter-spacing:-.01em}
+.life-page .fh8-s{margin-top:calc(1.4*var(--lr));font-size:calc(1.5*var(--lr));color:var(--graphite);max-width:40ch}
+.life-page .fh8-f{list-style:none;padding:0;margin-top:calc(2.4*var(--lr));display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:2px solid var(--ink)}
+.life-page .fh8-f li{display:flex;flex-direction:column;gap:calc(.2*var(--lr));padding:calc(1.2*var(--lr)) calc(.4*var(--lr)) 0;font-size:calc(1.25*var(--lr));font-weight:700;color:var(--graphite)}
+.life-page .fh8-f li+li{border-left:1px solid var(--line);padding-left:calc(1.2*var(--lr))}
+.life-page .fh8-f b{font-family:var(--anton);font-size:calc(2.2*var(--lr));line-height:1.1;color:#1B7686;letter-spacing:.02em}
+.life-page .fh8-n{margin-top:calc(2*var(--lr));display:inline-block;font-size:calc(1.15*var(--lr));font-weight:700;color:var(--graphite);border:1.5px dashed #9AA3AE;padding:calc(.3*var(--lr)) calc(.8*var(--lr))}
+.life-page .fh8-b{display:grid;grid-template-columns:1.25fr 1fr 1fr;grid-template-rows:repeat(2,minmax(calc(15*var(--lr)),1fr));gap:calc(1.2*var(--lr));min-height:calc(44*var(--lr))}
+.life-page .btl{position:relative;overflow:hidden;border:0;padding:0;border-radius:calc(1.4*var(--lr));background:#20242B;color:#fff;font:inherit;text-align:left;cursor:pointer;isolation:isolate}
+.life-page .btl.tl1{grid-row:1/3}
+.life-page .btl.tl2{grid-column:2/4}
+.life-page .btl-i{position:absolute;inset:0;z-index:-1;background-size:cover;background-position:center;transition:transform .7s cubic-bezier(.22,.61,.36,1)}
+.life-page .btl::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(14,16,19,0) 45%,rgba(14,16,19,.78))}
+.life-page .btl em{position:absolute;right:calc(1*var(--lr));top:calc(1*var(--lr));font-style:normal;background:rgba(14,16,19,.78);font-size:calc(1.1*var(--lr));font-weight:700;padding:calc(.3*var(--lr)) calc(.7*var(--lr));border-radius:calc(.4*var(--lr))}
+.life-page .btl-c{position:absolute;left:calc(1.6*var(--lr));bottom:calc(1.4*var(--lr));right:calc(5.6*var(--lr));display:flex;flex-direction:column;gap:calc(.2*var(--lr));text-shadow:0 1px 6px rgba(0,0,0,.4)}
+.life-page .btl-c i{align-self:flex-start;font-style:normal;font-family:var(--anton);font-size:calc(1.25*var(--lr));letter-spacing:.06em;color:#0E2F35;background:var(--nc,#6FC3D1);padding:calc(.1*var(--lr)) calc(.7*var(--lr));border-radius:calc(.4*var(--lr));text-shadow:none}
+.life-page .btl-c b{font-size:calc(2*var(--lr));line-height:1.25}
+.life-page .btl-go{position:absolute;right:calc(1.4*var(--lr));bottom:calc(1.4*var(--lr));width:calc(3.6*var(--lr));height:calc(3.6*var(--lr));border-radius:50%;background:#F3F1EC;color:#20242B;display:grid;place-items:center;transform:scale(.85);opacity:.85;transition:transform .3s,opacity .3s,background .3s}
+.life-page .btl-go svg{width:calc(1.8*var(--lr));height:calc(1.8*var(--lr));fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.life-page .btl:hover .btl-i,
+.life-page .btl:focus-visible .btl-i{transform:scale(1.06)}
+.life-page .btl:hover .btl-go,
+.life-page .btl:focus-visible .btl-go{transform:none;opacity:1;background:var(--nc,#6FC3D1)}
+.life-page .btl:focus-visible{outline:3px solid #1B7686;outline-offset:3px}
+@media (max-width:960px){
+.life-page .fh8-g{grid-template-columns:1fr}
+.life-page .fh8-b{min-height:calc(38*var(--lr))}
+}
+@media (max-width:600px){
+.life-page .fh8-g{gap:calc(2.4*var(--lr))}
+.life-page :is(.fh8,.pt7) h1{font-size:calc(3.6*var(--lr))}
+.life-page .fh8-s{font-size:calc(1.4*var(--lr))}
+.life-page .fh8-f{grid-template-columns:1fr 1fr;row-gap:calc(1.2*var(--lr))}
+.life-page .fh8-f li:nth-child(3){border-left:0;padding-left:calc(.4*var(--lr))}
+.life-page .fh8-b{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:calc(18*var(--lr)) calc(13*var(--lr));min-height:0;gap:calc(.8*var(--lr))}
+.life-page .btl.tl1{grid-row:auto;grid-column:1/-1}
+.life-page .btl.tl2{grid-column:auto}
+.life-page .btl-c{left:calc(1*var(--lr));bottom:calc(1*var(--lr));right:calc(1*var(--lr))}
+.life-page .btl:not(.tl1) .btl-go{display:none}
+.life-page .btl:not(.tl1) .btl-c b{font-size:calc(1.4*var(--lr))}
+.life-page .btl-c b{font-size:calc(1.6*var(--lr))}
+.life-page .btl-go{width:calc(3*var(--lr));height:calc(3*var(--lr))}
+}
+/* 엘리베이터 아래 줄: 사진 설명은 빼고 몇 번째 사진인지만 가운데에 */
+.life-page #pg-facility .e8-bars .fxcap{display:none}
+
+/* ===== 공간 탭: 사진 카드(.fxtabs, 시안8 v6) ===== */
+.life-page #pg-facility .fx.e8on .fxtabs{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:calc(1*var(--lr));margin:calc(1.6*var(--lr)) 0 0;position:relative}
+.life-page #pg-facility .fx.e8on .fxtabs::before{content:"공간 고르기";position:absolute;left:0;top:calc(-2.4*var(--lr));font-size:calc(1.2*var(--lr));font-weight:800;letter-spacing:.04em;color:#1B7686}
+.life-page #pg-facility .fx.e8on .fxh{margin-bottom:calc(3.6*var(--lr))}
+.life-page #pg-facility .fx.e8on .fxg:not(:has(.fxtabs)) .fxh{margin-bottom:calc(1.6*var(--lr))}   /* 공간 탭이 없는 층(8F): '공간 고르기' 라벨 자리 여백을 뺌 */
+.life-page #pg-facility .fx.e8on .fxt{position:relative;display:flex;flex-direction:column;align-items:stretch;padding:0;border:2px solid var(--bline,#E4E1DA);border-radius:calc(1*var(--lr));background:var(--card,#fff);color:var(--ink,#2B2F38);overflow:hidden;text-align:left;font-size:calc(1.5*var(--lr));font-weight:800;box-shadow:0 calc(.4*var(--lr)) calc(1*var(--lr)) rgba(31,36,48,.06);transition:border-color .2s,transform .2s,box-shadow .2s}
+.life-page .fxt-th{display:block;aspect-ratio:16/10;background-size:cover;background-position:center;filter:saturate(.75) brightness(.92);transition:filter .3s}
+.life-page .fxt-l{display:flex;align-items:center;justify-content:space-between;gap:calc(.6*var(--lr));padding:calc(.9*var(--lr)) calc(1.1*var(--lr)) calc(1*var(--lr))}
+.life-page .fxt-l i{font-style:normal;font-family:var(--anton);font-weight:400;font-size:calc(1.2*var(--lr));color:#7A808A}
+.life-page #pg-facility .fx.e8on .fxt:hover{border-color:var(--nc,#6FC3D1);transform:translateY(calc(-.2*var(--lr)));box-shadow:0 calc(.8*var(--lr)) calc(1.6*var(--lr)) rgba(31,36,48,.1)}
+.life-page #pg-facility .fx.e8on .fxt:hover .fxt-th{filter:none}
+.life-page #pg-facility .fx.e8on .fxt[aria-selected="true"]{background:#16323A;border-color:var(--nc,#6FC3D1);color:#fff;box-shadow:0 0 0 3px color-mix(in srgb,var(--nc,#6FC3D1) 35%,transparent)}
+.life-page #pg-facility .fx.e8on .fxt[aria-selected="true"] .fxt-th{filter:none}
+.life-page #pg-facility .fx.e8on .fxt[aria-selected="true"] .fxt-l i{color:var(--nc,#6FC3D1)}
+.life-page #pg-facility .fx.e8on .fxt[aria-selected="true"]::after{content:"보는 중";position:absolute;right:calc(.7*var(--lr));top:calc(.7*var(--lr));background:var(--nc,#6FC3D1);color:#0E2F35;font-size:calc(1.05*var(--lr));font-weight:800;padding:calc(.2*var(--lr)) calc(.6*var(--lr));border-radius:calc(.4*var(--lr))}
+.life-page #pg-facility .fx.e8on .fxt:focus-visible{outline:3px solid #1B7686;outline-offset:2px}
+@media (max-width:600px){
+.life-page #pg-facility .fx.e8on .fxtabs{gap:calc(.6*var(--lr))}
+.life-page .fxt-l{padding:calc(.6*var(--lr)) calc(.7*var(--lr)) calc(.7*var(--lr))}
+.life-page #pg-facility .fx.e8on .fxt{font-size:calc(1.25*var(--lr))}
+.life-page .fxt-l i{display:none}
+.life-page #pg-facility .fx.e8on .fxt[aria-selected="true"]::after{content:"✓";right:calc(.5*var(--lr));top:calc(.5*var(--lr));padding:calc(.1*var(--lr)) calc(.5*var(--lr))}
+}
+@media (prefers-reduced-motion:no-preference){
+@keyframes lbxin{from{opacity:0;transform:translateY(calc(1.2*var(--lr))) scale(.98)}to{opacity:1;transform:none}}
+}
+@keyframes fxin{from{opacity:0;transform:translateY(calc(.6*var(--lr)))}to{opacity:1;transform:none}}
+
+/* ===== 사이트 통합 조정 (시안 밖, 공통 틀에 맞춘 값 · 2026-10-07) =====
+   - 헤더: 시안의 자기 헤더(붙는 높이 7rem) 대신 공통 고정 헤더(--hdr: 72px, 860px 이하 60px) + 하위 메뉴 바(--sub). 2뎁스(시설 둘러보기 · 생활 꿀팁 · 오시는 길)는
+     공통 하위 메뉴 바, 시안의 소메뉴 바(.lnb)는 생활 꿀팁의 01~04 바로가기만 남겨 그 밑에 붙임(.lnb의 top)
+   - 가로: 본문 · 히어로 안 · 바로가기 막대 · '다음으로' · 안내문을 헤더와 같은 정렬선(공통 --wrap 1240px · 좌우 --gutter)으로. 값은 각 규칙(.wrap · .next .wrap ·
+     .disc.inset · 아래 히어로 안 상자)에 있음. 시안 비율 단위 상자(124 · 150 × --lr)와 시안 자체 좌우 여백은 폭 · 여백에 쓰지 않음(글자 · 컴포넌트 크기는 --lr 그대로).
+     100vw 대신 부모 폭 기준이라 스크롤바가 있어도 헤더와 같은 선
+   - 세로: 공통 토큰(common/css/tokens.css) — 섹션 사이 --sec-y, 히어로(꿀팁은 바로가기 막대) 바로 다음 섹션 위 --sec-y-first, 히어로 안 위아래 --hero-y,
+     '다음으로' 띠 위아래 --sec-y. 섹션 제목 위 여백은 이 토큰만(제목 margin-top 0). 라이프 .sec.alt 바탕(paper 55% + card)은 기본 바탕과 거의 같아
+     (명도 대비 약 1.02 : 1) 띠로 읽히지 않음 → 띠 규칙 대신 섹션 사이를 --sec-y로(지원 전 체크와 같은 간격) 하고, 흐린 바탕 경계가 글에 붙지 않게 위아래 반씩
+   - 문화·여가 지도(.lmw2)의 시안 sticky 규칙은 그대로 두지만 실제로는 붙지 않음 — 옆 목록(.lmlw)이 지도와 같은 높이에서 안쪽 스크롤이라 줄(.lmrow)에 붙을 여유가 없음 */
+/* 히어로 바탕: 2026-10-07 사용자 결정(후보 B) — 카테고리 색(청록)을 연하게. 시안 생활 꿀팁의 연한 색(#DFF1F4)과 같은 값 */
+.life-page :is(.fh8,.h5-tip,.pt7){background:#DFF1F4}
+
+/* 히어로 안 상자: 정렬선 폭 · 위아래 --hero-y */
+.life-page :is(.fh8-g,.h5g,.pt7-w){max-width:var(--wrap);padding:var(--hero-y) var(--gutter)}
+/* 꿀팁 히어로 점무늬: 안쪽 상자(.h5g)가 정렬선 폭으로 좁아지면 무늬 끝이 히어로 안에 세로 경계로 보여 히어로 전체 바탕으로 옮김(무늬 · 색 그대로) */
+.life-page .h5-tip{background-image:radial-gradient(circle,#A9CFD6 1.1px,transparent 1.3px);background-size:calc(2.2*var(--lr)) calc(2.2*var(--lr))}
+/* 꿀팁 히어로 칸 비율: 시안 1 : 1.1 대신 1 : 1(961px 이상, 960px 이하는 시안대로 한 칸). 상자가 정렬선 폭(1290 → 1144px, 1440 기준)으로 좁아져
+   시안에서 한 줄이던 제목(「선배만 아는 인사교 생활 꿀팁」)이 '꿀팁'만 다음 줄로 떨어져서. 사진 칸은 574 → 548px. 글꼴이 달라 그래도 넘치면 두 줄을 고르게 */
+@media (min-width:961px){.life-page .h5g{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.life-page .sec{padding-block:calc(var(--sec-y) / 2)}   /* 섹션 사이 = 앞 섹션 아래 반 + 이 섹션 위 반 = --sec-y */
+.life-page :is(.fh8,.pt7,.lnb)+.sec{padding-top:var(--sec-y-first)}
+.life-page .sec:has(+.next-band){padding-bottom:var(--sec-y)}   /* '다음으로' 띠(공용 .next-band: 흰 바탕 · 위 선이 보이는 띠) 앞 마지막 섹션 아래 */
+/* 안내문(꿀팁 끝): 왼쪽 선 포함 상자가 정렬선에서 시작. 바탕이 같은 마지막 섹션의 끝 줄이라 그 섹션 아래 여백은 0, '다음으로' 띠 앞 여백(--sec-y)은 안내문 아래로 옮김 */
+.life-page .sec:has(+.disc.inset){padding-bottom:0}
+/* 꿀팁 위치(#tp-house 등)로 갈 때(바로가기 · 주소 · 다른 화면 링크): 섹션 제목이 바로가기 막대 아래 32px.
+   scroll-margin = 막대 높이 + 24px(32 - base.css scroll-padding의 8) - 섹션 위 여백 */
+.life-page .tp-sec{scroll-margin-top:calc(var(--lnb-h) + 24px - var(--sec-y) / 2)}
+.life-page .lnb+.tp-sec{scroll-margin-top:calc(var(--lnb-h) + 24px - var(--sec-y-first))}
+/* 엘리베이터 사진 칸: 시안의 860px 이하 세로형(3:4)은 폰 폭 기준이라 601~860px에서는 사진이 화면보다 길어짐(860px: 718 × 958px) → 이 구간만 데스크톱과 같은 4:3 */
+@media (min-width:601px) and (max-width:860px){.life-page .e8-car{aspect-ratio:4/3}}

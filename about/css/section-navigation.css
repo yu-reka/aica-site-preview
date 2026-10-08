@@ -1,0 +1,51 @@
+/* Introduction-only chapter index: compact rail with hover contents. */
+.section-navigation { display: none; }
+
+@media (min-width: 1200px) {
+  .section-navigation {
+    --section-nav-top: max(calc(150px + min(11.865vw, 231px)), calc(50svh - 173px));
+    display: block; position: fixed; top: var(--section-nav-top); right: 20px; z-index: 20; width: 52px; color: #f5f7fc;
+  }
+  .section-navigation-trigger {
+    display: flex; flex-direction: column; align-items: center; width: 52px; padding: 24px 0;
+    border: 1px solid #ffffff40; background: #e5e8eedb; backdrop-filter: blur(16px); color: #626f83; transition: background .2s;
+  }
+  .section-navigation-ticks { display: flex; flex-direction: column; align-items: center; gap: 25px; }
+  .section-navigation-ticks i { display: block; width: 15px; height: 2px; background: #8792a2; transform: rotate(-30deg); transition: background .2s, box-shadow .2s; }
+  .section-navigation-ticks i.is-current { background: #244cd2; box-shadow: 0 0 7px #244cd242; }
+  .section-navigation-caption { writing-mode: vertical-rl; font-size: 11px; letter-spacing: .08em; margin-top: 24px; font-weight: 700; }
+  .section-navigation-line { height: 40px; width: 1px; margin-top: 14px; background: #8792a280; }
+  .section-navigation-panel {
+    position: absolute; top: 0; right: 52px; width: 278px; max-height: calc(100svh - var(--section-nav-top) - 20px);
+    overflow-y: auto; overscroll-behavior: contain; padding: 25px 18px 18px; border: 1px solid #ffffff26; border-radius: 16px 0 0 16px;
+    background: #101c2df2; box-shadow: -12px 15px 35px #06112626; backdrop-filter: blur(22px);
+    opacity: 0; visibility: hidden; transform: translateX(8px); transition: opacity .2s, transform .2s, visibility .2s;
+    scrollbar-width: thin; scrollbar-color: #66758a transparent;
+  }
+  .section-navigation.is-open .section-navigation-panel { opacity: 1; visibility: visible; transform: translateX(0); }
+  .section-navigation.is-open .section-navigation-trigger { background: #e5e8eef5; }
+  .section-navigation-heading { padding: 0 10px 20px; }
+  .section-navigation-heading > span { display: block; margin-bottom: 8px; font-size: 9px; letter-spacing: .15em; color: #94a2b7; }
+  .section-navigation-heading strong { font-size: 17px; font-weight: 700; letter-spacing: -.035em; }
+  .section-navigation ol { list-style: none; padding: 0; margin: 0; }
+  .section-navigation li + li { margin-top: 5px; }
+  .section-navigation li a { display: flex; align-items: baseline; gap: 12px; padding: 13px 9px; border-left: 2px solid transparent; border-radius: 0 5px 5px 0; color: #b4c0d0; transition: background .15s, color .15s; }
+  .section-navigation-number { font-size: 10px; font-weight: 400; letter-spacing: 0; }
+  .section-navigation li strong { display: block; font-size: 14px; font-weight: 700; letter-spacing: -.035em; }
+  .section-navigation li small { display: block; margin-top: 5px; font-size: 10px; font-weight: 400; color: #8594aa; white-space: nowrap; }
+  .section-navigation li a:hover { color: #fff; background: #ffffff09; }
+  .section-navigation li a[aria-current='location'] { border-left-color: #69b4ff; color: #7abfff; background: #539fff0d; }
+  .section-navigation-top { display: flex; justify-content: space-between; margin: 16px 9px 0; padding-top: 15px; border-top: 1px solid #ffffff1a; font-size: 11px; color: #94a2b7; }
+  .section-navigation-top:hover { color: #fff; }
+  /* #위치 도착: 넓은 화면 섹션 여백은 막대 없는 기준이라 공통 하위 메뉴 바 높이를 더함(좁은 화면 여백에는 전달본 섹션 이동 막대 높이가 이미 들어 있음) */
+  .about-has-section-nav { --about-subnav: var(--sub); }
+  .about-has-section-nav .about-wrap { width: min(1120px, calc(100% - 288px)); margin-inline: auto; }
+  .about-has-section-nav .about-section { scroll-margin-top: 28px; }
+  .school-about.about-has-section-nav .scene-copy { left: 63%; width: 21%; }
+  .about-has-section-nav .hero-story { right: 220px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-navigation *, .section-navigation *::before { transition: none; }
+}
+

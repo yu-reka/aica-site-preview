@@ -1,0 +1,61 @@
+/* 취업·창업 준비: 흐름도와 펼쳐 보는 프로그램 안내 */
+.career-guide { padding: 80px 0 88px; background: #edf3ff; color: var(--about-ink); scroll-margin-top: 76px; }
+.career-guide-heading .micro-label { font-size: 13px; margin-bottom: 12px; }
+.school-about .career-guide-heading h2 { font-size: clamp(28px, 3vw, 42px); line-height: 1.45; font-weight: 900; letter-spacing: -.045em; word-break: keep-all; }
+.career-guide-flow { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; padding: 0; margin: 42px 0 58px; list-style: none; }
+.career-guide-flow::before { content: ''; position: absolute; top: 23px; left: 24px; right: calc(25% - 14px); height: 1px; background: #bbcbed; }
+.career-guide-flow li { position: relative; }
+.career-guide-step { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border: 1px solid #b8c9ed; border-radius: 50%; background: #edf3ff; color: var(--about-blue); font-size: 13px; font-weight: 700; }
+.career-guide-flow li:first-child .career-guide-step { background: var(--about-blue); border-color: var(--about-blue); color: #fff; }
+.career-guide-flow strong { display: block; margin-top: 17px; font-size: 20px; font-weight: 700; letter-spacing: -.035em; }
+.school-about .career-guide-flow p { margin: 5px 0 0; font-size: 14px; color: var(--about-muted); line-height: 1.7; word-break: keep-all; }
+.career-guide-layout { display: grid; grid-template-columns: .8fr 1.6fr; gap: 72px; padding-top: 38px; border-top: 1px solid #cbd8f0; align-items: start; }
+.school-about .career-guide-intro h3 { margin: 0; font-size: 30px; font-weight: 900; line-height: 1.45; letter-spacing: -.04em; }
+.school-about .career-guide-intro > p { margin-top: 20px; font-size: 16px; line-height: 1.9; color: var(--about-muted); word-break: keep-all; }
+.career-guide-programs { padding-top: 25px; margin-top: 30px; border-top: 1px solid #cbd8f0; }
+.career-guide-programs .micro-label { margin-bottom: 10px; }
+.school-about .career-guide-programs p { font-size: 16px; font-weight: 700; line-height: 1.9; color: var(--about-blue); }
+.career-guide-accordion { min-width: 0; }
+.career-guide-accordion details { border-bottom: 1px solid #c1d0eb; }
+.career-guide-accordion summary { display: flex; align-items: center; gap: 18px; list-style: none; padding: 22px 0; cursor: pointer; }
+.career-guide-accordion details:first-child summary { padding-top: 3px; }
+.career-guide-accordion summary::-webkit-details-marker { display: none; }
+.career-guide-accordion summary:focus-visible { outline: 2px solid var(--about-blue); outline-offset: 5px; }
+.career-guide-accordion summary:hover .career-guide-service-title { color: var(--about-blue); }
+.career-guide-number { flex: 0 0 24px; color: #7288b4; font-size: 12px; font-weight: 700; }
+.career-guide-service-title { flex: 1; font-size: 21px; letter-spacing: -.04em; line-height: 1.5; word-break: keep-all; }
+.career-guide-plus { position: relative; flex: 0 0 18px; height: 18px; color: #637faa; }
+.career-guide-plus::before, .career-guide-plus::after { content: ''; position: absolute; background: currentColor; }
+.career-guide-plus::before { top: 8px; left: 1px; right: 1px; height: 1.5px; }
+.career-guide-plus::after { top: 1px; bottom: 1px; left: 8px; width: 1.5px; }
+.career-guide-accordion details[open] .career-guide-plus::after { display: none; }
+.career-guide-accordion details[open] .career-guide-service-title { color: var(--about-blue); }
+.career-guide-answer { padding: 0 34px 26px 42px; }
+.school-about .career-guide-answer > p { margin: 0; font-size: 15px; line-height: 1.9; color: var(--about-muted); word-break: keep-all; }
+.career-guide-tags { display: flex; flex-wrap: wrap; gap: 7px; padding: 0; margin: 15px 0 0; list-style: none; }
+.career-guide-tags li { padding: 5px 9px; border: 1px solid #c4d2eb; border-radius: 4px; color: #526992; font-size: 12px; line-height: 1.5; }
+@media (max-width: 1000px) {
+  .career-guide-layout { gap: 35px; }
+  .career-guide-service-title { font-size: 19px; }
+}
+@media (max-width: 700px) {
+  .career-guide { padding: 52px 0 58px; scroll-margin-top: 63px; }
+  .school-about .career-guide-heading h2 { font-size: 28px; }
+  .career-guide-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 22px; margin: 30px 0 36px; }
+  .career-guide-flow::before { display: none; }
+  .career-guide-step { width: 42px; height: 42px; font-size: 12px; }
+  .career-guide-flow strong { font-size: 18px; margin-top: 12px; }
+  .school-about .career-guide-flow p { font-size: 12px; }
+  .career-guide-layout { grid-template-columns: 1fr; gap: 30px; padding-top: 28px; }
+  .school-about .career-guide-intro h3 { font-size: 25px; }
+  .career-guide-intro h3 br { display: none; }
+  .school-about .career-guide-intro > p { font-size: 14px; margin-top: 14px; }
+  .career-guide-programs { margin-top: 22px; padding-top: 20px; }
+  .school-about .career-guide-programs p { font-size: 14px; }
+  .career-guide-accordion summary { gap: 12px; padding: 20px 0; }
+  .career-guide-service-title { font-size: 18px; }
+  .career-guide-number { flex-basis: 20px; }
+  .career-guide-answer { padding: 0 0 22px 32px; }
+  .school-about .career-guide-answer > p { font-size: 14px; }
+  .career-guide-tags li { font-size: 11px; }
+}

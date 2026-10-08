@@ -16,7 +16,9 @@
 /* =========================================================
    상단 헤더 / GNB — 모든 페이지 같은 어두운 막대
    ========================================================= */
-.site-header{position:fixed;inset:0 0 auto 0;z-index:50;padding-top:env(safe-area-inset-top,0px);color:var(--ink)}
+.site-header{position:fixed;inset:0 0 auto 0;z-index:50;padding-top:env(safe-area-inset-top,0px);color:var(--ink);
+  --logo-w:187px;                                      /* 로고(심볼 + 이름 + 광주) 칸 폭: 글꼴이 늦게 와도 GNB가 안 움직이게 고정(Pretendard에서 실제 186.9px) */
+  --gnb-x:calc(var(--logo-w) + 40px + 12px + 22px)}    /* GNB 첫 메뉴(인사교 알아보기) 글자 시작 = 정렬선 + 로고 + 칸 사이(.hdr-inner gap) + .gnb 왼쪽 여백 + 링크 안쪽 여백. 하위 메뉴 바 첫 항목도 여기 */
 .site-header:empty{height:calc(env(safe-area-inset-top,0px) + var(--hdr));background:var(--header-bg)}
 .site-header .hdr-bar{position:relative;z-index:2;height:var(--hdr);background:color-mix(in srgb,var(--header-bg) 92%,transparent);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid rgba(255,255,255,.08);color:var(--on-header);transition:border-color .3s,background .3s}
 .site-header.is-scrolled .hdr-bar{border-bottom-color:rgba(255,255,255,.12)}   /* 막대는 늘 어두워서 선도 어두운 면 기준(밝은 회색 선이 홈 사진 위에 튀던 것) */
@@ -24,6 +26,7 @@
 
 /* 로고: 인공지능사관학교 심볼(2026-09-29 받은 원본) + 이름 */
 .logo{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none;flex-shrink:0}
+.site-header .hdr-bar .logo{min-width:var(--logo-w)}
 .logo-mark{width:31px;height:26px;flex:none;background:url("../assets/brand/symbol-blue.png") center/contain no-repeat}
 .hdr-bar .logo-mark{background-image:url("../assets/brand/symbol-white.png")}
 .logo-text{font-weight:700;font-size:17px;letter-spacing:-.03em}
@@ -90,7 +93,10 @@
 .site-header .subnav-list a.is-active{color:var(--ink);font-weight:600}
 .site-header .subnav-indicator{position:absolute;left:0;bottom:0;height:2px;background:var(--ink);transition:transform .4s var(--ease),width .4s var(--ease);pointer-events:none}
 @media (min-width:861px){
-  .site-header .subnav-inner>.subnav-list:first-child{margin-left:-14px}   /* 왼쪽 제목이 없는 바(알아보기): 첫 탭 글자를 로고 · 본문 정렬선에(링크 안쪽 여백만큼 당김) */
+  /* 2뎁스 시작점(2026-10-08 사용자 "모든 카테고리의 2depth 지점도 동일하게"): 첫 항목 글자 = GNB 첫 메뉴 '인사교 알아보기' 글자 아래(--gnb-x).
+     왼쪽 제목(이야기 · 체크)은 고정 폭 칸이라 구분선도 모든 페이지 같은 자리, 제목 없는 바(알아보기 · 라이프)는 그만큼 띄움. 링크 안쪽 여백 14px · 칸 사이 28px 뺌 */
+  .site-header .subnav-title{flex:none;width:calc(var(--gnb-x) - 28px - 14px);overflow:hidden;text-overflow:ellipsis}
+  .site-header .subnav-inner>.subnav-list:first-child{margin-left:calc(var(--gnb-x) - 14px)}
 }
 
 /* =========================================================
@@ -181,6 +187,8 @@
 :root .btn.is-line:hover{border-color:var(--ink)}
 :root .btn.is-cta{background:var(--cta);border-color:var(--cta);color:var(--on-cta)}
 :root .btn.is-cta:hover{background:color-mix(in srgb,var(--cta) 90%,#000);border-color:color-mix(in srgb,var(--cta) 90%,#000)}
+:root .btn.is-kakao{background:#FEE500;border-color:#FEE500;color:#191919}   /* 카카오톡 문의: 카카오 브랜드 노랑(값은 --cta와 같지만 브랜드 색이라 따로, 2026-10-08 사용자 결정으로 되살림) */
+:root .btn.is-kakao:hover{background:color-mix(in srgb,#FEE500 90%,#000);border-color:color-mix(in srgb,#FEE500 90%,#000)}
 :root .btn.is-sm{height:40px;padding:0 18px;font-size:14.5px;gap:6px}
 :root .btn svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8}
 :root .btn.is-sm svg{width:16px;height:16px}
@@ -195,10 +203,14 @@
    </div></nav>
    어두운 카드의 작은 글 · 화살표 색은 --next-accent(없으면 헤더 연파랑). 페이지 CSS에서 카테고리 색으로: .life-page{--next-accent:#6FC3D1}
    지원하기처럼 노랑으로 강조: 첫 카드에 class="is-cta"(작은 글 · 화살표가 --cta)
-   main 맨 끝에 두면 main 아래 여백은 0(띠 자체 위아래 여백이 --sec-y). :root는 버튼과 같은 까닭 */
+   세로 여백(2026-10-08): 띠 앞 마지막 내용 ↔ 첫 카드가 섹션 사이와 같은 --sec-y 한 번. 바탕이 바뀌는 경계(띠 위 선)의 양쪽에 반씩 —
+   띠 바로 앞 형제(섹션 · 안내문 등, 페이지 CSS와 상관없이)의 아래 여백 --sec-y / 2 + 띠 위 여백 --sec-y / 2. 띠 아래도 --sec-y / 2(푸터 위 선 너머 푸터 위 여백 64px).
+   전에는 둘 다 --sec-y여서 1440에서 마지막 내용 ↔ 카드가 225px(섹션 사이 112px의 두 배)
+   main 맨 끝에 두면 main 아래 여백은 0. :root는 버튼과 같은 까닭 */
 :root .next-band{display:block;border-top:1px solid var(--line);background:var(--surface)}
 main:has(>.next-band:last-child){padding-bottom:0}
-:root .next-band .wrap{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:16px;padding-block:var(--sec-y)}
+:root main :has(+.next-band){padding-bottom:calc(var(--sec-y) / 2)}
+:root .next-band .wrap{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:16px;padding-block:calc(var(--sec-y) / 2)}
 :root .next-band a{position:relative;display:flex;flex-direction:column;min-width:0;min-height:196px;padding:28px 28px 84px;border:1px solid var(--line);border-radius:var(--r-card);background:var(--paper);color:var(--ink);text-decoration:none;transition:transform .25s var(--ease),border-color .25s,box-shadow .25s}
 :root .next-band small{display:block;margin:0;font-size:13px;font-weight:600;line-height:1.4;letter-spacing:.04em;color:var(--graphite)}
 :root .next-band b{display:block;margin:10px 0 0;font-family:var(--ff-title);font-weight:700;font-size:clamp(21px,1.9vw,25px);line-height:1.25;letter-spacing:-.01em}
@@ -228,6 +240,17 @@ main:has(>.next-band:last-child){padding-bottom:0}
   :root .next-band a,:root .next-band a::before,:root .next-band a::after{transition:none}
   :root .next-band a:hover,:root .next-band a:hover::after{transform:none}
 }
+
+/* ---------- 구분점(·) 목록: 줄이 바뀌는 자리의 점은 감춤(2026-10-08) ----------
+   줄 끝에 '탑승 ·'처럼 점만 남지 않게. <span class="seps"><span><span>항목</span><span>항목</span></span></span>
+   바깥이 자르고(overflow), 안쪽 줄을 점 칸만큼 왼쪽으로 당겨 줄 첫 항목 앞의 점이 바깥 밖으로 나가게. 항목은 통째로 다음 줄로
+   (한 항목이 줄보다 길면 그 안에서 줄바꿈 · 둘째 줄은 점 칸만큼 내어쓰기). 쓰는 곳: 인사교 라이프 오시는 길 단계 · '다음으로' 띠 카드 설명
+   margin을 다시 정하는 것은 띠의 span 규칙(margin-top 8px)이 안쪽 span에 번지지 않게. 자르기는 가로만(clip) — 사진 위 글의 그림자가 위아래로 잘리지 않게 */
+:root .seps{--seps:.72em;overflow:hidden;overflow-x:clip;overflow-y:visible}   /* 점 칸 폭 = 글 ' · '(띄어쓰기 · 점 · 띄어쓰기)의 실제 폭(Paperlogy Text 0.72em) — 점 간격이 손으로 쓴 ' · '와 같게 */
+:root .seps>span{display:block;margin:0 0 0 calc(-1*var(--seps))}
+:root .seps>span>span{display:inline-block;margin:0;padding-left:var(--seps);text-indent:calc(-1*var(--seps));text-wrap:balance}
+:root .seps>span>span::before{content:"·";display:inline-block;width:var(--seps);text-indent:0;text-align:center}
+:root .seps>span>span:first-child::before{content:"·"/""}   /* 첫 점은 늘 잘려 안 보임 — 화면 읽기에서도 빼기(링크 이름이 '제목 · 첫 항목'이 되지 않게) */
 
 /* ---------- 가로로 넘치는 탭 줄: 더 있으면 끝을 흐리게 ----------
    공통 하위 메뉴 바는 자동. 페이지의 가로 스크롤 줄은 그 요소에 data-scroll-fade(예: <div class="wrap" data-scroll-fade>)

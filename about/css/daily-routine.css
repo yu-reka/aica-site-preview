@@ -1,83 +1,83 @@
 .school-about:has(#daily-routine:target) { scroll-padding-top: calc(var(--hdr) + var(--about-subnav, 0px)); }
-.daily-routine { margin-top: 72px; padding-top: 58px; border-top: 1px solid #d8dfeb; scroll-margin-top: 24px; }
-.daily-routine-heading { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 34px; }
-.daily-routine .daily-routine-heading h3 { font-size: clamp(28px, 3vw, 40px); font-weight: 900; letter-spacing: -.05em; line-height: 1.35; }
-.daily-routine-heading .micro-label { margin-bottom: 14px; font-size: 13px; }
-.daily-routine-heading > p { flex-shrink: 0; font-size: 14px; color: #657087; padding-bottom: 6px; }
-.daily-routine-layout { display: grid; grid-template-columns: .9fr 1.6fr; gap: 54px; align-items: start; }
-.daily-routine-clock { background: #f5f4ee; padding: 28px; border-radius: 18px; text-align: center; }
-.daily-routine-week { display: inline-block; color: #536078; font-size: 14px; font-weight: 700; letter-spacing: -.02em; }
-.daily-routine-dial { position: relative; width: min(100%, 320px); margin: 16px auto 8px; }
-.daily-routine-dial > svg { display: block; width: 100%; aspect-ratio: 1; }
-.daily-routine-dial-label { position: absolute; inset: 24% 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.daily-routine-dial-label strong { font-size: clamp(30px, 3.1vw, 44px); color: #13203c; line-height: 1.15; letter-spacing: -.045em; font-weight: 900; }
-.daily-routine-dial-label small { font-size: 12px; color: #657087; }
-.daily-routine-dial-label > span { margin: 4px 0; color: #244cd2; font-size: 21px; line-height: 1; }
-.daily-routine .daily-routine-clock > p { font-size: 13px; color: #657087; }
-.daily-routine-lunch-note { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 22px; padding-top: 20px; border-top: 1px solid #dedfd6; color: #776229; font-size: 14px; }
-.daily-routine-lunch-note strong { color: #13203c; white-space: nowrap; font-weight: 700; }
-.daily-routine-clock-legend { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin: 18px 0 0; padding: 0; list-style: none; color: #657087; font-size: 12px; }
-.daily-routine-clock-legend li::before { content: ''; display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: #8da9ed; }
-.daily-routine-clock-legend li:nth-child(2)::before { background: #edbc55; }
-.daily-routine-clock-legend li:nth-child(3)::before { background: #244cd2; }
-.daily-routine-timeline { list-style: none; margin: 0; padding: 0; }
-.daily-routine-timeline > li { display: grid; grid-template-columns: 42px 126px minmax(0, 1fr); column-gap: 18px; align-items: start; position: relative; padding: 24px 0; }
-.daily-routine-timeline > li:first-child { padding-top: 10px; }
-.daily-routine-timeline > li:last-child { padding-bottom: 10px; }
-.daily-routine-timeline > li + li { border-top: 1px solid #e4e8ee; }
-.daily-routine-step-icon { position: relative; z-index: 1; display: grid; place-items: center; width: 42px; height: 42px; background: #eef3ff; color: #244cd2; border-radius: 50%; }
-.daily-routine-step-icon svg { display: block; width: 22px; height: 22px; }
-.daily-routine-time { display: flex; flex-direction: column; gap: 3px; padding-top: 1px; font-size: 13px; line-height: 1.65; color: #657087; }
-.daily-routine-time strong { color: #13203c; font-size: 23px; line-height: 1.35; font-weight: 700; letter-spacing: -.025em; white-space: nowrap; }
-.daily-routine .daily-routine-step-copy h4 { font-size: 22px; font-weight: 700; line-height: 1.5; letter-spacing: -.035em; }
-.daily-routine .daily-routine-step-copy p { margin-top: 5px; color: #657087; font-size: 15px; line-height: 1.85; word-break: keep-all; }
-.daily-routine-timeline > .daily-routine-lunch { margin: 6px -20px; padding: 22px 20px; border-top: 0; border-radius: 12px; background: #fff7e5; }
-.daily-routine-lunch .daily-routine-step-icon { color: #8b651c; background: #ffedbe; }
-.daily-routine-timeline > .daily-routine-lunch + li { border-top: 0; }
-.daily-routine-learning { display: grid; grid-template-columns: 1fr 2.6fr; gap: 30px; padding-top: 26px; margin-top: 38px; border-top: 1px solid #d8dfeb; }
-.daily-routine-learning strong { font-size: 17px; color: #13203c; }
-.daily-routine .daily-routine-learning p { color: #536078; font-size: 15px; line-height: 1.9; word-break: keep-all; }
-.daily-routine .daily-routine-source { margin-top: 20px; color: #687180; font-size: 12px; line-height: 1.85; word-break: keep-all; }
-/* #위치 도착: 1200px 미만은 why-school · institution-profile과 같은 여백(하위 메뉴 바 아래) */
-@media (max-width: 1199px) {
-  .daily-routine { scroll-margin-top: 88px; }
-}
+.daily-routine { margin-top: 72px; padding-top: 62px; scroll-margin-top: 24px; }
+.daily-routine-heading { text-align: left; margin-bottom: 38px; }
+.daily-routine-heading .micro-label { display: block; color: #244cd2; margin-bottom: 10px; font-size: 11px; }
+.daily-routine .daily-routine-heading h3 { font-size: clamp(22px, 2.2vw, 30px); font-weight: 700; line-height: 1.5; letter-spacing: -.04em; word-break: keep-all; }
+.daily-routine-heading > p { display: inline-block; margin-top: 18px; padding: 7px 13px; border-radius: 30px; background: #f1f5fb; color: #657087; font-size: 13px; }
+.daily-routine-board { padding: 30px 34px; border: 1px solid #e0e8f5; border-radius: 24px; background: linear-gradient(180deg, #f6f9ff, #fff 68%); overflow: hidden; }
+.daily-routine-board-top { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.daily-routine-week { font-size: 14px; color: #657087; font-weight: 600; }
+.daily-routine-weekdays { display: flex; gap: 7px; margin: 0; padding: 0; list-style: none; }
+.daily-routine-weekdays li { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; background: #eaf0ff; color: #315bd3; font-size: 12px; font-weight: 700; }
+.daily-routine-day-range { display: grid; grid-template-columns: 1fr 1.2fr 1fr; align-items: center; gap: 30px; max-width: 810px; margin: 30px auto 34px; text-align: center; }
+.daily-routine-day-range > div > span { display: block; margin-bottom: 10px; color: #657087; font-size: 13px; }
+.daily-routine-day-range strong { display: block; font-family: 'School Paperlogy', sans-serif; font-size: clamp(42px, 4.5vw, 60px); color: #244cd2; font-weight: 900; letter-spacing: -.035em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.daily-routine-day-range > .daily-routine-day-connector { display: flex; align-items: center; gap: 10px; padding-top: 22px; }
+.daily-routine-day-connector svg { flex: 0 0 32px; width: 32px; height: 32px; color: #7296e6; }
+.daily-routine-day-range .daily-routine-day-connector span { height: 1px; background: #c9d8f3; margin: 0; flex: 1; }
+.daily-routine-track { display: grid; grid-template-columns: 170fr 70fr 300fr; gap: 5px; margin-bottom: 24px; }
+.daily-routine-track > div { display: flex; align-items: center; justify-content: center; min-height: 36px; font-size: 12px; font-weight: 600; border-radius: 6px; color: #315bd3; background: #dfe9ff; }
+.daily-routine-track > .daily-routine-track-lunch { color: #9a6f20; background: #fff0c9; }
+.daily-routine-track > .daily-routine-track-afternoon { color: #fff; background: #416bdd; }
+.daily-routine-agenda { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; padding: 0; margin: 0; list-style: none; }
+.daily-routine-agenda > li { padding: 23px 24px 25px; min-width: 0; border: 1px solid #e3eaf6; border-radius: 16px; background: #fff; }
+.daily-routine-agenda > .daily-routine-lunch { border-color: #f5e7c7; background: #fffaf0; }
+.daily-routine-agenda-top { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+.daily-routine-step-icon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; background: #edf3ff; color: #416bdd; flex-shrink: 0; }
+.daily-routine-step-icon svg { width: 21px; height: 21px; }
+.daily-routine-period { color: #657087; font-size: 13px; font-weight: 600; }
+.daily-routine-lunch .daily-routine-step-icon { color: #b78329; background: #ffedc0; }
+.daily-routine-lunch .daily-routine-period { color: #9a6f20; }
+.daily-routine-time { display: flex; align-items: baseline; gap: 8px; margin-bottom: 14px; font-family: 'School Pretendard', sans-serif; font-size: clamp(20px, 2vw, 26px); font-weight: 700; color: #253859; line-height: 1.25; letter-spacing: -.03em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.daily-routine-time > span { font-size: 16px; color: #a0aec5; font-weight: 400; }
+.daily-routine-lunch .daily-routine-time { color: #936721; }
+.daily-routine .daily-routine-agenda h4 { font-size: 20px; font-weight: 900; color: #172641; line-height: 1.45; letter-spacing: -.03em; }
+.daily-routine .daily-routine-agenda p { margin-top: 11px; color: #657087; font-size: 15px; line-height: 1.85; word-break: keep-all; }
+/* #위치 도착(1199px 이하): 공통 하위 메뉴 바 아래로 — 다른 섹션(선택 이유 · 활동)과 같은 88px. 전달본은 24px라 섹션 이동 막대 밑에 가려 도착하던 것 */
+@media (max-width: 1199px) { .daily-routine { scroll-margin-top: 88px; } }
 @media (max-width: 1100px) {
-  .daily-routine-layout { grid-template-columns: .85fr 1.4fr; gap: 34px; }
-  .daily-routine-clock { padding: 24px 20px; }
-  .daily-routine-timeline > li { grid-template-columns: 38px 106px minmax(0, 1fr); column-gap: 14px; }
-  .daily-routine-step-icon { width: 38px; height: 38px; }
-  .daily-routine-time strong { font-size: 21px; }
-  .daily-routine .daily-routine-step-copy h4 { font-size: 20px; }
+  .daily-routine-board { padding: 26px; }
+  .daily-routine-agenda { gap: 12px; }
+  .daily-routine-agenda > li { padding: 21px 18px; }
+  .daily-routine-time { font-size: 22px; gap: 5px; }
+  .daily-routine .daily-routine-agenda h4 { font-size: 18px; }
 }
-@media (max-width: 800px) {
-  .daily-routine-layout { grid-template-columns: 1fr; gap: 30px; }
-  .daily-routine-clock { max-width: 440px; width: 100%; margin-inline: auto; }
-  .daily-routine-dial-label strong { font-size: 42px; }
-  .daily-routine-timeline > li { grid-template-columns: 42px 120px minmax(0, 1fr); column-gap: 18px; }
-  .daily-routine-step-icon { width: 42px; height: 42px; }
-}
+@media (max-width: 900px) {
+  .daily-routine-agenda { grid-template-columns: 1fr; gap: 12px; }
+  .daily-routine-agenda > li { display: grid; grid-template-columns: 180px 1fr; gap: 7px 26px; padding: 24px; }
+  .daily-routine-agenda-top { grid-column: 1; grid-row: 1; margin-bottom: 6px; }
+  .daily-routine-time { grid-column: 1; grid-row: 2; margin: 0; font-size: 22px; }
+  .daily-routine .daily-routine-agenda h4 { grid-column: 2; grid-row: 1; align-self: center; font-size: 20px; }
+  .daily-routine .daily-routine-agenda p { grid-column: 2; grid-row: 2; margin: 0; }
+  }
 @media (max-width: 640px) {
-  .daily-routine { margin-top: 54px; padding-top: 40px; scroll-margin-top: 88px; }
-  .daily-routine-heading { display: block; margin-bottom: 26px; }
-  .daily-routine .daily-routine-heading h3 { font-size: 28px; }
-  .daily-routine-heading > p { margin-top: 14px; padding: 0; font-size: 13px; }
-  .daily-routine-clock { padding: 22px 18px; }
-  .daily-routine-dial { max-width: 280px; }
-  .daily-routine-dial-label strong { font-size: 38px; }
-  .daily-routine-timeline > li { grid-template-columns: 34px minmax(0, 1fr); column-gap: 14px; row-gap: 8px; padding-block: 22px; }
-  .daily-routine-step-icon { width: 34px; height: 34px; }
-  .daily-routine-step-icon svg { width: 19px; height: 19px; }
-  .daily-routine-time { padding-top: 3px; display: flex; flex-direction: row; align-items: baseline; gap: 9px; }
-  .daily-routine-time strong { font-size: 21px; }
-  .daily-routine-time span { font-size: 12px; }
-  .daily-routine-step-copy { grid-column: 2; }
-  .daily-routine .daily-routine-step-copy h4 { font-size: 19px; }
-  .daily-routine .daily-routine-step-copy p { font-size: 14px; }
-  .daily-routine-timeline > .daily-routine-lunch { margin-inline: 0; padding: 20px 14px; }
-  .daily-routine-learning { grid-template-columns: 1fr; gap: 10px; }
-}
+  .daily-routine { margin-top: 54px; padding-top: 42px; scroll-margin-top: 88px; }
+  .daily-routine-heading { margin-bottom: 28px; }
+  .daily-routine-board { padding: 22px 18px; border-radius: 20px; }
+  .daily-routine-board-top { flex-direction: column; gap: 13px; }
+  .daily-routine-week { font-size: 13px; }
+  .daily-routine-weekdays li { width: 30px; height: 30px; }
+  .daily-routine-day-range { grid-template-columns: 1fr 34px 1fr; gap: 8px; margin: 28px auto; }
+  .daily-routine-day-range strong { font-size: clamp(32px, 9vw, 42px); }
+  .daily-routine-day-range > div > span { font-size: 11px; }
+  .daily-routine-day-connector span { display: none !important; }
+  .daily-routine-day-range > .daily-routine-day-connector { padding-top: 17px; }
+  .daily-routine-track { margin-bottom: 18px; gap: 4px; }
+  .daily-routine-track > div { min-height: 11px; border-radius: 3px; }
+  .daily-routine-track span { display: none; }
+  .daily-routine-agenda > li { display: block; padding: 21px; }
+  .daily-routine-agenda-top { margin-bottom: 14px; }
+  .daily-routine-time { margin-bottom: 12px; font-size: 23px; gap: 8px; }
+  .daily-routine .daily-routine-agenda h4 { font-size: 20px; }
+  .daily-routine .daily-routine-agenda p { margin-top: 10px; font-size: 14px; }
+      }
 @media (max-width: 360px) {
-  .daily-routine-dial-label strong { font-size: 34px; }
-  .daily-routine-lunch-note { font-size: 13px; gap: 10px; }
+  .daily-routine-board { padding-inline: 14px; }
+  .daily-routine-day-range strong { font-size: 32px; }
+  .daily-routine-agenda > li { padding: 19px 17px; }
+  .daily-routine-time { font-size: 22px; }
+}
+
+@media (max-width: 600px) {
+  .daily-routine .daily-routine-heading h3 { font-size: 23px; }
 }

@@ -1,12 +1,15 @@
 /* =========================================================
    지원 전 체크: 움직임만(본문은 index.html)
-   AICA_인사교_프로토타입 script.js의 jumpTo · setupReveal · setupCheck를 옮김
+   aica-prototype-v3(2026-10-08) script.js의 jumpTo · setupReveal · setupCheck를 옮김(시안의 본문 위 목차 .pg-nav 동작은 공통 하위 메뉴 바로 대신)
    - 스크롤 등장(.rv): 움직임 줄이기면 바로 보임. 숨김은 이 스크립트가 main에 .rv-ready를 붙일 때만
    - 위치 이동: 콘텐츠 시작(섹션 머리)이 헤더 + 공통 하위 메뉴 바 아래 32px에 오게
      본문 #링크 · 처음 주소의 #위치 · 하위 메뉴 바 · 헤더 메뉴에서 고른 같은 페이지 #위치(hashchange)
      (하위 메뉴 바의 지금 위치 표시는 공통 site.js)
      브라우저가 #위치로 직접 스크롤하는 경우(처음 열 때 · 헤더 메뉴)도 같은 자리가 되게 check.css의 scroll-margin과 맞춤
-   - 자주 묻는 질문: 분류 · 검색(질문 · 답 글자 하이라이트, 질문은 .faq-qt의 data-text, 검색어를 넣으면 분류 '전체') · 하나씩 펼치기(aria-expanded)
+   - 모집 프로세스 단계(#procFlow): 화면에 30% 이상 보이는 동안 3.2초마다 다음 단계를 켬(.is-on). 단계에 마우스를 올리거나 누르거나
+     카드에 초점이 가면 그 단계에서 멈추고, 마우스 · 초점이 단계 밖으로 나가면 다시 돎. 움직임 줄이기면 자동으로 넘기지 않음
+   - 자주 묻는 질문: 분류 · 검색(질문 · 답 글자 하이라이트, 질문은 .faq-qt의 data-text) · 하나씩 펼치기(aria-expanded).
+     검색어를 고쳐도 고른 분류는 그대로 — 그 분류에 없고 다른 분류에 있으면 '전체 분류에서 n개' 안내 + 전체에서 보기
    - 스스로 체크: 진행 막대(aria-valuenow) · 하나라도 고르면 '모집 프로세스 보러 가기'
    ========================================================= */
 (() => {
@@ -101,13 +104,39 @@
     });
   }
 
+  /* ---------- 모집 프로세스: 단계 차례로 켜기 ---------- */
+  const pf = $('#procFlow', main);
+  if (pf) {
+    const cols = $$('.pf-col', pf);
+    let cur = 0, timer = null, inView = false, hold = false;
+    const set = k => { cur = k; cols.forEach((c, i) => c.classList.toggle('is-on', i === k)); };
+    const stop = () => { clearInterval(timer); timer = null; };
+    const start = () => { stop(); if (!reduce && inView && !hold) timer = setInterval(() => set((cur + 1) % cols.length), 3200); };
+    cols.forEach((c, i) => {
+      const pick = () => { set(i); hold = true; stop(); };
+      c.addEventListener('mouseenter', pick);
+      c.addEventListener('click', pick);
+      const card = $('.pf-card', c);
+      if (card) card.addEventListener('focus', pick);
+    });
+    pf.addEventListener('mouseleave', () => { hold = false; start(); });
+    pf.addEventListener('focusout', e => { if (!pf.contains(e.relatedTarget)) { hold = false; start(); } });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(es => es.forEach(e => { inView = e.isIntersecting; start(); }), { threshold: .3 }).observe(pf);
+    }
+    set(0);
+  }
+
   /* ---------- 자주 묻는 질문: 분류 · 검색 · 펼치기 ---------- */
-  // 검색: 질문 · 답 글 모두에서 찾고 둘 다 하이라이트(<mark>, 답은 글자 마디만 감싸 링크는 그대로).
-  // 검색어를 넣으면 분류는 '전체'로(다른 분류에 있는 답이 '없어요'로 보이지 않게), 결과가 1~2개면 첫 결과를 펼침
+  // 검색: 질문 · 답 글 모두에서 찾고 둘 다 하이라이트(<mark>, 답은 글자 마디만 감싸 링크는 그대로). 결과가 1~2개면 첫 결과를 펼침.
+  // 분류는 사용자가 고른 대로 둠(전에는 글자를 칠 때마다 '전체'로 돌아감). 고른 분류에 없고 다른 분류에 있으면 '없어요' 대신
+  // '전체 분류에서는 n개' + 전체에서 보기 버튼(문구는 index.html #faqEmpty, 여기서는 분류 이름 · 숫자만 채움)
   const fl = $('#faqList', main);
   if (fl) {
     const items = $$('.faq-item', fl), tabs = $$('.faq-tab', main), q = $('#faqQ', main), clr = $('#faqClear', main),
-      cnt = $('#faqCount', main), empty = $('#faqEmpty', main), eq = $('#faqEmptyQ', main);
+      cnt = $('#faqCount', main), empty = $('#faqEmpty', main), eq = $('#faqEmptyQ', main),
+      eIn = $('#faqEmptyIn', main), eCat = $('#faqEmptyCat', main), eAsk = $('#faqEmptyAsk', main),
+      eAll = $('#faqEmptyAll', main), eAllN = $('#faqAllN', main), allBtn = $('#faqAllBtn', main);
     let cat = 'all';
     const answers = new Map(items.map(li => { const at = $('.faq-at', li); return [li, { at, html: at.innerHTML }]; }));
     const esc = t => t.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -122,13 +151,20 @@
     };
     const setOpen = (li, open) => { li.classList.toggle('is-open', open); $('.faq-q', li).setAttribute('aria-expanded', String(open)); };
     const setCat = c => { cat = c; tabs.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cat === c))); };
+    const catName = c => {   // 칩 글자에서 질문 수(.faq-cnt)는 빼고 이름만
+      const b = tabs.find(t => t.dataset.cat === c);
+      return b ? [...b.childNodes].filter(n => n.nodeType === 3).map(n => n.nodeValue).join('').trim() : c;
+    };
     const apply = () => {
       const kw = q.value.trim().toLowerCase();
       const shown = [];
+      let hits = 0;   // 분류와 상관없이 검색어에 맞는 질문 수
       items.forEach(li => {
         const qt = $('.faq-qt', li), txt = qt.dataset.text, a = answers.get(li);
         a.at.innerHTML = a.html;
-        const ok = (cat === 'all' || li.dataset.cat === cat) && (!kw || (txt + ' ' + a.at.textContent).toLowerCase().includes(kw));
+        const hit = !kw || (txt + ' ' + a.at.textContent).toLowerCase().includes(kw);
+        if (hit) hits++;
+        const ok = (cat === 'all' || li.dataset.cat === cat) && hit;
         li.hidden = !ok;
         if (ok) shown.push(li);
         if (kw && ok) { qt.innerHTML = markText(txt, kw); markAnswer(a.at, kw); } else qt.textContent = txt;
@@ -138,13 +174,25 @@
         items.forEach(li => setOpen(li, false));
         setOpen(shown[0], true);
       }
+      const other = !n && kw && cat !== 'all' ? hits : 0;   // 고른 분류에는 없고 다른 분류에 있는 수
       clr.hidden = !q.value;
-      cnt.textContent = (kw || cat !== 'all') ? n + '개의 질문' : '';
+      cnt.textContent = (kw || cat !== 'all') ? n + '개의 질문' + (other ? ' · 전체 분류에서 ' + other + '개' : '') : '';
       empty.hidden = n > 0;
       eq.textContent = kw ? '“' + q.value.trim() + '”' : '이 분류';
+      eCat.textContent = catName(cat);
+      eIn.hidden = !other;
+      eAsk.hidden = !!other;
+      eAll.hidden = allBtn.hidden = !other;
+      eAllN.textContent = other;
     };
     tabs.forEach(t => t.addEventListener('click', () => { setCat(t.dataset.cat); apply(); }));
-    q.addEventListener('input', () => { if (q.value.trim() && cat !== 'all') setCat('all'); apply(); });
+    q.addEventListener('input', apply);
+    // 전체에서 보기: 분류만 '전체'로(검색어 그대로), 초점은 첫 결과 질문으로(누른 버튼이 사라지므로)
+    allBtn.addEventListener('click', () => {
+      setCat('all'); apply();
+      const first = items.find(li => !li.hidden);
+      if (first) $('.faq-q', first).focus();
+    });
     clr.addEventListener('click', () => { q.value = ''; apply(); q.focus(); });
     $$('.faq-q', fl).forEach(b => b.addEventListener('click', () => {
       const li = b.closest('.faq-item'), open = !li.classList.contains('is-open');

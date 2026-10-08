@@ -3,12 +3,8 @@
 /* 기본 배치 */
 .intro-feature { display: grid; grid-template-columns: 1fr 1.05fr; gap: 60px; align-items: center; }
 .intro-purpose > p { margin-top: 24px; font-size: 16px; color: var(--about-muted); line-height: 1.9; word-break: keep-all; }
-.school-photo { min-width: 0; }
-.school-photo img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
-.intro-photo { position: relative; }
-.intro-photo::before { content: ''; position: absolute; top: -13px; left: -13px; width: 42px; height: 42px; border-top: 1px solid var(--about-blue); border-left: 1px solid var(--about-blue); }
 .partner-heading h3 { font-weight: 900; }
-.partner-block { padding: 30px 0 0; border-top: 1px solid var(--about-line); }
+.partner-block { padding: 30px 0 0; }
 .partner-heading { display: flex; }
 @media (max-width: 1100px) {
   .intro-feature { gap: 40px; }
@@ -20,8 +16,7 @@
 @media (max-width: 600px) {
   .intro-feature { grid-template-columns: 1fr; }
   .intro-purpose > p { font-size: 15px; }
-  .intro-photo { margin-top: 8px; }
-}
+  }
 
 /* 가운데 정렬 소개 · 교육 플랫폼 · 관련 기관 연결도 */
 .school-about:has(#intro:target) { scroll-padding-top: calc(var(--hdr) + var(--about-subnav, 0px)); }
@@ -32,19 +27,12 @@
 .school-about #intro .intro-purpose > p { font-size: clamp(20px, 1.85vw, 26px); line-height: 1.85; margin-top: 0; color: var(--about-ink); letter-spacing: -.035em; word-break: keep-all; }
 .school-about #intro .intro-purpose > p + p { margin-top: 30px; }
 .school-about #intro .intro-purpose strong { color: var(--about-blue); font-weight: 700; }
-.school-about #intro .intro-photo { position: relative; width: min(960px, 100%); margin: 54px auto 0; border-radius: 24px; overflow: hidden; }
-.school-about #intro .intro-photo::before { display: none; }
-.school-about #intro .intro-photo img { aspect-ratio: auto; height: auto; object-fit: contain; filter: none; }
-.intro-photo-label { position: absolute; top: 18px; right: 18px; padding: 9px 14px; background: #13203cd9; color: #fff; font-size: 16px; font-weight: 700; line-height: 1.6; border-radius: 6px; }
 @media (max-width: 1199px) {
   .school-about #intro { scroll-margin-top: 76px; }
   /* #partners 도착: 하위 메뉴 바 아래로(1200px 이상은 base.css의 --about-subnav가 맡음) */
   .school-about .partner-block { scroll-margin-top: var(--sub); }
 }
 .intro-platform { margin-top: 76px; scroll-margin-top: 90px; }
-.intro-platform-heading { text-align: center; }
-.intro-platform-heading .micro-label { font-size: 14px; margin-bottom: 12px; }
-.school-about .intro-platform-heading h3 { font-family: 'School Paperlogy', 'School Pretendard', sans-serif; font-size: clamp(27px, 2.6vw, 36px); font-weight: 900; font-synthesis: none; line-height: 1.5; letter-spacing: -.03em; }
 .intro-platform-features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 44px; max-width: 1020px; margin: 36px auto 0; }
 .intro-platform-features article { padding: 0 10px; text-align: center; }
 .platform-icon { display: block; width: 180px; height: 180px; max-width: 100%; object-fit: contain; margin: 0 auto; }
@@ -89,7 +77,6 @@
 @media (max-width: 800px) {
   .school-about #intro .intro-purpose h2 { font-size: 42px; }
   .school-about #intro .intro-purpose > p { font-size: 21px; line-height: 1.9; }
-  .school-about #intro .intro-photo { margin-top: 42px; }
   .intro-platform-features { gap: 23px; }
   .platform-icon { width: 150px; height: 150px; }
   .school-about .intro-platform-features h4 { font-size: 19px; }
@@ -107,8 +94,6 @@
   .school-about #intro .intro-purpose > p { font-size: 18px; line-height: 1.9; }
   .school-about #intro .intro-purpose > p + p { margin-top: 24px; }
   .school-about #intro .intro-purpose > p br { display: none; }
-  .school-about #intro .intro-photo { margin-top: 32px; border-radius: 14px; }
-  .intro-photo-label { top: 12px; right: 12px; padding: 7px 10px; font-size: 12px; }
   .intro-platform { margin-top: 48px; scroll-margin-top: 80px; }
   .intro-platform-features { grid-template-columns: 1fr; gap: 35px; margin-top: 24px; }
   .platform-icon { width: 160px; height: 160px; }
@@ -131,9 +116,9 @@
 }
 
 /* 지원 대상(관련 기관 아래) */
-.eligibility-panel { display: block; margin-top: 78px; padding: 30px 0 0; background: transparent; border-top: 1px solid var(--about-line); border-bottom: 1px solid #e5e5e5; scroll-margin-top: 52px; }
+.eligibility-panel { display: block; margin-top: 78px; padding: 30px 0 0; background: transparent; scroll-margin-top: 52px; }
 .eligibility-heading { padding: 0; }
-.eligibility-summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; padding: 60px 0 66px; border-bottom: 1px solid #e5e5e5; }
+.eligibility-summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; padding: 60px 0 66px; }
 .eligibility-condition { position: relative; padding: 0 24px; text-align: center; }
 .eligibility-condition + .eligibility-condition::before { content: ''; position: absolute; left: 0; top: 50%; height: 100px; width: 1px; transform: translateY(-50%); background: #e5e5e5; }
 .eligibility-icon { display: block; width: 132px; height: 132px; margin: 0 auto 26px; background-image: url('../assets/eligibility-icons.webp'); background-size: 200% 100%; background-repeat: no-repeat; }

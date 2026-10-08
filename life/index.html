@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko" data-menu="life" data-theme="light">
+<html lang="ko" data-menu="life" data-subnav-title="off" data-theme="light">
 <head>
 <meta charset="utf-8">
   <meta name="robots" content="noindex, nofollow">
@@ -30,30 +30,54 @@
      층 · 공간(.fxg · .fxs)은 엘리베이터 사진(.fxv) · 아래 막대(.fxbar)와 data-k="층-공간"으로 짝 -->
 <main id="main" class="life-page" tabindex="-1">
 
-<!-- ===== 시설 둘러보기 (#facilities) ===== -->
-<div class="page" id="pg-facility" data-page="facility">
-  <header class="fh8">
-    <div class="fh8-g">
-      <div class="fh8-t">
-        <p class="fh8-k"><span aria-hidden="true"></span>03 · 인사교 라이프<em aria-hidden="true">FACILITY</em></p>
-        <h1>시설 둘러보기</h1>
-        <p class="fh8-s">1년 가까이 매일 나오는 건물이에요. 사진을 누르면 그&nbsp;공간 안내로 바로 가요.</p>
-        <ul class="fh8-f" aria-label="건물 한눈에">
-          <li><b>1~3F</b>교육장</li>
-          <li><b>8F</b>구내식당</li>
-          <li><b>4~7F</b>다른 기관</li>
-          <li><b>9~18시</b>평일 수업</li>
-        </ul>
-        <p class="fh8-n">사진 일부 예시</p>
-      </div>
-      <div class="fh8-b" role="group" aria-label="공간 사진 · 누르면 그 공간 안내로 이동">
-        <button type="button" class="btl tl1" data-hf="1" data-ht="0"><span class="btl-i im-building" aria-hidden="true"></span><span class="btl-c"><i>건물 외관</i><b>1~3F 교육장 · 8F 구내식당</b></span><span class="btl-go" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"></path></svg></span></button>
-        <button type="button" class="btl tl2" data-hf="1" data-ht="1"><span class="btl-i im-cafe_k" aria-hidden="true"></span><span class="btl-c"><i>1F</i><b>AI 카페</b></span><span class="btl-go" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"></path></svg></span></button>
-        <button type="button" class="btl tl3" data-hf="23" data-ht="0"><span class="btl-i im-classroom" aria-hidden="true"></span><span class="btl-c"><i>2·3F</i><b>강의실</b></span><span class="btl-go" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"></path></svg></span></button>
-        <button type="button" class="btl tl4" data-hf="23" data-ht="1"><span class="btl-i im-rest_tmp" aria-hidden="true"></span><em>임시 사진</em><span class="btl-c"><i>2·3F</i><b>휴게 공간</b></span><span class="btl-go" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"></path></svg></span></button>
-      </div>
+<!-- ===== 인사교 라이프 히어로 페이지(시안10-B v3, 주소 #overview 또는 주소 없음): 히어로만 있는 따로 된 화면. 하위 화면(시설 · 꿀팁 · 오시는 길)에는 히어로 없음 ===== -->
+<div class="page" id="pg-home" data-page="home">
+<header class="lh">
+  <div class="lh-g">
+    <div class="lh-t">
+      <p class="lh-k"><span aria-hidden="true"></span>03 · 인사교 라이프<em aria-hidden="true">REAL LIFE</em></p>
+      <h1>인사교 Real Life</h1>
+      <p class="lh-s">매일 지낼 건물, 수업 끝나고 보낼 동네, 오가는 길을 한곳에 모았어요.</p>
+      <p class="lh-hint" aria-hidden="true"><i></i>오른쪽에서 골라 보세요</p>
+      <ul class="lh-f" aria-label="한눈에">
+        <li><b>1~3F</b>교육장</li>
+        <li><b>8F</b>구내식당</li>
+        <li><b>5분</b>문화전당역에서 도보</li>
+      </ul>
     </div>
-  </header>
+    <nav class="lh-p" aria-label="인사교 라이프 하위 메뉴 · 누르면 그 화면으로">
+      <a class="lhp is-open" href="#facilities" data-pg="facility">
+        <span class="lhp-m" aria-hidden="true"><span class="lhp-i im-building"></span></span>
+        <span class="lhp-n" aria-hidden="true">01</span>
+        <span class="lhp-c">
+          <em>FACILITY</em><b>시설 둘러보기</b>
+          <span class="lhp-x"><span class="lhp-xi"><span class="lhp-d">매일 지내는 건물을 층별로 둘러봐요.</span><span class="lhp-l"><span>1F 정문 · AI 카페</span><span>2·3F 강의실 · 휴게 · 프로젝트 공간</span><span>8F 구내식당</span></span><span class="lhp-go">둘러보기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"></path></svg></span></span></span>
+        </span>
+      </a>
+      <a class="lhp" href="#tips" data-pg="tips">
+        <span class="lhp-m" aria-hidden="true"><span class="lhp-i im-cafest"></span><span class="lhp-i im-trailp"></span><span class="lhp-i im-mkt_tmp"></span></span>
+        <span class="lhp-n" aria-hidden="true">02</span>
+        <span class="lhp-c">
+          <em>TIPS</em><b>생활 꿀팁</b>
+          <span class="lhp-x"><span class="lhp-xi"><span class="lhp-d">수업 끝나고 지낼 동네를 미리 알아 둬요.</span><span class="lhp-l"><span>주거 · 동별 시세와 통학 시간</span><span>근처 식당 · 혼밥 · 여럿이</span><span>문화·여가 · 생활 적응</span></span><span class="lhp-go">꿀팁 보기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"></path></svg></span></span></span>
+        </span>
+      </a>
+      <a class="lhp" href="#directions" data-pg="way">
+        <span class="lhp-m" aria-hidden="true"><span class="lhp-i im-acc_tmp"></span></span>
+        <span class="lhp-n" aria-hidden="true">03</span>
+        <span class="lhp-c">
+          <em>DIRECTIONS</em><b>오시는 길</b>
+          <span class="lhp-x"><span class="lhp-xi"><span class="lhp-d">광주광역시 동구 제봉로 92, 1~3층</span><span class="lhp-l"><span>문화전당역에서 걸어서 약 5분</span><span>광주송정역 · 버스터미널에서 지하철로</span><span>주차는 주변 공영주차장</span></span><span class="lhp-go">길 찾기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"></path></svg></span></span></span>
+        </span>
+      </a>
+    </nav>
+  </div>
+</header>
+</div>
+
+<!-- ===== 시설 둘러보기 (#facilities) ===== -->
+<div class="page" id="pg-facility" data-page="facility" hidden>
+  <h2 class="lh-sr">시설 둘러보기</h2>
   <section class="sec">
     <div class="wrap">
       <div class="sh">
@@ -202,22 +226,24 @@
               <button type="button" role="tab" class="fxt" data-s="1" aria-selected="false"><span class="fxt-th im-cafe_k" aria-hidden="true"></span><span class="fxt-l"><b>AI 카페</b><i aria-hidden="true">3장</i></span></button>
               <button type="button" role="tab" class="fxt" data-s="2" aria-selected="false"><span class="fxt-th im-x2_room" aria-hidden="true"></span><span class="fxt-l"><b>회의실</b><i aria-hidden="true">3장</i></span></button>
             </div>
-            <div class="fxs" data-s="0" data-k="1-0">
-              <div class="fxinfo">
-                <h4>정문(입구)</h4>
-                <ul><li>교육장 건물로 들어오는 입구</li><li>출입 방법 ○○</li><li>엘리베이터로 2 · 3층 교육장 이동</li></ul>
+            <div class="fxss">
+              <div class="fxs" data-s="0" data-k="1-0">
+                <div class="fxinfo">
+                  <h4>정문(입구)</h4>
+                  <ul><li>교육장 건물로 들어오는 입구</li><li>출입 방법 ○○</li><li>엘리베이터로 2 · 3층 교육장 이동</li></ul>
+                </div>
               </div>
-            </div>
-            <div class="fxs" data-s="1" hidden data-k="1-1">
-              <div class="fxinfo">
-                <h4>AI 카페</h4>
-                <ul><li>1층에도 있는 카페 공간</li><li>이용 시간 ○○</li><li>전자레인지 · 냉장고 · 도시락 가능</li></ul>
+              <div class="fxs" data-s="1" hidden data-k="1-1">
+                <div class="fxinfo">
+                  <h4>AI 카페</h4>
+                  <ul><li>1층에도 있는 카페 공간</li><li>이용 시간 ○○</li><li>전자레인지 · 냉장고 · 도시락 가능</li></ul>
+                </div>
               </div>
-            </div>
-            <div class="fxs" data-s="2" hidden data-k="1-2">
-              <div class="fxinfo">
-                <h4>회의실</h4>
-                <ul><li>팀 회의 · 발표 연습을 하는 공간</li><li>예약 방법 · 이용 시간 ○○</li><li>수용 인원 ○○명</li></ul>
+              <div class="fxs" data-s="2" hidden data-k="1-2">
+                <div class="fxinfo">
+                  <h4>회의실</h4>
+                  <ul><li>팀 회의 · 발표 연습을 하는 공간</li><li>예약 방법 · 이용 시간 ○○</li><li>수용 인원 ○○명</li></ul>
+                </div>
               </div>
             </div>
           </section>
@@ -230,17 +256,19 @@
               <button type="button" role="tab" class="fxt" data-s="1" aria-selected="false"><span class="fxt-th im-rest_tmp" aria-hidden="true" style="--bp: left bottom;"></span><span class="fxt-l"><b>휴게 공간</b><i aria-hidden="true">3장</i></span></button>
               <button type="button" role="tab" class="fxt" data-s="2" aria-selected="false"><span class="fxt-th im-project" aria-hidden="true"></span><span class="fxt-l"><b>프로젝트 공간</b><i aria-hidden="true">3장</i></span></button>
             </div>
-            <div class="fxs" data-s="0" data-k="23-0">
-              <div class="fxinfo">
-                <h4>강의실</h4>
-                <ul><li>수업과 실습이 이뤄지는 주 공간</li><li>평일 9시 ~ 18시 오프라인 수업</li><li>교육 기간 동안 개인 노트북 · 모니터 대여</li></ul>
+            <div class="fxss">
+              <div class="fxs" data-s="0" data-k="23-0">
+                <div class="fxinfo">
+                  <h4>강의실</h4>
+                  <ul><li>수업과 실습이 이뤄지는 주 공간</li><li>평일 9시 ~ 18시 오프라인 수업</li><li>교육 기간 동안 개인 노트북 · 모니터 대여</li></ul>
+                </div>
               </div>
-            </div>
-            <div class="fxs" data-s="1" hidden data-k="23-1">
-              <div class="fxinfo"><h4>휴게 공간</h4><ul><li>수업 사이 잠깐 쉬어 가는 공간</li><li>층마다 같은 구성</li></ul></div>
-            </div>
-            <div class="fxs" data-s="2" hidden data-k="23-2">
-              <div class="fxinfo"><h4>프로젝트 공간</h4><ul><li>도약과정 팀 프로젝트를 하는 공간</li><li>이용 시간 · 예약 방법 ○○</li></ul></div>
+              <div class="fxs" data-s="1" hidden data-k="23-1">
+                <div class="fxinfo"><h4>휴게 공간</h4><ul><li>수업 사이 잠깐 쉬어 가는 공간</li><li>층마다 같은 구성</li></ul></div>
+              </div>
+              <div class="fxs" data-s="2" hidden data-k="23-2">
+                <div class="fxinfo"><h4>프로젝트 공간</h4><ul><li>도약과정 팀 프로젝트를 하는 공간</li><li>이용 시간 · 예약 방법 ○○</li></ul></div>
+              </div>
             </div>
           </section>
           <section class="fxg" data-g="8" hidden aria-label="8F 구내식당">
@@ -269,49 +297,16 @@
   </section>
   <nav class="next-band" aria-label="다음으로 볼 페이지">
     <div class="wrap">
-      <a href="#tips"><small>다음으로</small><b>생활 꿀팁</b><span>주거 · 근처 식당 · 문화·여가 · 생활 적응</span></a>
-      <a href="../stories/index.html#reviews"><small>함께 보면 좋은</small><b>선배 후기</b><span>생활 · 공간을 써 본 이야기</span></a>
-      <a href="#directions"><small>함께 보면 좋은</small><b>오시는 길</b><span>주소 · 교통 · 실제 통학 시간 · 주차</span></a>
+      <a href="#tips"><small>다음으로</small><b>생활 꿀팁</b><span class="seps"><span><span>주거</span><span>근처 식당</span><span>문화·여가</span><span>생활 적응</span></span></span></a>
+      <a href="../stories/index.html#reviews"><small>함께 보면 좋은</small><b>선배 후기</b><span>생활&nbsp;·&nbsp;공간을 써 본 이야기</span></a>
+      <a href="#directions"><small>함께 보면 좋은</small><b>오시는 길</b><span class="seps"><span><span>주소</span><span>교통</span><span>실제 통학 시간</span><span>주차</span></span></span></a>
     </div>
   </nav>
 </div>
 
 <!-- ===== 생활 꿀팁 (#tips) ===== -->
 <div class="page" id="pg-tips" data-page="tips" hidden>
-  <header class="h5 h5-tip">
-    <div class="h5g">
-      <div class="h5t">
-        <p class="h5k"><span aria-hidden="true"></span>03 · 인사교 라이프<em aria-hidden="true">TIPS</em></p>
-        <h1><mark>선배만 아는</mark> 인사교 생활 꿀팁</h1>
-        <p class="h5s">강의장 밖에서 부딪히는 것들을 한곳에 모았어요. 주거&nbsp;· 근처 식당&nbsp;· <span class="nw">문화·여가</span>&nbsp;· 생활 적응 순서로 볼 수 있어요.</p>
-        <p class="h5n">업소 · 시세는 참고용 예시</p>
-      </div>
-      <div class="scrap">
-        <p class="scrap-hand" aria-hidden="true">수업 끝나고 여기!</p>
-        <div class="pols">
-          <a class="pol" href="#tp-fun" style="--r:-4deg"><span class="pol-i im-trailp" role="img" aria-label="푸른길 산책"></span><span class="pol-t">푸른길 산책</span></a>
-          <a class="pol" href="#tp-fun" style="--r:2.5deg"><span class="pol-i im-cafest" role="img" aria-label="카페거리"></span><span class="pol-t">카페거리</span></a>
-          <a class="pol" href="#tp-fun" style="--r:-1.5deg"><span class="pol-i im-cj_tmp" role="img" aria-label="충장로"></span><span class="pol-t">충장로</span></a>
-        </div>
-        <nav class="stks" aria-label="생활 꿀팁 바로가기">
-          <a class="stk s1" href="#tp-house" style="--r:-2deg"><i>01</i><b>주거</b><span>동별 시세 · 통학 시간</span></a>
-          <a class="stk s2" href="#tp-food" style="--r:1.5deg"><i>02</i><b>근처 식당</b><span>혼밥 · 여럿이 · 가격대</span></a>
-          <a class="stk s3" href="#tp-fun" style="--r:-1deg"><i>03</i><b>문화·여가</b><span>가볼 곳 · 산책길</span></a>
-          <a class="stk s4" href="#tp-adapt" style="--r:2deg"><i>04</i><b>생활 적응</b><span>오기 전 · 첫 주</span></a>
-        </nav>
-      </div>
-    </div>
-  </header>
-  <nav class="lnb" aria-label="생활 꿀팁 안 위치">
-    <div class="wrap" data-scroll-fade>
-      <div class="lnb-s">
-        <a href="#tp-house" aria-current="location"><i aria-hidden="true">01</i>주거</a>
-        <a href="#tp-food"><i aria-hidden="true">02</i>근처 식당</a>
-        <a href="#tp-fun"><i aria-hidden="true">03</i>문화·여가</a>
-        <a href="#tp-adapt"><i aria-hidden="true">04</i>생활 적응 정보</a>
-      </div>
-    </div>
-  </nav>
+  <h2 class="lh-sr">생활 꿀팁</h2>
   <section class="sec alt tp-sec" id="tp-house">
     <div class="wrap">
       <div>
@@ -459,6 +454,20 @@
             </div>
           </div>
         </div>
+        <div class="fdcat" role="group" aria-label="음식 종류로 거르기">
+          <span class="fdcat-l">음식 종류</span>
+          <div class="chips">
+            <button type="button" class="chip" data-fc="all" aria-pressed="true">전체</button>
+            <button type="button" class="chip" data-fc="한식" aria-pressed="false">한식</button>
+            <button type="button" class="chip" data-fc="면" aria-pressed="false">면</button>
+            <button type="button" class="chip" data-fc="분식" aria-pressed="false">분식</button>
+            <button type="button" class="chip" data-fc="중식" aria-pressed="false">중식</button>
+            <button type="button" class="chip" data-fc="일식" aria-pressed="false">일식</button>
+            <button type="button" class="chip" data-fc="양식" aria-pressed="false">양식</button>
+            <button type="button" class="chip" data-fc="고기" aria-pressed="false">고기</button>
+          </div>
+          <p class="fdcnt" aria-live="polite"></p>
+        </div>
         <p class="fdleg"><span><b>₩</b>1인 1만 원 이하</span><span><b>₩₩</b>1인 1~2만 원</span><span>대표 메뉴 기준 · 추정값</span></p>
         <div class="fd2">
           <section class="fd2c solo" aria-label="혼밥하기 편한 곳">
@@ -546,6 +555,7 @@
             <p class="fdmore" aria-live="polite" hidden></p>
           </section>
         </div>
+        <div class="fdempty" hidden>조건에 맞는 식당이 없어요<button type="button" class="btn is-line is-sm" data-fdreset>거르기 풀기</button></div>
         <p class="fdisc"><span class="bdg part">시안 예시 · 확인 전</span> 식당 이름&nbsp;· 주소&nbsp;· 메뉴는 공개 맛집 소개 자료에서 골랐고, 특정 가게가 도드라지지 않도록 여러 곳을 함께 실었어요. 「혼밥 / 여럿이」 구분은 메뉴로 짐작했고, 영업 여부&nbsp;· 좌석&nbsp;· 가격대&nbsp;· 도보 시간은 확인 전 추정값이에요. 참고용이며 특정 업소를 추천하지 않습니다.</p>
       </div>
     </div>
@@ -770,7 +780,7 @@
           </ul>
         </section>
       </div>
-      <a class="adlk" href="../stories/index.html#reviews"><span class="adtn">+</span><div><b>선배들은 처음 한 달을 어떻게 보냈을까</b><p>타지에서 온 선배들의 적응 이야기는 선배 후기(생활 · #타지출신)에 있어요.</p></div><span class="adlkgo" aria-hidden="true">→</span></a>
+      <a class="adlk" href="../stories/index.html#reviews"><span class="adtn">+</span><div><b>선배들은 처음 한 달을 어떻게 보냈을까</b><p>타지에서 온 선배들의 적응 이야기는 선배&nbsp;후기<wbr>(생활&nbsp;·&nbsp;#타지출신)&#8288;에&nbsp;있어요.</p></div><span class="adlkgo" aria-hidden="true">→</span></a>
       <p class="note">정리형 정보만 싣고 개인 경험담은 선배 후기(생활)로 연결 · 생활 편의 · 병원 항목은 동 단위까지만 표기하며 특정 업소 · 기관을 추천하지 않습니다</p>
     </div>
   </section>
@@ -779,9 +789,9 @@
   </aside>
   <nav class="next-band" aria-label="다음으로 볼 페이지">
     <div class="wrap">
-      <a href="#directions"><small>다음으로</small><b>오시는 길</b><span>주소 · 교통 · 실제 통학 시간 · 주차</span></a>
-      <a href="../stories/index.html#reviews"><small>함께 보면 좋은</small><b>선배 후기</b><span>생활 · 공간을 써 본 이야기</span></a>
-      <a href="../check/index.html#benefits"><small>함께 보면 좋은</small><b>지원 혜택</b><span>지원 내용 · 조건 · 유의사항</span></a>
+      <a href="#directions"><small>다음으로</small><b>오시는 길</b><span class="seps"><span><span>주소</span><span>교통</span><span>실제 통학 시간</span><span>주차</span></span></span></a>
+      <a href="../stories/index.html#reviews"><small>함께 보면 좋은</small><b>선배 후기</b><span>생활&nbsp;·&nbsp;공간을 써 본 이야기</span></a>
+      <a href="../check/index.html#benefits"><small>함께 보면 좋은</small><b>지원 혜택</b><span class="seps"><span><span>지원 내용</span><span>조건</span><span>유의사항</span></span></span></a>
     </div>
   </nav>
   <dialog class="lbx" aria-label="장소 크게 보기">
@@ -805,13 +815,7 @@
 
 <!-- ===== 오시는 길 (#directions) ===== -->
 <div class="page" id="pg-way" data-page="way" hidden>
-  <header class="pt7">
-    <div class="pt7-w">
-      <p class="fh8-k"><span aria-hidden="true"></span>03 · 인사교 라이프<em aria-hidden="true">DIRECTIONS</em></p>
-      <h1>오시는 길</h1>
-      <p class="fh8-s">광주광역시 동구 제봉로 92, 1~3층. 지하철 문화전당역에서 걸어서 약&nbsp;5분이에요.</p>
-    </div>
-  </header>
+  <h2 class="lh-sr">오시는 길</h2>
   <section class="sec">
     <div class="wrap">
       <div class="sh"><div><h2>위치 · 교통</h2></div></div>
@@ -847,10 +851,10 @@
             <h3>지하철로 오는 길</h3>
             <ol class="route">
               <li><i>1</i>
-                <div><b>광주송정역 · 시내에서</b><span>도시철도 1호선 소태 방면 탑승 · 교통카드 1,250원</span></div>
+                <div><b class="seps"><span><span>광주송정역</span><span>시내에서</span></span></b><span class="seps"><span><span>도시철도 1호선 소태 방면 탑승</span><span>교통카드 1,250원</span></span></span></div>
                 <em>약 25분 · 13정거장</em></li>
               <li><i>2</i>
-                <div><b>문화전당역 하차</b><span>출구마다 개찰구가 나뉘어 있어요(1·2번 / 3·4번 / 5·6번). 내리기 전에 나갈 출구를 정하세요.</span></div>
+                <div><b>문화전당역 하차</b><span>출구마다 개찰구가 나뉘어 있어요<wbr>(1·2번&nbsp;/&nbsp;3·4번&nbsp;/&nbsp;5·6번). 내리기 전에 나갈 출구를 정하세요.</span></div>
                 <em>—</em></li>
               <li><i>3</i><div><b>교육장</b><span>출구에서 걸어서</span></div><em>도보 약 5분</em></li>
             </ol>
@@ -858,8 +862,8 @@
           <div class="mpanel">
             <h3>버스로 오는 길</h3>
             <ol class="route">
-              <li><i>1</i><div><b>시내 어디서나</b><span>금남58 · 금남59 · 금호36 · 송정98 · 수완12 등</span></div><em>출발지마다 달라요</em></li>
-              <li><i>2</i><div><b>국립아시아문화전당(구 도청) 정류장 하차</b><span>대부분의 노선은 문화전당역 정류장에도 서요</span></div><em>—</em></li>
+              <li><i>1</i><div><b>시내 어디서나</b><span class="seps"><span><span>금남58</span><span>금남59</span><span>금호36</span><span>송정98</span><span>수완12 등</span></span></span></div><em>출발지마다 달라요</em></li>
+              <li><i>2</i><div><b>국립아시아문화전당<wbr>(구&nbsp;도청) 정류장&nbsp;하차</b><span>대부분의 노선은 문화전당역 정류장에도&nbsp;서요</span></div><em>—</em></li>
               <li><i>3</i><div><b>교육장</b><span>정류장에서 걸어서</span></div><em>도보 약 5분</em></li>
             </ol>
           </div>
@@ -876,7 +880,7 @@
           <h3>광주송정역</h3>
           <small>KTX · SRT로 도착</small>
           <ol>
-            <li><i>1</i><b>광주송정역에서 도시철도 1호선(소태 방면)</b><span>약 25분</span></li>
+            <li><i>1</i><b>광주송정역에서 도시철도 1호선<wbr>(소태&nbsp;방면)</b><span>약 25분</span></li>
             <li><i>2</i><b>문화전당역 하차</b><span>13정거장</span></li>
             <li><i>3</i><b>걸어서 교육장</b><span>도보 약 5분</span></li>
           </ol>
@@ -887,7 +891,7 @@
           <small>고속 · 시외버스로 도착</small>
           <ol>
             <li><i>1</i><b>터미널에서 농성역까지 걸어서</b><span>도보 약 10분 · 농성역 4번 출구 쪽</span></li>
-            <li><i>2</i><b>농성역에서 도시철도 1호선(소태 방면)</b><span>약 10분 · 5정거장</span></li>
+            <li><i>2</i><b>농성역에서 도시철도 1호선<wbr>(소태&nbsp;방면)</b><span>약 10분 · 5정거장</span></li>
             <li><i>3</i><b>문화전당역에서 걸어서 교육장</b><span>도보 약 5분</span></li>
           </ol>
           <p class="rtr"><span>예상 · 도보 + 도시철도 1호선</span><b>약 30분</b><em>기다리는 시간 포함 추정</em></p>
@@ -907,16 +911,16 @@
       <div class="rlx">
         <div class="sh"><div><h2>주차 안내(방문객)</h2></div></div>
         <div class="park"><span class="P" aria-hidden="true">P</span>
-          <div><h3>교육생 전용 주차 공간은 없습니다</h3><p>방문객은 ACC · KT 등 주변 공영주차장을 이용해 주세요. 매일 차로 다니기보다는 대중교통이나 도보를 권합니다.</p></div>
+          <div><p>방문객은 ACC · KT 등 주변 공영주차장을 이용해 주세요. 매일 차로 다니기보다는 대중교통이나 도보를 권합니다.</p></div>
           <a class="btn is-line" href="#tp-house">도보권 주거 보기</a></div>
       </div>
     </div>
   </section>
   <nav class="next-band" aria-label="다음으로 볼 페이지">
     <div class="wrap">
-      <a href="../check/index.html#eligibility"><small>다음으로</small><b>지원 전 체크</b><span>자격 · 일정 · 혜택 · 자주 묻는 질문</span></a>
-      <a href="#facilities"><small>함께 보면 좋은</small><b>시설 둘러보기</b><span>강의실 · AI 카페 · 구내식당 등</span></a>
-      <a href="#tips"><small>함께 보면 좋은</small><b>생활 꿀팁</b><span>주거 · 근처 식당 · 문화·여가 · 생활 적응</span></a>
+      <a href="../check/index.html#eligibility"><small>다음으로</small><b>지원 전 체크</b><span class="seps"><span><span>자격</span><span>일정</span><span>혜택</span><span>자주 묻는 질문</span></span></span></a>
+      <a href="#facilities"><small>함께 보면 좋은</small><b>시설 둘러보기</b><span class="seps"><span><span>강의실</span><span>AI 카페</span><span>구내식당 등</span></span></span></a>
+      <a href="#tips"><small>함께 보면 좋은</small><b>생활 꿀팁</b><span class="seps"><span><span>주거</span><span>근처 식당</span><span>문화·여가</span><span>생활 적응</span></span></span></a>
     </div>
   </nav>
 </div>

@@ -5,6 +5,7 @@
    페이지에서 쓰는 법(check/index.html 참고):
      <html data-menu="메뉴 id">        지금 카테고리(홈은 생략). 헤더 메뉴에 현재 위치로 표시하고 그 아래 하위 메뉴 바(세부 카테고리)
                                        페이지에 자기 목차가 있어 바가 필요 없으면 data-subnav="off"
+                                       바 왼쪽 카테고리 제목(menu.js title)을 빼려면 data-subnav-title="off"(라이프: 첫 화면 히어로가 제목)
                                        글 상세처럼 하위 메뉴 주소에 없는 페이지는 data-sub="하위 메뉴 id"로 밑줄 위치를 정함
                                        (탭 화면 페이지는 페이지 스크립트가 data-sub를 바꾸고 Site.syncSubnav() 호출)
      <header class="site-header" id="siteHeader"></header>
@@ -116,7 +117,7 @@ const Site = (() => {
     </div>${subnavOn ? `
     <nav class="subnav" id="subnav" data-type="${current.type}" aria-label="${current.label} 세부 메뉴">
       <div class="wrap subnav-inner">
-        ${current.children.some(c => c.label === current.title) ? '' : `<span class="subnav-title">${current.title}</span>`}
+        ${!current.title || html.dataset.subnavTitle === 'off' || current.children.some(c => c.label === current.title) ? '' : `<span class="subnav-title">${current.title}</span>`}
         <ul class="subnav-list" role="list">
           ${current.children.map(c => `<li><a href="${href(current, c)}" data-sub="${c.id}">${c.label}</a></li>`).join('')}
           <li class="subnav-indicator" aria-hidden="true"></li>
@@ -327,9 +328,10 @@ const Site = (() => {
     const id = decodeURIComponent(hash.slice(1));
     const target = id && document.getElementById(id);
     if (!hash) {
-      if (location.hash) history.pushState(null, '', location.pathname + location.search);
       window.scrollTo({ top: 0 });
-      syncSubnav();
+      // 주소에서 #위치를 지움(pushState는 hashchange가 없음) → 직접 알려 탭 화면 페이지(라이프 등)가 첫 화면으로 돌아가고 하위 메뉴 바도 다시 맞춤
+      if (location.hash) { history.pushState(null, '', location.pathname + location.search); dispatchEvent(new HashChangeEvent('hashchange')); }
+      else syncSubnav();
     } else if (hash !== location.hash) location.hash = hash;   // 스크롤 · hashchange(→ syncSubnav)는 브라우저가
     else target?.scrollIntoView({ block: 'start' });           // 지금 #위치를 다시 고르면 그 자리로
     const h = target && target.querySelector('h1, h2');
@@ -401,13 +403,26 @@ const Site = (() => {
       m.focus();
     });
 
+    // 맨 위로: 페이지 끝 '다음으로' 띠(.next-band)의 카드가 버튼 자리를 지나는 동안은 감춤 — 좁은 화면에서 카드 오른쪽 화살표 원과 겹쳐 보였음.
+    // 카드가 다 지나가면(푸터 위) 다시 보임. 넓은 화면처럼 버튼이 카드 옆 바깥에 있으면 그대로
+    const floating = fabTop.parentElement;
+    const overBand = () => {
+      const band = $$('.next-band').find(b => b.offsetParent);   // 탭 화면 페이지는 보이는 화면의 띠 하나
+      if (!band) return false;
+      const f = floating.getBoundingClientRect();
+      return $$('a', band).some(a => {
+        const r = a.getBoundingClientRect();
+        return r.left < f.right && r.right > f.left && r.top < f.bottom + 8 && r.bottom > f.top - 8;
+      });
+    };
     const onScroll = () => {
       header.classList.toggle('is-scrolled', scrollY > 8);
-      fabTop.classList.toggle('is-visible', scrollY > innerHeight * .8);
+      fabTop.classList.toggle('is-visible', scrollY > innerHeight * .8 && !overBand());
     };
     fabTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }));
     addEventListener('scroll', onScroll, { passive: true });
-    addEventListener('resize', () => { if ($('#subnav')) setActiveSub($('#subnav .subnav-list a.is-active')?.dataset.sub || null); });
+    addEventListener('resize', () => { onScroll(); if ($('#subnav')) setActiveSub($('#subnav .subnav-list a.is-active')?.dataset.sub || null); });
+    addEventListener('hashchange', () => requestAnimationFrame(onScroll));   // 탭 화면 페이지: 화면이 바뀌면 띠도 바뀜
     // 뒤로 가기로 돌아온 페이지에 열린 메뉴 · 드롭다운 · 검색이 남지 않게
     addEventListener('pageshow', () => { closeDrawer(); setMega(false); setSearch(false); });
     onScroll();

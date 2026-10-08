@@ -42,8 +42,7 @@
   .about-has-section-nav .about-wrap { width: min(1120px, calc(100% - 288px)); margin-inline: auto; }
   .about-has-section-nav .about-section { scroll-margin-top: 28px; }
   .school-about.about-has-section-nav .scene-copy { left: 63%; width: 21%; }
-  .about-has-section-nav .hero-story { right: 220px; }
-}
+  }
 
 @media (prefers-reduced-motion: reduce) {
   .section-navigation *, .section-navigation *::before { transition: none; }

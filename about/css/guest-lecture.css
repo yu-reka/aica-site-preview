@@ -1,53 +1,104 @@
 .school-about:has(#activities:target) { scroll-padding-top: calc(var(--hdr) + var(--about-subnav, 0px)); }
-.guest-lecture { padding: 64px 0 76px; background: #fff; scroll-margin-top: 24px; }
+.guest-lecture { padding: 64px 0 76px; background: #fff; scroll-margin-top: 24px; overflow: hidden; }
 .guest-lecture-wrap { width: min(1240px, calc(100% - 168px)); margin-inline: auto; }
-.guest-lecture-kicker { display: flex; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid #d8dfeb; padding-top: 28px; margin-bottom: 22px; }
-.guest-lecture-kicker .micro-label { margin: 0; font-size: 13px; }
-.guest-lecture-example { font-size: 12px; color: #788193; background: #f1f3f7; border-radius: 4px; padding: 6px 10px; }
-.guest-lecture-heading { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 34px; }
+.guest-lecture-heading { text-align: center; margin-bottom: 28px; }
 .school-about .guest-lecture-heading h2 { font-size: clamp(32px, 3.2vw, 46px); font-weight: 900; line-height: 1.35; letter-spacing: -.055em; color: #13203c; }
-.guest-lecture-heading > p { font-size: 16px; line-height: 1.8; color: #657087; }
-.guest-lecture-photo { position: relative; margin: 0; }
-.guest-lecture-photo img { display: block; width: 100%; height: auto; aspect-ratio: 2.2; object-fit: cover; object-position: center 44%; border-radius: 5px; background: #edf0f5; }
-.guest-lecture-photo-label { display: inline-flex; align-items: center; gap: 12px; position: absolute; top: 22px; left: 22px; padding: 11px 15px; color: #fff; background: #13203cdb; border-radius: 4px; font-size: 12px; font-weight: 700; letter-spacing: .02em; }
-.guest-lecture-photo-label i { width: 1px; height: 12px; background: #ffffff70; }
-.guest-lecture-photo figcaption { text-align: right; margin-top: 12px; font-size: 12px; line-height: 1.6; color: #7a8498; }
-.guest-lecture-story { display: grid; grid-template-columns: 1fr 1.15fr; gap: 70px; margin-top: 30px; }
-.guest-lecture-category { display: block; margin-bottom: 12px; color: #244cd2; font-size: 13px; font-weight: 700; }
-.school-about .guest-lecture-story h3 { color: #13203c; font-size: clamp(27px, 2.6vw, 36px); line-height: 1.45; font-weight: 900; letter-spacing: -.045em; }
-.guest-lecture-description { padding-top: 27px; }
-.guest-lecture-description > p { font-size: 17px; line-height: 1.9; word-break: keep-all; color: #657087; }
-.guest-lecture-topics { display: flex; gap: 8px; flex-wrap: wrap; padding: 0; margin: 18px 0 0; list-style: none; }
-.guest-lecture-topics li { padding: 7px 11px; background: #eff3fc; border-radius: 4px; color: #315693; font-size: 13px; line-height: 1.6; }
-.guest-lecture-note { margin-top: 30px; font-size: 12px; line-height: 1.8; color: #7a8498; }
+.guest-lecture-heading > p { margin-top: 16px; font-size: 16px; line-height: 1.8; color: #657087; word-break: keep-all; }
+.activity-gallery-filters { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
+.activity-gallery-filters button { display: flex; align-items: center; justify-content: center; gap: 10px; min-width: 136px; min-height: 58px; padding: 14px 28px; border: 1px solid #e1e7f1; border-radius: 30px; background: #fff; color: #657087; font-size: 18px; font-weight: 700; transition: background .2s, color .2s, border-color .2s; }
+.activity-gallery-filters button span { display: grid; place-items: center; min-width: 22px; height: 22px; padding-inline: 4px; border-radius: 50%; background: #edf2fb; color: #526a9d; font-size: 12px; font-weight: 600; }
+.activity-gallery-filters button[aria-pressed="true"] span { background: #ffffff29; color: #fff; }
+.activity-gallery-filters button[aria-pressed="true"] { background: #244cd2; border-color: #244cd2; color: #fff; }
+.activity-gallery-filters button:hover { border-color: #244cd2; }
+/* Without JavaScript, all photos remain accessible as a simple gallery. */
+.activity-gallery-stage { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.activity-gallery-slide { min-width: 0; margin: 0; }
+.activity-gallery-photo { aspect-ratio: 16 / 9; overflow: hidden; border-radius: 20px; background: #eef2f8; }
+.activity-gallery-slide img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: var(--photo-position, 50% 50%); transform: scale(var(--photo-zoom, 1)); transform-origin: var(--photo-origin, 50% 50%); }
+/* Preserve the supplied group photograph: color and backdrop treatment only. */
+.activity-gallery-photo--graduation { position: relative; isolation: isolate; }
+.activity-gallery-photo--graduation > img { filter: brightness(1.035) contrast(1.055) saturate(.95); }
+.activity-gallery-photo--graduation::after { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: url("../assets/activities/graduation-group-photo.webp"); background-size: cover; background-position: var(--photo-position, 50% 50%); transform: scale(var(--photo-zoom, 1)); transform-origin: var(--photo-origin, 50% 50%); filter: brightness(1.035) contrast(1.055) saturate(.95) blur(2.4px); mask-image: linear-gradient(to bottom, #000 0%, #000 24%, transparent 34%, transparent 94%, #000 100%); }
+.activity-gallery-slide figcaption { text-align: center; color: #344660; font-size: 15px; padding-top: 13px; }
+/* A sharp central photograph with soft previews of its neighbors. */
+.activity-gallery[data-gallery-ready] .activity-gallery-viewport { overflow: hidden; width: 100%; max-width: 1120px; margin-inline: auto; padding: 14px 0 24px; }
+.activity-gallery[data-gallery-ready] .activity-gallery-stage { display: block; position: relative; width: min(900px, calc(100% - 152px)); aspect-ratio: 16 / 9; margin-inline: auto; touch-action: pan-y; }
+.activity-gallery[data-gallery-ready] .activity-gallery-slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; transform: scale(.92); transition: none; z-index: 0; }
+.activity-gallery[data-gallery-ready] .activity-gallery-photo { height: 100%; width: 100%; border: 1px solid #dce3f0; box-shadow: 0 14px 34px #1427490c; }
+.activity-gallery[data-gallery-ready] .activity-gallery-slide figcaption { display: none; }
+.activity-gallery[data-gallery-ready] .activity-gallery-slide[data-gallery-position="current"] { visibility: visible !important; opacity: 1; transform: translateX(0) scale(1); filter: none; z-index: 2 !important; }
+.activity-gallery-slide[data-gallery-position="previous"], .activity-gallery-slide[data-gallery-position="next"] { visibility: visible !important; opacity: .52 !important; filter: blur(4px); pointer-events: none; }
+.activity-gallery[data-gallery-ready] .activity-gallery-slide[data-gallery-position="previous"] { transform: translateX(calc(-90% - 24px)) scale(.92); }
+.activity-gallery[data-gallery-ready] .activity-gallery-slide[data-gallery-position="next"] { transform: translateX(calc(90% + 24px)) scale(.92); }
+.activity-gallery[data-gallery-ready] .activity-gallery-transition-layer { position: absolute; inset: 0; z-index: 3; pointer-events: none; filter: none; }
+/* Animate ordered copies; original preview roles update only behind the track. */
+.activity-gallery[data-gallery-ready][data-gallery-animating] .activity-gallery-slide[data-gallery-position] { visibility: hidden !important; }
+.activity-gallery-transition-frame { position: absolute; inset: 0; pointer-events: none; border-radius: 20px; overflow: hidden; background: #fff; will-change: transform; }
+.activity-gallery-transition-frame .activity-gallery-photo { will-change: opacity, filter; }
+.activity-gallery-transition-layer img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: var(--photo-position, 50% 50%); transform: scale(var(--photo-zoom, 1)); transform-origin: var(--photo-origin, 50% 50%); }
+.activity-gallery-arrow { position: absolute; z-index: 4; top: 50%; transform: translateY(-50%); display: grid; place-items: center; width: 50px; height: 50px; border: 1px solid #e9edf4; border-radius: 50%; background: #fff; color: #546176; box-shadow: 0 5px 20px #0c183b20; padding: 0; transition: color .2s, box-shadow .2s; }
+.activity-gallery-arrow--prev { left: 18px; }
+.activity-gallery-arrow--next { right: 18px; }
+.activity-gallery-arrow svg { width: 23px; height: 23px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.activity-gallery-arrow:hover { color: #244cd2; box-shadow: 0 5px 24px #0c183b30; }
+.activity-gallery-info { text-align: center; margin-top: 3px; }
+.activity-gallery-category { display: block; color: #244cd2; font-size: 12px; font-weight: 600; margin-bottom: 9px; }
+.activity-gallery-caption { display: block; color: #253859; font-size: 22px; font-weight: 700; line-height: 1.5; letter-spacing: -.03em; word-break: keep-all; }
+.activity-gallery-info .activity-gallery-description { color: #657087; font-size: 15px; line-height: 1.8; margin-top: 9px; word-break: keep-all; }
+.activity-gallery-pagination { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 17px; }
+.activity-gallery-dots { display: flex; align-items: center; gap: 3px; }
+.activity-gallery-dot { display: grid; place-items: center; width: 32px; height: 32px; border: 0; background: transparent; padding: 0; }
+.activity-gallery-dot span { display: block; width: 6px; height: 6px; background: #d6deec; border-radius: 8px; transition: width .3s ease, background .3s ease; }
+.activity-gallery-dot[aria-current="true"] span { width: 22px; background: #244cd2; }
 @media (max-width: 1199px) {
   .guest-lecture { scroll-margin-top: 88px; }
   .guest-lecture-wrap { width: calc(100% - 72px); }
-  .guest-lecture-story { gap: 40px; }
+  .activity-gallery[data-gallery-ready] .activity-gallery-stage { width: calc(100% - 64px); }
 }
 @media (max-width: 800px) {
   .guest-lecture-wrap { width: calc(100% - 48px); }
-  .guest-lecture-heading { align-items: start; }
-  .guest-lecture-heading > p { font-size: 14px; }
-  .guest-lecture-story { grid-template-columns: 1fr; gap: 18px; }
-  .guest-lecture-description { padding-top: 0; }
-  .guest-lecture-photo img { aspect-ratio: 1.65; }
+  .activity-gallery[data-gallery-ready] .activity-gallery-stage { width: calc(100% - 48px); }
+}
+@media (max-width: 760px) {
+  .activity-gallery[data-gallery-ready] .activity-gallery-viewport { max-width: 560px; }
 }
 @media (max-width: 640px) {
   .guest-lecture { padding: 36px 0 50px; }
   .guest-lecture-wrap { width: calc(100% - 40px); }
-  .guest-lecture-kicker { gap: 12px; padding-top: 24px; margin-bottom: 20px; }
-  .guest-lecture-kicker .micro-label { font-size: 12px; }
-  .guest-lecture-example { flex-shrink: 0; font-size: 11px; }
-  .guest-lecture-heading { display: block; margin-bottom: 24px; }
+  .guest-lecture-heading { margin-bottom: 23px; }
   .school-about .guest-lecture-heading h2 { font-size: clamp(28px, 8vw, 34px); }
   .guest-lecture-heading > p { margin-top: 14px; font-size: 15px; }
-  .guest-lecture-photo img { aspect-ratio: 1.4; }
-  .guest-lecture-photo-label { top: 12px; left: 12px; padding: 8px 10px; font-size: 10px; gap: 9px; }
-  .guest-lecture-photo figcaption { text-align: left; font-size: 11px; margin-top: 9px; }
-  .guest-lecture-story { margin-top: 26px; }
-  .school-about .guest-lecture-story h3 { font-size: clamp(25px, 7vw, 30px); }
-  .guest-lecture-description > p { font-size: 16px; }
-  .guest-lecture-topics li { font-size: 12px; padding: 6px 9px; }
-  .guest-lecture-note { font-size: 11px; margin-top: 24px; }
+  .activity-gallery-filters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0 auto 20px; max-width: 380px; gap: 10px; }
+  .activity-gallery-filters button[data-gallery-category="orientation"] { grid-column: 1 / -1; }
+  .activity-gallery-filters button { min-width: 0; min-height: 52px; padding: 12px 14px; font-size: 16px; }
+  .activity-gallery-stage { grid-template-columns: 1fr; }
+  .activity-gallery[data-gallery-ready] .activity-gallery-viewport { padding: 8px 0 20px; }
+  .activity-gallery[data-gallery-ready] .activity-gallery-stage { width: calc(100% - 24px); }
+  .activity-gallery-photo, .activity-gallery-transition-frame { border-radius: 13px; }
+  .activity-gallery[data-gallery-ready] .activity-gallery-slide[data-gallery-position="previous"] { transform: translateX(calc(-94% - 14px)) scale(.92); }
+  .activity-gallery[data-gallery-ready] .activity-gallery-slide[data-gallery-position="next"] { transform: translateX(calc(94% + 14px)) scale(.92); }
+  .activity-gallery-arrow { width: 36px; height: 36px; }
+  .activity-gallery-arrow--prev { left: 10px; }
+  .activity-gallery-arrow--next { right: 10px; }
+  .activity-gallery-arrow svg { width: 18px; height: 18px; }
+  .activity-gallery-caption { font-size: 18px; }
+  .activity-gallery-info .activity-gallery-description { font-size: 14px; }
+  .activity-gallery-pagination { gap: 14px; margin-top: 12px; }
 }
+@media (max-width: 360px) {
+  .activity-gallery-filters button { gap: 8px; padding-inline: 10px; font-size: 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .activity-gallery-slide, .activity-gallery-filters button, .activity-gallery-dot span { transition: none !important; }
+}
+
+/* Match the small blue introduction above adjacent activity headings. */
+.activity-other-heading > span { display: block; margin-bottom: 10px; color: #244cd2; font-size: 11px; font-weight: 700; line-height: 1.5; }
+
+/* 사진마다 자르는 위치 · 확대(HTML의 export-style-25~30. about.js가 넘김 효과 복사본에도 붙임) */
+.export-style-25 { --photo-position: 50% 45%; }
+.export-style-26 { --photo-position: 50% 50%; }
+.export-style-27 { --photo-position: 50% 42%; }
+.export-style-28 { --photo-zoom: 1.5; --photo-origin: 100% 35%; }
+.export-style-29 { --photo-zoom: 2.25; --photo-origin: 53% 43%; }
+.export-style-30 { --photo-position: 50% 75%; --photo-zoom: 1.06; --photo-origin: 50% 65%; }

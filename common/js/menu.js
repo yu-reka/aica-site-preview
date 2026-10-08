@@ -5,7 +5,7 @@
    메뉴 이름 · 순서 · 주소, 지원하기 같은 바깥 연결처, 검색 추천 키워드는 이 파일에서 고칩니다.
 
    page      사이트 폴더(site/) 기준 페이지 주소
-   title     하위 메뉴 바 왼쪽에 보이는 카테고리 페이지 이름
+   title     하위 메뉴 바 왼쪽에 보이는 카테고리 페이지 이름(없으면 바 왼쪽 제목 없음 — 알아보기 · 라이프, 2026-10-08 사용자)
    type      anchor = 한 페이지 안에서 위치로 이동(스크롤하면 하위 메뉴 바가 지금 섹션을 따라감)
              tab = 하위 메뉴마다 화면이 따로(라이프 · 이야기는 한 페이지 안 탭 화면, 페이지 JS가 Site.syncSubnav()로 표시)
    children  하위 메뉴. 주소는 기본으로 page#id
@@ -15,8 +15,7 @@
 const SITE_HOME = 'home/index.html';
 
 const SITE_MENU = [
-  { id:'about', label:'인사교 알아보기', title:'인사교 A to Z', type:'anchor', page:'about/index.html', children:[
-    { id:'overview', label:'인사교 A to Z', anchor:'' },
+  { id:'about', label:'인사교 알아보기', type:'anchor', page:'about/index.html', children:[
     { id:'intro', label:'인사교 소개', anchor:'#intro' },
     { id:'learn', label:'무엇을 배우나요?', anchor:'#learning' },
     { id:'activity', label:'어떤 활동을 하나요?', anchor:'#activities' },
@@ -26,7 +25,7 @@ const SITE_MENU = [
     { id:'interviews', label:'선배 인터뷰' },
     { id:'projects', label:'프로젝트' },
     { id:'cohorts', label:'기수별 모아보기' } ]},
-  { id:'life', label:'인사교 라이프', title:'인사교 Real Life', type:'tab', page:'life/index.html', children:[
+  { id:'life', label:'인사교 라이프', type:'tab', page:'life/index.html', children:[
     { id:'facilities', label:'시설 둘러보기' },
     { id:'tips', label:'생활 꿀팁' },
     { id:'directions', label:'오시는 길' } ]},

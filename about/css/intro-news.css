@@ -1,0 +1,66 @@
+/* 기사 제목을 보여 주는 비인터랙티브 종이 카드. */
+.school-about #intro .intro-purpose h2 { margin-bottom: 23px; }
+.school-about #intro .intro-purpose > p { max-width: 920px; margin-inline: auto; font-size: 21px; line-height: 1.8; color: #657087; text-wrap: balance; }
+.school-about #intro .intro-purpose > p br { display: none; }
+.intro-news-stack { position: relative; isolation: isolate; width: 100%; height: 304px; margin-top: 65px; }
+.intro-news-motion { position: absolute; inset: 0; isolation: isolate; }
+.intro-news-stack[data-news-reveal] .intro-news-motion { transition: opacity 1s ease-in-out, transform 1s ease-in-out; }
+.intro-news-stack[data-news-reveal="waiting"] .intro-news-motion { opacity: 0; transform: translateY(100px); }
+.intro-news-stack[data-news-reveal="visible"] .intro-news-motion { opacity: 1; transform: translateY(0); }
+.intro-news-papers { position: absolute; inset: 0; clip-path: inset(-40px 0 0); }
+.intro-news-motion::before { content: ''; position: absolute; z-index: -1; inset: -90px -60px -20px; pointer-events: none; background: radial-gradient(ellipse at 50% 50%, #e5d5ffb3 0%, #f0e9ff80 38%, transparent 72%); }
+.intro-news-card { position: absolute; width: 54%; background: #fff; border: 1.5px solid #d6d5df; border-radius: 6px; box-shadow: 0 5px 14px #22204105; transform-origin: center center; }
+.intro-news-card--learning { left: 18px; width: calc(54% - 18px); top: 30px; transform: rotate(-2.8deg); z-index: 1; }
+.intro-news-card--career { right: 18px; width: calc(58% - 18px); top: 44px; transform: rotate(2.8deg); z-index: 0; }
+.intro-news-card--project { left: 14%; top: 200px; width: 72%; transform: rotate(1.7deg); z-index: 2; box-shadow: 0 8px 25px #3c2d660a; }
+.intro-news-body { padding: 18px 25px 25px; color: #333238; border-radius: inherit; }
+.intro-news-card--career .intro-news-body { padding-left: 175px; }
+.intro-news-meta { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 7px 0; border-block: 1px solid #d1d0d6; color: #8d8c92; font-size: 12px; line-height: 1.5; }
+.intro-news-meta > span { font-weight: 700; }
+.intro-news-meta time { white-space: nowrap; }
+.school-about #intro .intro-news-card h4 { margin-top: 18px; font-family: 'School Pretendard', sans-serif; font-weight: 700; font-size: 20px; line-height: 1.65; letter-spacing: -.035em; word-break: keep-all; color: #333238; }
+.school-about #intro .intro-news-card--career h4 { text-wrap: balance; }
+.intro-news-card h4 em { color: #2563eb; font-style: normal; }
+.intro-news-print-lines { position: relative; display: grid; gap: 11px; margin-top: 26px; min-height: 44px; }
+.intro-news-print-lines i { height: 6px; border-radius: 4px; background: #f0eff3; }
+.intro-news-print-lines i:nth-child(2) { width: 91%; }
+.intro-news-print-lines i:nth-child(3) { width: 67%; }
+.intro-news-print-lines--column { min-height: 105px; align-content: start; padding: 12px 0 0 48%; }
+.intro-news-print-lines--column::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 44%; background: #f8f7fa; border-radius: 2px; }
+.intro-news-card--project .intro-news-print-lines { visibility: hidden; }
+@media (max-width: 1199px) {
+  .intro-news-stack { width: 100%; height: 360px; margin-top: 52px; }
+  .intro-news-motion::before { left: -28px; right: -28px; }
+  .intro-news-card--career .intro-news-body { padding-left: 130px; }
+  .intro-news-card--project { top: 236px; left: 9%; width: 82%; }
+  .school-about #intro .intro-news-card h4 { font-size: 19px; }
+}
+@media (max-width: 960px) {
+  .school-about #intro .intro-purpose > p { font-size: 18px; }
+  .intro-news-stack { display: grid; gap: 20px; height: auto; margin-top: 40px; padding: 9px 0; }
+  .intro-news-motion { position: relative; display: grid; gap: 20px; }
+  .intro-news-papers { display: grid; gap: 20px; position: relative; inset: auto; padding-inline: 8px; clip-path: inset(-12px 0 -12px); }
+  .intro-news-card--project { overflow: hidden; }
+  .intro-news-card--project .intro-news-body { padding-bottom: 12px; }
+  .intro-news-card--project .intro-news-print-lines { display: none; }
+  .intro-news-motion::before { inset: -20px -10px; }
+  .intro-news-card { position: relative; inset: auto; width: 100%; }
+  .intro-news-card--learning { transform: rotate(-1.4deg); }
+  .intro-news-card--career { transform: rotate(1.4deg); }
+  .intro-news-card--project { transform: rotate(-1deg); }
+  .intro-news-body { padding: 17px 20px 23px; }
+  .intro-news-card--career .intro-news-body { padding-left: 20px; }
+  .intro-news-print-lines { min-height: 0; gap: 8px; margin-top: 20px; }
+  .intro-news-print-lines i { height: 4px; }
+  .intro-news-print-lines--column { padding: 0; }
+  .intro-news-print-lines--column::before { display: none; }
+  .intro-news-meta { font-size: 11px; gap: 8px; }
+}
+@media (max-width: 360px) {
+  .intro-news-body { padding-inline: 17px; }
+  .school-about #intro .intro-news-card h4 { font-size: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-news-stack[data-news-reveal] .intro-news-motion { opacity: 1; transform: none; transition: none; }
+}

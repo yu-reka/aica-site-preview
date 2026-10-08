@@ -18,13 +18,6 @@
 .glass-note > div > span:last-child { font-size: 27px; }
 .scene-scroll { position: absolute; left: 50%; transform: translateX(-50%); bottom: 29px; display: flex; align-items: center; gap: 11px; font: 10px Arial,sans-serif; letter-spacing: 1px; white-space: nowrap; }
 .scene-scroll .down-circle { border-color: #ffffff61; }
-.hero-story { position: absolute; right: 73px; width: 208px; height: 123px; border: 1px solid #ffffff75; box-shadow: 0 3px 30px #020f384a; border-radius: 4px; overflow: hidden; bottom: 73px; }
-.hero-story img { height: 100%; filter: brightness(.57); transition: transform .5s; }
-.hero-story:hover img { transform: scale(1.07); }
-.hero-story > span { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: end; padding: 16px; }
-.hero-story small { font: 9px Arial; letter-spacing: 1px; margin-bottom: 7px; color: #dee7ff; }
-.hero-story strong { font-size: 16px; font-weight: 500; }
-.hero-story b { position: absolute; right: 14px; top: 8px; font-size: 24px; font-weight: 400; }
 @media (max-width: 1100px) {
   .glass-note { width: 214px; bottom: 40px; }
   .glass-note > strong { font-size: 21px; }
@@ -36,16 +29,12 @@
   .glass-note > .eyebrow { font-size: 8px; }
   .glass-note > div { padding-top: 10px; }
   .glass-note > div > span:last-child { font-size: 20px; }
-  .hero-story > span { padding: 10px; }
-  .hero-story small { font-size: 7px; letter-spacing: 0; }
-  .hero-story strong { font-size: 11px; }
-  .hero-story b { font-size: 17px; }
   .scene-scroll .down-circle { font-size: 13px; width: 21px; height: 21px; }
 }
 
 /* 화면 폭별 배치 */
 .scene-runway { position: relative; }
-.glass-note, .hero-story, .scene-scroll, .scene-copy, .hero-masthead { z-index: 1; }
+.glass-note, .scene-scroll, .scene-copy, .hero-masthead { z-index: 1; }
 @media (min-width: 1200px) {
   .scene-copy { left: 65%; }
 }
@@ -61,7 +50,6 @@
   .glass-note { left: 7%; bottom: 67px; width: 178px; padding: 13px; }
   .glass-note > strong { font-size: 14px; line-height: 1.4; margin: 9px 0 11px; }
   .glass-note > div > span:first-child { font-size: 8px; }
-  .hero-story { bottom: 85px; height: 89px; right: 6%; width: 120px; }
   .scene-scroll { bottom: 24px; left: 7%; transform: none; }
   .scene-shade { background: linear-gradient(180deg,transparent 40%,#03123542 65%,#03123560); }
 }
@@ -73,8 +61,7 @@
 @media (max-width: 380px) {
   .scene-still .scene-copy { top: auto; bottom: 255px; }
   .scene-still .glass-note { width: 49%; }
-  .scene-still .hero-story { width: 34%; }
-}
+  }
 
 /* 알아보기 글꼴 · 사진 · 위치 */
 .school-about .hero-masthead { top: 100px; left: 3%; right: 3%; }
@@ -85,8 +72,7 @@
 .school-about .scene-copy p { margin-top: 23px; color: #d9e5ff; font-size: 14px; }
 .school-about .scene-copy .eyebrow { color: #d5e3ff; }
 .school-about .glass-note strong { font-family: 'School Pretendard', sans-serif; font-weight: 900; letter-spacing: -.04em; }
-.school-about .scene-scroll, .school-about .hero-story { font-family: 'School Pretendard', sans-serif; }
-.school-about .hero-story img { object-position: center; }
+.school-about .scene-scroll { font-family: 'School Pretendard', sans-serif; }
 .school-about .scene-scroll { font-size: 12px; }
 @media (max-width: 800px) {
   .school-about .hero-masthead h1 { font-size: 11.4vw; }
@@ -113,14 +99,10 @@
   .school-about .glass-note > div { margin-top: 14px; padding-top: 12px; }
   .school-about .glass-note > div > span:first-child { font-size: 9px; }
   .school-about .glass-note .eyebrow { font-size: 8px; }
-  .school-about .hero-story { width: 34%; height: 102px; right: 6%; bottom: 75px; }
-  .school-about .hero-story strong { font-size: 12px; }
-  .school-about .hero-story small { font-size: 7px; }
   .school-about .scene-scroll { font-size: 10px; }
 }
 @media (max-width: 360px) {
   .school-about .immersive-hero { min-height: 800px; }
   .school-about .scene-background { background-size: auto calc(100% + 310px); }
-  .school-about .hero-story { height: 94px; }
   .school-about .glass-note strong { font-size: 14px; }
 }

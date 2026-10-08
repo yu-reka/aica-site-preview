@@ -9,7 +9,6 @@
 /* 소개 소제목 통일. 선택 이유 영역은 큰 제목만 적용합니다. */
 .school-about .about-paper :is(h2, h3, h4, h5, h6):not(#why-school *),
 .school-about .scene-copy h2,
-.school-about .career-guide-service-title,
 .school-about #why-school-heading {
   font-family: 'School Paperlogy', 'School Pretendard', sans-serif;
   font-weight: 900;
@@ -23,5 +22,12 @@
 .school-about #why-school-heading {
   font-family: 'School Giants', 'School Paperlogy', 'School Pretendard', sans-serif;
   font-weight: 700;
+  font-synthesis: none;
+}
+
+/* 카드 · 노드 제목만 바꿉니다. 둘레 제목은 위 글꼴 그대로. */
+.school-about main#main .about-paper :is(.intro-platform-features article, .partner-node, .eligibility-condition, .why-school-card, .common-course-card, .education-phase-band, .daily-routine-agenda li, .activity-project-card, .career-stage-card) :is(h3, h4) {
+  font-family: 'School Paperlogy', 'School Pretendard', sans-serif;
+  font-weight: 900;
   font-synthesis: none;
 }

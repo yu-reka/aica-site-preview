@@ -18,10 +18,10 @@ if (!MAIN) return;
    #facilities(기본) · #tips · #directions. 시안 주소 #facility · #way · #tips/house 도 받음.
    화면 안 위치(#tp-house 등)로 오면 그 화면을 연 뒤 그 위치로. 하위 메뉴 바 · 헤더 드롭다운에서 고르면 site.js가 location.hash를 바꿈 */
 var PG = $$(':scope > .page', MAIN);
-var SCREEN = { facilities:'facility', facility:'facility', tips:'tips', directions:'way', way:'way' };
+var SCREEN = { overview:'home', home:'home', facilities:'facility', facility:'facility', tips:'tips', directions:'way', way:'way' };   // 시안10-B v3: overview = 히어로 페이지
 var CANON = { facility:'#facilities', way:'#directions' };
-var NAME = { facility:'시설 둘러보기', tips:'생활 꿀팁', way:'오시는 길' };
-var SUB = { facility:'facilities', tips:'tips', way:'directions' };   // menu.js 하위 메뉴 id
+var NAME = { home:'인사교 Real Life', facility:'시설 둘러보기', tips:'생활 꿀팁', way:'오시는 길' };
+var SUB = { home:'none', facility:'facilities', tips:'tips', way:'directions' };   // home: 하위 메뉴 바에 표시 없음   // menu.js 하위 메뉴 id
 var BASE_TITLE = document.title;
 function route(){
   var raw = decodeURIComponent(location.hash.slice(1)), part = raw.split('/'), id = SCREEN[part[0]], target = null;
@@ -34,7 +34,7 @@ function route(){
     if (pg && PG.indexOf(pg) > -1) { id = pg.dataset.page; target = el; }
     else return;   // 화면 밖 위치(본문으로 바로가기 #main 등)나 모르는 주소: 지금 화면 그대로
   }
-  if (!id) id = 'facility';
+  if (!id) id = 'home';   // 주소 없이 들어오면(헤더 '인사교 라이프') 히어로 페이지
   var cur = document.getElementById('pg-' + id), was = !cur.hidden;
   PG.forEach(function(p){ p.hidden = p !== cur; });
   document.title = NAME[id] + ' · ' + BASE_TITLE;
@@ -53,13 +53,27 @@ function route(){
 }
 addEventListener('hashchange', route);
 
+/* 헤더 GNB · 모바일 메뉴 · 푸터의 「인사교 라이프」(주소 없는 life/index.html)를 이 페이지 안에서 누르면 히어로 페이지로:
+   공통 site.js가 #위치를 지우며 hashchange를 알려 주므로 위 route()가 받음(따로 처리 없음).
+   하위 메뉴 바 왼쪽 제목(「인사교 Real Life」)은 <html data-subnav-title="off">로 공통 틀이 그리지 않음 */
+
+/* 시안10-B v7: 히어로 패널 — 마우스를 올리거나 초점이 가면 그 패널을 펼침(961px 이상). 마지막에 고른 패널이 펼쳐진 채로 남음 */
+(function(){
+  var ps = $$('.lh-p .lhp', MAIN); if (!ps.length) return;
+  function open(p){ ps.forEach(function(x){ x.classList.toggle('is-open', x === p); }); }
+  ps.forEach(function(p){
+    p.addEventListener('pointerenter', function(e){ if (e.pointerType === 'mouse') open(p); });
+    p.addEventListener('focus', function(){ open(p); });
+  });
+})();
+
 /* ---------- 생활 꿀팁 바로가기 막대: 지금 보는 부분 표시 ([01]) ----------
    항목은 링크(<a href="#tp-…">: 주소 공유 · 새 탭 가능). 누르면 브라우저가 그 위치로(부드러운 스크롤은 base.css) · 화면 전환은 위 route()가 맡음.
    지금 보는 부분 = aria-current="location"(모양은 공통 하위 메뉴 바처럼 밑줄, life.css) */
 function spy(){
   var pg = $(':scope > .page:not([hidden])', MAIN); if (!pg) return;
   var sn = $$('.lnb-s a', pg); if (!sn.length) return;
-  var cur = sn[0];
+  var cur = null;   // 시안10: 바로가기에서 주거 · 근처 식당을 뺐으므로, 그 위를 보는 동안은 표시 없음
   sn.forEach(function(a){ var t = document.getElementById(a.hash.slice(1)); if (t && t.getBoundingClientRect().top < innerHeight * .4) cur = a; });
   sn.forEach(function(a){ if (a === cur) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
 }
@@ -147,21 +161,42 @@ addEventListener('scroll', function(){
   layout(); setTimeout(layout, 60);
 })();
 
-/* ---------- 근처 식당: 혼밥 / 여럿이 · 도보 10분 · 1만 원 이하 ([11]) ---------- */
+/* ---------- 근처 식당: 혼밥 / 여럿이 · 도보 10분 · 1만 원 이하 · 음식 종류 ([11], 음식 종류 · 빈 상태는 시안10에서 더함) ---------- */
 (function(){
   var bs = $$('[data-fg2]', MAIN), nb = $('#fdNear'), cb = $('#fdCheap'); if (!bs.length) return;
-  var g = 'all', near = false, cheap = false;
+  var fs = $$('[data-fc]', MAIN), cnt = $('.fdcnt', MAIN), empty = $('.fdempty', MAIN), rs = $('[data-fdreset]', MAIN);
+  var g = 'all', near = false, cheap = false, cat = 'all';
   function ap(){
+    var total = 0, cols = 0;
     $$('.fd2c', MAIN).forEach(function(c){
-      var vis = g === 'all' || c.classList.contains(g); c.hidden = !vis; var n = 0;
-      $$('.fd2i', c).forEach(function(i){ var ok = (!near || +i.dataset.w <= 10) && (!cheap || i.dataset.p === '1'); i.hidden = !ok; if (ok) n++; });
+      var n = 0;
+      $$('.fd2i', c).forEach(function(i){ var ok = (!near || +i.dataset.w <= 10) && (!cheap || i.dataset.p === '1') && (cat === 'all' || i.dataset.c === cat); i.hidden = !ok; if (ok) n++; });
       c.querySelector('h3 em').textContent = n + '곳';
+      var vis = (g === 'all' || c.classList.contains(g)) && n > 0;   // 거른 뒤 0곳인 칸은 접음
+      c.hidden = !vis; if (vis) { cols++; total += n; }
     });
-    $('.fd2', MAIN).classList.toggle('one', g !== 'all');
+    $('.fd2', MAIN).classList.toggle('one', cols < 2);
+    $('.fd2', MAIN).hidden = cols === 0;
+    if (empty) empty.hidden = cols > 0;
+    var on = g !== 'all' || near || cheap || cat !== 'all';
+    if (cnt) cnt.textContent = on ? total + '곳' : '';
+    // 고른 조건에서 0곳이 되는 음식 종류는 흐리게(누를 수는 있음)
+    fs.forEach(function(b){
+      if (b.dataset.fc === 'all') return;
+      var k = $$('.fd2c', MAIN).reduce(function(a, c){ return a + ((g === 'all' || c.classList.contains(g)) ? $$('.fd2i', c).filter(function(i){ return i.dataset.c === b.dataset.fc && (!near || +i.dataset.w <= 10) && (!cheap || i.dataset.p === '1'); }).length : 0); }, 0);
+      b.classList.toggle('is-zero', k === 0);
+    });
   }
-  bs.forEach(function(b){ b.addEventListener('click', function(){ g = b.dataset.fg2; bs.forEach(function(x){ x.setAttribute('aria-pressed', x === b); }); ap(); }); });
+  function press(list, b){ list.forEach(function(x){ x.setAttribute('aria-pressed', x === b); }); }
+  bs.forEach(function(b){ b.addEventListener('click', function(){ g = b.dataset.fg2; press(bs, b); ap(); }); });
+  fs.forEach(function(b){ b.addEventListener('click', function(){ cat = b.dataset.fc; press(fs, b); ap(); }); });
   if (nb) nb.addEventListener('click', function(){ near = !near; nb.setAttribute('aria-pressed', near); ap(); });
   if (cb) cb.addEventListener('click', function(){ cheap = !cheap; cb.setAttribute('aria-pressed', cheap); ap(); });
+  if (rs) rs.addEventListener('click', function(){
+    g = 'all'; cat = 'all'; near = false; cheap = false;
+    press(bs, bs[0]); press(fs, fs[0]); if (nb) nb.setAttribute('aria-pressed', false); if (cb) cb.setAttribute('aria-pressed', false); ap();
+  });
+  ap();
 })();
 
 /* ---------- 문화 · 여가: 누르면 크게 보기 ([15], 창 dialog.lbx는 index.html에) ---------- */
@@ -227,7 +262,7 @@ addEventListener('scroll', function(){
     ul.addEventListener('scroll', tip, { passive:true }); c._fdupd = upd;
   });
   function all(){ cs.forEach(function(c){ if (c._fdupd) c._fdupd(); }); }
-  $$('[data-fg2],#fdNear,#fdCheap', MAIN).forEach(function(b){ b.addEventListener('click', function(){ setTimeout(all, 0); }); });
+  $$('[data-fg2],[data-fc],[data-fdreset],#fdNear,#fdCheap', MAIN).forEach(function(b){ b.addEventListener('click', function(){ setTimeout(all, 0); }); });
   addEventListener('resize', all); addEventListener('hashchange', function(){ setTimeout(all, 80); });
   if (NARROW.addEventListener) NARROW.addEventListener('change', all);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(all);

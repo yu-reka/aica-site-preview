@@ -17,67 +17,38 @@
   <link rel="stylesheet" href="../common/css/base.css">
   <link rel="stylesheet" href="../common/css/site.css">
   <link rel="stylesheet" href="css/stories.css">
+  <link rel="stylesheet" href="css/stories-sections.css">
+  <script src="js/stories-sections.js" defer></script>
   <script src="../common/js/menu.js" defer></script>
   <script src="../common/js/site.js" defer></script>
   <script src="js/stories.js" defer></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
-<!-- 본문: 디자이너 시안 '선배들의이야기(히어로변경+지학사)'. 2뎁스는 헤더 밑 공통 하위 메뉴 바, 주소 #reviews(기본) · #interviews · #projects · #cohorts → 탭 라디오 t1~t4(js/stories.js)
-     구조: 표지 슬라이더(#cover) → .st-main 안 탭 4개(#p-rev · #p-iv · #p-pr · #p-coh) → 글 창 .ov(#r-…) · 쓰기 창 .wov(#write-…) · 기수 기록 창 .cmodal(JS가 누른 카드 내용을 옮김)
+<!-- 본문: 디자이너 시안 '선배들의이야기_최신'(2026-10-08). 2뎁스는 헤더 밑 공통 하위 메뉴 바, 주소 #reviews(기본) · #interviews · #projects · #cohorts → 탭 라디오 t1~t4(js/stories.js)
+     구조: 히어로 캐러셀(#hx) → .st-main 안 탭 4개(#p-rev · #p-iv · #p-pr · #p-coh, 인터뷰 상세 .ivd #iv-… · 프로젝트 상세 .pjd #pj-…) → 글 창 .ov(#r-…) · 기수 기록 창 .cmodal(JS가 누른 카드 내용을 옮김)
+     쓰기 버튼 · 쓰기 창은 관리자 전용이라 공개 화면에서 뺌(2026-10-08 사용자 결정. 옛 주소 #write-…는 js/stories.js가 그 탭으로)
      반복 단위(첫 항목에만 data-field 표시, 나머지는 같은 구조): 후기 카드 .idc · 후기 리스트 행 .rvr · 글 창 .ov · 인터뷰 카드 .iv · 인터뷰 상세 .ivd · 프로젝트 .pp · 기수 카드 a.st
-     칸 이름: title · summary · body · category · cohort · tag · thumbnail · author · date(common 게시판과 같음) + track(이름 옆 분야, 예: 데이터 분석 · AI 모델링 — 쓰기 창에서는 '직군' 칸) · duration(영상 길이) · question · answer · team · type · term(프로젝트 정보)
+     칸 이름: title · summary · body · category · cohort · tag · thumbnail · author · date(common 게시판과 같음) + track(이름 옆 분야, 예: 데이터 분석 · AI 모델링) · duration(영상 길이) · question · answer · team · type · term(프로젝트 정보)
      cohort 칸은 대부분 '7<i>기</i>'처럼 숫자 뒤 '기'가 <i>로 붙어 있음 — 템플릿에서는 숫자만 넣고 <i>기</i>는 마크업에 둠(기수 카드 .cg만 '7기' 글자 그대로) -->
 <main id="main" class="stories-page" tabindex="-1">
-<section class="cover" id="cover" style="--dur:3s" aria-roledescription="carousel" aria-label="선배들의 대표 이야기">
-  <div class="ssul-b"><i>02</i>먼저 다녀온 선배들의 <b>SSUL</b></div>
+<section class="hx" id="hx" aria-roledescription="carousel" aria-label="선배들의 대표 이야기">
   <h1 class="sr">선배들의 이야기</h1>
-  <div class="track">
-    <article class="sl on" id="s0" aria-roledescription="slide" aria-label="1 / 4 대표 후기">
-      <div class="txt">
-        <div class="kick"><span class="tag">대표 후기</span>생활 · 지원금</div>
-        <h2>생활지원금으로 한 달을 꾸려본 기록</h2>
-        <p class="lede">교통비 6만원, 점심값 20만원. 광주로 전입하면서 숙박비까지 받았더니 월세 부담이 확 줄었습니다.</p>
-        <div class="by">
-          <span class="av">김</span>
-          <span class="nm"><b>김민서</b><span>7기 · 데이터 분석</span></span>
-          <a class="go" href="#reviews">후기 읽기 <span aria-hidden="true">→</span></a>
-        </div>
-      </div>
-      <div class="scene">
-        <img src="assets/cover-living-costs.jpg" alt="한 달 생활비 정산표와 달력, 계산기, 카드 일러스트" width="1536" height="1024">
-        <div class="cap"><b>7기 · 데이터 분석</b><span>읽는 데 <em>4분</em></span><span>후기 56편 중 하나</span></div>
-      </div>
+  <div class="hx-in">
+    <div class="hx-head"><div class="hx-ssul">먼저 다녀온 선배들의 <b>SSUL</b></div></div>
+    <div class="hx-row">
+    <article class="hx-pn on" data-i="0" aria-roledescription="slide" aria-label="1 / 4 후기">
+      <img class="hx-img" src="assets/cover-living-costs.jpg" alt="한 달 생활비 정산표와 달력, 계산기, 카드 일러스트" width="1536" height="1024">
+      <button class="hx-open" type="button" aria-label="후기 이야기 펼치기"><span class="hx-lab" aria-hidden="true"><em>01</em><i class="hx-ln"></i><span class="hx-v"><span>후</span><span>기</span></span></span></button>
+      <div class="hx-tx"><div class="hx-k">대표 후기 · 생활 · 지원금</div><h2>생활지원금으로 한 달을 꾸려본 기록</h2><p>교통비 6만원, 점심값 20만원. 광주로 전입하면서 숙박비까지 받았더니 월세 부담이 확 줄었습니다.</p><div class="hx-by"><span class="hx-av">김</span><span><b>김민서</b>7기 · 데이터 분석</span><a class="hx-go" href="#reviews">후기 읽기 <span aria-hidden="true">→</span></a></div></div>
     </article>
-    <article class="sl" id="s1" aria-roledescription="slide" aria-label="2 / 4 대표 인터뷰">
-      <div class="txt">
-        <div class="kick"><span class="tag">대표 인터뷰</span>수료생 인터뷰 · Q&amp;A 6</div>
-        <h2>기획자였던 제가 AI 엔지니어로 바뀌기까지</h2>
-        <p class="lede">3년차 서비스 기획자였습니다. 모델을 직접 만들어보고 싶어서 8개월을 비웠습니다. 팀에서 제일 못하는 사람이었지만, 요구사항 정리와 사용자 테스트가 제 자리가 됐습니다.</p>
-        <div class="by">
-          <span class="av">김</span>
-          <span class="nm"><b>김서준</b><span>7기 · AI 모델링</span></span>
-          <a class="go" href="#interviews">인터뷰 읽기 <span aria-hidden="true">→</span></a>
-        </div>
-      </div>
-      <div class="scene">
-        <img src="assets/team-pointing.jpg" alt="7기 김서준 인터뷰 사진" loading="lazy" decoding="async" width="1000" height="562">
-        <div class="cap"><b>7기 · AI 모델링</b><span>문답 <em>6개</em></span><span>인터뷰 7편 중 하나</span></div>
-      </div>
+    <article class="hx-pn" data-i="1" aria-roledescription="slide" aria-label="2 / 4 인터뷰">
+      <img class="hx-img" src="assets/team-pointing.jpg" alt="7기 김서준 인터뷰 사진" loading="lazy" decoding="async" width="1000" height="562">
+      <button class="hx-open" type="button" aria-label="인터뷰 이야기 펼치기"><span class="hx-lab" aria-hidden="true"><em>02</em><i class="hx-ln"></i><span class="hx-v"><span>인</span><span>터</span><span>뷰</span></span></span></button>
+      <div class="hx-tx"><div class="hx-k">대표 인터뷰 · Q&amp;A 6</div><h2>기획자였던 제가 AI 엔지니어로 바뀌기까지</h2><p>3년차 서비스 기획자였습니다. 모델을 직접 만들어보고 싶어서 8개월을 비웠습니다.</p><div class="hx-by"><span class="hx-av">김</span><span><b>김서준</b>7기 · AI 모델링</span><a class="hx-go" href="#interviews">인터뷰 읽기 <span aria-hidden="true">→</span></a></div></div>
     </article>
-    <article class="sl" id="s2" aria-roledescription="slide" aria-label="3 / 4 대표 프로젝트">
-      <div class="txt">
-        <div class="kick"><span class="tag">대표 프로젝트</span>실증 · 도약과정 720H</div>
-        <h2>손끝, 시각장애인 보행 보조 앱</h2>
-        <p class="lede">휴대폰 카메라만으로 횡단보도 신호와 점자블록을 읽어 음성으로 알려줍니다. 광주 동구 일대에서 2주간 실증했습니다.</p>
-        <div class="by">
-          <span class="av">손</span>
-          <span class="nm"><b>AI 모델링 2반</b><span>5명 · 컴퓨터비전 · Flutter</span></span>
-          <a class="go" href="#projects">자세히 보기 <span aria-hidden="true">→</span></a>
-        </div>
-      </div>
-      <div class="scene">
-        <svg viewBox="0 0 840 560" preserveAspectRatio="xMidYMid slice" role="img" aria-label="손끝 앱이 횡단보도를 인식하는 장면 일러스트">
+    <article class="hx-pn" data-i="2" aria-roledescription="slide" aria-label="3 / 4 프로젝트">
+      <svg viewBox="0 0 840 560" preserveAspectRatio="xMidYMid slice" role="img" class="hx-img" aria-label="손끝 앱이 횡단보도를 인식하는 장면 일러스트">
           <rect width="840" height="560" fill="#26272B"/>
           <rect y="372" width="840" height="188" fill="#323338"/>
           <g fill="#ECEDEF" opacity=".88"><rect x="60" y="398" width="58" height="150" rx="5"/><rect x="156" y="398" width="58" height="150" rx="5"/><rect x="626" y="398" width="58" height="150" rx="5"/><rect x="722" y="398" width="58" height="150" rx="5"/></g>
@@ -93,43 +64,19 @@
           <g stroke="#fff" stroke-width="4.5" stroke-linecap="round"><path d="M404 326v20M413 318v36M422 323v26M431 329v14"/></g>
           <g fill="none" stroke="#E5197F" stroke-width="3" opacity=".45"><path d="M540 300a60 60 0 0 1 0 72"/><path d="M566 280a92 92 0 0 1 0 112"/></g>
         </svg>
-        <div class="cap"><b>실증 과제</b><span>팀 <em>5명</em></span><span>광주 동구 · 2주</span></div>
-      </div>
+      <button class="hx-open" type="button" aria-label="프로젝트 이야기 펼치기"><span class="hx-lab" aria-hidden="true"><em>03</em><i class="hx-ln"></i><span class="hx-v"><span>프</span><span>로</span><span>젝</span><span>트</span></span></span></button>
+      <div class="hx-tx"><div class="hx-k">대표 프로젝트 · 실증 · 720H</div><h2>손끝, 시각장애인 보행 보조 앱</h2><p>휴대폰 카메라만으로 횡단보도 신호와 점자블록을 읽어 음성으로 알려줍니다. 광주 동구 일대에서 2주간 실증했습니다.</p><div class="hx-by"><span class="hx-av">손</span><span><b>AI 모델링 2반</b>5명 · 컴퓨터비전 · Flutter</span><a class="hx-go" href="#projects">프로젝트 보기 <span aria-hidden="true">→</span></a></div></div>
     </article>
-    <article class="sl" id="s3" aria-roledescription="slide" aria-label="4 / 4 6기 대표 사진">
-      <div class="txt">
-        <div class="kick"><span class="tag">6기 대표 사진</span>기수별 모아보기</div>
-        <h2>도약과정 중간발표회 현장</h2>
-        <p class="lede">1,551명이 지원한 해. 10개 반, 7개 트랙에서 절반쯤 온 팀들이 무엇을 보여줬는지 기록했습니다.</p>
-        <div class="by">
-          <span class="av">6</span>
-          <span class="nm"><b>6기 기록</b><span>2025. 10. 22 · 입교생 열에 여덟이 비전공자</span></span>
-          <a class="go" href="#cohorts">6기 모아보기 <span aria-hidden="true">→</span></a>
-        </div>
-      </div>
-      <div class="scene">
-        <img src="assets/presentation-books.jpg" alt="6기 도약과정 중간발표회 현장, 책상 위에 쌓인 발표 자료집" loading="lazy" decoding="async" width="880" height="495">
-        <div class="cap"><b>6기</b><span>기록 <em>5건</em></span><span>2025. 10. 22</span></div>
-      </div>
+    <article class="hx-pn" data-i="3" aria-roledescription="slide" aria-label="4 / 4 기수">
+      <img class="hx-img" src="assets/presentation-books.jpg" alt="6기 도약과정 중간발표회 현장, 책상 위에 쌓인 발표 자료집" loading="lazy" decoding="async" width="880" height="495">
+      <button class="hx-open" type="button" aria-label="기수 이야기 펼치기"><span class="hx-lab" aria-hidden="true"><em>04</em><i class="hx-ln"></i><span class="hx-v"><span>기</span><span>수</span></span></span></button>
+      <div class="hx-tx"><div class="hx-k">6기 대표 사진 · 기수별 모아보기</div><h2>도약과정 중간발표회 현장</h2><p>1,551명이 지원한 해. 10개 반, 7개 트랙에서 절반쯤 온 팀들이 무엇을 보여줬는지 기록했습니다.</p><div class="hx-by"><span class="hx-av">6</span><span><b>6기 기록</b>2025. 10. 22</span><a class="hx-go" href="#cohorts">기수별 모아보기 <span aria-hidden="true">→</span></a></div></div>
     </article>
-  </div>
-  <button class="arw prev" type="button" id="prev" aria-label="이전 이야기">
-    <svg viewBox="0 0 22 44" aria-hidden="true"><path d="M19 2L3 22l16 20"/></svg>
-  </button>
-  <button class="arw next" type="button" id="next" aria-label="다음 이야기">
-    <svg viewBox="0 0 22 44" aria-hidden="true"><path d="M3 2l16 20L3 42"/></svg>
-  </button>
-  <div class="pg">
-    <div class="segs">
-      <button class="seg" type="button" data-i="0" aria-current="true"><span>후기</span><i></i></button>
-      <button class="seg" type="button" data-i="1" aria-current="false"><span>인터뷰</span><i></i></button>
-      <button class="seg" type="button" data-i="2" aria-current="false"><span>프로젝트</span><i></i></button>
-      <button class="seg" type="button" data-i="3" aria-current="false"><span>기수</span><i></i></button>
     </div>
-    <span class="cnt"><b id="cur">01</b> / 04</span>
-    <button class="ply" type="button" id="ply" aria-label="자동 넘김 멈추기"><svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1" y="0" width="3" height="10"/><rect x="6" y="0" width="3" height="10"/></svg></button>
+    <div class="hx-prog"><div class="hx-segs" role="group" aria-label="대표 이야기 고르기"><button type="button" aria-label="1번째 이야기: 후기"><i></i></button><button type="button" aria-label="2번째 이야기: 인터뷰"><i></i></button><button type="button" aria-label="3번째 이야기: 프로젝트"><i></i></button><button type="button" aria-label="4번째 이야기: 기수"><i></i></button></div><span class="hx-cue" aria-hidden="true">아래로 이어지는 이야기<i></i></span></div>
   </div>
 </section>
+
 <input class="tr tb" autocomplete="off" type="radio" name="tab" id="t1" tabindex="-1" aria-hidden="true">
 <input class="tr tb" autocomplete="off" type="radio" name="tab" id="t2" tabindex="-1" aria-hidden="true">
 <input class="tr tb" autocomplete="off" type="radio" name="tab" id="t3" tabindex="-1" aria-hidden="true">
@@ -161,10 +108,6 @@
     <input class="tr" autocomplete="off" type="radio" name="pgn" id="pgn7">
     <div class="sh sh-row">
       <div><h2>후기</h2><p>겪어 본 사람이 직접 써요</p></div>
-      <div class="shacts">
-        <a class="wbtn" href="#write-rev">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4l10-10-4-4L4 16v4z"/><path d="M14.5 5.5l4 4"/></svg>후기 쓰기</a>
-      </div>
     </div>
     <div class="lmq lq" aria-label="후기 미리보기" role="group">
       <div class="lq-rail">
@@ -1093,14 +1036,8 @@
     <div class="ivlist">
       <div class="sh sh-row">
         <div><h2>인터뷰</h2><p>한 사람의 여덟 달을 통째로 들어요</p></div>
-        <a class="wbtn" href="#write-iv">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4l10-10-4-4L4 16v4z"/><path d="M14.5 5.5l4 4"/></svg>인터뷰 쓰기</a>
       </div>
-      <section class="lsp">
-        <input class="tr" type="radio" name="spv" id="spv0" autocomplete="off" checked>
-        <input class="tr" type="radio" name="spv" id="spv1" autocomplete="off">
-        <input class="tr" type="radio" name="spv" id="spv2" autocomplete="off">
-        <input class="tr" type="radio" name="spv" id="spv3" autocomplete="off">
+      <section class="ivband" aria-label="인터뷰 목록">
         <div class="lsp-wave" aria-hidden="true">
           <i style="height:35%"></i>
           <i style="height:82%"></i>
@@ -1244,76 +1181,6 @@
           <i style="height:10%"></i>
         </div>
         <span class="lsp-rec" aria-hidden="true">REC 00:42:17</span>
-        <div class="lsp-in">
-          <div class="lsp-s lsp-s0">
-            <article class="lsp-card">
-              <p class="lsp-eb">7기 · AI 모델링</p>
-              <p class="lsp-nm">김서준<em>3년차 서비스 기획자 출신</em></p>
-              <div class="lsp-qm" aria-hidden="true">
-                <svg viewBox="0 0 58 44" aria-hidden="true"><path d="M1 30C1 16 8 6 20 2l2 4.5C15 9.5 11.5 14 11 19A11 11 0 1 1 1 30Z"/><path d="M31 30C31 16 38 6 50 2l2 4.5C45 9.5 41.5 14 41 19A11 11 0 1 1 31 30Z"/></svg>
-              </div>
-              <blockquote>비전공자 비율이 80%입니다. 다들 비슷하게 시작합니다. 다만 8개월을 온전히 쓸 수 있는 상황인지는 꼭 확인하고 오세요.</blockquote><a class="lsp-go" href="#iv-1">기획자였던 제가 AI 엔지니어로 바뀌기까지 →</a></article>
-            <div class="lsp-ph" style="background:#1F4ED8" role="img" aria-label="김서준 인터뷰 대표 이미지 자리">
-              <i class="lsp-head" style="background:#FFE600"></i>
-              <i class="lsp-body"></i>
-            </div>
-            <label class="lsp-arw l" for="spv3" aria-label="이전 인터뷰">←</label>
-            <label class="lsp-arw r" for="spv1" aria-label="다음 인터뷰">→</label>
-          </div>
-          <div class="lsp-s lsp-s1">
-            <article class="lsp-card">
-              <p class="lsp-eb">6기 · 인프라</p>
-              <p class="lsp-nm">박다인<em>문과 출신</em></p>
-              <div class="lsp-qm" aria-hidden="true">
-                <svg viewBox="0 0 58 44" aria-hidden="true"><path d="M1 30C1 16 8 6 20 2l2 4.5C15 9.5 11.5 14 11 19A11 11 0 1 1 1 30Z"/><path d="M31 30C31 16 38 6 50 2l2 4.5C45 9.5 41.5 14 41 19A11 11 0 1 1 31 30Z"/></svg>
-              </div>
-              <blockquote>컨테이너입니다. VM과 뭐가 다른지 한 달을 헤맸습니다. 결국 직접 Dockerfile을 20번쯤 써보고 나서야 감이 왔습니다.</blockquote><a class="lsp-go" href="#iv-2">서버를 한 번도 안 만져본 문과생의 8개월 →</a></article>
-            <div class="lsp-ph" style="background:#22D3EE" role="img" aria-label="박다인 인터뷰 대표 이미지 자리">
-              <i class="lsp-head" style="background:#0B5563"></i>
-              <i class="lsp-body"></i>
-            </div>
-            <label class="lsp-arw l" for="spv0" aria-label="이전 인터뷰">←</label>
-            <label class="lsp-arw r" for="spv2" aria-label="다음 인터뷰">→</label>
-          </div>
-          <div class="lsp-s lsp-s2">
-            <article class="lsp-card">
-              <p class="lsp-eb">5기 · 기획</p>
-              <p class="lsp-nm">이하늘<em>창업 유형 팀</em></p>
-              <div class="lsp-qm" aria-hidden="true">
-                <svg viewBox="0 0 58 44" aria-hidden="true"><path d="M1 30C1 16 8 6 20 2l2 4.5C15 9.5 11.5 14 11 19A11 11 0 1 1 1 30Z"/><path d="M31 30C31 16 38 6 50 2l2 4.5C45 9.5 41.5 14 41 19A11 11 0 1 1 31 30Z"/></svg>
-              </div>
-              <blockquote>기업연계는 과제가 정해져 있고, 실증은 현장이 정해져 있습니다. 창업만 아무것도 안 정해져 있었고 그게 좋았습니다.</blockquote><a class="lsp-go" href="#iv-3">도약과정 프로젝트를 그대로 창업으로 →</a></article>
-            <div class="lsp-ph" style="background:#8CFF3F" role="img" aria-label="이하늘 인터뷰 대표 이미지 자리">
-              <i class="lsp-head" style="background:#2F5A12"></i>
-              <i class="lsp-body"></i>
-            </div>
-            <label class="lsp-arw l" for="spv1" aria-label="이전 인터뷰">←</label>
-            <label class="lsp-arw r" for="spv3" aria-label="다음 인터뷰">→</label>
-          </div>
-          <div class="lsp-s lsp-s3">
-            <article class="lsp-card">
-              <p class="lsp-eb">3기 · AI 모델링</p>
-              <p class="lsp-nm">문지훈<em>가장 오래된 기수</em></p>
-              <div class="lsp-qm" aria-hidden="true">
-                <svg viewBox="0 0 58 44" aria-hidden="true"><path d="M1 30C1 16 8 6 20 2l2 4.5C15 9.5 11.5 14 11 19A11 11 0 1 1 1 30Z"/><path d="M31 30C31 16 38 6 50 2l2 4.5C45 9.5 41.5 14 41 19A11 11 0 1 1 31 30Z"/></svg>
-              </div>
-              <blockquote>수료가 끝이 아니라 시작입니다. 여기서 만든 포트폴리오는 6개월이면 낡습니다. 습관을 가져가세요.</blockquote><a class="lsp-go" href="#iv-6">3기 수료생이 보는 4년 뒤 →</a></article>
-            <div class="lsp-ph" style="background:#FF9EDB" role="img" aria-label="문지훈 인터뷰 대표 이미지 자리">
-              <i class="lsp-head" style="background:#10203D"></i>
-              <i class="lsp-body"></i>
-            </div>
-            <label class="lsp-arw l" for="spv2" aria-label="이전 인터뷰">←</label>
-            <label class="lsp-arw r" for="spv0" aria-label="다음 인터뷰">→</label>
-          </div>
-          <div class="lsp-dots">
-            <label for="spv0" aria-label="1번째 인터뷰"></label>
-            <label for="spv1" aria-label="2번째 인터뷰"></label>
-            <label for="spv2" aria-label="3번째 인터뷰"></label>
-            <label for="spv3" aria-label="4번째 인터뷰"></label>
-          </div>
-        </div>
-      </section>
-      <section class="ivband" aria-label="인터뷰 목록">
         <div class="ivcar">
           <button class="ivnav l" type="button" aria-label="이전 인터뷰">←</button>
           <div class="ivgrid">
@@ -1321,6 +1188,7 @@
               <div class="ph"><img class="illu" src="assets/team-pointing-sm.jpg" alt="" loading="lazy" decoding="async" width="880" height="550" data-field="thumbnail"></div>
               <div class="tb">
                 <h3 data-field="title">기획자였던 제가 AI 엔지니어로 바뀌기까지</h3>
+                <blockquote class="ivq">비전공자 비율이 80%입니다. 다들 비슷하게 시작합니다. 다만 8개월을 온전히 쓸 수 있는 상황인지는 꼭 확인하고 오세요.</blockquote>
                 <p data-field="summary">3년차 서비스 기획자였습니다. 모델을 직접 만들어보고 싶어서 8개월을 비웠습니다.</p>
                 <div class="by"><span class="av" data-field="cohort">7<i>기</i></span><b data-field="author">김서준</b><em data-field="track">AI 모델링</em></div>
               </div>
@@ -1329,11 +1197,12 @@
               <div class="ph"><img class="illu" src="assets/table-team-sm.jpg" alt="" loading="lazy" decoding="async" width="880" height="550"></div>
               <div class="tb">
                 <h3>서버를 한 번도 안 만져본 문과생의 8개월</h3>
+                <blockquote class="ivq">컨테이너입니다. VM과 뭐가 다른지 한 달을 헤맸습니다. 결국 직접 Dockerfile을 20번쯤 써보고 나서야 감이 왔습니다.</blockquote>
                 <p>쿠버네티스라는 단어를 입교식에서 처음 들었습니다.</p>
                 <div class="by"><span class="av">6<i>기</i></span><b>박다인</b><em>인프라</em></div>
               </div>
             </a>
-            <a class="iv" href="https://www.youtube.com/watch?v=h1KXqTuGzkA" target="_blank" rel="noopener">
+            <a class="iv" href="#iv-7" data-yt="h1KXqTuGzkA">
               <div class="ph">
                 <svg class="illu" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#FFE600"/>
    <path d="M150 54h100v56c0 30-22 52-50 52s-50-22-50-52z" fill="#fff"/>
@@ -1355,6 +1224,7 @@
               <div class="ph"><img class="illu" src="assets/classroom-laptops-sm.jpg" alt="" loading="lazy" decoding="async" width="880" height="550"></div>
               <div class="tb">
                 <h3>도약과정 프로젝트를 그대로 창업으로</h3>
+                <blockquote class="ivq">기업연계는 과제가 정해져 있고, 실증은 현장이 정해져 있습니다. 창업만 아무것도 안 정해져 있었고 그게 좋았습니다.</blockquote>
                 <p>5개월 동안 만든 걸 버리기 아까웠습니다.</p>
                 <div class="by"><span class="av">5<i>기</i></span><b>이하늘</b><em>기획</em></div>
               </div>
@@ -1404,6 +1274,7 @@
               <div class="ph"><img class="illu" src="assets/lobby-laptops-sm.jpg" alt="" loading="lazy" decoding="async" width="880" height="550"></div>
               <div class="tb">
                 <h3>3기 수료생이 보는 4년 뒤</h3>
+                <blockquote class="ivq">수료가 끝이 아니라 시작입니다. 여기서 만든 포트폴리오는 6개월이면 낡습니다. 습관을 가져가세요.</blockquote>
                 <p>가장 오래된 기수 중 하나입니다.</p>
                 <div class="by"><span class="av">3<i>기</i></span><b>문지훈</b><em>AI 모델링</em></div>
               </div>
@@ -1420,6 +1291,21 @@
             <button type="button" aria-label="7번째 인터뷰"></button>
           </div>
         </div>
+      </section>
+      <section class="iva" id="iv-all" aria-labelledby="iva-t">
+        <div class="iva-hd">
+          <h3 id="iva-t">전체 인터뷰</h3>
+          <div class="iva-tools">
+            <div class="iva-chips" data-f="coh" role="group" aria-label="기수"></div>
+            <div class="iva-seg" role="group" aria-label="보기 방식">
+              <button type="button" data-v="grid" aria-pressed="true" title="카드 보기"><svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1.6"/><rect x="9" y="1" width="6" height="6" rx="1.6"/><rect x="1" y="9" width="6" height="6" rx="1.6"/><rect x="9" y="9" width="6" height="6" rx="1.6"/></svg><span class="sr">카드 보기</span></button>
+              <button type="button" data-v="list" aria-pressed="false" title="리스트 보기"><svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><rect x="1" y="2" width="14" height="2.4" rx="1.2"/><rect x="1" y="6.8" width="14" height="2.4" rx="1.2"/><rect x="1" y="11.6" width="14" height="2.4" rx="1.2"/></svg><span class="sr">리스트 보기</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="iva-out" data-view="grid"></div>
+        <p class="iva-empty" hidden>고른 조건에 맞는 인터뷰가 없어요.</p>
+        <button class="iva-more" type="button" hidden></button>
       </section>
       <p class="footnote">글과 영상을 한 목록에 섞어 두었어요 · 사진과 영상은 초상권·재게시 동의가 확인된 자료만 올립니다. 지금 보이는 글과 이름은 시안용 더미입니다.</p>
     </div>
@@ -1640,6 +1526,31 @@
         </aside>
       </div>
     </div>
+    <div class="ivd ivd-v" id="iv-7">
+      <a class="ivback" href="#p-iv">← 인터뷰 목록</a>
+      <div class="ivwrap">
+        <div>
+          <div class="ivhero ivvid" data-yt="h1KXqTuGzkA"><span class="ivtag">6기 · AI 클라우드·인프라</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#FFE600"/>
+   <path d="M150 54h100v56c0 30-22 52-50 52s-50-22-50-52z" fill="#fff"/>
+   <path d="M150 66h-28a24 24 0 0 0 28 42zM250 66h28a24 24 0 0 1-28 42z" fill="#fff" opacity=".7"/>
+   <rect x="186" y="162" width="28" height="28" fill="#15368F"/>
+   <rect x="152" y="190" width="96" height="20" rx="7" fill="#15368F"/>
+   <circle cx="200" cy="90" r="20" fill="#FFE600"/>
+   <path d="M60 220h280" stroke="#8A6B14" stroke-width="8" stroke-linecap="round" opacity=".35"/></svg>
+            <button class="ivplay" type="button" aria-label="인터뷰 영상 재생"><i></i></button><span class="dur">8:05</span>
+          </div>
+          <h2>6기 수료생 인터뷰 — 인프라 직군</h2>
+          <p class="lead">쿠버네티스라는 말을 입교식에서 처음 들었다는 사람의 여덟 달.</p>
+          <div class="who2"><span class="av">6<i>기</i></span><div><b>윤태경</b><em>AI 클라우드·인프라</em></div></div>
+          <p class="ivnote">영상 인터뷰예요. 위 화면에서 바로 재생됩니다. 영상 내용을 글로 옮긴 요약이 준비되면 이 아래에 함께 실어요.</p>
+        </div>
+        <aside class="sidebox">
+          <h3>이 영상</h3>
+          <dl class="ivmeta"><div><dt>길이</dt><dd>8분 5초</dd></div><div><dt>기수</dt><dd>6기</dd></div><div><dt>직군</dt><dd>AI 클라우드·인프라</dd></div></dl>
+          <a class="ivyt" href="https://www.youtube.com/watch?v=h1KXqTuGzkA" target="_blank" rel="noopener">유튜브에서 보기 ↗</a>
+        </aside>
+      </div>
+    </div>
     <div class="ivd" id="iv-6">
       <a class="ivback" href="#p-iv">← 인터뷰 목록</a>
       <div class="ivwrap">
@@ -1671,10 +1582,9 @@
     </div>
   </section>
   <section class="wrap pane proj" id="p-pr">
+    <div class="pjlist">
     <div class="sh sh-row">
       <div><h2>우수 프로젝트 소개</h2><p>도약과정에서 나온 기수별 대표 프로젝트예요</p></div>
-      <a class="wbtn" href="#write-pr">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4l10-10-4-4L4 16v4z"/><path d="M14.5 5.5l4 4"/></svg>프로젝트 올리기</a>
     </div>
     <input class="tr" autocomplete="off" type="radio" name="pr" id="pr0" checked>
     <input class="tr" autocomplete="off" type="radio" name="pr" id="pr1">
@@ -1693,11 +1603,11 @@
    <rect x="226" y="112" width="48" height="12" rx="6" fill="#FFE600"/>
    <rect x="106" y="152" width="136" height="12" rx="6" fill="#E4E9F7"/>
    <rect x="60" y="204" width="280" height="14" rx="7" fill="#E35B28"/>
-   <circle cx="320" cy="150" r="22" fill="#1F4ED8"/><rect x="310" y="142" width="20" height="4" rx="2" fill="#fff"/></svg>
+   <circle cx="320" cy="150" r="22" fill="#1F4ED8"/><rect x="310" y="142" width="20" height="4" rx="2" fill="#fff"/></svg><a class="pjph" href="#pj-1" aria-label="손끝 — 시각장애인 보행 보조 앱 자세히 보기" tabindex="-1"></a>
           </div>
           <div>
             <div class="no">01</div>
-            <h3 data-field="title">손끝 — 시각장애인 보행 보조 앱</h3>
+            <h3 data-field="title"><a class="pjt" href="#pj-1">손끝 — 시각장애인 보행 보조 앱</a></h3>
             <div class="tags"><span data-field="tag">#컴퓨터비전</span><span data-field="tag">#접근성</span><span data-field="tag">#온디바이스</span><span data-field="tag">#실증연계</span><span data-field="tag">#Flutter</span></div>
             <p class="sum" data-field="summary">휴대폰 카메라만으로 횡단보도 신호와 점자블록을 읽어 음성으로 알려줍니다. 광주 동구 일대에서 2주간 실증했습니다.</p>
             <dl class="info">
@@ -1705,6 +1615,7 @@
               <div><dt>TYPE</dt><dd data-field="type">실증</dd></div>
               <div><dt>TERM</dt><dd data-field="term">도약과정 720H</dd></div>
             </dl>
+            <a class="pjgo" href="#pj-1">프로젝트 자세히 보기 <span aria-hidden="true">→</span></a>
           </div>
           <label class="arw l" for="pr5" aria-label="이전 프로젝트">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1724,11 +1635,11 @@
    <path d="M286 92h76a14 14 0 0 1 14 14v46a14 14 0 0 1-14 14h-30l-14 18v-18h-32a14 14 0 0 1-14-14v-46a14 14 0 0 1 14-14z" fill="#22D3EE"/>
    <rect x="296" y="112" width="52" height="7" rx="3.5" fill="#fff"/>
    <rect x="296" y="128" width="36" height="7" rx="3.5" fill="#fff" opacity=".66"/>
-   <rect x="92" y="204" width="216" height="16" rx="8" fill="#15368F"/></svg>
+   <rect x="92" y="204" width="216" height="16" rx="8" fill="#15368F"/></svg><a class="pjph" href="#pj-2" aria-label="밥값 — 구내식당 혼잡도 예측 자세히 보기" tabindex="-1"></a>
           </div>
           <div>
             <div class="no">02</div>
-            <h3>밥값 — 구내식당 혼잡도 예측</h3>
+            <h3><a class="pjt" href="#pj-2">밥값 — 구내식당 혼잡도 예측</a></h3>
             <div class="tags"><span>#시계열예측</span><span>#혼잡도</span><span>#사내서비스</span><span>#FastAPI</span></div>
             <p class="sum">출입 게이트 로그로 8층 구내식당의 30분 단위 혼잡도를 예측합니다. 사내 슬랙 봇으로 붙였습니다.</p>
             <dl class="info">
@@ -1736,6 +1647,7 @@
               <div><dt>TYPE</dt><dd>기업연계</dd></div>
               <div><dt>TERM</dt><dd>도약과정 720H</dd></div>
             </dl>
+            <a class="pjgo" href="#pj-2">프로젝트 자세히 보기 <span aria-hidden="true">→</span></a>
           </div>
           <label class="arw l" for="pr0" aria-label="이전 프로젝트">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1756,11 +1668,11 @@
    <g fill="#0A4F49" opacity=".8"><rect x="236" y="120" width="40" height="22" rx="5"/>
    <rect x="292" y="120" width="40" height="22" rx="5"/><rect x="236" y="156" width="40" height="22" rx="5"/>
    <rect x="292" y="156" width="40" height="22" rx="5"/></g>
-   <path d="M20 236h360" stroke="#0A4F49" stroke-width="10" stroke-linecap="round"/></svg>
+   <path d="M20 236h360" stroke="#0A4F49" stroke-width="10" stroke-linecap="round"/></svg><a class="pjph" href="#pj-3" aria-label="틈 — 중소병원 판독 보조 자세히 보기" tabindex="-1"></a>
           </div>
           <div>
             <div class="no">03</div>
-            <h3>틈 — 중소병원 판독 보조</h3>
+            <h3><a class="pjt" href="#pj-3">틈 — 중소병원 판독 보조</a></h3>
             <div class="tags"><span>#의료영상</span><span>#세그멘테이션</span><span>#헬스케어</span><span>#PyTorch</span></div>
             <p class="sum">흉부 X-ray에서 이상 소견 후보 영역을 표시해 판독 순서를 정렬합니다. 지역 병원 두 곳과 함께 검증했습니다.</p>
             <dl class="info">
@@ -1768,6 +1680,7 @@
               <div><dt>TYPE</dt><dd>기업연계</dd></div>
               <div><dt>TERM</dt><dd>도약과정 720H</dd></div>
             </dl>
+            <a class="pjgo" href="#pj-3">프로젝트 자세히 보기 <span aria-hidden="true">→</span></a>
           </div>
           <label class="arw l" for="pr1" aria-label="이전 프로젝트">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1784,11 +1697,11 @@
    <rect x="186" y="162" width="28" height="28" fill="#15368F"/>
    <rect x="152" y="190" width="96" height="20" rx="7" fill="#15368F"/>
    <circle cx="200" cy="90" r="20" fill="#FFE600"/>
-   <path d="M60 220h280" stroke="#8A6B14" stroke-width="8" stroke-linecap="round" opacity=".35"/></svg>
+   <path d="M60 220h280" stroke="#8A6B14" stroke-width="8" stroke-linecap="round" opacity=".35"/></svg><a class="pjph" href="#pj-4" aria-label="돌아봄 — 공장 설비 이상 탐지 자세히 보기" tabindex="-1"></a>
           </div>
           <div>
             <div class="no">04</div>
-            <h3>돌아봄 — 공장 설비 이상 탐지</h3>
+            <h3><a class="pjt" href="#pj-4">돌아봄 — 공장 설비 이상 탐지</a></h3>
             <div class="tags"><span>#이상탐지</span><span>#엣지컴퓨팅</span><span>#피지컬AI</span><span>#Kubernetes</span></div>
             <p class="sum">진동 센서 스트림에서 베어링 이상을 실시간 감지합니다. 라즈베리파이 엣지 환경에 올려 현장 테스트했습니다.</p>
             <dl class="info">
@@ -1796,6 +1709,7 @@
               <div><dt>TYPE</dt><dd>실증</dd></div>
               <div><dt>TERM</dt><dd>도약과정 720H</dd></div>
             </dl>
+            <a class="pjgo" href="#pj-4">프로젝트 자세히 보기 <span aria-hidden="true">→</span></a>
           </div>
           <label class="arw l" for="pr2" aria-label="이전 프로젝트">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1817,11 +1731,11 @@
    <rect x="236" y="122" width="92" height="7" rx="3.5" fill="#CBD5F0"/>
    <g fill="#1F4ED8"><circle cx="112" cy="206" r="16"/><rect x="92" y="226" width="40" height="22" rx="11"/>
    <circle cx="200" cy="212" r="14"/><rect x="182" y="230" width="36" height="20" rx="10"/>
-   <circle cx="288" cy="206" r="16"/><rect x="268" y="226" width="40" height="22" rx="11"/></g></svg>
+   <circle cx="288" cy="206" r="16"/><rect x="268" y="226" width="40" height="22" rx="11"/></g></svg><a class="pjph" href="#pj-5" aria-label="말줄임 — 회의록 자동 요약 자세히 보기" tabindex="-1"></a>
           </div>
           <div>
             <div class="no">05</div>
-            <h3>말줄임 — 회의록 자동 요약</h3>
+            <h3><a class="pjt" href="#pj-5">말줄임 — 회의록 자동 요약</a></h3>
             <div class="tags"><span>#LLM</span><span>#RAG</span><span>#생산성</span><span>#창업연계</span></div>
             <p class="sum">녹취를 화자별로 나눠 결정사항과 할 일만 추립니다. 수료 후 법인 설립까지 이어진 팀입니다.</p>
             <dl class="info">
@@ -1829,6 +1743,7 @@
               <div><dt>TYPE</dt><dd>창업</dd></div>
               <div><dt>TERM</dt><dd>도약과정 720H</dd></div>
             </dl>
+            <a class="pjgo" href="#pj-5">프로젝트 자세히 보기 <span aria-hidden="true">→</span></a>
           </div>
           <label class="arw l" for="pr3" aria-label="이전 프로젝트">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1846,11 +1761,11 @@
    <rect x="226" y="112" width="48" height="12" rx="6" fill="#FFE600"/>
    <rect x="106" y="152" width="136" height="12" rx="6" fill="#E4E9F7"/>
    <rect x="60" y="204" width="280" height="14" rx="7" fill="#E35B28"/>
-   <circle cx="320" cy="150" r="22" fill="#1F4ED8"/><rect x="310" y="142" width="20" height="4" rx="2" fill="#fff"/></svg>
+   <circle cx="320" cy="150" r="22" fill="#1F4ED8"/><rect x="310" y="142" width="20" height="4" rx="2" fill="#fff"/></svg><a class="pjph" href="#pj-6" aria-label="파수 — 사내 문서 유출 탐지 자세히 보기" tabindex="-1"></a>
           </div>
           <div>
             <div class="no">06</div>
-            <h3>파수 — 사내 문서 유출 탐지</h3>
+            <h3><a class="pjt" href="#pj-6">파수 — 사내 문서 유출 탐지</a></h3>
             <div class="tags"><span>#보안</span><span>#이상행위탐지</span><span>#그래프</span><span>#기업연계</span></div>
             <p class="sum">문서 접근 로그를 그래프로 만들어 평소와 다른 열람 패턴을 잡아냅니다.</p>
             <dl class="info">
@@ -1858,6 +1773,7 @@
               <div><dt>TYPE</dt><dd>기업연계</dd></div>
               <div><dt>TERM</dt><dd>도약과정 720H</dd></div>
             </dl>
+            <a class="pjgo" href="#pj-6">프로젝트 자세히 보기 <span aria-hidden="true">→</span></a>
           </div>
           <label class="arw l" for="pr4" aria-label="이전 프로젝트">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1944,27 +1860,204 @@
         </label>
       </div>
     </div>
+    </div>
+    <div class="pjd" id="pj-1">
+      <a class="ivback" href="#p-pr">← 프로젝트 목록</a>
+      <div class="ivwrap">
+        <div>
+          <div class="ivhero pjhero"><span class="ivtag">실증</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#FFE600"/>
+   <rect x="86" y="62" width="228" height="134" rx="12" fill="#fff"/>
+   <rect x="106" y="82" width="104" height="54" rx="7" fill="#1F4ED8"/>
+   <rect x="226" y="82" width="68" height="18" rx="6" fill="#E4E9F7"/>
+   <rect x="226" y="112" width="48" height="12" rx="6" fill="#FFE600"/>
+   <rect x="106" y="152" width="136" height="12" rx="6" fill="#E4E9F7"/>
+   <rect x="60" y="204" width="280" height="14" rx="7" fill="#E35B28"/>
+   <circle cx="320" cy="150" r="22" fill="#1F4ED8"/><rect x="310" y="142" width="20" height="4" rx="2" fill="#fff"/></svg></div>
+          <span class="pjno">01</span>
+          <h2>손끝 — 시각장애인 보행 보조 앱</h2>
+          <p class="lead">휴대폰 카메라만으로 횡단보도 신호와 점자블록을 읽어 음성으로 알려줍니다. 광주 동구 일대에서 2주간 실증했습니다.</p>
+          <div class="pjtags"><span>#컴퓨터비전</span><span>#접근성</span><span>#온디바이스</span><span>#실증연계</span><span>#Flutter</span></div>
+          <div class="pjsec">
+            <section><h3>문제 정의</h3><p class="pjph-t">어떤 문제를, 누구를 위해 풀었는지 들어갈 자리예요.</p></section>
+            <section><h3>접근 방법</h3><p class="pjph-t">데이터 · 모델 · 서비스 구조를 어떻게 잡았는지 들어갈 자리예요.</p></section>
+            <section><h3>결과와 다음 단계</h3><p class="pjph-t">실증 · 검증 결과와 수료 뒤 이어진 이야기가 들어갈 자리예요.</p></section>
+          </div>
+          <p class="ivnote">시안이라 본문은 자리만 잡아 두었어요. 관리자가 프로젝트를 올리면 이 자리에 내용과 시연 영상 · 발표 자료 링크가 들어갑니다.</p>
+        </div>
+        <aside class="sidebox pjside">
+          <h3>프로젝트 정보</h3>
+          <dl class="ivmeta"><div><dt>팀</dt><dd>AI 모델링 2반 · 5명</dd></div><div><dt>유형</dt><dd>실증</dd></div><div><dt>기간</dt><dd>도약과정 720H</dd></div></dl>
+          <div class="pjnav"><a href="#pj-6"><small>이전 프로젝트</small>파수 — 사내 문서 유출 탐지</a><a href="#pj-2"><small>다음 프로젝트</small>밥값 — 구내식당 혼잡도 예측</a></div>
+        </aside>
+      </div>
+    </div>
+    <div class="pjd" id="pj-2">
+      <a class="ivback" href="#p-pr">← 프로젝트 목록</a>
+      <div class="ivwrap">
+        <div>
+          <div class="ivhero pjhero"><span class="ivtag">기업연계</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#1F4ED8"/>
+   <rect x="54" y="44" width="212" height="132" rx="12" fill="#fff"/>
+   <rect x="76" y="68" width="120" height="12" rx="6" fill="#1F4ED8"/>
+   <rect x="76" y="94" width="168" height="8" rx="4" fill="#D7DEF4"/>
+   <rect x="76" y="112" width="140" height="8" rx="4" fill="#D7DEF4"/>
+   <rect x="76" y="136" width="76" height="20" rx="10" fill="#FFE600"/>
+   <path d="M286 92h76a14 14 0 0 1 14 14v46a14 14 0 0 1-14 14h-30l-14 18v-18h-32a14 14 0 0 1-14-14v-46a14 14 0 0 1 14-14z" fill="#22D3EE"/>
+   <rect x="296" y="112" width="52" height="7" rx="3.5" fill="#fff"/>
+   <rect x="296" y="128" width="36" height="7" rx="3.5" fill="#fff" opacity=".66"/>
+   <rect x="92" y="204" width="216" height="16" rx="8" fill="#15368F"/></svg></div>
+          <span class="pjno">02</span>
+          <h2>밥값 — 구내식당 혼잡도 예측</h2>
+          <p class="lead">출입 게이트 로그로 8층 구내식당의 30분 단위 혼잡도를 예측합니다. 사내 슬랙 봇으로 붙였습니다.</p>
+          <div class="pjtags"><span>#시계열예측</span><span>#혼잡도</span><span>#사내서비스</span><span>#FastAPI</span></div>
+          <div class="pjsec">
+            <section><h3>문제 정의</h3><p class="pjph-t">어떤 문제를, 누구를 위해 풀었는지 들어갈 자리예요.</p></section>
+            <section><h3>접근 방법</h3><p class="pjph-t">데이터 · 모델 · 서비스 구조를 어떻게 잡았는지 들어갈 자리예요.</p></section>
+            <section><h3>결과와 다음 단계</h3><p class="pjph-t">실증 · 검증 결과와 수료 뒤 이어진 이야기가 들어갈 자리예요.</p></section>
+          </div>
+          <p class="ivnote">시안이라 본문은 자리만 잡아 두었어요. 관리자가 프로젝트를 올리면 이 자리에 내용과 시연 영상 · 발표 자료 링크가 들어갑니다.</p>
+        </div>
+        <aside class="sidebox pjside">
+          <h3>프로젝트 정보</h3>
+          <dl class="ivmeta"><div><dt>팀</dt><dd>데이터 분석 1반 · 4명</dd></div><div><dt>유형</dt><dd>기업연계</dd></div><div><dt>기간</dt><dd>도약과정 720H</dd></div></dl>
+          <div class="pjnav"><a href="#pj-1"><small>이전 프로젝트</small>손끝 — 시각장애인 보행 보조 앱</a><a href="#pj-3"><small>다음 프로젝트</small>틈 — 중소병원 판독 보조</a></div>
+        </aside>
+      </div>
+    </div>
+    <div class="pjd" id="pj-3">
+      <a class="ivback" href="#p-pr">← 프로젝트 목록</a>
+      <div class="ivwrap">
+        <div>
+          <div class="ivhero pjhero"><span class="ivtag">기업연계</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#22D3EE"/>
+   <rect x="52" y="54" width="128" height="166" rx="10" fill="#fff"/>
+   <g fill="#0E8577"><rect x="70" y="74" width="34" height="24" rx="5"/><rect x="126" y="74" width="34" height="24" rx="5"/>
+   <rect x="70" y="112" width="34" height="24" rx="5"/><rect x="126" y="112" width="34" height="24" rx="5"/>
+   <rect x="70" y="150" width="34" height="24" rx="5"/><rect x="126" y="150" width="34" height="24" rx="5"/></g>
+   <rect x="96" y="188" width="42" height="32" rx="5" fill="#FFE600"/>
+   <rect x="218" y="100" width="130" height="120" rx="10" fill="#fff" opacity=".82"/>
+   <g fill="#0A4F49" opacity=".8"><rect x="236" y="120" width="40" height="22" rx="5"/>
+   <rect x="292" y="120" width="40" height="22" rx="5"/><rect x="236" y="156" width="40" height="22" rx="5"/>
+   <rect x="292" y="156" width="40" height="22" rx="5"/></g>
+   <path d="M20 236h360" stroke="#0A4F49" stroke-width="10" stroke-linecap="round"/></svg></div>
+          <span class="pjno">03</span>
+          <h2>틈 — 중소병원 판독 보조</h2>
+          <p class="lead">흉부 X-ray에서 이상 소견 후보 영역을 표시해 판독 순서를 정렬합니다. 지역 병원 두 곳과 함께 검증했습니다.</p>
+          <div class="pjtags"><span>#의료영상</span><span>#세그멘테이션</span><span>#헬스케어</span><span>#PyTorch</span></div>
+          <div class="pjsec">
+            <section><h3>문제 정의</h3><p class="pjph-t">어떤 문제를, 누구를 위해 풀었는지 들어갈 자리예요.</p></section>
+            <section><h3>접근 방법</h3><p class="pjph-t">데이터 · 모델 · 서비스 구조를 어떻게 잡았는지 들어갈 자리예요.</p></section>
+            <section><h3>결과와 다음 단계</h3><p class="pjph-t">실증 · 검증 결과와 수료 뒤 이어진 이야기가 들어갈 자리예요.</p></section>
+          </div>
+          <p class="ivnote">시안이라 본문은 자리만 잡아 두었어요. 관리자가 프로젝트를 올리면 이 자리에 내용과 시연 영상 · 발표 자료 링크가 들어갑니다.</p>
+        </div>
+        <aside class="sidebox pjside">
+          <h3>프로젝트 정보</h3>
+          <dl class="ivmeta"><div><dt>팀</dt><dd>헬스케어 도메인 · 6명</dd></div><div><dt>유형</dt><dd>기업연계</dd></div><div><dt>기간</dt><dd>도약과정 720H</dd></div></dl>
+          <div class="pjnav"><a href="#pj-2"><small>이전 프로젝트</small>밥값 — 구내식당 혼잡도 예측</a><a href="#pj-4"><small>다음 프로젝트</small>돌아봄 — 공장 설비 이상 탐지</a></div>
+        </aside>
+      </div>
+    </div>
+    <div class="pjd" id="pj-4">
+      <a class="ivback" href="#p-pr">← 프로젝트 목록</a>
+      <div class="ivwrap">
+        <div>
+          <div class="ivhero pjhero"><span class="ivtag">실증</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#FFE600"/>
+   <path d="M150 54h100v56c0 30-22 52-50 52s-50-22-50-52z" fill="#fff"/>
+   <path d="M150 66h-28a24 24 0 0 0 28 42zM250 66h28a24 24 0 0 1-28 42z" fill="#fff" opacity=".7"/>
+   <rect x="186" y="162" width="28" height="28" fill="#15368F"/>
+   <rect x="152" y="190" width="96" height="20" rx="7" fill="#15368F"/>
+   <circle cx="200" cy="90" r="20" fill="#FFE600"/>
+   <path d="M60 220h280" stroke="#8A6B14" stroke-width="8" stroke-linecap="round" opacity=".35"/></svg></div>
+          <span class="pjno">04</span>
+          <h2>돌아봄 — 공장 설비 이상 탐지</h2>
+          <p class="lead">진동 센서 스트림에서 베어링 이상을 실시간 감지합니다. 라즈베리파이 엣지 환경에 올려 현장 테스트했습니다.</p>
+          <div class="pjtags"><span>#이상탐지</span><span>#엣지컴퓨팅</span><span>#피지컬AI</span><span>#Kubernetes</span></div>
+          <div class="pjsec">
+            <section><h3>문제 정의</h3><p class="pjph-t">어떤 문제를, 누구를 위해 풀었는지 들어갈 자리예요.</p></section>
+            <section><h3>접근 방법</h3><p class="pjph-t">데이터 · 모델 · 서비스 구조를 어떻게 잡았는지 들어갈 자리예요.</p></section>
+            <section><h3>결과와 다음 단계</h3><p class="pjph-t">실증 · 검증 결과와 수료 뒤 이어진 이야기가 들어갈 자리예요.</p></section>
+          </div>
+          <p class="ivnote">시안이라 본문은 자리만 잡아 두었어요. 관리자가 프로젝트를 올리면 이 자리에 내용과 시연 영상 · 발표 자료 링크가 들어갑니다.</p>
+        </div>
+        <aside class="sidebox pjside">
+          <h3>프로젝트 정보</h3>
+          <dl class="ivmeta"><div><dt>팀</dt><dd>인프라 1반 · 5명</dd></div><div><dt>유형</dt><dd>실증</dd></div><div><dt>기간</dt><dd>도약과정 720H</dd></div></dl>
+          <div class="pjnav"><a href="#pj-3"><small>이전 프로젝트</small>틈 — 중소병원 판독 보조</a><a href="#pj-5"><small>다음 프로젝트</small>말줄임 — 회의록 자동 요약</a></div>
+        </aside>
+      </div>
+    </div>
+    <div class="pjd" id="pj-5">
+      <a class="ivback" href="#p-pr">← 프로젝트 목록</a>
+      <div class="ivwrap">
+        <div>
+          <div class="ivhero pjhero"><span class="ivtag">창업</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#E4E9F7"/>
+   <rect x="34" y="78" width="150" height="104" rx="10" fill="#fff"/>
+   <rect x="54" y="98" width="86" height="10" rx="5" fill="#1F4ED8"/>
+   <rect x="54" y="120" width="110" height="7" rx="3.5" fill="#CBD5F0"/>
+   <rect x="54" y="138" width="64" height="18" rx="9" fill="#FFE600"/>
+   <rect x="216" y="62" width="150" height="120" rx="10" fill="#fff"/>
+   <rect x="236" y="82" width="70" height="10" rx="5" fill="#22D3EE"/>
+   <rect x="236" y="104" width="110" height="7" rx="3.5" fill="#CBD5F0"/>
+   <rect x="236" y="122" width="92" height="7" rx="3.5" fill="#CBD5F0"/>
+   <g fill="#1F4ED8"><circle cx="112" cy="206" r="16"/><rect x="92" y="226" width="40" height="22" rx="11"/>
+   <circle cx="200" cy="212" r="14"/><rect x="182" y="230" width="36" height="20" rx="10"/>
+   <circle cx="288" cy="206" r="16"/><rect x="268" y="226" width="40" height="22" rx="11"/></g></svg></div>
+          <span class="pjno">05</span>
+          <h2>말줄임 — 회의록 자동 요약</h2>
+          <p class="lead">녹취를 화자별로 나눠 결정사항과 할 일만 추립니다. 수료 후 법인 설립까지 이어진 팀입니다.</p>
+          <div class="pjtags"><span>#LLM</span><span>#RAG</span><span>#생산성</span><span>#창업연계</span></div>
+          <div class="pjsec">
+            <section><h3>문제 정의</h3><p class="pjph-t">어떤 문제를, 누구를 위해 풀었는지 들어갈 자리예요.</p></section>
+            <section><h3>접근 방법</h3><p class="pjph-t">데이터 · 모델 · 서비스 구조를 어떻게 잡았는지 들어갈 자리예요.</p></section>
+            <section><h3>결과와 다음 단계</h3><p class="pjph-t">실증 · 검증 결과와 수료 뒤 이어진 이야기가 들어갈 자리예요.</p></section>
+          </div>
+          <p class="ivnote">시안이라 본문은 자리만 잡아 두었어요. 관리자가 프로젝트를 올리면 이 자리에 내용과 시연 영상 · 발표 자료 링크가 들어갑니다.</p>
+        </div>
+        <aside class="sidebox pjside">
+          <h3>프로젝트 정보</h3>
+          <dl class="ivmeta"><div><dt>팀</dt><dd>기획 2반 · 4명</dd></div><div><dt>유형</dt><dd>창업</dd></div><div><dt>기간</dt><dd>도약과정 720H</dd></div></dl>
+          <div class="pjnav"><a href="#pj-4"><small>이전 프로젝트</small>돌아봄 — 공장 설비 이상 탐지</a><a href="#pj-6"><small>다음 프로젝트</small>파수 — 사내 문서 유출 탐지</a></div>
+        </aside>
+      </div>
+    </div>
+    <div class="pjd" id="pj-6">
+      <a class="ivback" href="#p-pr">← 프로젝트 목록</a>
+      <div class="ivwrap">
+        <div>
+          <div class="ivhero pjhero"><span class="ivtag">기업연계</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#FFE600"/>
+   <rect x="86" y="62" width="228" height="134" rx="12" fill="#fff"/>
+   <rect x="106" y="82" width="104" height="54" rx="7" fill="#1F4ED8"/>
+   <rect x="226" y="82" width="68" height="18" rx="6" fill="#E4E9F7"/>
+   <rect x="226" y="112" width="48" height="12" rx="6" fill="#FFE600"/>
+   <rect x="106" y="152" width="136" height="12" rx="6" fill="#E4E9F7"/>
+   <rect x="60" y="204" width="280" height="14" rx="7" fill="#E35B28"/>
+   <circle cx="320" cy="150" r="22" fill="#1F4ED8"/><rect x="310" y="142" width="20" height="4" rx="2" fill="#fff"/></svg></div>
+          <span class="pjno">06</span>
+          <h2>파수 — 사내 문서 유출 탐지</h2>
+          <p class="lead">문서 접근 로그를 그래프로 만들어 평소와 다른 열람 패턴을 잡아냅니다.</p>
+          <div class="pjtags"><span>#보안</span><span>#이상행위탐지</span><span>#그래프</span><span>#기업연계</span></div>
+          <div class="pjsec">
+            <section><h3>문제 정의</h3><p class="pjph-t">어떤 문제를, 누구를 위해 풀었는지 들어갈 자리예요.</p></section>
+            <section><h3>접근 방법</h3><p class="pjph-t">데이터 · 모델 · 서비스 구조를 어떻게 잡았는지 들어갈 자리예요.</p></section>
+            <section><h3>결과와 다음 단계</h3><p class="pjph-t">실증 · 검증 결과와 수료 뒤 이어진 이야기가 들어갈 자리예요.</p></section>
+          </div>
+          <p class="ivnote">시안이라 본문은 자리만 잡아 두었어요. 관리자가 프로젝트를 올리면 이 자리에 내용과 시연 영상 · 발표 자료 링크가 들어갑니다.</p>
+        </div>
+        <aside class="sidebox pjside">
+          <h3>프로젝트 정보</h3>
+          <dl class="ivmeta"><div><dt>팀</dt><dd>보안 도메인 · 5명</dd></div><div><dt>유형</dt><dd>기업연계</dd></div><div><dt>기간</dt><dd>도약과정 720H</dd></div></dl>
+          <div class="pjnav"><a href="#pj-5"><small>이전 프로젝트</small>말줄임 — 회의록 자동 요약</a><a href="#pj-1"><small>다음 프로젝트</small>손끝 — 시각장애인 보행 보조 앱</a></div>
+        </aside>
+      </div>
+    </div>
   </section>
   <section class="wrap pane" id="p-coh">
     <div class="sh sh-row">
       <div><h2>기수별 모아보기</h2><p>입교식부터 수료식까지, 기수마다 무슨 일이 있었는지 모아 뒀어요 · 개인 경험담은 후기 탭에서 기수로 걸러 보세요</p></div>
-      <a class="wbtn" href="#write-coh">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4l10-10-4-4L4 16v4z"/><path d="M14.5 5.5l4 4"/></svg>기록 쓰기</a>
     </div>
     <div class="arch">
-      <input class="tr" autocomplete="off" type="radio" name="coh" id="fc_all" checked>
-      <input class="tr" autocomplete="off" type="radio" name="coh" id="fc_7">
-      <input class="tr" autocomplete="off" type="radio" name="coh" id="fc_6">
-      <input class="tr" autocomplete="off" type="radio" name="coh" id="fc_mid">
-      <nav class="rail">
-        <div><h3>기수</h3><div>
-            <label for="fc_all"><b>전체</b><em>17</em></label>
-            <label for="fc_7"><b>7기</b><em>5</em></label>
-            <label for="fc_6"><b>6기</b><em>5</em></label>
-            <label for="fc_mid"><b>3~5기</b><em>7</em></label>
-          </div></div>
-      </nav>
-      <div>
+      <nav class="crail" aria-label="기수 고르기">
+      <div class="crg"><h3>기수</h3><ul data-group="coh"></ul></div>
+    </nav>      <div>
         <div class="g2">
           <div class="diff"><span class="lb">7기 변경점</span><h3>6기와 무엇이 달라졌나</h3>
             <table>
@@ -3129,253 +3222,6 @@
         <p>목표한 수치에 닿지 못했습니다. 숨기고 싶었지만 발표에서 그대로 말했습니다.</p>
         <p>왜 안 됐는지 설명할 수 있다는 점을 오히려 높게 봐주셨습니다. 실패한 시도도 기록이 있으면 자산이 됩니다.</p>
         <div class="mtags"><a class="t" href="#tg-4">#적응</a><span class="hint">태그를 누르면 창이 닫히고 그 태그의 후기만 모여요</span></div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="wov" id="write-rev" role="dialog" aria-modal="true" aria-labelledby="write-rev-t">
-  <a class="back" href="#p-rev" aria-label="닫기"></a>
-  <div class="wsheet">
-    <div class="whead">
-      <div><span class="wkind">후기 쓰기</span><h3 id="write-rev-t">겪어 본 이야기를 남겨 주세요</h3></div>
-      <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
-    </div>
-    <div class="wbody">
-      <div class="wf">
-        <label id="write-rev-f1">갈래</label>
-        <div class="wchips" role="radiogroup" aria-labelledby="write-rev-f1">
-          <input class="tr" autocomplete="off" type="radio" name="wrc" id="wrc0" checked>
-          <label for="wrc0">생활</label>
-          <input class="tr" autocomplete="off" type="radio" name="wrc" id="wrc1">
-          <label for="wrc1">수업</label>
-          <input class="tr" autocomplete="off" type="radio" name="wrc" id="wrc2">
-          <label for="wrc2">프로젝트</label>
-          <input class="tr" autocomplete="off" type="radio" name="wrc" id="wrc3">
-          <label for="wrc3">취업·진로</label>
-        </div>
-      </div>
-      <div class="wf">
-        <label id="write-rev-f2">기수</label>
-        <div class="wchips" role="radiogroup" aria-labelledby="write-rev-f2">
-          <input class="tr" autocomplete="off" type="radio" name="wrk" id="wrk0" checked>
-          <label for="wrk0">7기</label>
-          <input class="tr" autocomplete="off" type="radio" name="wrk" id="wrk1">
-          <label for="wrk1">6기</label>
-          <input class="tr" autocomplete="off" type="radio" name="wrk" id="wrk2">
-          <label for="wrk2">5기</label>
-          <input class="tr" autocomplete="off" type="radio" name="wrk" id="wrk3">
-          <label for="wrk3">4기</label>
-          <input class="tr" autocomplete="off" type="radio" name="wrk" id="wrk4">
-          <label for="wrk4">3기</label>
-        </div>
-      </div>
-      <div class="wf"><label for="write-rev-f3">제목</label><input type="text" placeholder="예) 8층 구내식당을 쓰게 된 이유" id="write-rev-f3"><em>한 문장으로, 겪은 일이 바로 보이게</em></div>
-      <div class="wf"><label for="write-rev-f4">한 줄 요약</label><input type="text" placeholder="목록 카드에 보일 한 줄" id="write-rev-f4"></div>
-      <div class="wf">
-        <label for="write-rev-f5">본문</label>
-        <textarea rows="9" placeholder="언제·어디서·무엇을 겪었는지 순서대로 적어 주세요.&#10;&#10;문단은 빈 줄로 나눠 주세요." id="write-rev-f5"></textarea>
-        <em>최소 300자 권장</em>
-      </div>
-      <div class="wf">
-        <label>사진</label>
-        <div class="wdrop"><b>사진을 끌어다 놓거나 눌러서 고르세요</b><span>JPG · PNG · 10MB 이하 · 최대 5장</span></div>
-        <em>사람이 나온 사진은 본인 동의를 받은 것만 올려 주세요</em>
-      </div>
-      <div class="wf"><label for="write-rev-f7">태그</label><input type="text" placeholder="쉼표로 구분 — 예) 비전공자, 팀활동, 적응" id="write-rev-f7"></div>
-      <div class="wrow">
-        <div class="wf"><label for="write-rev-f8">이름</label><input type="text" placeholder="실명 또는 활동명" id="write-rev-f8"></div>
-        <div class="wf"><label for="write-rev-f9">직군</label><input type="text" placeholder="예) AI 서비스 기획" id="write-rev-f9"></div>
-      </div>
-      <div class="wf">
-        <label id="write-rev-f10">공개 범위</label>
-        <div class="wopt" role="radiogroup" aria-labelledby="write-rev-f10">
-          <label><input type="radio" name="wrp" checked><span>이름 공개</span></label>
-          <label><input type="radio" name="wrp"><span>기수·직군만</span></label>
-          <label><input type="radio" name="wrp"><span>익명</span></label>
-        </div>
-      </div>
-    </div>
-    <div class="wfoot">
-      <p>올린 글은 운영진 확인 뒤 공개돼요. 시안이라 실제로 저장되지는 않습니다.</p>
-      <div class="wacts">
-        <a class="wghost" href="#p-rev">임시저장</a>
-        <a class="wghost" href="#p-rev">미리보기</a>
-        <a class="wgo" href="#p-rev">올리기</a>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="wov" id="write-iv" role="dialog" aria-modal="true" aria-labelledby="write-iv-t">
-  <a class="back" href="#p-iv" aria-label="닫기"></a>
-  <div class="wsheet">
-    <div class="whead">
-      <div><span class="wkind">인터뷰 쓰기</span><h3 id="write-iv-t">당신의 이야기를 들려주세요</h3></div>
-      <a class="x" href="#p-iv" aria-label="닫기">&times;</a>
-    </div>
-    <div class="wbody">
-      <div class="wrow">
-        <div class="wf"><label for="write-iv-f1">인터뷰이</label><input type="text" placeholder="이름" id="write-iv-f1"></div>
-        <div class="wf">
-          <label id="write-iv-f2">기수</label>
-          <div class="wchips" role="radiogroup" aria-labelledby="write-iv-f2">
-            <input class="tr" autocomplete="off" type="radio" name="wik" id="wik0" checked>
-            <label for="wik0">7기</label>
-            <input class="tr" autocomplete="off" type="radio" name="wik" id="wik1">
-            <label for="wik1">6기</label>
-            <input class="tr" autocomplete="off" type="radio" name="wik" id="wik2">
-            <label for="wik2">5기</label>
-            <input class="tr" autocomplete="off" type="radio" name="wik" id="wik3">
-            <label for="wik3">4기</label>
-            <input class="tr" autocomplete="off" type="radio" name="wik" id="wik4">
-            <label for="wik4">3기</label>
-          </div>
-        </div>
-      </div>
-      <div class="wf"><label for="write-iv-f3">직군</label><input type="text" placeholder="예) AI 모델링" id="write-iv-f3"></div>
-      <div class="wf"><label for="write-iv-f4">제목</label><input type="text" placeholder="예) 기획자였던 제가 AI 엔지니어로 바뀌기까지" id="write-iv-f4"></div>
-      <div class="wf"><label for="write-iv-f5">들어가는 말</label><textarea rows="3" placeholder="이 인터뷰를 한 줄로 소개해 주세요." id="write-iv-f5"></textarea></div>
-      <div class="wf"><label>대표 사진</label><div class="wdrop"><b>사진을 끌어다 놓거나 눌러서 고르세요</b><span>비율 상관없이 한 장 · 인터뷰이 동의가 확인된 사진만</span></div></div>
-      <div class="wf">
-        <label id="write-iv-f7">질문과 답변</label>
-        <div class="wqlist" role="group" aria-labelledby="write-iv-f7">
-          <div class="wqa">
-            <span class="wno">1</span>
-            <input type="text" placeholder="질문 1 — 예) 입교 전에는 무슨 일을 하셨나요?" aria-label="질문 1">
-            <textarea rows="4" placeholder="답변" aria-label="답변 1"></textarea>
-          </div>
-          <div class="wqa">
-            <span class="wno">2</span>
-            <input type="text" placeholder="질문 2 — 예) 입교 전에는 무슨 일을 하셨나요?" aria-label="질문 2">
-            <textarea rows="4" placeholder="답변" aria-label="답변 2"></textarea>
-          </div>
-          <div class="wqa">
-            <span class="wno">3</span>
-            <input type="text" placeholder="질문 3 — 예) 입교 전에는 무슨 일을 하셨나요?" aria-label="질문 3">
-            <textarea rows="4" placeholder="답변" aria-label="답변 3"></textarea>
-          </div>
-        </div>
-        <a class="wadd" href="#write-iv">+ 질문 추가</a>
-      </div>
-      <div class="wf"><label for="write-iv-f8">영상 링크</label><input type="url" placeholder="https:// — 영상 인터뷰가 있다면" id="write-iv-f8"></div>
-    </div>
-    <div class="wfoot">
-      <p>인터뷰는 인터뷰이 본인 확인을 거친 뒤 공개돼요. 시안이라 실제로 저장되지는 않습니다.</p>
-      <div class="wacts"><a class="wghost" href="#p-iv">임시저장</a><a class="wghost" href="#p-iv">미리보기</a><a class="wgo" href="#p-iv">올리기</a></div>
-    </div>
-  </div>
-</div>
-<div class="wov" id="write-pr" role="dialog" aria-modal="true" aria-labelledby="write-pr-t">
-  <a class="back" href="#p-pr" aria-label="닫기"></a>
-  <div class="wsheet">
-    <div class="whead">
-      <div><span class="wkind">프로젝트 올리기</span><h3 id="write-pr-t">도약과정에서 만든 결과물을 보여 주세요</h3></div>
-      <a class="x" href="#p-pr" aria-label="닫기">&times;</a>
-    </div>
-    <div class="wbody">
-      <div class="wrow">
-        <div class="wf">
-          <label id="write-pr-f1">기수</label>
-          <div class="wchips" role="radiogroup" aria-labelledby="write-pr-f1">
-            <input class="tr" autocomplete="off" type="radio" name="wpk" id="wpk0" checked>
-            <label for="wpk0">7기</label>
-            <input class="tr" autocomplete="off" type="radio" name="wpk" id="wpk1">
-            <label for="wpk1">6기</label>
-            <input class="tr" autocomplete="off" type="radio" name="wpk" id="wpk2">
-            <label for="wpk2">5기</label>
-            <input class="tr" autocomplete="off" type="radio" name="wpk" id="wpk3">
-            <label for="wpk3">4기</label>
-            <input class="tr" autocomplete="off" type="radio" name="wpk" id="wpk4">
-            <label for="wpk4">3기</label>
-          </div>
-        </div>
-        <div class="wf"><label for="write-pr-f2">팀 이름</label><input type="text" placeholder="예) 팀 모아" id="write-pr-f2"></div>
-      </div>
-      <div class="wf"><label for="write-pr-f3">프로젝트 이름</label><input type="text" placeholder="서비스·모델 이름" id="write-pr-f3"></div>
-      <div class="wf"><label for="write-pr-f4">한 줄 소개</label><input type="text" placeholder="무엇을 푸는 프로젝트인가요?" id="write-pr-f4"></div>
-      <div class="wf"><label for="write-pr-f5">설명</label><textarea rows="6" placeholder="문제 정의 → 접근 → 결과 순서로 적어 주세요." id="write-pr-f5"></textarea></div>
-      <div class="wrow">
-        <div class="wf">
-          <label id="write-pr-f6">유형</label>
-          <div class="wchips" role="radiogroup" aria-labelledby="write-pr-f6">
-            <input class="tr" autocomplete="off" type="radio" name="wpt" id="wpt0" checked>
-            <label for="wpt0">기업연계</label>
-            <input class="tr" autocomplete="off" type="radio" name="wpt" id="wpt1">
-            <label for="wpt1">실증</label>
-            <input class="tr" autocomplete="off" type="radio" name="wpt" id="wpt2">
-            <label for="wpt2">창업</label>
-          </div>
-        </div>
-        <div class="wf"><label for="write-pr-f7">기술 태그</label><input type="text" placeholder="쉼표로 구분 — 예) 비전, 추천, LLM" id="write-pr-f7"></div>
-      </div>
-      <div class="wf"><label>대표 이미지</label><div class="wdrop"><b>이미지를 끌어다 놓거나 눌러서 고르세요</b><span>비율 상관없이 한 장 · 화면 캡처·포스터 모두 좋아요</span></div></div>
-      <div class="wf"><label for="write-pr-f9">링크</label><input type="url" placeholder="https:// — 데모·깃허브·발표자료" id="write-pr-f9"></div>
-    </div>
-    <div class="wfoot">
-      <p>팀원 전원의 동의를 받은 자료만 올려 주세요. 시안이라 실제로 저장되지는 않습니다.</p>
-      <div class="wacts"><a class="wghost" href="#p-pr">임시저장</a><a class="wghost" href="#p-pr">미리보기</a><a class="wgo" href="#p-pr">올리기</a></div>
-    </div>
-  </div>
-</div>
-<div class="wov" id="write-coh" role="dialog" aria-modal="true" aria-labelledby="write-coh-t">
-  <a class="back" href="#p-coh" aria-label="닫기"></a>
-  <div class="wsheet">
-    <div class="whead">
-      <div><span class="wkind">기수 기록 쓰기</span><h3 id="write-coh-t">그 해 무슨 일이 있었는지 남겨 주세요</h3></div>
-      <a class="x" href="#p-coh" aria-label="닫기">&times;</a>
-    </div>
-    <div class="wbody">
-      <div class="wf">
-        <label id="write-coh-f1">기수</label>
-        <div class="wchips" role="radiogroup" aria-labelledby="write-coh-f1">
-          <input class="tr" autocomplete="off" type="radio" name="wck" id="wck0" checked>
-          <label for="wck0">7기</label>
-          <input class="tr" autocomplete="off" type="radio" name="wck" id="wck1">
-          <label for="wck1">6기</label>
-          <input class="tr" autocomplete="off" type="radio" name="wck" id="wck2">
-          <label for="wck2">5기</label>
-          <input class="tr" autocomplete="off" type="radio" name="wck" id="wck3">
-          <label for="wck3">4기</label>
-          <input class="tr" autocomplete="off" type="radio" name="wck" id="wck4">
-          <label for="wck4">3기</label>
-        </div>
-      </div>
-      <div class="wf">
-        <label id="write-coh-f2">활동</label>
-        <div class="wchips" role="radiogroup" aria-labelledby="write-coh-f2">
-          <input class="tr" autocomplete="off" type="radio" name="wca" id="wca0" checked>
-          <label for="wca0">입교식</label>
-          <input class="tr" autocomplete="off" type="radio" name="wca" id="wca1">
-          <label for="wca1">OT</label>
-          <input class="tr" autocomplete="off" type="radio" name="wca" id="wca2">
-          <label for="wca2">특강</label>
-          <input class="tr" autocomplete="off" type="radio" name="wca" id="wca3">
-          <label for="wca3">기업탐방</label>
-          <input class="tr" autocomplete="off" type="radio" name="wca" id="wca4">
-          <label for="wca4">중간발표회</label>
-          <input class="tr" autocomplete="off" type="radio" name="wca" id="wca5">
-          <label for="wca5">해커톤</label>
-          <input class="tr" autocomplete="off" type="radio" name="wca" id="wca6">
-          <label for="wca6">프로젝트</label>
-          <input class="tr" autocomplete="off" type="radio" name="wca" id="wca7">
-          <label for="wca7">취업박람회</label>
-          <input class="tr" autocomplete="off" type="radio" name="wca" id="wca8">
-          <label for="wca8">수료식</label>
-          <input class="tr" autocomplete="off" type="radio" name="wca" id="wca9">
-          <label for="wca9">동문회</label>
-        </div>
-      </div>
-      <div class="wf"><label for="write-coh-f3">날짜</label><input type="date" id="write-coh-f3"></div>
-      <div class="wf"><label for="write-coh-f4">제목</label><input type="text" placeholder="예) 마지막 해커톤, 소노벨 변산 2박 3일" id="write-coh-f4"></div>
-      <div class="wf"><label for="write-coh-f5">설명</label><textarea rows="5" placeholder="그날 무슨 일이 있었는지 두세 문장으로." id="write-coh-f5"></textarea></div>
-      <div class="wf"><label>사진 · 영상</label><div class="wdrop"><b>사진을 끌어다 놓거나 눌러서 고르세요</b><span>영상이라면 유튜브 링크를 아래에</span></div></div>
-      <div class="wf"><label for="write-coh-f7">영상 링크</label><input type="url" placeholder="https://" id="write-coh-f7"></div>
-    </div>
-    <div class="wfoot">
-      <p>기수 기록은 같은 기수 누구나 쓸 수 있어요. 시안이라 실제로 저장되지는 않습니다.</p>
-      <div class="wacts">
-        <a class="wghost" href="#p-coh">임시저장</a>
-        <a class="wghost" href="#p-coh">미리보기</a>
-        <a class="wgo" href="#p-coh">올리기</a>
       </div>
     </div>
   </div>

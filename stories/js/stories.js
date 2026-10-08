@@ -2,8 +2,10 @@
    선배들의 이야기 — 움직임만(본문은 index.html에 있음)
    시안 script.js의 네 부분(표지 슬라이더 · 인터뷰 캐러셀 · 기수 아카이브 페이지 넘김 · 기수 기록 창)을 그대로 옮기고
    메뉴 주소(#reviews · #interviews · #projects · #cohorts)로 탭을 고르는 부분을 더함(탭 고르는 막대는 공통 하위 메뉴 바).
-   탭 · 필터 · 글 창(.ov) · 인터뷰 상세(.ivd) · 쓰기 창(.wov)은 시안처럼 CSS(라디오 · :target)만으로 움직임 —
+   탭 · 필터 · 글 창(.ov) · 인터뷰 상세(.ivd) · 프로젝트 상세(.pjd)는 시안처럼 CSS(라디오 · :target)만으로 움직임 —
    여기서는 키보드만 더함(창 Esc · 포커스 이동 · Tab 가둠, 숨은 라디오의 라벨 포커스 테두리. 2026-10-07).
+   히어로 캐러셀 · 전체 인터뷰 목록 · 영상 인터뷰 재생 · 프로젝트 넘김은 js/stories-sections.js.
+   쓰기 버튼 · 쓰기 창(.wov)은 관리자 전용이라 뺐고(2026-10-08 사용자 결정), 글 수 숫자도 안 씀(같은 날 사용자 결정).
    ========================================================= */
 (function(){
   var page = document.querySelector('.stories-page');
@@ -13,8 +15,10 @@
   /* ---------- 탭 주소 ----------
      2뎁스는 헤더 밑 공통 하위 메뉴 바(site.js). 바 · 헤더 메뉴 · 표지 '읽기' 링크의 주소(#reviews · #interviews · #projects · #cohorts) → 탭 라디오.
      오버레이 · 상세 주소(#r-… · #iv-… · #p-rev 등)는 고른 탭을 바꾸지 않아 닫아도 그대로(고른 탭이 없을 때만 아래 paneTab).
-     하위 메뉴 바의 지금 항목은 고른 탭 기준(<html data-sub>) — 오버레이 주소가 붙어도 그대로 */
-  var TAB = { reviews:'t1', interviews:'t2', projects:'t3', cohorts:'t4', 'go-iv':'t2', 'go-pr':'t3', 'go-coh':'t4' };
+     하위 메뉴 바의 지금 항목은 고른 탭 기준(<html data-sub>) — 오버레이 주소가 붙어도 그대로
+     옛 주소: 시안의 #go-… · 없앤 쓰기 창 #write-…(2026-10-08)로 오면 그 탭으로 */
+  var TAB = { reviews:'t1', interviews:'t2', projects:'t3', cohorts:'t4', 'go-iv':'t2', 'go-pr':'t3', 'go-coh':'t4',
+    'write-rev':'t1', 'write-iv':'t2', 'write-pr':'t3', 'write-coh':'t4' };
   var SUB = { t1:'reviews', t2:'interviews', t3:'projects', t4:'cohorts' };
   var header = document.getElementById('siteHeader');
   // 고른 탭의 섹션 머리(.sh)가 헤더 + 하위 메뉴 바 아래 32px에 오게 — 다른 카테고리 페이지의 #주소 도착 자리와 같음(2026-10-07, check.js jumpTo).
@@ -149,17 +153,42 @@
     all();
   })();
 
+  /* ---------- 기수별 교육과정(트랙 이름). 3–5기는 자료가 없어 카드를 안 보임. 새 기수는 여기에 한 줄 추가 ---------- */
+  window.STORIES_CURRICULUM = window.STORIES_CURRICULUM || {
+    '7': ['AI 금융', 'AI 피지컬', 'AI 보안', 'AI 헬스케어', 'AI 융합'],
+    '6': ['데이터 기술', 'AI 모델링', 'AI 기반 서비스', 'AI 플랫폼&인프라', 'AI 비즈니스']
+  };
+
   /* ---------- 기수 아카이브: 기수 필터 + 8개씩 페이지 넘김(번호 버튼은 걸린 글 수에 따라 만듦) ---------- */
   (function(){
     var arch = page.querySelector('#p-coh .arch'); if (!arch) return;
     var cards = [].slice.call(arch.querySelectorAll('.g2 > a.st')), nav = arch.querySelector('.cpager'), PER = 8, pg = 1;
-    function match(c){
-      var r = arch.querySelector('input[name=coh]:checked'), id = r ? r.id : 'fc_all';
-      if (id === 'fc_7') return c.classList.contains('c7');
-      if (id === 'fc_6') return c.classList.contains('c6');
-      if (id === 'fc_mid') return c.classList.contains('c5') || c.classList.contains('c4') || c.classList.contains('c3');
-      return true;
+    var TAGS = ['입교식','OT','특강','기업탐방','중간발표회','해커톤','프로젝트','취업박람회','수료식','동문회'];
+    var COHS = ['7','6','3-5'], coh = 'all', tag = null, rail = page.querySelector('#p-coh .crail');
+    function cOf(c){ var m = c.className.match(/\bc(\d)\b/); return m ? m[1] : ''; }
+    function tOf(c){ return (c.className.match(/\bg(\d)\b/g) || []).map(function(x){ return TAGS[+x.slice(1)]; }); }
+    function inC(c, k){ var v = cOf(c); return k === '3-5' ? (v === '3' || v === '4' || v === '5') : v === k; }
+    function match(c){ return (coh === 'all' || inC(c, coh)) && (!tag || tOf(c).indexOf(tag) > -1); }
+    // 거르기 버튼: 이름만(글 수 숫자는 안 씀, 2026-10-08 사용자 결정). 걸리는 글이 없는 태그만 누를 수 없게
+    function li(label, on, dis, fn, live){
+      var l = document.createElement('li'), b = document.createElement('button'); b.type = 'button';
+      b.textContent = label; if (live) { var d = document.createElement('span'); d.className = 'live'; d.textContent = '·'; b.appendChild(d); }
+      b.setAttribute('aria-pressed', on ? 'true' : 'false'); if (dis) b.disabled = true; b.onclick = fn; l.appendChild(b); return l;
     }
+    function drawRail(){
+      if (!rail) return;
+      var cu = rail.querySelector('[data-group=coh]'), tu = rail.querySelector('[data-group=tag]');
+      cu.innerHTML = ''; if (tu) tu.innerHTML = '';
+      cu.appendChild(li('전체', coh === 'all', false, function(){ coh = 'all'; tag = null; update(); }));
+      COHS.forEach(function(k, i){ cu.appendChild(li(k.replace('-', '–') + '기', coh === k, false, function(){ coh = k; tag = null; update(); }, i === 0)); });
+      if (tu) TAGS.forEach(function(t){
+        var any = cards.some(function(c){ return (coh === 'all' || inC(c, coh)) && tOf(c).indexOf(t) > -1; });
+        tu.appendChild(li(t, tag === t, !any, function(){ tag = tag === t ? null : t; update(); }));
+      });
+      var rs = rail.querySelector('.creset'); if (rs) rs.hidden = !tag;
+      arch.dataset.coh = coh; if (tag) arch.dataset.tag = tag; else delete arch.dataset.tag;
+    }
+    function update(){ pg = 1; drawRail(); render(false); }
     function btn(label, to, opt){
       var b = document.createElement('button'); b.type = 'button'; b.textContent = label;
       if (opt && opt.cur) b.setAttribute('aria-current', 'page');
@@ -168,11 +197,34 @@
       b.onclick = function(){ pg = to; render(true); };
       return b;
     }
+    // 교육과정 고정 카드: 고른 기수의 교육과정 요약을 그리드 첫 칸에(1쪽에만, 그만큼 1쪽 기록은 하나 적게)
+    var pin = document.createElement('div'); pin.className = 'cpin';
+    var g2 = arch.querySelector('.g2'); g2.insertBefore(pin, g2.firstChild);
+    pin.addEventListener('click', function(e){ var b = e.target.closest('button[data-coh]'); if (!b) return; coh = b.dataset.coh; tag = null; update(); });
+    function drawPin(){
+      var C = window.STORIES_CURRICULUM || {}, h = '', ks = Object.keys(C).sort(function(x, y){ return y - x; });
+      var url = (typeof SITE_LINKS !== 'undefined' && SITE_LINKS.official && SITE_LINKS.official.url) || 'https://support.gj-aischool.or.kr/fo/main';
+      var esc = function(t){ return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+      pin.dataset.coh = coh;
+      var chips = function(list){ return '<div class="cchips">' + list.map(function(t){ return '<span>' + esc(t) + '</span>'; }).join('') + '</div>'; };
+      if (coh === 'all' && ks.length) {
+        // 전체: 가장 최근 기수 트랙을 크게, 지난 기수는 아래 작은 단추(누르면 그 기수로 거름) — 기수가 늘어도 카드 높이 그대로
+        h = '<span class="k">CURRICULUM</span><b>' + ks[0] + '기<br>교육과정</b><span class="nw">가장 최근 기수</span>' + chips(C[ks[0]]);
+        if (ks.length > 1) h += '<div class="past"><span>지난 기수</span><div>' + ks.slice(1).map(function(k){ return '<button type="button" data-coh="' + k + '">' + k + '기</button>'; }).join('') + '</div></div>';
+      } else if (C[coh]) {
+        h = '<span class="k">CURRICULUM</span><b>' + coh + '기<br>교육과정</b>' + chips(C[coh]);
+      }
+      if (h) h += '<div class="cpin-ft"><p>자세한 내용은 공식 홈페이지에서 확인하세요.</p><a href="' + url + '" target="_blank" rel="noopener">공식 홈페이지 <span aria-hidden="true">↗</span></a></div>';
+      pin.innerHTML = h; pin.setAttribute('role', 'group'); pin.setAttribute('aria-label', (coh === 'all' ? '기수별' : coh + '기') + ' 교육과정');
+      return !!h;
+    }
     function render(scroll){
-      var list = cards.filter(match), pages = Math.max(1, Math.ceil(list.length / PER));
+      var hasPin = drawPin();
+      var list = cards.filter(match), first = hasPin ? PER - 1 : PER, pages = Math.max(1, 1 + Math.ceil(Math.max(0, list.length - first) / PER));
       if (pg > pages) pg = pages;
       cards.forEach(function(c){ c.classList.add('pg-off'); });
-      list.slice((pg - 1) * PER, pg * PER).forEach(function(c){ c.classList.remove('pg-off'); });
+      pin.hidden = !hasPin || pg !== 1;
+      (pg === 1 ? list.slice(0, first) : list.slice(first + (pg - 2) * PER, first + (pg - 1) * PER)).forEach(function(c){ c.classList.remove('pg-off'); });
       nav.innerHTML = ''; nav.hidden = pages < 2; if (pages < 2) return;
       nav.appendChild(btn('←', pg - 1, { dis: pg === 1, aria: '이전 페이지' }));
       for (var i = 1; i <= pages; i++) nav.appendChild(btn(String(i), i, { cur: i === pg, aria: i + '페이지' }));
@@ -182,16 +234,16 @@
         if (y < window.scrollY) window.scrollTo({ top: y, behavior: reduce ? 'instant' : 'smooth' });
       }
     }
-    arch.addEventListener('change', function(e){ if (e.target.name === 'coh') { pg = 1; render(false); } });
-    render(false);
+    if (rail && rail.querySelector('.creset')) rail.querySelector('.creset').onclick = function(){ tag = null; update(); };
+    drawRail(); render(false);
   })();
 
-  /* ---------- 글 창(.ov) · 쓰기 창(.wov): 주소(:target)로 열리는 창 ----------
+  /* ---------- 글 창(.ov): 주소(:target)로 열리는 창 ----------
      Esc로 닫기(닫기 링크와 같은 주소로), 열리면 닫기 단추로 포커스, 닫히면 연 링크로 포커스를 돌려줌.
      창이 열린 동안 Tab은 창 안에서만 돎(기수 기록 창도 같이). 처음부터 창 주소로 열 때는 포커스를 옮기지 않음 */
   (function(){
     var opener = null, link = null;
-    function open(){ return page.querySelector('.ov:target, .wov:target'); }
+    function open(){ return page.querySelector('.ov:target'); }
     // 연 링크: 주소 이동 때 브라우저가 포커스를 비우기도 해서 누른 순간에 기억해 둠
     document.addEventListener('click', function(e){ link = e.target.closest && e.target.closest('a[href^="#"]'); }, true);
     addEventListener('hashchange', function(){
@@ -232,12 +284,12 @@
     var arch = page.querySelector('#p-coh .arch'), m = page.querySelector('.cmodal');
     if (!arch || !m) return;
     var last = null;
-    function close(){ m.classList.remove('on'); document.body.classList.remove('cm-lock'); if (last) last.focus(); }
+    function close(){ var f = m.querySelector('.media iframe'); if (f) m.querySelector('.media').innerHTML = ''; m.classList.remove('on'); document.body.classList.remove('cm-lock'); if (last) last.focus(); }
     m.querySelector('.bg').onclick = close; m.querySelector('.x').onclick = close;
     document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && m.classList.contains('on')) close(); });
     arch.addEventListener('click', function(e){
       var c = e.target.closest('a.st'); if (!c || !arch.contains(c)) return;
-      e.preventDefault(); last = c;
+      e.preventDefault(); last = c; m.classList.remove('is-cur');
       var ph = c.querySelector('.ph'), media = m.querySelector('.media'); media.innerHTML = '';
       var vis = ph && ph.querySelector('img,svg'); if (vis) media.appendChild(vis.cloneNode(true));
       var dur = ph && ph.querySelector('.dur');
@@ -254,8 +306,23 @@
       var ex = m.querySelector('.extra'); ex.innerHTML = '';
       if (!isVid) { var note = document.createElement('p'); note.className = 'note'; note.textContent = '기수 기록 본문이 들어갈 자리예요. 시안이라 지금은 요약만 담겨 있어요.'; ex.appendChild(note); }
       var acts = m.querySelector('.acts'); acts.innerHTML = '';
-      if (isVid) { var go = document.createElement('a'); go.className = 'go'; go.href = yt; go.target = '_blank'; go.rel = 'noopener'; go.textContent = '유튜브에서 영상 보기 →'; acts.appendChild(go); }
+      // 목록으로는 늘 왼쪽, 영상이면 유튜브 버튼을 오른쪽 끝에(2026-10-08)
       var b = document.createElement('button'); b.type = 'button'; b.className = 'ghost'; b.textContent = '목록으로'; b.onclick = close; acts.appendChild(b);
+      if (isVid) {
+        var go = document.createElement('a'); go.className = 'yt'; go.href = yt; go.target = '_blank'; go.rel = 'noopener'; go.textContent = '유튜브에서 보기 ↗'; acts.appendChild(go);
+        // 창 안에서 재생: 처음엔 사진 + 재생 단추, 누르면 그 자리가 유튜브 플레이어로 바뀜(2026-10-08)
+        var id = (yt.match(/[?&]v=([\w-]{6,})/) || yt.match(/youtu\.be\/([\w-]{6,})/) || [])[1];
+        if (id) {
+          var pb = document.createElement('button'); pb.type = 'button'; pb.className = 'cplay'; pb.setAttribute('aria-label', '여기서 영상 재생'); pb.innerHTML = '<i></i>';
+          pb.onclick = function(){
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1';
+            f.title = (h ? h.textContent : '영상'); f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true;
+            media.innerHTML = ''; media.appendChild(f); f.focus();
+          };
+          media.appendChild(pb);
+        }
+      }
       m.classList.add('on'); document.body.classList.add('cm-lock'); m.scrollTop = 0; m.querySelector('.x').focus();
     });
   })();

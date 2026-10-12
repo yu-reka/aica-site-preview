@@ -84,7 +84,7 @@
    ========================================================= */
 .site-header .subnav{position:relative;z-index:1;height:var(--sub);background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .site-header .subnav-inner{height:100%;display:flex;align-items:center;gap:28px}
-.site-header .subnav-title{font-size:16px;font-weight:500;color:var(--graphite);white-space:nowrap;padding-right:28px;border-right:1px solid var(--line);line-height:1.2}
+.site-header .subnav-title{font-size:15px;font-weight:500;color:var(--graphite);white-space:nowrap;padding-right:20px;border-right:1px solid var(--line);line-height:1.2}
 .site-header .subnav-list{position:relative;display:flex;gap:4px;height:100%;list-style:none;margin:0;padding:0;overflow-x:auto;scrollbar-width:none}
 .site-header .subnav-list::-webkit-scrollbar{display:none}
 .site-header .subnav-list a{display:flex;align-items:center;height:100%;padding:0 14px;font-size:15px;color:var(--graphite);text-decoration:none;white-space:nowrap;transition:color .2s}
@@ -93,7 +93,7 @@
 .site-header .subnav-indicator{position:absolute;left:0;bottom:0;height:2px;background:var(--ink);transition:transform .4s var(--ease),width .4s var(--ease);pointer-events:none}
 @media (min-width:861px){
   /* 2뎁스 시작점(2026-10-08 사용자 "모든 카테고리의 2depth 지점도 동일하게"): 첫 항목 글자 = GNB 첫 메뉴 '인사교 알아보기' 글자 아래(--gnb-x).
-     왼쪽 제목(이야기 · 체크)은 고정 폭 칸이라 구분선도 모든 페이지 같은 자리, 제목 없는 바(알아보기 · 라이프)는 그만큼 띄움. 링크 안쪽 여백 14px · 칸 사이 28px 뺌 */
+     왼쪽 제목(이야기 · 체크)은 고정 폭 칸이라 구분선도 모든 페이지 같은 자리(로고에서 '광주'를 뺀 뒤 칸이 좁아져 제목 15px · 오른쪽 여백 20px — '먼저 다녀온 선배들의 SSUL'이 안 잘리게), 제목 없는 바(알아보기 · 라이프)는 그만큼 띄움. 링크 안쪽 여백 14px · 칸 사이 28px 뺌 */
   .site-header .subnav-title{flex:none;width:calc(var(--gnb-x) - 28px - 14px);overflow:hidden;text-overflow:ellipsis}
   .site-header .subnav-inner>.subnav-list:first-child{margin-left:calc(var(--gnb-x) - 14px)}
 }

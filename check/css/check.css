@@ -3,6 +3,7 @@
    출처: aica-prototype-v3(2026-10-08) styles.css에서 '지원 전 체크'(#/check) 본문에 쓰이는 규칙만.
      시안이 같은 선택자를 뒤에서 다시 덮어쓰던 층(섹션 머리 · 정부지원사업 안내 · 체크 표시 색 · 단계 그림 등)은 마지막 값으로 합쳐 한 규칙으로,
      !important는 선택자를 한 단계 좁혀 뺌. 시안 값 그대로(화면은 시안과 같음).
+     2026-10-08 코드 정리: 물려받는 값 · 기본값 · 공통과 같아 효과 없던 선언은 지움(README '코드 정리')
    모든 선택자는 .check-page(main) 범위. 헤더 · 하위 메뉴 바 · 푸터 · 맨 위로 · 토스트 · 버튼(.btn) · '다음으로' 띠,
    기본 요소(box-sizing · img · a · button · :focus-visible · .wrap)는 ../common/css/
    글꼴: 본문 --ff-text("Paperlogy Text" = 시안 "Paperlogy", common/css/tokens.css), 큰 제목 · 숫자 "Giants"(시안 "Giants Title")
@@ -12,21 +13,19 @@
    ========================================================= */
 
 /* ---------- 바탕 · 공통 조각 ---------- */
-/* 시안 :root · body · main 값 중 공통(tokens · base)과 다른 것만: 본문 글꼴, 자간 0, 큰 제목 글꼴 대체 순서 */
+/* 시안 :root · body · main 값 중 공통(tokens · base)과 다른 것만: 본문 글꼴, 자간 0(본문 글 전체가 물려받음), 큰 제목 글꼴 대체 순서.
+   페이지 아래 여백은 공통 site.css '다음으로' 띠 규칙(main 아래 0 · 띠 앞 마지막 섹션 아래 --sec-y / 2) */
 .check-page{
   --ff-title:"Giants","Paperlogy Text",sans-serif;   /* 큼직한 타이틀 · 숫자 */
   font-family:var(--ff-text);
   letter-spacing:0;     /* Paperlogy 자간(공통 body는 -.01em) */
-  padding-bottom:var(--sec-y);   /* 끝에 '다음으로' 띠가 있으면 공통 site.css가 0으로(띠 앞 마지막 섹션 아래 --sec-y / 2도 공통 site.css) */
 }
-.check-page p,
-.check-page li,
-.check-page dd,
-.check-page dt{letter-spacing:0}
 /* 화면에 안 보이는 페이지 제목(h1 #overview) — 시안 v3는 히어로 없이 바로 섹션 */
 .check-page .sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 /* 확인 필요 표시 — 확정 전 정보는 숨기지 않고 표시 */
-.check-page .tbd{display:inline-block;font-size:12px;line-height:1;padding:4px 7px;border-radius:4px;background:var(--blue-soft);color:var(--blue);font-weight:500;vertical-align:.15em;margin-left:6px;letter-spacing:0;white-space:nowrap}
+.check-page .tbd{display:inline-block;font-size:12px;line-height:1;padding:4px 7px;border-radius:4px;background:var(--blue-soft);color:var(--blue);font-weight:500;vertical-align:.15em;margin-left:6px;white-space:nowrap}
+/* 숨긴 버튼(hidden: '모집 프로세스 보러 가기' · '전체에서 보기') — 공통 .btn의 display:inline-flex가 [hidden]을 덮어서 */
+.check-page .btn[hidden]{display:none}
 /* 글 안 링크: 파랑 + 밑줄 테두리. 화살표 아이콘은 뒤에 */
 .check-page .text-link{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--blue);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}
 .check-page .text-link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;transition:transform .25s var(--ease)}
@@ -39,7 +38,7 @@
 .check-page.rv-ready .rv{opacity:0;transform:translateY(18px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .check-page.rv-ready .rv.is-in{opacity:1;transform:none}
 .check-page.rv-init .rv{transition:none}
-@media (prefers-reduced-motion:reduce){
+@media (prefers-reduced-motion:reduce){   /* 처음부터 줄이기면 JS가 .rv-ready를 안 붙임 — 이 규칙은 페이지를 연 뒤 설정을 켠 경우 */
 .check-page.rv-ready .rv{opacity:1;transform:none;transition:none}
 }
 
@@ -49,10 +48,10 @@
 .check-page>.sec:first-of-type{padding-top:var(--sec-y-first)}
 .check-page .s-head{margin-bottom:clamp(28px,3.4vw,44px)}
 .check-page .s-row{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 18px}
-.check-page .s-head .s-word{margin:0;font-family:var(--ff-title);font-weight:400;font-size:clamp(52px,6vw,86px);line-height:.95;letter-spacing:-.01em;color:var(--blue)}
-.check-page .s-head h2{margin:0;font-size:clamp(28px,2.8vw,38px);font-weight:700;letter-spacing:-.035em;line-height:1.25}
+.check-page .s-head .s-word{margin:0;font-family:var(--ff-title);font-size:clamp(52px,6vw,86px);line-height:.95;letter-spacing:-.01em;color:var(--blue)}
+.check-page .s-head h2{margin:0;font-size:clamp(28px,2.8vw,38px);letter-spacing:-.035em;line-height:1.25}
 .check-page .s-head .s-desc{margin:10px 0 0;max-width:60ch;font-size:15.5px;line-height:1.7;color:var(--graphite)}
-.check-page .s-sub{margin:48px 0 16px;font-size:20px;font-weight:700;letter-spacing:-.02em}
+.check-page .s-sub{margin:48px 0 16px;font-size:20px;letter-spacing:-.02em}
 .check-page .s-head+.s-sub{margin-top:0}
 @media (max-width:860px){
 .check-page .s-head .s-word{font-size:clamp(44px,13vw,64px)}
@@ -69,16 +68,15 @@
 .check-page .chk-crit-note{margin:16px 0 0;font-size:14.5px;color:var(--graphite)}
 @media (max-width:860px){
 .check-page .chk-crit{grid-template-columns:1fr}
-.check-page .chk-crit>div,
-.check-page .chk-crit>div+div{padding:24px 0;border-left:0}
-.check-page .chk-crit>div+div{border-top:1px solid var(--line)}
+.check-page .chk-crit>div{padding:24px 0}
+.check-page .chk-crit>div+div{padding-left:0;border-left:0;border-top:1px solid var(--line)}
 }
 
 /* ---------- 모집 대상: 다른 정부지원사업 안내(중요 내용이라 글씨 키움) ---------- */
 .check-page .chk-notice{display:flex;gap:18px;align-items:flex-start;margin-top:26px;padding:26px 30px;background:var(--surface);border:1.5px solid var(--ink);border-radius:14px}
 .check-page .chk-notice-ico{flex:none;display:grid;place-items:center;width:34px;height:34px;border:2px solid #111;border-radius:50%;background:#FFE600;color:#111;font-size:18px;font-weight:800}
 .check-page .chk-notice h4{margin:0 0 8px;font-size:clamp(19px,1.6vw,22px);letter-spacing:-.02em}
-.check-page .chk-notice p{margin:0;font-size:clamp(16.5px,1.3vw,18px);line-height:1.75;color:var(--ink)}
+.check-page .chk-notice p{margin:0;font-size:clamp(16.5px,1.3vw,18px)}
 
 /* ---------- 모집 대상: 스스로 체크(체크 목록 + 진행 상자) ---------- */
 .check-page .chk-self{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(28px,5vw,72px);align-items:start}
@@ -99,11 +97,10 @@
 .check-page .chk-progress b{font-family:var(--ff-title);font-weight:400;font-size:38px;margin-right:2px}
 .check-page .chk-bar{height:12px;border:2px solid var(--ink);border-radius:12px;background:var(--paper);overflow:hidden}
 .check-page .chk-bar i{display:block;height:100%;width:0;background:var(--blue);transition:width .45s var(--ease)}
-/* '모집 프로세스 보러 가기': 공통 .btn.is-sm에 시안 모양(잉크 알약, 글 굵게, 위아래 12px)을 덮음 */
-.check-page .btn.chk-go{height:auto;margin-top:18px;padding:12px 18px;border:0;gap:8px;background:var(--ink);color:var(--paper);font-weight:700;line-height:inherit;letter-spacing:0;transition:background .2s,color .2s}
+/* '모집 프로세스 보러 가기': 공통 .btn.is-sm(잉크 알약)에 시안 모양(테두리 없음, 글 굵게, 위아래 12px)을 덮음 */
+.check-page .btn.chk-go{height:auto;margin-top:18px;padding:12px 18px;border:0;gap:8px;color:var(--paper);font-weight:700;line-height:inherit;letter-spacing:0;transition:background .2s,color .2s}
 .check-page .btn.chk-go:hover{background:var(--blue);color:#fff}
 .check-page .btn.chk-go svg{stroke-width:2}
-.check-page .chk-go[hidden]{display:none}
 @media (max-width:860px){
 .check-page .chk-self{grid-template-columns:1fr}
 }
@@ -116,26 +113,25 @@
 /* ---------- 모집 프로세스: 단계 그림 + 점 + 카드(켜진 단계만 색 · 파란 카드), 1000px 이하 2열 · 620px 이하 1열 ---------- */
 /* 단계 목록은 ol(시안은 div) — 목록 기본 여백만 지움 */
 .check-page .pf{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:18px;list-style:none;margin:0;padding:8px 0 0}
-.check-page .pf-col{position:relative;display:flex;flex-direction:column;align-items:stretch;cursor:pointer}
+.check-page .pf-col{position:relative;display:flex;flex-direction:column;cursor:pointer}
 .check-page .pf-illus{height:clamp(170px,16vw,230px);display:flex;align-items:flex-end;justify-content:center;padding-bottom:18px}
-.check-page .pf-illus img{max-width:86%;max-height:100%;object-fit:contain;filter:grayscale(1);opacity:.42;transform:scale(.82);transform-origin:center bottom;transition:transform .55s cubic-bezier(.34,1.56,.64,1),filter .45s,opacity .45s}
+.check-page .pf-illus img{max-width:86%;max-height:100%;filter:grayscale(1);opacity:.42;transform:scale(.82);transform-origin:center bottom;transition:transform .55s cubic-bezier(.34,1.56,.64,1),filter .45s,opacity .45s}
 .check-page .pf-col.is-on .pf-illus img{filter:none;opacity:1;transform:scale(1)}
-.check-page .pf-dot{position:relative;display:block;height:24px}
+.check-page .pf-dot{position:relative;height:24px}   /* span이지만 .pf-col(flex)의 항목이라 블록 */
 .check-page .pf-dot::before{content:"";position:absolute;left:-9px;right:-9px;top:11px;height:1px;background:var(--line)}
 .check-page .pf-col:first-child .pf-dot::before{left:0}
 .check-page .pf-col:last-child .pf-dot::before{right:0}
 .check-page .pf-dot::after{content:"";position:absolute;left:50%;top:5px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--surface);border:2px solid #C9D3E6;transition:border-color .3s,box-shadow .3s}
 .check-page .pf-col.is-on .pf-dot::after{border-color:var(--blue);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 18%,transparent)}
-.check-page .pf-card{margin-top:22px;flex:1;padding:22px 22px 24px;background:color-mix(in srgb,var(--surface) 70%,transparent);border:1px solid var(--line);border-radius:16px;transition:border-color .3s,background .3s,box-shadow .3s;outline:none}
+.check-page .pf-card{margin-top:22px;flex:1;padding:22px 22px 24px;background:color-mix(in srgb,var(--surface) 70%,transparent);border:1px solid var(--line);border-radius:16px;transition:border-color .3s,background .3s,box-shadow .3s}
 .check-page .pf-col.is-on .pf-card{background:var(--surface);border-color:var(--blue);box-shadow:0 16px 32px -24px rgba(31,78,216,.55)}
-.check-page .pf-card:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 .check-page .pf-step{margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--graphite)}
 .check-page .pf-col.is-on .pf-step{color:var(--blue)}
-.check-page .pf-card h3{margin:0 0 12px;font-size:clamp(18px,1.6vw,21px);font-weight:700;letter-spacing:-.03em;line-height:1.35}
+.check-page .pf-card h3{margin:0 0 12px;font-size:clamp(18px,1.6vw,21px);letter-spacing:-.03em;line-height:1.35}
 .check-page .pf-body p,
 .check-page .pf-body dd{margin:0;font-size:14.5px;line-height:1.7;color:var(--graphite)}
 .check-page .pf-body dl{margin:0;display:flex;flex-direction:column;gap:10px}
-.check-page .pf-body dt{font-weight:700;font-size:14px;color:var(--ink);margin-bottom:2px}
+.check-page .pf-body dt{font-weight:700;font-size:14px;margin-bottom:2px}
 /* 코딩 테스트 면제 상자 */
 .check-page .pf-body .pf-note{margin-top:12px;padding:12px 14px;border-radius:10px;background:var(--blue-soft);color:var(--ink);font-size:13.5px}
 .check-page .pf-note b{display:block;margin-bottom:2px;font-size:12.5px;color:var(--blue)}
@@ -160,11 +156,15 @@
 .check-page .ben-ico svg{width:38px;height:38px;fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .check-page .ben-ico .accent{stroke:var(--blue)}
 .check-page .ben-no{margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--graphite)}
-.check-page .ben-card h3{margin:0 0 8px;font-size:18.5px;font-weight:700;letter-spacing:-.025em}
+.check-page .ben-card h3{margin:0 0 8px;font-size:18.5px;letter-spacing:-.025em}
 .check-page .ben-desc,
 .check-page .ben-sub{margin:0;font-size:14.5px;line-height:1.7;color:var(--graphite)}
 .check-page .ben-sub{margin-top:8px;font-size:13.5px}
-.check-page .ben-card b{color:var(--ink);font-weight:700;background:linear-gradient(transparent 62%,var(--blue-soft) 62%)}
+.check-page .ben-card b{color:var(--ink);background:linear-gradient(transparent 62%,var(--blue-soft) 62%)}
+/* 아래 안내: 모집 공고 링크 · 선배 후기 링크 · 금액 안내 */
+.check-page .ben-foot{margin-top:28px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;font-size:15px;color:var(--graphite)}
+.check-page .ben-foot p{margin:0}
+.check-page .ben-foot small{font-size:13.5px}
 @media (max-width:1000px){
 .check-page .ben-grid{grid-template-columns:1fr 1fr}
 }
@@ -174,9 +174,6 @@
 @media (prefers-reduced-motion:reduce){
 .check-page .ben-card:hover{transform:none}
 }
-.check-page .ben-foot{margin-top:28px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;font-size:15px;color:var(--graphite)}
-.check-page .ben-foot p{margin:0}
-.check-page .ben-foot small{font-size:13.5px}
 
 /* ---------- 자주 묻는 질문: 분류(질문 수) · 검색 · 하나씩 펼치기 + 카카오톡 문의 ---------- */
 .check-page .faq-tools{display:flex;flex-wrap:wrap;gap:16px 24px;align-items:center;justify-content:space-between}
@@ -185,23 +182,22 @@
 .check-page .faq-tab{display:inline-flex;align-items:center;gap:7px;padding:12px 26px;border:0;border-radius:40px;background:transparent;color:var(--blue);font-weight:700;font-size:16px;cursor:pointer;transition:background .2s,color .2s}
 .check-page .faq-tab:hover{background:var(--blue-soft)}
 .check-page .faq-tab[aria-pressed="true"]{background:var(--blue);color:#fff}
-.check-page .faq-cnt{min-width:22px;padding:1px 7px;border-radius:20px;background:var(--blue-soft);color:var(--blue);font-style:normal;font-size:12.5px;font-weight:700;line-height:1.5;text-align:center}
-.check-page .faq-tab[aria-pressed="true"] .faq-cnt{background:rgba(255,255,255,.22);color:#fff}
+.check-page .faq-cnt{min-width:22px;padding:1px 7px;border-radius:20px;background:var(--blue-soft);font-style:normal;font-size:12.5px;line-height:1.5}   /* 글자색 · 굵기 · 가운데는 칩에서 물려받음 */
+.check-page .faq-tab[aria-pressed="true"] .faq-cnt{background:rgba(255,255,255,.22)}
 .check-page .faq-search{position:relative;flex:1 1 280px;max-width:380px}
 .check-page .faq-search svg{position:absolute;left:18px;top:50%;width:20px;height:20px;margin-top:-10px;stroke:var(--graphite);fill:none;stroke-width:2;stroke-linecap:round;pointer-events:none}
 .check-page .faq-search input{width:100%;height:56px;padding:0 48px 0 50px;border:1.5px solid var(--ink);border-radius:40px;background:var(--surface);font:inherit;font-size:16px;color:var(--ink);outline:none;transition:border-color .2s,box-shadow .2s}
 .check-page .faq-search input:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(31,78,216,.15)}
 .check-page .faq-search input::-webkit-search-cancel-button{display:none}
 /* 검색어 지우기: 보이는 원은 시안 그대로 32px(오른쪽 12px), 누르는 곳은 44px */
-.check-page .faq-search button{position:absolute;right:6px;top:50%;width:44px;height:44px;margin-top:-22px;border:0;border-radius:50%;background:radial-gradient(circle,var(--blue-soft) 15.5px,transparent 16.5px);color:var(--ink);font-size:20px;line-height:1;cursor:pointer}
+.check-page .faq-search button{position:absolute;right:6px;top:50%;width:44px;height:44px;margin-top:-22px;border:0;border-radius:50%;background:radial-gradient(circle,var(--blue-soft) 15.5px,transparent 16.5px);font-size:20px;line-height:1;cursor:pointer}
 .check-page .faq-count{margin:22px 0 0;min-height:22px;font-size:14.5px;color:var(--graphite)}
 .check-page .faq-list{list-style:none;margin:6px 0 0;padding:0;border-top:2px solid var(--ink)}
 .check-page .faq-item{border-bottom:1px solid var(--line)}
-.check-page .faq-item[hidden]{display:none}
 .check-page .faq-item h3{margin:0}
-.check-page .faq-q{width:100%;display:grid;grid-template-columns:34px minmax(0,1fr) 36px;gap:10px;align-items:center;padding:26px 6px;background:none;border:0;text-align:left;cursor:pointer;color:var(--ink);font:inherit}
-.check-page .faq-qa{font-family:var(--ff-title);font-size:22px;line-height:1;color:var(--ink)}
-.check-page .faq-qt{font-size:clamp(17px,1.5vw,20px);font-weight:700;letter-spacing:-.02em;line-height:1.5}
+.check-page .faq-q{width:100%;display:grid;grid-template-columns:34px minmax(0,1fr) 36px;gap:10px;align-items:center;padding:26px 6px;background:none;border:0;text-align:left;cursor:pointer}
+.check-page .faq-qa{font-family:var(--ff-title);font-size:22px;line-height:1}
+.check-page .faq-qt{font-size:clamp(17px,1.5vw,20px);letter-spacing:-.02em;line-height:1.5}
 /* 검색 하이라이트: 질문(시안) · 답 글(사이트에서 더함) 같은 색 */
 .check-page :is(.faq-qt,.faq-at) mark{background:rgba(31,78,216,.18);color:inherit;border-radius:3px}
 .check-page .faq-arrow{display:grid;place-items:center;transition:transform .35s var(--ease)}
@@ -220,9 +216,7 @@
 .check-page .faq-empty{padding:44px 0;text-align:center;color:var(--graphite);border-bottom:1px solid var(--line)}
 .check-page .faq-empty p{margin:0 0 6px}
 .check-page .faq-empty b{color:var(--ink)}
-.check-page .faq-empty[hidden]{display:none}
 .check-page .faq-all{margin-top:14px}   /* 고른 분류 밖에 결과가 있을 때 '전체에서 보기'(공통 .btn.is-line.is-sm, 사이트에서 더함) */
-.check-page .faq-all[hidden]{display:none}
 /* 카카오톡 문의 */
 .check-page .faq-cta{margin-top:40px;display:flex;flex-wrap:wrap;gap:18px 32px;align-items:center;justify-content:space-between;padding:28px 32px;border:1.5px solid var(--ink);border-radius:16px;background:var(--surface)}
 .check-page .faq-cta h3{margin:0 0 4px;font-size:clamp(19px,1.8vw,23px);letter-spacing:-.03em}

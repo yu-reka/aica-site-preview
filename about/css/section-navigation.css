@@ -1,4 +1,4 @@
-/* Introduction-only chapter index: compact rail with hover contents. */
+/* 오른쪽 목차(알아보기 전용, 1200px 이상): 좁은 막대 · 올리거나 누르면 펼쳐짐(about.js) */
 .section-navigation { display: none; }
 
 @media (min-width: 1200px) {
@@ -39,12 +39,7 @@
   .section-navigation-top:hover { color: #fff; }
   /* #위치 도착: 넓은 화면 섹션 여백은 막대 없는 기준이라 공통 하위 메뉴 바 높이를 더함(좁은 화면 여백에는 전달본 섹션 이동 막대 높이가 이미 들어 있음) */
   .about-has-section-nav { --about-subnav: var(--sub); }
-  .about-has-section-nav .about-wrap { width: min(1120px, calc(100% - 288px)); margin-inline: auto; }
-  .about-has-section-nav .about-section { scroll-margin-top: 28px; }
+  .about-has-section-nav .about-wrap { width: min(1120px, calc(100% - 288px)); }
   .school-about.about-has-section-nav .scene-copy { left: 63%; width: 21%; }
-  }
-
-@media (prefers-reduced-motion: reduce) {
-  .section-navigation *, .section-navigation *::before { transition: none; }
 }
 

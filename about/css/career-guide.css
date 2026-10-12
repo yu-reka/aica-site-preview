@@ -1,16 +1,16 @@
-/* Three stages of career support, within the shared section width. */
+/* 취업 · 창업 지원(#career): 공통 본문 폭 안의 세 단계 카드 */
 .career-guide { padding: 80px 0 88px; background: #edf3ff; color: var(--about-ink); scroll-margin-top: 76px; }
 .career-guide-heading { text-align: center; }
 .school-about .career-guide-heading > p { max-width: 780px; margin: 16px auto 0; color: #657087; font-size: 16px; line-height: 1.85; word-break: keep-all; }
-.school-about .career-guide-heading h2 { font-size: clamp(28px, 3vw, 42px); line-height: 1.45; font-weight: 700; letter-spacing: -.045em; word-break: keep-all; }
+.school-about .career-guide-heading h2 { font-size: clamp(28px, 3vw, 42px); line-height: 1.45; letter-spacing: -.045em; }
 .career-guide-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; list-style: none; margin: 38px 0 0; padding: 0; }
 .career-stage-card { display: flex; flex-direction: column; min-width: 0; padding: 26px 22px 22px; border: 1px solid #e0e7f1; border-radius: 20px; background: #fff; box-shadow: 0 8px 22px #23447406; }
 .career-stage-copy { flex: 1; }
 .career-stage-label { display: inline-flex; padding: 6px 10px; border-radius: 7px; background: #eaf0ff; color: #244cd2; font-size: 12px; font-weight: 700; line-height: 1.5; }
-.school-about .career-guide .career-stage-copy h3 { margin: 18px 0 13px; font-family: 'School Paperlogy', 'School Pretendard', sans-serif; font-synthesis: none; color: #172641; font-size: 22px; font-weight: 900; line-height: 1.5; letter-spacing: -.04em; word-break: keep-all; }
-.school-about .career-stage-copy p { margin: 0; color: #657087; font-size: 14px; line-height: 1.85; word-break: keep-all; }
+.school-about .career-guide .career-stage-copy h3 { margin: 18px 0 13px; color: #172641; font-size: 22px; line-height: 1.5; letter-spacing: -.04em; }
+.school-about .career-stage-copy p { color: #657087; font-size: 14px; line-height: 1.85; word-break: keep-all; }
 .career-stage-media { flex: none; width: 100%; aspect-ratio: 1.55; margin-top: 22px; overflow: hidden; border-radius: 12px; background: #edf3fa; }
-.career-stage-media img, .career-stage-media svg { display: block; width: 100%; height: 100%; object-fit: cover; }
+.career-stage-media img, .career-stage-media svg { width: 100%; height: 100%; object-fit: cover; }
 .career-stage-media img { object-position: center; }
 .career-stage-media--channel { display: flex; flex-direction: column; justify-content: center; padding: 12px; background: linear-gradient(140deg, #ffe96a, #fee500); }
 .career-channel-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }

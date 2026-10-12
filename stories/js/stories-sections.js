@@ -1,14 +1,14 @@
 /* =========================================================
    선배들의 이야기 — 섹션별 추가 동작
-   (히어로 캐러셀 · 인터뷰 아카이브 · 영상 인터뷰 재생 · 프로젝트 넘김 등)
-   stories.js보다 먼저 불러옵니다(defer 순서)
+   히어로 캐러셀(#hx) · 전체 인터뷰 목록(#iv-all) · 영상 인터뷰 재생(#iv-7) · 프로젝트 넘김(#p-pr)
+   stories.js보다 먼저 불러옵니다(defer 순서. 디자이너 지정)
    글 수 숫자(전체 인터뷰 옆 개수 · 더 보기 남은 수)는 안 씀(2026-10-08 사용자 결정)
    ========================================================= */
 
+/* 히어로: 3초마다 다음 패널(아래 진행 바가 차는 동안). 마우스가 패널 줄 위에 있거나 터치하면 멈춤, 좌우 화살표 키 · 진행 바 · 접힌 패널로 고름 */
 (function(){
   var root=document.getElementById('hx');if(!root)return;
   var pn=[].slice.call(root.querySelectorAll('.hx-pn')),cur=0,t=null,hold=false,DUR=3000;
-  var reduce=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
   function go(i){cur=(i+pn.length)%pn.length;pn.forEach(function(p,k){var on=k===cur;p.classList.toggle('on',on);var tx=p.querySelector('.hx-tx');tx.inert=!on;tx.setAttribute('aria-hidden',on?'false':'true');p.querySelector('.hx-open').tabIndex=on?-1:0});if(hold)paint();run()}
   var segs=[].slice.call(root.querySelectorAll('.hx-segs button'));
   function paint(){segs.forEach(function(s,k){s.classList.toggle('done',k<cur);s.classList.remove('run');s.classList.toggle('hold',hold)});var s=segs[cur];if(s){void s.offsetWidth;s.classList.add('run')}}
@@ -19,10 +19,11 @@
   row.addEventListener('pointerenter',function(e){if(e.pointerType==='mouse'){hold=true;run()}});
   row.addEventListener('pointerleave',function(e){if(e.pointerType==='mouse'){hold=false;run()}});
   row.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse'){hold=true;run()}});
-    root.addEventListener('keydown',function(e){if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});
+  root.addEventListener('keydown',function(e){if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});
   go(0);
 })();
 
+/* 전체 인터뷰 목록: 위 추천 캐러셀 카드(a.iv)를 읽어 카드를 만듦 — 기수 거르기 · 그리드/리스트(고른 보기는 localStorage) · 6개씩 더 보기 */
 (function(){
   var sec=document.getElementById('iv-all');if(!sec)return;
   var src=[].slice.call(document.querySelectorAll('#p-iv .ivgrid a.iv'));
@@ -30,15 +31,14 @@
     var av=a.querySelector('.by .av'),c=av?parseInt(av.textContent,10):0,dur=a.querySelector('.ph .dur');
     return {a:a,c:c,v:!!dur,t:(a.querySelector('h3')||{}).textContent||'',s:(a.querySelector('.tb p')||{}).textContent||'',n:(a.querySelector('.by b')||{}).textContent||'',tr:(a.querySelector('.by em')||{}).textContent||''};
   });
-  var STEP=6,shown=STEP,coh='all',kind='all',view='grid';
+  var STEP=6,shown=STEP,coh='all',view='grid';
   try{view=localStorage.getItem('iva-view')||'grid'}catch(e){}
   var out=sec.querySelector('.iva-out'),more=sec.querySelector('.iva-more'),empty=sec.querySelector('.iva-empty');
-  function chip(box,val,label,curv){var b=document.createElement('button');b.type='button';b.textContent=label;b.setAttribute('aria-pressed',val===curv);b.onclick=function(){if(box.dataset.f==='coh')coh=val;else kind=val;shown=STEP;draw()};box.appendChild(b)}
+  function chip(box,val,label){var b=document.createElement('button');b.type='button';b.textContent=label;b.setAttribute('aria-pressed',val===coh);b.onclick=function(){coh=val;shown=STEP;draw()};box.appendChild(b)}
   function chips(){
-    var cb=sec.querySelector('[data-f=coh]'),kb=sec.querySelector('[data-f=kind]');cb.innerHTML='';if(kb)kb.innerHTML='';
-    chip(cb,'all','전체 기수',coh);
-    [['7','7기'],['6','6기'],['3-5','3–5기']].forEach(function(g){chip(cb,g[0],g[1],coh)});
-    if(kb){chip(kb,'all','글·영상',kind);chip(kb,'t','글',kind);chip(kb,'v','영상',kind);}
+    var cb=sec.querySelector('[data-f=coh]');cb.innerHTML='';
+    chip(cb,'all','전체 기수');
+    [['7','7기'],['6','6기'],['3-5','3–5기']].forEach(function(g){chip(cb,g[0],g[1])});
   }
   function card(d){
     var a=document.createElement('a');a.className='iva-c';a.href=d.a.getAttribute('href');
@@ -56,7 +56,7 @@
   function draw(){
     chips();
     sec.querySelectorAll('.iva-seg button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.v===view)});
-    var list=D.filter(function(d){return (coh==='all'||(coh==='3-5'?(d.c>=3&&d.c<=5):String(d.c)===coh))&&(kind==='all'||(kind==='v')===d.v)});
+    var list=D.filter(function(d){return coh==='all'||(coh==='3-5'?(d.c>=3&&d.c<=5):String(d.c)===coh)});
     out.dataset.view=view;out.innerHTML='';
     list.slice(0,shown).forEach(function(d){out.appendChild(card(d))});
     empty.hidden=list.length>0;
@@ -67,6 +67,7 @@
   draw();
 })();
 
+/* 영상 인터뷰 상세(#iv-7): 대표 그림의 재생 단추를 누르면 그 자리가 유튜브 플레이어로 */
 (function(){
   var box=document.querySelector('#iv-7 .ivvid');if(!box)return;var orig=box.innerHTML;
   function bind(){var b=box.querySelector('.ivplay');if(b)b.onclick=function(){

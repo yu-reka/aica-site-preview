@@ -5,7 +5,7 @@
    페이지에서 쓰는 법(check/index.html 참고):
      <html data-menu="메뉴 id">        지금 카테고리(홈은 생략). 헤더 메뉴에 현재 위치로 표시하고 그 아래 하위 메뉴 바(세부 카테고리)
                                        페이지에 자기 목차가 있어 바가 필요 없으면 data-subnav="off"
-                                       바 왼쪽 카테고리 제목(menu.js title)을 빼려면 data-subnav-title="off"(라이프: 첫 화면 히어로가 제목)
+                                       바 왼쪽 카테고리 제목은 menu.js title(없으면 제목 없이 목록만)
                                        글 상세처럼 하위 메뉴 주소에 없는 페이지는 data-sub="하위 메뉴 id"로 밑줄 위치를 정함
                                        (탭 화면 페이지는 페이지 스크립트가 data-sub를 바꾸고 Site.syncSubnav() 호출)
      <header class="site-header" id="siteHeader"></header>
@@ -89,7 +89,7 @@ const Site = (() => {
     if (!el.firstElementChild) el.innerHTML = `
     <div class="hdr-bar">
       <div class="wrap hdr-inner">
-        <a class="logo" href="${ROOT + SITE_HOME}" aria-label="인공지능사관학교 홈">${logo('<span class="logo-sub">광주</span>')}</a>
+        <a class="logo" href="${ROOT + SITE_HOME}" aria-label="인공지능사관학교 홈">${logo()}</a>
         <nav class="hdr-nav" aria-label="주 메뉴">
           <ul class="gnb">${SITE_MENU.map(m => `
             <li><a class="gnb-link" href="${href(m)}" data-top="${m.id}"${m === current ? ' aria-current="page"' : ''}>${m.label}</a>
@@ -117,7 +117,7 @@ const Site = (() => {
     </div>${subnavOn ? `
     <nav class="subnav" id="subnav" data-type="${current.type}" aria-label="${current.label} 세부 메뉴">
       <div class="wrap subnav-inner">
-        ${!current.title || html.dataset.subnavTitle === 'off' || current.children.some(c => c.label === current.title) ? '' : `<span class="subnav-title">${current.title}</span>`}
+        ${!current.title || current.children.some(c => c.label === current.title) ? '' : `<span class="subnav-title">${current.title}</span>`}
         <ul class="subnav-list" role="list">
           ${current.children.map(c => `<li><a href="${href(current, c)}" data-sub="${c.id}">${c.label}</a></li>`).join('')}
           <li class="subnav-indicator" aria-hidden="true"></li>

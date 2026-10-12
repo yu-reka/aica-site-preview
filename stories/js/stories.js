@@ -1,10 +1,10 @@
 /* =========================================================
    선배들의 이야기 — 움직임만(본문은 index.html에 있음)
-   시안 script.js의 네 부분(표지 슬라이더 · 인터뷰 캐러셀 · 기수 아카이브 페이지 넘김 · 기수 기록 창)을 그대로 옮기고
+   시안 script.js의 인터뷰 캐러셀 · 기수 아카이브(기수 버튼 · 교육과정 카드 · 페이지 넘김) · 기수 기록 창을 옮기고
    메뉴 주소(#reviews · #interviews · #projects · #cohorts)로 탭을 고르는 부분을 더함(탭 고르는 막대는 공통 하위 메뉴 바).
    탭 · 필터 · 글 창(.ov) · 인터뷰 상세(.ivd) · 프로젝트 상세(.pjd)는 시안처럼 CSS(라디오 · :target)만으로 움직임 —
    여기서는 키보드만 더함(창 Esc · 포커스 이동 · Tab 가둠, 숨은 라디오의 라벨 포커스 테두리. 2026-10-07).
-   히어로 캐러셀 · 전체 인터뷰 목록 · 영상 인터뷰 재생 · 프로젝트 넘김은 js/stories-sections.js.
+   히어로 캐러셀 · 전체 인터뷰 목록 · 영상 인터뷰 재생 · 프로젝트 넘김은 js/stories-sections.js(이 파일보다 먼저 불러옴).
    쓰기 버튼 · 쓰기 창(.wov)은 관리자 전용이라 뺐고(2026-10-08 사용자 결정), 글 수 숫자도 안 씀(같은 날 사용자 결정).
    ========================================================= */
 (function(){
@@ -13,7 +13,7 @@
   var reduce = typeof Site !== 'undefined' ? Site.reduce : !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
 
   /* ---------- 탭 주소 ----------
-     2뎁스는 헤더 밑 공통 하위 메뉴 바(site.js). 바 · 헤더 메뉴 · 표지 '읽기' 링크의 주소(#reviews · #interviews · #projects · #cohorts) → 탭 라디오.
+     2뎁스는 헤더 밑 공통 하위 메뉴 바(site.js). 바 · 헤더 메뉴 · 히어로 '읽기 · 보기' 링크의 주소(#reviews · #interviews · #projects · #cohorts) → 탭 라디오.
      오버레이 · 상세 주소(#r-… · #iv-… · #p-rev 등)는 고른 탭을 바꾸지 않아 닫아도 그대로(고른 탭이 없을 때만 아래 paneTab).
      하위 메뉴 바의 지금 항목은 고른 탭 기준(<html data-sub>) — 오버레이 주소가 붙어도 그대로
      옛 주소: 시안의 #go-… · 없앤 쓰기 창 #write-…(2026-10-08)로 오면 그 탭으로 */
@@ -61,7 +61,7 @@
   }
   paneTab();
   addEventListener('hashchange', function(){ fromHash(false); });
-  // 지금 주소와 같은 탭을 다시 고르면(하위 메뉴 바 · 헤더 · 모바일 메뉴 · 표지 링크) hashchange가 없으므로 직접 처리
+  // 지금 주소와 같은 탭을 다시 고르면(하위 메뉴 바 · 헤더 · 모바일 메뉴 · 히어로 링크) hashchange가 없으므로 직접 처리
   document.addEventListener('click', function(e){
     var a = e.target.closest('#siteHeader a[href], #drawer a[href], .stories-page a[href^="#"]');
     if (!a) return;
@@ -81,45 +81,10 @@
     if (document.readyState === 'complete') requestAnimationFrame(goPane); else addEventListener('load', goPane, { once: true });
   }
 
-  /* ---------- 표지 슬라이더 ---------- */
-  (function(){
-    var root = document.getElementById('cover'); if (!root) return;
-    var sl = [].slice.call(root.querySelectorAll('.sl')), seg = [].slice.call(root.querySelectorAll('.seg'));
-    var curEl = document.getElementById('cur'), ply = document.getElementById('ply'), cur = 0, t = null, DUR = 3000, hold = false;
-    var paused = reduce;
-    var P = '<svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1" y="0" width="3" height="10"/><rect x="6" y="0" width="3" height="10"/></svg>';
-    var R = '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 0l8 5-8 5z"/></svg>';
-    function go(i){
-      cur = (i + sl.length) % sl.length;
-      sl.forEach(function(s, k){ s.classList.toggle('on', k === cur); s.setAttribute('aria-hidden', k === cur ? 'false' : 'true'); s.inert = k !== cur; });
-      seg.forEach(function(b, k){
-        b.setAttribute('aria-current', k === cur ? 'true' : 'false'); b.classList.toggle('done', k < cur);
-        var bar = b.querySelector('i'); bar.style.display = 'none'; void bar.offsetWidth; bar.style.display = '';   // 진행 막대 애니메이션 다시 시작
-      });
-      curEl.textContent = '0' + (cur + 1); run();
-    }
-    function run(){ clearTimeout(t); var on = !paused && !hold; root.classList.toggle('playing', on); if (on) t = setTimeout(function(){ go(cur + 1); }, DUR); }
-    function setP(p){ paused = p; ply.innerHTML = p ? R : P; ply.setAttribute('aria-label', p ? '자동 넘김 시작' : '자동 넘김 멈추기'); go(cur); }
-    seg.forEach(function(b){ b.addEventListener('click', function(){ go(+b.dataset.i); }); });
-    document.getElementById('prev').onclick = function(){ go(cur - 1); };
-    document.getElementById('next').onclick = function(){ go(cur + 1); };
-    ply.onclick = function(){ setP(!paused); };
-    root.addEventListener('mouseenter', function(){ hold = true; run(); });
-    root.addEventListener('mouseleave', function(){ hold = false; run(); });
-    root.addEventListener('focusin', function(){ hold = true; run(); });
-    root.addEventListener('focusout', function(){ hold = false; run(); });
-    root.addEventListener('keydown', function(e){ if (e.key === 'ArrowRight') go(cur + 1); if (e.key === 'ArrowLeft') go(cur - 1); });
-    var x0 = null;
-    root.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; }, { passive: true });
-    root.addEventListener('touchend', function(e){ if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) go(cur + (dx < 0 ? 1 : -1)); x0 = null; });
-    setP(paused);
-  })();
-
-  /* ---------- 인터뷰 캐러셀(넘김 점은 HTML .ivdots) ---------- */
+  /* ---------- 인터뷰 캐러셀: 넘김 점(HTML .ivdots) · 옆 카드 누르기 · 좌우 화살표 키 · 끌기 ---------- */
   (function(){
     var band = page.querySelector('.ivband'); if (!band) return;
     var g = band.querySelector('.ivgrid'), cards = [].slice.call(g.querySelectorAll('.iv')), n = cards.length, cur = 0;
-    var L = band.querySelector('.ivnav.l'), R = band.querySelector('.ivnav.r');
     var dots = [].slice.call(band.querySelectorAll('.ivdots button'));
     dots.forEach(function(d, i){ d.onclick = function(){ go(i); }; });
     var POS = [{x:0,s:1.06,o:1},{x:.72,s:.84,o:1},{x:1.3,s:.7,o:.9},{x:1.7,s:.6,o:0}];
@@ -134,14 +99,13 @@
       cards.forEach(function(c, k){
         var off = ((k - cur) % n + n) % n; if (off > n / 2) off -= n;
         var a = Math.min(Math.abs(off), 3), p = POS[a], sg = off < 0 ? -1 : 1;
-        var t = 'translateX(' + Math.round(sg * p.x * w) + 'px) scale(' + p.s + ')';
-        c.style.setProperty('--t', t); c.style.transform = t; c.style.opacity = p.o; c.style.zIndex = 10 - a; c.style.pointerEvents = a > 2 ? 'none' : '';
+        c.style.transform = 'translateX(' + Math.round(sg * p.x * w) + 'px) scale(' + p.s + ')';
+        c.style.opacity = p.o; c.style.zIndex = 10 - a; c.style.pointerEvents = a > 2 ? 'none' : '';
         c.classList.toggle('on', off === 0); c.tabIndex = off === 0 ? 0 : -1; c.setAttribute('aria-hidden', a > 2 ? 'true' : 'false');
       });
       dots.forEach(function(d, k){ d.setAttribute('aria-current', k === cur ? 'true' : 'false'); });
     }
     cards.forEach(function(c, k){ c.addEventListener('click', function(e){ if (!c.classList.contains('on')) { e.preventDefault(); go(k); } }); });
-    L.onclick = function(){ go(cur - 1); }; R.onclick = function(){ go(cur + 1); };
     band.addEventListener('keydown', function(e){ if (e.key === 'ArrowLeft') go(cur - 1); else if (e.key === 'ArrowRight') go(cur + 1); });
     var sx = null;
     g.addEventListener('pointerdown', function(e){ sx = e.clientX; });
@@ -159,34 +123,27 @@
     '6': ['데이터 기술', 'AI 모델링', 'AI 기반 서비스', 'AI 플랫폼&인프라', 'AI 비즈니스']
   };
 
-  /* ---------- 기수 아카이브: 기수 필터 + 8개씩 페이지 넘김(번호 버튼은 걸린 글 수에 따라 만듦) ---------- */
+  /* ---------- 기수 아카이브: 위쪽 기수 버튼(전체 · 7기 · 6기 · 3–5기) + 8개씩 페이지 넘김(번호 버튼은 걸린 글 수에 따라 만듦) ----------
+     카드 기수는 클래스 c7 · c6 …(3–5기는 c3 · c4 · c5). 새 기수는 COHS와 위 STORIES_CURRICULUM에 함께 추가 */
   (function(){
     var arch = page.querySelector('#p-coh .arch'); if (!arch) return;
     var cards = [].slice.call(arch.querySelectorAll('.g2 > a.st')), nav = arch.querySelector('.cpager'), PER = 8, pg = 1;
-    var TAGS = ['입교식','OT','특강','기업탐방','중간발표회','해커톤','프로젝트','취업박람회','수료식','동문회'];
-    var COHS = ['7','6','3-5'], coh = 'all', tag = null, rail = page.querySelector('#p-coh .crail');
+    var COHS = ['7','6','3-5'], coh = 'all', rail = page.querySelector('#p-coh .crail');
     function cOf(c){ var m = c.className.match(/\bc(\d)\b/); return m ? m[1] : ''; }
-    function tOf(c){ return (c.className.match(/\bg(\d)\b/g) || []).map(function(x){ return TAGS[+x.slice(1)]; }); }
     function inC(c, k){ var v = cOf(c); return k === '3-5' ? (v === '3' || v === '4' || v === '5') : v === k; }
-    function match(c){ return (coh === 'all' || inC(c, coh)) && (!tag || tOf(c).indexOf(tag) > -1); }
-    // 거르기 버튼: 이름만(글 수 숫자는 안 씀, 2026-10-08 사용자 결정). 걸리는 글이 없는 태그만 누를 수 없게
-    function li(label, on, dis, fn, live){
+    function match(c){ return coh === 'all' || inC(c, coh); }
+    // 기수 버튼: 이름만(글 수 숫자는 안 씀, 2026-10-08 사용자 결정). 가장 최근 기수에 분홍 점(.live)
+    function li(label, on, fn, live){
       var l = document.createElement('li'), b = document.createElement('button'); b.type = 'button';
       b.textContent = label; if (live) { var d = document.createElement('span'); d.className = 'live'; d.textContent = '·'; b.appendChild(d); }
-      b.setAttribute('aria-pressed', on ? 'true' : 'false'); if (dis) b.disabled = true; b.onclick = fn; l.appendChild(b); return l;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false'); b.onclick = fn; l.appendChild(b); return l;
     }
     function drawRail(){
       if (!rail) return;
-      var cu = rail.querySelector('[data-group=coh]'), tu = rail.querySelector('[data-group=tag]');
-      cu.innerHTML = ''; if (tu) tu.innerHTML = '';
-      cu.appendChild(li('전체', coh === 'all', false, function(){ coh = 'all'; tag = null; update(); }));
-      COHS.forEach(function(k, i){ cu.appendChild(li(k.replace('-', '–') + '기', coh === k, false, function(){ coh = k; tag = null; update(); }, i === 0)); });
-      if (tu) TAGS.forEach(function(t){
-        var any = cards.some(function(c){ return (coh === 'all' || inC(c, coh)) && tOf(c).indexOf(t) > -1; });
-        tu.appendChild(li(t, tag === t, !any, function(){ tag = tag === t ? null : t; update(); }));
-      });
-      var rs = rail.querySelector('.creset'); if (rs) rs.hidden = !tag;
-      arch.dataset.coh = coh; if (tag) arch.dataset.tag = tag; else delete arch.dataset.tag;
+      var cu = rail.querySelector('[data-group=coh]');
+      cu.innerHTML = '';
+      cu.appendChild(li('전체', coh === 'all', function(){ coh = 'all'; update(); }));
+      COHS.forEach(function(k, i){ cu.appendChild(li(k.replace('-', '–') + '기', coh === k, function(){ coh = k; update(); }, i === 0)); });
     }
     function update(){ pg = 1; drawRail(); render(false); }
     function btn(label, to, opt){
@@ -200,12 +157,11 @@
     // 교육과정 고정 카드: 고른 기수의 교육과정 요약을 그리드 첫 칸에(1쪽에만, 그만큼 1쪽 기록은 하나 적게)
     var pin = document.createElement('div'); pin.className = 'cpin';
     var g2 = arch.querySelector('.g2'); g2.insertBefore(pin, g2.firstChild);
-    pin.addEventListener('click', function(e){ var b = e.target.closest('button[data-coh]'); if (!b) return; coh = b.dataset.coh; tag = null; update(); });
+    pin.addEventListener('click', function(e){ var b = e.target.closest('button[data-coh]'); if (!b) return; coh = b.dataset.coh; update(); });
     function drawPin(){
       var C = window.STORIES_CURRICULUM || {}, h = '', ks = Object.keys(C).sort(function(x, y){ return y - x; });
       var url = (typeof SITE_LINKS !== 'undefined' && SITE_LINKS.official && SITE_LINKS.official.url) || 'https://support.gj-aischool.or.kr/fo/main';
       var esc = function(t){ return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
-      pin.dataset.coh = coh;
       var chips = function(list){ return '<div class="cchips">' + list.map(function(t){ return '<span>' + esc(t) + '</span>'; }).join('') + '</div>'; };
       if (coh === 'all' && ks.length) {
         // 전체: 가장 최근 기수 트랙을 크게, 지난 기수는 아래 작은 단추(누르면 그 기수로 거름) — 기수가 늘어도 카드 높이 그대로
@@ -234,7 +190,6 @@
         if (y < window.scrollY) window.scrollTo({ top: y, behavior: reduce ? 'instant' : 'smooth' });
       }
     }
-    if (rail && rail.querySelector('.creset')) rail.querySelector('.creset').onclick = function(){ tag = null; update(); };
     drawRail(); render(false);
   })();
 
@@ -289,7 +244,7 @@
     document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && m.classList.contains('on')) close(); });
     arch.addEventListener('click', function(e){
       var c = e.target.closest('a.st'); if (!c || !arch.contains(c)) return;
-      e.preventDefault(); last = c; m.classList.remove('is-cur');
+      e.preventDefault(); last = c;
       var ph = c.querySelector('.ph'), media = m.querySelector('.media'); media.innerHTML = '';
       var vis = ph && ph.querySelector('img,svg'); if (vis) media.appendChild(vis.cloneNode(true));
       var dur = ph && ph.querySelector('.dur');

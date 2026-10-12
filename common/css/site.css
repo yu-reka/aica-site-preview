@@ -17,7 +17,7 @@
    상단 헤더 / GNB — 모든 페이지 같은 어두운 막대
    ========================================================= */
 .site-header{position:fixed;inset:0 0 auto 0;z-index:50;padding-top:env(safe-area-inset-top,0px);color:var(--ink);
-  --logo-w:187px;                                      /* 로고(심볼 + 이름 + 광주) 칸 폭: 글꼴이 늦게 와도 GNB가 안 움직이게 고정(Pretendard에서 실제 186.9px) */
+  --logo-w:155px;                                      /* 로고(심볼 + 이름) 칸 폭: 글꼴이 늦게 와도 GNB가 안 움직이게 고정(Pretendard에서 실제 154.5px. 2026-10-12 '광주' 뺌) */
   --gnb-x:calc(var(--logo-w) + 40px + 12px + 22px)}    /* GNB 첫 메뉴(인사교 알아보기) 글자 시작 = 정렬선 + 로고 + 칸 사이(.hdr-inner gap) + .gnb 왼쪽 여백 + 링크 안쪽 여백. 하위 메뉴 바 첫 항목도 여기 */
 .site-header:empty{height:calc(env(safe-area-inset-top,0px) + var(--hdr));background:var(--header-bg)}
 .site-header .hdr-bar{position:relative;z-index:2;height:var(--hdr);background:color-mix(in srgb,var(--header-bg) 92%,transparent);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid rgba(255,255,255,.08);color:var(--on-header);transition:border-color .3s,background .3s}
@@ -30,7 +30,6 @@
 .logo-mark{width:31px;height:26px;flex:none;background:url("../assets/brand/symbol-blue.png") center/contain no-repeat}
 .hdr-bar .logo-mark{background-image:url("../assets/brand/symbol-white.png")}
 .logo-text{font-weight:700;font-size:17px;letter-spacing:-.03em}
-.logo-sub{font-size:12px;color:var(--header-muted);font-weight:500;margin-left:2px}   /* 헤더 막대에만 있음 */
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]) .logo-mark{background-image:url("../assets/brand/symbol-white.png")}
 }

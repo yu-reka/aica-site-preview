@@ -55,7 +55,7 @@ addEventListener('hashchange', route);
 
 /* 헤더 GNB · 모바일 메뉴 · 푸터의 「인사교 라이프」(주소 없는 life/index.html)를 이 페이지 안에서 누르면 히어로 페이지로:
    공통 site.js가 #위치를 지우며 hashchange를 알려 주므로 위 route()가 받음(따로 처리 없음).
-   하위 메뉴 바 왼쪽 제목(「인사교 Real Life」)은 <html data-subnav-title="off">로 공통 틀이 그리지 않음 */
+   하위 메뉴 바 왼쪽 제목은 menu.js 라이프 항목에 title이 없어 그리지 않음 */
 
 /* 시안10-B v7: 히어로 패널 — 마우스를 올리거나 초점이 가면 그 패널을 펼침(961px 이상). 마지막에 고른 패널이 펼쳐진 채로 남음 */
 (function(){

@@ -1,79 +1,60 @@
-/* 첫 화면: 사진 배경 · 큰 제목 · 안내 문구 · 안내 카드 · 이야기 카드 · 스크롤 표시 */
+/* 첫 화면: 사진 배경 · 큰 제목 · 안내 문구 · 안내 카드 · 스크롤 표시 (움직이는 장면 없이 사진 한 장으로 고정) */
 
 /* 기본 배치 */
-.immersive-hero { overflow: hidden; background: #092787; color: #fff; isolation: isolate; top: 0; height: 100svh; min-height: 680px; max-height: none; overflow: clip; }
+.immersive-hero { position: relative; overflow: hidden; background: #092787; color: #fff; isolation: isolate; height: 100svh; min-height: 680px; overflow: clip; }
 .scene-background { position: absolute; inset: -3%; background: #102d80 center/cover no-repeat; z-index: -3; transform: scale(1.02); }
 .scene-shade { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(180deg,#030c271c,transparent 30%,#02091808 70%,#030d2b30); }
 .hero-masthead { position: absolute; line-height: .82; pointer-events: none; }
 .hero-masthead > span { text-align: center; font-weight: 600; letter-spacing: .5px; }
 .scene-copy { position: absolute; text-shadow: 0 2px 25px #06194150; left: 65%; width: 29%; top: 43%; }
-.scene-copy > .eyebrow { font-family: inherit; font-size: 12px; letter-spacing: .3px; margin-bottom: 19px; color: #ccdcff; }
+.scene-copy > .eyebrow { font-family: inherit; letter-spacing: .3px; margin-bottom: 19px; }
 .scene-copy p { line-height: 1.8; }
 .glass-note { position: absolute; left: 3%; bottom: 40px; width: 238px; padding: 23px; background: #c8e4ff15; border: 1px solid #ffffff45; backdrop-filter: blur(12px); transition: background .25s; }
 .glass-note:hover { background: #c8e4ff27; }
 .glass-note > .eyebrow { font-size: 10px; letter-spacing: .7px; opacity: .7; }
-.glass-note > strong { display: block; font-size: 23px; line-height: 1.4; letter-spacing: -.6px; font-weight: 600; margin: 17px 0 28px; }
+.glass-note > strong { display: block; font-size: 23px; line-height: 1.4; margin: 17px 0 28px; }
 .glass-note > div { border-top: 1px dashed #ffffff73; padding-top: 16px; display: flex; justify-content: space-between; align-items: end; }
 .glass-note > div > span:first-child { font-size: 11px; line-height: 1.6; color: #dae2f1; }
 .glass-note > div > span:last-child { font-size: 27px; }
 .scene-scroll { position: absolute; left: 50%; transform: translateX(-50%); bottom: 29px; display: flex; align-items: center; gap: 11px; font: 10px Arial,sans-serif; letter-spacing: 1px; white-space: nowrap; }
 .scene-scroll .down-circle { border-color: #ffffff61; }
-@media (max-width: 1100px) {
-  .glass-note { width: 214px; bottom: 40px; }
-  .glass-note > strong { font-size: 21px; }
-}
-@media (max-width: 760px) {
-  .hero-masthead > span { text-align: left; letter-spacing: 1px; }
-  .scene-background { background-position: 43% center; }
-  .scene-copy p { line-height: 1.7; }
-  .glass-note > .eyebrow { font-size: 8px; }
-  .glass-note > div { padding-top: 10px; }
-  .glass-note > div > span:last-child { font-size: 20px; }
-  .scene-scroll .down-circle { font-size: 13px; width: 21px; height: 21px; }
-}
 
 /* 화면 폭별 배치 */
 .scene-runway { position: relative; }
 .glass-note, .scene-scroll, .scene-copy, .hero-masthead { z-index: 1; }
-@media (min-width: 1200px) {
-  .scene-copy { left: 65%; }
-}
 @media (max-width: 1100px) and (min-width: 761px) {
-  .scene-copy { left: 66%; width: 28%; top: 43%; }
+  .scene-copy { left: 66%; width: 28%; }
   .glass-note { width: 200px; padding: 19px; }
   .glass-note > strong { font-size: 20px; }
 }
 @media (max-width: 760px) {
-  .immersive-hero { height: 100svh; min-height: 760px; }
+  .immersive-hero { min-height: 760px; }
+  .scene-background { background-position: 43% center; }
+  .scene-shade { background: linear-gradient(180deg,transparent 40%,#03123542 65%,#03123560); }
+  .hero-masthead > span { text-align: left; letter-spacing: 1px; }
   .scene-copy { top: 53%; max-width: 85%; }
   .scene-copy .eyebrow { font-size: 10px; margin-bottom: 10px; }
+  .scene-copy p { line-height: 1.7; }
   .glass-note { left: 7%; bottom: 67px; width: 178px; padding: 13px; }
-  .glass-note > strong { font-size: 14px; line-height: 1.4; margin: 9px 0 11px; }
+  .glass-note > .eyebrow { font-size: 8px; }
+  .glass-note > strong { font-size: 14px; margin: 9px 0 11px; }
+  .glass-note > div { padding-top: 10px; }
   .glass-note > div > span:first-child { font-size: 8px; }
+  .glass-note > div > span:last-child { font-size: 20px; }
   .scene-scroll { bottom: 24px; left: 7%; transform: none; }
-  .scene-shade { background: linear-gradient(180deg,transparent 40%,#03123542 65%,#03123560); }
+  .scene-scroll .down-circle { font-size: 13px; width: 21px; height: 21px; }
 }
-
-/* 움직이는 장면 대신 사진 한 장으로 고정 */
-.scene-still .scene-runway { height: auto; min-height: 0; }
-.scene-still .immersive-hero { position: relative; }
-.scene-still .scene-background { opacity: 1; transition: none; will-change: auto; }
-@media (max-width: 380px) {
-  .scene-still .scene-copy { top: auto; bottom: 255px; }
-  .scene-still .glass-note { width: 49%; }
-  }
 
 /* 알아보기 글꼴 · 사진 · 위치 */
 .school-about .hero-masthead { top: 100px; left: 3%; right: 3%; }
 .school-about .hero-masthead > span { display: block; margin-bottom: 20px; font-family: 'School Pretendard', sans-serif; font-size: 12px; }
-.school-about .hero-masthead h1 { font-family: 'School Paperlogy', 'School Pretendard', sans-serif; font-size: clamp(42px, 11.3vw, 220px); font-weight: 900; font-synthesis: none; letter-spacing: -.03em; line-height: 1.05; white-space: nowrap; text-align: center; color: #fff; }
+.school-about .hero-masthead h1 { font-size: clamp(42px, 11.3vw, 220px); letter-spacing: -.03em; line-height: 1.05; white-space: nowrap; text-align: center; color: #fff; }
 .school-about .scene-background { background-image: url('../assets/hero-cap-enlarged-fit-desktop-2x.webp'); filter: brightness(.82) saturate(.78); }
-.school-about .scene-copy h2 { font-size: clamp(24px, 2.2vw, 38px); font-weight: 900; letter-spacing: -.045em; line-height: 1.5; color: #fff; }
+.school-about .scene-copy h2 { font-size: clamp(24px, 2.2vw, 38px); letter-spacing: -.045em; line-height: 1.5; color: #fff; }
 .school-about .scene-copy p { margin-top: 23px; color: #d9e5ff; font-size: 14px; }
 .school-about .scene-copy .eyebrow { color: #d5e3ff; }
 .school-about .glass-note strong { font-family: 'School Pretendard', sans-serif; font-weight: 900; letter-spacing: -.04em; }
-.school-about .scene-scroll { font-family: 'School Pretendard', sans-serif; }
-.school-about .scene-scroll { font-size: 12px; }
+.school-about .scene-scroll { font-family: 'School Pretendard', sans-serif; font-size: 12px; }
 @media (max-width: 800px) {
   .school-about .hero-masthead h1 { font-size: 11.4vw; }
   .school-about .hero-masthead { left: 4%; right: 4%; }
@@ -86,19 +67,16 @@
   .school-about .scene-copy { left: 67%; width: 30%; }
 }
 @media (max-width: 600px) {
-  .school-about .immersive-hero { min-height: 760px; }
   .school-about .scene-background { inset: 0; transform: none; background-image: url('../assets/hero-cap-enlarged-fit-mobile-2x.webp'); background-size: auto calc(100% + 280px); background-position: center bottom; }
-  .school-about .hero-masthead { top: 103px; left: 4%; right: 4%; }
+  .school-about .hero-masthead { top: 103px; }
   .school-about .hero-masthead > span { font-size: 9px; margin-bottom: 19px; }
-  .school-about .hero-masthead h1 { font-size: 11.4vw; letter-spacing: -.03em; }
   .school-about .scene-copy { top: auto; bottom: 275px; left: 7%; width: 86%; max-width: 86%; }
   .school-about .scene-copy h2 { font-size: 27px; line-height: 1.45; }
-  .school-about .scene-copy p { font-size: 12px; margin-top: 12px; }
-  .school-about .glass-note { left: 7%; bottom: 67px; width: 49%; padding: 14px; }
+  .school-about .scene-copy p { margin-top: 12px; }
+  .school-about .glass-note { width: 49%; padding: 14px; }
   .school-about .glass-note strong { font-size: 16px; line-height: 1.45; }
   .school-about .glass-note > div { margin-top: 14px; padding-top: 12px; }
   .school-about .glass-note > div > span:first-child { font-size: 9px; }
-  .school-about .glass-note .eyebrow { font-size: 8px; }
   .school-about .scene-scroll { font-size: 10px; }
 }
 @media (max-width: 360px) {

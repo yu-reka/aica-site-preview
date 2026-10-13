@@ -19,9 +19,16 @@
   <script src="../common/js/menu.js" defer></script>
   <script src="../common/js/site.js" defer></script>
   <script src="script.js" defer></script>
+  <script src="sec-float.js" defer></script>
 </head>
 <body>
   <header class="site-header" id="siteHeader"></header>
+  <nav class="sec-float" aria-label="인사교 알아보기 목차"><ul>
+    <li><button type="button" class="sf-btn is-active" data-jump="intro" aria-current="true"><i class="sf-slash" aria-hidden="true"></i><span class="sf-label">인사교 소개</span></button></li>
+    <li><button type="button" class="sf-btn" data-jump="learning"><i class="sf-slash" aria-hidden="true"></i><span class="sf-label">무엇을 배우나요?</span></button></li>
+    <li><button type="button" class="sf-btn" data-jump="activities"><i class="sf-slash" aria-hidden="true"></i><span class="sf-label">어떤 활동을 하나요?</span></button></li>
+    <li><button type="button" class="sf-btn" data-jump="career"><i class="sf-slash" aria-hidden="true"></i><span class="sf-label">취업·창업 지원</span></button></li>
+  </ul></nav>
   <nav class="section-navigation" aria-label="인사교 알아보기 페이지 목차">
     <button class="section-navigation-trigger" type="button" aria-label="인사교 알아보기 목차 보기" aria-expanded="false" aria-controls="section-navigation-panel">
       <span class="section-navigation-ticks" aria-hidden="true"><i class="is-current"></i><i></i><i></i><i></i></span>

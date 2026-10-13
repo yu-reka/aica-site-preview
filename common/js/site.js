@@ -97,22 +97,12 @@ const Site = (() => {
           </ul>
         </nav>
         <div class="hdr-util">
-          <button class="icon-btn" id="searchBtn" aria-label="검색 열기" aria-expanded="false" aria-controls="searchPanel">${ICON.search}</button>
           <a class="official-link" ${ext('official')}>공식 홈페이지</a>
           <a class="btn-apply" ${ext('apply')}>지원하기</a>
           <button class="icon-btn menu-toggle" id="menuBtn" aria-label="전체 메뉴 열기" aria-expanded="false" aria-controls="drawer">
             <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
           </button>
         </div>
-      </div>
-    </div>
-    <div class="search-panel" id="searchPanel">
-      <div class="wrap">
-        <form role="search" method="get">
-          <input id="q" name="q" type="search" aria-label="사이트 검색" placeholder="궁금한 걸 검색해 보세요. 예) 비전공자, 월세, 점심" data-placeholder-short="예) 비전공자, 월세, 점심">
-          <button class="icon-btn" type="submit" aria-label="검색">${ICON.search}</button>
-        </form>
-        <div class="search-tags">${SITE_SEARCH_TAGS.map(t => `<a href="${withQuery(href(t.menu, t.sub), t.query)}">${t.label}</a>`).join('')}</div>
       </div>
     </div>${subnavOn ? `
     <nav class="subnav" id="subnav" data-type="${current.type}" aria-label="${current.label} 세부 메뉴">
@@ -306,6 +296,7 @@ const Site = (() => {
   }
   /* 검색 패널. 통합 검색은 개발 단계에서 연결 */
   function setSearch(on){
+    if (!$('#searchPanel')) return;   // 헤더 검색 뺌(2026-10-13)
     $('#searchPanel').classList.toggle('is-open', on);
     $('#searchBtn').setAttribute('aria-expanded', String(on));
     if (on) { setMega(false); setTimeout(() => $('#q').focus(), 30); }
@@ -368,9 +359,9 @@ const Site = (() => {
     });
     gnb.addEventListener('focusout', e => { if (!gnb.contains(e.relatedTarget)) setMega(false); });
 
-    $('#searchBtn').addEventListener('click', () => setSearch(!searchOpen()));
+    $('#searchBtn')?.addEventListener('click', () => setSearch(!searchOpen()));
     // 검색: 서버가 폼에 검색 주소(action)를 넣었으면 그대로 제출(?q=검색어), 없으면 안내만
-    $('#searchPanel form').addEventListener('submit', e => {
+    $('#searchPanel form')?.addEventListener('submit', e => {
       if (e.currentTarget.getAttribute('action')) return;
       e.preventDefault(); toast('통합 검색은 개발 단계에서 연결돼요');
     });

@@ -4,8 +4,8 @@
 .school-about .site-header .subnav { transition: transform .35s var(--ease); }
 .school-about .site-header:not(.is-scrolled) .subnav { transform: translateY(-100%); visibility: hidden; transition: transform .35s var(--ease), visibility 0s .35s; }
 .about-paper { background: var(--about-paper); }
-.about-section { padding-bottom: 108px; }
-.micro-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: .025em; color: var(--about-blue); }
+.about-section { padding-top: 100px; padding-bottom: 108px; }
+.micro-label { display: block; margin-bottom: 17px; font-size: 11px; font-weight: 700; letter-spacing: .025em; color: var(--about-blue); }
 @media (max-width: 1100px) {
   .about-wrap { width: calc(100% - 72px); }
 }

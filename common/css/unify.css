@@ -1,0 +1,890 @@
+/* =========================================================
+   디자인 통일 v1 (2026-10-12): '지원 전 체크'를 기준으로 페이지별 색 · 글꼴 · 섹션 제목을 공통 토큰에 맞춤
+   각 페이지 CSS 다음, 맨 마지막에 불러옵니다(알아보기 · 선배들의 이야기 · 라이프).
+   - 메인 색: --blue(#1F4ED8) 하나로. 어두운 바탕 위 · 진한 글자를 얹는 밝은 강조는 --blue-bright
+   - 강조 노랑: --cta(#FEE500)
+   - 글꼴: 본문 --ff-text(Paperlogy Text), 큰 제목 · 숫자 --ff-title(Giants)
+   - 섹션 제목(h2): 체크의 .s-head h2와 같은 크기 · 굵기 · 자간
+   손대지 않은 것: 분류 · 기수 색 점(기능색), 일러스트 파스텔, 랜딩(홈)의 네온 첫 화면
+   ========================================================= */
+
+:root{
+  --blue-bright:#7C9CFF;   /* tokens.css 다크 모드의 --blue와 같은 값. 진한 글자(--ink) 대비 5.8 : 1, 어두운 바탕 위 글자로도 씀 */
+}
+
+/* ---------- 선배들의 이야기 ---------- */
+.stories-page{
+  --g900:var(--ink); --g600:var(--graphite); --g300:var(--line); --g50:var(--paper);
+  --pri:var(--blue);
+  --l-blue:var(--blue); --l-eb:var(--blue);
+  --num:var(--ff-title);   /* 숫자: Anton → Giants(체크와 같게) */
+}
+.stories-page .sh h2{
+  font-family:var(--ff-text);
+  font-size:clamp(28px,2.8vw,38px);
+  font-weight:700;
+  letter-spacing:-.035em;
+  line-height:1.25;
+  color:var(--ink);
+}
+
+/* ---------- 인사교 라이프 ---------- */
+.life-page{
+  --nc:var(--blue-bright);   /* 청록 #6FC3D1 → 밝은 파랑 */
+  --wkd:var(--blue);         /* 진한 청록 #1B7686 → 메인 파랑 */
+  --anton:var(--ff-title);   /* 숫자 · 영문 라벨: Anton → Giants */
+  --next-accent:var(--header-accent);   /* '다음으로' 띠 화살표: 청록 → 다른 페이지와 같은 기본값 */
+}
+.life-page .sh h2,
+.life-page #pg-way .sh h2{
+  font-family:var(--ff-text);
+  font-size:clamp(28px,2.8vw,38px);
+  font-weight:700;
+  letter-spacing:-.035em;
+  line-height:1.25;
+  color:var(--ink);
+}
+
+/* ---------- 인사교 알아보기 ---------- */
+.school-about{
+  --about-blue:var(--blue);
+  --about-ink:var(--ink);
+  --about-muted:var(--graphite);
+  --about-line:var(--line);
+  --about-paper:var(--paper);
+}
+:root.school-about{background:var(--paper);color:var(--ink)}
+.school-about body{font-family:var(--ff-text);letter-spacing:0}
+/* 작은 제목 · 카드 제목: 'School Paperlogy' 900 → 본문 글꼴 굵게(체크 h2와 같은 결) */
+.school-about .about-paper :is(h2, h3, h4, h5, h6):not(#why-school *),
+.school-about .scene-copy h2,
+.school-about main#main .about-paper :is(.intro-platform-features article, .partner-node, .eligibility-condition, .why-school-card, .common-course-card, .education-phase-band, .daily-routine-agenda li, .activity-project-card, .career-stage-card) :is(h3, h4){
+  font-family:var(--ff-text);
+  font-weight:700;
+}
+/* 큰 제목은 Giants 그대로(체크의 큰 단어와 같은 글꼴) */
+.school-about .about-paper h2:not(#why-school *):not(.common-course-card *){
+  font-family:var(--ff-text);
+  font-size:clamp(28px,2.8vw,38px);
+  font-weight:700;
+  letter-spacing:-.035em;
+  line-height:1.25;
+}
+.school-about a:focus-visible,
+.school-about button:focus-visible,
+.school-about summary:focus-visible{outline-color:var(--blue)}
+
+/* =========================================================
+   히어로 통일(10-12): 내용형 페이지(선배들의 이야기 · 인사교 라이프)
+   흰 바탕 · 단독 첫 화면(주소 없이 들어오면 히어로만, 카드 · 하위 메뉴를 누르면 그 화면으로)
+   왼쪽 큰 제목 · 설명 · 한눈에 숫자, 오른쪽 펼침 카드(마우스 · 초점이 가면 펼침). 값 · 움직임은 라이프(.lh · .lhp) 그대로
+   ========================================================= */
+
+/* ---------- 인사교 라이프 ---------- */
+.life-page .lh{background:var(--surface);background-image:none}
+.life-page .lh h1{margin-top:0}
+.life-page .lh h1 b{color:var(--blue);font-weight:inherit}
+
+/* ---------- 선배들의 이야기: 크기 단위 --lr(라이프와 같은 값 · 구간) ---------- */
+.stories-page{--lr:clamp(9.2px,.78vw,10px)}
+@media (max-width:1024px){.stories-page{--lr:clamp(7.8px,.92vw,9.2px)}}
+@media (max-width:600px){.stories-page{--lr:clamp(8.2px,2.7vw,11px)}}
+
+/* 단독 첫 화면: js/hero-page.js가 주소 없을 때 main에 .is-home을 붙임 */
+.stories-page.is-home .tr,
+.stories-page.is-home .tgt2,
+.stories-page.is-home .st-main{display:none!important}
+.stories-page:not(.is-home) .hx{display:none}
+
+/* 히어로 틀 (라이프 .lh · .lh-g와 같게) */
+.stories-page .hx{position:relative;display:flex;flex-direction:column;min-height:calc(100svh - var(--hdr) - var(--sub) - env(safe-area-inset-top,0px));background:var(--surface);padding:0}
+.stories-page .hx-in{flex:1;width:100%;max-width:var(--wrap);margin:0 auto;padding:var(--hero-y) var(--gutter);display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:calc(3.2*var(--lr)) calc(5.6*var(--lr));align-items:center;align-content:center}
+.stories-page .hx-head{margin:0}
+.stories-page .hx-ssul{display:block;margin:0;font:700 clamp(calc(4.8*var(--lr)),5.4vw,calc(8.8*var(--lr)))/1.08 var(--ff-title);letter-spacing:-.01em;color:var(--ink)}
+.stories-page .hx-ssul b{color:var(--blue);font-weight:inherit}
+.stories-page .hx-s{margin:calc(1.4*var(--lr)) 0 0;font-size:calc(1.7*var(--lr));line-height:1.7;color:var(--graphite);max-width:36ch}
+.stories-page .hx-f{list-style:none;padding:0;margin:calc(2.4*var(--lr)) 0 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink)}
+.stories-page .hx-f li{display:flex;flex-direction:column;gap:calc(.2*var(--lr));padding:calc(1.2*var(--lr)) calc(.4*var(--lr)) 0;font-size:calc(1.25*var(--lr));font-weight:700;line-height:1.4;color:var(--graphite)}
+.stories-page .hx-f li+li{border-left:1px solid var(--line);padding-left:calc(1.2*var(--lr))}
+.stories-page .hx-f b{font-family:var(--ff-title);font-size:calc(2.2*var(--lr));line-height:1.1;color:var(--blue);letter-spacing:.02em}
+@media (max-width:960px){.stories-page .hx-in{grid-template-columns:1fr}}
+
+/* 펼침 카드: life.css의 .lh-p · .lhp · .lh-hint 규칙을 그대로 옮김(이름만 .hx-p · .hxp · .hx-hint) */
+.stories-page .hx-hint{display:none}
+.stories-page .hx-p{display:flex;gap:12px;height:clamp(380px,calc(100svh - var(--hdr) - var(--sub) - 2 * var(--hero-y) - 40px),640px)}
+.stories-page .hxp{position:relative;flex:1 1 0;min-width:0;overflow:hidden;border-radius:var(--r-card);background:var(--ink);color:#fff;isolation:isolate;transition:flex-grow .6s cubic-bezier(.22,.61,.36,1),box-shadow .3s}
+.stories-page .hxp.is-open{flex-grow:3;box-shadow:0 24px 48px -28px rgba(20,35,63,.55)}
+.stories-page .hxp-m{position:absolute;inset:0;z-index:-1;display:grid}
+.stories-page .hxp-i{display:block;min-width:0;min-height:0;background-size:cover;background-position:center;filter:saturate(.55) brightness(.78);transition:filter .5s,transform 1.2s cubic-bezier(.22,.61,.36,1)}
+.stories-page .hxp-m:has(.hxp-i+.hxp-i){grid-template-columns:1.25fr 1fr;grid-template-rows:1fr 1fr;gap:3px;background:var(--ink)}
+.stories-page .hxp-m:has(.hxp-i+.hxp-i) .hxp-i:first-child{grid-row:1/3}
+.stories-page .hxp.is-open .hxp-i{filter:none;transform:scale(1.03)}
+.stories-page .hxp::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(10,22,28,.45) 0%,rgba(10,22,28,0) 22%,rgba(10,22,28,.25) 40%,rgba(10,22,28,.78) 62%,rgba(10,22,28,.93) 100%);pointer-events:none}
+.stories-page .hxp-n{position:absolute;left:calc(1.8*var(--lr));top:calc(1.4*var(--lr));font-family:var(--ff-title);font-size:calc(3.4*var(--lr));line-height:1;color:var(--blue-bright);text-shadow:0 2px 12px rgba(0,0,0,.35)}
+.stories-page .hxp-c{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;padding:calc(1.8*var(--lr))}
+.stories-page .hxp-c em{font-style:normal;font-family:var(--ff-title);font-size:calc(1.2*var(--lr));letter-spacing:.14em;color:var(--blue-bright)}
+.stories-page .hxp-c b{margin-top:calc(.4*var(--lr));font-size:calc(2.2*var(--lr));font-weight:700;line-height:1.25;letter-spacing:-.02em;text-wrap:balance}
+.stories-page .hxp-x{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .5s cubic-bezier(.22,.61,.36,1),opacity .35s}
+.stories-page .hxp-xi{min-height:0;overflow:hidden;display:flex;flex-direction:column}
+.stories-page .hxp.is-open .hxp-x{grid-template-rows:1fr;opacity:1;transition-delay:0s,.15s}
+.stories-page .hxp-d{margin-top:calc(.8*var(--lr));font-size:calc(1.45*var(--lr));color:rgba(255,255,255,.86)}
+.stories-page .hxp-l{display:flex;flex-direction:column;gap:calc(.5*var(--lr));margin-top:calc(1.4*var(--lr));padding-top:calc(1.4*var(--lr));border-top:1px solid rgba(255,255,255,.22)}
+.stories-page .hxp-l span{position:relative;padding-left:calc(1.6*var(--lr));font-size:calc(1.35*var(--lr));font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stories-page .hxp-l span::before{content:"";position:absolute;left:0;top:.62em;width:calc(.6*var(--lr));height:calc(.6*var(--lr));border-radius:50%;background:var(--blue-bright)}
+.stories-page .hxp-go{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;margin-top:calc(2*var(--lr));height:40px;padding:0 16px 0 20px;border-radius:999px;background:var(--blue-bright);color:var(--ink);font-size:14.5px;font-weight:700}
+.stories-page .hxp-go svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s}
+.stories-page .hxp:hover .hxp-go svg{transform:translateX(3px)}
+.stories-page .hxp:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+@media (min-width:961px){
+  .stories-page .hx-hint{display:flex;align-items:center;gap:10px;margin-top:calc(2*var(--lr));font-size:calc(1.25*var(--lr));font-weight:700;color:var(--blue)}
+  .stories-page .hx-hint i{width:28px;height:1.5px;background:currentColor;position:relative}
+  .stories-page .hx-hint i::after{content:"";position:absolute;right:0;top:-3.5px;width:7px;height:7px;border:solid currentColor;border-width:1.5px 1.5px 0 0;transform:rotate(45deg)}
+}
+@media (max-width:960px){
+  .stories-page .hx-p{flex-direction:column;height:auto;gap:10px}
+  .stories-page .hxp,.stories-page .hxp.is-open{flex:none;height:clamp(116px,17svh,160px);box-shadow:none}
+  .stories-page .hxp-i,.stories-page .hxp.is-open .hxp-i{filter:saturate(.8) brightness(.8);transform:none}
+  .stories-page .hxp::after{background:linear-gradient(90deg,rgba(10,22,28,.88) 0%,rgba(10,22,28,.55) 55%,rgba(10,22,28,.15) 100%)}
+  .stories-page .hxp-n{left:auto;right:calc(1.6*var(--lr));top:calc(1.2*var(--lr));font-size:calc(2.6*var(--lr))}
+  .stories-page .hxp-c{top:0;justify-content:center;padding:calc(1.4*var(--lr)) calc(1.8*var(--lr))}
+  .stories-page .hxp-x,.stories-page .hxp.is-open .hxp-x{grid-template-rows:1fr;opacity:1}
+  .stories-page .hxp-d{margin-top:calc(.4*var(--lr));font-size:calc(1.3*var(--lr))}
+  .stories-page .hxp-l,.stories-page .hxp-go{display:none}
+  .stories-page .hxp-c b::after{content:" →";color:var(--blue-bright)}
+}
+@media (prefers-reduced-motion:reduce){
+  .stories-page .hxp,.stories-page .hxp-x,.stories-page .hxp-i{transition:none}
+}
+/* 카드 그림: 라이프는 배경 그림, 여기는 <img> · <svg> */
+.stories-page .hxp-i{width:100%;height:100%;object-fit:cover}
+/* 카드가 넷이라 접힌 카드가 라이프보다 좁음: 접힌 카드의 영문 라벨 자간만 줄임 */
+.stories-page .hxp:not(.is-open) .hxp-c em{letter-spacing:.06em;white-space:nowrap}
+
+
+/* 카드 번호(01 · 02 …)가 밝은 사진 위에서도 보이게(10-12): 카드 윗부분만 살짝 어둡게, 번지는 그림자 없앰. 라이프 · 이야기 같은 값 */
+.life-page .lhp::after,
+.stories-page .hxp::after{background:linear-gradient(180deg,rgba(10,22,28,.8) 0%,rgba(10,22,28,.62) 12%,rgba(10,22,28,.14) 26%,rgba(10,22,28,.25) 40%,rgba(10,22,28,.78) 62%,rgba(10,22,28,.93) 100%)}
+.life-page .lhp-n,
+.stories-page .hxp-n{text-shadow:none}
+@media (max-width:960px){
+  /* 모바일 카드: 번호가 오른쪽 위 → 오른쪽 위 모서리도 어둡게(왼쪽 글 쪽 어둡기는 그대로) */
+  .life-page .lhp::after,
+  .stories-page .hxp::after{background:radial-gradient(120% 90% at 100% 0%,rgba(10,22,28,.6) 0%,rgba(10,22,28,0) 45%),linear-gradient(90deg,rgba(10,22,28,.88) 0%,rgba(10,22,28,.55) 55%,rgba(10,22,28,.15) 100%)}
+}
+
+/* 라이프 하위 화면 제목 글꼴 통일(10-12): 시설 둘러보기 · 생활 꿀팁의 섹션 제목(h2)과 시설 층 제목(h3 .fxh)을 오시는 길처럼 Paperlogy로 */
+.life-page :is(#pg-facility,#pg-tips,#pg-way) .sh h2{font-family:var(--ff-text);font-size:clamp(28px,2.8vw,38px);font-weight:700;letter-spacing:-.035em;line-height:1.25}
+.life-page #pg-facility .fxh h3{font-family:var(--ff-text);font-weight:700}
+
+/* =========================================================
+   선배 후기 카드(10-12): 코르크판 위에 붙은 포스트잇(고정핀 없음)
+   카드 보기에서만. 리스트 보기는 그대로. 분류별 포스트잇 색(생활 하늘 · 수업 노랑 · 프로젝트 민트 · 취업·진로 연보라)
+   ========================================================= */
+/* 나무판: 나무 결 사진 + 안쪽 그림자 */
+.stories-page #p-rev .idgrid{
+  gap:28px 24px;
+  padding:clamp(24px,3.4vw,44px);
+  border-radius:var(--r-card);
+  background:#E5CEB3 url("../../stories/assets/wood.webp") center/cover no-repeat;   /* 나무판 사진(stories/assets/wood.webp, 10-12 사용자 제공. 코르크에서 교체) */
+  box-shadow:inset 0 0 0 1px rgba(120,86,48,.18),inset 0 2px 12px rgba(90,60,28,.18);
+}
+/* 포스트잇 */
+.stories-page #p-rev .idc{
+  --pi:#FBEFA4;
+  position:relative;
+  border:0;border-radius:2px;overflow:visible;
+  background:var(--pi);
+  box-shadow:0 1px 1px rgba(60,35,10,.12),0 12px 16px -10px rgba(50,28,8,.55);
+  transform:rotate(var(--tilt,0deg));
+  transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s;
+}
+.stories-page #p-rev .idc.cat-life{--pi:#C6EBF1}
+.stories-page #p-rev .idc.cat-class{--pi:#FBEFA4}
+.stories-page #p-rev .idc.cat-proj{--pi:#D3F0CF}
+.stories-page #p-rev .idc.cat-career{--pi:#DAD6F5}
+/* 위쪽 접착 부분: 살짝 진한 띠 */
+.stories-page #p-rev .idc::before{content:"";position:absolute;left:0;right:0;top:0;height:30px;background:linear-gradient(rgba(0,0,0,.06),rgba(0,0,0,0));pointer-events:none}
+/* 조금씩 다른 기울기 */
+.stories-page #p-rev .idc:nth-child(4n+1){--tilt:-1.2deg}
+.stories-page #p-rev .idc:nth-child(4n+2){--tilt:.8deg}
+.stories-page #p-rev .idc:nth-child(4n+3){--tilt:-.4deg}
+.stories-page #p-rev .idc:nth-child(4n){--tilt:1.4deg}
+.stories-page #p-rev .idc:hover{transform:rotate(0deg) translateY(-6px) scale(1.02);border-color:transparent;box-shadow:0 2px 2px rgba(60,35,10,.12),0 22px 26px -12px rgba(50,28,8,.6)}
+/* 포스트잇 안: 분류 띠 대신 글자만, 구분선 · 태그는 종이 위에 어울리게 */
+.stories-page #p-rev .idc .cbar,
+.stories-page #p-rev .idc:hover .cbar{background:transparent;height:auto;padding:18px 18px 0}
+.stories-page #p-rev .idc .cbar b{line-height:1.4;font-size:12.5px;color:var(--dk);opacity:.85}
+.stories-page #p-rev .idc .cbar span{color:var(--dk)}
+.stories-page #p-rev .idc .in{padding:8px 18px 16px}
+.stories-page #p-rev .idc h3{color:var(--ink)}
+.stories-page #p-rev .idc:hover h3{color:var(--blue)}
+.stories-page #p-rev .idc>.in>p{color:rgba(20,35,63,.72)}
+.stories-page #p-rev .idc .who{border-top:1px dashed rgba(20,35,63,.2)}
+.stories-page #p-rev .idc .who .tg{background:rgba(255,255,255,.55);color:var(--ink)}
+@media (prefers-reduced-motion:reduce){.stories-page #p-rev .idc{transition:none}}
+
+/* 라이프 히어로 제목 위 작은 정보 카드(10-12, 시안 1): 오시는 길 지도 일부 + 주소 · 역에서 걸리는 시간. 누르면 오시는 길 화면 */
+.life-page .lh-info{display:flex;align-items:center;gap:16px;margin-bottom:calc(3*var(--lr));padding:12px 18px 12px 12px;border:1px solid var(--line);border-radius:var(--r-card);background:var(--surface);box-shadow:0 12px 28px -18px rgba(20,35,63,.35);text-decoration:none;color:var(--ink);max-width:420px;transition:border-color .2s,transform .2s}
+.life-page .lh-info:hover{border-color:var(--blue);transform:translateY(-2px)}
+.life-page .lh-info-map{flex:none;width:112px;height:100px;border-radius:12px;overflow:hidden;background:var(--paper)}
+.life-page .lh-info-map svg{display:block;width:100%;height:100%}
+.life-page .lh-info-map .gmrd{stroke-width:10}
+.life-page .lh-info-map .lmsub1{stroke-width:7}
+.life-page .lh-info-tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.life-page .lh-info-tx em{font-style:normal;font-family:var(--ff-title);font-size:12px;letter-spacing:.14em;color:var(--blue)}
+.life-page .lh-info-tx b{font-size:17px;font-weight:700}
+.life-page .lh-info-tx span{font-size:14px;color:var(--graphite)}
+.life-page .lh-info>i{margin-left:auto;font-style:normal;color:var(--blue);font-weight:700}
+
+/* 라이프 모든 화면 바탕을 흰색으로(10-12): 페이지 바탕 연회색(--paper)과 번갈아 깔리던 섹션 바탕(.sec.alt)을 없앰 */
+html[data-menu="life"] body,
+.life-page{background:var(--surface)}
+.life-page .sec.alt{background:transparent!important}   /* life.css가 !important로 칠해서 같이 씀 */
+
+/* 선배 후기 색 정리(10-12, 후기 시안 1): 포스트잇 한 가지 색(노랑, 명도만 3단계) + 포인트는 파랑 하나. 분류 칩 · 흐르는 후기 · 리스트 보기의 4색도 뺌 */
+/* 분류 칩: 색 점 없애고, 고른 칩은 남색으로 */
+.stories-page .chips label::before{display:none}
+.stories-page .rev .chips label[for]{--dot:transparent}
+.stories-page .rev:has(#rc_life:checked) .chips label[for=rc_life],
+.stories-page .rev:has(#rc_class:checked) .chips label[for=rc_class],
+.stories-page .rev:has(#rc_proj:checked) .chips label[for=rc_proj],
+.stories-page .rev:has(#rc_career:checked) .chips label[for=rc_career]{background:var(--ink)!important;color:#fff!important}
+/* 흐르는 한 줄 후기: 따옴표 파랑 하나 */
+.stories-page .lq-c{--c:var(--blue)!important}
+/* 리스트 보기: 점 · 태그 회색 */
+.stories-page .rvr .cg{background:var(--line)!important}
+.stories-page .rvr .tg{background:var(--paper-2)!important;color:var(--graphite)!important}
+/* 포스트잇 위 분류 · 기수 글자: 회색 */
+.stories-page #p-rev .idc .cbar b,.stories-page #p-rev .idc .cbar span{color:var(--graphite)!important}
+
+.stories-page #p-rev .idc{--pi:#FAEDA6!important}
+.stories-page #p-rev .idc:nth-child(3n+1){--pi:#FBF0B4!important}
+.stories-page #p-rev .idc:nth-child(3n){--pi:#F7E79A!important}
+
+
+/* 후기 글 창(모달) 색 빼기(10-12): 분류색 머리 바탕 → 연회색, 분류 점 · 분류명 · 기수 숫자 → 회색/남색 */
+.stories-page .ov .mtop{background:var(--paper)}
+.stories-page .ov .mcat{color:var(--graphite)}
+.stories-page .ov .mcat::before{background:var(--g300)}
+.stories-page .ov .mav,.stories-page .ov .mav i{color:var(--ink)}
+
+/* 포스트잇 종이 모양 · 그림자(10-12, 사용자 참고 이미지): 평평한 종이 + 얇고 짧은 그림자, 위쪽 접착 띠 없앰 */
+.stories-page #p-rev .idc{border-radius:1px;box-shadow:0 1px 2px rgba(70,45,15,.16),0 6px 10px -6px rgba(70,45,15,.32)}
+.stories-page #p-rev .idc::before{display:none}
+.stories-page #p-rev .idc:hover{box-shadow:0 2px 3px rgba(70,45,15,.16),0 14px 18px -10px rgba(70,45,15,.38)}
+
+/* 후기 글 창(모달)을 미색 메모지로(10-12): 네모 종이 · 오른쪽 아래 모서리 말림 · 종이 모양을 따라가는 그림자, 회색 머리 띠 없앰 */
+.stories-page .ov .sheet{
+  border-radius:2px;
+  background:linear-gradient(-45deg,transparent 30px,#FBF8F1 30px);
+  box-shadow:none;
+  filter:drop-shadow(0 2px 3px rgba(40,26,8,.18)) drop-shadow(0 26px 34px rgba(0,0,0,.38));
+  transform:rotate(-.4deg);
+}
+.stories-page .ov .sheet::after{
+  display:block;content:"";position:absolute;z-index:2;right:0;bottom:0;width:43px;height:43px;pointer-events:none;
+  background:linear-gradient(-45deg,transparent 50%,#E6DDC8 50%,#F3EDDF 78%,#EDE5D3 100%);
+  border-radius:0 0 0 14px;
+  box-shadow:-3px -3px 6px -2px rgba(60,40,12,.18);
+}
+.stories-page .ov .mtop{background:transparent}
+.stories-page .ov .mby{border-top:1px dashed rgba(20,35,63,.18)}
+.stories-page .ov .mtags{border-top:1px dashed rgba(20,35,63,.18)}
+.stories-page .ov .mtags .t{background:rgba(20,35,63,.06)}
+.stories-page .ov .mbody{padding-bottom:44px}
+.stories-page .ov .x{background:transparent;box-shadow:none}
+.stories-page .ov .x:hover{background:var(--ink);color:#fff}
+
+/* 선배 후기 분류: '취업·진로'를 '취업성공후기'(cat-job) · '진로고민후기'(cat-path) 둘로 나눔(10-12). 카드 · 리스트 · 글 창은 둘 다 cat-career도 그대로 가짐 */
+.stories-page .rev:has(#rc_job:checked) .idc:not(.cat-job),
+.stories-page .rev:has(#rc_job:checked) .rvr:not(.cat-job),
+.stories-page .rev:has(#rc_path:checked) .idc:not(.cat-path),
+.stories-page .rev:has(#rc_path:checked) .rvr:not(.cat-path){display:none}
+.stories-page .rev:has(#rc_job:checked) .chips label[for=rc_job],
+.stories-page .rev:has(#rc_path:checked) .chips label[for=rc_path]{background:var(--ink)!important;color:#fff!important}
+
+/* =========================================================
+   기수별 이모저모 카드를 인스타 게시물처럼(10-12, 시안 A: 포인트만 프라이머리). 교육과정 카드(.cpin) · 변경점 표(.diff) 제외
+   카드 안 구조(머리 · 아이콘 줄 · 캡션)는 stories/js/cohort-ig.js가 만듦
+   ========================================================= */
+.stories-page .arch .g2 > a.st.ig{display:flex;flex-direction:column;background:#fff;border:1px solid #DBDBDB;border-radius:10px;overflow:hidden;color:#262626;text-decoration:none;transition:box-shadow .2s,transform .2s}
+.stories-page .arch .g2 > a.st.ig:hover{transform:translateY(-3px);box-shadow:0 14px 28px -16px rgba(20,35,63,.35)}
+.stories-page .arch .g2 > a.st.ig:hover .ph{transform:none;box-shadow:none}
+.stories-page .arch .g2 > a.st.ig:hover h3{color:inherit}
+.ig-hd{display:flex;align-items:center;gap:10px;padding:10px 12px}
+.ig-av{flex:none;width:34px;height:34px;border-radius:50%;padding:2px;background:conic-gradient(from 210deg,#1F4ED8,#7C9CFF,#1F4ED8)}
+.ig-av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#fff;border:2px solid #fff;font:700 12px/1 var(--ff-title);color:var(--ink)}
+.ig-id{display:flex;flex-direction:column;min-width:0;line-height:1.2}
+.ig-id b{font-size:13.5px;font-weight:700;color:#262626}
+.ig-id small{font-size:11.5px;color:#8E8E8E}
+.ig-more{margin-left:auto;font-size:18px;line-height:1;color:#262626;letter-spacing:1px}
+.stories-page .arch a.st.ig .ph{position:relative;margin:0;border-radius:0;aspect-ratio:1/1;box-shadow:none;transform:none}
+.stories-page .arch a.st.ig .ph .illu{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;aspect-ratio:auto}
+.stories-page .arch a.st.ig .ph .play{display:none}
+.stories-page .arch a.st.ig .ph .dur{display:none}
+.ig-reel{position:absolute;top:10px;right:10px;width:22px;height:22px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))}
+.ig-act{display:flex;align-items:center;gap:14px;padding:10px 12px 4px}
+.ig-act svg{width:23px;height:23px;fill:none;stroke:#262626;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ig-act .sv{margin-left:auto}
+.ig-cap{padding:4px 12px 0;font-size:13.5px;line-height:1.5;color:#262626}
+.stories-page .arch a.st.ig .ig-cap h3{display:inline;margin:0;font-family:var(--ff-text);font-size:13.5px;font-weight:700;letter-spacing:0}
+.stories-page .arch a.st.ig .ig-cap h3::before{content:attr(data-acc) " ";font-weight:700}
+.stories-page .arch a.st.ig .ig-cap h3::after{display:none}
+.stories-page .arch a.st.ig .ig-cap p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:2px 0 0;font-size:13.5px;color:#262626}
+.ig-mo{display:inline-block;margin-top:2px;font-size:13px;color:#8E8E8E}
+.stories-page .arch a.st.ig .mt{margin-top:auto;padding:8px 12px 12px}
+.stories-page .arch a.st.ig .mt .cg{display:none}
+.stories-page .arch a.st.ig .mt .dt{margin-left:0;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:#8E8E8E}
+.stories-page .arch .g2:not(.st){gap:28px 20px}
+
+/* 시안 A: 프로필 링 · 계정 이름 · 저장 · 더 보기 · 마우스 올림 테두리 */
+.ig-av{background:var(--primary)}
+.ig-av span{color:var(--primary)}
+.ig-id b{color:var(--primary)}
+.ig-act .sv svg{fill:var(--primary);stroke:var(--primary)}
+.ig-mo{color:var(--primary);font-weight:700}
+.stories-page .arch .g2 > a.st.ig:hover{border-color:var(--primary)}
+.stories-page .arch .g2 > a.st.ig.pg-off{display:none}   /* 페이지 넘김(8개씩)이 숨긴 카드는 계속 숨김 */
+
+/* 기수별 이모저모: 지금 진행 중인 기수(7기) 표시 점을 키워 프라이머리 원으로(10-12). 글자 '·'는 숨기고 원으로 그림 */
+.stories-page .crail .live{display:inline-block;width:8px;height:8px;margin:0 0 0 1px;border-radius:50%;background:var(--blue);font-size:0;line-height:0;vertical-align:middle;position:relative;top:-1px}   /* 메인 파랑 #1F4ED8 */
+.stories-page .crail li button[aria-pressed="true"] .live{background:#fff}   /* 고른 상태(어두운 바탕)에서는 흰 원 */
+
+/* 인스타 카드 좋아요 · 저장 누름(10-12): 색만 바뀜. 좋아요는 빨강으로 채움, 저장은 프라이머리로 채움 */
+.ig-act .ig-tg{display:inline-flex;cursor:pointer;border-radius:4px}
+.ig-act .ig-tg:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.ig-act .ig-tg.sv{margin-left:auto}
+.ig-act .sv svg,.ig-act .ig-tg.sv svg{fill:none;stroke:#262626}
+.ig-act .hr[aria-pressed="true"] svg{fill:#ED4956;stroke:#ED4956}
+.ig-act .sv[aria-pressed="true"] svg{fill:var(--primary);stroke:var(--primary)}
+.ig-act .ig-tg.pop svg{animation:igPop .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes igPop{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.ig-act .ig-tg.pop svg{animation:none}}
+
+/* 인스타 카드 아이콘 모양을 실제 인스타처럼(10-12, 사용자 참고 이미지): 하트 · 말풍선 · 종이비행기 · 북마크, 세로 점 세 개 */
+.ig-act svg{width:24px;height:24px;stroke-width:1.6;stroke-linejoin:round}
+.ig-act .sv svg{stroke-linejoin:miter}
+.ig-more{display:flex;flex-direction:column;gap:3px;padding:2px 4px;font-size:0}
+.ig-more i{width:3.5px;height:3.5px;border-radius:50%;background:#262626}
+
+/* 인스타 카드 아이콘을 인스타 글리프 그대로(10-12 2차): 빈 하트 · 말풍선 · 종이비행기 · 북마크, 누르면 채운 모양으로 바뀜 */
+.ig-act{gap:16px;padding:8px 12px 4px}
+.ig-act .ig-tg,.ig-act .ig-ic{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px}
+.ig-act svg{width:24px;height:24px;stroke:none;fill:none;transform-origin:center}
+.ig-act svg.o:not(.ln),.ig-act svg.f{fill:#262626}
+.ig-act svg.ln{fill:none;stroke:#262626;stroke-width:2;stroke-linejoin:round}
+.ig-act .hr svg.f{fill:#FF3040}
+.ig-act .sv svg.f{fill:var(--primary)}
+.ig-act .ig-tg svg.f{display:none}
+.ig-act .ig-tg[aria-pressed="true"] svg.o{display:none}
+.ig-act .ig-tg[aria-pressed="true"] svg.f{display:block}
+.ig-act .ig-tg.sv{margin-left:auto}
+
+/* 인스타 카드 아이콘 크기 · 정렬 맞춤(10-12 3차): 네 개 모두 같은 선 굵기(1.9) · 같은 24px 칸 · 세로 가운데. 채운 하트 · 북마크도 같은 윤곽선을 채워 크기가 그대로 */
+.ig-act{display:flex;align-items:center;gap:14px}
+.ig-act .ig-tg,.ig-act .ig-ic{flex:none;line-height:0}
+.ig-act svg,.ig-act svg.ln{display:block;width:24px;height:24px;fill:none;stroke:#262626;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ig-act .hr[aria-pressed="true"] svg.f{fill:#FF3040;stroke:#FF3040}
+.ig-act .sv[aria-pressed="true"] svg.f{fill:var(--primary);stroke:var(--primary)}
+.ig-act .ig-tg svg.f{display:none}
+.ig-act .ig-tg[aria-pressed="true"] svg.o{display:none}
+.ig-act .ig-tg[aria-pressed="true"] svg.f{display:block}
+.ig-act .ig-tg.sv{margin-left:auto}
+@media (max-width:560px){.ig-act{gap:10px}.ig-act svg,.ig-act svg.ln{width:22px;height:22px}}
+
+/* 섹션 제목 글꼴을 Giants로(10-12): 선배들의 이야기 · 인사교 라이프 · 지원 전 체크의 섹션 제목(h2)과 라이프 층 제목. 크기 · 굵기는 그대로, 자간만 Giants에 맞게 */
+.stories-page .sh h2,
+.stories-page .pjd h2,
+.stories-page .ivd h2,
+.life-page .sh h2,
+.life-page #pg-way .sh h2,
+.life-page :is(#pg-facility,#pg-tips,#pg-way) .sh h2,
+.life-page #pg-facility .fxh h3,
+.check-page .s-head h2{font-family:var(--ff-title);letter-spacing:-.01em}
+
+/* 히어로 강조 단어를 랜딩 01~04 포인트 색으로(10-12): 선배들의 이야기 SSUL = 02 마젠타, 인사교 LIFE = 03 시안 (home/css/styles.css --n-magenta · --n-cyan과 같은 값) */
+.stories-page .hx-ssul b{color:#FF3EA5}
+.life-page .lh h1 b{color:#22D3EE}
+
+/* 지원 전 체크 페이지 제목(10-12): 사진 히어로 없이 제목 · 설명만. 글자 크기 · 글꼴은 이야기 · 라이프 히어로 제목과 같게, CHECK는 랜딩 04 라임 계열(흰 바탕에서 읽히게 진하게) */
+.check-page{--lr:clamp(9.2px,.78vw,10px)}
+@media (max-width:1024px){.check-page{--lr:clamp(7.8px,.92vw,9.2px)}}
+@media (max-width:600px){.check-page{--lr:clamp(8.2px,2.7vw,11px)}}
+.check-page .ck-hd{padding:var(--hero-y) 0 0}
+.check-page .ck-hd h1{margin:0;font:700 clamp(calc(4.8*var(--lr)),5.4vw,calc(8.8*var(--lr)))/1.08 var(--ff-title);letter-spacing:-.01em;color:var(--ink)}
+.check-page .ck-hd h1 b{font-weight:inherit;color:#8CFF3F}   /* 랜딩 04 라임(home --n-lime)과 같은 값 */
+.check-page .ck-hd p{margin:calc(1.4*var(--lr)) 0 0;max-width:46ch;font-size:calc(1.7*var(--lr));line-height:1.7;color:var(--graphite)}
+.check-page>.ck-hd+.sec{padding-top:var(--sec-y-first)}
+
+/* 히어로 강조 단어에 검은 테두리(10-12): SSUL · LIFE · CHECK. 랜딩 프레임 검정(#0B0B0C)과 같은 색, 글자 크기에 맞춰 굵기 조정. 테두리를 글자 바깥에 그려 획이 가늘어지지 않게 */
+.stories-page .hx-ssul b,
+.life-page .lh h1 b,
+.check-page .ck-hd h1 b{-webkit-text-stroke:.045em #0B0B0C;paint-order:stroke fill}
+
+/* 후기 포스트잇의 태그(#적응 등)를 메인 파랑으로(10-12): 파랑 바탕 + 흰 글자 */
+.stories-page #p-rev .idc .who .tg{background:var(--blue);color:#fff}
+
+/* 지원 전 체크 제목 영역 분리(10-12, 시안 1에서 오른쪽 카드 뺀 것): 제목 영역만 흰 바탕 + 아래 경계선, 본문 앞 여백 넉넉히 */
+.check-page .ck-hd{background:var(--surface);border-bottom:1px solid var(--line);padding:calc(var(--hero-y) + 8px) 0 calc(var(--hero-y) + 16px)}
+.check-page>.ck-hd+.sec{padding-top:var(--sec-y)}
+
+/* 후기 리스트 보기: 태그를 제목 왼쪽으로(10-12). 태그 너비를 같게 해 제목 시작선이 줄마다 맞음 */
+.stories-page .rvr .cg{order:0}
+.stories-page .rvr .tg{order:1}
+.stories-page .rvr .tt{order:2}
+.stories-page .rvr .mt{order:3}
+/* 태그는 이전 모양(글자 길이만큼) 그대로, 칸을 나눠 제목 시작선만 맞춤 */
+.stories-page .rvr{display:grid;grid-template-columns:9px 104px minmax(0,1fr) 158px;column-gap:14px;align-items:center}
+.stories-page .rvr .cg{margin-right:0}
+.stories-page .rvr .tg{justify-self:start}
+@media (max-width:860px){.stories-page .rvr{grid-template-columns:9px auto minmax(0,1fr)}.stories-page .rvr .mt{grid-column:2/-1}}
+/* 리스트 보기 태그를 카드 보기 태그와 같은 모양으로(10-12): 파랑 알약 · 흰 글자 */
+.stories-page .rvr .tg{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:999px!important;background:var(--blue)!important;color:#fff!important;font-size:12px;font-weight:600;line-height:22px;white-space:nowrap}
+
+/* 후기: 흐르는 한 줄 후기와 분류 버튼 사이 '후기 카드' 제목(10-13). 글꼴 · 크기는 위 '후기' 제목(.sh h2)과 같음 */
+.stories-page #p-rev .sh-card{margin:clamp(40px,4vw,56px) 0 20px}
+.life-page .pgi{background:var(--surface)}   /* 새 하위 화면 머리(생활 꿀팁 · 오시는 길)도 흰 바탕 */
+
+/* =========================================================
+   글꼴 위계(10-13): 제목 Giants · 짧은 글 Paperlogy · 두 줄 이상 작은 본문 Pretendard
+   랜딩(홈)은 제외. Pretendard는 tokens.css의 --ff-sans(로컬 파일, 400 · 700 · 900)
+   라벨 · 캡션 · 버튼 · 칩 · 수치처럼 짧은 글은 Paperlogy 그대로 둡니다.
+   ========================================================= */
+/* 알아보기 */
+.school-about main :is(
+  .scene-copy p,
+  .intro-platform-features article p,
+  .why-school-heading p,
+  .why-school-card p,
+  .education-phase-body p,
+  .daily-routine-morning p, .daily-routine-lunch p, .daily-routine-afternoon p,
+  .career-stage-copy p
+),
+/* 선배들의 이야기: 히어로 설명 · 후기 카드/창 · 인터뷰 · 프로젝트 · 기수 캡션 · 주석 */
+.stories-page :is(
+  .hx-s,
+  .in p,
+  .footnote,
+  .ivq,
+  .ivd .lead, .ivd .a, .ivnote,
+  .pjd .lead, .pjph-t, .sum,
+  .ig-cap p
+),
+.ov .mbody p,
+/* 인사교 라이프 */
+.life-page :is(
+  .lh-s, .pgi-t, .note, .fdisc, .hzmw-ds, .park2-d, .fdc-r blockquote,
+  .adt li p, .fsc-d
+),
+/* 지원 전 체크 */
+.check-page :is(
+  .ck-hd p,
+  .chk-crit-note,
+  .chk-notice p,
+  .pf-body p, .pf-body dd,
+  .ben-sub,
+  .faq-at
+){
+  font-family:var(--ff-sans);
+  letter-spacing:-.01em;
+}
+
+/* =========================================================
+   인터뷰 미리보기: 다이나믹 콜라주(10-13)
+   대표 1장(크게) + 크기 · 비율이 다른 4장, 살짝 기운 카드와 손글씨 · 낙서.
+   아래 '전체 인터뷰' 목록이 .ivgrid 카드 7장을 읽으므로 카드는 그대로 두고, 미리보기에는 5장만 보입니다.
+   보이는 카드는 href로 고름: #iv-1 대표 · #iv-6 · #iv-7(영상) · #iv-2 · #iv-5. 바꾸려면 아래 href만 바꾸면 됨
+   ========================================================= */
+@font-face{font-family:"Caveat";src:url("../assets/fonts/Caveat-SemiBold.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Caveat";src:url("../assets/fonts/Caveat-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+
+/* 머리: 오른쪽 '전체 보기' */
+.stories-page #p-iv .sh-row{align-items:flex-end}
+.stories-page .ivall{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 16px;border:1.5px solid var(--ink);border-radius:999px;
+  font-size:14px;font-weight:700;color:var(--ink);background:#fff;transition:background .2s,color .2s}
+.stories-page .ivall:hover{background:var(--ink);color:#fff}
+
+/* 띠: 파형 · REC · 넘김 버튼 · 점 끔 */
+.stories-page .ivband.ivcol{padding:28px 0 56px;overflow:visible}
+.stories-page .ivcol .lsp-wave,
+.stories-page .ivcol .lsp-rec,
+.stories-page .ivcol .ivnav,
+.stories-page .ivcol .ivdots{display:none!important}
+.stories-page .ivcol .ivcar{max-width:1200px}
+
+/* 배치: 12칸 × 8줄 */
+.stories-page .ivcol .ivgrid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:repeat(8,56px);gap:12px 18px;height:auto!important}
+.stories-page .ivcol .iv{position:relative!important;left:auto!important;width:auto!important;margin:0!important;height:auto!important;top:auto!important;opacity:1!important;
+  display:flex;flex-direction:column;border:0!important;border-radius:18px;overflow:hidden;background:#fff;
+  box-shadow:0 14px 30px -12px rgba(20,35,63,.28),0 2px 6px rgba(20,35,63,.06);
+  transform:translate(var(--dx,0),var(--dy,0)) rotate(var(--r,0deg));
+  transition:transform .35s cubic-bezier(.22,.61,.36,1),box-shadow .35s}
+.stories-page .ivcol .iv:hover,
+.stories-page .ivcol .iv:focus-visible{z-index:5;transform:translate(var(--dx,0),calc(var(--dy,0px) - 6px)) rotate(0deg);box-shadow:0 26px 46px -16px rgba(20,35,63,.38)}
+.stories-page .ivcol .iv[href="#iv-3"],
+.stories-page .ivcol .iv[href="#iv-4"]{display:none!important}
+
+/* 작은 카드 공통: 제목 + 이름 줄만 */
+.stories-page .ivcol .iv:not([href="#iv-1"]) .ivq,
+.stories-page .ivcol .iv:not([href="#iv-1"]) .tb p{display:none}
+.stories-page .ivcol .iv .tb{flex:1;min-height:0;min-width:0;padding:14px 16px 14px}
+.stories-page .ivcol .iv h3{font-size:16.5px;line-height:1.4;font-weight:700;color:var(--ink);word-break:keep-all}
+.stories-page .ivcol .iv .by{margin-top:auto;padding-top:10px;border-top:0;gap:6px}
+.stories-page .ivcol .iv .av{width:24px;height:24px}
+.stories-page .ivcol .iv .by b{font-size:13px}
+.stories-page .ivcol .iv .by b{flex:none}
+.stories-page .ivcol .iv .by em{flex:0 1 auto;min-width:0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stories-page .ivcol .iv .by::after{content:"→";display:grid;place-items:center;width:28px;height:28px;margin-left:auto;padding:0;flex:none;
+  border-radius:50%;background:var(--ink);color:#fff;font-size:14px}
+.stories-page .ivcol .iv:hover .by::after{background:var(--blue);color:#fff;transform:none}
+.stories-page .ivcol .iv .ph{position:relative;overflow:hidden}
+.stories-page .ivcol .iv .ph .illu{display:block;width:100%;height:100%;aspect-ratio:auto;object-fit:cover}
+
+/* 대표(#iv-1): 세로로 큰 사진 카드, 글은 사진 위 */
+.stories-page .ivcol .iv[href="#iv-1"]{grid-column:1/6;grid-row:1/9;--r:-1deg;justify-content:flex-end;color:#fff}
+.stories-page .ivcol .iv[href="#iv-1"] .ph{position:absolute;inset:0}
+.stories-page .ivcol .iv[href="#iv-1"] .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,16,32,0) 32%,rgba(11,16,32,.55) 58%,rgba(11,16,32,.92) 100%)}
+.stories-page .ivcol .iv[href="#iv-1"] .tb{position:relative;z-index:2;flex:none;padding:26px 28px 24px}
+.stories-page .ivcol .iv[href="#iv-1"] .tb::before{content:"비전공자라면";align-self:flex-start;margin-bottom:12px;padding:4px 11px;border-radius:999px;background:var(--blue);color:#fff;font-size:12px;font-weight:700}
+.stories-page .ivcol .iv[href="#iv-1"] h3{font-size:clamp(24px,2.2vw,30px);line-height:1.3;color:#fff}
+.stories-page .ivcol .iv[href="#iv-1"] .ivq{margin:10px 0 0;font-size:15px;font-weight:500;color:rgba(255,255,255,.86);-webkit-line-clamp:2}
+.stories-page .ivcol .iv[href="#iv-1"] .ivq::before,
+.stories-page .ivcol .iv[href="#iv-1"] .ivq::after{color:var(--blue-bright)}
+.stories-page .ivcol .iv[href="#iv-1"] .by{padding-top:18px}
+.stories-page .ivcol .iv[href="#iv-1"] .by b{color:#fff;font-size:14px}
+.stories-page .ivcol .iv[href="#iv-1"] .by em{color:rgba(255,255,255,.7);font-size:13px}
+.stories-page .ivcol .iv[href="#iv-1"] .by::after{width:40px;height:40px;background:#fff;color:var(--ink);font-size:17px}
+
+/* #iv-6: 세로 카드(사진 위) */
+.stories-page .ivcol .iv[href="#iv-6"]{grid-column:6/9;grid-row:1/6;--r:-3deg;--dy:6px}
+.stories-page .ivcol .iv[href="#iv-6"] .ph{flex:1 1 0;min-height:0}
+/* #iv-7(영상): 가로로 넓은 노랑 카드 */
+.stories-page .ivcol .iv[href="#iv-7"]{grid-column:9/13;grid-row:1/5;--r:3deg;--dx:6px;--dy:10px;flex-direction:row;background:#FFF2A8}
+.stories-page .ivcol .iv[href="#iv-7"] .ph{flex:0 0 44%}
+.stories-page .ivcol .iv[href="#iv-7"] .tb{padding:18px 16px}
+.stories-page .ivcol .iv[href="#iv-7"] h3{font-size:18px}
+/* #iv-2: 낮고 넓은 가로 카드(사진 왼쪽) */
+.stories-page .ivcol .iv[href="#iv-2"]{grid-column:6/10;grid-row:6/9;--r:-1.5deg;--dy:4px;flex-direction:row}
+.stories-page .ivcol .iv[href="#iv-2"] .ph{flex:0 0 42%}
+.stories-page .ivcol .iv[href="#iv-2"] .tb{padding:16px}
+/* #iv-5: 민트 카드, 그림은 작은 아이콘처럼 */
+.stories-page .ivcol .iv[href="#iv-5"]{grid-column:10/13;grid-row:5/9;--r:2deg;--dy:16px;--dx:4px;background:#D8F5FA}
+.stories-page .ivcol .iv[href="#iv-5"] .ph{flex:none;width:76px;height:76px;margin:18px 18px 0;border-radius:16px;box-shadow:0 6px 14px -6px rgba(11,85,99,.4)}
+.stories-page .ivcol .iv[href="#iv-5"] .tb{padding:14px 18px 16px}
+.stories-page .ivcol .iv[href="#iv-5"] h3{font-size:19px}
+
+/* 손글씨 · 낙서(10-13 수정): 낙서는 카드 뒤에 깔려 가장자리만 보이고, 'Real interview'는 대표 사진 안에 씀 */
+.stories-page .ivcol .ivcar{position:relative}
+.stories-page .ivcol .ivgrid{z-index:1}
+.stories-page .ivcol .ivscript{display:none}
+/* 'Real interview' 손글씨: 대표 카드 밖(.ivgrid 위)에 얹어 오른쪽 카드에 자연스럽게 걸침. 가는 손글씨 두 줄, 색은 후기 'SSUL'과 같은 남색 */
+.stories-page .ivcol .ivgrid::after{content:"Real\A   interview";white-space:pre;position:absolute;z-index:4;left:33%;top:33%;pointer-events:none;
+  font-family:"Caveat",cursive;font-weight:400;font-size:clamp(44px,4vw,58px);line-height:.9;letter-spacing:.02em;color:#1E3FCF;
+  transform:rotate(-9deg) skewX(-8deg)}
+/* 낙서는 10-13 사용자 요청으로 모두 뺌(손글씨 'Real interview'만 남김) */
+
+/* 태블릿 · 모바일: 대표 위, 나머지 2열 */
+@media (max-width:900px){
+.stories-page .ivcol .ivgrid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:auto;gap:18px 14px}
+.stories-page .ivcol .iv[href]{grid-column:auto;grid-row:auto}
+.stories-page .ivcol .iv[href="#iv-1"]{grid-column:1/-1;min-height:420px}
+.stories-page .ivcol .iv[href="#iv-6"] .ph{flex:none;aspect-ratio:4/3}
+.stories-page .ivcol .iv[href="#iv-7"],
+.stories-page .ivcol .iv[href="#iv-2"]{flex-direction:column}
+.stories-page .ivcol .iv[href="#iv-7"] .ph,
+.stories-page .ivcol .iv[href="#iv-2"] .ph{flex:none;aspect-ratio:16/10}
+.stories-page .ivcol .ivgrid::after{left:auto;right:4%;top:150px;font-size:42px}
+}
+@media (max-width:520px){
+.stories-page .ivcol .iv{--r:0deg!important;--dx:0!important;--dy:0!important}
+}
+@media (prefers-reduced-motion:reduce){.stories-page .ivcol .iv{transition:none}}
+
+/* =========================================================
+   후기 카드: 핸드드로잉 포스트잇(10-13, 사용자 후기 시안 3)
+   나무판 → 옅은 모눈 종이, 포스트잇은 파스텔 여러 색(자리 순서대로 돌아감), 손으로 그린 별 · 낙서 · 'SSUL' 동그라미
+   위의 나무판 · 노랑 한 가지 색 규칙을 덮어씁니다
+   ========================================================= */
+.stories-page #p-rev .idgrid{
+  position:relative;isolation:isolate;
+  padding:clamp(34px,4vw,54px) clamp(24px,3.4vw,44px);
+  border-radius:var(--r-card);
+  background-color:#F4F5FB;
+  background-image:linear-gradient(rgba(70,80,150,.11) 1px,transparent 1px),linear-gradient(90deg,rgba(70,80,150,.11) 1px,transparent 1px);
+  background-size:22px 22px;background-position:-1px -1px;background-repeat:repeat;
+  box-shadow:inset 0 0 0 1px rgba(20,35,63,.08);
+}
+/* 포스트잇 색: 노랑 · 하늘 · 살구 · 민트 · 분홍 · 노랑 · 하늘 · 연보라(8장마다 반복) */
+.stories-page #p-rev .idc:nth-child(8n+1),
+.stories-page #p-rev .idc:nth-child(8n+6){--pi:#FFF1A6!important}
+.stories-page #p-rev .idc:nth-child(8n+2),
+.stories-page #p-rev .idc:nth-child(8n+7){--pi:#D6ECFF!important}
+.stories-page #p-rev .idc:nth-child(8n+3){--pi:#FFE2C2!important}
+.stories-page #p-rev .idc:nth-child(8n+4){--pi:#D6F5E3!important}
+.stories-page #p-rev .idc:nth-child(8n+5){--pi:#FFD9E8!important}
+.stories-page #p-rev .idc:nth-child(8n){--pi:#E7DEFF!important}
+.stories-page #p-rev .idc{border-radius:3px;box-shadow:0 1px 2px rgba(20,35,63,.10),0 10px 16px -10px rgba(20,35,63,.32)}
+.stories-page #p-rev .idc:hover{box-shadow:0 2px 3px rgba(20,35,63,.12),0 18px 24px -12px rgba(20,35,63,.38)}
+.stories-page #p-rev .idc .who{border-top-color:rgba(20,35,63,.16)}
+/* 손 낙서(10-13, 사용자 시안 그대로): 마커로 그린 별 · 'SSUL' 동그라미(줄 그은 동그라미 · 분홍 지그재그는 10-13 뺌). 포스트잇 모서리 위에 걸쳐 그림 */
+.stories-page #p-rev .idc{z-index:1}
+.stories-page #p-rev .idgrid::before{content:"";position:absolute;inset:-14px;z-index:3;pointer-events:none;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%231E3FCF' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M30 8c2 8 4 13 7 17 6 1 12 1 18 3-5 4-10 7-13 11 1 7 3 13 3 18-6-3-11-7-15-9-5 3-10 7-16 10 1-6 3-12 5-18-4-4-9-8-13-12 6-1 12-1 18-2 3-5 5-11 6-18z' stroke-width='3.6'/%3E%3Cpath d='M22 30l14-3M21 37l18-5M24 44l14-5' stroke-width='3'/%3E%3Cpath d='M50 8l4-5M56 16l6-2M8 52l-5 4' stroke-width='2.6'/%3E%3C/g%3E%3C/svg%3E") left 22px top 30px/70px no-repeat;
+}
+/* 오른쪽 위 'SSUL': 손으로 두 번 감은 동그라미 */
+.stories-page #p-rev .idgrid::after{content:"SSUL";position:absolute;right:clamp(10px,2vw,28px);top:-8px;z-index:3;pointer-events:none;
+  padding:14px 30px 12px;border:0;border-radius:0;
+  font-family:"Caveat",cursive;font-weight:600;font-size:36px;line-height:1;letter-spacing:.04em;color:#1E3FCF;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 56' preserveAspectRatio='none'%3E%3Cpath d='M22 12C46 2 92 0 110 12c14 10 2 28-26 36-30 8-66 6-78-6C-4 32 8 16 30 8c10-3 22-4 30-4' fill='none' stroke='%231E3FCF' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E") center/100% 100% no-repeat;transform:rotate(-9deg)}
+@media (max-width:640px){
+.stories-page #p-rev .idgrid::before{background-size:42px}
+.stories-page #p-rev .idgrid::after{font-size:26px;top:-14px}
+}
+
+/* =========================================================
+   선배들의 이야기 섹션 머리(10-13): 인사교 라이프와 같은 형식
+   짧은 이름(.sh-k, 앞에 밝은 파랑 막대) + 친근한 문장형 제목(h2, Giants) + 필요할 때만 설명 한 줄
+   ========================================================= */
+.stories-page .sh .sh-k{display:flex;align-items:center;gap:10px;margin:0 0 10px;max-width:none;
+  font-family:var(--ff-text);font-size:14.5px;font-weight:700;letter-spacing:.02em;line-height:1.3;color:var(--blue)}
+.stories-page .sh .sh-k::before{content:"";flex:none;width:24px;height:3px;border-radius:2px;background:var(--blue-bright)}
+.stories-page .sh h2{text-wrap:balance;line-height:1.22;letter-spacing:-.02em}
+.stories-page .sh h2 + p{margin-top:10px}
+@media (max-width:600px){.stories-page .sh .sh-k{font-size:13.5px}}
+
+/* =========================================================
+   후기 글 창(모달)을 후기 카드와 같은 포스트잇으로(10-13)
+   색은 그 창을 연 카드의 포스트잇 색을 그대로 씀(stories.js가 카드 색을 창의 --pi로 넘김). 위의 미색 메모지 · 말린 모서리 규칙을 덮어씀
+   ========================================================= */
+.stories-page .ov .sheet{
+  background:var(--pi,#FFF1A6);
+  border-radius:3px;
+  filter:none;
+  box-shadow:0 1px 2px rgba(20,35,63,.12),0 28px 44px -18px rgba(0,0,0,.5);
+  transform:rotate(-.6deg);
+}
+.stories-page .ov .sheet::after{display:none}
+.stories-page .ov .mtop{background:transparent}
+.stories-page .ov .mcat{color:var(--graphite)}
+.stories-page .ov .mcat::before{display:none}
+.stories-page .ov .mby,
+.stories-page .ov .mtags{border-top:1px dashed rgba(20,35,63,.16)}
+.stories-page .ov .mbody{padding-bottom:28px}
+/* 태그: 카드와 같은 파랑 알약 */
+.stories-page .ov .mtags .t{background:var(--blue);color:#fff;border-radius:999px}
+.stories-page .ov .mtags .t:hover{background:var(--ink);color:#fff}
+.stories-page .ov .x:hover{background:rgba(20,35,63,.85);color:#fff}
+
+/* 흐르는 한 줄 후기를 손글씨(나눔손글씨 펜, OFL)로(10-13). 완성형 2,350자 + 영문 · 숫자만 담은 파일(약 470KB) */
+@font-face{font-family:"Nanum Pen Script";src:url("../assets/fonts/NanumPenScript-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+.stories-page .lq-c .t{font-family:"Nanum Pen Script",var(--ff-text);font-weight:400;font-size:clamp(28px,2.9vw,36px);line-height:1.2;letter-spacing:0;color:var(--ink)}
+.stories-page .lq-c .t::before,
+.stories-page .lq-c .t::after{font-weight:400}
+.stories-page .lq-c{align-items:center}
+
+/* 선배 후기 머리 정리(10-13): 큰 제목은 맨 위 하나만. 아래 '후기 모아 보기'는 막대 + 작은 이름만 남김
+   흐르는 한 줄 후기는 제목과 겨루지 않게 작고 옅게, 위아래 점선으로 묶은 띠로 */
+.stories-page #p-rev .sh-card{margin:clamp(28px,3vw,40px) 0 14px}
+.stories-page #p-rev .sh-card .sh-k{margin:0}
+.stories-page .lq{margin:clamp(20px,2.4vw,28px) 0 0 calc(50% - 50cqw);padding-block:14px 16px;
+  border-top:1px dashed rgba(20,35,63,.16);border-bottom:1px dashed rgba(20,35,63,.16)}
+.stories-page .lq-c .t{font-size:clamp(21px,1.9vw,25px);color:#6B7385}
+.stories-page .lq-c .t::before,
+.stories-page .lq-c .t::after{color:#9DB0E8}
+.stories-page .lq-c .a{color:#A3A9B6}
+.stories-page .lq-c:hover .t{color:var(--ink)}
+
+/* 숫자 페이지 넘김 통일(10-13): 후기 · 인터뷰도 기수별 이모저모(.cpager)와 같은 모양 — 흰 원형 + 회색 테두리, 지금 페이지는 차콜, 앞뒤 ← → */
+.stories-page .pager.cpager{gap:6px;margin-top:44px}
+.stories-page .pager.cpager label,
+.stories-page .pager.cpager button{min-width:40px;width:auto;height:40px;padding:0 6px;border:1px solid #DDE0E5;border-radius:999px;background:#fff;color:#4A4F59;
+  font:700 14px/1 var(--f);font-variant-numeric:tabular-nums;cursor:pointer;box-shadow:none;transition:border-color .15s,background .15s,color .15s}
+.stories-page .pager.cpager label:hover,
+.stories-page .pager.cpager button:hover{border-color:#2B2D31;background:#fff;color:#16171A}
+.stories-page .rev:has(#pgn1:checked) .pager.cpager label[for=pgn1],
+.stories-page .rev:has(#pgn2:checked) .pager.cpager label[for=pgn2],
+.stories-page .rev:has(#pgn3:checked) .pager.cpager label[for=pgn3],
+.stories-page .rev:has(#pgn4:checked) .pager.cpager label[for=pgn4],
+.stories-page .rev:has(#pgn5:checked) .pager.cpager label[for=pgn5],
+.stories-page .rev:has(#pgn6:checked) .pager.cpager label[for=pgn6],
+.stories-page .rev:has(#pgn7:checked) .pager.cpager label[for=pgn7]{background:#2B2D31;border-color:#2B2D31;color:#fff}
+.stories-page .pager.cpager button:disabled{opacity:.35;pointer-events:none}
+.stories-page .iva .cpager{margin-top:36px}
+.stories-page .iva .iva-more{display:none!important}
+
+/* 선배 후기 머리 여백(10-13): 제목 · 흐르는 띠 · '후기 모아 보기' · 칩 · 보드 사이를 넉넉하게 */
+.stories-page #p-rev .sh-row{margin-bottom:0}
+.stories-page .lq{margin-top:clamp(36px,3.6vw,48px);padding-block:22px 24px}
+.stories-page #p-rev .sh-card{margin:clamp(64px,6vw,88px) 0 22px}
+.stories-page #p-rev .filters{margin-bottom:clamp(32px,3vw,40px)}
+
+/* 프로젝트 아래 공감 문구(10-13): 비전공자 → 프로젝트 · 수상 → 포트폴리오, 과정에서 결과로 이어지는 세 줄 */
+.stories-page .pjout{margin:clamp(72px,7vw,104px) 0 clamp(24px,3vw,40px)}
+.stories-page .pjout .sh{margin-bottom:clamp(28px,3vw,40px)}
+.stories-page .pjout-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;counter-reset:po}
+.stories-page .pjout-list li{position:relative;padding:28px 26px 26px;border-radius:20px;background:#fff;border:1px solid var(--line);counter-increment:po}
+.stories-page .pjout-list li::before{content:"0" counter(po);position:absolute;right:22px;top:20px;font-family:var(--ff-title);font-size:34px;line-height:1;color:#E4E9F7}
+.stories-page .pjout-k{display:inline-flex;align-items:center;height:26px;padding:0 11px;border-radius:999px;background:var(--blue);color:#fff;font-size:12.5px;font-weight:700}
+.stories-page .pjout-list b{display:block;margin-top:16px;font-size:19px;font-weight:700;line-height:1.4;letter-spacing:-.02em;color:var(--ink);word-break:keep-all}
+.stories-page .pjout-list p{margin-top:10px;font-family:var(--ff-sans);font-size:15px;line-height:1.7;color:var(--graphite);word-break:keep-all}
+.stories-page .pjout-go{display:inline-flex;align-items:center;gap:8px;margin-top:28px;height:48px;padding:0 22px;border-radius:999px;background:var(--ink);color:#fff;font-size:15px;font-weight:700;transition:background .2s}
+.stories-page .pjout-go:hover{background:var(--blue)}
+@media (max-width:860px){.stories-page .pjout-list{grid-template-columns:1fr;gap:12px}}
+
+/* =========================================================
+   선배 이야기(10-13): 선배 후기 + 선배 인터뷰를 한 메뉴로, 안에서 '후기 · 인터뷰' 탭
+   탭은 하위 메뉴(밑줄 글자)와 다르게 숫자가 붙은 큰 알약. 후기 탭에는 인터뷰로 넘어가는 '이번 주 인터뷰' 가로 카드 1장
+   탭 숫자(56 · 7)는 index.html에 직접 씀 — 후기 · 인터뷰를 더하면 같이 고침
+   ========================================================= */
+.stories-page .ytabs{display:flex;gap:10px;margin:clamp(22px,2.4vw,30px) 0 0}
+.stories-page .ytabs a{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:999px;border:1.5px solid var(--line);background:#fff;
+  font-size:17px;font-weight:700;color:var(--graphite);transition:border-color .15s,color .15s,background .15s}
+.stories-page .ytabs a span{display:inline-grid;place-items:center;min-width:28px;height:24px;padding:0 8px;border-radius:999px;background:var(--paper-2,#EEF0F4);font-size:13px;font-weight:700;color:var(--graphite)}
+.stories-page .ytabs a:hover{border-color:var(--ink);color:var(--ink)}
+.stories-page .ytabs a[aria-current="page"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.stories-page .ytabs a[aria-current="page"] span{background:rgba(255,255,255,.18);color:#fff}
+/* 인터뷰 탭: 머리 아래 탭이 오도록 '전체 보기'는 제목 줄 오른쪽 그대로 */
+.stories-page #p-iv .ytabs{margin-bottom:0}
+.stories-page #p-iv .ivband{margin-top:clamp(28px,3vw,40px)!important}
+.stories-page #p-iv .sh-row{align-items:flex-end}
+/* 후기 탭의 인터뷰 대표 1장(가로 띠) */
+.stories-page .yfeat{display:grid;grid-template-columns:150px minmax(0,1fr) auto;align-items:center;gap:24px;margin:clamp(56px,5vw,72px) 0 0;padding:14px 26px 14px 14px;
+  border-radius:20px;background:#fff;border:1px solid var(--line);box-shadow:0 14px 30px -18px rgba(20,35,63,.28);transition:border-color .2s,transform .25s}
+.stories-page .yfeat:hover{border-color:var(--blue);transform:translateY(-2px)}
+.stories-page .yfeat-ph{display:block;height:96px;border-radius:12px;overflow:hidden}
+.stories-page .yfeat-ph img{width:100%;height:100%;object-fit:cover;display:block}
+.stories-page .yfeat-tx{display:flex;flex-direction:column;gap:6px;min-width:0}
+.stories-page .yfeat-tx em{align-self:flex-start;padding:3px 10px;border-radius:999px;background:var(--blue);color:#fff;font-style:normal;font-size:12px;font-weight:700}
+.stories-page .yfeat-tx b{font-size:19px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.stories-page .yfeat-tx small{font-size:13px;color:var(--graphite)}
+.stories-page .yfeat-go{display:inline-flex;align-items:center;gap:6px;height:42px;padding:0 18px;border-radius:999px;background:var(--ink);color:#fff;font-size:14px;font-weight:700;white-space:nowrap}
+.stories-page .yfeat:hover .yfeat-go{background:var(--blue)}
+.stories-page #p-rev .yfeat + .sh-card{margin-top:clamp(48px,4.4vw,64px)}
+@media (max-width:760px){
+ .stories-page .ytabs a{height:46px;padding:0 18px;font-size:15.5px}
+ .stories-page .yfeat{grid-template-columns:96px minmax(0,1fr);gap:14px;padding:12px}
+ .stories-page .yfeat-ph{height:72px}
+ .stories-page .yfeat-tx b{font-size:16px}
+ .stories-page .yfeat-go{display:none}
+}
+
+/* 흐르는 한 줄 후기 존재감 다시 올림(10-13): 점선 없앰, 글자 조금 크게 · 한 단계 진하게 */
+.stories-page .lq{border-top:0;border-bottom:0;padding-block:10px 12px}
+.stories-page .lq-c .t{font-size:clamp(26px,2.5vw,32px);color:#3E4659}
+.stories-page .lq-c .t::before,
+.stories-page .lq-c .t::after{color:#6F8EEA}
+.stories-page .lq-c .a{color:#8A909B}
+
+/* =========================================================
+   하위 메뉴 바(LNB) ↔ 페이지 제목 여백 통일(10-13): 데스크톱 64px · 모바일(760px 이하) 40px
+   이야기 · 체크는 탭/위치 이동 스크롤 값(stories.js · check.js), 라이프는 맨 위 여백, 알아보기는 위치 이동 도착 자리로 맞춤
+   ========================================================= */
+.life-page #pg-facility .fac-sec:first-child,
+.life-page #pg-facility > .sec:first-of-type{padding-top:64px}
+.life-page :is(#pg-tips,#pg-way) .pgi{padding-top:64px}
+.check-page .ck-hd{padding-top:64px}
+/* 알아보기: 섹션마다 위 여백이 달라 도착 자리를 섹션별로 보정(scroll-padding 기준 +8px에서 제목까지) */
+.school-about #intro{scroll-margin-top:-16px}
+.school-about #learning{scroll-margin-top:16px}
+.school-about #activities{scroll-margin-top:0px}
+.school-about #career{scroll-margin-top:-16px}
+@media (max-width:760px){
+  .life-page #pg-facility .fac-sec:first-child,
+  .life-page #pg-facility > .sec:first-of-type,
+  .life-page :is(#pg-tips,#pg-way) .pgi,
+  .check-page .ck-hd{padding-top:40px}
+}
+
+/* 인터뷰 카드 지은이 줄(10-13): 기수 동그라미 빼고 '7기 · 김ㅇㅇ · AI 모델링' 한 줄 회색 글자 */
+.stories-page .iva-c .by.by-t{display:block;margin-top:12px;font-size:14px;line-height:1.4;color:#5F6675;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stories-page .iva-out[data-view="list"] .iva-c .by.by-t{margin:0;min-width:0}
+.stories-page .ivcol .iv .by .av{width:auto!important;height:auto!important;background:none!important;border-radius:0!important;color:inherit!important;
+  font:inherit!important;font-size:13px!important;line-height:1.4!important;padding:0!important}
+.stories-page .ivcol .iv .by .av i{font:inherit!important;font-size:inherit!important}
+.stories-page .ivcol .iv .by .av::after,
+.stories-page .ivcol .iv .by b::after{content:"\00a0·";margin-right:1px}
+.stories-page .ivcol .iv .by{color:#5F6675;gap:4px;font-size:13px}
+.stories-page .ivcol .iv .by b{font-weight:400!important;color:inherit!important;font-size:13px!important}
+.stories-page .ivcol .iv .by em{color:inherit!important;font-size:13px!important}
+.stories-page .ivcol .iv[href="#iv-1"] .by{color:rgba(255,255,255,.78)}
+.stories-page .ivcol .iv[href="#iv-1"] .by :is(.av,b,em){font-size:14px!important}
+
+/* 후기 글 창(모달)을 진짜 포스트잇처럼(10-13): 위쪽 접착 띠(살짝 진한 색) · 오른쪽 아래 들뜬 모서리 · 아래가 뜬 그림자 · 살짝 기울기 */
+.stories-page .ov .sheet{
+  border-radius:2px 2px 4px 3px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--pi,#FFF1A6) 88%,#000 6%) 0,var(--pi,#FFF1A6) 34px,var(--pi,#FFF1A6) 100%);
+  box-shadow:0 1px 1px rgba(20,35,63,.10),0 18px 22px -14px rgba(0,0,0,.5),0 40px 60px -30px rgba(0,0,0,.55);
+  transform:rotate(-1.2deg);
+  overflow:visible;
+}
+.stories-page .ov .sheet .mscroll{border-radius:inherit}
+/* 오른쪽 아래 말려 올라간 모서리 */
+.stories-page .ov .sheet::after{display:block;content:"";position:absolute;z-index:2;right:0;bottom:0;width:46px;height:46px;pointer-events:none;
+  background:linear-gradient(315deg,#252B3A 0,#252B3A 48%,transparent 48.5%),
+             linear-gradient(135deg,transparent 50%,color-mix(in srgb,var(--pi,#FFF1A6) 80%,#fff) 50%,color-mix(in srgb,var(--pi,#FFF1A6) 92%,#000 8%) 100%);
+  border-radius:0 0 4px 0;filter:drop-shadow(-2px -2px 3px rgba(0,0,0,.12))}
+@media (prefers-reduced-motion:no-preference){.stories-page .ov:target .sheet{animation:piIn .35s cubic-bezier(.2,.8,.2,1)}}
+@keyframes piIn{from{transform:rotate(-4deg) translateY(16px) scale(.97);opacity:0}to{transform:rotate(-1.2deg);opacity:1}}
+/* '비전공자라면' 배지를 제목에서 조금 띄워 위로(10-13) */
+.stories-page .yfeat-tx em{margin-bottom:6px;transform:translateY(-3px)}
+/* '나도 지원할 수 있는지 확인하기' 버튼: 오른쪽 카드 끝에 맞춤(10-13) */
+.stories-page .pjout{display:flex;flex-direction:column}
+.stories-page .pjout-go{align-self:flex-end}
+@media (max-width:860px){.stories-page .pjout-go{align-self:stretch;justify-content:center}}
+
+/* 후기 리스트 보기 태그(10-13, 리스트태그 시안 2): 알약 폭 고정 84px + 글자 가운데, 옅은 파랑 바탕 + 파랑 글자 */
+.stories-page .rvr{grid-template-columns:9px 84px minmax(0,1fr) 158px}
+.stories-page .rvr .tg{justify-self:stretch;justify-content:center;width:84px;padding:0!important;background:#E8EEFC!important;color:var(--blue)!important}
+@media (max-width:860px){.stories-page .rvr{grid-template-columns:9px 84px minmax(0,1fr)}}
+
+/* 프로젝트 카드(10-13): 무엇을 하는 서비스인지 한 문장을 큰 제목으로. 번호 · 서비스 이름은 위 작은 줄, 한 줄 설명 · 태그 · 팀 정보는 작게(자세한 건 시연 영상에서) */
+.stories-page .pr .pjname{display:flex;align-items:center;gap:10px;margin:0;font-size:15px;font-weight:700;color:var(--blue);letter-spacing:-.01em}
+.stories-page section.proj .pr .pjname .no,
+.stories-page .pr .pjname .no{display:inline-grid;place-items:center;min-width:34px;height:24px;padding:0 6px;border-radius:999px;background:var(--ink);color:#fff;
+  font-family:var(--num);font-size:13px;letter-spacing:.04em;-webkit-text-stroke:0;line-height:1}
+.stories-page .pr h3.pjhl{margin-top:14px;font-family:var(--ff-title);font-size:clamp(28px,2.7vw,40px);line-height:1.28;letter-spacing:-.02em;color:var(--ink);word-break:keep-all;text-wrap:balance}
+.stories-page .pr .sum{margin-top:14px;font-size:15.5px;line-height:1.6;color:#6B7280}
+.stories-page .pr .tags{margin-top:14px}
+.stories-page .pr .tags span{height:24px;padding:0 9px;font-size:12px}
+.stories-page .pr .info{margin-top:22px;padding-top:16px}
+.stories-page .pr .info dt{font-size:12px;line-height:14px}
+.stories-page .pr .info dd{font-size:14px;line-height:20px;font-weight:600}
+@media (max-width:980px){body .stories-page .pr h3.pjhl{font-size:24px}}
+/* 프로젝트 카드 큰 제목: Paperlogy ExtraBold(10-13) */
+@font-face{font-family:"Paperlogy XB";src:url("../assets/fonts/Paperlogy-8ExtraBold.woff2") format("woff2");font-weight:800;font-display:swap}
+.stories-page .pr h3.pjhl{font-family:"Paperlogy XB",var(--ff-text);font-weight:800;letter-spacing:-.035em;line-height:1.32}
+/* 프로젝트 카드 제목을 섹션 제목보다 한 단계 아래로(10-13): SemiBold · 작게 */
+.stories-page .pr h3.pjhl{font-family:var(--ff-text);font-weight:600;font-size:clamp(22px,2vw,28px);line-height:1.4;letter-spacing:-.03em;margin-top:12px}
+@media (max-width:980px){body .stories-page .pr h3.pjhl{font-size:20px}}
+
+
+/* =========================================================
+   인사교 알아보기 오른쪽 목차(10-13): 지원 전 체크의 플로팅 목차(.sec-float)와 같은 모양으로 교체
+   기존 레일(.section-navigation)은 숨김. 움직임은 about/js/about.js 맨 끝
+   ========================================================= */
+.school-about .section-navigation{display:none!important}
+.school-about .sec-float{position:fixed;right:clamp(14px,2.2vw,36px);top:50%;z-index:30;transform:translateY(-50%);opacity:0;transition:opacity .4s var(--ease,cubic-bezier(.22,.61,.36,1))}
+.school-about .sec-float.is-in{opacity:1}
+.school-about .sec-float ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;gap:18px}
+.school-about .sf-btn{display:flex;flex-direction:column;align-items:center;gap:0;padding:6px 8px;background:none;border:0;cursor:pointer;font:inherit;color:var(--graphite)}
+.school-about .sf-slash{display:block;width:22px;height:14px;position:relative}
+.school-about .sf-slash::before{content:"";position:absolute;left:50%;top:50%;width:20px;height:1.5px;border-radius:1px;background:currentColor;opacity:.55;transform:translate(-50%,-50%) rotate(-28deg);transition:opacity .25s,background .25s,width .25s var(--ease,cubic-bezier(.22,.61,.36,1))}
+.school-about .sf-label{writing-mode:vertical-rl;font-size:13px;font-weight:600;letter-spacing:.08em;line-height:1;white-space:nowrap;color:var(--blue);max-height:0;opacity:0;overflow:hidden;margin-top:0;transition:max-height .45s var(--ease,cubic-bezier(.22,.61,.36,1)),opacity .3s,margin-top .3s var(--ease,cubic-bezier(.22,.61,.36,1))}
+.school-about .sf-btn::after{content:"";display:block;width:1px;height:0;margin-top:0;background:var(--blue);transition:height .45s var(--ease,cubic-bezier(.22,.61,.36,1)),margin-top .45s var(--ease,cubic-bezier(.22,.61,.36,1))}
+.school-about .sf-btn:hover .sf-label,.sf-btn:focus-visible .sf-label{max-height:220px;opacity:1;margin-top:10px}
+.school-about .sf-btn:hover::after,.sf-btn:focus-visible::after{height:64px;margin-top:12px}
+.school-about .sf-btn:hover .sf-slash::before,.sf-btn:focus-visible .sf-slash::before{opacity:1;background:var(--blue);width:24px}
+.school-about .sf-btn.is-active .sf-slash::before{opacity:1;background:var(--blue);width:24px}
+.school-about .sf-btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:4px}
+@media (max-width:767px){.school-about .sec-float{display:none}}
+@media (prefers-reduced-motion:reduce){.school-about .sec-float,.school-about .sf-label,.school-about .sf-btn::after,.school-about .sf-slash::before{transition:none}}
+/* 알아보기 플로팅 목차: 어두운 히어로 위에서는 흰 막대 · 흰 글자 */
+.school-about .sec-float.on-dark .sf-btn{color:rgba(255,255,255,.85)}
+.school-about .sec-float.on-dark .sf-btn.is-active .sf-slash::before,
+.school-about .sec-float.on-dark .sf-btn:hover .sf-slash::before{background:#fff}
+.school-about .sec-float.on-dark .sf-label{color:#fff}
+.school-about .sec-float.on-dark .sf-btn::after{background:#fff}
+/* 전체 인터뷰 카드 요약 · 지은이 줄: Pretendard(10-13) */
+.stories-page .iva-c p,
+.stories-page .iva-c .by.by-t{font-family:var(--ff-sans);letter-spacing:-.01em}

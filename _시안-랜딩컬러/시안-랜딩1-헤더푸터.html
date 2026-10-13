@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>[랜딩 1-헤더푸터] [랜딩 테스트] 인사교 A to Z · 인공지능사관학교</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@1&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/styles.css">
+<style>/* 안 1 · 바탕 차콜 + 헤더 · 푸터만 프라이머리(위아래로 감싸는 구조) */
+:root{--ax-bg:#2B2D31}
+body.is-home .hdr-bar,body.is-home .site-header.menu-open .hdr-bar,body.is-home .mega{background:#102D80!important}
+body.is-home .site-footer{background:#102D80!important}
+.sian-note{position:fixed;left:12px;bottom:12px;z-index:99;padding:8px 14px;border-radius:999px;background:#fff;color:#14233F;font:700 13px/1.4 sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+</style>
+</head>
+<body>
+<div class="sian-note" aria-hidden="true">안 1 · 바탕 차콜 + 헤더 · 푸터만 프라이머리(위아래로 감싸는 구조)</div>
+
+<a class="sr-only" href="#main">본문으로 바로가기</a>
+
+<header class="site-header" id="siteHeader">
+  <div class="hdr-bar">
+    <div class="wrap hdr-inner">
+      <a class="logo" href="#/" aria-label="인공지능사관학교 홈">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="logo-text">인공지능사관학교</span>
+      </a>
+      <nav aria-label="주 메뉴" style="height:100%;display:flex;flex:1">
+        <ul class="gnb" id="gnb"></ul>
+      </nav>
+      <div class="hdr-util">
+        <button class="icon-btn" id="searchBtn" aria-label="검색 열기" aria-expanded="false" aria-controls="searchPanel">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+        </button>
+        <a class="official-link" href="#official" data-toast="공식 홈페이지 주소는 확정 후 연결돼요">공식 홈페이지</a>
+        <a class="btn-apply" href="#apply" data-toast="지원하기 연결처(카카오톡 채널 / 공식 접수처)는 확인 중이에요">지원하기</a>
+        <button class="icon-btn menu-toggle" id="menuBtn" aria-label="전체 메뉴 열기" aria-expanded="false" aria-controls="drawer">
+          <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="mega" id="mega"><div class="wrap mega-inner" id="megaInner"></div></div>
+  <div class="search-panel" id="searchPanel">
+    <div class="wrap">
+      <form role="search" onsubmit="event.preventDefault();App.toast('통합 검색은 개발 단계에서 연결돼요')">
+        <label class="sr-only" for="q">사이트 검색</label>
+        <input id="q" type="search" placeholder="궁금한 걸 검색해 보세요. 예) 비전공자, 월세, 점심">
+        <button class="icon-btn" type="submit" aria-label="검색"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      </form>
+      <div class="search-tags"><a href="#/stories/reviews">#비전공자</a><a href="#/life/tips">#타지출신</a><a href="#/stories/reviews">#팀활동</a><a href="#/check/faq">#지원금</a></div>
+    </div>
+  </div>
+  <div class="subnav" id="subnav"></div>
+</header>
+
+<aside class="drawer" id="drawer" aria-label="전체 메뉴">
+  <div class="drawer-top">
+    <a class="logo" href="#/"><span class="logo-mark" aria-hidden="true"></span><span class="logo-text">인공지능사관학교</span></a>
+    <button class="icon-btn" id="drawerClose" aria-label="전체 메뉴 닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <div id="drawerNav"></div>
+  <a class="drawer-cta" href="#apply" data-toast="지원하기 연결처는 확인 중이에요">지원하기</a>
+</aside>
+
+<main id="main" tabindex="-1"></main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="logo" href="#/"><span class="logo-mark" aria-hidden="true"></span><span class="logo-text">인공지능사관학교</span></a>
+      <address>광주광역시 동구 제봉로 92<br>주관 인공지능산업융합사업단(AICA) · 운영 이스트소프트</address>
+    </div>
+    <div>
+      <ul class="footer-links">
+        <li><a href="#official" data-toast="공식 홈페이지 주소는 확정 후 연결돼요">공식 홈페이지 바로가기</a></li>
+        <li><a href="#kakao" data-toast="카카오톡 채널 주소는 확정 후 연결돼요">카카오톡 채널</a></li>
+        <li><a href="#privacy">개인정보처리방침</a></li>
+        <li><a href="#policy">운영정책 · 게시물 신고</a></li>
+      </ul>
+      <p style="margin:0">이 사이트는 입교를 고민하는 분들을 위한 선배들의 기록 공간이에요. 모집 공고와 공식 안내는 공식 홈페이지를 기준으로 해요.</p>
+      <p class="footer-copy">© 2026 인공지능사관학교. 콘텐츠 속 사진·인터뷰는 본인 동의를 받아 게시해요.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="floating">
+  <button class="fab-top" id="fabTop" aria-label="맨 위로"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/script.js"></script>
+</body>
+</html>

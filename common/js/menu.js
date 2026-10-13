@@ -21,11 +21,10 @@ const SITE_MENU = [
     { id:'activity', label:'어떤 활동을 하나요?', anchor:'#activities' },
     { id:'career', label:'취업·창업 지원', anchor:'#career' } ]},
   { id:'stories', label:'선배들의 이야기', title:'먼저 다녀온 선배들의 SSUL', type:'tab', page:'stories/index.html', children:[
-    { id:'reviews', label:'선배 후기' },
-    { id:'interviews', label:'선배 인터뷰' },
+    { id:'reviews', label:'선배 이야기' },   // 10-13: 선배 후기 + 선배 인터뷰를 한 메뉴로. 안에서 후기 · 인터뷰 탭(#reviews · #interviews)
     { id:'projects', label:'프로젝트' },
-    { id:'cohorts', label:'기수별 모아보기' } ]},
-  { id:'life', label:'인사교 라이프', type:'tab', page:'life/index.html', children:[
+    { id:'cohorts', label:'기수별 이모저모' } ]},
+  { id:'life', label:'인사교 라이프', title:'인사교 LIFE', type:'tab', page:'life/index.html', children:[
     { id:'facilities', label:'시설 둘러보기' },
     { id:'tips', label:'생활 꿀팁' },
     { id:'directions', label:'오시는 길' } ]},

@@ -18,57 +18,55 @@
   <link rel="stylesheet" href="../common/css/site.css">
   <link rel="stylesheet" href="css/stories.css">
   <link rel="stylesheet" href="css/stories-sections.css">
+  <link rel="stylesheet" href="../common/css/unify.css">
+  <script src="js/cohort-ig.js" defer></script>
   <script src="js/stories-sections.js" defer></script>
   <script src="../common/js/menu.js" defer></script>
   <script src="../common/js/site.js" defer></script>
   <script src="js/stories.js" defer></script>
+  <script src="js/hero-page.js" defer></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
 <!-- 본문: 디자이너 시안 '선배들의이야기_최신'(2026-10-08). 2뎁스는 헤더 밑 공통 하위 메뉴 바, 주소 #reviews(기본) · #interviews · #projects · #cohorts → 탭 라디오 t1~t4(js/stories.js)
      구조: 히어로 캐러셀(#hx) → .st-main 안 탭 4개(#p-rev · #p-iv · #p-pr · #p-coh, 인터뷰 상세 .ivd #iv-… · 프로젝트 상세 .pjd #pj-…) → 글 창 .ov(#r-…) · 기수 기록 창 .cmodal(JS가 누른 카드 내용을 옮김)
-     JS가 그리는 곳: 인터뷰 전체 목록 #iv-all(js/stories-sections.js가 위 추천 캐러셀 카드 a.iv를 읽어 만듦 — 인터뷰는 캐러셀 카드만 추가),
-     기수 탭의 기수 버튼 · 교육과정 카드 · 쪽 번호(js/stories.js, 교육과정 트랙 이름은 STORIES_CURRICULUM). 탭 앞 .tgt2(#go-iv · #go-pr · #go-coh)는 시안 옛 주소 자리표
      쓰기 버튼 · 쓰기 창은 관리자 전용이라 공개 화면에서 뺌(2026-10-08 사용자 결정. 옛 주소 #write-…는 js/stories.js가 그 탭으로)
      반복 단위(첫 항목에만 data-field 표시, 나머지는 같은 구조): 후기 카드 .idc · 후기 리스트 행 .rvr · 글 창 .ov · 인터뷰 카드 .iv · 인터뷰 상세 .ivd · 프로젝트 .pp · 기수 카드 a.st
      칸 이름: title · summary · body · category · cohort · tag · thumbnail · author · date(common 게시판과 같음) + track(이름 옆 분야, 예: 데이터 분석 · AI 모델링) · duration(영상 길이) · question · answer · team · type · term(프로젝트 정보)
      cohort 칸은 대부분 '7<i>기</i>'처럼 숫자 뒤 '기'가 <i>로 붙어 있음 — 템플릿에서는 숫자만 넣고 <i>기</i>는 마크업에 둠(기수 카드 .cg만 '7기' 글자 그대로) -->
 <main id="main" class="stories-page" tabindex="-1">
-<section class="hx" id="hx" aria-roledescription="carousel" aria-label="선배들의 대표 이야기">
+<section class="hx" id="stories-home" aria-label="선배들의 이야기">
   <h1 class="sr">선배들의 이야기</h1>
   <div class="hx-in">
-    <div class="hx-head"><div class="hx-ssul">먼저 다녀온 선배들의 <b>SSUL</b></div></div>
-    <div class="hx-row">
-      <article class="hx-pn on" data-i="0" aria-roledescription="slide" aria-label="1 / 4 후기">
-        <img class="hx-img" src="assets/cover-living-costs.jpg" alt="한 달 생활비 정산표와 달력, 계산기, 카드 일러스트" width="1536" height="1024">
-        <button class="hx-open" type="button" aria-label="후기 이야기 펼치기"><span class="hx-lab" aria-hidden="true"><em>01</em><i class="hx-ln"></i><span class="hx-v"><span>후</span><span>기</span></span></span></button>
-        <div class="hx-tx">
-          <div class="hx-k">대표 후기 · 생활 · 지원금</div>
-          <h2>생활지원금으로 한 달을 꾸려본 기록</h2>
-          <p>교통비 6만원, 점심값 20만원. 광주로 전입하면서 숙박비까지 받았더니 월세 부담이 확 줄었습니다.</p>
-          <div class="hx-by">
-            <span class="hx-av">김</span>
-            <span><b>김민서</b>7기 · 데이터 분석</span>
-            <a class="hx-go" href="#reviews">후기 읽기 <span aria-hidden="true">→</span></a>
-          </div>
-        </div>
-      </article>
-      <article class="hx-pn" data-i="1" aria-roledescription="slide" aria-label="2 / 4 인터뷰">
-        <img class="hx-img" src="assets/team-pointing.jpg" alt="7기 김서준 인터뷰 사진" loading="lazy" decoding="async" width="1000" height="562">
-        <button class="hx-open" type="button" aria-label="인터뷰 이야기 펼치기"><span class="hx-lab" aria-hidden="true"><em>02</em><i class="hx-ln"></i><span class="hx-v"><span>인</span><span>터</span><span>뷰</span></span></span></button>
-        <div class="hx-tx">
-          <div class="hx-k">대표 인터뷰 · Q&amp;A 6</div>
-          <h2>기획자였던 제가 AI 엔지니어로 바뀌기까지</h2>
-          <p>3년차 서비스 기획자였습니다. 모델을 직접 만들어보고 싶어서 8개월을 비웠습니다.</p>
-          <div class="hx-by">
-            <span class="hx-av">김</span>
-            <span><b>김서준</b>7기 · AI 모델링</span>
-            <a class="hx-go" href="#interviews">인터뷰 읽기 <span aria-hidden="true">→</span></a>
-          </div>
-        </div>
-      </article>
-      <article class="hx-pn" data-i="2" aria-roledescription="slide" aria-label="3 / 4 프로젝트">
-        <svg viewBox="0 0 840 560" preserveAspectRatio="xMidYMid slice" role="img" class="hx-img" aria-label="손끝 앱이 횡단보도를 인식하는 장면 일러스트">
+    <div class="hx-head">
+      <p class="hx-ssul">먼저 다녀온<br>선배들의 <b>SSUL</b></p>
+      <p class="hx-s">후기, 인터뷰, 프로젝트, 기수 기록까지 먼저 지나간 선배들이 남긴 이야기를 한곳에 모았어요.</p>
+      <p class="hx-hint" aria-hidden="true"><i></i>오른쪽에서 골라 보세요</p>
+      <ul class="hx-f" aria-label="한눈에">
+        <li><b>56</b>선배 후기</li>
+        <li><b>7</b>선배 인터뷰</li>
+        <li><b>6</b>프로젝트 사례</li>
+      </ul>
+    </div>
+    <nav class="hx-p" aria-label="선배들의 이야기 하위 메뉴 · 누르면 그 화면으로">
+      <a class="hxp is-open" href="#reviews">
+        <span class="hxp-m" aria-hidden="true"><img class="hxp-i" src="assets/cover-living-costs.jpg" alt="" width="1536" height="1024"></span>
+        <span class="hxp-n" aria-hidden="true">01</span>
+        <span class="hxp-c">
+          <em>REVIEW</em><b>후기</b>
+          <span class="hxp-x"><span class="hxp-xi"><span class="hxp-d">생활 · 수업 · 프로젝트 · 취업, 선배들이 직접 쓴 후기를 모았어요.</span><span class="hxp-l"><span>생활지원금으로 한 달을 꾸려본 기록</span><span>헬스케어 도메인, 비전공자의 6주</span><span>격주 미팅이 있는 프로젝트의 리듬</span></span><span class="hxp-go">후기 보기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"></path></svg></span></span></span>
+        </span>
+      </a>
+      <a class="hxp" href="#interviews">
+        <span class="hxp-m" aria-hidden="true"><img class="hxp-i" src="assets/team-pointing.jpg" alt="" loading="lazy" decoding="async" width="1000" height="562"></span>
+        <span class="hxp-n" aria-hidden="true">02</span>
+        <span class="hxp-c">
+          <em>INTERVIEW</em><b>인터뷰</b>
+          <span class="hxp-x"><span class="hxp-xi"><span class="hxp-d">직무를 바꾸고, 창업하고, 지금 다니는 선배들의 인터뷰예요.</span><span class="hxp-l"><span>기획자였던 제가 AI 엔지니어로 바뀌기까지</span><span>서버를 한 번도 안 만져본 문과생의 8개월</span><span>도약과정 프로젝트를 그대로 창업으로</span></span><span class="hxp-go">인터뷰 보기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"></path></svg></span></span></span>
+        </span>
+      </a>
+      <a class="hxp" href="#projects">
+        <span class="hxp-m" aria-hidden="true"><svg viewBox="0 0 840 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="hxp-i" aria-label="손끝 앱이 횡단보도를 인식하는 장면 일러스트">
           <rect width="840" height="560" fill="#26272B"/>
           <rect y="372" width="840" height="188" fill="#323338"/>
           <g fill="#ECEDEF" opacity=".88"><rect x="60" y="398" width="58" height="150" rx="5"/><rect x="156" y="398" width="58" height="150" rx="5"/><rect x="626" y="398" width="58" height="150" rx="5"/><rect x="722" y="398" width="58" height="150" rx="5"/></g>
@@ -83,43 +81,22 @@
           <circle cx="420" cy="336" r="34" fill="#E5197F"/>
           <g stroke="#fff" stroke-width="4.5" stroke-linecap="round"><path d="M404 326v20M413 318v36M422 323v26M431 329v14"/></g>
           <g fill="none" stroke="#E5197F" stroke-width="3" opacity=".45"><path d="M540 300a60 60 0 0 1 0 72"/><path d="M566 280a92 92 0 0 1 0 112"/></g>
-        </svg>
-        <button class="hx-open" type="button" aria-label="프로젝트 이야기 펼치기"><span class="hx-lab" aria-hidden="true"><em>03</em><i class="hx-ln"></i><span class="hx-v"><span>프</span><span>로</span><span>젝</span><span>트</span></span></span></button>
-        <div class="hx-tx">
-          <div class="hx-k">대표 프로젝트 · 실증 · 720H</div>
-          <h2>손끝, 시각장애인 보행 보조 앱</h2>
-          <p>휴대폰 카메라만으로 횡단보도 신호와 점자블록을 읽어 음성으로 알려줍니다. 광주 동구 일대에서 2주간 실증했습니다.</p>
-          <div class="hx-by">
-            <span class="hx-av">손</span>
-            <span><b>AI 모델링 2반</b>5명 · 컴퓨터비전 · Flutter</span>
-            <a class="hx-go" href="#projects">프로젝트 보기 <span aria-hidden="true">→</span></a>
-          </div>
-        </div>
-      </article>
-      <article class="hx-pn" data-i="3" aria-roledescription="slide" aria-label="4 / 4 기수">
-        <img class="hx-img" src="assets/presentation-books.jpg" alt="6기 도약과정 중간발표회 현장, 책상 위에 쌓인 발표 자료집" loading="lazy" decoding="async" width="880" height="495">
-        <button class="hx-open" type="button" aria-label="기수 이야기 펼치기"><span class="hx-lab" aria-hidden="true"><em>04</em><i class="hx-ln"></i><span class="hx-v"><span>기</span><span>수</span></span></span></button>
-        <div class="hx-tx">
-          <div class="hx-k">6기 대표 사진 · 기수별 모아보기</div>
-          <h2>도약과정 중간발표회 현장</h2>
-          <p>1,551명이 지원한 해. 10개 반, 7개 트랙에서 절반쯤 온 팀들이 무엇을 보여줬는지 기록했습니다.</p>
-          <div class="hx-by">
-            <span class="hx-av">6</span>
-            <span><b>6기 기록</b>2025. 10. 22</span>
-            <a class="hx-go" href="#cohorts">기수별 모아보기 <span aria-hidden="true">→</span></a>
-          </div>
-        </div>
-      </article>
-    </div>
-    <div class="hx-prog">
-      <div class="hx-segs" role="group" aria-label="대표 이야기 고르기">
-        <button type="button" aria-label="1번째 이야기: 후기"><i></i></button>
-        <button type="button" aria-label="2번째 이야기: 인터뷰"><i></i></button>
-        <button type="button" aria-label="3번째 이야기: 프로젝트"><i></i></button>
-        <button type="button" aria-label="4번째 이야기: 기수"><i></i></button>
-      </div>
-      <span class="hx-cue" aria-hidden="true">아래로 이어지는 이야기<i></i></span>
-    </div>
+        </svg></span>
+        <span class="hxp-n" aria-hidden="true">03</span>
+        <span class="hxp-c">
+          <em>PROJECT</em><b>프로젝트</b>
+          <span class="hxp-x"><span class="hxp-xi"><span class="hxp-d">실증까지 해 본 프로젝트를 문제 정의부터 결과까지 소개해요.</span><span class="hxp-l"><span>손끝 — 시각장애인 보행 보조 앱</span><span>밥값 — 구내식당 혼잡도 예측</span><span>틈 — 중소병원 판독 보조</span></span><span class="hxp-go">프로젝트 보기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"></path></svg></span></span></span>
+        </span>
+      </a>
+      <a class="hxp" href="#cohorts">
+        <span class="hxp-m" aria-hidden="true"><img class="hxp-i" src="assets/presentation-books.jpg" alt="" loading="lazy" decoding="async" width="880" height="495"></span>
+        <span class="hxp-n" aria-hidden="true">04</span>
+        <span class="hxp-c">
+          <em>COHORT</em><b>기수별 이모저모</b>
+          <span class="hxp-x"><span class="hxp-xi"><span class="hxp-d">입교식부터 수료식까지, 기수마다 남긴 기록을 모아 봐요.</span><span class="hxp-l"><span>도약과정 중간발표회 현장</span><span>7기 입교식 하이라이트</span><span>마지막 해커톤, 소노벨 변산 2박 3일</span></span><span class="hxp-go">기수별 보기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"></path></svg></span></span></span>
+        </span>
+      </a>
+    </nav>
   </div>
 </section>
 
@@ -136,7 +113,8 @@
     <input class="tr" autocomplete="off" type="radio" name="rc" id="rc_life">
     <input class="tr" autocomplete="off" type="radio" name="rc" id="rc_class">
     <input class="tr" autocomplete="off" type="radio" name="rc" id="rc_proj">
-    <input class="tr" autocomplete="off" type="radio" name="rc" id="rc_career">
+    <input class="tr" autocomplete="off" type="radio" name="rc" id="rc_job">
+    <input class="tr" autocomplete="off" type="radio" name="rc" id="rc_path">
     <input class="tr" autocomplete="off" type="radio" name="fco" id="fco_all" checked>
     <input class="tr" autocomplete="off" type="radio" name="fco" id="fco_0">
     <input class="tr" autocomplete="off" type="radio" name="fco" id="fco_1">
@@ -153,86 +131,87 @@
     <input class="tr" autocomplete="off" type="radio" name="pgn" id="pgn6">
     <input class="tr" autocomplete="off" type="radio" name="pgn" id="pgn7">
     <div class="sh sh-row">
-      <div><h2>후기</h2><p>겪어 본 사람이 직접 써요</p></div>
+      <div><p class="sh-k">선배 이야기</p><h2>먼저 겪어 본 선배들이 솔직하게 남겼어요</h2></div>
     </div>
+    <nav class="ytabs" aria-label="선배 이야기 보기"><a href="#reviews" aria-current="page">후기 <span>56</span></a><a href="#interviews">인터뷰 <span>7</span></a></nav>
     <div class="lmq lq" aria-label="후기 미리보기" role="group">
       <div class="lq-rail">
         <div class="lq-t">
-          <a class="lq-c" href="#r-life-0" style="--c:#0E9DB3"><span class="t">교통비 6만원, 점심값 20만원.</span><span class="a">김민서 · 7기</span></a>
-          <a class="lq-c" href="#r-class-0" style="--c:#C9A800"><span class="t">의료 데이터는 전처리가 8할입니다.</span><span class="a">정하윤 · 6기</span></a>
-          <a class="lq-c" href="#r-proj-0" style="--c:#4FA51A"><span class="t">그 사이에 뭘 보여줄지가 팀의 스프린트가 됩니다.</span><span class="a">오세진 · 6기</span></a>
+          <a class="lq-c" href="#r-life-0" style="--c:#0E9DB3"><span class="t">교통비 6만원, 점심값 20만원.</span><span class="a">김ㅇㅇ · 7기</span></a>
+          <a class="lq-c" href="#r-class-0" style="--c:#C9A800"><span class="t">의료 데이터는 전처리가 8할입니다.</span><span class="a">정ㅇㅇ · 6기</span></a>
+          <a class="lq-c" href="#r-proj-0" style="--c:#4FA51A"><span class="t">그 사이에 뭘 보여줄지가 팀의 스프린트가 됩니다.</span><span class="a">오ㅇㅇ · 6기</span></a>
           <a class="lq-c" href="#r-career-0" style="--c:#1F4ED8">
             <span class="t">코드를 짜는 시간보다 왜 그렇게 짜는지 듣는 시간이 길었습니다.</span>
-            <span class="a">장우석 · 6기</span>
+            <span class="a">장ㅇㅇ · 6기</span>
           </a>
           <a class="lq-c" href="#r-life-1" style="--c:#0E9DB3">
             <span class="t">도시락 데우는 줄에서 만난 네 명이 그대로 팀이 됐습니다.</span>
-            <span class="a">이준호 · 7기</span>
+            <span class="a">이ㅇㅇ · 7기</span>
           </a>
-          <a class="lq-c" href="#r-class-1" style="--c:#C9A800"><span class="t">모델은 만들었는데 어디에 올릴지를 몰랐습니다.</span><span class="a">최도현 · 5기</span></a>
-          <a class="lq-c" href="#r-proj-1" style="--c:#4FA51A"><span class="t">도약과정에서 만든 서비스를 그대로 가져갔습니다.</span><span class="a">윤가람 · 5기</span></a>
+          <a class="lq-c" href="#r-class-1" style="--c:#C9A800"><span class="t">모델은 만들었는데 어디에 올릴지를 몰랐습니다.</span><span class="a">최ㅇㅇ · 5기</span></a>
+          <a class="lq-c" href="#r-proj-1" style="--c:#4FA51A"><span class="t">도약과정에서 만든 서비스를 그대로 가져갔습니다.</span><span class="a">윤ㅇㅇ · 5기</span></a>
           <a class="lq-c" href="#r-career-1" style="--c:#1F4ED8">
             <span class="t">기획으로 들어왔는데 데이터를 들여다보는 시간이 더 많았습니다.</span>
-            <span class="a">노다현 · 7기</span>
+            <span class="a">노ㅇㅇ · 7기</span>
           </a>
-          <a class="lq-c" href="#r-life-2" style="--c:#0E9DB3"><span class="t">인기 시간대는 전날 밤에 다 나갑니다.</span><span class="a">박서연 · 6기</span></a>
-          <a class="lq-c" href="#r-class-2" style="--c:#C9A800"><span class="t">질문을 적어갔더니 돌아오는 버스가 달랐습니다.</span><span class="a">한지우 · 4기</span></a>
-          <a class="lq-c" href="#r-proj-2" style="--c:#4FA51A"><span class="t">화면을 세 번 갈아엎고 나서야 통과됐습니다.</span><span class="a">신예린 · 6기</span></a>
+          <a class="lq-c" href="#r-life-2" style="--c:#0E9DB3"><span class="t">인기 시간대는 전날 밤에 다 나갑니다.</span><span class="a">박ㅇㅇ · 6기</span></a>
+          <a class="lq-c" href="#r-class-2" style="--c:#C9A800"><span class="t">질문을 적어갔더니 돌아오는 버스가 달랐습니다.</span><span class="a">한ㅇㅇ · 4기</span></a>
+          <a class="lq-c" href="#r-proj-2" style="--c:#4FA51A"><span class="t">화면을 세 번 갈아엎고 나서야 통과됐습니다.</span><span class="a">신ㅇㅇ · 6기</span></a>
           <a class="lq-c" href="#r-career-2" style="--c:#1F4ED8">
             <span class="t">제가 만든 걸 바로 올려 볼 수 있는 쪽이 맞았습니다.</span>
-            <span class="a">구본영 · 5기</span>
+            <span class="a">구ㅇㅇ · 5기</span>
           </a>
-          <a class="lq-c" href="#r-life-3" style="--c:#0E9DB3"><span class="t">개강 한 달 전에 방을 봤습니다.</span><span class="a">정하윤 · 6기</span></a>
-          <a class="lq-c" href="#r-class-3" style="--c:#C9A800"><span class="t">프로젝트에 들어가면 그 내용이 전부 근거가 됩니다.</span><span class="a">김서진 · 7기</span></a>
-          <a class="lq-c" href="#r-proj-3" style="--c:#4FA51A"><span class="t">현장에 나가야 왜 그런지 알게 됩니다.</span><span class="a">홍시우 · 5기</span></a>
+          <a class="lq-c" href="#r-life-3" style="--c:#0E9DB3"><span class="t">개강 한 달 전에 방을 봤습니다.</span><span class="a">정ㅇㅇ · 6기</span></a>
+          <a class="lq-c" href="#r-class-3" style="--c:#C9A800"><span class="t">프로젝트에 들어가면 그 내용이 전부 근거가 됩니다.</span><span class="a">김ㅇㅇ · 7기</span></a>
+          <a class="lq-c" href="#r-proj-3" style="--c:#4FA51A"><span class="t">현장에 나가야 왜 그런지 알게 됩니다.</span><span class="a">홍ㅇㅇ · 5기</span></a>
           <a class="lq-c" href="#r-career-3" style="--c:#1F4ED8">
             <span class="t">그 세 달이 면접에서 가장 많이 나온 이야기였습니다.</span>
-            <span class="a">심지안 · 6기</span>
+            <span class="a">심ㅇㅇ · 6기</span>
           </a>
-          <a class="lq-c" href="#r-life-4" style="--c:#0E9DB3"><span class="t">결국 절반 이상은 여기서 먹었습니다.</span><span class="a">최도현 · 6기</span></a>
-          <a class="lq-c" href="#r-class-4" style="--c:#C9A800"><span class="t">발표와 문서가 곧 결과물입니다.</span><span class="a">문채원 · 6기</span></a>
-          <a class="lq-c" href="#r-proj-4" style="--c:#4FA51A"><span class="t">방향을 정하는 것도 팀의 일입니다.</span><span class="a">조민규 · 7기</span></a>
+          <a class="lq-c" href="#r-life-4" style="--c:#0E9DB3"><span class="t">결국 절반 이상은 여기서 먹었습니다.</span><span class="a">최ㅇㅇ · 6기</span></a>
+          <a class="lq-c" href="#r-class-4" style="--c:#C9A800"><span class="t">발표와 문서가 곧 결과물입니다.</span><span class="a">문ㅇㅇ · 6기</span></a>
+          <a class="lq-c" href="#r-proj-4" style="--c:#4FA51A"><span class="t">방향을 정하는 것도 팀의 일입니다.</span><span class="a">조ㅇㅇ · 7기</span></a>
           <a class="lq-c" href="#r-career-4" style="--c:#1F4ED8">
             <span class="t">프로젝트 세 개 중 하나만 남겼습니다. 덜어내는 게 더 어려웠습니다.</span>
-            <span class="a">표민규 · 7기</span>
+            <span class="a">표ㅇㅇ · 7기</span>
           </a>
-          <a class="lq-c" href="#r-life-0" style="--c:#0E9DB3" aria-hidden="true" tabindex="-1"><span class="t">교통비 6만원, 점심값 20만원.</span><span class="a">김민서 · 7기</span></a>
-          <a class="lq-c" href="#r-class-0" style="--c:#C9A800" aria-hidden="true" tabindex="-1"><span class="t">의료 데이터는 전처리가 8할입니다.</span><span class="a">정하윤 · 6기</span></a>
-          <a class="lq-c" href="#r-proj-0" style="--c:#4FA51A" aria-hidden="true" tabindex="-1"><span class="t">그 사이에 뭘 보여줄지가 팀의 스프린트가 됩니다.</span><span class="a">오세진 · 6기</span></a>
+          <a class="lq-c" href="#r-life-0" style="--c:#0E9DB3" aria-hidden="true" tabindex="-1"><span class="t">교통비 6만원, 점심값 20만원.</span><span class="a">김ㅇㅇ · 7기</span></a>
+          <a class="lq-c" href="#r-class-0" style="--c:#C9A800" aria-hidden="true" tabindex="-1"><span class="t">의료 데이터는 전처리가 8할입니다.</span><span class="a">정ㅇㅇ · 6기</span></a>
+          <a class="lq-c" href="#r-proj-0" style="--c:#4FA51A" aria-hidden="true" tabindex="-1"><span class="t">그 사이에 뭘 보여줄지가 팀의 스프린트가 됩니다.</span><span class="a">오ㅇㅇ · 6기</span></a>
           <a class="lq-c" href="#r-career-0" style="--c:#1F4ED8" aria-hidden="true" tabindex="-1">
             <span class="t">코드를 짜는 시간보다 왜 그렇게 짜는지 듣는 시간이 길었습니다.</span>
-            <span class="a">장우석 · 6기</span>
+            <span class="a">장ㅇㅇ · 6기</span>
           </a>
           <a class="lq-c" href="#r-life-1" style="--c:#0E9DB3" aria-hidden="true" tabindex="-1">
             <span class="t">도시락 데우는 줄에서 만난 네 명이 그대로 팀이 됐습니다.</span>
-            <span class="a">이준호 · 7기</span>
+            <span class="a">이ㅇㅇ · 7기</span>
           </a>
-          <a class="lq-c" href="#r-class-1" style="--c:#C9A800" aria-hidden="true" tabindex="-1"><span class="t">모델은 만들었는데 어디에 올릴지를 몰랐습니다.</span><span class="a">최도현 · 5기</span></a>
-          <a class="lq-c" href="#r-proj-1" style="--c:#4FA51A" aria-hidden="true" tabindex="-1"><span class="t">도약과정에서 만든 서비스를 그대로 가져갔습니다.</span><span class="a">윤가람 · 5기</span></a>
+          <a class="lq-c" href="#r-class-1" style="--c:#C9A800" aria-hidden="true" tabindex="-1"><span class="t">모델은 만들었는데 어디에 올릴지를 몰랐습니다.</span><span class="a">최ㅇㅇ · 5기</span></a>
+          <a class="lq-c" href="#r-proj-1" style="--c:#4FA51A" aria-hidden="true" tabindex="-1"><span class="t">도약과정에서 만든 서비스를 그대로 가져갔습니다.</span><span class="a">윤ㅇㅇ · 5기</span></a>
           <a class="lq-c" href="#r-career-1" style="--c:#1F4ED8" aria-hidden="true" tabindex="-1">
             <span class="t">기획으로 들어왔는데 데이터를 들여다보는 시간이 더 많았습니다.</span>
-            <span class="a">노다현 · 7기</span>
+            <span class="a">노ㅇㅇ · 7기</span>
           </a>
-          <a class="lq-c" href="#r-life-2" style="--c:#0E9DB3" aria-hidden="true" tabindex="-1"><span class="t">인기 시간대는 전날 밤에 다 나갑니다.</span><span class="a">박서연 · 6기</span></a>
-          <a class="lq-c" href="#r-class-2" style="--c:#C9A800" aria-hidden="true" tabindex="-1"><span class="t">질문을 적어갔더니 돌아오는 버스가 달랐습니다.</span><span class="a">한지우 · 4기</span></a>
-          <a class="lq-c" href="#r-proj-2" style="--c:#4FA51A" aria-hidden="true" tabindex="-1"><span class="t">화면을 세 번 갈아엎고 나서야 통과됐습니다.</span><span class="a">신예린 · 6기</span></a>
+          <a class="lq-c" href="#r-life-2" style="--c:#0E9DB3" aria-hidden="true" tabindex="-1"><span class="t">인기 시간대는 전날 밤에 다 나갑니다.</span><span class="a">박ㅇㅇ · 6기</span></a>
+          <a class="lq-c" href="#r-class-2" style="--c:#C9A800" aria-hidden="true" tabindex="-1"><span class="t">질문을 적어갔더니 돌아오는 버스가 달랐습니다.</span><span class="a">한ㅇㅇ · 4기</span></a>
+          <a class="lq-c" href="#r-proj-2" style="--c:#4FA51A" aria-hidden="true" tabindex="-1"><span class="t">화면을 세 번 갈아엎고 나서야 통과됐습니다.</span><span class="a">신ㅇㅇ · 6기</span></a>
           <a class="lq-c" href="#r-career-2" style="--c:#1F4ED8" aria-hidden="true" tabindex="-1">
             <span class="t">제가 만든 걸 바로 올려 볼 수 있는 쪽이 맞았습니다.</span>
-            <span class="a">구본영 · 5기</span>
+            <span class="a">구ㅇㅇ · 5기</span>
           </a>
-          <a class="lq-c" href="#r-life-3" style="--c:#0E9DB3" aria-hidden="true" tabindex="-1"><span class="t">개강 한 달 전에 방을 봤습니다.</span><span class="a">정하윤 · 6기</span></a>
-          <a class="lq-c" href="#r-class-3" style="--c:#C9A800" aria-hidden="true" tabindex="-1"><span class="t">프로젝트에 들어가면 그 내용이 전부 근거가 됩니다.</span><span class="a">김서진 · 7기</span></a>
-          <a class="lq-c" href="#r-proj-3" style="--c:#4FA51A" aria-hidden="true" tabindex="-1"><span class="t">현장에 나가야 왜 그런지 알게 됩니다.</span><span class="a">홍시우 · 5기</span></a>
+          <a class="lq-c" href="#r-life-3" style="--c:#0E9DB3" aria-hidden="true" tabindex="-1"><span class="t">개강 한 달 전에 방을 봤습니다.</span><span class="a">정ㅇㅇ · 6기</span></a>
+          <a class="lq-c" href="#r-class-3" style="--c:#C9A800" aria-hidden="true" tabindex="-1"><span class="t">프로젝트에 들어가면 그 내용이 전부 근거가 됩니다.</span><span class="a">김ㅇㅇ · 7기</span></a>
+          <a class="lq-c" href="#r-proj-3" style="--c:#4FA51A" aria-hidden="true" tabindex="-1"><span class="t">현장에 나가야 왜 그런지 알게 됩니다.</span><span class="a">홍ㅇㅇ · 5기</span></a>
           <a class="lq-c" href="#r-career-3" style="--c:#1F4ED8" aria-hidden="true" tabindex="-1">
             <span class="t">그 세 달이 면접에서 가장 많이 나온 이야기였습니다.</span>
-            <span class="a">심지안 · 6기</span>
+            <span class="a">심ㅇㅇ · 6기</span>
           </a>
-          <a class="lq-c" href="#r-life-4" style="--c:#0E9DB3" aria-hidden="true" tabindex="-1"><span class="t">결국 절반 이상은 여기서 먹었습니다.</span><span class="a">최도현 · 6기</span></a>
-          <a class="lq-c" href="#r-class-4" style="--c:#C9A800" aria-hidden="true" tabindex="-1"><span class="t">발표와 문서가 곧 결과물입니다.</span><span class="a">문채원 · 6기</span></a>
-          <a class="lq-c" href="#r-proj-4" style="--c:#4FA51A" aria-hidden="true" tabindex="-1"><span class="t">방향을 정하는 것도 팀의 일입니다.</span><span class="a">조민규 · 7기</span></a>
+          <a class="lq-c" href="#r-life-4" style="--c:#0E9DB3" aria-hidden="true" tabindex="-1"><span class="t">결국 절반 이상은 여기서 먹었습니다.</span><span class="a">최ㅇㅇ · 6기</span></a>
+          <a class="lq-c" href="#r-class-4" style="--c:#C9A800" aria-hidden="true" tabindex="-1"><span class="t">발표와 문서가 곧 결과물입니다.</span><span class="a">문ㅇㅇ · 6기</span></a>
+          <a class="lq-c" href="#r-proj-4" style="--c:#4FA51A" aria-hidden="true" tabindex="-1"><span class="t">방향을 정하는 것도 팀의 일입니다.</span><span class="a">조ㅇㅇ · 7기</span></a>
           <a class="lq-c" href="#r-career-4" style="--c:#1F4ED8" aria-hidden="true" tabindex="-1">
             <span class="t">프로젝트 세 개 중 하나만 남겼습니다. 덜어내는 게 더 어려웠습니다.</span>
-            <span class="a">표민규 · 7기</span>
+            <span class="a">표ㅇㅇ · 7기</span>
           </a>
         </div>
       </div>
@@ -244,13 +223,19 @@
     <span class="tgt" id="tg-4"></span>
     <span class="tgt" id="tg-5"></span>
     <span class="tgt" id="tg-6"></span>
+    <a class="yfeat" href="#iv-1">
+      <span class="yfeat-ph"><img src="assets/team-pointing-sm.jpg" alt="" loading="lazy" decoding="async"></span>
+      <span class="yfeat-tx"><em>비전공자라면</em><b>기획자였던 제가 AI 엔지니어로 바뀌기까지</b><small>7기 · 김ㅇㅇ · AI 모델링</small></span>
+      <span class="yfeat-go">인터뷰 읽기 <span aria-hidden="true">→</span></span>
+    </a>
+    <div class="sh sh-card"><div><p class="sh-k">후기 모아 보기</p></div></div>
     <div class="filters">
       <div class="chips">
-        <label for="rc_all">전체</label>
+        <label for="rc_all">전체</label><label for="rc_job">취업성공후기</label>
         <label for="rc_life">생활</label>
         <label for="rc_class">수업</label>
         <label for="rc_proj">프로젝트</label>
-        <label for="rc_career">취업·진로</label>
+        <label for="rc_path">진로고민후기</label>
       </div>
       <div class="drawers">
         <details class="dw dw-fco" name="dwg"><summary>
@@ -285,7 +270,7 @@
         <div class="in">
           <h3 data-field="title">생활지원금으로 한 달을 꾸려본 기록</h3>
           <p data-field="summary">교통비 6만원, 점심값 20만원. 광주로 전입하면서 숙박비까지 받았더니 월세 부담이 확 줄었습니다.</p>
-          <div class="who"><b data-field="author">김민서</b><em data-field="track">데이터 분석</em><span class="tg" data-field="tag">#적응</span></div>
+          <div class="who"><b data-field="author">김ㅇㅇ</b><em data-field="track">데이터 분석</em><span class="tg" data-field="tag">#적응</span></div>
         </div>
       </a>
       <a class="idc cat-class coh6 fld0 tg4 pg1" href="#r-class-0" style="--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00">
@@ -293,7 +278,7 @@
         <div class="in">
           <h3>헬스케어 도메인, 비전공자의 6주</h3>
           <p>의료 데이터는 전처리가 8할입니다. 모델을 돌리기 전에 결측치와 라벨 불균형에서 2주를 썼습니다.</p>
-          <div class="who"><b>정하윤</b><em>AI 모델개발</em><span class="tg">#적응</span></div>
+          <div class="who"><b>정ㅇㅇ</b><em>AI 모델개발</em><span class="tg">#적응</span></div>
         </div>
       </a>
       <a class="idc cat-proj coh6 fld1 tg5 tg6 pg1" href="#r-proj-0" style="--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12">
@@ -301,15 +286,15 @@
         <div class="in">
           <h3>격주 미팅이 있는 프로젝트의 리듬</h3>
           <p>기업 담당자와 2주에 한 번 만납니다. 그 사이에 뭘 보여줄지가 팀의 스프린트가 됩니다.</p>
-          <div class="who"><b>오세진</b><em>AI 클라우드·인프라</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>오ㅇㅇ</b><em>AI 클라우드·인프라</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
-      <a class="idc cat-career coh6 fld1 tg4 tg6 pg1" href="#r-career-0" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F">
-        <div class="cbar"><b>취업·진로</b><span>6<i>기</i></span></div>
+      <a class="idc cat-career cat-job coh6 fld1 tg4 tg6 pg1" href="#r-career-0" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F">
+        <div class="cbar"><b>취업 성공</b><span>6<i>기</i></span></div>
         <div class="in">
           <h3>인턴십 두 달, 회사가 돌아가는 걸 처음 봤습니다</h3>
           <p>수료 직후 연계 인턴으로 들어갔습니다. 코드를 짜는 시간보다 왜 그렇게 짜는지 듣는 시간이 길었습니다.</p>
-          <div class="who"><b>장우석</b><em>AI 클라우드·인프라</em><span class="tg">#적응</span></div>
+          <div class="who"><b>장ㅇㅇ</b><em>AI 클라우드·인프라</em><span class="tg">#적응</span></div>
         </div>
       </a>
       <a class="idc cat-life coh7 fld1 tg5 pg1" href="#r-life-1" style="--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563">
@@ -317,7 +302,7 @@
         <div class="in">
           <h3>AI카페가 없었으면 우리 팀도 없었습니다</h3>
           <p>점심마다 도시락을 데우러 오는 사람이 정해져 있는데, 그 줄에서 만난 네 명이 그대로 팀이 됐습니다.</p>
-          <div class="who"><b>이준호</b><em>AI 클라우드·인프라</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>이ㅇㅇ</b><em>AI 클라우드·인프라</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
       <a class="idc cat-class coh5 fld1 tg5 pg1" href="#r-class-1" style="--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00">
@@ -325,7 +310,7 @@
         <div class="in">
           <h3>AWS 특강에서 배운 건 결국 배포였습니다</h3>
           <p>모델은 만들었는데 어디에 올릴지를 몰랐습니다. 이틀 특강으로 EC2와 S3를 붙여봤고 그대로 썼습니다.</p>
-          <div class="who"><b>최도현</b><em>AI 클라우드·인프라</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>최ㅇㅇ</b><em>AI 클라우드·인프라</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
       <a class="idc cat-proj coh5 fld2 tg5 pg1" href="#r-proj-1" style="--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12">
@@ -333,15 +318,15 @@
         <div class="in">
           <h3>수료 두 달 뒤에 법인을 냈습니다</h3>
           <p>도약과정에서 만든 회의록 요약 서비스를 그대로 가져갔습니다. 창업 멘토링이 실제로 도움이 됐습니다.</p>
-          <div class="who"><b>윤가람</b><em>AI 서비스 기획</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>윤ㅇㅇ</b><em>AI 서비스 기획</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
-      <a class="idc cat-career coh7 fld2 tg4 pg1" href="#r-career-1" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F">
-        <div class="cbar"><b>취업·진로</b><span>7<i>기</i></span></div>
+      <a class="idc cat-career cat-path coh7 fld2 tg4 pg1" href="#r-career-1" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F">
+        <div class="cbar"><b>진로 고민</b><span>7<i>기</i></span></div>
         <div class="in">
           <h3>직무가 생각과 달랐던 이야기</h3>
           <p>기획으로 들어왔는데 실제로는 데이터를 들여다보는 시간이 더 많았습니다.</p>
-          <div class="who"><b>노다현</b><em>AI 서비스 기획</em><span class="tg">#적응</span></div>
+          <div class="who"><b>노ㅇㅇ</b><em>AI 서비스 기획</em><span class="tg">#적응</span></div>
         </div>
       </a>
       <a class="idc cat-life coh6 fld2 tg5 pg2" href="#r-life-2" style="--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563">
@@ -349,7 +334,7 @@
         <div class="in">
           <h3>프로젝트룸 예약 전쟁에서 살아남는 법</h3>
           <p>회의실은 예약 시스템으로 씁니다. 인기 시간대는 전날 밤에 다 나가서, 우리 팀은 고정 슬롯을 잡았습니다.</p>
-          <div class="who"><b>박서연</b><em>AI 서비스 기획</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>박ㅇㅇ</b><em>AI 서비스 기획</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
       <a class="idc cat-class coh4 fld2 tg5 tg6 pg2" href="#r-class-2" style="--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00">
@@ -357,7 +342,7 @@
         <div class="in">
           <h3>네이버에 질문 세 개를 준비해 갔습니다</h3>
           <p>구경만 하면 반나절이 그냥 갑니다. Q&amp;A에 쓸 질문을 적어갔더니 돌아오는 버스가 달랐습니다.</p>
-          <div class="who"><b>한지우</b><em>AI 서비스 기획</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>한ㅇㅇ</b><em>AI 서비스 기획</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
       <a class="idc cat-proj coh6 fld0 tg5 pg2" href="#r-proj-2" style="--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12">
@@ -365,15 +350,15 @@
         <div class="in">
           <h3>개발 멘토가 아니라 디자인 멘토를 찾았습니다</h3>
           <p>성능은 어느 정도 나왔는데 아무도 안 쓸 것 같았습니다. 화면을 세 번 갈아엎고 나서야 통과됐습니다.</p>
-          <div class="who"><b>신예린</b><em>AI 모델개발</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>신ㅇㅇ</b><em>AI 모델개발</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
-      <a class="idc cat-career coh5 fld1 tg4 pg2" href="#r-career-2" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F">
-        <div class="cbar"><b>취업·진로</b><span>5<i>기</i></span></div>
+      <a class="idc cat-career cat-job coh5 fld1 tg4 pg2" href="#r-career-2" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F">
+        <div class="cbar"><b>취업 성공</b><span>5<i>기</i></span></div>
         <div class="in">
           <h3>스타트업으로 간 이유</h3>
           <p>대기업 공채를 한 번 보고 접었습니다. 제가 만든 걸 바로 올려 볼 수 있는 쪽이 맞았습니다.</p>
-          <div class="who"><b>구본영</b><em>AI 클라우드·인프라</em><span class="tg">#적응</span></div>
+          <div class="who"><b>구ㅇㅇ</b><em>AI 클라우드·인프라</em><span class="tg">#적응</span></div>
         </div>
       </a>
       <a class="idc cat-life coh6 fld3 tg1 tg5 pg2" href="#r-life-3" style="--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563">
@@ -381,7 +366,7 @@
         <div class="in">
           <h3>타지에서 올라와 방을 구한 순서</h3>
           <p>개강 한 달 전에 방을 봤습니다. 학교 근처 동은 그때쯤 매물이 제일 많았습니다.</p>
-          <div class="who"><b>정하윤</b><em>데이터 분석</em><span class="tg">#타지출신</span></div>
+          <div class="who"><b>정ㅇㅇ</b><em>데이터 분석</em><span class="tg">#타지출신</span></div>
         </div>
       </a>
       <a class="idc cat-class coh7 fld0 tg4 pg2" href="#r-class-3" style="--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00">
@@ -389,7 +374,7 @@
         <div class="in">
           <h3>보안은 처음엔 지루하고 나중에 다 쓰입니다</h3>
           <p>이론 비중이 높아서 초반에 지칩니다. 그런데 프로젝트에 들어가면 그 내용이 전부 근거가 됩니다.</p>
-          <div class="who"><b>김서진</b><em>AI 모델개발</em><span class="tg">#적응</span></div>
+          <div class="who"><b>김ㅇㅇ</b><em>AI 모델개발</em><span class="tg">#적응</span></div>
         </div>
       </a>
       <a class="idc cat-proj coh5 fld0 tg4 pg2" href="#r-proj-3" style="--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12">
@@ -397,15 +382,15 @@
         <div class="in">
           <h3>실증은 절반이 현장입니다</h3>
           <p>데이터가 생각한 대로 나오지 않습니다. 현장에 나가야 왜 그런지 알게 됩니다.</p>
-          <div class="who"><b>홍시우</b><em>AI 모델개발</em><span class="tg">#적응</span></div>
+          <div class="who"><b>홍ㅇㅇ</b><em>AI 모델개발</em><span class="tg">#적응</span></div>
         </div>
       </a>
-      <a class="idc cat-career coh6 fld3 tg6 pg2" href="#r-career-3" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F">
-        <div class="cbar"><b>취업·진로</b><span>6<i>기</i></span></div>
+      <a class="idc cat-career cat-path coh6 fld3 tg6 pg2" href="#r-career-3" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F">
+        <div class="cbar"><b>진로 고민</b><span>6<i>기</i></span></div>
         <div class="in">
           <h3>수료 직후 세 달을 어떻게 썼나</h3>
           <p>바로 취업하지 못했습니다. 그 세 달에 뭘 했는지가 결국 면접에서 가장 많이 나온 이야기였습니다.</p>
-          <div class="who"><b>심지안</b><em>데이터 분석</em><span class="tg">#취업연계</span></div>
+          <div class="who"><b>심ㅇㅇ</b><em>데이터 분석</em><span class="tg">#취업연계</span></div>
         </div>
       </a>
       <a class="idc cat-life coh6 fld1 tg5 pg3" href="#r-life-4" style="--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563">
@@ -413,7 +398,7 @@
         <div class="in">
           <h3>8층 구내식당을 쓰게 된 이유</h3>
           <p>밖에 나가면 왕복 30분은 각오해야 합니다. 생각보다 괜찮아서 결국 절반 이상은 여기서 먹었습니다.</p>
-          <div class="who"><b>최도현</b><em>AI 클라우드·인프라</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>최ㅇㅇ</b><em>AI 클라우드·인프라</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
       <a class="idc cat-class coh6 fld2 tg5 pg3" href="#r-class-4" style="--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00">
@@ -421,7 +406,7 @@
         <div class="in">
           <h3>기획 도메인은 개발을 못해도 됩니다</h3>
           <p>대신 말로 설명하는 걸 굉장히 많이 시킵니다. 발표와 문서가 곧 결과물입니다.</p>
-          <div class="who"><b>문채원</b><em>AI 서비스 기획</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>문ㅇㅇ</b><em>AI 서비스 기획</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
       <a class="idc cat-proj coh7 fld0 tg5 pg3" href="#r-proj-4" style="--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12">
@@ -429,15 +414,15 @@
         <div class="in">
           <h3>자유로운 만큼 스스로 굴려야 합니다</h3>
           <p>창업 유형은 정해진 요구사항이 없습니다. 방향을 정하는 것도 팀의 일입니다.</p>
-          <div class="who"><b>조민규</b><em>AI 모델개발</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>조ㅇㅇ</b><em>AI 모델개발</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
-      <a class="idc cat-career coh7 fld0 tg6 pg3" href="#r-career-4" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F">
-        <div class="cbar"><b>취업·진로</b><span>7<i>기</i></span></div>
+      <a class="idc cat-career cat-path coh7 fld0 tg6 pg3" href="#r-career-4" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F">
+        <div class="cbar"><b>진로 고민</b><span>7<i>기</i></span></div>
         <div class="in">
           <h3>포트폴리오에 뭘 넣었나</h3>
           <p>프로젝트 세 개 중 하나만 남기고 둘을 뺐습니다. 덜어내는 게 더 어려웠습니다.</p>
-          <div class="who"><b>표민규</b><em>AI 모델개발</em><span class="tg">#취업연계</span></div>
+          <div class="who"><b>표ㅇㅇ</b><em>AI 모델개발</em><span class="tg">#취업연계</span></div>
         </div>
       </a>
       <a class="idc cat-life coh4 fld2 tg4 pg3" href="#r-life-5" style="--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563">
@@ -445,7 +430,7 @@
         <div class="in">
           <h3>층별 휴게공간, 어디가 조용한가</h3>
           <p>3층이 제일 조용합니다. 통화하거나 잠깐 집중할 일이 있으면 거기로 올라갔습니다.</p>
-          <div class="who"><b>한지우</b><em>AI 서비스 기획</em><span class="tg">#적응</span></div>
+          <div class="who"><b>한ㅇㅇ</b><em>AI 서비스 기획</em><span class="tg">#적응</span></div>
         </div>
       </a>
       <a class="idc cat-class coh5 fld1 tg0 pg3" href="#r-class-5" style="--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00">
@@ -453,7 +438,7 @@
         <div class="in">
           <h3>파이썬 기초는 떼고 오시는 게 좋습니다</h3>
           <p>수업이 기본 문법은 안다고 가정하고 갑니다. 준비과정 VOD를 제대로 듣는 게 실제로 차이를 만듭니다.</p>
-          <div class="who"><b>류지호</b><em>AI 클라우드·인프라</em><span class="tg">#비전공자</span></div>
+          <div class="who"><b>류ㅇㅇ</b><em>AI 클라우드·인프라</em><span class="tg">#비전공자</span></div>
         </div>
       </a>
       <a class="idc cat-proj coh7 fld3 tg5 pg3" href="#r-proj-5" style="--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12">
@@ -461,15 +446,15 @@
         <div class="in">
           <h3>멘토링은 요청해야 잡힙니다</h3>
           <p>기획, 창업, 디자인, 개발, 비즈니스, 영업까지 분야가 있습니다. 필요한 걸 골라 요청하는 구조입니다.</p>
-          <div class="who"><b>서다온</b><em>데이터 분석</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>서ㅇㅇ</b><em>데이터 분석</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
-      <a class="idc cat-career coh4 fld2 tg4 tg6 pg3" href="#r-career-5" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F">
-        <div class="cbar"><b>취업·진로</b><span>4<i>기</i></span></div>
+      <a class="idc cat-career cat-job coh4 fld2 tg4 tg6 pg3" href="#r-career-5" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F">
+        <div class="cbar"><b>취업 성공</b><span>4<i>기</i></span></div>
         <div class="in">
           <h3>면접에서 제일 많이 받은 질문</h3>
           <p>"비전공자인데 왜 이 일을 하려고 하나요"였습니다. 여덟 번 중 여섯 번 받았습니다.</p>
-          <div class="who"><b>배소율</b><em>AI 서비스 기획</em><span class="tg">#적응</span></div>
+          <div class="who"><b>배ㅇㅇ</b><em>AI 서비스 기획</em><span class="tg">#적응</span></div>
         </div>
       </a>
       <a class="idc cat-life coh5 fld2 tg2 pg4" href="#r-life-6" style="--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563">
@@ -477,7 +462,7 @@
         <div class="in">
           <h3>퇴사하고 들어와서 계산해본 생활비</h3>
           <p>소득이 끊긴 상태로 8개월을 버텨야 하니, 지원금이 어디까지 커버되는지 먼저 계산했습니다.</p>
-          <div class="who"><b>오세진</b><em>AI 서비스 기획</em><span class="tg">#직장인출신</span></div>
+          <div class="who"><b>오ㅇㅇ</b><em>AI 서비스 기획</em><span class="tg">#직장인출신</span></div>
         </div>
       </a>
       <a class="idc cat-class coh3 fld3 tg6 pg4" href="#r-class-6" style="--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00">
@@ -485,7 +470,7 @@
         <div class="in">
           <h3>포트폴리오 첨삭은 중간에 한 번 더</h3>
           <p>수료 직전에만 받으면 고칠 시간이 없습니다. 중간발표 무렵에 한 번 받아두는 걸 권합니다.</p>
-          <div class="who"><b>장유나</b><em>데이터 분석</em><span class="tg">#취업연계</span></div>
+          <div class="who"><b>장ㅇㅇ</b><em>데이터 분석</em><span class="tg">#취업연계</span></div>
         </div>
       </a>
       <a class="idc cat-proj coh4 fld0 tg4 tg6 pg4" href="#r-proj-6" style="--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12">
@@ -493,15 +478,15 @@
         <div class="in">
           <h3>결과물 활용은 시작할 때 협의하세요</h3>
           <p>포트폴리오로 쓸 수 있는 범위는 기업과 협의해야 합니다. 끝나고 물으면 늦습니다.</p>
-          <div class="who"><b>권나윤</b><em>AI 모델개발</em><span class="tg">#적응</span></div>
+          <div class="who"><b>권ㅇㅇ</b><em>AI 모델개발</em><span class="tg">#적응</span></div>
         </div>
       </a>
-      <a class="idc cat-career coh5 fld1 tg6 pg4" href="#r-career-6" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F">
-        <div class="cbar"><b>취업·진로</b><span>5<i>기</i></span></div>
+      <a class="idc cat-career cat-job coh5 fld1 tg6 pg4" href="#r-career-6" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F">
+        <div class="cbar"><b>취업 성공</b><span>5<i>기</i></span></div>
         <div class="in">
           <h3>첫 회사에서 쓴 기술은 절반이었습니다</h3>
           <p>배운 것 중 절반은 그대로 썼고, 나머지 절반은 회사 들어가서 새로 배웠습니다.</p>
-          <div class="who"><b>한결</b><em>AI 클라우드·인프라</em><span class="tg">#취업연계</span></div>
+          <div class="who"><b>한ㅇㅇ</b><em>AI 클라우드·인프라</em><span class="tg">#취업연계</span></div>
         </div>
       </a>
       <a class="idc cat-life coh7 fld2 tg4 pg4" href="#r-life-7" style="--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563">
@@ -509,7 +494,7 @@
         <div class="in">
           <h3>도시락으로 한 달에 15만원</h3>
           <p>싱크대가 있어서 설거지가 되고, 냉장고도 쓸 수 있습니다. 매일은 아니어도 절반만 싸 와도 차이가 큽니다.</p>
-          <div class="who"><b>윤가람</b><em>AI 서비스 기획</em><span class="tg">#적응</span></div>
+          <div class="who"><b>윤ㅇㅇ</b><em>AI 서비스 기획</em><span class="tg">#적응</span></div>
         </div>
       </a>
       <a class="idc cat-class coh6 fld3 tg1 tg5 pg4" href="#r-class-7" style="--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00">
@@ -517,7 +502,7 @@
         <div class="in">
           <h3>금융 도메인은 데이터 구하기가 일입니다</h3>
           <p>공개 데이터셋을 미리 찾아두면 시작이 훨씬 빠릅니다. 없는 데이터를 기다리다 시간을 씁니다.</p>
-          <div class="who"><b>차현우</b><em>데이터 분석</em><span class="tg">#타지출신</span></div>
+          <div class="who"><b>차ㅇㅇ</b><em>데이터 분석</em><span class="tg">#타지출신</span></div>
         </div>
       </a>
       <a class="idc cat-proj coh7 fld1 tg4 pg4" href="#r-proj-7" style="--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12">
@@ -525,15 +510,15 @@
         <div class="in">
           <h3>프로젝트 지원금은 클라우드로 나갑니다</h3>
           <p>저희는 대부분 인프라 비용이었습니다. 계획 없이 쓰면 후반에 모자랍니다.</p>
-          <div class="who"><b>유하람</b><em>AI 클라우드·인프라</em><span class="tg">#적응</span></div>
+          <div class="who"><b>유ㅇㅇ</b><em>AI 클라우드·인프라</em><span class="tg">#적응</span></div>
         </div>
       </a>
-      <a class="idc cat-career coh3 fld3 tg5 tg6 pg4" href="#r-career-7" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F">
-        <div class="cbar"><b>취업·진로</b><span>3<i>기</i></span></div>
+      <a class="idc cat-career cat-job coh3 fld3 tg5 tg6 pg4" href="#r-career-7" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F">
+        <div class="cbar"><b>취업 성공</b><span>3<i>기</i></span></div>
         <div class="in">
           <h3>취업연계 과정에서 알게 된 것</h3>
           <p>연계는 자리를 보장해 주는 게 아니라 문을 한 번 열어 주는 것이었습니다.</p>
-          <div class="who"><b>유세하</b><em>데이터 분석</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>유ㅇㅇ</b><em>데이터 분석</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
       <a class="idc cat-life coh5 fld1 tg4 pg5" href="#r-life-8" style="--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563">
@@ -541,7 +526,7 @@
         <div class="in">
           <h3>주차는 포기하시는 게 좋습니다</h3>
           <p>별도 주차장이 없습니다. 문화전당역 2번 출구 쪽에서 걸어오는 동선이 가장 무난했습니다.</p>
-          <div class="who"><b>신예린</b><em>AI 클라우드·인프라</em><span class="tg">#적응</span></div>
+          <div class="who"><b>신ㅇㅇ</b><em>AI 클라우드·인프라</em><span class="tg">#적응</span></div>
         </div>
       </a>
       <a class="idc cat-class coh4 fld0 tg4 pg5" href="#r-class-8" style="--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00">
@@ -549,7 +534,7 @@
         <div class="in">
           <h3>피지컬 AI는 하드웨어를 만집니다</h3>
           <p>생각보다 실물을 다루는 일이 많습니다. 저는 납땜도 했습니다.</p>
-          <div class="who"><b>손아람</b><em>AI 모델개발</em><span class="tg">#적응</span></div>
+          <div class="who"><b>손ㅇㅇ</b><em>AI 모델개발</em><span class="tg">#적응</span></div>
         </div>
       </a>
       <a class="idc cat-proj coh6 fld1 tg0 tg5 pg5" href="#r-proj-8" style="--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12">
@@ -557,7 +542,7 @@
         <div class="in">
           <h3>코드를 못 짜도 몫은 충분했습니다</h3>
           <p>데이터 정리와 기획으로 팀에 기여했습니다. 팀 안에서 역할은 생각보다 다양합니다.</p>
-          <div class="who"><b>황지안</b><em>AI 클라우드·인프라</em><span class="tg">#비전공자</span></div>
+          <div class="who"><b>황ㅇㅇ</b><em>AI 클라우드·인프라</em><span class="tg">#비전공자</span></div>
         </div>
       </a>
       <a class="idc cat-life coh3 fld0 tg3 tg4 pg5" href="#r-life-9" style="--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563">
@@ -565,7 +550,7 @@
         <div class="in">
           <h3>수료하고 돌아보는 지원금 이야기</h3>
           <p>받을 때는 당연했는데, 나와서 다른 교육을 알아보니 이 조건이 흔하지 않다는 걸 알았습니다.</p>
-          <div class="who"><b>강태현</b><em>AI 모델개발</em><span class="tg">#졸업생</span></div>
+          <div class="who"><b>강ㅇㅇ</b><em>AI 모델개발</em><span class="tg">#졸업생</span></div>
         </div>
       </a>
       <a class="idc cat-class coh7 fld1 tg4 pg5" href="#r-class-9" style="--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00">
@@ -573,7 +558,7 @@
         <div class="in">
           <h3>수업은 정시에 끝납니다, 복습이 문제입니다</h3>
           <p>시간표는 지켜집니다. 다만 복습을 건너뛰면 다음 주에 바로 티가 납니다.</p>
-          <div class="who"><b>백서우</b><em>AI 클라우드·인프라</em><span class="tg">#적응</span></div>
+          <div class="who"><b>백ㅇㅇ</b><em>AI 클라우드·인프라</em><span class="tg">#적응</span></div>
         </div>
       </a>
       <a class="idc cat-proj coh3 fld0 tg5 pg5" href="#r-proj-9" style="--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12">
@@ -581,7 +566,7 @@
         <div class="in">
           <h3>5개월은 길지 않습니다</h3>
           <p>두 달차에 이미 시간이 없다고 느꼈습니다. 초반에 범위를 줄이는 결정이 중요합니다.</p>
-          <div class="who"><b>천서율</b><em>AI 모델개발</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>천ㅇㅇ</b><em>AI 모델개발</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
       <a class="idc cat-life coh7 fld0 tg5 pg5" href="#r-life-10" style="--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563">
@@ -589,7 +574,7 @@
         <div class="in">
           <h3>강의장과 프로젝트 공간을 오가는 하루</h3>
           <p>오전에는 강의장, 오후에는 프로젝트 공간. 짐을 어떻게 두고 다니느냐가 은근히 중요합니다.</p>
-          <div class="who"><b>임도윤</b><em>AI 모델개발</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>임ㅇㅇ</b><em>AI 모델개발</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
       <a class="idc cat-class coh5 fld3 tg5 tg6 pg5" href="#r-class-10" style="--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00">
@@ -597,7 +582,7 @@
         <div class="in">
           <h3>탐방에서 본 실무와 수업의 거리</h3>
           <p>우리가 배우는 것과 회사에서 쓰는 것이 얼마나 겹치는지 확인하는 자리였습니다.</p>
-          <div class="who"><b>노유진</b><em>데이터 분석</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>노ㅇㅇ</b><em>데이터 분석</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
       <a class="idc cat-proj coh5 fld2 tg5 pg6" href="#r-proj-10" style="--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12">
@@ -605,7 +590,7 @@
         <div class="in">
           <h3>중간발표에서 갈아엎은 팀이 잘 됐습니다</h3>
           <p>늦었다고 생각했는데 아니었습니다. 그때 방향을 바꾼 팀이 결국 제일 좋은 결과를 냈습니다.</p>
-          <div class="who"><b>남주원</b><em>AI 서비스 기획</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>남ㅇㅇ</b><em>AI 서비스 기획</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
       <a class="idc cat-life coh6 fld1 tg0 tg4 pg6" href="#r-life-11" style="--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563">
@@ -613,7 +598,7 @@
         <div class="in">
           <h3>노트북은 빌려 쓰는 것으로 충분했습니다</h3>
           <p>대여해주는 장비로 8개월을 다 썼습니다. 모니터도 같이 나와서 따로 살 일이 없었습니다.</p>
-          <div class="who"><b>배소율</b><em>AI 클라우드·인프라</em><span class="tg">#비전공자</span></div>
+          <div class="who"><b>배ㅇㅇ</b><em>AI 클라우드·인프라</em><span class="tg">#비전공자</span></div>
         </div>
       </a>
       <a class="idc cat-class coh7 fld2 tg2 pg6" href="#r-class-11" style="--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00">
@@ -621,7 +606,7 @@
         <div class="in">
           <h3>오후 실습을 빠지면 남는 게 없습니다</h3>
           <p>오전 이론만 듣고 빠지면 그날 배운 게 사라집니다. 핵심은 오후에 손으로 하는 시간입니다.</p>
-          <div class="who"><b>고은별</b><em>AI 서비스 기획</em><span class="tg">#직장인출신</span></div>
+          <div class="who"><b>고ㅇㅇ</b><em>AI 서비스 기획</em><span class="tg">#직장인출신</span></div>
         </div>
       </a>
       <a class="idc cat-proj coh7 fld2 tg5 pg6" href="#r-proj-11" style="--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12">
@@ -629,7 +614,7 @@
         <div class="in">
           <h3>팀은 아이디어보다 사람이 먼저입니다</h3>
           <p>도메인 안에서 팀이 짜입니다. 무엇을 만들지는 그 다음에 정해지는 구조입니다.</p>
-          <div class="who"><b>구태윤</b><em>AI 서비스 기획</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>구ㅇㅇ</b><em>AI 서비스 기획</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
       <a class="idc cat-life coh6 fld3 tg5 pg6" href="#r-life-12" style="--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563">
@@ -637,7 +622,7 @@
         <div class="in">
           <h3>회의실 말고 강의장에 남는 방법</h3>
           <p>저녁에 강의장이 비면 그대로 씁니다. 다만 몇 시까지 있을 수 있는지는 먼저 확인하세요.</p>
-          <div class="who"><b>명선우</b><em>데이터 분석</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>명ㅇㅇ</b><em>데이터 분석</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
       <a class="idc cat-class coh7 fld0 tg4 tg5 pg6" href="#r-class-12" style="--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00">
@@ -645,7 +630,7 @@
         <div class="in">
           <h3>도메인은 흥미 반, 시장 반으로 골랐습니다</h3>
           <p>여섯 갈래 중에 고르는 날이 옵니다. 재미만 보고 고르면 후반이 힘들 수 있습니다.</p>
-          <div class="who"><b>진하경</b><em>AI 모델개발</em><span class="tg">#적응</span></div>
+          <div class="who"><b>진ㅇㅇ</b><em>AI 모델개발</em><span class="tg">#적응</span></div>
         </div>
       </a>
       <a class="idc cat-proj coh7 fld0 tg6 pg6" href="#r-proj-12" style="--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12">
@@ -653,7 +638,7 @@
         <div class="in">
           <h3>NDA가 있는 프로젝트의 기록 남기기</h3>
           <p>공개 못 하는 내용이 있으면 구조와 판단 과정만 따로 정리해 두세요.</p>
-          <div class="who"><b>단지아</b><em>AI 모델개발</em><span class="tg">#취업연계</span></div>
+          <div class="who"><b>단ㅇㅇ</b><em>AI 모델개발</em><span class="tg">#취업연계</span></div>
         </div>
       </a>
       <a class="idc cat-life coh4 fld1 tg4 pg6" href="#r-life-13" style="--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563">
@@ -661,7 +646,7 @@
         <div class="in">
           <h3>교통비를 줄이려고 정기권을 끊었습니다</h3>
           <p>매일 왕복이면 정기권이 확실히 쌉니다. 한 달 정산해보고 바로 바꿨습니다.</p>
-          <div class="who"><b>표지훈</b><em>AI 클라우드·인프라</em><span class="tg">#적응</span></div>
+          <div class="who"><b>표ㅇㅇ</b><em>AI 클라우드·인프라</em><span class="tg">#적응</span></div>
         </div>
       </a>
       <a class="idc cat-class coh6 fld1 tg5 pg7" href="#r-class-13" style="--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00">
@@ -669,7 +654,7 @@
         <div class="in">
           <h3>EST 탐방에서 본 개발 조직</h3>
           <p>제품이 어떻게 나뉘어 굴러가는지 눈으로 봤습니다. 팀 역할 나누는 데 참고가 됐습니다.</p>
-          <div class="who"><b>봉시현</b><em>AI 클라우드·인프라</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>봉ㅇㅇ</b><em>AI 클라우드·인프라</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
       <a class="idc cat-proj coh6 fld2 tg5 pg7" href="#r-proj-13" style="--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12">
@@ -677,7 +662,7 @@
         <div class="in">
           <h3>멘토링 한 번을 제대로 쓰는 법</h3>
           <p>보여줄 걸 미리 만들어 가면 한 시간이 완전히 달라집니다.</p>
-          <div class="who"><b>류하준</b><em>AI 서비스 기획</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>류ㅇㅇ</b><em>AI 서비스 기획</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
       <a class="idc cat-life coh7 fld2 tg4 pg7" href="#r-life-14" style="--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563">
@@ -685,7 +670,7 @@
         <div class="in">
           <h3>냉장고 쓰는 암묵적인 규칙</h3>
           <p>이름을 써 붙이는 게 기본입니다. 금요일에는 각자 정리하고 가는 분위기였습니다.</p>
-          <div class="who"><b>우하린</b><em>AI 서비스 기획</em><span class="tg">#적응</span></div>
+          <div class="who"><b>우ㅇㅇ</b><em>AI 서비스 기획</em><span class="tg">#적응</span></div>
         </div>
       </a>
       <a class="idc cat-class coh5 fld2 tg4 pg7" href="#r-class-14" style="--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00">
@@ -693,7 +678,7 @@
         <div class="in">
           <h3>발표 특강을 듣고 슬라이드를 다 지웠습니다</h3>
           <p>글자를 줄이고 한 장에 한 메시지로 바꿨습니다. 중간발표 반응이 확실히 달랐습니다.</p>
-          <div class="who"><b>곽유담</b><em>AI 서비스 기획</em><span class="tg">#적응</span></div>
+          <div class="who"><b>곽ㅇㅇ</b><em>AI 서비스 기획</em><span class="tg">#적응</span></div>
         </div>
       </a>
       <a class="idc cat-proj coh5 fld0 tg5 pg7" href="#r-proj-14" style="--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12">
@@ -701,7 +686,7 @@
         <div class="in">
           <h3>팀이 깨졌을 때 어떻게 했나</h3>
           <p>두 달차에 방향이 갈렸습니다. 감정 상하기 전에 역할과 기대치를 다시 적었습니다.</p>
-          <div class="who"><b>전소리</b><em>AI 모델개발</em><span class="tg">#팀활동</span></div>
+          <div class="who"><b>전ㅇㅇ</b><em>AI 모델개발</em><span class="tg">#팀활동</span></div>
         </div>
       </a>
       <a class="idc cat-life coh5 fld1 tg0 pg7" href="#r-life-15" style="--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563">
@@ -709,7 +694,7 @@
         <div class="in">
           <h3>지원금을 장비가 아니라 시간에 썼습니다</h3>
           <p>새 장비를 사는 대신 아르바이트를 줄였습니다. 공부할 시간을 산 셈입니다.</p>
-          <div class="who"><b>편도현</b><em>AI 클라우드·인프라</em><span class="tg">#비전공자</span></div>
+          <div class="who"><b>편ㅇㅇ</b><em>AI 클라우드·인프라</em><span class="tg">#비전공자</span></div>
         </div>
       </a>
       <a class="idc cat-class coh3 fld3 tg4 pg7" href="#r-class-15" style="--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00">
@@ -717,7 +702,7 @@
         <div class="in">
           <h3>3기 때 배운 게 지금도 쓰이나</h3>
           <p>도구는 많이 바뀌었지만 데이터를 의심하는 습관은 그대로 남았습니다.</p>
-          <div class="who"><b>석도윤</b><em>데이터 분석</em><span class="tg">#적응</span></div>
+          <div class="who"><b>석ㅇㅇ</b><em>데이터 분석</em><span class="tg">#적응</span></div>
         </div>
       </a>
       <a class="idc cat-proj coh4 fld0 tg4 pg7" href="#r-proj-15" style="--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12">
@@ -725,7 +710,7 @@
         <div class="in">
           <h3>결과가 안 나올 때 남기는 기록</h3>
           <p>성능이 기대에 못 미쳤습니다. 대신 시도한 것과 이유를 전부 남겼습니다.</p>
-          <div class="who"><b>정무열</b><em>AI 모델개발</em><span class="tg">#적응</span></div>
+          <div class="who"><b>정ㅇㅇ</b><em>AI 모델개발</em><span class="tg">#적응</span></div>
         </div>
       </a>
     </div>
@@ -748,8 +733,8 @@
         <span class="tg" style="background:#ECFFD9;color:#2F5A12">#팀활동</span>
         <span class="mt">6기 · AI 클라우드·인프라</span>
       </a>
-      <a class="rvr cat-career coh6 fld1 tg4 tg6 pg1" href="#r-career-0">
-        <span class="cg" style="background:#1F4ED8">취업·진로</span>
+      <a class="rvr cat-career cat-job coh6 fld1 tg4 tg6 pg1" href="#r-career-0">
+        <span class="cg" style="background:#1F4ED8">취업 성공</span>
         <span class="tt">인턴십 두 달, 회사가 돌아가는 걸 처음 봤습니다</span>
         <span class="tg" style="background:#DCE5F7;color:#15368F">#적응</span>
         <span class="mt">6기 · AI 클라우드·인프라</span>
@@ -772,8 +757,8 @@
         <span class="tg" style="background:#ECFFD9;color:#2F5A12">#팀활동</span>
         <span class="mt">5기 · AI 서비스 기획</span>
       </a>
-      <a class="rvr cat-career coh7 fld2 tg4 pg1" href="#r-career-1">
-        <span class="cg" style="background:#1F4ED8">취업·진로</span>
+      <a class="rvr cat-career cat-path coh7 fld2 tg4 pg1" href="#r-career-1">
+        <span class="cg" style="background:#1F4ED8">진로 고민</span>
         <span class="tt">직무가 생각과 달랐던 이야기</span>
         <span class="tg" style="background:#DCE5F7;color:#15368F">#적응</span>
         <span class="mt">7기 · AI 서비스 기획</span>
@@ -796,8 +781,8 @@
         <span class="tg" style="background:#ECFFD9;color:#2F5A12">#팀활동</span>
         <span class="mt">6기 · AI 모델개발</span>
       </a>
-      <a class="rvr cat-career coh5 fld1 tg4 pg2" href="#r-career-2">
-        <span class="cg" style="background:#1F4ED8">취업·진로</span>
+      <a class="rvr cat-career cat-job coh5 fld1 tg4 pg2" href="#r-career-2">
+        <span class="cg" style="background:#1F4ED8">취업 성공</span>
         <span class="tt">스타트업으로 간 이유</span>
         <span class="tg" style="background:#DCE5F7;color:#15368F">#적응</span>
         <span class="mt">5기 · AI 클라우드·인프라</span>
@@ -820,8 +805,8 @@
         <span class="tg" style="background:#ECFFD9;color:#2F5A12">#적응</span>
         <span class="mt">5기 · AI 모델개발</span>
       </a>
-      <a class="rvr cat-career coh6 fld3 tg6 pg2" href="#r-career-3">
-        <span class="cg" style="background:#1F4ED8">취업·진로</span>
+      <a class="rvr cat-career cat-path coh6 fld3 tg6 pg2" href="#r-career-3">
+        <span class="cg" style="background:#1F4ED8">진로 고민</span>
         <span class="tt">수료 직후 세 달을 어떻게 썼나</span>
         <span class="tg" style="background:#DCE5F7;color:#15368F">#취업연계</span>
         <span class="mt">6기 · 데이터 분석</span>
@@ -844,8 +829,8 @@
         <span class="tg" style="background:#ECFFD9;color:#2F5A12">#팀활동</span>
         <span class="mt">7기 · AI 모델개발</span>
       </a>
-      <a class="rvr cat-career coh7 fld0 tg6 pg3" href="#r-career-4">
-        <span class="cg" style="background:#1F4ED8">취업·진로</span>
+      <a class="rvr cat-career cat-path coh7 fld0 tg6 pg3" href="#r-career-4">
+        <span class="cg" style="background:#1F4ED8">진로 고민</span>
         <span class="tt">포트폴리오에 뭘 넣었나</span>
         <span class="tg" style="background:#DCE5F7;color:#15368F">#취업연계</span>
         <span class="mt">7기 · AI 모델개발</span>
@@ -868,8 +853,8 @@
         <span class="tg" style="background:#ECFFD9;color:#2F5A12">#팀활동</span>
         <span class="mt">7기 · 데이터 분석</span>
       </a>
-      <a class="rvr cat-career coh4 fld2 tg4 tg6 pg3" href="#r-career-5">
-        <span class="cg" style="background:#1F4ED8">취업·진로</span>
+      <a class="rvr cat-career cat-job coh4 fld2 tg4 tg6 pg3" href="#r-career-5">
+        <span class="cg" style="background:#1F4ED8">취업 성공</span>
         <span class="tt">면접에서 제일 많이 받은 질문</span>
         <span class="tg" style="background:#DCE5F7;color:#15368F">#적응</span>
         <span class="mt">4기 · AI 서비스 기획</span>
@@ -892,8 +877,8 @@
         <span class="tg" style="background:#ECFFD9;color:#2F5A12">#적응</span>
         <span class="mt">4기 · AI 모델개발</span>
       </a>
-      <a class="rvr cat-career coh5 fld1 tg6 pg4" href="#r-career-6">
-        <span class="cg" style="background:#1F4ED8">취업·진로</span>
+      <a class="rvr cat-career cat-job coh5 fld1 tg6 pg4" href="#r-career-6">
+        <span class="cg" style="background:#1F4ED8">취업 성공</span>
         <span class="tt">첫 회사에서 쓴 기술은 절반이었습니다</span>
         <span class="tg" style="background:#DCE5F7;color:#15368F">#취업연계</span>
         <span class="mt">5기 · AI 클라우드·인프라</span>
@@ -916,8 +901,8 @@
         <span class="tg" style="background:#ECFFD9;color:#2F5A12">#적응</span>
         <span class="mt">7기 · AI 클라우드·인프라</span>
       </a>
-      <a class="rvr cat-career coh3 fld3 tg5 tg6 pg4" href="#r-career-7">
-        <span class="cg" style="background:#1F4ED8">취업·진로</span>
+      <a class="rvr cat-career cat-job coh3 fld3 tg5 tg6 pg4" href="#r-career-7">
+        <span class="cg" style="background:#1F4ED8">취업 성공</span>
         <span class="tt">취업연계 과정에서 알게 된 것</span>
         <span class="tg" style="background:#DCE5F7;color:#15368F">#팀활동</span>
         <span class="mt">3기 · 데이터 분석</span>
@@ -1081,9 +1066,11 @@
   <section class="wrap pane" id="p-iv">
     <div class="ivlist">
       <div class="sh sh-row">
-        <div><h2>인터뷰</h2><p>한 사람의 여덟 달을 통째로 들어요</p></div>
+        <div><p class="sh-k">선배 이야기</p><h2>여덟 달을 먼저 지나온 선배들에게 물어봤어요</h2></div>
+        <a class="ivall" href="#iv-all">전체 보기 <span aria-hidden="true">→</span></a>
       </div>
-      <section class="ivband" aria-label="인터뷰 목록">
+      <nav class="ytabs" aria-label="선배 이야기 보기"><a href="#reviews">후기 <span>56</span></a><a href="#interviews" aria-current="page">인터뷰 <span>7</span></a></nav>
+      <section class="ivband ivcol" aria-label="인터뷰 미리보기">
         <div class="lsp-wave" aria-hidden="true">
           <i style="height:35%"></i>
           <i style="height:82%"></i>
@@ -1228,6 +1215,7 @@
         </div>
         <span class="lsp-rec" aria-hidden="true">REC 00:42:17</span>
         <div class="ivcar">
+          <button class="ivnav l" type="button" aria-label="이전 인터뷰">←</button>
           <div class="ivgrid">
             <a class="iv" href="#iv-1">
               <div class="ph"><img class="illu" src="assets/team-pointing-sm.jpg" alt="" loading="lazy" decoding="async" width="880" height="550" data-field="thumbnail"></div>
@@ -1235,7 +1223,7 @@
                 <h3 data-field="title">기획자였던 제가 AI 엔지니어로 바뀌기까지</h3>
                 <blockquote class="ivq">비전공자 비율이 80%입니다. 다들 비슷하게 시작합니다. 다만 8개월을 온전히 쓸 수 있는 상황인지는 꼭 확인하고 오세요.</blockquote>
                 <p data-field="summary">3년차 서비스 기획자였습니다. 모델을 직접 만들어보고 싶어서 8개월을 비웠습니다.</p>
-                <div class="by"><span class="av" data-field="cohort">7<i>기</i></span><b data-field="author">김서준</b><em data-field="track">AI 모델링</em></div>
+                <div class="by"><span class="av" data-field="cohort">7<i>기</i></span><b data-field="author">김ㅇㅇ</b><em data-field="track">AI 모델링</em></div>
               </div>
             </a>
             <a class="iv" href="#iv-2">
@@ -1244,7 +1232,7 @@
                 <h3>서버를 한 번도 안 만져본 문과생의 8개월</h3>
                 <blockquote class="ivq">컨테이너입니다. VM과 뭐가 다른지 한 달을 헤맸습니다. 결국 직접 Dockerfile을 20번쯤 써보고 나서야 감이 왔습니다.</blockquote>
                 <p>쿠버네티스라는 단어를 입교식에서 처음 들었습니다.</p>
-                <div class="by"><span class="av">6<i>기</i></span><b>박다인</b><em>인프라</em></div>
+                <div class="by"><span class="av">6<i>기</i></span><b>박ㅇㅇ</b><em>인프라</em></div>
               </div>
             </a>
             <a class="iv" href="#iv-7" data-yt="h1KXqTuGzkA">
@@ -1262,7 +1250,7 @@
               <div class="tb">
                 <h3 data-field="title">6기 수료생 인터뷰 — 인프라 직군</h3>
                 <p data-field="summary">쿠버네티스라는 말을 입교식에서 처음 들었다는 사람의 여덟 달.</p>
-                <div class="by"><span class="av" data-field="cohort">6<i>기</i></span><b data-field="author">윤태경</b><em data-field="track">AI 클라우드·인프라</em></div>
+                <div class="by"><span class="av" data-field="cohort">6<i>기</i></span><b data-field="author">윤ㅇㅇ</b><em data-field="track">AI 클라우드·인프라</em></div>
               </div>
             </a>
             <a class="iv" href="#iv-3">
@@ -1271,7 +1259,7 @@
                 <h3>도약과정 프로젝트를 그대로 창업으로</h3>
                 <blockquote class="ivq">기업연계는 과제가 정해져 있고, 실증은 현장이 정해져 있습니다. 창업만 아무것도 안 정해져 있었고 그게 좋았습니다.</blockquote>
                 <p>5개월 동안 만든 걸 버리기 아까웠습니다.</p>
-                <div class="by"><span class="av">5<i>기</i></span><b>이하늘</b><em>기획</em></div>
+                <div class="by"><span class="av">5<i>기</i></span><b>이ㅇㅇ</b><em>기획</em></div>
               </div>
             </a>
             <a class="iv" href="#iv-4">
@@ -1292,7 +1280,7 @@
               <div class="tb">
                 <h3>지금 다니는 중입니다, 4개월차 기록</h3>
                 <p>수료 후기가 아니라 진행형 기록입니다.</p>
-                <div class="by"><span class="av">7<i>기</i></span><b>조은비</b><em>데이터분석</em></div>
+                <div class="by"><span class="av">7<i>기</i></span><b>조ㅇㅇ</b><em>데이터분석</em></div>
               </div>
             </a>
             <a class="iv" href="#iv-5">
@@ -1312,7 +1300,7 @@
               <div class="tb">
                 <h3>노코드로 시작해 화면을 만들게 되기까지</h3>
                 <p>디자인 툴만 쓸 줄 알았습니다.</p>
-                <div class="by"><span class="av">6<i>기</i></span><b>강태윤</b><em>프론트엔드</em></div>
+                <div class="by"><span class="av">6<i>기</i></span><b>강ㅇㅇ</b><em>프론트엔드</em></div>
               </div>
             </a>
             <a class="iv" href="#iv-6">
@@ -1321,10 +1309,11 @@
                 <h3>3기 수료생이 보는 4년 뒤</h3>
                 <blockquote class="ivq">수료가 끝이 아니라 시작입니다. 여기서 만든 포트폴리오는 6개월이면 낡습니다. 습관을 가져가세요.</blockquote>
                 <p>가장 오래된 기수 중 하나입니다.</p>
-                <div class="by"><span class="av">3<i>기</i></span><b>문지훈</b><em>AI 모델링</em></div>
+                <div class="by"><span class="av">3<i>기</i></span><b>문ㅇㅇ</b><em>AI 모델링</em></div>
               </div>
             </a>
           </div>
+          <button class="ivnav r" type="button" aria-label="다음 인터뷰">→</button>
           <div class="ivdots" aria-label="인터뷰 넘김 위치" role="group">
             <button type="button" aria-label="1번째 인터뷰"></button>
             <button type="button" aria-label="2번째 인터뷰"></button>
@@ -1342,12 +1331,8 @@
           <div class="iva-tools">
             <div class="iva-chips" data-f="coh" role="group" aria-label="기수"></div>
             <div class="iva-seg" role="group" aria-label="보기 방식">
-              <button type="button" data-v="grid" aria-pressed="true" title="카드 보기">
-                <svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1.6"/><rect x="9" y="1" width="6" height="6" rx="1.6"/><rect x="1" y="9" width="6" height="6" rx="1.6"/><rect x="9" y="9" width="6" height="6" rx="1.6"/></svg><span class="sr">카드 보기</span>
-              </button>
-              <button type="button" data-v="list" aria-pressed="false" title="리스트 보기">
-                <svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><rect x="1" y="2" width="14" height="2.4" rx="1.2"/><rect x="1" y="6.8" width="14" height="2.4" rx="1.2"/><rect x="1" y="11.6" width="14" height="2.4" rx="1.2"/></svg><span class="sr">리스트 보기</span>
-              </button>
+              <button type="button" data-v="grid" aria-pressed="true" title="카드 보기"><svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1.6"/><rect x="9" y="1" width="6" height="6" rx="1.6"/><rect x="1" y="9" width="6" height="6" rx="1.6"/><rect x="9" y="9" width="6" height="6" rx="1.6"/></svg><span class="sr">카드 보기</span></button>
+              <button type="button" data-v="list" aria-pressed="false" title="리스트 보기"><svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><rect x="1" y="2" width="14" height="2.4" rx="1.2"/><rect x="1" y="6.8" width="14" height="2.4" rx="1.2"/><rect x="1" y="11.6" width="14" height="2.4" rx="1.2"/></svg><span class="sr">리스트 보기</span></button>
             </div>
           </div>
         </div>
@@ -1364,7 +1349,7 @@
           <div class="ivhero"><span class="ivtag">7기 · AI 모델링</span><img class="illu" src="assets/team-pointing.jpg" alt="" loading="lazy" decoding="async" width="1000" height="562" data-field="thumbnail"></div>
           <h2 data-field="title">기획자였던 제가 AI 엔지니어로 바뀌기까지</h2>
           <p class="lead" data-field="summary">3년차 서비스 기획자였습니다. 모델을 직접 만들어보고 싶어서 8개월을 비웠습니다.</p>
-          <div class="who2"><span class="av" data-field="cohort">7<i>기</i></span><div><b data-field="author">김서준</b><em data-field="track">AI 모델링</em></div></div>
+          <div class="who2"><span class="av" data-field="cohort">7<i>기</i></span><div><b data-field="author">김ㅇㅇ</b><em data-field="track">AI 모델링</em></div></div>
           <div class="qa">
             <div id="q-1-1">
               <div class="q"><i>1</i><span data-field="question">기획자로 일하던 중 AI, 특히 NLP에 관심을 갖게 된 계기는 무엇인가요?</span></div>
@@ -1395,7 +1380,7 @@
         <aside class="sidebox">
           <h3>이 인터뷰에서 묻는 것</h3>
           <ol>
-            <li><a href="#q-1-1">기획자였던 서준님이 AI와 NLP에 관심을 갖게 된 계기</a></li>
+            <li><a href="#q-1-1">기획자였던 김ㅇㅇ 님이 AI와 NLP에 관심을 갖게 된 계기</a></li>
             <li><a href="#q-1-2">8개월 과정을 선택한 이유</a></li>
             <li><a href="#q-1-3">비개발자가 경험한 AI 커리큘럼의 난이도</a></li>
             <li><a href="#q-1-4">과정에서 가장 만족했던 부분</a></li>
@@ -1412,7 +1397,7 @@
           <div class="ivhero"><span class="ivtag">6기 · 인프라</span><img class="illu" src="assets/table-team.jpg" alt="" loading="lazy" decoding="async" width="1000" height="562"></div>
           <h2>서버를 한 번도 안 만져본 문과생의 8개월</h2>
           <p class="lead">쿠버네티스라는 단어를 입교식에서 처음 들었습니다.</p>
-          <div class="who2"><span class="av">6<i>기</i></span><div><b>박다인</b><em>인프라</em></div></div>
+          <div class="who2"><span class="av">6<i>기</i></span><div><b>박ㅇㅇ</b><em>인프라</em></div></div>
           <div class="qa">
             <div id="q-2-1">
               <div class="q"><i>1</i><span>인프라 직군을 선택한 이유는 무엇인가요?</span></div>
@@ -1450,7 +1435,7 @@
           <div class="ivhero"><span class="ivtag">5기 · 기획</span><img class="illu" src="assets/classroom-laptops.jpg" alt="" loading="lazy" decoding="async" width="1000" height="562"></div>
           <h2>도약과정 프로젝트를 그대로 창업으로</h2>
           <p class="lead">5개월 동안 만든 걸 버리기 아까웠습니다.</p>
-          <div class="who2"><span class="av">5<i>기</i></span><div><b>이하늘</b><em>기획</em></div></div>
+          <div class="who2"><span class="av">5<i>기</i></span><div><b>이ㅇㅇ</b><em>기획</em></div></div>
           <div class="qa">
             <div id="q-3-1">
               <div class="q"><i>1</i><span>창업 유형을 선택한 이유는?</span></div>
@@ -1502,7 +1487,7 @@
           </div>
           <h2>지금 다니는 중입니다, 4개월차 기록</h2>
           <p class="lead">수료 후기가 아니라 진행형 기록입니다.</p>
-          <div class="who2"><span class="av">7<i>기</i></span><div><b>조은비</b><em>데이터분석</em></div></div>
+          <div class="who2"><span class="av">7<i>기</i></span><div><b>조ㅇㅇ</b><em>데이터분석</em></div></div>
           <div class="qa">
             <div id="q-4-1">
               <div class="q"><i>1</i><span>하루를 어떻게 보내나요?</span></div>
@@ -1548,7 +1533,7 @@
           </div>
           <h2>노코드로 시작해 화면을 만들게 되기까지</h2>
           <p class="lead">디자인 툴만 쓸 줄 알았습니다.</p>
-          <div class="who2"><span class="av">6<i>기</i></span><div><b>강태윤</b><em>프론트엔드</em></div></div>
+          <div class="who2"><span class="av">6<i>기</i></span><div><b>강ㅇㅇ</b><em>프론트엔드</em></div></div>
           <div class="qa">
             <div id="q-5-1">
               <div class="q"><i>1</i><span>프론트엔드 트랙이 따로 없는데 어떻게 하셨나요?</span></div>
@@ -1589,7 +1574,7 @@
           </div>
           <h2>6기 수료생 인터뷰 — 인프라 직군</h2>
           <p class="lead">쿠버네티스라는 말을 입교식에서 처음 들었다는 사람의 여덟 달.</p>
-          <div class="who2"><span class="av">6<i>기</i></span><div><b>윤태경</b><em>AI 클라우드·인프라</em></div></div>
+          <div class="who2"><span class="av">6<i>기</i></span><div><b>윤ㅇㅇ</b><em>AI 클라우드·인프라</em></div></div>
           <p class="ivnote">영상 인터뷰예요. 위 화면에서 바로 재생됩니다. 영상 내용을 글로 옮긴 요약이 준비되면 이 아래에 함께 실어요.</p>
         </div>
         <aside class="sidebox">
@@ -1606,7 +1591,7 @@
           <div class="ivhero"><span class="ivtag">3기 · AI 모델링</span><img class="illu" src="assets/lobby-laptops.jpg" alt="" loading="lazy" decoding="async" width="1000" height="562"></div>
           <h2>3기 수료생이 보는 4년 뒤</h2>
           <p class="lead">가장 오래된 기수 중 하나입니다.</p>
-          <div class="who2"><span class="av">3<i>기</i></span><div><b>문지훈</b><em>AI 모델링</em></div></div>
+          <div class="who2"><span class="av">3<i>기</i></span><div><b>문ㅇㅇ</b><em>AI 모델링</em></div></div>
           <div class="qa">
             <div id="q-6-1">
               <div class="q"><i>1</i><span>3기 때와 지금은 무엇이 다른가요?</span></div>
@@ -1632,7 +1617,7 @@
   <section class="wrap pane proj" id="p-pr">
     <div class="pjlist">
     <div class="sh sh-row">
-      <div><h2>우수 프로젝트 소개</h2><p>도약과정에서 나온 기수별 대표 프로젝트예요</p></div>
+      <div><p class="sh-k">프로젝트 아카이브</p><h2>선배들은 여기서 이런 걸 만들었어요</h2></div>
     </div>
     <input class="tr" autocomplete="off" type="radio" name="pr" id="pr0" checked>
     <input class="tr" autocomplete="off" type="radio" name="pr" id="pr1">
@@ -1654,10 +1639,10 @@
    <circle cx="320" cy="150" r="22" fill="#1F4ED8"/><rect x="310" y="142" width="20" height="4" rx="2" fill="#fff"/></svg><a class="pjph" href="#pj-1" aria-label="손끝 — 시각장애인 보행 보조 앱 자세히 보기" tabindex="-1"></a>
           </div>
           <div>
-            <div class="no">01</div>
-            <h3 data-field="title"><a class="pjt" href="#pj-1">손끝 — 시각장애인 보행 보조 앱</a></h3>
+            <p class="pjname"><span class="no">01</span>손끝 · 시각장애인 보행 보조 앱</p>
+            <h3 class="pjhl" data-field="title"><a class="pjt" href="#pj-1">휴대폰 카메라가 신호등과 점자블록을 읽고, 소리로 길을 알려줘요</a></h3>
+            <p class="sum" data-field="summary">광주 동구 일대에서 2주 동안 실제로 써 봤어요.</p>
             <div class="tags"><span data-field="tag">#컴퓨터비전</span><span data-field="tag">#접근성</span><span data-field="tag">#온디바이스</span><span data-field="tag">#실증연계</span><span data-field="tag">#Flutter</span></div>
-            <p class="sum" data-field="summary">휴대폰 카메라만으로 횡단보도 신호와 점자블록을 읽어 음성으로 알려줍니다. 광주 동구 일대에서 2주간 실증했습니다.</p>
             <dl class="info">
               <div><dt>TEAM</dt><dd data-field="team">AI 모델링 2반 · 5명</dd></div>
               <div><dt>TYPE</dt><dd data-field="type">실증</dd></div>
@@ -1686,10 +1671,10 @@
    <rect x="92" y="204" width="216" height="16" rx="8" fill="#15368F"/></svg><a class="pjph" href="#pj-2" aria-label="밥값 — 구내식당 혼잡도 예측 자세히 보기" tabindex="-1"></a>
           </div>
           <div>
-            <div class="no">02</div>
-            <h3><a class="pjt" href="#pj-2">밥값 — 구내식당 혼잡도 예측</a></h3>
+            <p class="pjname"><span class="no">02</span>밥값 · 구내식당 혼잡도 예측</p>
+            <h3 class="pjhl"><a class="pjt" href="#pj-2">구내식당이 언제 붐비는지 30분 단위로 미리 알려줘요</a></h3>
+            <p class="sum">출입 기록으로 예측하고, 사내 메신저로 알려 줘요.</p>
             <div class="tags"><span>#시계열예측</span><span>#혼잡도</span><span>#사내서비스</span><span>#FastAPI</span></div>
-            <p class="sum">출입 게이트 로그로 8층 구내식당의 30분 단위 혼잡도를 예측합니다. 사내 슬랙 봇으로 붙였습니다.</p>
             <dl class="info">
               <div><dt>TEAM</dt><dd>데이터 분석 1반 · 4명</dd></div>
               <div><dt>TYPE</dt><dd>기업연계</dd></div>
@@ -1719,10 +1704,10 @@
    <path d="M20 236h360" stroke="#0A4F49" stroke-width="10" stroke-linecap="round"/></svg><a class="pjph" href="#pj-3" aria-label="틈 — 중소병원 판독 보조 자세히 보기" tabindex="-1"></a>
           </div>
           <div>
-            <div class="no">03</div>
-            <h3><a class="pjt" href="#pj-3">틈 — 중소병원 판독 보조</a></h3>
+            <p class="pjname"><span class="no">03</span>틈 · 중소병원 판독 보조</p>
+            <h3 class="pjhl"><a class="pjt" href="#pj-3">엑스레이에서 이상해 보이는 곳을 먼저 짚어, 의사의 판독을 도와요</a></h3>
+            <p class="sum">지역 병원 두 곳과 함께 검증했어요.</p>
             <div class="tags"><span>#의료영상</span><span>#세그멘테이션</span><span>#헬스케어</span><span>#PyTorch</span></div>
-            <p class="sum">흉부 X-ray에서 이상 소견 후보 영역을 표시해 판독 순서를 정렬합니다. 지역 병원 두 곳과 함께 검증했습니다.</p>
             <dl class="info">
               <div><dt>TEAM</dt><dd>헬스케어 도메인 · 6명</dd></div>
               <div><dt>TYPE</dt><dd>기업연계</dd></div>
@@ -1748,10 +1733,10 @@
    <path d="M60 220h280" stroke="#8A6B14" stroke-width="8" stroke-linecap="round" opacity=".35"/></svg><a class="pjph" href="#pj-4" aria-label="돌아봄 — 공장 설비 이상 탐지 자세히 보기" tabindex="-1"></a>
           </div>
           <div>
-            <div class="no">04</div>
-            <h3><a class="pjt" href="#pj-4">돌아봄 — 공장 설비 이상 탐지</a></h3>
+            <p class="pjname"><span class="no">04</span>돌아봄 · 공장 설비 이상 탐지</p>
+            <h3 class="pjhl"><a class="pjt" href="#pj-4">공장 기계가 고장 나기 전에, 진동만으로 이상을 알아채요</a></h3>
+            <p class="sum">작은 컴퓨터에 올려 실제 공장에서 테스트했어요.</p>
             <div class="tags"><span>#이상탐지</span><span>#엣지컴퓨팅</span><span>#피지컬AI</span><span>#Kubernetes</span></div>
-            <p class="sum">진동 센서 스트림에서 베어링 이상을 실시간 감지합니다. 라즈베리파이 엣지 환경에 올려 현장 테스트했습니다.</p>
             <dl class="info">
               <div><dt>TEAM</dt><dd>인프라 1반 · 5명</dd></div>
               <div><dt>TYPE</dt><dd>실증</dd></div>
@@ -1782,10 +1767,10 @@
    <circle cx="288" cy="206" r="16"/><rect x="268" y="226" width="40" height="22" rx="11"/></g></svg><a class="pjph" href="#pj-5" aria-label="말줄임 — 회의록 자동 요약 자세히 보기" tabindex="-1"></a>
           </div>
           <div>
-            <div class="no">05</div>
-            <h3><a class="pjt" href="#pj-5">말줄임 — 회의록 자동 요약</a></h3>
+            <p class="pjname"><span class="no">05</span>말줄임 · 회의록 자동 요약</p>
+            <h3 class="pjhl"><a class="pjt" href="#pj-5">회의 녹음을 넣으면 결정된 것과 할 일만 정리해 줘요</a></h3>
+            <p class="sum">수료 뒤 법인 설립까지 이어진 팀이에요.</p>
             <div class="tags"><span>#LLM</span><span>#RAG</span><span>#생산성</span><span>#창업연계</span></div>
-            <p class="sum">녹취를 화자별로 나눠 결정사항과 할 일만 추립니다. 수료 후 법인 설립까지 이어진 팀입니다.</p>
             <dl class="info">
               <div><dt>TEAM</dt><dd>기획 2반 · 4명</dd></div>
               <div><dt>TYPE</dt><dd>창업</dd></div>
@@ -1812,10 +1797,10 @@
    <circle cx="320" cy="150" r="22" fill="#1F4ED8"/><rect x="310" y="142" width="20" height="4" rx="2" fill="#fff"/></svg><a class="pjph" href="#pj-6" aria-label="파수 — 사내 문서 유출 탐지 자세히 보기" tabindex="-1"></a>
           </div>
           <div>
-            <div class="no">06</div>
-            <h3><a class="pjt" href="#pj-6">파수 — 사내 문서 유출 탐지</a></h3>
+            <p class="pjname"><span class="no">06</span>파수 · 사내 문서 유출 탐지</p>
+            <h3 class="pjhl"><a class="pjt" href="#pj-6">회사 문서를 평소와 다르게 여는 움직임을 찾아 유출을 막아요</a></h3>
+            <p class="sum">문서 열람 기록을 이어 보며 이상한 패턴을 잡아내요.</p>
             <div class="tags"><span>#보안</span><span>#이상행위탐지</span><span>#그래프</span><span>#기업연계</span></div>
-            <p class="sum">문서 접근 로그를 그래프로 만들어 평소와 다른 열람 패턴을 잡아냅니다.</p>
             <dl class="info">
               <div><dt>TEAM</dt><dd>보안 도메인 · 5명</dd></div>
               <div><dt>TYPE</dt><dd>기업연계</dd></div>
@@ -1907,6 +1892,15 @@
           <b>06</b>
         </label>
       </div>
+    </div>
+    <div class="pjout">
+      <div class="sh"><div><p class="sh-k">8개월 뒤의 나</p><h2>비전공자로 시작해도,<br>끝에는 내 이름이 들어간 포트폴리오가 남아요</h2></div></div>
+      <ol class="pjout-list">
+        <li><span class="pjout-k">비전공자</span><b>기획자도 문과생도 출발선은 같았어요</b><p>준비과정 VOD로 기초를 다지고, 성장과정에서 매일 실습하며 코드 한 줄부터 따라잡았어요.</p></li>
+        <li><span class="pjout-k">프로젝트 · 수상</span><b>팀으로 만든 서비스가 무대에 올랐어요</b><p>도약과정 다섯 달 동안 기업 과제와 현장 실증을 거친 결과물로 성과발표회와 공모전에 나갔어요.</p></li>
+        <li><span class="pjout-k">포트폴리오</span><b>면접에서 꺼낼 이야기가 생겼어요</b><p>문제 정의부터 배포까지 직접 해 본 기록이 그대로 포트폴리오가 되고, 취업 컨설팅에서 함께 다듬었어요.</p></li>
+      </ol>
+      <a class="pjout-go" href="../check/index.html">나도 지원할 수 있는지 확인하기 <span aria-hidden="true">→</span></a>
     </div>
     </div>
     <div class="pjd" id="pj-1">
@@ -2100,14 +2094,24 @@
   </section>
   <section class="wrap pane" id="p-coh">
     <div class="sh sh-row">
-      <div><h2>기수별 모아보기</h2><p>입교식부터 수료식까지, 기수마다 무슨 일이 있었는지 모아 뒀어요 · 개인 경험담은 후기 탭에서 기수로 걸러 보세요</p></div>
+      <div><p class="sh-k">기수별 이모저모</p><h2>입교식부터 수료식까지, 기수마다 이런 일이 있었어요</h2></div>
     </div>
     <div class="arch">
       <nav class="crail" aria-label="기수 고르기">
-        <div class="crg"><h3>기수</h3><ul data-group="coh"></ul></div>
-      </nav>
-      <div>
+      <div class="crg"><h3>기수</h3><ul data-group="coh"></ul></div>
+    </nav>      <div>
         <div class="g2">
+          <div class="diff"><span class="lb">7기 변경점</span><h3>6기와 무엇이 달라졌나</h3>
+            <table>
+              <tr><th scope="row">수업 방식</th><td class="old">준비·성장 일부 온라인 병행</td><td class="new">AI 준비과정(VOD) 외 전 과정 오프라인</td></tr>
+              <tr><th scope="row">프로젝트</th><td class="old">520시간</td><td class="new">720시간 — 기업연계·실증·창업 중 택 1</td></tr>
+              <tr><th scope="row">해커톤</th><td class="old">전 직군 통합 2박 3일</td><td class="new">폐지</td></tr>
+              <tr><th scope="row">트랙 구성</th><td class="old">7개 트랙</td><td class="new">직군별 심화 + 산업 도메인 2층 구조</td></tr>
+              <tr><th scope="row">전형</th><td class="old">서류 → 인터뷰 → Pre-Training → 퀴즈</td><td class="new">서류 → 코딩테스트 → 면접·인적성</td></tr>
+              <tr><th scope="row">지원금</th><td class="old">생활지원금</td><td class="new">생활지원금 + 프로젝트 지원금 200만원 신설</td></tr>
+              <tr><th scope="row">지원 대상</th><td class="old">4학년·졸업예정·졸업유예자 중심</td><td class="new">졸업생·스타트업 재직자까지 확대</td></tr>
+            </table>
+          </div>
           <a class="st c7 g6" href="#" style="--c:#10203D">
             <div class="ph"><img class="illu" src="assets/lobby-laptops-sm.jpg" alt="로비 테이블에서 노트북을 펴고 함께 작업하는 교육생들" loading="lazy" decoding="async" width="880" height="550" data-field="thumbnail"></div>
             <h3 data-field="title">AI카페에서 시작된 팀</h3>
@@ -2253,7 +2257,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat" data-field="category">생활</div><h3 id="r-life-0-t" data-field="title">생활지원금으로 한 달을 꾸려본 기록</h3>
-        <div class="mby"><span class="mav" data-field="cohort">7<i>기</i></span><div><b data-field="author">김민서</b><em data-field="track">데이터 분석</em></div></div>
+        <div class="mby"><span class="mav" data-field="cohort">7<i>기</i></span><div><b data-field="author">김ㅇㅇ</b><em data-field="track">데이터 분석</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead" data-field="summary">교통비 6만원, 점심값 20만원. 광주로 전입하면서 숙박비까지 받았더니 월세 부담이 확 줄었습니다.</p>
@@ -2271,7 +2275,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">수업</div><h3 id="r-class-0-t">헬스케어 도메인, 비전공자의 6주</h3>
-        <div class="mby"><span class="mav">6<i>기</i></span><div><b>정하윤</b><em>AI 모델개발</em></div></div>
+        <div class="mby"><span class="mav">6<i>기</i></span><div><b>정ㅇㅇ</b><em>AI 모델개발</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">의료 데이터는 전처리가 8할입니다. 모델을 돌리기 전에 결측치와 라벨 불균형에서 2주를 썼습니다.</p>
@@ -2289,7 +2293,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">프로젝트</div><h3 id="r-proj-0-t">격주 미팅이 있는 프로젝트의 리듬</h3>
-        <div class="mby"><span class="mav">6<i>기</i></span><div><b>오세진</b><em>AI 클라우드·인프라</em></div></div>
+        <div class="mby"><span class="mav">6<i>기</i></span><div><b>오ㅇㅇ</b><em>AI 클라우드·인프라</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">기업 담당자와 2주에 한 번 만납니다. 그 사이에 뭘 보여줄지가 팀의 스프린트가 됩니다.</p>
@@ -2305,13 +2309,13 @@
     </div>
   </div>
 </div>
-<div class="ov cat-career coh6 fld1 tg4 tg6" id="r-career-0" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F" role="dialog" aria-modal="true" aria-labelledby="r-career-0-t">
+<div class="ov cat-career cat-job coh6 fld1 tg4 tg6" id="r-career-0" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F" role="dialog" aria-modal="true" aria-labelledby="r-career-0-t">
   <a class="back" href="#p-rev" aria-label="닫기"></a>
   <div class="sheet">
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
-      <div class="mtop"><div class="mcat">취업·진로</div><h3 id="r-career-0-t">인턴십 두 달, 회사가 돌아가는 걸 처음 봤습니다</h3>
-        <div class="mby"><span class="mav">6<i>기</i></span><div><b>장우석</b><em>AI 클라우드·인프라</em></div></div>
+      <div class="mtop"><div class="mcat">취업 성공</div><h3 id="r-career-0-t">인턴십 두 달, 회사가 돌아가는 걸 처음 봤습니다</h3>
+        <div class="mby"><span class="mav">6<i>기</i></span><div><b>장ㅇㅇ</b><em>AI 클라우드·인프라</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">수료 직후 연계 인턴으로 들어갔습니다. 코드를 짜는 시간보다 왜 그렇게 짜는지 듣는 시간이 길었습니다.</p>
@@ -2332,7 +2336,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">생활</div><h3 id="r-life-1-t">AI카페가 없었으면 우리 팀도 없었습니다</h3>
-        <div class="mby"><span class="mav">7<i>기</i></span><div><b>이준호</b><em>AI 클라우드·인프라</em></div></div>
+        <div class="mby"><span class="mav">7<i>기</i></span><div><b>이ㅇㅇ</b><em>AI 클라우드·인프라</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">점심마다 도시락을 데우러 오는 사람이 정해져 있는데, 그 줄에서 만난 네 명이 그대로 팀이 됐습니다.</p>
@@ -2350,7 +2354,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">수업</div><h3 id="r-class-1-t">AWS 특강에서 배운 건 결국 배포였습니다</h3>
-        <div class="mby"><span class="mav">5<i>기</i></span><div><b>최도현</b><em>AI 클라우드·인프라</em></div></div>
+        <div class="mby"><span class="mav">5<i>기</i></span><div><b>최ㅇㅇ</b><em>AI 클라우드·인프라</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">모델은 만들었는데 어디에 올릴지를 몰랐습니다. 이틀 특강으로 EC2와 S3를 붙여봤고 그대로 썼습니다.</p>
@@ -2368,7 +2372,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">프로젝트</div><h3 id="r-proj-1-t">수료 두 달 뒤에 법인을 냈습니다</h3>
-        <div class="mby"><span class="mav">5<i>기</i></span><div><b>윤가람</b><em>AI 서비스 기획</em></div></div>
+        <div class="mby"><span class="mav">5<i>기</i></span><div><b>윤ㅇㅇ</b><em>AI 서비스 기획</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">도약과정에서 만든 회의록 요약 서비스를 그대로 가져갔습니다. 창업 멘토링이 실제로 도움이 됐습니다.</p>
@@ -2380,13 +2384,13 @@
     </div>
   </div>
 </div>
-<div class="ov cat-career coh7 fld2 tg4" id="r-career-1" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F" role="dialog" aria-modal="true" aria-labelledby="r-career-1-t">
+<div class="ov cat-career cat-path coh7 fld2 tg4" id="r-career-1" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F" role="dialog" aria-modal="true" aria-labelledby="r-career-1-t">
   <a class="back" href="#p-rev" aria-label="닫기"></a>
   <div class="sheet">
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
-      <div class="mtop"><div class="mcat">취업·진로</div><h3 id="r-career-1-t">직무가 생각과 달랐던 이야기</h3>
-        <div class="mby"><span class="mav">7<i>기</i></span><div><b>노다현</b><em>AI 서비스 기획</em></div></div>
+      <div class="mtop"><div class="mcat">진로 고민</div><h3 id="r-career-1-t">직무가 생각과 달랐던 이야기</h3>
+        <div class="mby"><span class="mav">7<i>기</i></span><div><b>노ㅇㅇ</b><em>AI 서비스 기획</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">기획으로 들어왔는데 실제로는 데이터를 들여다보는 시간이 더 많았습니다.</p>
@@ -2403,7 +2407,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">생활</div><h3 id="r-life-2-t">프로젝트룸 예약 전쟁에서 살아남는 법</h3>
-        <div class="mby"><span class="mav">6<i>기</i></span><div><b>박서연</b><em>AI 서비스 기획</em></div></div>
+        <div class="mby"><span class="mav">6<i>기</i></span><div><b>박ㅇㅇ</b><em>AI 서비스 기획</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">회의실은 예약 시스템으로 씁니다. 인기 시간대는 전날 밤에 다 나가서, 우리 팀은 고정 슬롯을 잡았습니다.</p>
@@ -2421,7 +2425,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">수업</div><h3 id="r-class-2-t">네이버에 질문 세 개를 준비해 갔습니다</h3>
-        <div class="mby"><span class="mav">4<i>기</i></span><div><b>한지우</b><em>AI 서비스 기획</em></div></div>
+        <div class="mby"><span class="mav">4<i>기</i></span><div><b>한ㅇㅇ</b><em>AI 서비스 기획</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">구경만 하면 반나절이 그냥 갑니다. Q&amp;A에 쓸 질문을 적어갔더니 돌아오는 버스가 달랐습니다.</p>
@@ -2443,7 +2447,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">프로젝트</div><h3 id="r-proj-2-t">개발 멘토가 아니라 디자인 멘토를 찾았습니다</h3>
-        <div class="mby"><span class="mav">6<i>기</i></span><div><b>신예린</b><em>AI 모델개발</em></div></div>
+        <div class="mby"><span class="mav">6<i>기</i></span><div><b>신ㅇㅇ</b><em>AI 모델개발</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">성능은 어느 정도 나왔는데 아무도 안 쓸 것 같았습니다. 화면을 세 번 갈아엎고 나서야 통과됐습니다.</p>
@@ -2455,13 +2459,13 @@
     </div>
   </div>
 </div>
-<div class="ov cat-career coh5 fld1 tg4" id="r-career-2" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F" role="dialog" aria-modal="true" aria-labelledby="r-career-2-t">
+<div class="ov cat-career cat-job coh5 fld1 tg4" id="r-career-2" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F" role="dialog" aria-modal="true" aria-labelledby="r-career-2-t">
   <a class="back" href="#p-rev" aria-label="닫기"></a>
   <div class="sheet">
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
-      <div class="mtop"><div class="mcat">취업·진로</div><h3 id="r-career-2-t">스타트업으로 간 이유</h3>
-        <div class="mby"><span class="mav">5<i>기</i></span><div><b>구본영</b><em>AI 클라우드·인프라</em></div></div>
+      <div class="mtop"><div class="mcat">취업 성공</div><h3 id="r-career-2-t">스타트업으로 간 이유</h3>
+        <div class="mby"><span class="mav">5<i>기</i></span><div><b>구ㅇㅇ</b><em>AI 클라우드·인프라</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">대기업 공채를 한 번 보고 접었습니다. 제가 만든 걸 바로 올려 볼 수 있는 쪽이 맞았습니다.</p>
@@ -2478,7 +2482,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">생활</div><h3 id="r-life-3-t">타지에서 올라와 방을 구한 순서</h3>
-        <div class="mby"><span class="mav">6<i>기</i></span><div><b>정하윤</b><em>데이터 분석</em></div></div>
+        <div class="mby"><span class="mav">6<i>기</i></span><div><b>정ㅇㅇ</b><em>데이터 분석</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">개강 한 달 전에 방을 봤습니다. 학교 근처 동은 그때쯤 매물이 제일 많았습니다.</p>
@@ -2500,7 +2504,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">수업</div><h3 id="r-class-3-t">보안은 처음엔 지루하고 나중에 다 쓰입니다</h3>
-        <div class="mby"><span class="mav">7<i>기</i></span><div><b>김서진</b><em>AI 모델개발</em></div></div>
+        <div class="mby"><span class="mav">7<i>기</i></span><div><b>김ㅇㅇ</b><em>AI 모델개발</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">이론 비중이 높아서 초반에 지칩니다. 그런데 프로젝트에 들어가면 그 내용이 전부 근거가 됩니다.</p>
@@ -2517,7 +2521,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">프로젝트</div><h3 id="r-proj-3-t">실증은 절반이 현장입니다</h3>
-        <div class="mby"><span class="mav">5<i>기</i></span><div><b>홍시우</b><em>AI 모델개발</em></div></div>
+        <div class="mby"><span class="mav">5<i>기</i></span><div><b>홍ㅇㅇ</b><em>AI 모델개발</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">데이터가 생각한 대로 나오지 않습니다. 현장에 나가야 왜 그런지 알게 됩니다.</p>
@@ -2528,13 +2532,13 @@
     </div>
   </div>
 </div>
-<div class="ov cat-career coh6 fld3 tg6" id="r-career-3" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F" role="dialog" aria-modal="true" aria-labelledby="r-career-3-t">
+<div class="ov cat-career cat-path coh6 fld3 tg6" id="r-career-3" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F" role="dialog" aria-modal="true" aria-labelledby="r-career-3-t">
   <a class="back" href="#p-rev" aria-label="닫기"></a>
   <div class="sheet">
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
-      <div class="mtop"><div class="mcat">취업·진로</div><h3 id="r-career-3-t">수료 직후 세 달을 어떻게 썼나</h3>
-        <div class="mby"><span class="mav">6<i>기</i></span><div><b>심지안</b><em>데이터 분석</em></div></div>
+      <div class="mtop"><div class="mcat">진로 고민</div><h3 id="r-career-3-t">수료 직후 세 달을 어떻게 썼나</h3>
+        <div class="mby"><span class="mav">6<i>기</i></span><div><b>심ㅇㅇ</b><em>데이터 분석</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">바로 취업하지 못했습니다. 그 세 달에 뭘 했는지가 결국 면접에서 가장 많이 나온 이야기였습니다.</p>
@@ -2551,7 +2555,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">생활</div><h3 id="r-life-4-t">8층 구내식당을 쓰게 된 이유</h3>
-        <div class="mby"><span class="mav">6<i>기</i></span><div><b>최도현</b><em>AI 클라우드·인프라</em></div></div>
+        <div class="mby"><span class="mav">6<i>기</i></span><div><b>최ㅇㅇ</b><em>AI 클라우드·인프라</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">밖에 나가면 왕복 30분은 각오해야 합니다. 생각보다 괜찮아서 결국 절반 이상은 여기서 먹었습니다.</p>
@@ -2569,7 +2573,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">수업</div><h3 id="r-class-4-t">기획 도메인은 개발을 못해도 됩니다</h3>
-        <div class="mby"><span class="mav">6<i>기</i></span><div><b>문채원</b><em>AI 서비스 기획</em></div></div>
+        <div class="mby"><span class="mav">6<i>기</i></span><div><b>문ㅇㅇ</b><em>AI 서비스 기획</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">대신 말로 설명하는 걸 굉장히 많이 시킵니다. 발표와 문서가 곧 결과물입니다.</p>
@@ -2587,7 +2591,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">프로젝트</div><h3 id="r-proj-4-t">자유로운 만큼 스스로 굴려야 합니다</h3>
-        <div class="mby"><span class="mav">7<i>기</i></span><div><b>조민규</b><em>AI 모델개발</em></div></div>
+        <div class="mby"><span class="mav">7<i>기</i></span><div><b>조ㅇㅇ</b><em>AI 모델개발</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">창업 유형은 정해진 요구사항이 없습니다. 방향을 정하는 것도 팀의 일입니다.</p>
@@ -2598,13 +2602,13 @@
     </div>
   </div>
 </div>
-<div class="ov cat-career coh7 fld0 tg6" id="r-career-4" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F" role="dialog" aria-modal="true" aria-labelledby="r-career-4-t">
+<div class="ov cat-career cat-path coh7 fld0 tg6" id="r-career-4" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F" role="dialog" aria-modal="true" aria-labelledby="r-career-4-t">
   <a class="back" href="#p-rev" aria-label="닫기"></a>
   <div class="sheet">
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
-      <div class="mtop"><div class="mcat">취업·진로</div><h3 id="r-career-4-t">포트폴리오에 뭘 넣었나</h3>
-        <div class="mby"><span class="mav">7<i>기</i></span><div><b>표민규</b><em>AI 모델개발</em></div></div>
+      <div class="mtop"><div class="mcat">진로 고민</div><h3 id="r-career-4-t">포트폴리오에 뭘 넣었나</h3>
+        <div class="mby"><span class="mav">7<i>기</i></span><div><b>표ㅇㅇ</b><em>AI 모델개발</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">프로젝트 세 개 중 하나만 남기고 둘을 뺐습니다. 덜어내는 게 더 어려웠습니다.</p>
@@ -2621,7 +2625,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">생활</div><h3 id="r-life-5-t">층별 휴게공간, 어디가 조용한가</h3>
-        <div class="mby"><span class="mav">4<i>기</i></span><div><b>한지우</b><em>AI 서비스 기획</em></div></div>
+        <div class="mby"><span class="mav">4<i>기</i></span><div><b>한ㅇㅇ</b><em>AI 서비스 기획</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">3층이 제일 조용합니다. 통화하거나 잠깐 집중할 일이 있으면 거기로 올라갔습니다.</p>
@@ -2638,7 +2642,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">수업</div><h3 id="r-class-5-t">파이썬 기초는 떼고 오시는 게 좋습니다</h3>
-        <div class="mby"><span class="mav">5<i>기</i></span><div><b>류지호</b><em>AI 클라우드·인프라</em></div></div>
+        <div class="mby"><span class="mav">5<i>기</i></span><div><b>류ㅇㅇ</b><em>AI 클라우드·인프라</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">수업이 기본 문법은 안다고 가정하고 갑니다. 준비과정 VOD를 제대로 듣는 게 실제로 차이를 만듭니다.</p>
@@ -2655,7 +2659,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">프로젝트</div><h3 id="r-proj-5-t">멘토링은 요청해야 잡힙니다</h3>
-        <div class="mby"><span class="mav">7<i>기</i></span><div><b>서다온</b><em>데이터 분석</em></div></div>
+        <div class="mby"><span class="mav">7<i>기</i></span><div><b>서ㅇㅇ</b><em>데이터 분석</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">기획, 창업, 디자인, 개발, 비즈니스, 영업까지 분야가 있습니다. 필요한 걸 골라 요청하는 구조입니다.</p>
@@ -2666,13 +2670,13 @@
     </div>
   </div>
 </div>
-<div class="ov cat-career coh4 fld2 tg4 tg6" id="r-career-5" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F" role="dialog" aria-modal="true" aria-labelledby="r-career-5-t">
+<div class="ov cat-career cat-job coh4 fld2 tg4 tg6" id="r-career-5" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F" role="dialog" aria-modal="true" aria-labelledby="r-career-5-t">
   <a class="back" href="#p-rev" aria-label="닫기"></a>
   <div class="sheet">
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
-      <div class="mtop"><div class="mcat">취업·진로</div><h3 id="r-career-5-t">면접에서 제일 많이 받은 질문</h3>
-        <div class="mby"><span class="mav">4<i>기</i></span><div><b>배소율</b><em>AI 서비스 기획</em></div></div>
+      <div class="mtop"><div class="mcat">취업 성공</div><h3 id="r-career-5-t">면접에서 제일 많이 받은 질문</h3>
+        <div class="mby"><span class="mav">4<i>기</i></span><div><b>배ㅇㅇ</b><em>AI 서비스 기획</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">"비전공자인데 왜 이 일을 하려고 하나요"였습니다. 여덟 번 중 여섯 번 받았습니다.</p>
@@ -2693,7 +2697,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">생활</div><h3 id="r-life-6-t">퇴사하고 들어와서 계산해본 생활비</h3>
-        <div class="mby"><span class="mav">5<i>기</i></span><div><b>오세진</b><em>AI 서비스 기획</em></div></div>
+        <div class="mby"><span class="mav">5<i>기</i></span><div><b>오ㅇㅇ</b><em>AI 서비스 기획</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">소득이 끊긴 상태로 8개월을 버텨야 하니, 지원금이 어디까지 커버되는지 먼저 계산했습니다.</p>
@@ -2711,7 +2715,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">수업</div><h3 id="r-class-6-t">포트폴리오 첨삭은 중간에 한 번 더</h3>
-        <div class="mby"><span class="mav">3<i>기</i></span><div><b>장유나</b><em>데이터 분석</em></div></div>
+        <div class="mby"><span class="mav">3<i>기</i></span><div><b>장ㅇㅇ</b><em>데이터 분석</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">수료 직전에만 받으면 고칠 시간이 없습니다. 중간발표 무렵에 한 번 받아두는 걸 권합니다.</p>
@@ -2728,7 +2732,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">프로젝트</div><h3 id="r-proj-6-t">결과물 활용은 시작할 때 협의하세요</h3>
-        <div class="mby"><span class="mav">4<i>기</i></span><div><b>권나윤</b><em>AI 모델개발</em></div></div>
+        <div class="mby"><span class="mav">4<i>기</i></span><div><b>권ㅇㅇ</b><em>AI 모델개발</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">포트폴리오로 쓸 수 있는 범위는 기업과 협의해야 합니다. 끝나고 물으면 늦습니다.</p>
@@ -2743,13 +2747,13 @@
     </div>
   </div>
 </div>
-<div class="ov cat-career coh5 fld1 tg6" id="r-career-6" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F" role="dialog" aria-modal="true" aria-labelledby="r-career-6-t">
+<div class="ov cat-career cat-job coh5 fld1 tg6" id="r-career-6" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F" role="dialog" aria-modal="true" aria-labelledby="r-career-6-t">
   <a class="back" href="#p-rev" aria-label="닫기"></a>
   <div class="sheet">
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
-      <div class="mtop"><div class="mcat">취업·진로</div><h3 id="r-career-6-t">첫 회사에서 쓴 기술은 절반이었습니다</h3>
-        <div class="mby"><span class="mav">5<i>기</i></span><div><b>한결</b><em>AI 클라우드·인프라</em></div></div>
+      <div class="mtop"><div class="mcat">취업 성공</div><h3 id="r-career-6-t">첫 회사에서 쓴 기술은 절반이었습니다</h3>
+        <div class="mby"><span class="mav">5<i>기</i></span><div><b>한ㅇㅇ</b><em>AI 클라우드·인프라</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">배운 것 중 절반은 그대로 썼고, 나머지 절반은 회사 들어가서 새로 배웠습니다.</p>
@@ -2766,7 +2770,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">생활</div><h3 id="r-life-7-t">도시락으로 한 달에 15만원</h3>
-        <div class="mby"><span class="mav">7<i>기</i></span><div><b>윤가람</b><em>AI 서비스 기획</em></div></div>
+        <div class="mby"><span class="mav">7<i>기</i></span><div><b>윤ㅇㅇ</b><em>AI 서비스 기획</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">싱크대가 있어서 설거지가 되고, 냉장고도 쓸 수 있습니다. 매일은 아니어도 절반만 싸 와도 차이가 큽니다.</p>
@@ -2783,7 +2787,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">수업</div><h3 id="r-class-7-t">금융 도메인은 데이터 구하기가 일입니다</h3>
-        <div class="mby"><span class="mav">6<i>기</i></span><div><b>차현우</b><em>데이터 분석</em></div></div>
+        <div class="mby"><span class="mav">6<i>기</i></span><div><b>차ㅇㅇ</b><em>데이터 분석</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">공개 데이터셋을 미리 찾아두면 시작이 훨씬 빠릅니다. 없는 데이터를 기다리다 시간을 씁니다.</p>
@@ -2804,7 +2808,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">프로젝트</div><h3 id="r-proj-7-t">프로젝트 지원금은 클라우드로 나갑니다</h3>
-        <div class="mby"><span class="mav">7<i>기</i></span><div><b>유하람</b><em>AI 클라우드·인프라</em></div></div>
+        <div class="mby"><span class="mav">7<i>기</i></span><div><b>유ㅇㅇ</b><em>AI 클라우드·인프라</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">저희는 대부분 인프라 비용이었습니다. 계획 없이 쓰면 후반에 모자랍니다.</p>
@@ -2815,13 +2819,13 @@
     </div>
   </div>
 </div>
-<div class="ov cat-career coh3 fld3 tg5 tg6" id="r-career-7" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F" role="dialog" aria-modal="true" aria-labelledby="r-career-7-t">
+<div class="ov cat-career cat-job coh3 fld3 tg5 tg6" id="r-career-7" style="--c:#1F4ED8;--bg:#DCE5F7;--dk:#15368F" role="dialog" aria-modal="true" aria-labelledby="r-career-7-t">
   <a class="back" href="#p-rev" aria-label="닫기"></a>
   <div class="sheet">
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
-      <div class="mtop"><div class="mcat">취업·진로</div><h3 id="r-career-7-t">취업연계 과정에서 알게 된 것</h3>
-        <div class="mby"><span class="mav">3<i>기</i></span><div><b>유세하</b><em>데이터 분석</em></div></div>
+      <div class="mtop"><div class="mcat">취업 성공</div><h3 id="r-career-7-t">취업연계 과정에서 알게 된 것</h3>
+        <div class="mby"><span class="mav">3<i>기</i></span><div><b>유ㅇㅇ</b><em>데이터 분석</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">연계는 자리를 보장해 주는 게 아니라 문을 한 번 열어 주는 것이었습니다.</p>
@@ -2842,7 +2846,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">생활</div><h3 id="r-life-8-t">주차는 포기하시는 게 좋습니다</h3>
-        <div class="mby"><span class="mav">5<i>기</i></span><div><b>신예린</b><em>AI 클라우드·인프라</em></div></div>
+        <div class="mby"><span class="mav">5<i>기</i></span><div><b>신ㅇㅇ</b><em>AI 클라우드·인프라</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">별도 주차장이 없습니다. 문화전당역 2번 출구 쪽에서 걸어오는 동선이 가장 무난했습니다.</p>
@@ -2859,7 +2863,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">수업</div><h3 id="r-class-8-t">피지컬 AI는 하드웨어를 만집니다</h3>
-        <div class="mby"><span class="mav">4<i>기</i></span><div><b>손아람</b><em>AI 모델개발</em></div></div>
+        <div class="mby"><span class="mav">4<i>기</i></span><div><b>손ㅇㅇ</b><em>AI 모델개발</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">생각보다 실물을 다루는 일이 많습니다. 저는 납땜도 했습니다.</p>
@@ -2876,7 +2880,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">프로젝트</div><h3 id="r-proj-8-t">코드를 못 짜도 몫은 충분했습니다</h3>
-        <div class="mby"><span class="mav">6<i>기</i></span><div><b>황지안</b><em>AI 클라우드·인프라</em></div></div>
+        <div class="mby"><span class="mav">6<i>기</i></span><div><b>황ㅇㅇ</b><em>AI 클라우드·인프라</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">데이터 정리와 기획으로 팀에 기여했습니다. 팀 안에서 역할은 생각보다 다양합니다.</p>
@@ -2897,7 +2901,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">생활</div><h3 id="r-life-9-t">수료하고 돌아보는 지원금 이야기</h3>
-        <div class="mby"><span class="mav">3<i>기</i></span><div><b>강태현</b><em>AI 모델개발</em></div></div>
+        <div class="mby"><span class="mav">3<i>기</i></span><div><b>강ㅇㅇ</b><em>AI 모델개발</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">받을 때는 당연했는데, 나와서 다른 교육을 알아보니 이 조건이 흔하지 않다는 걸 알았습니다.</p>
@@ -2918,7 +2922,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">수업</div><h3 id="r-class-9-t">수업은 정시에 끝납니다, 복습이 문제입니다</h3>
-        <div class="mby"><span class="mav">7<i>기</i></span><div><b>백서우</b><em>AI 클라우드·인프라</em></div></div>
+        <div class="mby"><span class="mav">7<i>기</i></span><div><b>백ㅇㅇ</b><em>AI 클라우드·인프라</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">시간표는 지켜집니다. 다만 복습을 건너뛰면 다음 주에 바로 티가 납니다.</p>
@@ -2935,7 +2939,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">프로젝트</div><h3 id="r-proj-9-t">5개월은 길지 않습니다</h3>
-        <div class="mby"><span class="mav">3<i>기</i></span><div><b>천서율</b><em>AI 모델개발</em></div></div>
+        <div class="mby"><span class="mav">3<i>기</i></span><div><b>천ㅇㅇ</b><em>AI 모델개발</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">두 달차에 이미 시간이 없다고 느꼈습니다. 초반에 범위를 줄이는 결정이 중요합니다.</p>
@@ -2952,7 +2956,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">생활</div><h3 id="r-life-10-t">강의장과 프로젝트 공간을 오가는 하루</h3>
-        <div class="mby"><span class="mav">7<i>기</i></span><div><b>임도윤</b><em>AI 모델개발</em></div></div>
+        <div class="mby"><span class="mav">7<i>기</i></span><div><b>임ㅇㅇ</b><em>AI 모델개발</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">오전에는 강의장, 오후에는 프로젝트 공간. 짐을 어떻게 두고 다니느냐가 은근히 중요합니다.</p>
@@ -2969,7 +2973,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">수업</div><h3 id="r-class-10-t">탐방에서 본 실무와 수업의 거리</h3>
-        <div class="mby"><span class="mav">5<i>기</i></span><div><b>노유진</b><em>데이터 분석</em></div></div>
+        <div class="mby"><span class="mav">5<i>기</i></span><div><b>노ㅇㅇ</b><em>데이터 분석</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">우리가 배우는 것과 회사에서 쓰는 것이 얼마나 겹치는지 확인하는 자리였습니다.</p>
@@ -2990,7 +2994,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">프로젝트</div><h3 id="r-proj-10-t">중간발표에서 갈아엎은 팀이 잘 됐습니다</h3>
-        <div class="mby"><span class="mav">5<i>기</i></span><div><b>남주원</b><em>AI 서비스 기획</em></div></div>
+        <div class="mby"><span class="mav">5<i>기</i></span><div><b>남ㅇㅇ</b><em>AI 서비스 기획</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">늦었다고 생각했는데 아니었습니다. 그때 방향을 바꾼 팀이 결국 제일 좋은 결과를 냈습니다.</p>
@@ -3007,7 +3011,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">생활</div><h3 id="r-life-11-t">노트북은 빌려 쓰는 것으로 충분했습니다</h3>
-        <div class="mby"><span class="mav">6<i>기</i></span><div><b>배소율</b><em>AI 클라우드·인프라</em></div></div>
+        <div class="mby"><span class="mav">6<i>기</i></span><div><b>배ㅇㅇ</b><em>AI 클라우드·인프라</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">대여해주는 장비로 8개월을 다 썼습니다. 모니터도 같이 나와서 따로 살 일이 없었습니다.</p>
@@ -3028,7 +3032,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">수업</div><h3 id="r-class-11-t">오후 실습을 빠지면 남는 게 없습니다</h3>
-        <div class="mby"><span class="mav">7<i>기</i></span><div><b>고은별</b><em>AI 서비스 기획</em></div></div>
+        <div class="mby"><span class="mav">7<i>기</i></span><div><b>고ㅇㅇ</b><em>AI 서비스 기획</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">오전 이론만 듣고 빠지면 그날 배운 게 사라집니다. 핵심은 오후에 손으로 하는 시간입니다.</p>
@@ -3045,7 +3049,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">프로젝트</div><h3 id="r-proj-11-t">팀은 아이디어보다 사람이 먼저입니다</h3>
-        <div class="mby"><span class="mav">7<i>기</i></span><div><b>구태윤</b><em>AI 서비스 기획</em></div></div>
+        <div class="mby"><span class="mav">7<i>기</i></span><div><b>구ㅇㅇ</b><em>AI 서비스 기획</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">도메인 안에서 팀이 짜입니다. 무엇을 만들지는 그 다음에 정해지는 구조입니다.</p>
@@ -3062,7 +3066,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">생활</div><h3 id="r-life-12-t">회의실 말고 강의장에 남는 방법</h3>
-        <div class="mby"><span class="mav">6<i>기</i></span><div><b>명선우</b><em>데이터 분석</em></div></div>
+        <div class="mby"><span class="mav">6<i>기</i></span><div><b>명ㅇㅇ</b><em>데이터 분석</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">저녁에 강의장이 비면 그대로 씁니다. 다만 몇 시까지 있을 수 있는지는 먼저 확인하세요.</p>
@@ -3079,7 +3083,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">수업</div><h3 id="r-class-12-t">도메인은 흥미 반, 시장 반으로 골랐습니다</h3>
-        <div class="mby"><span class="mav">7<i>기</i></span><div><b>진하경</b><em>AI 모델개발</em></div></div>
+        <div class="mby"><span class="mav">7<i>기</i></span><div><b>진ㅇㅇ</b><em>AI 모델개발</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">여섯 갈래 중에 고르는 날이 옵니다. 재미만 보고 고르면 후반이 힘들 수 있습니다.</p>
@@ -3100,7 +3104,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">프로젝트</div><h3 id="r-proj-12-t">NDA가 있는 프로젝트의 기록 남기기</h3>
-        <div class="mby"><span class="mav">7<i>기</i></span><div><b>단지아</b><em>AI 모델개발</em></div></div>
+        <div class="mby"><span class="mav">7<i>기</i></span><div><b>단ㅇㅇ</b><em>AI 모델개발</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">공개 못 하는 내용이 있으면 구조와 판단 과정만 따로 정리해 두세요.</p>
@@ -3117,7 +3121,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">생활</div><h3 id="r-life-13-t">교통비를 줄이려고 정기권을 끊었습니다</h3>
-        <div class="mby"><span class="mav">4<i>기</i></span><div><b>표지훈</b><em>AI 클라우드·인프라</em></div></div>
+        <div class="mby"><span class="mav">4<i>기</i></span><div><b>표ㅇㅇ</b><em>AI 클라우드·인프라</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">매일 왕복이면 정기권이 확실히 쌉니다. 한 달 정산해보고 바로 바꿨습니다.</p>
@@ -3134,7 +3138,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">수업</div><h3 id="r-class-13-t">EST 탐방에서 본 개발 조직</h3>
-        <div class="mby"><span class="mav">6<i>기</i></span><div><b>봉시현</b><em>AI 클라우드·인프라</em></div></div>
+        <div class="mby"><span class="mav">6<i>기</i></span><div><b>봉ㅇㅇ</b><em>AI 클라우드·인프라</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">제품이 어떻게 나뉘어 굴러가는지 눈으로 봤습니다. 팀 역할 나누는 데 참고가 됐습니다.</p>
@@ -3151,7 +3155,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">프로젝트</div><h3 id="r-proj-13-t">멘토링 한 번을 제대로 쓰는 법</h3>
-        <div class="mby"><span class="mav">6<i>기</i></span><div><b>류하준</b><em>AI 서비스 기획</em></div></div>
+        <div class="mby"><span class="mav">6<i>기</i></span><div><b>류ㅇㅇ</b><em>AI 서비스 기획</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">보여줄 걸 미리 만들어 가면 한 시간이 완전히 달라집니다.</p>
@@ -3168,7 +3172,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">생활</div><h3 id="r-life-14-t">냉장고 쓰는 암묵적인 규칙</h3>
-        <div class="mby"><span class="mav">7<i>기</i></span><div><b>우하린</b><em>AI 서비스 기획</em></div></div>
+        <div class="mby"><span class="mav">7<i>기</i></span><div><b>우ㅇㅇ</b><em>AI 서비스 기획</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">이름을 써 붙이는 게 기본입니다. 금요일에는 각자 정리하고 가는 분위기였습니다.</p>
@@ -3185,7 +3189,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">수업</div><h3 id="r-class-14-t">발표 특강을 듣고 슬라이드를 다 지웠습니다</h3>
-        <div class="mby"><span class="mav">5<i>기</i></span><div><b>곽유담</b><em>AI 서비스 기획</em></div></div>
+        <div class="mby"><span class="mav">5<i>기</i></span><div><b>곽ㅇㅇ</b><em>AI 서비스 기획</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">글자를 줄이고 한 장에 한 메시지로 바꿨습니다. 중간발표 반응이 확실히 달랐습니다.</p>
@@ -3202,7 +3206,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">프로젝트</div><h3 id="r-proj-14-t">팀이 깨졌을 때 어떻게 했나</h3>
-        <div class="mby"><span class="mav">5<i>기</i></span><div><b>전소리</b><em>AI 모델개발</em></div></div>
+        <div class="mby"><span class="mav">5<i>기</i></span><div><b>전ㅇㅇ</b><em>AI 모델개발</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">두 달차에 방향이 갈렸습니다. 감정 상하기 전에 역할과 기대치를 다시 적었습니다.</p>
@@ -3219,7 +3223,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">생활</div><h3 id="r-life-15-t">지원금을 장비가 아니라 시간에 썼습니다</h3>
-        <div class="mby"><span class="mav">5<i>기</i></span><div><b>편도현</b><em>AI 클라우드·인프라</em></div></div>
+        <div class="mby"><span class="mav">5<i>기</i></span><div><b>편ㅇㅇ</b><em>AI 클라우드·인프라</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">새 장비를 사는 대신 아르바이트를 줄였습니다. 공부할 시간을 산 셈입니다.</p>
@@ -3236,7 +3240,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">수업</div><h3 id="r-class-15-t">3기 때 배운 게 지금도 쓰이나</h3>
-        <div class="mby"><span class="mav">3<i>기</i></span><div><b>석도윤</b><em>데이터 분석</em></div></div>
+        <div class="mby"><span class="mav">3<i>기</i></span><div><b>석ㅇㅇ</b><em>데이터 분석</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">도구는 많이 바뀌었지만 데이터를 의심하는 습관은 그대로 남았습니다.</p>
@@ -3253,7 +3257,7 @@
     <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
     <div class="mscroll">
       <div class="mtop"><div class="mcat">프로젝트</div><h3 id="r-proj-15-t">결과가 안 나올 때 남기는 기록</h3>
-        <div class="mby"><span class="mav">4<i>기</i></span><div><b>정무열</b><em>AI 모델개발</em></div></div>
+        <div class="mby"><span class="mav">4<i>기</i></span><div><b>정ㅇㅇ</b><em>AI 모델개발</em></div></div>
       </div>
       <div class="mbody">
         <p class="lead">성능이 기대에 못 미쳤습니다. 대신 시도한 것과 이유를 전부 남겼습니다.</p>

@@ -1,9 +1,9 @@
 /* =========================================================
    인사교 라이프 — 시설 둘러보기 · 생활 꿀팁 · 오시는 길
    박지원 시안8(2026-10-07 전달) script.js에서 이 세 화면이 쓰는 동작만 옮김. [nn]은 시안 블록 번호
-   본문(엘리베이터 · 공간 썸네일 · 크게 보기 창 · 목록 스크롤 안내 자리 포함)은 모두 index.html에 있고, 이 파일은 움직임만
-   2026-10-07 정리: 실제로 안 돌던 시안 블록은 뺌 — [10] 지도 핀 터치 대체 · [09] 핀 고정(.pick)(둘 다 [15]가 핀 클릭을 먼저 받아 닿지 않음),
-   [20] 숨긴 층 카드(.fxsel) 맞추기(카드 자체를 HTML에서 뺌)
+   본문(시설 둘러보기 · 크게 보기 창 · 목록 스크롤 안내 자리 포함)은 모두 index.html에 있고, 이 파일은 움직임만
+   2026-10-07 정리: 실제로 안 돌던 시안 블록은 뺌 — [10] 지도 핀 터치 대체 · [09] 핀 고정(.pick)(둘 다 [15]가 핀 클릭을 먼저 받아 닿지 않음)
+   2026-10-12: 예전 엘리베이터(층별 · 공간별 안내 [18]~[27]) 삭제 — 시설 둘러보기는 아래 '건물 단면 + 사진'(.bx9)
    ========================================================= */
 (function(){
 'use strict';
@@ -20,7 +20,7 @@ if (!MAIN) return;
 var PG = $$(':scope > .page', MAIN);
 var SCREEN = { overview:'home', home:'home', facilities:'facility', facility:'facility', tips:'tips', directions:'way', way:'way' };   // 시안10-B v3: overview = 히어로 페이지
 var CANON = { facility:'#facilities', way:'#directions' };
-var NAME = { home:'인사교 Real Life', facility:'시설 둘러보기', tips:'생활 꿀팁', way:'오시는 길' };
+var NAME = { home:'인사교 LIFE', facility:'시설 둘러보기', tips:'생활 꿀팁', way:'오시는 길' };
 var SUB = { home:'none', facility:'facilities', tips:'tips', way:'directions' };   // home: 하위 메뉴 바에 표시 없음   // menu.js 하위 메뉴 id
 var BASE_TITLE = document.title;
 function route(){
@@ -53,9 +53,15 @@ function route(){
 }
 addEventListener('hashchange', route);
 
-/* 헤더 GNB · 모바일 메뉴 · 푸터의 「인사교 라이프」(주소 없는 life/index.html)를 이 페이지 안에서 누르면 히어로 페이지로:
-   공통 site.js가 #위치를 지우며 hashchange를 알려 주므로 위 route()가 받음(따로 처리 없음).
-   하위 메뉴 바 왼쪽 제목은 menu.js 라이프 항목에 title이 없어 그리지 않음 */
+/* 시안10-B v4: 헤더 GNB · 모바일 메뉴 · 푸터의 「인사교 라이프」(주소 없는 life/index.html)를 이 페이지 안에서 누르면 히어로 페이지로.
+   공통 site.js는 같은 페이지 링크를 새로 불러오지 않고 #위치만 지워(맨 위로) 화면이 그대로였음 → 그 뒤에 화면 전환을 한 번 더 */
+document.addEventListener('click', function(e){
+  var a = e.target.closest && e.target.closest('#siteHeader a[href], #drawer a[href], #siteFooter a[href]');
+  if (!a || a.hasAttribute('data-toast') || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+  var u = new URL(a.href, location.href);
+  if (u.hash || u.origin !== location.origin || u.pathname.replace(/index\.html$/, '') !== location.pathname.replace(/index\.html$/, '')) return;
+  setTimeout(function(){ dispatchEvent(new HashChangeEvent('hashchange')); }, 0);   // route() → 히어로 페이지(주소 없음 = home)
+});
 
 /* 시안10-B v7: 히어로 패널 — 마우스를 올리거나 초점이 가면 그 패널을 펼침(961px 이상). 마지막에 고른 패널이 펼쳐진 채로 남음 */
 (function(){
@@ -66,6 +72,8 @@ addEventListener('hashchange', route);
     p.addEventListener('focus', function(){ open(p); });
   });
 })();
+/* 시안10-B v5: 하위 메뉴 바 왼쪽 제목 「인사교 Real Life」는 뺌(히어로 페이지는 헤더 GNB 「인사교 라이프」로) */
+/* 디자인통일v1: 하위 메뉴 바 왼쪽 제목 「인사교 LIFE」는 남김(10-12 사용자 요청) */
 
 /* ---------- 생활 꿀팁 바로가기 막대: 지금 보는 부분 표시 ([01]) ----------
    항목은 링크(<a href="#tp-…">: 주소 공유 · 새 탭 가능). 누르면 브라우저가 그 위치로(부드러운 스크롤은 base.css) · 화면 전환은 위 route()가 맡음.
@@ -73,7 +81,7 @@ addEventListener('hashchange', route);
 function spy(){
   var pg = $(':scope > .page:not([hidden])', MAIN); if (!pg) return;
   var sn = $$('.lnb-s a', pg); if (!sn.length) return;
-  var cur = null;   // 시안10: 바로가기에서 주거 · 근처 식당을 뺐으므로, 그 위를 보는 동안은 표시 없음
+  var cur = null;   // 시안10: 바로가기에서 주거 · 근처 먹거리를 뺐으므로, 그 위를 보는 동안은 표시 없음
   sn.forEach(function(a){ var t = document.getElementById(a.hash.slice(1)); if (t && t.getBoundingClientRect().top < innerHeight * .4) cur = a; });
   sn.forEach(function(a){ if (a === cur) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
 }
@@ -161,42 +169,128 @@ addEventListener('scroll', function(){
   layout(); setTimeout(layout, 60);
 })();
 
-/* ---------- 근처 식당: 혼밥 / 여럿이 · 도보 10분 · 1만 원 이하 · 음식 종류 ([11], 음식 종류 · 빈 상태는 시안10에서 더함) ---------- */
+/* ---------- 주거(단독 시안 2026-10-12): 교육장 가운데 지도 + 오른쪽 '동별 주거 정보'(탭 1~5)
+   지도의 동 원을 누르거나 탭을 누르면 그 동 정보로 바뀌고 지도 원도 강조. 탭은 ← → · Home · End ---------- */
 (function(){
-  var bs = $$('[data-fg2]', MAIN), nb = $('#fdNear'), cb = $('#fdCheap'); if (!bs.length) return;
-  var fs = $$('[data-fc]', MAIN), cnt = $('.fdcnt', MAIN), empty = $('.fdempty', MAIN), rs = $('[data-fdreset]', MAIN);
-  var g = 'all', near = false, cheap = false, cat = 'all';
-  function ap(){
-    var total = 0, cols = 0;
-    $$('.fd2c', MAIN).forEach(function(c){
-      var n = 0;
-      $$('.fd2i', c).forEach(function(i){ var ok = (!near || +i.dataset.w <= 10) && (!cheap || i.dataset.p === '1') && (cat === 'all' || i.dataset.c === cat); i.hidden = !ok; if (ok) n++; });
-      c.querySelector('h3 em').textContent = n + '곳';
-      var vis = (g === 'all' || c.classList.contains(g)) && n > 0;   // 거른 뒤 0곳인 칸은 접음
-      c.hidden = !vis; if (vis) { cols++; total += n; }
-    });
-    $('.fd2', MAIN).classList.toggle('one', cols < 2);
-    $('.fd2', MAIN).hidden = cols === 0;
-    if (empty) empty.hidden = cols > 0;
-    var on = g !== 'all' || near || cheap || cat !== 'all';
-    if (cnt) cnt.textContent = on ? total + '곳' : '';
-    // 고른 조건에서 0곳이 되는 음식 종류는 흐리게(누를 수는 있음)
-    fs.forEach(function(b){
-      if (b.dataset.fc === 'all') return;
-      var k = $$('.fd2c', MAIN).reduce(function(a, c){ return a + ((g === 'all' || c.classList.contains(g)) ? $$('.fd2i', c).filter(function(i){ return i.dataset.c === b.dataset.fc && (!near || +i.dataset.w <= 10) && (!cheap || i.dataset.p === '1'); }).length : 0); }, 0);
-      b.classList.toggle('is-zero', k === 0);
-    });
+  var tabs = $$('.hzp-t', MAIN), panels = $$('.hzp', MAIN), dots = $$('.hzmap-d', MAIN); if (!tabs.length) return;
+  function sel(i, focus){
+    i = String(i);
+    tabs.forEach(function(t){ var on = t.dataset.i === i; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; if (on && focus) t.focus(); });
+    panels.forEach(function(p){ p.hidden = p.dataset.i !== i; });
+    dots.forEach(function(d){ d.classList.toggle('on', d.dataset.i === i); });
   }
-  function press(list, b){ list.forEach(function(x){ x.setAttribute('aria-pressed', x === b); }); }
-  bs.forEach(function(b){ b.addEventListener('click', function(){ g = b.dataset.fg2; press(bs, b); ap(); }); });
-  fs.forEach(function(b){ b.addEventListener('click', function(){ cat = b.dataset.fc; press(fs, b); ap(); }); });
-  if (nb) nb.addEventListener('click', function(){ near = !near; nb.setAttribute('aria-pressed', near); ap(); });
-  if (cb) cb.addEventListener('click', function(){ cheap = !cheap; cb.setAttribute('aria-pressed', cheap); ap(); });
-  if (rs) rs.addEventListener('click', function(){
-    g = 'all'; cat = 'all'; near = false; cheap = false;
-    press(bs, bs[0]); press(fs, fs[0]); if (nb) nb.setAttribute('aria-pressed', false); if (cb) cb.setAttribute('aria-pressed', false); ap();
+  tabs.forEach(function(t, k){
+    t.addEventListener('click', function(){ sel(t.dataset.i); });
+    t.addEventListener('keydown', function(e){
+      var j = { ArrowRight:k + 1, ArrowLeft:k - 1, ArrowDown:k + 1, ArrowUp:k - 1, Home:0, End:tabs.length - 1 }[e.key];
+      if (j === undefined) return; e.preventDefault(); sel(tabs[(j + tabs.length) % tabs.length].dataset.i, true);
+    });
   });
+  dots.forEach(function(d){
+    d.addEventListener('click', function(){
+      sel(d.dataset.i);
+      var side = $('.hzmw-side', MAIN), r = side.getBoundingClientRect();
+      if (r.top > innerHeight - 120) side.scrollIntoView({ behavior:'smooth', block:'start' });   // 좁은 화면: 지도 아래 정보 칸으로
+    });
+    d.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); d.dispatchEvent(new MouseEvent('click')); } });
+  });
+  sel('0');
+  // 좁은 화면: 지도가 화면보다 넓어 가로로 밀어 봄 → 처음엔 교육장(가운데)이 보이게
+  var mw = $('.hzmw-map', MAIN);
+  function center(){ if (mw && mw.scrollWidth > mw.clientWidth + 4 && mw.offsetParent) mw.scrollLeft = (mw.scrollWidth - mw.clientWidth) / 2; }
+  center(); addEventListener('hashchange', function(){ setTimeout(center, 60); }); addEventListener('resize', center);
+})();
+
+/* ---------- 근처 먹거리(단독 시안 2026-10-12): 식당 · 카페 탭 + 거르기(전체 · 혼밥/혼자 · 여럿이 + 도보 10분 안)
+   카드(사진 자리 · 이름 · 메뉴 · 선배 후기)를 그리드로. 처음 6곳 + '나머지 n곳 더 보기', 탭 · 거르기를 바꾸면 다시 6곳부터 ---------- */
+(function(){
+  var bs = $$('[data-fg2]', MAIN), nb = $('#fdNear'); if (!bs.length) return;
+  var ks = $$('[data-fk]', MAIN), solo = $('[data-fg2="solo"]', MAIN), list = $('.fdg', MAIN);
+  var cards = $$('.fdg .fdc', MAIN), empty = $('.fdempty', MAIN), rs = $('[data-fdreset]', MAIN);
+  var mw = $('.fdmore2', MAIN), mb = mw && mw.querySelector('button'), N = 8;
+  var MID = matchMedia('(max-width: 1100px)');
+  function cnt(){ return MID.matches ? 6 : 8; }   // PC 4열 × 2줄 = 8곳, 1100px 이하(3 · 2 · 1열)는 6곳
+  var k = 'food', g = 'all', near = false, all = false;
+  function ap(){
+    N = cnt();
+    var hits = cards.filter(function(c){ return c.dataset.t === k && (g === 'all' || c.dataset.g === g) && (!near || +c.dataset.w <= 10); });
+    cards.forEach(function(c){ c.hidden = true; });
+    hits.forEach(function(c, i){ c.hidden = !all && i >= N; });
+    if (empty) empty.hidden = hits.length > 0;
+    list.hidden = !hits.length;
+    if (mw) { var rest = hits.length - N; mw.hidden = all || rest <= 0; if (rest > 0) mb.textContent = '나머지 ' + rest + '곳 더 보기'; mb.setAttribute('aria-expanded', 'false'); }
+  }
+  function tab(b, focus){
+    k = b.dataset.fk; all = false;
+    ks.forEach(function(x){ var on = x === b; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; });
+    if (focus) b.focus();
+    list.setAttribute('aria-labelledby', b.id);
+    if (solo) solo.textContent = k === 'cafe' ? '혼자' : '혼밥';
+    ap();
+  }
+  ks.forEach(function(b, i){
+    b.addEventListener('click', function(){ tab(b); });
+    b.addEventListener('keydown', function(e){
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault(); tab(ks[(i + (e.key === 'ArrowRight' ? 1 : ks.length - 1)) % ks.length], true);
+    });
+  });
+  function press(b){ bs.forEach(function(x){ x.setAttribute('aria-pressed', x === b); }); }
+  bs.forEach(function(b){ b.addEventListener('click', function(){ g = b.dataset.fg2; all = false; press(b); ap(); }); });
+  if (nb) nb.addEventListener('click', function(){ near = !near; all = false; nb.setAttribute('aria-pressed', near); ap(); });
+  if (mb) mb.addEventListener('click', function(){ all = true; ap(); mb.setAttribute('aria-expanded', 'true'); });
+  if (rs) rs.addEventListener('click', function(){ g = 'all'; near = false; all = false; press(bs[0]); if (nb) nb.setAttribute('aria-pressed', false); ap(); });
+  if (MID.addEventListener) MID.addEventListener('change', function(){ if (!all) ap(); });
   ap();
+})();
+
+/* ---------- 문화 · 여가(단독 시안 2026-10-12): 세 갈래(근처 산책길 · 가까운 시설 · 멀지만 가볼 만한 곳) — 사진이 겹친 묶음을 누르면 가로로 펼침
+   펼치기 · 접기는 FLIP: 바뀌기 전 자리를 재고 → 클래스를 바꾼 뒤 새 자리를 재고 → 옛 자리에서 새 자리로 transform만 움직임(사진은 4:3 그대로라 늘어나 보이지 않음).
+   묶음 높이 · 제목 줄 · 버튼도 같은 시간 · 같은 곡선으로. 움직임 줄이기 설정이면 바로 바뀜 ---------- */
+(function(){
+  var RMQ = matchMedia('(prefers-reduced-motion: reduce)'), EASE = 'cubic-bezier(.22,.8,.24,1)', DUR = 560;
+  $$('.fs .fsg', MAIN).forEach(function(g){
+    var b = g.querySelector('.fs-tg'), d = g.querySelector('.fsd'), cards = [].slice.call(g.querySelectorAll('.fsc'));
+    var heads = [g.querySelector('.fsn'), g.querySelector('.fsh > div'), b], busy = false;
+    function ph(c){ return c.querySelector('.fsc-ph'); }
+    function snap(){
+      return {
+        h: g.getBoundingClientRect().height,
+        heads: heads.map(function(e){ var r = e.getBoundingClientRect(); return { x:r.left, y:r.top }; }),
+        cards: cards.map(function(c){ var p = ph(c), r = p.getBoundingClientRect(); return { cx:r.left + r.width / 2, cy:r.top + r.height / 2, w:p.offsetWidth }; })
+      };
+    }
+    function rot(c, open){ return open ? 0 : (parseFloat(getComputedStyle(c).getPropertyValue('--rt')) || 0); }
+    function origin(c){ var p = ph(c); c.style.transformOrigin = (p.offsetLeft + p.offsetWidth / 2) + 'px ' + (p.offsetTop + p.offsetHeight / 2) + 'px'; }
+    cards.forEach(origin);
+    function set(open){
+      if (busy || open === g.classList.contains('is-open')) return;
+      if (RMQ.matches || !g.animate) { g.classList.toggle('is-open', open); b.setAttribute('aria-expanded', open); cards.forEach(origin); return; }
+      busy = true;
+      var A = snap();
+      g.classList.add('fs-flip');
+      g.classList.toggle('is-open', open); b.setAttribute('aria-expanded', open);
+      cards.forEach(origin);
+      var B = snap(), an = [];
+      an.push(g.animate([{ height:A.h + 'px' }, { height:B.h + 'px' }], { duration:DUR, easing:EASE }));
+      heads.forEach(function(e, i){
+        var dx = A.heads[i].x - B.heads[i].x, dy = A.heads[i].y - B.heads[i].y;
+        if (Math.abs(dx) + Math.abs(dy) > 1) an.push(e.animate([{ transform:'translate(' + dx + 'px,' + dy + 'px)' }, { transform:'none' }], { duration:DUR, easing:EASE }));
+      });
+      cards.forEach(function(c, i){
+        var a = A.cards[i], z = B.cards[i], s = a.w / z.w, r0 = rot(c, !open), r1 = rot(c, open);
+        an.push(c.animate([
+          { transform:'translate(' + (a.cx - z.cx) + 'px,' + (a.cy - z.cy) + 'px) rotate(' + r0 + 'deg) scale(' + s + ')' },
+          { transform:'rotate(' + r1 + 'deg)' }
+        ], { duration:DUR, easing:EASE, delay:(open ? i : cards.length - 1 - i) * 40, fill:'backwards' }));
+      });
+      function done(){ g.classList.remove('fs-flip'); busy = false; }
+      Promise.all(an.map(function(x){ return x.finished; })).then(done, done);
+    }
+    b.addEventListener('click', function(){ set(!g.classList.contains('is-open')); });
+    d.addEventListener('click', function(){ if (!g.classList.contains('is-open')) set(true); });
+    addEventListener('resize', function(){ cards.forEach(origin); });
+  });
 })();
 
 /* ---------- 문화 · 여가: 누르면 크게 보기 ([15], 창 dialog.lbx는 index.html에) ---------- */
@@ -262,138 +356,75 @@ addEventListener('scroll', function(){
     ul.addEventListener('scroll', tip, { passive:true }); c._fdupd = upd;
   });
   function all(){ cs.forEach(function(c){ if (c._fdupd) c._fdupd(); }); }
-  $$('[data-fg2],[data-fc],[data-fdreset],#fdNear,#fdCheap', MAIN).forEach(function(b){ b.addEventListener('click', function(){ setTimeout(all, 0); }); });
+  $$('[data-fg2],[data-fdreset],#fdNear', MAIN).forEach(function(b){ b.addEventListener('click', function(){ setTimeout(all, 0); }); });
   addEventListener('resize', all); addEventListener('hashchange', function(){ setTimeout(all, 80); });
   if (NARROW.addEventListener) NARROW.addEventListener('change', all);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(all);
   setTimeout(all, 50);
 })();
 
-/* ---------- 층별 · 공간별 안내(엘리베이터) ----------
-   index.html의 구조는 시안 [26](사진을 엘리베이터 안으로) · [28](공간 탭 썸네일)이 만든 모양 그대로.
-   공간(.fxs) ↔ 엘리베이터 안 사진(.fxv) ↔ 아래 막대(.fxbar)는 data-k(층-공간)로 짝 지음 */
-var FX = $('#pg-facility .fx');
-if (FX) {
-  var FP = FX.querySelector('.fxp'), E8 = FX.querySelector('.e8');
-  var pair = function(sp, sel){ return E8.querySelector(sel + '[data-k="' + sp.dataset.k + '"]'); };
-
-  /* [18] 층 선택 · 공간 탭 · 사진 넘김(몇 번째 사진인지 표시) */
-  (function(){
-    var r = FX, $$r = function(q, e){ return [].slice.call((e || r).querySelectorAll(q)); };
-    function floor(g){
-      $$r('.fxf.act').forEach(function(b){ var on = b.dataset.g === g; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
-      $$r('.fxg').forEach(function(x){ x.hidden = x.dataset.g !== g; });
-    }
-    $$r('.fxf.act').forEach(function(b){ b.addEventListener('click', function(){ floor(b.dataset.g); }); });
-    // 공간 탭: 고른 탭만 Tab 키로 들어가고(나머지 tabindex -1), 안에서는 ← → · Home · End로 옮김(탭 목록 키보드 규칙)
-    $$r('.fxg').forEach(function(g){
-      var ts = $$r('.fxt', g);
-      function pick(t){
-        ts.forEach(function(x){ x.setAttribute('aria-selected', x === t); x.tabIndex = x === t ? 0 : -1; });
-        $$r('.fxs', g).forEach(function(sp){ sp.hidden = sp.dataset.s !== t.dataset.s; });
-      }
-      ts.forEach(function(t, i){
-        t.tabIndex = t.getAttribute('aria-selected') === 'true' ? 0 : -1;
-        t.addEventListener('click', function(){ pick(t); });
-        t.addEventListener('keydown', function(e){
-          var j = { ArrowRight:i + 1, ArrowLeft:i - 1, Home:0, End:ts.length - 1 }[e.key];
-          if (j === undefined) return;
-          e.preventDefault(); var n = ts[(j + ts.length) % ts.length]; n.focus(); pick(n);
-        });
-      });
+/* ---------- 시설 둘러보기: 건물 단면 + 사진 ----------
+   왼쪽 건물 단면의 층(.bx9-f) → 오른쪽 그 층 묶음(.bx9-g) · 공간 탭(.bx9-t) → 공간(.bx9-s) · 사진 넘김(.bx9-ph) · 작은 사진(.bx9-tb)
+   다른 곳에서 data-fac="층-공간"(예: 1-0) 링크를 누르면 그 공간을 열어 둠 */
+var BX = $('#pg-facility .bx9');
+if (BX) (function(){
+  var fbs = $$('.bx9-f[data-g]', BX), gs = $$('.bx9-g', BX), tw = $('.bx9-tw', BX);
+  var mk = document.createElement('span'); mk.className = 'bx9-cur'; mk.setAttribute('aria-hidden', 'true'); tw.appendChild(mk);
+  function place(){
+    var b = fbs.filter(function(x){ return x.getAttribute('aria-pressed') === 'true'; })[0]; if (!b || !b.offsetParent) return;
+    var r = b.getBoundingClientRect(), t = tw.getBoundingClientRect();
+    mk.style.transform = 'translate(' + (r.left - t.left) + 'px,' + (r.top - t.top) + 'px)';
+    mk.style.width = r.width + 'px'; mk.style.height = r.height + 'px';
+  }
+  function floor(g){
+    BX.dataset.g = g;
+    fbs.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.g === g)); });
+    gs.forEach(function(x){ var on = x.dataset.g === g; if (on && x.hidden) { x.hidden = false; x.classList.remove('bx9-in'); void x.offsetWidth; x.classList.add('bx9-in'); } else x.hidden = !on; });
+    place();
+  }
+  fbs.forEach(function(b){ b.addEventListener('click', function(){ floor(b.dataset.g); }); });
+  // 공간 탭
+  function tab(t, focus){
+    var g = t.closest('.bx9-g'), ts = $$('.bx9-t', g);
+    ts.forEach(function(x){ var on = x === t; x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1; var pn = document.getElementById(x.getAttribute('aria-controls')); if (pn) { if (on && pn.hidden) { pn.hidden = false; pn.classList.remove('bx9-in'); void pn.offsetWidth; pn.classList.add('bx9-in'); } else pn.hidden = !on; } });
+    if (focus) t.focus();
+  }
+  $$('.bx9-t', BX).forEach(function(t){
+    t.addEventListener('click', function(){ tab(t); });
+    t.addEventListener('keydown', function(e){
+      var ts = $$('.bx9-t', t.closest('.bx9-g')), i = ts.indexOf(t), n = ts.length, j = -1;
+      if (e.key === 'ArrowRight') j = (i + 1) % n; else if (e.key === 'ArrowLeft') j = (i - 1 + n) % n; else if (e.key === 'Home') j = 0; else if (e.key === 'End') j = n - 1;
+      if (j > -1) { e.preventDefault(); tab(ts[j], true); }
     });
-    $$r('.fxs').forEach(function(sp){
-      var v = pair(sp, '.fxv'), bar = pair(sp, '.fxbar'); if (!v || !bar) return;
-      var tr = v.querySelector('.fxtr'), sl = $$r('.fxsl', v), ds = $$r('.fxd', bar), cap = bar.querySelector('.fxcap'), num = bar.querySelector('.fxn b'), k = 0, n = sl.length;
-      function go(j){
-        k = (j + n) % n; tr.style.transform = 'translateX(' + (-100 * k) + '%)';
-        ds.forEach(function(d, i){ d.classList.toggle('on', i === k); if (i === k) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current'); });
-        cap.textContent = sl[k].getAttribute('aria-label'); num.textContent = k + 1;
-      }
-      v.querySelector('.fxa.prev').addEventListener('click', function(){ go(k - 1); });
-      v.querySelector('.fxa.next').addEventListener('click', function(){ go(k + 1); });
-      ds.forEach(function(d, i){ d.addEventListener('click', function(){ go(i); }); });
-      v.addEventListener('keydown', function(e){ if (e.key === 'ArrowRight') { e.preventDefault(); go(k + 1); } if (e.key === 'ArrowLeft') { e.preventDefault(); go(k - 1); } });
-      var x0 = null;
-      v.addEventListener('pointerdown', function(e){ if (e.target.closest('.fxa')) return; x0 = e.clientX; });
-      v.addEventListener('pointerup', function(e){ if (x0 == null) return; var dx = e.clientX - x0; x0 = null; if (Math.abs(dx) > 40) go(dx < 0 ? k + 1 : k - 1); });
-      if (n < 2) { bar.querySelector('.fxdots').hidden = true; $$r('.fxa', v).forEach(function(a){ a.hidden = true; }); }
-    });
-  })();
-
-  /* [19] 위(히어로 사진)에서 층을 고르면 엘리베이터가 다 보이게 스크롤 — 고정 헤더 · 붙는 메뉴 높이를 재서 그 아래로 */
-  (function(){
-    function navBottom(){
-      var L = [];
-      document.querySelectorAll('body *').forEach(function(el){
-        if (FX.contains(el)) return; var c = getComputedStyle(el); if (c.position !== 'sticky' && c.position !== 'fixed') return;
-        var r = el.getBoundingClientRect(), t = c.position === 'sticky' && c.top !== 'auto' ? parseFloat(c.top) : r.top;
-        if (r.height < 200 && r.width > innerWidth * .5 && t < innerHeight / 2) L.push({ top:t, bottom:t + r.height });
-      });
-      var m = 0, ch = true;
-      while (ch) { ch = false; L.forEach(function(r){ if (r.top <= m + 4 && r.bottom > m) { m = r.bottom; ch = true; } }); }
-      return m;
+  });
+  // 사진 넘김
+  $$('.bx9-s', BX).forEach(function(sp){
+    var ph = $('.bx9-ph', sp), tr = $('.bx9-tr', ph), sl = $$('.bx9-sl', ph), tb = $$('.bx9-tb', sp), cap = $('.bx9-cap span', ph), num = $('.bx9-n b', ph), k = 0, n = sl.length;
+    function go(i){
+      k = (i + n) % n; tr.style.transform = 'translateX(' + (-100 * k) + '%)';
+      cap.textContent = sl[k].getAttribute('aria-label'); num.textContent = k + 1;
+      tb.forEach(function(b, j){ if (j === k) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
     }
-    function bottomBar(){
-      var m = innerHeight;
-      document.querySelectorAll('body *').forEach(function(el){
-        if (FX.contains(el)) return; var c = getComputedStyle(el); if (c.position !== 'fixed') return;
-        var r = el.getBoundingClientRect(); if (r.bottom > innerHeight - 4 && r.width > innerWidth * .6) m = Math.min(m, r.top);
-      });
-      return m;
-    }
-    function fit(){
-      var g = [].find.call(FX.querySelectorAll('.fxg'), function(x){ return !x.hidden; }); if (!g) return;
-      var s = [].find.call(g.querySelectorAll('.fxs'), function(x){ return !x.hidden; }); if (!s) return;
-      // 기준 = 안내 칸과 엘리베이터 중 위에 있는 것. 860px 이하는 엘리베이터가 안내 칸 위에 쌓여, 안내 칸 기준이면 사진이 헤더 뒤로 숨었음(2026-10-08)
-      var top = Math.min(g.getBoundingClientRect().top, E8.getBoundingClientRect().top), bot = E8.getBoundingClientRect().bottom, nb = navBottom(), bb = bottomBar();
-      if (top < nb - 2 || bot > bb - 6) scrollTo({ top:scrollY + top - nb - 12, behavior:RM ? 'auto' : 'smooth' });
-    }
-    FX.addEventListener('click', function(e){ if (!e.isTrusted && !FX.__quiet && e.target.closest('.fxf.act')) requestAnimationFrame(function(){ requestAnimationFrame(fit); }); });
-  })();
-
-  /* [25] 엘리베이터: 층 버튼을 누르면 문이 닫히고 표시창이 한 층씩 바뀐 뒤 그 층으로 */
-  (function(){
-    var num = FX.querySelector('.e8-num'), nm = FX.querySelector('.e8-name'), arw = FX.querySelector('.e8-arw'), busy = false;
-    var bs = [].slice.call(FX.querySelectorAll('.fxf.act'));
-    function fl(b){ return parseInt(b.querySelector('b').textContent, 10); }
-    function label(b){ return b.querySelector('b').textContent + ' ' + b.querySelector('span').textContent; }
-    var cur = bs.filter(function(b){ return fl(b) === 2; })[0] || bs[0];
-    function mark(b){ bs.forEach(function(x){ x.classList.toggle('cur', x === b); }); cur = b; num.textContent = fl(b) + 'F'; nm.textContent = label(b); }
-    mark(cur);
-    function press(b){ FX.__quiet = true; b.click(); FX.__quiet = false; }
-    FX.addEventListener('click', function(e){
-      var b = e.target.closest('.fxf.act'); if (!b) return;
-      if (!e.isTrusted) { if (!FX.__quiet) mark(b); return; }   // 히어로 사진 등에서 넘어온 클릭: 표시만 바로 맞춤
-      e.stopImmediatePropagation(); e.preventDefault(); if (busy) return;
-      var from = fl(cur), to = fl(b);
-      if (b === cur || from === to && b.dataset.g === cur.dataset.g) { mark(b); press(b); return; }
-      if (RM) { mark(b); press(b); return; }
-      busy = true; arw.className = 'e8-arw ' + (to > from ? 'up' : 'dn'); FX.classList.add('e8-closed'); var f = from, step = to > from ? 1 : -1;
-      setTimeout(function tick(){
-        if (f !== to) { f += step; num.textContent = f + 'F'; setTimeout(tick, 140); return; }
-        mark(b); press(b); setTimeout(function(){ FX.classList.remove('e8-closed'); arw.className = 'e8-arw'; busy = false; }, 160);
-      }, 460);
-    }, true);
-  })();
-
-  /* [26] 고른 층 · 공간의 사진과 아래 막대만 보이게 */
-  (function(){
-    function sync(){
-      $$('.fxs', FP).forEach(function(sp){
-        var g = sp.closest('.fxg'), on = !sp.hidden && !(g && g.hidden);
-        [pair(sp, '.fxv'), pair(sp, '.fxbar')].forEach(function(x){ if (x) x.hidden = !on; });
-      });
-    }
-    new MutationObserver(sync).observe(FP, { attributes:true, attributeFilter:['hidden'], subtree:true }); sync();
-  })();
-
-  /* [27] 히어로 사진 → 그 공간 안내 */
-  $$('#pg-facility .fh8 .btl').forEach(function(b){ b.addEventListener('click', function(){
-    var f = FX.querySelector('.fxf.act[data-g="' + b.dataset.hf + '"]'); if (!f) return; f.click();
-    var g = FX.querySelector('.fxg[data-g="' + b.dataset.hf + '"]'), t = g && g.querySelectorAll('.fxt')[+b.dataset.ht || 0]; if (t) t.click();
-  }); });
-}
+    $('.bx9-a.prev', ph).addEventListener('click', function(){ go(k - 1); });
+    $('.bx9-a.next', ph).addEventListener('click', function(){ go(k + 1); });
+    tb.forEach(function(b, j){ b.addEventListener('click', function(){ go(j); }); });
+    ph.addEventListener('keydown', function(e){ if (e.key === 'ArrowRight') { e.preventDefault(); go(k + 1); } else if (e.key === 'ArrowLeft') { e.preventDefault(); go(k - 1); } });
+    var x0 = null;
+    ph.addEventListener('pointerdown', function(e){ if (e.target.closest('.bx9-a')) return; x0 = e.clientX; });
+    ph.addEventListener('pointerup', function(e){ if (x0 === null) return; var dx = e.clientX - x0; x0 = null; if (Math.abs(dx) > 40) go(k + (dx < 0 ? 1 : -1)); });
+    if (n < 2) $$('.bx9-a', ph).forEach(function(a){ a.hidden = true; });
+  });
+  // 다른 곳에서 특정 공간으로
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('[data-fac]'); if (!a) return;
+    var q = a.dataset.fac.split('-'); floor(q[0]);
+    var t = document.getElementById('bx9t-' + q[0] + '-' + (q[1] || 0)); if (t) tab(t);
+  });
+  addEventListener('resize', place); addEventListener('hashchange', function(){ setTimeout(place, 60); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+  new MutationObserver(place).observe($('#pg-facility'), { attributes:true, attributeFilter:['hidden'] });
+  setTimeout(place, 50);
+})();
 
 route(); spy();
 })();

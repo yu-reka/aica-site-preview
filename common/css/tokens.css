@@ -19,6 +19,7 @@
 
 :root{
   /* 색 */
+  --primary:#102D80;     /* 디자인통일v1(10-12): 프라이머리 = 랜딩 바탕 파랑. 페이지마다 이 색을 쓰는 곳을 둠(나중에 바뀔 수 있어 이름으로 씀) */
   --blue:#1F4ED8;        /* 메인 색: 버튼 · 강조 · 링크 */
   --blue-soft:#DCE5F7;
   --ink:#14233F;         /* 본문 · 제목 */
@@ -31,12 +32,12 @@
   --cta:#FEE500;         /* 지원하기 버튼: 모든 페이지 헤더 · 모바일 메뉴 */
   --on-cta:#191919;
 
-  /* 상단 헤더 막대. 기본 차콜(이야기 · 라이프 · 체크)
-     페이지마다 자기 CSS에서 :root{--header-bg:…}로 그 페이지에 맞는 색을 씀(홈 #102D80 · 알아보기 #1C2A4A) */
-  --header-bg:#2B2D31;
-  --on-header:#F2F2F2;
-  --header-muted:rgba(255,255,255,.6);
-  --header-accent:#A9BEFF;   /* 막대 위 현재 메뉴 · 포커스(차콜 · 남색 위 모두 대비 7:1 이상) */
+  /* 상단 헤더 막대. 기본은 랜딩 바탕색(home.css --ax-bg가 이 값을 씀): 차콜
+     페이지마다 자기 CSS에서 :root{--header-bg:…}로 그 페이지에 맞는 색을 씀(알아보기 #1C2A4A) */
+  --header-bg:#2457F5;   /* 10-13: 새 랜딩(aica-home-v2) 헤더와 같은 파랑. 흰 글자 5.6 : 1. 전에는 남색 #102D80 */
+  --on-header:#fff;
+  --header-muted:#fff;   /* 파랑 위 흐린 흰색은 대비 미달이라 쓰지 않음(랜딩과 같음) */
+  --header-accent:#fff;  /* 현재 메뉴 · 포커스: 흰 글자 + 흰 밑줄 */
 
   /* 글꼴 */
   --ff-sans:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;   /* 기본: 본문 · 메뉴 · 푸터 */

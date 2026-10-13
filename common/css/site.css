@@ -17,7 +17,7 @@
    상단 헤더 / GNB — 모든 페이지 같은 어두운 막대
    ========================================================= */
 .site-header{position:fixed;inset:0 0 auto 0;z-index:50;padding-top:env(safe-area-inset-top,0px);color:var(--ink);
-  --logo-w:155px;                                      /* 로고(심볼 + 이름) 칸 폭: 글꼴이 늦게 와도 GNB가 안 움직이게 고정(Pretendard에서 실제 154.5px. 2026-10-12 '광주' 뺌) */
+  --logo-w:187px;                                      /* 로고(심볼 + 이름 + 광주) 칸 폭: 글꼴이 늦게 와도 GNB가 안 움직이게 고정(Pretendard에서 실제 186.9px) */
   --gnb-x:calc(var(--logo-w) + 40px + 12px + 22px)}    /* GNB 첫 메뉴(인사교 알아보기) 글자 시작 = 정렬선 + 로고 + 칸 사이(.hdr-inner gap) + .gnb 왼쪽 여백 + 링크 안쪽 여백. 하위 메뉴 바 첫 항목도 여기 */
 .site-header:empty{height:calc(env(safe-area-inset-top,0px) + var(--hdr));background:var(--header-bg)}
 .site-header .hdr-bar{position:relative;z-index:2;height:var(--hdr);background:color-mix(in srgb,var(--header-bg) 92%,transparent);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid rgba(255,255,255,.08);color:var(--on-header);transition:border-color .3s,background .3s}
@@ -30,6 +30,7 @@
 .logo-mark{width:31px;height:26px;flex:none;background:url("../assets/brand/symbol-blue.png") center/contain no-repeat}
 .hdr-bar .logo-mark{background-image:url("../assets/brand/symbol-white.png")}
 .logo-text{font-weight:700;font-size:17px;letter-spacing:-.03em}
+.logo-sub{font-size:12px;color:var(--header-muted);font-weight:500;margin-left:2px}   /* 헤더 막대에만 있음 */
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]) .logo-mark{background-image:url("../assets/brand/symbol-white.png")}
 }
@@ -84,7 +85,7 @@
    ========================================================= */
 .site-header .subnav{position:relative;z-index:1;height:var(--sub);background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .site-header .subnav-inner{height:100%;display:flex;align-items:center;gap:28px}
-.site-header .subnav-title{font-size:15px;font-weight:500;color:var(--graphite);white-space:nowrap;padding-right:20px;border-right:1px solid var(--line);line-height:1.2}
+.site-header .subnav-title{font-size:16px;font-weight:500;color:var(--graphite);white-space:nowrap;padding-right:28px;border-right:1px solid var(--line);line-height:1.2}
 .site-header .subnav-list{position:relative;display:flex;gap:4px;height:100%;list-style:none;margin:0;padding:0;overflow-x:auto;scrollbar-width:none}
 .site-header .subnav-list::-webkit-scrollbar{display:none}
 .site-header .subnav-list a{display:flex;align-items:center;height:100%;padding:0 14px;font-size:15px;color:var(--graphite);text-decoration:none;white-space:nowrap;transition:color .2s}
@@ -93,7 +94,7 @@
 .site-header .subnav-indicator{position:absolute;left:0;bottom:0;height:2px;background:var(--ink);transition:transform .4s var(--ease),width .4s var(--ease);pointer-events:none}
 @media (min-width:861px){
   /* 2뎁스 시작점(2026-10-08 사용자 "모든 카테고리의 2depth 지점도 동일하게"): 첫 항목 글자 = GNB 첫 메뉴 '인사교 알아보기' 글자 아래(--gnb-x).
-     왼쪽 제목(이야기 · 체크)은 고정 폭 칸이라 구분선도 모든 페이지 같은 자리(로고에서 '광주'를 뺀 뒤 칸이 좁아져 제목 15px · 오른쪽 여백 20px — '먼저 다녀온 선배들의 SSUL'이 안 잘리게), 제목 없는 바(알아보기 · 라이프)는 그만큼 띄움. 링크 안쪽 여백 14px · 칸 사이 28px 뺌 */
+     왼쪽 제목(이야기 · 체크)은 고정 폭 칸이라 구분선도 모든 페이지 같은 자리, 제목 없는 바(알아보기 · 라이프)는 그만큼 띄움. 링크 안쪽 여백 14px · 칸 사이 28px 뺌 */
   .site-header .subnav-title{flex:none;width:calc(var(--gnb-x) - 28px - 14px);overflow:hidden;text-overflow:ellipsis}
   .site-header .subnav-inner>.subnav-list:first-child{margin-left:calc(var(--gnb-x) - 14px)}
 }
@@ -257,3 +258,36 @@ main:has(>.next-band:last-child){padding-bottom:0}
 :is(.subnav-list,[data-scroll-fade]).fade-r{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent)}
 :is(.subnav-list,[data-scroll-fade]).fade-l{-webkit-mask-image:linear-gradient(90deg,transparent,#000 40px);mask-image:linear-gradient(90deg,transparent,#000 40px)}
 :is(.subnav-list,[data-scroll-fade]).fade-l.fade-r{-webkit-mask-image:linear-gradient(90deg,transparent,#000 40px,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(90deg,transparent,#000 40px,#000 calc(100% - 40px),transparent)}
+
+/* ---------- 디자인통일v1(10-12): 상단 메뉴를 랜딩 헤더와 같게 ---------- */
+/* 10-13: 새 랜딩(aica-home-v2 home.css 'v2.1 GNB')과 같은 헤더 — 파랑 막대 · 흰 굵은 메뉴 · 아래 검정 3px 선 · 흰 지원하기(검정 테두리 + 그림자) */
+.site-header .gnb-link{font-weight:700}
+.site-header .gnb-link::after{height:3px;bottom:-3px;background:#fff}
+.site-header .gnb-link:hover,
+.site-header .gnb-link:focus-visible,
+.site-header .gnb-link[aria-current="page"]{color:#fff}
+.site-header .hdr-bar,.site-header.is-scrolled .hdr-bar,.site-header.menu-open .hdr-bar{border-bottom:3px solid #0B0B0C}
+.site-header.menu-open .drop-bg{border-bottom:3px solid #0B0B0C}
+.site-header .search-panel{border-bottom:3px solid #0B0B0C;box-shadow:none}
+.site-header .drop a{font-weight:500;color:#fff}
+.site-header .drop a:hover,.site-header .drop a:focus-visible{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.site-header .logo-sub,.site-header .official-link{color:#fff;opacity:1}
+.hdr-bar .icon-btn:hover,.search-panel .icon-btn:hover{background:rgba(11,11,12,.18)}
+.site-header .search-tags a{border-color:rgba(255,255,255,.55)}
+.site-header .search-tags a:hover{background:#fff;color:var(--header-bg)}
+.site-header .btn-apply{background:#fff;color:var(--header-bg);font-weight:700;border:2px solid #0B0B0C;box-shadow:3px 3px 0 #0B0B0C;transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.site-header .btn-apply:hover{background:#fff;transform:translate(-2px,-2px);box-shadow:5px 5px 0 #0B0B0C}
+:root .site-header :is(a,button,input):focus-visible{outline-color:#fff}
+@media (max-width:860px){.site-header .btn-apply{box-shadow:2px 2px 0 #0B0B0C}}
+/* 바탕: 밝은 페이지에서도 랜딩과 같은 색이 되도록 불투명하게 */
+.site-header .hdr-bar,
+.site-header .drop-bg,
+.site-header .search-panel{background:var(--header-bg);-webkit-backdrop-filter:none;backdrop-filter:none}
+/* 로고 크기 · 간격: 랜딩과 같게(심볼 34×29, 간격 11px) */
+.site-header .logo{gap:11px}
+.site-header .logo-mark{width:34px;height:29px}
+
+/* 디자인통일v1(10-12): 하위 메뉴 바 왼쪽 페이지 이름(선배들의 이야기 · 인사교 LIFE · 지원 전 Check)을 오른쪽 정렬해 세로 구분선에 붙임 */
+.site-header .subnav-title{text-align:right}
+/* 이름 ↔ 구분선 여백을 구분선 ↔ 첫 메뉴 글자 여백(바 사이 간격 28px + 메뉴 왼쪽 안쪽 여백 14px = 42px)과 같게. 메뉴 위치는 그대로 */
+.site-header .subnav-title{padding-right:41px}   /* 구분선 1px 포함 42px */

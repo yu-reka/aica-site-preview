@@ -1,15 +1,15 @@
-/* 기업 연계 프로젝트: 링크 탭 · 영상 · 정보가 한 폴더 모양 · 제목이 화면에 들어오면 색종이(about.js) */
+/* The link tab, video and project details form one folder. */
 .activity-projects { position: relative; isolation: isolate; max-width: 1120px; margin: 30px auto 0; }
 .activity-projects-heading { position: relative; z-index: 1; max-width: 1120px; margin: 0 auto 38px; text-align: left; }
-.activity-projects-heading > span { display: block; margin-bottom: 10px; color: #244cd2; font-size: 11px; font-weight: 700; }
-.school-about .activity-projects-heading h3 { font-size: clamp(22px, 2.2vw, 30px); line-height: 1.5; letter-spacing: -.04em; color: #172641; }
-.activity-projects-heading h3 em { font-style: normal; color: #244cd2; }
+.activity-projects-heading > span { display: block; margin-bottom: 10px; color: var(--blue); font-size: 11px; font-weight: 700; }
+.school-about .activity-projects-heading h3 { font-size: clamp(22px, 2.2vw, 30px); line-height: 1.5; letter-spacing: -.04em; font-weight: 700; color: var(--ink); word-break: keep-all; }
+.activity-projects-heading h3 em { font-style: normal; color: var(--blue); }
 .activity-project-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; max-width: 1120px; margin-inline: auto; }
 .activity-project-card { position: relative; isolation: isolate; display: flex; min-width: 0; padding: 0; filter: drop-shadow(0 6px 12px #16496125); }
 .activity-project-sheet { position: relative; isolation: isolate; display: flex; flex-direction: column; flex: 1; min-width: 0; overflow: visible; background: transparent; }
 .activity-project-sheet::before { content: ""; position: absolute; z-index: 0; top: 24px; left: 0; right: 0; height: 70px; border: 1px solid #3299bf; border-radius: 18px 18px 0 0; background: linear-gradient(180deg, #48b2d9, #359ecb); pointer-events: none; }
 .activity-project-sheet::after { content: ""; position: absolute; z-index: 0; top: 52px; left: 0; right: 0; height: 40px; border-radius: 18px 18px 0 0; background: #f4fcff; pointer-events: none; }
-.activity-project-link { position: relative; z-index: 1; isolation: isolate; align-self: flex-start; display: flex; align-items: center; gap: 10px; width: max-content; max-width: calc(100% - 22px); min-height: 52px; padding: 13px 38px 13px 18px; background: transparent; color: #25344c; font-size: 14px; font-weight: 700; }
+.activity-project-link { position: relative; z-index: 1; isolation: isolate; align-self: flex-start; display: flex; align-items: center; gap: 10px; width: max-content; max-width: calc(100% - 22px); min-height: 52px; padding: 13px 38px 13px 18px; background: transparent; color: #25344c; font-size: 14px; font-weight: 700; text-decoration: none; }
 .activity-project-link::before, .activity-project-link::after { content: ""; position: absolute; pointer-events: none; clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 100%, 0 100%); }
 .activity-project-link::before { z-index: -2; inset: 0; border-radius: 16px 10px 0 0; background: #3299bf; }
 .activity-project-link::after { z-index: -1; inset: 1px 1px 0; border-radius: 15px 9px 0 0; background: #4ab6dc; }
@@ -17,10 +17,11 @@
 .activity-project-link-arrow { width: 21px; height: 21px; flex: none; margin-left: auto; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .activity-project-link:hover { color: #123951; }
 .activity-project-link:hover::after { background: #5fc4e9; }
+.activity-project-link:focus-visible { outline: 3px solid #1673a3; outline-offset: -4px; }
 .activity-project-player { position: relative; z-index: 2; width: 100%; margin-top: 8px; aspect-ratio: 16 / 9; min-height: 200px; overflow: hidden; border: 1px solid #3299bf; border-bottom: 0; border-radius: 18px 18px 0 0; background: #111827; }
 .activity-project-player iframe { display: block; position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .activity-project-body { position: relative; z-index: 2; display: flex; flex-direction: column; flex: 1; padding: 20px 20px 23px; border: 1px solid #3299bf; border-top: 0; border-radius: 0 0 18px 18px; background: linear-gradient(180deg, #5bc2e8, #43acd6); box-shadow: inset 0 -2px 0 #288eb940; }
-.school-about .activity-project-body h4 { margin-top: 0; margin-bottom: 18px; color: #25344c; font-size: 22px; line-height: 1.5; letter-spacing: -.035em; }
+.school-about .activity-project-body h4 { font-family: 'School Paperlogy', 'School Pretendard', sans-serif; font-synthesis: none; margin-top: 0; margin-bottom: 18px; color: #25344c; font-size: 22px; font-weight: 900; line-height: 1.5; letter-spacing: -.035em; word-break: keep-all; }
 .activity-project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: auto 0 0; padding: 0; list-style: none; }
 .activity-project-tags li { padding: 5px 9px; border: 1px solid #b7e2f4; border-radius: 6px; background: #eefaff; color: #2b5570; font-size: 11px; font-weight: 600; line-height: 1.5; }
 .activity-project-confetti { position: absolute; z-index: 0; top: -8px; width: 112px; height: 350px; pointer-events: none; user-select: none; }
@@ -37,7 +38,7 @@
   100% { opacity: .65; transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(1); }
 }
 .activity-other-heading { max-width: 1120px; text-align: left; margin: 76px auto 28px; }
-.school-about .activity-other-heading h3 { font-size: clamp(22px, 2.2vw, 30px); line-height: 1.5; color: #172641; letter-spacing: -.04em; }
+.school-about .activity-other-heading h3 { font-size: clamp(22px, 2.2vw, 30px); line-height: 1.5; color: var(--ink); font-weight: 700; letter-spacing: -.04em; }
 @media (max-width: 1250px) {
   .activity-project-confetti--left { left: -72px; }
   .activity-project-confetti--right { right: -72px; }
@@ -71,6 +72,9 @@
 @media (max-width: 600px) {
   .school-about .activity-projects-heading h3, .school-about .activity-other-heading h3 { font-size: 23px; }
 }
+@media (prefers-reduced-motion: reduce) {
+  .activity-projects .activity-project-particle { animation: none !important; opacity: .65 !important; }
+}
 
 /* 색종이 조각마다 날아갈 방향 · 크기 · 색(HTML의 export-style-1~24) */
 .export-style-1 { --x:-32px;--y:-132px;--w:16px;--h:28px;--r:-28deg;--turn:202deg;--delay:0ms;--confetti-color:#9ca7e9; }
@@ -99,10 +103,11 @@
 .export-style-24 { --x:24px;--y:160px;--w:10px;--h:24px;--r:18deg;--turn:-212deg;--delay:35ms;--confetti-color:#a9d9ff; }
 
 /* 파일로 바로 열었을 때(file://): 유튜브 대신 미리보기 그림 링크(about.js) */
-.activity-project-file-video { position: absolute; inset: 0; display: block; background: #18263b; color: #fff; }
+.activity-project-file-video { position: absolute; inset: 0; display: block; background: #18263b; color: #fff; text-decoration: none; }
 .activity-project-file-video > img { width: 100%; height: 100%; object-fit: cover; }
 .activity-project-file-video::after { content: ''; position: absolute; inset: 55% 0 0; background: linear-gradient(transparent, #000a); pointer-events: none; }
 .activity-project-file-play { position: absolute; z-index: 1; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 68px; height: 48px; border-radius: 12px; background: #ff0033; box-shadow: 0 3px 14px #0003; }
 .activity-project-file-play::before { content: ''; position: absolute; left: 29px; top: 14px; border-left: 17px solid #fff; border-top: 10px solid transparent; border-bottom: 10px solid transparent; }
 .activity-project-file-caption { position: absolute; z-index: 1; left: 0; right: 0; bottom: 15px; text-align: center; font-family: 'School Pretendard', sans-serif; font-size: 14px; font-weight: 700; }
+.activity-project-file-video:focus-visible { outline: 3px solid #fff; outline-offset: -5px; }
 .activity-project-file-video:hover .activity-project-file-play { background: #dc002b; }

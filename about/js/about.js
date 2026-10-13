@@ -1,14 +1,10 @@
 'use strict';
-/* 인사교 알아보기 본문 동작(본문 글 · 사진은 HTML, 여기서는 움직임 · 상태만. 예외: 갤러리 분류 이름표 names):
-   오른쪽 목차 · 현재 섹션 표시 · #위치 도착 보정 · 관련 기관 연결선 · 기사 카드 · 선택 이유 카드(코드 타자 · 학습 경로) · 교과목 · 교육 시간 숫자 · 활동 갤러리 · 프로젝트 색종이 · 파일로 열 때 유튜브 대체 링크.
-   움직임 줄이기 설정이면 모션은 건너뛰고 끝 모습 그대로. 헤더 · 하위 메뉴 바 · 모바일 메뉴 · 푸터는 공통 틀(../common/js/site.js). 전달본 script.js의 navigation.js(자체 헤더 메뉴)는 뺐습니다. */
-
-// 움직임 줄이기 설정: 아래 모션들이 모두 이 하나를 봄
-const aboutReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+/* 인사교 알아보기 본문 동작: 오른쪽 목차 · 현재 섹션 표시 · 관련 기관 · 기사 카드 · 선택 이유 카드 · 교과목 · 교육 시간 · 활동 갤러리 · 프로젝트 색종이.
+   헤더 · 하위 메뉴 바 · 모바일 메뉴 · 푸터는 공통 틀(../common/js/site.js). 전달본 script.js의 navigation.js(자체 헤더 메뉴)는 뺐습니다. */
 
 const chapterLinks = [...document.querySelectorAll('.section-navigation a[data-section]')];
 const chapters = [...new Set(chapterLinks.map(link => document.querySelector(link.hash)))].filter(Boolean);
-// 목차 글은 정한 순서 그대로 두고, 현재 섹션 고르기만 문서 순서로(섹션 자리가 바뀌어도 맞게)
+// Sections may move while menu labels retain their agreed order.
 const orderedChapters = [...chapters].sort((a, b) =>
   a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1
 );
@@ -88,7 +84,7 @@ window.addEventListener('resize', updateCurrentChapter);
 window.addEventListener('hashchange', updateCurrentChapter);
 updateCurrentChapter();
 
-// 관련 기관 연결선 움직임은 그림이 화면에 있을 때만
+// Run connector motion only while its diagram is on screen.
 const partnerNetwork = document.querySelector('.partner-network');
 if (partnerNetwork && 'IntersectionObserver' in window) {
   new IntersectionObserver(entries => {
@@ -96,8 +92,8 @@ if (partnerNetwork && 'IntersectionObserver' in window) {
   }, { threshold: .1 }).observe(partnerNetwork);
 }
 
-// 다른 페이지에서 #위치로 들어오면 웹 글꼴이 자리 잡기 전에 도착함.
-// 부드러운 스크롤 없이 바로 가고, 글꼴을 다 받은 뒤 한 번 더 맞춤.
+// A hash link from another page lands before the web fonts settle the layout.
+// Arrive without the smooth animation, then align once more after the fonts load.
 const initialTarget = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
 if (initialTarget && document.fonts) {
   const root = document.documentElement;
@@ -111,10 +107,11 @@ if (initialTarget && document.fonts) {
   });
 }
 
-// 기사 카드: 시안처럼 1초 동안 100px 아래에서 한 번 떠오름.
-// 움직이는 카드 대신 제자리 틀을 지켜봐 시작 시점이 흔들리지 않게.
+// Match the reference news block: a single 100px fade-up over one second.
+// Observe the stationary frame so the animated offset does not alter its trigger.
 const introNewsStack = document.querySelector('.intro-news-stack');
-if (introNewsStack && !aboutReducedMotion.matches && 'IntersectionObserver' in window) {
+const introNewsReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+if (introNewsStack && !introNewsReducedMotion.matches && 'IntersectionObserver' in window) {
   introNewsStack.dataset.newsReveal = 'waiting';
   const introNewsObserver = new IntersectionObserver(entries => {
     if (!entries.some(entry => entry.isIntersecting)) return;
@@ -122,16 +119,17 @@ if (introNewsStack && !aboutReducedMotion.matches && 'IntersectionObserver' in w
     introNewsObserver.disconnect();
   }, { rootMargin: '0px 0px -120px 0px', threshold: 0 });
   introNewsObserver.observe(introNewsStack);
-  aboutReducedMotion.addEventListener('change', event => {
+  introNewsReducedMotion.addEventListener('change', event => {
     if (!event.matches) return;
     introNewsStack.dataset.newsReveal = 'visible';
     introNewsObserver.disconnect();
   });
 }
 
-// 선택 이유 카드: 한 번씩 나타남. 좁은 화면에서 세로로 쌓인 카드는 각자 화면에 들어올 때.
+// Reveal each benefit card once; stacked mobile cards wait for their own entry.
 const whySchoolCards = [...document.querySelectorAll('#why-school .why-school-cards > .why-school-card')];
-if (whySchoolCards.length && !aboutReducedMotion.matches && 'IntersectionObserver' in window) {
+const whySchoolReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+if (whySchoolCards.length && !whySchoolReducedMotion.matches && 'IntersectionObserver' in window) {
   const whySchoolObserver = new IntersectionObserver(entries => {
     for (const entry of entries) {
       if (!entry.isIntersecting) continue;
@@ -143,16 +141,16 @@ if (whySchoolCards.length && !aboutReducedMotion.matches && 'IntersectionObserve
     card.dataset.cardReveal = 'waiting';
     whySchoolObserver.observe(card);
   }
-  aboutReducedMotion.addEventListener('change', event => {
+  whySchoolReducedMotion.addEventListener('change', event => {
     if (!event.matches) return;
     for (const card of whySchoolCards) card.dataset.cardReveal = 'visible';
     whySchoolObserver.disconnect();
   });
 }
 
-// 코드 글 · 색은 그대로 두고 줄마다 보이는 폭만 늘려 타자 치듯 보여 줌
+// Keep the source code and its colors intact; animate each line's visible width.
 const whySchoolCodeEditor = document.querySelector('#why-school .why-school-code-editor');
-if (whySchoolCodeEditor && !aboutReducedMotion.matches && 'IntersectionObserver' in window) {
+if (whySchoolCodeEditor && !whySchoolReducedMotion.matches && 'IntersectionObserver' in window) {
   const codeLines = [...whySchoolCodeEditor.querySelectorAll('.why-school-code-lines code')]
     .filter(line => line.textContent.trim().length);
   let typingDelay = .35;
@@ -177,7 +175,7 @@ if (whySchoolCodeEditor && !aboutReducedMotion.matches && 'IntersectionObserver'
       clearTimeout(codeRestartTimer);
       cancelAnimationFrame(codeStartFrame);
     };
-    const canTypeCode = () => codeVisible && codeCardReady && !aboutReducedMotion.matches && !document.hidden;
+    const canTypeCode = () => codeVisible && codeCardReady && !whySchoolReducedMotion.matches && !document.hidden;
     const startTyping = () => {
       clearCodeSchedule();
       if (!canTypeCode()) return;
@@ -211,7 +209,7 @@ if (whySchoolCodeEditor && !aboutReducedMotion.matches && 'IntersectionObserver'
     whySchoolCodeEditor.addEventListener('animationend', event => {
       if (whySchoolCodeEditor.dataset.codeTyping === 'typing' && event.target === codeLines[codeLines.length - 1] && event.animationName === 'why-school-code-type') finishTyping();
     });
-    aboutReducedMotion.addEventListener('change', event => {
+    whySchoolReducedMotion.addEventListener('change', event => {
       if (event.matches) {
         codeCardReady = true;
         projectCard?.removeEventListener('animationend', observeCodeAfterCard);
@@ -227,7 +225,7 @@ if (whySchoolCodeEditor && !aboutReducedMotion.matches && 'IntersectionObserver'
   }
 }
 
-// 학습 경로 세 단계: 그림이 화면에 있을 때만 반복
+// Repeat the three learning steps only while their illustration is visible.
 const whySchoolLearning = document.querySelector('#why-school .why-school-visual--learning');
 if (whySchoolLearning && 'IntersectionObserver' in window) {
   const learningCard = whySchoolLearning.closest('.why-school-card');
@@ -248,13 +246,13 @@ if (whySchoolLearning && 'IntersectionObserver' in window) {
   };
   const startLearning = () => {
     stopLearning();
-    if (!learningVisible || !learningCardReady || aboutReducedMotion.matches || document.hidden) return;
+    if (!learningVisible || !learningCardReady || whySchoolReducedMotion.matches || document.hidden) return;
     whySchoolLearning.dataset.learningStep = '0';
     whySchoolLearning.dataset.learningRouteStep = '0';
     whySchoolLearning.dataset.learningActive = 'true';
     learningTimer = setTimeout(beginLearningCycle, 350);
   };
-  // 도착 칸은 경로 선의 CSS 전환이 실제로 끝난 뒤에 켬
+  // A destination node lights only after the route's actual CSS transition ends.
   learningProgress.addEventListener('transitionend', event => {
     if (event.target !== learningProgress || event.propertyName !== 'stroke-dashoffset' ||
         whySchoolLearning.dataset.learningActive !== 'true' || !pendingLearningStep) return;
@@ -274,7 +272,7 @@ if (whySchoolLearning && 'IntersectionObserver' in window) {
       }, 2000);
     }
   });
-  if (!aboutReducedMotion.matches) {
+  if (!whySchoolReducedMotion.matches) {
     whySchoolLearning.dataset.learningStep = '0';
     whySchoolLearning.dataset.learningRouteStep = '0';
   }
@@ -290,7 +288,7 @@ if (whySchoolLearning && 'IntersectionObserver' in window) {
     startLearning();
   };
   if (!learningCardReady) learningCard.addEventListener('animationend', learningCardFinished);
-  aboutReducedMotion.addEventListener('change', event => {
+  whySchoolReducedMotion.addEventListener('change', event => {
     if (event.matches) {
       stopLearning();
       learningCardReady = true;
@@ -307,9 +305,10 @@ if (whySchoolLearning && 'IntersectionObserver' in window) {
   });
 }
 
-// 교과목 카드: 격자 자리는 그대로 두고 왼쪽에서 오른쪽으로 드러냄
+// Uncover each curriculum card left to right while keeping its grid slot intact.
 const commonCourseCards = [...document.querySelectorAll('#learning .common-courses-grid > .common-course-card')];
-if (commonCourseCards.length && !aboutReducedMotion.matches && 'IntersectionObserver' in window) {
+const commonCourseReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+if (commonCourseCards.length && !commonCourseReducedMotion.matches && 'IntersectionObserver' in window) {
   const commonCourseObserver = new IntersectionObserver(entries => {
     for (const entry of entries) {
       if (!entry.isIntersecting || entry.intersectionRatio < .12) continue;
@@ -324,23 +323,24 @@ if (commonCourseCards.length && !aboutReducedMotion.matches && 'IntersectionObse
       if (event.target === card && event.animationName === 'common-course-wipe') card.dataset.courseReveal = 'complete';
     });
   }
-  aboutReducedMotion.addEventListener('change', event => {
+  commonCourseReducedMotion.addEventListener('change', event => {
     if (!event.matches) return;
     for (const card of commonCourseCards) card.dataset.courseReveal = 'complete';
     commonCourseObserver.disconnect();
   });
 }
 
-// 교육 시간 숫자: 요약 칸이 화면에 들어올 때 한 번 셈
+// Count education hours once when each summary/card enters the viewport.
 const educationHourNumbers = [...document.querySelectorAll('#education-hours .education-hours-number[data-count-to]')];
-if (educationHourNumbers.length && !aboutReducedMotion.matches && 'IntersectionObserver' in window) {
+const educationHoursReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+if (educationHourNumbers.length && !educationHoursReducedMotion.matches && 'IntersectionObserver' in window) {
   const educationHoursFormatter = new Intl.NumberFormat('ko-KR');
   const educationHoursCounters = educationHourNumbers.map(number => ({
     number,
     target: Number(number.dataset.countTo),
     frame: 0,
     state: 'waiting',
-    container: number.closest('.education-hours-summary')
+    container: number.closest('.education-hours-summary, .education-time-stages > li')
   }));
   const finishEducationCounter = counter => {
     cancelAnimationFrame(counter.frame);
@@ -382,7 +382,7 @@ if (educationHourNumbers.length && !aboutReducedMotion.matches && 'IntersectionO
     counter.number.dataset.countState = 'waiting';
     educationHoursObserver.observe(counter.container);
   }
-  aboutReducedMotion.addEventListener('change', event => {
+  educationHoursReducedMotion.addEventListener('change', event => {
     if (!event.matches) return;
     for (const counter of educationHoursCounters) finishEducationCounter(counter);
     educationHoursObserver.disconnect();
@@ -410,6 +410,7 @@ if (activityGallery) {
   let category = 'lecture';
   let currentSlides = [];
   let dotButtons = [];
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let visibleSlide;
   let renderSequence = 0;
   let preparingSequence = 0;
@@ -430,7 +431,7 @@ if (activityGallery) {
     const current = currentSlides[index];
     const previous = currentSlides[(index - 1 + currentSlides.length) % currentSlides.length];
     const next = currentSlides[(index + 1) % currentSlides.length];
-    // 가운데 사진은 다 받은(decode) 뒤에 바꿈. 늦게 끝난 앞 요청은 반영 안 함
+    // Decode before replacing the central image; stale requests never commit.
     for (const slide of [current, previous, next]) slide.querySelector('img').loading = 'eager';
     if (visibleSlide && visibleSlide !== current) {
       preparingSequence = sequence;
@@ -442,13 +443,13 @@ if (activityGallery) {
     clearTransition();
     let layer;
     let movingFrames;
-    const from = currentSlides.indexOf(outgoing);
     if (outgoing && outgoing !== current && outgoing.dataset.category === current.dataset.category) {
+      const from = currentSlides.indexOf(outgoing);
       const forward = (index - from + currentSlides.length) % currentSlides.length;
       direction ||= forward <= currentSlides.length / 2 ? 1 : -1;
     } else direction = 0;
-    if (outgoing && outgoing !== current && !aboutReducedMotion.matches && typeof current.animate === 'function') {
-      // 앞뒤 칸을 따로 두어 한 바퀴 돌 때 미리보기 사진이 가운데 길을 지나가지 않게
+    if (outgoing && outgoing !== current && !reducedMotion.matches && typeof current.animate === 'function') {
+      // Separate slots keep wrap-around previews outside the central path.
       const makePhoto = slide => {
         const photo = slide.querySelector('.activity-gallery-photo').cloneNode(true);
         photo.querySelector('img').alt = '';
@@ -461,6 +462,7 @@ if (activityGallery) {
       layer.inert = true;
       if (direction) {
         layer.classList.add('activity-gallery-transition-track');
+        const from = currentSlides.indexOf(outgoing);
         const neighbor = activityGallery.querySelector('[data-gallery-position="next"]');
         const distance = new DOMMatrixReadOnly(getComputedStyle(neighbor).transform).m41;
         const pose = slot => ({
@@ -473,6 +475,7 @@ if (activityGallery) {
           const slide = currentSlides[(from + slot + currentSlides.length * 2) % currentSlides.length];
           const frame = document.createElement('div');
           frame.className = 'activity-gallery-transition-frame';
+          frame.style.cssText = slide.style.cssText;
           frame.classList.add(...[...slide.classList].filter(name => name.startsWith('export-style-')));
           const initial = pose(slot);
           frame.style.transform = initial.transform;
@@ -486,6 +489,7 @@ if (activityGallery) {
         }
         activityGallery.dataset.galleryAnimating = 'true';
       } else {
+        layer.style.cssText = outgoing.style.cssText;
         layer.classList.add(...[...outgoing.classList].filter(name => name.startsWith('export-style-')));
         layer.append(makePhoto(outgoing));
       }
@@ -498,6 +502,7 @@ if (activityGallery) {
       slide.setAttribute('aria-hidden', String(!active));
       slide.inert = !active;
     }
+    current.querySelector('img').loading = 'eager';
     caption.textContent = current.dataset.title;
     description.textContent = current.dataset.description;
     categoryLabel.textContent = names[category];
@@ -583,18 +588,19 @@ if (activityGallery) {
     });
     stage.addEventListener('pointercancel', () => { gesture = undefined; });
     stage.addEventListener('pointerleave', event => { if (event.pointerType === 'mouse') gesture = undefined; });
-    aboutReducedMotion.addEventListener('change', () => { pendingMoves.length = 0; clearTransition(); });
+    reducedMotion.addEventListener('change', () => { pendingMoves.length = 0; clearTransition(); });
     document.addEventListener('visibilitychange', () => { if (document.hidden) { pendingMoves.length = 0; clearTransition(); } });
     selectCategory(category);
   }
 }
 
-// 프로젝트 제목이 화면에 들어오면 색종이를 한 번 터뜨림
+// Celebrate the project section once when its heading enters the viewport.
 (() => {
   const section = document.querySelector('.activity-projects');
   const heading = section?.querySelector('.activity-projects-heading');
   if (!heading || !('IntersectionObserver' in window)) return;
-  if (aboutReducedMotion.matches) return;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (reducedMotion.matches) return;
   let headingVisible = false;
   let started = false;
   let finishedParticles = 0;
@@ -605,7 +611,7 @@ if (activityGallery) {
     observer.disconnect();
     section.removeEventListener('animationend', onParticleFinished);
     document.removeEventListener('visibilitychange', onVisibilityChange);
-    aboutReducedMotion.removeEventListener('change', onMotionPreference);
+    reducedMotion.removeEventListener('change', onMotionPreference);
   };
   const begin = () => {
     if (started || !headingVisible || document.hidden) return;
@@ -630,12 +636,12 @@ if (activityGallery) {
   }, { threshold: .45, rootMargin: '0px 0px -60px 0px' });
   section.addEventListener('animationend', onParticleFinished);
   document.addEventListener('visibilitychange', onVisibilityChange);
-  aboutReducedMotion.addEventListener('change', onMotionPreference);
+  reducedMotion.addEventListener('change', onMotionPreference);
   observer.observe(heading);
 })();
 
-// 파일(file://)로 열면 유튜브 임베드에 필요한 HTTP 출처가 없어 재생이 안 됨.
-// HTTP로 열면 임베드 그대로, 파일로 열 때만 유튜브로 가는 썸네일 링크로 바꿈.
+// Local HTML files cannot provide the HTTP origin required by YouTube embeds.
+// Keep HTTP previews embedded; show a working YouTube link when opened as a file.
 (() => {
   if (location.protocol !== 'file:') return;
   document.querySelectorAll('.activity-project-player').forEach(container => {
@@ -664,4 +670,30 @@ if (activityGallery) {
     link.append(poster, play, label);
     container.replaceChildren(link);
   });
+})();
+
+/* 오른쪽 플로팅 목차(10-13, 지원 전 체크와 같음): 화면 40% 지점을 지난 마지막 섹션 표시 · 누르면 그 섹션 주소로(도착 자리는 공통 scroll-margin) */
+(function(){
+  var nav = document.querySelector('.school-about .sec-float'); if (!nav) return;
+  var btns = [].slice.call(nav.querySelectorAll('.sf-btn'));
+  var secs = btns.map(function(b){ return document.getElementById(b.dataset.jump); });
+  var first = secs[0], raf;
+  function set(id){ btns.forEach(function(b){ var on = b.dataset.jump === id; b.classList.toggle('is-active', on); if (on) b.setAttribute('aria-current','true'); else b.removeAttribute('aria-current'); }); }
+  function calc(){
+    var line = innerHeight * .4, id = btns[0].dataset.jump;
+    secs.forEach(function(el, k){ if (el && el.getBoundingClientRect().top <= line) id = btns[k].dataset.jump; });
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) id = btns[btns.length - 1].dataset.jump;
+    set(id);
+    // 늘 보임(지원 전 체크와 같음). 첫 화면(어두운 히어로) 위에 있을 때는 흰색으로
+    nav.classList.add('is-in');
+    var r = nav.getBoundingClientRect(), mid = r.top + r.height / 2;
+    nav.classList.toggle('on-dark', !!first && first.getBoundingClientRect().top > mid);
+  }
+  function onS(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(calc); }
+  addEventListener('scroll', onS, { passive:true }); addEventListener('resize', onS);
+  btns.forEach(function(b){ b.addEventListener('click', function(){
+    var el = document.getElementById(b.dataset.jump); if (!el) return;
+    if (location.hash === '#' + b.dataset.jump) el.scrollIntoView({ behavior:'smooth', block:'start' }); else location.hash = b.dataset.jump;
+  }); });
+  calc();
 })();

@@ -1,13 +1,16 @@
-/* 무엇을 배우나요(#learning): 제목 · 공통 교과목 9개 카드 격자 · 화면에 들어오면 왼쪽부터 드러남(about.js) */
 .school-about:has(#learning:target) { scroll-padding-top: calc(var(--hdr) + var(--about-subnav, 0px)); }
 .common-courses {
   position: relative;
   padding: 48px 0 82px;
+  scroll-margin-top: 0;
   background: #fff;
 }
+/* Reuse about-wrap so learning, education and daily routine share the eligibility edges. */
+.common-courses-wrap { margin-inline: auto; }
 .common-courses-heading { text-align: center; margin-bottom: 36px; }
 .common-courses .common-courses-heading h2 {
   font-size: clamp(34px, 3.4vw, 50px);
+  font-weight: 900;
   line-height: 1.3;
   letter-spacing: -.055em;
 }
@@ -22,7 +25,7 @@
   font-weight: 700;
   color: #536078;
 }
-.common-courses-meta strong { color: #244cd2; }
+.common-courses-meta strong { color: var(--blue); }
 .common-courses-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -47,7 +50,7 @@
 .common-course-card:nth-child(6) { grid-column: 1; }
 .common-course-card:nth-child(7) { grid-column: 3; }
 .common-course-card:nth-child(9) { grid-column: 6; }
-/* 카드는 제자리에 둔 채(움직이거나 흐려지지 않게) 흰 가림막만 왼쪽부터 걷어 냄 */
+/* Wipe each fixed card from its left edge without moving or fading it. */
 .common-course-card[data-course-reveal] { position: relative; overflow: hidden; --course-reveal-delay: 0s; }
 .common-course-card:is([data-course-reveal="waiting"], [data-course-reveal="visible"])::after { content: ''; position: absolute; inset: 0; background: #fff; pointer-events: none; }
 .common-course-card[data-course-reveal="visible"]::after { animation: common-course-wipe .65s ease-in-out var(--course-reveal-delay) both; }
@@ -68,12 +71,13 @@
   .common-course-card[data-course-reveal]:nth-child(n) { --course-reveal-delay: 0s; }
   .common-course-card[data-course-reveal]:nth-child(2n) { --course-reveal-delay: .06s; }
 }
+@media (prefers-reduced-motion: reduce) { .common-course-card[data-course-reveal]::after { display: none; animation: none; } }
 .common-course-icon { display: block; flex: 0 0 auto; width: 56px; height: 56px; margin-bottom: 15px; }
 .common-course-caption { margin-top: auto; }
-.common-courses .common-course-caption h3 { font-size: 20px; letter-spacing: -.04em; line-height: 1.3; }
+.common-courses .common-course-caption h3 { font-size: 20px; font-weight: 700; letter-spacing: -.04em; line-height: 1.3; }
 .common-course-caption p { margin-top: 6px; color: #535c64; font-size: 13px; line-height: 1.6; word-break: keep-all; }
 .common-course-symbols { position: absolute; width: 0; height: 0; overflow: hidden; }
-/* 넓은 화면 6열 카드는 폭이 좁아 정사각 비율을 풀어 설명 글이 다 들어가게 */
+/* Keep full captions inside the narrower six-column desktop cards. */
 @media (min-width: 1200px) { .common-course-card { aspect-ratio: auto; } }
 @media (min-width: 1200px) and (max-width: 1350px) {
   .common-course-card { padding: 19px 17px; }
@@ -85,6 +89,7 @@
   .common-courses { padding-block: 48px 72px; scroll-margin-top: 76px; }
   .common-courses-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .common-course-card:nth-child(n) { grid-column: auto; }
+  .common-courses-heading { margin-bottom: 36px; }
 }
 @media (min-width: 1200px) and (max-height: 740px) {
   .common-courses { padding-top: 28px; }
@@ -102,7 +107,7 @@
   .common-course-caption p { font-size: 12px; }
   .common-courses-heading > p { font-size: 16px; }
   .common-courses .common-courses-meta { font-size: 13px; gap: 5px 14px; }
-}
+        }
 @media (max-width: 360px) {
   .common-courses-grid { gap: 10px; }
   .common-course-card { padding: 18px 14px; min-height: 204px; }

@@ -1,46 +1,50 @@
-/* 선택 이유(#why-school): 강점 세 가지 · 카드 3장(맞춤형 학습 · 팀 실무 프로젝트 · 단계별 취·창업 지원). 카드 나타남 · 학습 경로 · 코드 타자는 about.js */
+/* 선택 이유: 맞춤형 학습, 팀 실무 프로젝트, 단계별 취·창업 지원 */
 .school-about:has(#why-school:target) { scroll-padding-top: calc(var(--hdr) + var(--about-subnav, 0px)); }
-.why-school-section { position: relative; margin: 72px -40px 0; padding: 58px 40px 54px; scroll-margin-top: 24px; }
+.why-school-section { position: relative; margin: 72px -40px 0; padding: 58px 40px 54px; background: transparent; scroll-margin-top: 24px; }
 .why-school-heading { text-align: center; }
-.school-about .why-school-heading h3 { color: #13203c; font-size: clamp(30px, 3vw, 42px); line-height: 1.4; letter-spacing: -.055em; }
-.school-about .why-school-heading > p { margin-top: 16px; color: #657087; font-size: 16px; line-height: 1.8; word-break: keep-all; }
+.school-about .why-school-heading h3 { color: var(--ink); font-size: clamp(30px, 3vw, 42px); font-weight: 900; line-height: 1.4; letter-spacing: -.055em; }
+.school-about .why-school-heading > p { margin-top: 16px; color: var(--graphite); font-size: 16px; line-height: 1.8; word-break: keep-all; }
 .why-school-highlights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; max-width: 900px; padding: 0; margin: 38px auto 36px; list-style: none; text-align: center; }
 .why-school-highlight-label { display: flex; align-items: center; justify-content: center; gap: 7px; color: #536078; font-size: 14px; line-height: 1.6; }
 .why-school-highlight-label svg { width: 24px; height: 24px; flex-shrink: 0; }
-.why-school-highlights strong { display: block; margin-top: 11px; color: #13203c; font-size: clamp(23px, 2.15vw, 32px); line-height: 1.35; letter-spacing: -.045em; font-weight: 900; }
+.why-school-highlights strong { display: block; margin-top: 11px; color: var(--ink); font-size: clamp(23px, 2.15vw, 32px); line-height: 1.35; letter-spacing: -.045em; font-weight: 900; }
 .why-school-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
 .why-school-card { display: flex; flex-direction: column; min-width: 0; min-height: 488px; padding: 32px 28px 0; background: #fff; border-radius: 23px; box-shadow: 0 10px 38px #15223b08; overflow: hidden; }
-/* 기다리는 카드는 제자리에서 숨기기만(옮기지 않음): 스크롤 시작 시점이 실제 자리 기준이 되게 */
+/* Keep the waiting card stationary so scrolling triggers from its real position. */
 .why-school-card[data-card-reveal="waiting"] { opacity: 0; }
 .why-school-card[data-card-reveal="visible"] { animation: why-school-card-reveal 1.6s ease-in-out both; }
 .why-school-card[data-card-reveal="visible"]:nth-child(2) { animation-delay: .28s; }
 .why-school-card[data-card-reveal="visible"]:nth-child(3) { animation-delay: .56s; }
 @keyframes why-school-card-reveal { from { opacity: 0; transform: translateY(80px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 760px) { .why-school-card[data-card-reveal="visible"]:nth-child(n) { animation-delay: 0s; } }
-.why-school-card-category { display: block; color: #244cd2; font-size: 13px; font-weight: 700; line-height: 1.6; margin-bottom: 15px; }
-.school-about .why-school-card h4 { font-size: clamp(22px, 1.8vw, 26px); line-height: 1.45; color: #13203c; letter-spacing: -.035em; }
-.school-about .why-school-card > p { margin-top: 15px; font-size: 15px; line-height: 1.85; color: #657087; word-break: keep-all; }
+@media (prefers-reduced-motion: reduce) { .why-school-card[data-card-reveal] { opacity: 1; animation: none; transform: none; } }
+.why-school-card-category { display: block; color: var(--blue); font-size: 13px; font-weight: 700; line-height: 1.6; margin-bottom: 15px; }
+.school-about .why-school-card h4 { font-size: clamp(22px, 1.8vw, 26px); line-height: 1.45; font-weight: 700; color: var(--ink); letter-spacing: -.035em; word-break: keep-all; }
+.school-about .why-school-card > p { margin-top: 15px; font-size: 15px; line-height: 1.85; color: var(--graphite); word-break: keep-all; }
 .why-school-visual { position: relative; flex: 0 0 235px; min-height: 235px; margin-top: auto; }
-.why-school-monitor { position: absolute; height: 188px; padding: 8px; background: #17223b; border-radius: 11px 11px 3px 3px; box-shadow: 0 12px 24px #14244a1f; }
+.why-school-monitor { position: absolute; top: 35px; left: 24px; width: calc(100% - 10px); height: 188px; padding: 8px; background: #17223b; border-radius: 11px 11px 3px 3px; box-shadow: 0 12px 24px #14244a1f; }
 .why-school-monitor-bar { display: flex; align-items: center; gap: 4px; height: 15px; color: #b9c4dd; }
 .why-school-monitor-bar i { width: 4px; height: 4px; background: #6a7797; border-radius: 50%; }
 .why-school-monitor-bar span { margin-left: 6px; font-size: 7px; letter-spacing: .04em; }
-.why-school-monitor-base { position: absolute; height: 8px; background: linear-gradient(#c7cfdd, #737e94); border-radius: 1px 1px 50% 50%; }
+.why-school-monitor img { display: block; width: 100%; height: 156px; object-fit: cover; object-position: center 40%; border-radius: 2px; }
+.why-school-monitor-base { position: absolute; bottom: 5px; height: 8px; left: 8px; right: -24px; background: linear-gradient(#c7cfdd, #737e94); border-radius: 1px 1px 50% 50%; }
 .why-school-resource-icon { display: flex; align-items: center; justify-content: center; width: 43px; height: 39px; }
 .why-school-resource-icon svg { display: block; width: 43px; height: 39px; }
 .why-school-stack-track { display: flex; width: max-content; animation: why-school-stack-flow 20s linear infinite; }
-.why-school-stack-group { flex: none; }
+.why-school-stack-group { display: flex; flex: none; gap: 28px; padding-right: 28px; }
 @keyframes why-school-stack-flow { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .why-school-stack-track { animation: none; } }
 
 /* 각 강점의 내용에 맞춘 카드 안의 장식. */
 .why-school-card--learning .why-school-card-category { color: #5862bf; }
+.why-school-card--project .why-school-card-category { color: var(--blue); }
 .why-school-card--career .why-school-card-category { color: #28856f; }
 .why-school-career-viewport { position: absolute; top: 0; left: -28px; right: -28px; overflow: hidden; padding-block: 10px 18px; }
 .why-school-career-viewport .why-school-stack-track { animation-duration: 12s; }
 .why-school-career-viewport .why-school-stack-group { display: grid; grid-template-columns: repeat(3, 90px); grid-template-rows: repeat(2, 93px); gap: 14px 16px; padding-right: 16px; }
 .why-school-career-tile { display: flex; flex: 0 0 90px; flex-direction: column; align-items: center; justify-content: center; gap: 9px; width: 90px; height: 93px; border: 1px solid #f0f2f7; border-radius: 17px; background: #fff; color: #66738a; font-size: 11px; font-weight: 500; box-shadow: 0 6px 16px #15223b0a; }
 
-/* 두 줄로 엇갈린 타일 · 같은 가로 흐름 반복 */
+/* Two staggered rows, with the same repeating horizontal motion. */
 .why-school-career-tile:nth-child(1) { grid-column: 1; grid-row: 1; transform: translateX(48px); }
 .why-school-career-tile:nth-child(2) { grid-column: 2; grid-row: 1; transform: translateX(48px); }
 .why-school-career-tile:nth-child(3) { grid-column: 1; grid-row: 2; transform: translateX(82px); }
@@ -49,7 +53,7 @@
 .why-school-card--project .why-school-monitor { top: calc(100% - 220px); left: 50%; width: calc(100% - 8px); transform: translateX(-50%); }
 .why-school-card--project .why-school-monitor-base { bottom: 25px; left: 50%; right: auto; width: calc(100% + 12px); transform: translateX(-50%); }
 
-/* 학습 경로를 따라 떠 있는 수업 카드 */
+/* Floating lesson cards along a soft learning path. */
 .why-school-learning-glow { position: absolute; inset: 9px -10px 12px; background: radial-gradient(ellipse at 45% 48%, #e9edff 0%, #f5f7ff 43%, transparent 72%); }
 .why-school-learning-route { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: #c7d4f1; stroke-width: 1.8; stroke-dasharray: 4 5; }
 .why-school-learning-step { position: absolute; display: flex; align-items: center; gap: 11px; width: 200px; height: 62px; padding: 11px 12px; background: #fff; border: 1px solid #ecf0f7; border-radius: 15px; box-shadow: 0 9px 24px #3045770b; }
@@ -62,22 +66,28 @@
 .why-school-learning-step--latest .why-school-learning-step-icon { background: #eef8f4; }
 .why-school-learning-step b { display: block; color: #24334e; font-size: 13px; line-height: 1.6; font-weight: 700; }
 .why-school-learning-step small { display: block; color: #7c889d; font-size: 10px; line-height: 1.6; white-space: nowrap; }
-.why-school-learning-step-check { display: flex; align-items: center; justify-content: center; width: 19px; height: 19px; margin-left: auto; border-radius: 50%; font-size: 11px; }
-/* 경로 선이 도착한 뒤에 그 칸이 초록으로 바뀜(about.js가 선 전환이 끝나면 단계를 넘김) */
+.why-school-learning-step-check { display: flex; align-items: center; justify-content: center; width: 19px; height: 19px; margin-left: auto; color: #6988cb; background: #f0f4ff; border-radius: 50%; font-size: 11px; }
+/* The route reaches each destination before its node turns green. */
 .why-school-visual--learning[data-learning-step] .why-school-learning-step { transition: border-color .3s ease, box-shadow .3s ease; }
 .why-school-visual--learning[data-learning-step] .why-school-learning-step-check { transition: color .25s ease, background-color .25s ease, box-shadow .25s ease; color: var(--learning-check-color, #8c9bb4); background: var(--learning-check-background, #f1f4f8); box-shadow: var(--learning-check-shadow, none); font-weight: 700; }
 .why-school-visual--learning:is([data-learning-step="1"], [data-learning-step="2"], [data-learning-step="3"]) .why-school-learning-step--basics,
 .why-school-visual--learning:is([data-learning-step="2"], [data-learning-step="3"]) .why-school-learning-step--practice,
 .why-school-visual--learning[data-learning-step="3"] .why-school-learning-step--latest { border-color: #39b989; box-shadow: 0 0 0 1px #39b98924, 0 9px 24px #1e9b711a; --learning-check-color: #129861; --learning-check-background: #dff8ec; --learning-check-shadow: 0 0 0 3px #39b98912; }
 .why-school-learning-route-flow { stroke: #29b77f; stroke-width: 2; stroke-linecap: round; opacity: 1; transition: opacity .35s ease; }
-.why-school-learning-progress { stroke-dasharray: 100; transition: stroke-dashoffset 1.05s ease-in-out; }
+.why-school-learning-progress { stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset 1.05s ease-in-out; }
 .why-school-visual--learning[data-learning-route-step="0"] .why-school-learning-route-flow { opacity: 0; }
 .why-school-visual--learning[data-learning-route-step="0"] .why-school-learning-progress { stroke-dashoffset: 100; transition: none; }
 .why-school-visual--learning[data-learning-route-step="2"] .why-school-learning-progress { stroke-dashoffset: 30; }
 .why-school-visual--learning[data-learning-route-step="3"] .why-school-learning-progress { stroke-dashoffset: 0; }
 .why-school-visual--learning[data-learning-active="true"] .why-school-learning-route-flow { animation: why-school-learning-dashes .8s linear infinite; }
 @keyframes why-school-learning-dashes { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -18; } }
-/* 코드 화면: 사진이 아닌 글자로 그린 장식(실행 코드 아님) */
+@media (prefers-reduced-motion: reduce) {
+  .why-school-visual--learning[data-learning-step] .why-school-learning-step,
+  .why-school-visual--learning[data-learning-step] .why-school-learning-step-check,
+  .why-school-learning-progress,
+  .why-school-learning-route-flow { animation: none; transition: none; }
+}
+/* Crisp, decorative code screen; no raster photograph or executable code. */
 .why-school-code-editor { position: relative; height: 156px; overflow: hidden; background: #0c1627; border: 1px solid #28364f; border-radius: 3px; color: #c4cee0; font-family: Consolas, 'Courier New', monospace; font-size: clamp(7.5px, .7vw, 9.5px); }
 .why-school-code-tabs { display: flex; align-items: center; justify-content: space-between; height: 23px; padding-inline: 9px; border-bottom: 1px solid #24324a; background: #152138; }
 .why-school-code-tabs > span { display: inline-flex; align-items: center; gap: 5px; }
@@ -87,16 +97,18 @@
 .why-school-code-lines > div { display: grid; grid-template-columns: 13px minmax(0, 1fr); gap: 9px; line-height: 13px; }
 .why-school-code-number { color: #556781; text-align: right; }
 .why-school-code-lines code { overflow: hidden; white-space: pre; font-family: inherit; font-size: inherit; line-height: inherit; }
-/* 색 입힌 코드를 줄마다 한 글자씩 드러냄(글자 수 · 시간 변수는 about.js가 줄마다 넣음) */
+/* Reveal the original syntax-highlighted text one character at a time. */
 .why-school-code-editor[data-code-typing] .why-school-typing-line { width: var(--typing-width); max-width: 100%; padding-right: 1px; border-right: 1px solid transparent; }
 .why-school-code-editor[data-code-typing="waiting"] .why-school-typing-line { width: 0; }
 .why-school-code-editor[data-code-typing="typing"] .why-school-typing-line { animation: why-school-code-type var(--typing-duration) steps(var(--typing-characters), end) var(--typing-delay) both, why-school-code-caret var(--typing-duration) linear var(--typing-delay); }
 @keyframes why-school-code-type { from { width: 0; } to { width: var(--typing-width); } }
 @keyframes why-school-code-caret { from, to { border-right-color: #8ecceb; } }
+@media (prefers-reduced-motion: reduce) { .why-school-code-editor[data-code-typing] .why-school-typing-line { width: var(--typing-width); animation: none; border-right-color: transparent; } }
 .why-school-code-editor .syntax-purple { color: #c696ed; }
 .why-school-code-editor .syntax-blue { color: #8ecceb; }
 .why-school-code-editor .syntax-orange { color: #efbe88; }
 .why-school-code-status { position: absolute; inset: auto 0 0; display: flex; align-items: center; justify-content: space-between; height: 14px; padding-inline: 8px; background: #1e3760; color: #b6c9e8; font-size: 7px; }
+@media (max-width: 1000px) { .why-school-learning-step { width: min(200px, calc(100% - 14px)); } }
 @media (max-width: 1199px) {
   .why-school-section { scroll-margin-top: 88px; }
   .why-school-cards { gap: 18px; }
@@ -109,13 +121,12 @@
 }
 @media (max-width: 1000px) {
   .why-school-section { margin-inline: -24px; padding: 46px 24px; }
-  .why-school-learning-step { width: min(200px, calc(100% - 14px)); }
   .why-school-highlights { gap: 16px; }
   .why-school-card { padding: 26px 18px 0; min-height: 480px; }
   .school-about .why-school-card h4 { font-size: 21px; }
   .school-about .why-school-card > p { font-size: 14px; }
   .why-school-cards { gap: 16px; }
-}
+          }
 @media (max-width: 760px) {
   .why-school-section { margin-inline: -20px; padding: 44px 20px; }
   .why-school-highlights { margin-top: 29px; gap: 10px; }
@@ -127,7 +138,7 @@
   .school-about .why-school-card h4 { font-size: 25px; }
   .school-about .why-school-card > p { font-size: 15px; }
   .why-school-visual { flex-basis: 224px; min-height: 224px; }
-}
+      }
 @media (max-width: 640px) {
   .why-school-section { margin-top: 52px; }
   .school-about .why-school-heading h3 { font-size: 29px; }
@@ -137,6 +148,7 @@
   .why-school-highlight-label { justify-content: start; font-size: 13px; }
   .why-school-highlights strong { margin-top: 0; font-size: 21px; }
   .why-school-card { min-height: 467px; }
+  .why-school-card-category { font-size: 13px; }
 }
 @media (max-width: 360px) {
   .school-about .why-school-heading h3 { font-size: 26px; }

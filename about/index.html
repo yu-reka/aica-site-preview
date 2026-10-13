@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko" class="scene-still school-about about-has-section-nav">
+<html lang="ko" class="scene-still school-about about-has-section-nav" data-menu="about" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="robots" content="noindex, nofollow">
@@ -7,25 +7,21 @@
   <title>인사교 알아보기 — 인공지능사관학교</title>
   <meta name="description" content="인사교 A to Z. 인공지능사관학교의 교육 목적, 교과목과 교육 시간, 활동, 취업·창업 지원을 한 페이지에서 알아보세요.">
   <meta name="theme-color" content="#193d87">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231249ee'/%3E%3Ctext x='9' y='45' font-family='Arial' font-weight='bold' font-size='37' fill='white'%3Eai%3C/text%3E%3C/svg%3E">
+  <link rel="icon" type="image/png" href="../common/assets/brand/symbol-blue.png">
   <link rel="preload" as="image" href="assets/hero-cap-enlarged-fit-desktop-2x.png" media="(min-width: 901px), (min-width: 601px) and (min-aspect-ratio: 1/1)">
   <link rel="preload" as="image" href="assets/hero-cap-enlarged-fit-mobile-2x.png" media="(max-width: 600px), (min-width: 601px) and (max-width: 900px) and (max-aspect-ratio: 1/1)">
   <link rel="preload" as="font" href="assets/fonts/Pretendard-Black.woff2" type="font/woff2" crossorigin>
   <link rel="preload" as="font" href="assets/fonts/Paperlogy-9Black.woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../common/css/tokens.css">
   <link rel="stylesheet" href="style.css?v=20261012-program-alignment">
+  <link rel="stylesheet" href="../common/css/site.css">
+  <link rel="stylesheet" href="frame.css">
+  <script src="../common/js/menu.js" defer></script>
+  <script src="../common/js/site.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 <body>
-  <a class="skip" href="#main">본문으로 바로가기</a>
-  <header class="site-header">
-    <a class="brand" href="../home/index.html" aria-label="인공지능사관학교 홈으로"><span class="header-dot" aria-hidden="true"></span><span>광주<br>인공지능사관학교</span></a>
-    <nav class="desktop-nav" id="cover-navigation" aria-label="전체 메뉴">
-      <div class="gnb-item"><a class="gnb-title" href="index.html" aria-current="page">인사교 알아보기</a><button class="gnb-toggle" aria-label="인사교 알아보기 하위 메뉴" aria-expanded="false" aria-controls="gnb-about">⌄</button><div class="gnb-submenu" id="gnb-about"><a href="index.html#intro">인사교 소개</a><a href="index.html#learning">무엇을 배우나요?</a><a href="index.html#activities">어떤 활동을 하나요?</a><a href="index.html#career">취업·창업 지원</a></div></div>
-    </nav>
-    <div class="header-actions">
-      <button class="menu-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="cover-navigation">☰</button>
-    </div>
-  </header>
+  <header class="site-header" id="siteHeader"></header>
   <nav class="section-navigation" aria-label="인사교 알아보기 페이지 목차">
     <button class="section-navigation-trigger" type="button" aria-label="인사교 알아보기 목차 보기" aria-expanded="false" aria-controls="section-navigation-panel">
       <span class="section-navigation-ticks" aria-hidden="true"><i class="is-current"></i><i></i><i></i><i></i></span>
@@ -471,6 +467,6 @@
 
     </div>
   </main>
-  <footer class="about-footer"><div class="about-wrap"><a href="#main" class="footer-school">광주 인공지능사관학교</a><span>인사교 알아보기 · A to Z</span><a href="#main">맨 위로 <span aria-hidden="true">↑</span></a></div><div class="about-wrap footer-fine"><span>© 2026 인공지능사관학교 소개 페이지 시안</span><span>표지: 콘셉트 이미지 / 본문: 학교 LIVE 기록 사진</span></div></footer>
+  <footer class="site-footer" id="siteFooter"></footer>
 </body>
 </html>

@@ -1,0 +1,8 @@
+/* 공통 헤더 · 푸터(common/css/site.css · common/js/site.js)를 씌운 뒤 맞춤 — 2026-10-13
+   - 하위 메뉴 바: 첫 화면에서는 숨기고, 스크롤하면 헤더 아래로 내려옴(큰 제목을 가리지 않게. is-scrolled는 site.js)
+   - 위치 이동(#intro 등): 고정 헤더 + 하위 메뉴 바 높이만큼 띄움 */
+.school-about .site-header .subnav { transition: transform .35s var(--ease); }
+.school-about .site-header:not(.is-scrolled) .subnav { transform: translateY(-100%); visibility: hidden; transition: transform .35s var(--ease), visibility 0s .35s; }
+:root { scroll-padding-top: calc(var(--hdr) + var(--sub, 0px) + 16px); }
+/* style.css는 자체 헤더(첫 화면 위에만 얹힘) 기준이라 섹션 이동 때 여백 0 — 공통 고정 헤더 아래로 오게 덮음 */
+.school-about:has(:is(#intro, #why-school, #learning, #education-hours, #daily-routine, #activities, #career):target) { scroll-padding-top: calc(var(--hdr) + var(--sub, 0px)); }

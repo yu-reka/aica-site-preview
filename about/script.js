@@ -2,6 +2,7 @@
 'use strict';
 (() => {
   const nav = document.querySelector('#cover-navigation');
+  if (!nav) return;   // 공통 헤더(site.js)로 바꿈 — 자체 헤더 메뉴 코드는 안 씀
   const menu = document.querySelector('.menu-toggle');
   const groups = [...nav.querySelectorAll('.gnb-item')];
   const desktop = matchMedia('(min-width: 801px)');

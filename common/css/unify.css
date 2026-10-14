@@ -1718,14 +1718,12 @@ body .life-page .lo-tr:hover .ph img{transform:translateY(-4px) scale(1.04)}
 @media (max-width:860px){body .life-page .lo-tr .ph{height:92px}}
 @media (max-width:560px){body .life-page .lo-tr .ph{height:72px}}
 
-/* 푸터 색(10-14): 선배들의 이야기 · 인사교 라이프 · 지원 전 체크 = 랜딩 푸터와 같은 차콜(#2B2D31, home.css와 같은 값) */
-html:is([data-menu="stories"],[data-menu="life"],[data-menu="check"]) .site-footer{background:#2B2D31;border-top-color:rgba(255,255,255,.12);color:rgba(255,255,255,.62)}
-html:is([data-menu="stories"],[data-menu="life"],[data-menu="check"]) .site-footer :is(.logo,.footer-links a){color:#fff}
-html:is([data-menu="stories"],[data-menu="life"],[data-menu="check"]) .site-footer .footer-links a:hover{color:#8AA9FF}
-html:is([data-menu="stories"],[data-menu="life"],[data-menu="check"]) .site-footer .logo-mark{background-image:url("../assets/brand/symbol-white.png")}
-html:is([data-menu="stories"],[data-menu="life"],[data-menu="check"]) .site-footer :is(a,button):focus-visible{outline-color:#8AA9FF}
-/* 인사교 알아보기만: 흰 바탕 + 위쪽 네이비 선(2px, 본문 잉크색) */
-html[data-menu="about"] .site-footer{background:#fff;border-top:2px solid #14233F}
+/* 푸터 색(10-14): 모든 페이지(알아보기 포함) = 랜딩 푸터와 같은 차콜(#2B2D31, home.css와 같은 값) */
+html:is([data-menu="stories"],[data-menu="life"],[data-menu="check"],[data-menu="about"]) .site-footer{background:#2B2D31;border-top-color:rgba(255,255,255,.12);color:rgba(255,255,255,.62)}
+html:is([data-menu="stories"],[data-menu="life"],[data-menu="check"],[data-menu="about"]) .site-footer :is(.logo,.footer-links a){color:#fff}
+html:is([data-menu="stories"],[data-menu="life"],[data-menu="check"],[data-menu="about"]) .site-footer .footer-links a:hover{color:#8AA9FF}
+html:is([data-menu="stories"],[data-menu="life"],[data-menu="check"],[data-menu="about"]) .site-footer .logo-mark{background-image:url("../assets/brand/symbol-white.png")}
+html:is([data-menu="stories"],[data-menu="life"],[data-menu="check"],[data-menu="about"]) .site-footer :is(a,button):focus-visible{outline-color:#8AA9FF}
 
 /* 시설 둘러보기 끝 관련 링크(.fsx, 10-14): 위 정보 카드(흰 카드 + 그림자)와 구분 — 위 구분선 + "함께 보면 좋아요" 라벨, 그림자 없는 회색 판 + 화살표 원(라이프 전체 줄 목록 화살표와 같은 모양) */
 html .life-page .fsx{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:clamp(40px,4vw,56px)!important;padding-top:clamp(24px,2.4vw,32px);border-top:1px solid var(--line)}
@@ -1790,10 +1788,9 @@ html.school-about main#main .common-course-caption p{font-family:'School Pretend
 html.school-about main#main .cohort-doodle path{stroke:#8CC3FF;}
 html.school-about main#main .cohort-doodle b{color:#8CC3FF;text-shadow:0 1px 2px rgba(11,16,32,.35)}
 /* 7기 체크 낙서 키우고 왼쪽으로(10-14): 체크 84 → 112px, 글자 40 → 54px, 카드 모서리 안쪽으로 */
-/* 알아보기 푸터 = 랜딩 푸터와 같은 틀(10-14): 색 · 위 선만 다르고 폭 · 여백 · 요소는 같게. 알아보기 자체 .wrap(1360) · .footer-top(아래 선 + 35px) 규칙이 푸터까지 닿던 것을 되돌림 */
+/* 알아보기 푸터 = 랜딩 푸터와 같은 틀(10-14): 색 · 위 선도 같게(10-14 오후), 폭 · 여백 · 요소는 같게. 알아보기 자체 .wrap(1360) · .footer-top(아래 선 + 35px) 규칙이 푸터까지 닿던 것을 되돌림 */
 html.school-about .site-footer .wrap{width:auto}
 html.school-about .site-footer .footer-top{padding-bottom:0;border-bottom:0}
-html.school-about .site-footer :is(.logo,.logo-text,.footer-links a){color:#14233F}
 /* 7기 체크 낙서: 체크를 "Check!" 왼쪽으로(10-14) — 가로 배치, 글자는 체크 아래끝에 맞춤 */
 html.school-about main#main .cohort-doodle{flex-direction:row;align-items:flex-end;gap:2px;top:-30px;right:-24px}
 html.school-about main#main .cohort-doodle b{margin:0 0 -4px -14px}

@@ -208,6 +208,7 @@ body{background:var(--ax-bg)}
 /* 터치 화면은 hover가 없어 사진이 늘 흑백이던 것: 처음부터 컬러로 */
 @media (hover:none){
   .tl:not(.hq-map) img,.lg-ph img{filter:saturate(.92) contrast(1.04)}
+  .hq-map img{filter:grayscale(.2) contrast(1.05)}   /* 지도도 컬러로(넓은 화면에서 올렸을 때와 같은 값). 10-14 사용자 '다른 문은 색이 있는데 오시는 길만 없다' */
 }
 
 /* 헤더 지원하기: 홈에서는 Primary 파랑(토큰 --cta를 위에서 바꿈). 좁은 화면에도 보이게 */

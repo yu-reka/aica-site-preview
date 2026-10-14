@@ -113,7 +113,7 @@ body{background:var(--ax-bg)}
 .checkbox li a{display:flex;align-items:center;gap:8px;margin:0 -12px;padding:5px 12px;font-weight:700;font-size:clamp(12px,.95vw,13.5px);color:#111;text-decoration:none;transition:background .2s,color .2s,padding .25s var(--ease)}
 .checkbox li i{width:14px;height:14px;border:2px solid #111;flex:none;position:relative}
 .ax.is-settled .checkbox{transition:transform .4s cubic-bezier(.34,1.56,.64,1),box-shadow .35s var(--ease),translate .5s var(--ease)}
-.ax.is-settled .checkbox:hover,.ax.is-settled .checkbox:focus-within{transform:rotate(0deg) translate(-4px,-4px);box-shadow:14px 14px 0 var(--ax-line)}
+.ax.is-settled .checkbox:hover,.ax.is-settled .checkbox:focus-within,.ax.is-settled[data-active="4"] .checkbox{transform:rotate(1.5deg) translate(-6px,-10px) scale(1.04);box-shadow:16px 18px 0 var(--ax-line)}   /* 아래 04 칸에 올려도 포스트잇이 들림(01~03은 사진이 컬러로 바뀜) */
 .cb-head:hover,.cb-head:focus-visible{background:var(--ax-line);color:var(--n-lime);outline:none}
 .checkbox li a:hover,.checkbox li a:focus-visible{background:var(--ax-line);color:var(--n-lime);padding-left:18px;outline:none}
 .checkbox li a:hover i,.checkbox li a:focus-visible i{border-color:var(--n-lime);background:var(--n-lime)}

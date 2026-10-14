@@ -13,6 +13,35 @@ if (partnerNetwork && 'IntersectionObserver' in window) {
   }, { threshold: .1 }).observe(partnerNetwork);
 }
 
+// 관련 기관 연결선(10-14): 실제 카드 위치(px)로 다시 그림 — 가운데 줄기 → 가로선 → 카드마다 수직으로 내려가 꽂힘, 바깥 두 모서리만 둥글게.
+// 선마다 따로 그려 점선이 겹치지 않게 하고, 흐름 방향은 모두 위(학교)에서 아래(기관)로. 800px 이하는 HTML의 모바일 선 그대로
+const partnerWires = partnerNetwork && partnerNetwork.querySelector('.partner-wires-desktop');
+const partnerSchool = partnerNetwork && partnerNetwork.querySelector('.partner-node-school');
+const partnerKids = partnerNetwork ? [...partnerNetwork.querySelectorAll('.partner-network-children > .partner-node')] : [];
+if (partnerWires && partnerSchool && partnerKids.length > 1) {
+  const drawPartnerWires = () => {
+    const box = partnerWires.getBoundingClientRect();
+    if (!box.width || !box.height) return;
+    const w = box.width, h = box.height, r = Math.min(14, h / 3);
+    const s = partnerSchool.getBoundingClientRect();
+    const cx = s.left + s.width / 2 - box.left;
+    const xs = partnerKids.map(k => { const b = k.getBoundingClientRect(); return b.left + b.width / 2 - box.left; });
+    const end = partnerKids[0].getBoundingClientRect().top - box.top;
+    const y = Math.round(Math.max(r + 4, Math.min(end - r - 8, h * .46)));
+    const f = n => Math.round(n * 10) / 10;
+    const first = xs[0], last = xs[xs.length - 1];
+    const d = [`M${f(cx)} 0V${y}`,
+      `M${f(cx)} ${y}H${f(first + r)}Q${f(first)} ${y} ${f(first)} ${y + r}V${f(end)}`,
+      `M${f(cx)} ${y}H${f(last - r)}Q${f(last)} ${y} ${f(last)} ${y + r}V${f(end)}`,
+      ...xs.slice(1, -1).map(x => `M${f(x)} ${y}V${f(end)}`)];
+    partnerWires.setAttribute('viewBox', `0 0 ${f(w)} ${f(h)}`);
+    partnerWires.innerHTML = d.map(p => `<path d="${p}"/>`).join('');
+  };
+  drawPartnerWires();
+  if ('ResizeObserver' in window) new ResizeObserver(drawPartnerWires).observe(partnerNetwork);
+  else window.addEventListener('resize', drawPartnerWires);
+}
+
 // Reveal the four layered news cards once; their motion is defined in CSS.
 // Observe the stationary frame so the animated offset does not alter its trigger.
 const introNewsStack = document.querySelector('.intro-news-stack');

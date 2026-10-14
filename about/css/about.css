@@ -472,3 +472,16 @@
 .drv .drv-video--yt:focus-visible{ outline: 3px solid #2457f5; outline-offset: 3px; }
 .drv .drv-video.is-playing{ width: 100%; padding: 0; background: #000; cursor: default; }
 .drv .drv-video.is-playing iframe{ position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* '왜 인사교' 카드 머리(10-14, 받은 수정안): 위에 따로 있던 세 강점 줄을 카드 안으로 — 작은 꼬리말 → 큰 제목 → 파란 한 줄 → 설명, 모두 왼쪽 정렬.
+   카드 머리말(나에게 맞는 교육 등) · 강점 아이콘은 뺌. 글꼴은 모두 --ff-text(Paperlogy) */
+html.school-about main#main #why-school .why-school-cards{ margin-top: 44px; }
+html.school-about main#main #why-school .why-school-card :is(h4, p){ text-align: left; }
+.why-school-card-kicker{ display: block; color: #3d4659; font-family: var(--ff-text); font-size: 14px; font-weight: 600; line-height: 1.5; letter-spacing: -.01em; }
+html.school-about main#main #why-school .why-school-card h4{ margin-top: 6px; color: #13203c; font-family: var(--ff-text)!important; font-size: 26px!important; line-height: 1.3!important; font-weight: 800!important; letter-spacing: -.04em!important; }
+html.school-about main#main #why-school .why-school-card > p.why-school-card-lead{ margin-top: 20px; color: #2457f5; font-family: var(--ff-text); font-size: 20px; line-height: 1.4; font-weight: 800; letter-spacing: -.035em; }
+html.school-about main#main #why-school .why-school-card > p:not(.why-school-card-lead){ margin-top: 10px; }
+@media (min-width: 1200px){ html.school-about main#main #why-school .why-school-card{ padding: 34px 32px 0; } }
+@media (max-width: 1199px){ html.school-about main#main #why-school .why-school-card h4{ font-size: 24px!important; } html.school-about main#main #why-school .why-school-card > p.why-school-card-lead{ font-size: 18px; } }
+@media (max-width: 1000px){ html.school-about main#main #why-school .why-school-card h4{ font-size: 22px!important; } html.school-about main#main #why-school .why-school-card > p.why-school-card-lead{ margin-top: 14px; font-size: 17px; } .why-school-card-kicker{ font-size: 13px; } }
+@media (max-width: 760px){ html.school-about main#main #why-school .why-school-cards{ margin-top: 32px; } html.school-about main#main #why-school .why-school-card h4{ font-size: 26px!important; } html.school-about main#main #why-school .why-school-card > p.why-school-card-lead{ margin-top: 16px; font-size: 19px; } .why-school-card-kicker{ font-size: 14px; } }

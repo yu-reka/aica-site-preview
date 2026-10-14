@@ -3,18 +3,19 @@
    홈에서만 불러옵니다. 헤더 · 메뉴 · 푸터는 common/css/site.css
    ========================================================= */
 :root{
-  /* v2 블루 Primary: 차콜 바탕 · 네온 카테고리 색과 같은 채도의 전기 파랑. 채운 면 위 흰 글자 4.5:1, 차콜 위 면 3.1:1 */
-  --primary:#2F6BFF;--primary-strong:#2457F5;--primary-ink:#8AA9FF;--on-primary:#fff;--primary-soft:rgba(47,107,255,.16);
-  --cta:var(--primary);--on-cta:var(--on-primary);--header-accent:var(--primary-ink);
+  /* 지원하기(--cta)는 10-14부터 사이트 공통 흰 알약을 그대로 씀. 파랑: 2026-10-13 사이트 메인 파랑(#2457F5)으로 통일(전에는 랜딩만 #2F6BFF). 채운 면 위 흰 글자 5.6:1. --primary-strong도 같은 값(헤더 지원하기 글자 · 마우스 올림).
+     공통 토큰 --blue를 쓰지 않고 값을 적는 이유: 홈은 시스템 다크 모드를 따라 --blue가 밝은 파랑(#7C9CFF)으로 바뀜 */
+  --hm-primary:#2457F5;--hm-primary-strong:#2457F5;--hm-primary-ink:#8AA9FF;--hm-on-primary:#fff;--hm-primary-soft:rgba(36,87,245,.16);
+  --header-accent:var(--hm-primary-ink);
   --ff-mono:"JetBrains Mono","Pretendard",ui-monospace,"SFMono-Regular",Menlo,monospace;
-  --hq:var(--primary);--n-yellow:#FFE600;--n-magenta:#FF3EA5;--n-cyan:#22D3EE;--n-lime:#8CFF3F;--ax-bg:#2B2D31;--ax-paper:var(--ax-bg);--ax-rule:rgba(110,149,255,.34);--ax-rule-sub:rgba(110,149,255,.08);--ax-line:#0B0B0C;--ff-display:var(--ff-sans)}
+  --hq:var(--hm-primary);--n-yellow:#FFE600;--n-magenta:#FF3EA5;--n-cyan:#22D3EE;--n-lime:#8CFF3F;--ax-bg:#2B2D31;--ax-paper:var(--ax-bg);--ax-rule:rgba(110,149,255,.34);--ax-rule-sub:rgba(110,149,255,.08);--ax-line:#0B0B0C;--ff-display:var(--ff-sans)}
 body{background:var(--ax-bg)}
 /* 푸터: 랜딩은 페이지 전체가 같은 바탕색. 글자 · 로고는 헤더 막대와 같은 색 */
 .site-footer{background:var(--ax-bg);border-top-color:rgba(255,255,255,.12);color:rgba(255,255,255,.62)}
 .site-footer .logo,.site-footer .footer-links a{color:var(--on-header)}
-.site-footer .footer-links a:hover{color:var(--primary-ink)}
+.site-footer .footer-links a:hover{color:var(--hm-primary-ink)}
 .site-footer .logo-mark{background-image:url("../../common/assets/brand/symbol-white.png")}
-:root .site-footer :is(a,button):focus-visible{outline-color:var(--primary-ink)}
+:root .site-footer :is(a,button):focus-visible{outline-color:var(--hm-primary-ink)}
 /* 첫 화면 바탕: 설계도 모눈을 CSS로 그림(이미지 없이 어느 화면에서도 선명). 굵은 칸 88px · 가는 칸 22px(4등분), 가운데 기준 */
 .ax{position:relative;background-color:var(--ax-paper);color:#F4F4F4;padding:clamp(10px,1.6vh,20px) clamp(14px,2.2vw,34px) 0;height:max(560px,calc(100svh - var(--hdr)));display:flex;flex-direction:column;overflow:hidden;
   background-image:linear-gradient(to right,var(--ax-rule) 1px,transparent 1px),linear-gradient(to bottom,var(--ax-rule) 1px,transparent 1px),linear-gradient(to right,var(--ax-rule-sub) 1px,transparent 1px),linear-gradient(to bottom,var(--ax-rule-sub) 1px,transparent 1px);
@@ -25,7 +26,7 @@ body{background:var(--ax-bg)}
 .ax-title{grid-column:1 / 9;grid-row:1 / 3;z-index:6;align-self:end;margin-bottom:clamp(12px,2.4vh,24px);pointer-events:none;transition:translate .5s var(--ease)}
 .ax-row{display:flex;align-items:flex-end;gap:clamp(16px,2.4vw,40px);flex-wrap:wrap}
 .ax-ko{margin:0;font-family:var(--ff-title);font-weight:400;font-size:clamp(48px,min(7.6vw,12vh),128px);line-height:.95;letter-spacing:-.02em}
-.ax-sub{margin:0 0 .6em;font-size:clamp(14px,1.15vw,17px);line-height:1.6;font-weight:600;color:rgba(255,255,255,.88);border-left:3px solid var(--primary);padding-left:12px}
+.ax-sub{margin:0 0 .6em;font-size:clamp(14px,1.15vw,17px);line-height:1.6;font-weight:600;color:rgba(255,255,255,.88);border-left:3px solid var(--hm-primary);padding-left:12px}
 
 /* 타일 공통: 두꺼운 검정 프레임 + 흑백 */
 .tl{position:relative;display:block;margin:-3px;border:6px solid var(--ax-line);background:#111;overflow:hidden;text-decoration:none;color:#fff;
@@ -113,7 +114,7 @@ body{background:var(--ax-bg)}
 .checkbox li a{display:flex;align-items:center;gap:8px;margin:0 -12px;padding:5px 12px;font-weight:700;font-size:clamp(12px,.95vw,13.5px);color:#111;text-decoration:none;transition:background .2s,color .2s,padding .25s var(--ease)}
 .checkbox li i{width:14px;height:14px;border:2px solid #111;flex:none;position:relative}
 .ax.is-settled .checkbox{transition:transform .4s cubic-bezier(.34,1.56,.64,1),box-shadow .35s var(--ease),translate .5s var(--ease)}
-.ax.is-settled .checkbox:hover,.ax.is-settled .checkbox:focus-within,.ax.is-settled[data-active="4"] .checkbox{transform:rotate(1.5deg) translate(-6px,-10px) scale(1.04);box-shadow:16px 18px 0 var(--ax-line)}   /* 아래 04 칸에 올려도 포스트잇이 들림(01~03은 사진이 컬러로 바뀜) */
+.ax.is-settled .checkbox:hover,.ax.is-settled .checkbox:focus-within{transform:rotate(0deg) translate(-4px,-4px);box-shadow:14px 14px 0 var(--ax-line)}
 .cb-head:hover,.cb-head:focus-visible{background:var(--ax-line);color:var(--n-lime);outline:none}
 .checkbox li a:hover,.checkbox li a:focus-visible{background:var(--ax-line);color:var(--n-lime);padding-left:18px;outline:none}
 .checkbox li a:hover i,.checkbox li a:focus-visible i{border-color:var(--n-lime);background:var(--n-lime)}
@@ -193,24 +194,19 @@ body{background:var(--ax-bg)}
   .ax-index .ix i{display:none}
 }
 
-/* =========================================================
-   v2 (2026-10-12): 포스터 컨셉 유지 + 블루 Primary 디벨롭
-   - 설계도 모눈을 파랑 계열로(Primary와 한 톤) · 한 줄 정의 · 모노 메타 · 최근 기록 띠
-   ========================================================= */
 /* 손글씨: 밝은 사진 위에서도 읽히게 그림자 */
 .hand{text-shadow:0 2px 0 var(--ax-line),0 0 14px rgba(0,0,0,.65)}
 .hand path{filter:drop-shadow(0 2px 0 var(--ax-line))}
 
 /* 키워드 스티커 · 원형 마커는 이제 링크: 올리면 그 카테고리 색으로(기존 하이라이트) + 살짝 들림 */
 .kw:hover{translate:0 -2px}
-.mk:hover span{background:var(--primary)}
+.mk:hover span{background:var(--hm-primary)}
 
 /* 터치 화면(마우스 올리기 없음): 평소엔 넓은 화면과 같은 흑백 포스터, 문이 차례로 하나씩 깨어남(10-14 사용자 C안)
    - home.js가 01 → 02 → 03 → 04 → 오시는 길 순서로 1.5초씩 data-active를 돌림 → 넓은 화면 '올렸을 때' 규칙(컬러 · 카테고리 색 테두리)을 그대로 씀
    - 04는 상자가 원래 연두라 네모 칸에 차례로 체크 표시, 오시는 길은 지도 컬러 + 파랑 테두리 · 단추
    - 누르는 순간(:active)도 컬러. 움직임 줄이기 설정이면 돌지 않고 처음부터 컬러(전 방식) */
 @media (hover:none){
-  .lg-ph img{filter:saturate(.92) contrast(1.04)}
   .tl:not(.hq-map):active img{filter:none}
   .ax[data-active="5"] .hq-map{border-color:var(--hq)}
   .ax[data-active="5"] .hq-map img,.hq-map:active img{filter:grayscale(.2) contrast(1.05)}
@@ -230,7 +226,7 @@ body{background:var(--ax-bg)}
 
 /* 헤더 지원하기: 홈에서는 Primary 파랑(토큰 --cta를 위에서 바꿈). 좁은 화면에도 보이게 */
 .site-header .btn-apply{font-weight:700}
-.site-header .btn-apply:hover{background:var(--primary-strong)}
+.site-header .btn-apply:hover{background:var(--hm-primary-strong)}
 .site-header .btn-apply:focus-visible{outline-color:#fff}
 @media (max-width:1080px){
   .site-header .btn-apply{display:inline-flex;height:34px;padding:0 13px;font-size:14px}
@@ -247,118 +243,52 @@ body{background:var(--ax-bg)}
   .site-header .btn-apply{display:none}
 }
 
-/* ---------- 최근 기록(latest.log): 포스터 아래 '기록 보드' ----------
-   포스터와 같은 재료: 설계도 모눈 · 검정 굵은 프레임 · 흑백→컬러 사진 · 네온 스티커 · 하드 섀도. 05 마커는 Primary 파랑 */
-.lg{position:relative;color:#F4F4F4;background-color:var(--ax-bg);padding:0 0 clamp(72px,8vw,120px);overflow:hidden;
-  background-image:linear-gradient(to right,var(--ax-rule) 1px,transparent 1px),linear-gradient(to bottom,var(--ax-rule) 1px,transparent 1px),linear-gradient(to right,var(--ax-rule-sub) 1px,transparent 1px),linear-gradient(to bottom,var(--ax-rule-sub) 1px,transparent 1px);
-  background-size:88px 88px,88px 88px,22px 22px,22px 22px;background-position:center top}
-
 /* 한 줄 로그 띠: 검정 터미널 줄이 흐름 */
-.tk{position:relative;z-index:2;flex:none;margin:0 calc(clamp(14px,2.2vw,34px) * -1);background:var(--ax-line);border-top:3px solid var(--primary);overflow:hidden;height:44px;display:flex;align-items:center}
+.tk{position:relative;z-index:2;flex:none;margin:0 calc(clamp(14px,2.2vw,34px) * -1);background:var(--ax-line);border-top:3px solid var(--hm-primary);overflow:hidden;height:44px;display:flex;align-items:center}
 .tk-track{display:flex;width:max-content;animation:tk 60s linear infinite}
 .tk:hover .tk-track{animation-play-state:paused}
 .tk-list{display:flex;margin:0;padding:0;list-style:none}
 .tk-list li{white-space:nowrap;padding:0 34px 0 0;font-size:14px;font-weight:600;color:#E9E9EA}
 .tk-list li::after{content:"//";margin-left:34px;font-family:var(--ff-mono);color:rgba(255,255,255,.28)}
-.tk-p{font-family:var(--ff-mono);font-weight:500;font-size:13px;color:var(--primary-ink);margin-right:6px}
+.tk-p{font-family:var(--ff-mono);font-weight:500;font-size:13px;color:var(--hm-primary-ink);margin-right:6px}
 @keyframes tk{to{transform:translateX(-50%)}}
 
-.lg-wrap{max-width:calc(var(--wrap) + 40px);margin:0 auto;padding:clamp(56px,6vw,88px) var(--gutter) 0}
-
 /* 머리: 05 마커(포스터 01~04에 이어지는 다섯 번째 칸) + 제목 + 스티커 버튼 */
-.lg-head{display:grid;grid-template-columns:auto 1fr auto;align-items:end;column-gap:clamp(18px,2.4vw,32px);margin-bottom:clamp(36px,4vw,56px)}
-.lg-mk{display:flex;align-items:center;gap:10px;align-self:center}
-.lg-mk b{width:clamp(60px,6vw,78px);height:clamp(60px,6vw,78px);border-radius:50%;display:grid;place-items:center;background:var(--primary);color:#fff;font-family:"Anton",Impact,sans-serif;font-weight:400;font-size:clamp(26px,2.6vw,34px);box-shadow:0 0 0 5px var(--ax-line);transform:rotate(-8deg)}
-.lg-mk span{font-family:var(--ff-mono);font-weight:700;font-size:13px;line-height:1.2;background:var(--ax-line);color:#fff;padding:6px 9px}
-.lg-k{margin:0 0 10px;font-family:var(--ff-mono);font-size:13.5px;font-weight:500;color:var(--primary-ink)}
-.lg-k span{margin-right:8px;color:var(--n-lime)}
-.lg-h{margin:0;font-family:var(--ff-title);font-weight:400;font-size:clamp(34px,4.2vw,60px);line-height:1;letter-spacing:-.02em;color:#fff}
-.lg-all{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:#fff;color:#111;font-weight:800;font-size:15px;text-decoration:none;white-space:nowrap;border:3px solid var(--ax-line);box-shadow:5px 5px 0 var(--ax-line);transform:rotate(2deg);transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .2s}
-.lg-all svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2.6;transition:transform .2s var(--ease)}
-.lg-all:hover{background:var(--n-magenta);color:#fff;transform:rotate(0) translate(-2px,-2px);box-shadow:7px 7px 0 var(--ax-line)}
-.lg-all:hover svg{transform:translateX(3px)}
-.lg-all:focus-visible{outline:3px solid #fff;outline-offset:4px}
-
-/* 보드: 왼쪽 대표 기록 1 + 오른쪽 기록 2(살짝 기울여 붙인 카드) */
-.lg-board{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:auto auto;gap:clamp(24px,3vw,40px) clamp(24px,2.6vw,36px);margin:0;padding:0;list-style:none}
-.lg-feat{grid-column:1 / 8;grid-row:1 / 3;--rot:-1.2deg}
-.lg-s1{grid-column:8 / 13;grid-row:1;--rot:1.6deg;margin-top:8px}
-.lg-s2{grid-column:8 / 13;grid-row:2;--rot:-.8deg;margin-left:-14px}
-
-.lg-card{position:relative;height:100%;box-sizing:border-box;display:flex;flex-direction:column;background:#F6F5F0;color:#111;text-decoration:none;border:5px solid var(--ax-line);box-shadow:9px 9px 0 var(--ax-line);transform:rotate(var(--rot,0));transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .3s var(--ease)}
-.lg-card:hover,.lg-card:focus-visible{transform:rotate(0) translate(-4px,-4px);box-shadow:14px 14px 0 var(--primary)}
-.lg-card:focus-visible{outline:3px solid #fff;outline-offset:6px}
 
 /* 카드 머리: 파일 탭처럼 검정 줄 */
-.lg-tab{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0;padding:8px 14px;background:var(--ax-line);color:#fff;font-family:var(--ff-mono);font-size:12.5px;font-weight:500}
-.lg-tab span:first-child{display:flex;align-items:center;gap:8px}
-.lg-tab i{width:9px;height:9px;border-radius:50%;background:var(--c)}
-.lg-tab span:last-child{color:var(--c)}
-
-.lg-ph{position:relative;overflow:hidden;border-bottom:5px solid var(--ax-line);background:#222}
-.lg-ph img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1) brightness(.92);transition:filter .5s,transform .9s var(--ease)}
-.lg-card:hover .lg-ph img,.lg-card:focus-visible .lg-ph img{filter:none;transform:scale(1.04)}
-.lg-cat{position:absolute;left:14px;bottom:14px;padding:4px 12px;background:var(--c);color:#111;font-size:14px;font-weight:900;border:3px solid var(--ax-line);transform:rotate(-4deg);box-shadow:3px 3px 0 var(--ax-line)}
-
-.lg-body{display:flex;flex-direction:column;gap:10px;padding:20px 22px 20px;flex:1}
-.lg-card h3{margin:0;font-size:20px;font-weight:900;line-height:1.35;letter-spacing:-.03em}
-.lg-sum{margin:0;font-size:14.5px;line-height:1.65;color:#3B3D42}
-.lg-by{display:flex;align-items:center;gap:8px;margin:auto 0 0;padding-top:14px;border-top:2px dashed rgba(11,11,12,.2);font-size:14px}
-.lg-by b{font-weight:800}
-.lg-av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--ax-line);color:#fff;font-size:12.5px;font-weight:800}
-.lg-go{margin-left:auto;font-weight:800;font-size:13.5px;color:var(--primary-strong);transition:transform .2s var(--ease)}
-.lg-card:hover .lg-go{transform:translateX(4px)}
 
 /* 대표 기록: 사진 크게 */
-.lg-feat .lg-ph{aspect-ratio:16 / 9}
-.lg-feat .lg-body{padding:24px 28px 24px;gap:12px}
-.lg-feat h3{font-size:clamp(24px,2.3vw,32px)}
-.lg-feat .lg-sum{font-size:16px}
-.lg-feat .lg-cat{font-size:16px;left:18px;bottom:18px}
-/* 오른쪽 기록: 사진 왼쪽 · 글 오른쪽 */
-.lg-row{display:grid;grid-template-columns:40% 1fr;flex:1}
-.lg-row .lg-ph{border-bottom:0;border-right:5px solid var(--ax-line);min-height:200px}
-.lg-row .lg-cat{font-size:12.5px;left:10px;bottom:10px;padding:3px 9px}
-.lg-row .lg-sum{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 
-@media (max-width:960px){
-  .lg-head{grid-template-columns:auto 1fr;row-gap:20px}
-  .lg-all{grid-column:1 / -1;justify-self:start}
-  .lg-board{grid-template-columns:1fr;gap:28px}
-  .lg-feat,.lg-s1,.lg-s2{grid-column:1;grid-row:auto;margin:0}
-}
 /* 모바일: 전광판은 오시는 길 지도 바로 아래(포스터 맨 끝). 10-14 사용자 '카테고리 아래 말고 오시는 길 영역 아래로' — 전에는 헤더 바로 아래(order:-1) */
 @media (max-width:860px){
   .ax .tk{margin-top:16px}
 }
 @media (max-width:560px){
-  .lg-head{grid-template-columns:1fr;row-gap:16px}
-  .lg-mk,.lg-all{grid-column:1}
+  
+  
   .tk{height:42px}
   .tk-list li{font-size:13px}
-  .lg-mk b{width:54px;height:54px;font-size:24px}
-  .lg-h{font-size:clamp(28px,8.4vw,40px)}
-  .lg-row{grid-template-columns:1fr}
-  .lg-row .lg-ph{border-right:0;border-bottom:5px solid var(--ax-line);min-height:0;aspect-ratio:16 / 9}
-  .lg-body{padding:18px 18px}
-  .lg-feat .lg-body{padding:20px 20px}
-  .lg-card{box-shadow:6px 6px 0 var(--ax-line)}
-  .lg-s1{--rot:1deg}.lg-s2{--rot:-.6deg}.lg-feat{--rot:-.8deg}
+  
+  
+  
+  
+  
+  
+  
+  
 }
 @media (prefers-reduced-motion:reduce){
   .tk-track{animation:none}
   .tk{overflow-x:auto}
-  .lg-card,.lg-all,.ax-facts-go a{transition:none}
-  .lg-card:hover,.lg-all:hover,.ax-facts-go a:hover{transform:rotate(var(--rot,0))}
+  .ax-facts-go a{transition:none}
+  .ax-facts-go a:hover{transform:rotate(var(--rot,0))}
 }
-
-
 
 /* ---------- v2.1 GNB를 Primary 파랑으로 ----------
    막대 · 드롭다운 · 검색 패널이 --header-bg를 따라 모두 파랑. 막대는 한 단계 진한 #2457F5(흰 글자 5.6 : 1), 흐린 흰색은 기준 미달이라 쓰지 않음)
    아래쪽은 포스터 프레임과 같은 검정 굵은 선으로 마감 */
-:root{--header-bg:var(--primary-strong);--on-header:#fff;--header-muted:#fff;--header-accent:#fff}
-.site-header .hdr-bar,.site-header .drop-bg,.site-header .search-panel{background:var(--primary-strong);-webkit-backdrop-filter:none;backdrop-filter:none}
+:root{--header-bg:var(--hm-primary-strong);--on-header:#fff;--header-muted:#fff;--header-accent:#fff}
+.site-header .hdr-bar,.site-header .drop-bg,.site-header .search-panel{background:var(--hm-primary-strong);-webkit-backdrop-filter:none;backdrop-filter:none}
 .site-header .hdr-bar,.site-header.is-scrolled .hdr-bar,.site-header.menu-open .hdr-bar{border-bottom:3px solid var(--ax-line)}
 .site-header.menu-open .drop-bg{border-bottom:3px solid var(--ax-line)}
 .site-header .search-panel{border-bottom:3px solid var(--ax-line);box-shadow:none}
@@ -369,9 +299,9 @@ body{background:var(--ax-bg)}
 .site-header .logo-sub,.site-header .official-link{color:#fff;opacity:1}
 .hdr-bar .icon-btn:hover,.search-panel .icon-btn:hover{background:rgba(11,11,12,.18)}
 .site-header .search-tags a{border-color:rgba(255,255,255,.55)}
-.site-header .search-tags a:hover{background:#fff;color:var(--primary-strong)}
+.site-header .search-tags a:hover{background:#fff;color:var(--hm-primary-strong)}
 /* 파랑 막대 위 지원하기: 흰 버튼 + 파랑 글자 + 포스터식 검정 그림자 */
-.site-header .btn-apply{background:#fff;color:var(--primary-strong);border:2px solid var(--ax-line);box-shadow:3px 3px 0 var(--ax-line);transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.site-header .btn-apply{background:#fff;color:var(--hm-primary-strong);border:2px solid var(--ax-line);box-shadow:3px 3px 0 var(--ax-line);transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
 .site-header .btn-apply:hover{background:#fff;transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ax-line)}
 :root .site-header :is(a,button,input):focus-visible{outline-color:#fff}
 @media (max-width:860px){
@@ -380,8 +310,8 @@ body{background:var(--ax-bg)}
 
 /* ---------- v2.2 제목: 작은 브랜드 줄(인사교 AI-Log) + 큰 태그라인 두 줄 ---------- */
 .ax-h{margin:0;display:flex;flex-direction:column;gap:clamp(8px,1.2vh,14px);font-weight:400}
-.ax-brand{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;font-family:var(--ff-sans);font-size:clamp(13px,1vw,15px);font-weight:600;letter-spacing:.01em;color:var(--primary-ink)}
-.ax-brand::before{content:"";width:9px;height:9px;background:var(--primary);box-shadow:0 0 0 2px var(--ax-line)}
+.ax-brand{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;font-family:var(--ff-sans);font-size:clamp(13px,1vw,15px);font-weight:600;letter-spacing:.01em;color:var(--hm-primary-ink)}
+.ax-brand::before{content:"";width:9px;height:9px;background:var(--hm-primary);box-shadow:0 0 0 2px var(--ax-line)}
 .ax-brand b{font-weight:800;color:#fff}
 .ax-tag{font-family:var(--ff-title);font-weight:400;font-size:clamp(30px,min(4vw,6vh),68px);line-height:1.08;letter-spacing:-.02em;color:#F4F4F4;word-break:keep-all}
 @media (max-width:860px){

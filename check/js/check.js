@@ -128,7 +128,7 @@
   if (fl) {
     const items = $$('.faq-item', fl), tabs = $$('.faq-tab', main), cnt = $('#faqCount', main);
     const pager = $('#faqPager', main), pagesEl = $('#faqPages', main), fprev = $('#faqPrev', main), fnext = $('#faqNext', main);
-    const PER = 5; let cat = 'all', fpage = 0;
+    const PER = 8; let cat = 'all', fpage = 0;
     const apply = () => {
       let n = 0;
       items.forEach(li => { const ok = cat === 'all' || li.dataset.cat === cat; li._ok = ok; if (ok) n++; });
@@ -168,17 +168,19 @@
   /* ---------- 모집 프로세스: 단계 차례로 켜기 ---------- */
   const pf = $('#procFlow', main);
   if (pf) {
-    const cols = $$('.pf-col', pf); let cur = 0, timer = null, inView = false, hold = false;
+    const cols = $$('.pf-col', pf); let cur = 0, auto = 0, timer = null, inView = false, hold = false;
     const set = k => { cur = k; cols.forEach((c, i) => c.classList.toggle('is-on', i === k)); };
     const stop = () => { clearInterval(timer); timer = null; };
     const start = () => { stop(); if (!reduce && inView && !hold) timer = setInterval(() => set((cur + 1) % cols.length), 3200); };
     cols.forEach((c, i) => {
-      const pick = () => { set(i); hold = true; stop(); };
+      const pick = () => { if (!hold) auto = cur; set(i); hold = true; stop(); };
       c.addEventListener('mouseenter', pick); c.addEventListener('click', pick);
       const card = $('.pf-card', c); if (card) card.addEventListener('focus', pick);
     });
-    pf.addEventListener('mouseleave', () => { hold = false; start(); });
-    pf.addEventListener('focusout', e => { if (!pf.contains(e.relatedTarget)) { hold = false; start(); } });
+    // 커서가 벗어나면 호버로 켠 단계를 바로 끄고, 자동 순환하던 단계로 되돌림
+    const release = () => { if (!hold) return; hold = false; set(auto); start(); };
+    pf.addEventListener('mouseleave', () => { if (pf.contains(document.activeElement)) document.activeElement.blur(); release(); });
+    pf.addEventListener('focusout', e => { if (!pf.contains(e.relatedTarget)) release(); });
     new IntersectionObserver(es => es.forEach(e => { inView = e.isIntersecting; start(); }), { threshold: .3 }).observe(pf);
     set(0);
   }

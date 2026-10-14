@@ -28,14 +28,13 @@ html[data-nav="side"] .stories-page:has(> .st-main){background:#fff}
   /* 첫 줄(STORIES)이 본문 첫 섹션 머리(— 후기)와 같은 높이에서 시작, 스크롤하면 헤더 아래 32px에 붙음 */
   html[data-nav="side"] #siteLnb .lnb-in{position:sticky;top:calc(var(--hdr) + 32px);margin-top:var(--lnb-top,calc(var(--sec-y-first) + 4px))}   /* 탭 내용(.st-main) 위 여백과 같은 식. 머리 여백이 다른 페이지는 main에 --lnb-top */
   html[data-nav="side"] #siteLnb .lnb-head{display:flex;flex-direction:column;gap:10px;margin:0;padding:0 0 20px}
-  html[data-nav="side"] #siteLnb .lnb-en{font:700 12px/1 var(--ff-sans);letter-spacing:.18em;color:var(--blue)}
-  html[data-nav="side"] #siteLnb .lnb-title{font:700 24px/1.2 var(--ff-title);letter-spacing:-.01em;color:var(--ink);word-break:keep-all}
+  html[data-nav="side"] #siteLnb .lnb-title{font:700 24px/1.2 var(--ff-title);color:var(--ink);word-break:keep-all}
   html[data-nav="side"] #siteLnb .lnb-list{padding:0;border-top:2px solid var(--ink)}   /* 제목 아래 굵은 선은 목록 쪽에 — 낮은 창에서 제목을 빼도 선이 남게 */
   html[data-nav="side"] #siteLnb .lnb-list a{display:flex;align-items:center;gap:10px;padding:15px 2px;border-bottom:1px solid var(--line);font-size:16px;font-weight:500}
   /* 지금 항목: 메인 색 · 굵게 + 섹션 머리(— 후기)와 같은 짧은 선 */
-  html[data-nav="side"] #siteLnb .lnb-list a[aria-current]{color:var(--blue);font-weight:700}
+  html[data-nav="side"] #siteLnb .lnb-list a[aria-current]{color:var(--primary);font-weight:700}
   html[data-nav="side"] #siteLnb .lnb-list a[aria-current]::before{content:"";flex:none;width:14px;height:2px;background:currentColor}
-  html[data-nav="side"] #siteLnb .lnb-list a:focus-visible{outline:2px solid var(--blue);outline-offset:-2px;border-radius:2px}
+  html[data-nav="side"] #siteLnb .lnb-list a:focus-visible{outline:2px solid var(--primary);outline-offset:-2px;border-radius:2px}
 
   /* 본문 칸 안: 탭 내용(.wrap)의 최대 폭 · 좌우 여백은 main 안쪽 여백이 대신함(겹치면 본문이 두 번 들어감) */
   html[data-nav="side"] .stories-page .wrap{width:auto;max-width:none;padding-left:0;padding-right:0}
@@ -66,9 +65,10 @@ html[data-nav="side"] .stories-page:has(> .st-main){background:#fff}
   html[data-nav="side"] #siteLnb .lnb-list a{position:relative;z-index:0;display:flex;align-items:center;height:44px;padding:0 17px;border-radius:999px;font-size:14.5px;font-weight:500;white-space:nowrap}
   html[data-nav="side"] #siteLnb .lnb-list a::before{content:"";position:absolute;inset:3px 0;z-index:-1;border:1px solid var(--line);border-radius:inherit;background:var(--surface);transition:border-color .2s}
   html[data-nav="side"] #siteLnb .lnb-list a:hover::before{border-color:var(--line-ui)}
-  html[data-nav="side"] #siteLnb .lnb-list a[aria-current]{color:var(--blue);font-weight:700}
-  html[data-nav="side"] #siteLnb .lnb-list a[aria-current]::before{border-color:var(--blue)}
+  html[data-nav="side"] #siteLnb .lnb-list a[aria-current]{color:var(--primary);font-weight:700}
+  html[data-nav="side"] #siteLnb .lnb-list a[aria-current]::before{border-color:var(--primary)}
   html[data-nav="side"] #siteLnb .lnb-list a:focus-visible{outline:none}
-  html[data-nav="side"] #siteLnb .lnb-list a:focus-visible::before{outline:2px solid var(--blue);outline-offset:1px}   /* 링 바깥 끝이 a 안(3px)에 들어가 가로 스크롤 줄에 잘리지 않음 */
+  html[data-nav="side"] #siteLnb .lnb-list a:focus-visible::before{outline:2px solid var(--primary);outline-offset:1px}   /* 링 바깥 끝이 a 안(3px)에 들어가 가로 스크롤 줄에 잘리지 않음 */
 }
 
+html[data-nav="side"] #siteLnb .lnb-title{font-family:var(--ff-text);font-weight:700;font-size:21px;letter-spacing:-.02em}   /* 10-13: 왼쪽 메뉴 제목 Paperlogy */

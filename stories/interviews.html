@@ -21,8 +21,8 @@
   <link rel="stylesheet" href="../common/css/unify.css">
   <link rel="stylesheet" href="../common/css/lnb.css">
   <link rel="stylesheet" href="css/mast.css">
-  <script src="js/cohort-ig.js" defer></script>
   <script src="js/stories-sections.js" defer></script>
+  <script src="js/mast-fix.js" defer></script>
   <script src="../common/js/menu.js" defer></script>
   <script src="../common/js/site.js" defer></script>
   <script src="js/stories.js" defer></script>
@@ -37,8 +37,12 @@
 <main id="main" class="stories-page" tabindex="-1">
 <h1 class="sr">인터뷰 — 선배들의 이야기</h1>   <!-- 10-13 사본: 나눈 페이지 제목(화면엔 안 보임, 원본 h1.sr과 같은 방식) -->
 <div class="wrap st-mh">   <!-- 10-13 사본: 이야기 5페이지 같은 제목 줄(stories/css/mast.css). 이 페이지 제목은 위 h1.sr -->
-  <p class="st-mh-t">먼저 다녀온 선배들의 <b>SSUL</b></p>
-  <p class="st-mh-lead">후기, 인터뷰, 프로젝트, 기수 기록까지 먼저 지나간 선배들이 남긴 이야기를 한곳에 모았어요.</p>
+  <div class="mhb mhb5">
+  <span class="mhb-deco" aria-hidden="true"><i class="dc-tape"></i><i class="dc-blob"></i><span class="dc-scrap"><i class="dc-pin"></i><em>Real<br>Stories</em><i class="dc-tick"></i><i class="dc-tape2"></i></span><svg class="dc-swoosh" viewBox="0 0 240 90" fill="none" stroke="#5B8DEF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 88C24 60 42 38 58 30c10-5 18 0 14 9-4 8-16 7-15-1 1-10 18-12 38-14 40-4 90-12 140-22"/></svg></span>
+  <div class="mhb-tx"><p class="st-mh-t">먼저 다녀온 선배들의 <b>SSUL</b></p>
+  <p class="st-mh-lead">인터뷰, 후기, 프로젝트, 기수 기록까지 먼저 지나간 선배들이 남긴 이야기를 한곳에 모았어요.</p></div>
+  <nav class="mhb-st" aria-label="선배들의 이야기 바로가기"><a href="interviews.html" style="--c:#8CC3FF;--r:-6deg">인터뷰</a><a href="reviews.html" style="--c:#FFE36E;--r:4deg">후기</a><a href="projects.html" style="--c:#7FDDA8;--r:-3deg">프로젝트</a><a href="cohorts.html" style="--c:#FF9CC8;--r:6deg">기수별 이모저모</a></nav>
+  </div>
 </div>
 <input class="tr tb" autocomplete="off" type="radio" name="tab" id="t1" tabindex="-1" aria-hidden="true">
 <input class="tr tb" autocomplete="off" type="radio" name="tab" id="t2" checked tabindex="-1" aria-hidden="true">
@@ -249,14 +253,14 @@
               <div class="ph">
                 <svg class="illu" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#E4E9F7"/>
    <rect x="34" y="78" width="150" height="104" rx="10" fill="#fff"/>
-   <rect x="54" y="98" width="86" height="10" rx="5" fill="#1F4ED8"/>
+   <rect x="54" y="98" width="86" height="10" rx="5" fill="#2457F5"/>
    <rect x="54" y="120" width="110" height="7" rx="3.5" fill="#CBD5F0"/>
    <rect x="54" y="138" width="64" height="18" rx="9" fill="#FFE600"/>
    <rect x="216" y="62" width="150" height="120" rx="10" fill="#fff"/>
    <rect x="236" y="82" width="70" height="10" rx="5" fill="#22D3EE"/>
    <rect x="236" y="104" width="110" height="7" rx="3.5" fill="#CBD5F0"/>
    <rect x="236" y="122" width="92" height="7" rx="3.5" fill="#CBD5F0"/>
-   <g fill="#1F4ED8"><circle cx="112" cy="206" r="16"/><rect x="92" y="226" width="40" height="22" rx="11"/>
+   <g fill="#2457F5"><circle cx="112" cy="206" r="16"/><rect x="92" y="226" width="40" height="22" rx="11"/>
    <circle cx="200" cy="212" r="14"/><rect x="182" y="230" width="36" height="20" rx="10"/>
    <circle cx="288" cy="206" r="16"/><rect x="268" y="226" width="40" height="22" rx="11"/></g></svg>
               </div>
@@ -310,7 +314,7 @@
       </section>
       <section class="iva" id="iv-all" aria-labelledby="iva-t">
         <div class="iva-hd">
-          <h3 id="iva-t">전체 인터뷰</h3>
+          <h3 id="iva-t" class="sr">전체 인터뷰</h3>
           <div class="iva-tools">
             <div class="iva-chips" data-f="coh" role="group" aria-label="기수"></div>
             <div class="iva-seg" role="group" aria-label="보기 방식">
@@ -323,7 +327,7 @@
         <p class="iva-empty" hidden>고른 조건에 맞는 인터뷰가 없어요.</p>
         <button class="iva-more" type="button" hidden></button>
       </section>
-      <p class="footnote">글과 영상을 한 목록에 섞어 두었어요 · 사진과 영상은 초상권·재게시 동의가 확인된 자료만 올립니다. 지금 보이는 글과 이름은 시안용 더미입니다.</p>
+      <p class="footnote">글과 영상을 한 목록에 섞어 두었어요 · 사진과 영상은 초상권·재게시 동의가 확인된 자료만 올립니다.</p>
     </div>
     <div class="ivd" id="iv-1">
       <a class="ivback" href="#p-iv">← 인터뷰 목록</a>
@@ -457,14 +461,14 @@
             <span class="ivtag">7기 · 데이터분석</span>
             <svg class="illu" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#E4E9F7"/>
    <rect x="34" y="78" width="150" height="104" rx="10" fill="#fff"/>
-   <rect x="54" y="98" width="86" height="10" rx="5" fill="#1F4ED8"/>
+   <rect x="54" y="98" width="86" height="10" rx="5" fill="#2457F5"/>
    <rect x="54" y="120" width="110" height="7" rx="3.5" fill="#CBD5F0"/>
    <rect x="54" y="138" width="64" height="18" rx="9" fill="#FFE600"/>
    <rect x="216" y="62" width="150" height="120" rx="10" fill="#fff"/>
    <rect x="236" y="82" width="70" height="10" rx="5" fill="#22D3EE"/>
    <rect x="236" y="104" width="110" height="7" rx="3.5" fill="#CBD5F0"/>
    <rect x="236" y="122" width="92" height="7" rx="3.5" fill="#CBD5F0"/>
-   <g fill="#1F4ED8"><circle cx="112" cy="206" r="16"/><rect x="92" y="226" width="40" height="22" rx="11"/>
+   <g fill="#2457F5"><circle cx="112" cy="206" r="16"/><rect x="92" y="226" width="40" height="22" rx="11"/>
    <circle cx="200" cy="212" r="14"/><rect x="182" y="230" width="36" height="20" rx="10"/>
    <circle cx="288" cy="206" r="16"/><rect x="268" y="226" width="40" height="22" rx="11"/></g></svg>
           </div>

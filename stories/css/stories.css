@@ -486,7 +486,7 @@ body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:i
 .stories-page .g2{grid-template-columns:minmax(0,1fr)}
 .stories-page .ivd h2{font-size:26px;line-height:38px}
 }
-.stories-page .wrap{max-width:100%;margin:0 auto;width:1240px;padding-left:clamp(20px,4vw,48px);
+.stories-page .wrap{max-width:100%;margin:0 auto;width:var(--wrap);padding-left:clamp(20px,4vw,48px);
   padding-right:clamp(20px,4vw,48px)}
 /* 주제별 — 형광 면 위 글자색을 각자 정한다 */
 .stories-page .rev:has(#rc_life:checked) .chips label[for=rc_life]::before,
@@ -877,7 +877,7 @@ body .stories-page .st h3{font-size:16px}
 .stories-page .cover .scene img,
 .stories-page .cover .scene svg{transition:none;transform:none!important}
 }
-/* 랜딩판 맞춤: 히어로를 본문 폭(1240+여백) 안에 가운데 정렬 */
+/* 랜딩판 맞춤: 히어로를 본문 폭(--wrap) 안에 가운데 정렬 */
 .stories-page .cover .arw.prev{right:calc(var(--hin) + 64px)}
 .stories-page .cover .arw.next{right:calc(var(--hin) + 12px)}
 .stories-page .cover .arw.prev svg{stroke:#fff}

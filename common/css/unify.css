@@ -714,7 +714,7 @@ html[data-menu="life"] body,
 .stories-page .iva .iva-more{display:none!important}
 
 /* 선배 후기 머리 여백(10-13): 제목 · 흐르는 띠 · '후기 모아 보기' · 칩 · 보드 사이를 넉넉하게 */
-.stories-page #p-rev .sh-row{margin-bottom:0}
+/* 10-13 사본: 띠 · '후기 모아 보기' · 인터뷰 띠(.yfeat)를 후기 페이지에서 뺌 → 제목 줄 아래는 다른 목록 페이지(프로젝트 · 이모저모)와 같은 기본 여백 */
 .stories-page .lq{margin-top:clamp(36px,3.6vw,48px);padding-block:22px 24px}
 .stories-page #p-rev .sh-card{margin:clamp(64px,6vw,88px) 0 22px}
 .stories-page #p-rev .filters{margin-bottom:clamp(32px,3vw,40px)}

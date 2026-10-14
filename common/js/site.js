@@ -8,6 +8,7 @@
                                        바 왼쪽 카테고리 제목(menu.js title)을 빼려면 data-subnav-title="off"(라이프: 첫 화면 히어로가 제목)
                                        글 상세처럼 하위 메뉴 주소에 없는 페이지는 data-sub="하위 메뉴 id"로 밑줄 위치를 정함
                                        (탭 화면 페이지는 페이지 스크립트가 data-sub를 바꾸고 Site.syncSubnav() 호출)
+                                       하위 메뉴가 페이지마다 따로인 페이지는 data-nav="side"면 위쪽 바 대신 본문 왼쪽 메뉴(common/css/lnb.css, 10-13 사본: 이야기 하위 4페이지)
      <header class="site-header" id="siteHeader"></header>
      <main id="main" tabindex="-1">…</main>
      <footer class="site-footer" id="siteFooter"></footer>   사진 출처 같은 페이지 메모는 data-note="…"
@@ -54,6 +55,10 @@ const Site = (() => {
   }
 
   const current = menuOf(html.dataset.menu) || null;
+  /* 왼쪽 하위 메뉴(10-13 사본, 사용자 결정: 한눈에 보기 허브는 넓게 · 하위 페이지는 왼쪽 메뉴): <html data-nav="side">인 페이지 + 하위 메뉴가 모두 페이지 링크인 메뉴만.
+     위쪽 바를 끈 페이지와 같은 흐름(--sub 0 · 바 안 그림 · 헤더 높이 72)으로 돌리고 main 맨 앞에 왼쪽 메뉴(renderLnb) */
+  const sideNav = !!current && html.dataset.nav === 'side' && current.children.every(c => c.page);
+  if (sideNav) html.dataset.subnav = 'off';
   const subnavOn = !!current && html.dataset.subnav !== 'off';   // 하위 메뉴 바를 그릴지(그린 뒤에는 #subnav 유무로 판단)
   /* "폴더", "폴더/", "폴더/index.html"은 같은 페이지(서버 주소는 끝 / 없이 올 수 있음) */
   const pagePath = u => u.pathname.replace(/index\.html$/, '').replace(/\/$/, '');
@@ -64,7 +69,7 @@ const Site = (() => {
   function currentSub(){
     if (html.dataset.sub) return html.dataset.sub;
     const hash = decodeURIComponent(location.hash);
-    const links = $$('#subnav a[data-sub]').map(a => ({ id: a.dataset.sub, u: new URL(a.href) }));
+    const links = $$('#subnav a[data-sub], #siteLnb a[data-sub]').map(a => ({ id: a.dataset.sub, u: new URL(a.href) }));
     const here = links.filter(x => samePage(x.u));
     const hit = here.find(x => hash && decodeURIComponent(x.u.hash) === hash) || here.find(x => !x.u.hash) || here[0];
     return (hit || links[0])?.id;
@@ -172,10 +177,38 @@ const Site = (() => {
     <div class="toast" id="toast" role="status" aria-live="polite"></div>`);
   }
 
+  /* 왼쪽 하위 메뉴(10-13 사본). main 맨 앞에 그림(모양 · 자리는 common/css/lnb.css). 페이지 제목 줄(.st-mh, 이야기 5페이지)이 있으면 그 바로 뒤 — 좁은 화면에서 제목 → 알약 줄 순서.
+     지금 항목은 하위 메뉴 바와 같은 기준(data-sub · currentSub)으로 setActiveSub가 aria-current="page" */
+  const LNB_EN = { stories:'STORIES' };   // 제목 위 작은 영문: 메뉴 이름 번역만
+  function renderLnb(){
+    const main = $('#main');
+    if (!sideNav || !main || $('#siteLnb')) return;
+    const mh = main.querySelector(':scope > .st-mh');
+    (mh || main).insertAdjacentHTML(mh ? 'afterend' : 'afterbegin', `
+    <nav class="lnb" id="siteLnb" aria-label="${current.label} 메뉴">
+      <div class="lnb-in">
+        <p class="lnb-head">${LNB_EN[current.id] ? `<span class="lnb-en" aria-hidden="true">${LNB_EN[current.id]}</span>` : ''}<strong class="lnb-title">${current.label}</strong></p>
+        <ul class="lnb-list" role="list" data-scroll-fade>
+          ${current.children.map(c => `<li><a href="${href(current, c)}" data-sub="${c.id}">${c.label}</a></li>`).join('')}
+        </ul>
+      </div>
+    </nav>`);
+  }
   /* ---------- 하위 메뉴 바: 현재 항목 표시 ---------- */
   function setActiveSub(id){
     // 모바일 메뉴(☰)의 지금 카테고리 세부 링크에도 같은 표시(서버가 그린 메뉴면 data-sub가 있는 링크만)
     $$('#drawer a[data-sub]').forEach(a => { if (a.dataset.sub === id) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+    // 10-13 사본: 왼쪽 메뉴(좁은 화면은 가로 줄 — 지금 항목이 보이게 가운데로)
+    const lnb = $('#siteLnb .lnb-list');
+    if (lnb) {
+      let on;
+      $$('a', lnb).forEach(a => { if (a.dataset.sub === id) { a.setAttribute('aria-current', 'page'); on = a; } else a.removeAttribute('aria-current'); });
+      const max = lnb.scrollWidth - lnb.clientWidth;
+      if (on && max > 1) {
+        const x = on.offsetLeft - lnb.clientWidth / 2 + on.offsetWidth / 2;
+        lnb.scrollLeft = x > max - 40 ? max : x < 40 ? 0 : x;   // 끝 40px 안이면 끝까지(흐림 띠가 지금 항목에 걸리지 않게)
+      }
+    }
     const list = $('#subnav .subnav-list');
     if (!list) return;
     let active;
@@ -196,7 +229,7 @@ const Site = (() => {
   }
   /* 주소의 #위치가 바뀌면 하위 메뉴 바의 현재 항목을 맞춤 */
   function syncSubnav(){
-    if ($('#subnav')) setActiveSub(currentSub());
+    if ($('#subnav') || $('#siteLnb')) setActiveSub(currentSub());
   }
   /* 한 페이지 + 위치(anchor) 메뉴(#subnav data-type="anchor"): 화면에 들어온 섹션을 하위 메뉴에 표시 */
   function setupScrollSpy(){
@@ -371,9 +404,9 @@ const Site = (() => {
       const a = e.target.closest('[data-toast]');
       if (a) { e.preventDefault(); toast(a.dataset.toast); }
     });
-    // 헤더 · 모바일 메뉴 · 푸터의 같은 페이지 링크는 새로 불러오지 않고 그 위치로 이동
+    // 헤더 · 모바일 메뉴 · 푸터 · 왼쪽 메뉴의 같은 페이지 링크는 새로 불러오지 않고 그 위치로 이동
     document.addEventListener('click', e => {
-      const a = e.target.closest('#siteHeader a[href], #drawer a[href], #siteFooter a[href]');
+      const a = e.target.closest('#siteHeader a[href], #drawer a[href], #siteFooter a[href], #siteLnb a[href]');
       if (!a || a.hasAttribute('data-toast') || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       const u = new URL(a.href);
       if (!samePage(u)) { closeDrawer(); return; }
@@ -421,12 +454,14 @@ const Site = (() => {
 
   if ($('#siteHeader')) {
     renderHeader();
+    renderLnb();
     renderFooter();
     renderFloating();
     bind();
     setupScrollSpy();
     setupScrollFade();
     fitPlaceholder();
+    if ($('#siteLnb')) { syncSubnav(); document.fonts?.ready.then(syncSubnav); }   // 왼쪽 메뉴는 바로(첫 화면에 지금 항목이 비어 보이지 않게). 좁은 화면 가로 줄 위치는 글꼴이 자리 잡은 뒤 다시
     if ($('#subnav')) requestAnimationFrame(syncSubnav);
   }
   linkSiteLinks();

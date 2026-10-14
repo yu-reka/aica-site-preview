@@ -1,0 +1,28 @@
+/* =========================================================
+   선배들의 이야기 머리 줄(10-13 사본, 사용자 결정 '1번'): 한눈에 보기 · 후기 · 인터뷰 · 프로젝트 · 기수별 이모저모 5페이지 맨 위에 같은 큰 제목 줄.
+   카테고리 한 페이지로 느껴지게 — 페이지를 옮겨도 제목 줄 · 왼쪽 메뉴 자리가 그대로고 본문만 바뀜.
+   1200px 이상: 제목 줄은 [메뉴 | 본문] 두 칸 위로 헤더 로고 시작선부터 화면 폭 전체 + 아래 가는 선.
+                왼쪽 메뉴는 그 아래(첫 구역 머리 — 후기와 같은 높이)에서 시작하고, 스크롤하면 헤더 아래 붙어 따라옴(lnb.css sticky).
+   1200px 미만: 제목 줄 → 알약 줄 → 본문(site.js가 메뉴를 제목 줄 바로 뒤에 그림).
+   메뉴 시작 높이(--lnb-top, lnb.css)를 제목 줄 높이 식으로 계산 → 1200 이상에선 제목 · 설명을 한 줄로 고정(nowrap, 1200에서도 폭이 남음).
+   ========================================================= */
+:root{
+  --mh-t:clamp(36px,4.4vw,60px);     /* 제목 글자 크기 */
+  --mh-l:clamp(16px,1.2vw,17.5px);   /* 설명 글자 크기 */
+  --mh-pb:clamp(40px,3.6vw,52px);    /* 설명 → 선(1200 이상) */
+  --mh-gap:clamp(48px,4.4vw,64px)}   /* 선 → 첫 구역 머리(1200 이상) */
+
+.st-mh{padding-top:var(--sec-y-first);padding-bottom:4px}   /* 1200 미만: 바로 아래 알약 줄(위 17px)이 이어짐 */
+.st-mh .st-mh-t{margin:0;font:700 var(--mh-t)/1.12 var(--ff-title);letter-spacing:-.01em;color:var(--ink);text-wrap:balance;word-break:keep-all}
+.st-mh .st-mh-t b{font-weight:inherit;color:#FF3EA5;-webkit-text-stroke:.045em #0B0B0C;paint-order:stroke fill}
+.st-mh .st-mh-lead{margin:16px 0 0;max-width:42em;text-wrap:pretty;font-family:var(--ff-sans);font-size:var(--mh-l);font-weight:400;line-height:1.7;letter-spacing:normal;color:var(--graphite);word-break:keep-all}
+
+@media (min-width:1200px){
+  /* 본문 칸(main 안쪽 왼쪽 여백 = 메뉴 + 사이) 밖으로 메뉴 칸만큼 당겨 헤더 로고 시작선에서 시작 */
+  html[data-nav="side"] .st-mh{margin-left:calc(-1 * (var(--lnb-w) + var(--lnb-gap)));padding-bottom:var(--mh-pb);border-bottom:1px solid var(--line)}
+  html[data-nav="side"] .st-mh :is(.st-mh-t,.st-mh-lead){white-space:nowrap;max-width:none}
+  /* 메뉴 첫 줄(STORIES) = 제목 줄 높이 + 선 + 첫 머리 위 여백 + 4px(제목 줄이 없던 때와 같은 차) */
+  html[data-nav="side"] main#main:has(> .st-mh){--lnb-top:calc(var(--sec-y-first) + var(--mh-t) * 1.12 + 16px + var(--mh-l) * 1.7 + var(--mh-pb) + 1px + var(--mh-gap) + 4px)}
+  html[data-nav="side"] .stories-page:has(> .st-mh) div:where(.st-main){padding-top:var(--mh-gap)}
+  html[data-nav="side"] .stories-hub:has(> .st-mh) .hb > .hb-sec:first-child{padding-top:var(--mh-gap)}   /* 허브: 제목 줄은 main 바로 아래, 구역은 .hb 안 */
+}

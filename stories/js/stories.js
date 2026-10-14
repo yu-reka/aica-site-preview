@@ -19,7 +19,10 @@
      옛 주소: 시안의 #go-… · 없앤 쓰기 창 #write-…(2026-10-08)로 오면 그 탭으로 */
   var TAB = { reviews:'t1', interviews:'t2', projects:'t3', cohorts:'t4', 'go-iv':'t2', 'go-pr':'t3', 'go-coh':'t4',
     'write-rev':'t1', 'write-iv':'t2', 'write-pr':'t3', 'write-coh':'t4' };
-  var SUB = { t1:'reviews', t2:'reviews', t3:'projects', t4:'cohorts' };
+  var SUB = { t1:'reviews', t2:'interviews', t3:'projects', t4:'cohorts' };
+  // 10-13 사본: 탭마다 페이지가 따로(reviews · interviews · projects · cohorts.html). 이 페이지에 없는 탭 주소면 그 페이지로
+  var PAGE = { t1:'reviews.html', t2:'interviews.html', t3:'projects.html', t4:'cohorts.html' }, PANE = { t1:'p-rev', t2:'p-iv', t3:'p-pr', t4:'p-coh' };
+  function elsewhere(id){ if (!id || document.getElementById(PANE[id])) return false; location.replace(PAGE[id]); return true; }
   var header = document.getElementById('siteHeader');
   // 고른 탭의 섹션 머리(.sh)가 헤더 + 하위 메뉴 바 아래 32px에 오게 — 다른 카테고리 페이지의 #주소 도착 자리와 같음(2026-10-07, check.js jumpTo).
   // 머리 위치는 offsetTop 합으로 잼(탭이 바뀔 때 .pane이 translateY로 들어오는 동안에도 같은 값). 머리가 없으면 탭 내용 시작(.st-main)이 바 바로 아래
@@ -49,6 +52,7 @@
   });
   function fromHash(instant){
     var id = TAB[decodeURIComponent(location.hash.slice(1))];
+    if (elsewhere(id)) return;
     if (id && pick(id)) toTabs(instant);
     else if (!id) paneTab();
   }
@@ -75,7 +79,9 @@
     if (u.pathname === location.pathname && u.hash && u.hash === location.hash && TAB[decodeURIComponent(u.hash.slice(1))])
       setTimeout(function(){ fromHash(false); }, 0);
   }, true);
-  if (TAB[decodeURIComponent(location.hash.slice(1))]) {
+  if (elsewhere(TAB[decodeURIComponent(location.hash.slice(1))])) {
+    // 다른 페이지로 가는 중
+  } else if (TAB[decodeURIComponent(location.hash.slice(1))]) {
     // 처음 열 때: 탭만 먼저 켜고, 글꼴 · 레이아웃이 자리 잡은 뒤 탭 내용으로
     pick(TAB[decodeURIComponent(location.hash.slice(1))]);
     var go = function(){ fromHash(true); };

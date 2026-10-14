@@ -21,7 +21,7 @@
   --ink2:var(--graphite);--ink3:var(--graphite);   /* 보조 글: 공통 --graphite #566175(바탕 대비 5.8 : 1) */
   --line-s:#BCC5D0;--bline:var(--line);
   --navy:var(--ink);--navy-l:var(--ink);--citron:var(--nc);
-  --ny:#EFD06A;--nc:var(--primary-bright);--wkd:var(--primary);   /* --wkd: 문화·여가 '주말'(평일 저녁은 잉크). 흰 글자 대비 5.3 : 1 */
+  --ny:#EFD06A;--nc:var(--primary-bright);--life:#22D3EE;--wkd:var(--primary);   /* --wkd: 문화·여가 '주말'(평일 저녁은 잉크). 흰 글자 대비 5.3 : 1 */
   --axl:var(--ink);--axbg:var(--ink);--axb:var(--ink);--axsh:var(--ink);
   --soft:0 calc(.2*var(--lr)) calc(.8*var(--lr)) calc(-.5*var(--lr)) rgba(20,35,63,.1);
   --next-accent:#6FC3D1;   /* 공통 '다음으로' 띠(.next-band) 첫 카드의 작은 글 · 화살표 원 = 카테고리 청록 */
@@ -141,7 +141,7 @@
 .life-page .rt3 ol{display:grid;gap:calc(1*var(--lr));margin-top:calc(1.6*var(--lr));margin-bottom:calc(1.6*var(--lr))}
 .life-page .rt3 li{display:grid;grid-template-columns:calc(2.6*var(--lr)) 1fr;column-gap:calc(1*var(--lr))}
 .life-page .rt3 li i{grid-row:1/3;width:calc(2.6*var(--lr));height:calc(2.6*var(--lr));border-radius:50%;background:var(--ice);color:var(--navy);display:grid;place-items:center;font-style:normal;font-weight:900;font-size:calc(1.2*var(--lr))}
-.life-page .rt3 li:last-child i{background:var(--citron);color:#0A1020}
+.life-page .rt3 li:last-child i{background:var(--life);color:#0A1020}   /* 오시는 길 마지막 단계 = 라이프 색(LIFE 글자와 같은 값, 10-14) */
 .life-page .rt3 li b{font-size:calc(1.45*var(--lr))}
 .life-page .rt3 li span{font-size:calc(1.25*var(--lr));color:var(--ink3)}
 @media (max-width:860px){
@@ -836,7 +836,7 @@ html[data-nav="side"][data-sub="none"] #siteLnb{display:none}
 }
 
 /* ===== 인사교 라이프 한눈에 보기(10-13, 선배들의 이야기와 같은 구성): 위 배너(stories/css/mast.css 배너 5) + 왼쪽 메뉴 + 구역 요약 ===== */
-.life-page .st-mh-t b.lf{color:#22D3EE}
+.life-page .st-mh-t b.lf{color:var(--life)}
 .life-page > .st-mh{position:relative;z-index:3}
 .life-page .st-mh .mhb-st a{min-width:112px}
 @media (min-width:1200px){

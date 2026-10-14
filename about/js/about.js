@@ -629,3 +629,27 @@ if (activityGallery) {
   calc();
 })();
 })();
+
+// 하루 일과 영상(10-14): 누르면 미리보기 자리에 유튜브(nocookie)를 넣어 바로 재생
+(() => {
+  const box = document.querySelector('.drv-video--yt[data-yt]');
+  if (!box) return;
+  const id = box.dataset.yt;
+  if (!/^[a-zA-Z0-9_-]{11}$/.test(id)) return;
+  const poster = box.querySelector('.drv-poster');
+  if (poster) poster.addEventListener('error', () => { poster.src = 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg'; }, { once: true });
+  box.addEventListener('click', () => {
+    const org = /^https?:/.test(location.protocol) ? '&origin=' + encodeURIComponent(location.origin) : '';
+    const f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1&hl=ko' + org;
+    f.title = box.getAttribute('aria-label').replace(/ 재생$/, '');
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    f.allowFullscreen = true;
+    f.referrerPolicy = 'strict-origin-when-cross-origin';
+    const wrap = document.createElement('div');
+    wrap.className = 'drv-video is-playing';
+    wrap.append(f);
+    box.replaceWith(wrap);
+    f.focus();
+  }, { once: true });
+})();

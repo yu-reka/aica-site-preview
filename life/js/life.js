@@ -355,9 +355,10 @@ route();
     a.appendChild(n); el.parentNode.insertBefore(a, after?el.nextSibling:el);
   }
   var q=function(s){return document.querySelector(s)};
-  note(q('.bx9-g[data-g="23"] .bx9-ph'),'같이 고민하면<br>더 빨리 풀려요',{right:'-96px',top:'-192px','--r':'-6deg'},true);
-  note(q('.bx9-g[data-g="8"] .bx9-ph'),'밥 먹으면서<br>동기랑 제일 친해져요',{right:'-96px',top:'-192px','--r':'-6deg'},true);
-  note(q('.bx9-g[data-g="1"] .bx9-ph'),'머리 식힐 땐<br>1층으로 내려가 봐요',{right:'-96px',top:'-192px','--r':'-6deg'},true);
+  // 시설 둘러보기 사진 3곳(10-14): 사진 가운데 오른쪽(다음 화살표 자리)을 가려서, 사진 오른쪽 위 모서리에 붙임 — 사진 앞에 넣어 기준점이 사진 위 끝
+  note(q('.bx9-g[data-g="23"] .bx9-ph'),'같이 고민하면<br>더 빨리 풀려요',{top:'-6px','--r':'4deg'});
+  note(q('.bx9-g[data-g="8"] .bx9-ph'),'밥 먹으면서<br>동기랑 제일 친해져요',{top:'-6px','--r':'4deg'});
+  note(q('.bx9-g[data-g="1"] .bx9-ph'),'머리 식힐 땐<br>1층으로 내려가 봐요',{top:'-6px','--r':'4deg'});
   note(q('#tp-house .hzmw'),'방 구할 땐<br>천천히 비교해 봐요',{left:'-34px',top:'24px','--r':'4deg'});
   note(q('#tp-fun .fsg'),'수업 끝나면<br>동네 산책 추천!',{right:'-14px',top:'-80px','--r':'0deg'});
   note(q('#pg-way .wmap'),'여기까지 오는 길,<br>첫걸음부터 응원해요',{left:'calc(66% - 16px)',top:'-136px','--r':'4deg'});   // 10-13: 조금 왼쪽 · 위로, 오른쪽으로 기울임

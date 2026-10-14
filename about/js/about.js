@@ -13,29 +13,23 @@ if (partnerNetwork && 'IntersectionObserver' in window) {
   }, { threshold: .1 }).observe(partnerNetwork);
 }
 
-// 관련 기관 연결선(10-14): 실제 카드 위치(px)로 다시 그림 — 가운데 줄기 → 가로선 → 카드마다 수직으로 내려가 꽂힘, 바깥 두 모서리만 둥글게.
-// 선마다 따로 그려 점선이 겹치지 않게 하고, 흐름 방향은 모두 위(학교)에서 아래(기관)로. 800px 이하는 HTML의 모바일 선 그대로
+// 관련 기관 연결선(10-14): 디자이너 곡선 그대로, 실제 위치(px)로 다시 그려 위 점 정가운데에서 나가 아래 네 점 정가운데로 들어가게.
+// 점은 CSS에서 카드 테두리 가운데에 정확히 놓음(about.css 끝). 800px 이하는 HTML의 모바일 선 그대로
 const partnerWires = partnerNetwork && partnerNetwork.querySelector('.partner-wires-desktop');
 const partnerSchool = partnerNetwork && partnerNetwork.querySelector('.partner-node-school');
 const partnerKids = partnerNetwork ? [...partnerNetwork.querySelectorAll('.partner-network-children > .partner-node')] : [];
-if (partnerWires && partnerSchool && partnerKids.length > 1) {
+if (partnerWires && partnerSchool && partnerKids.length) {
   const drawPartnerWires = () => {
     const box = partnerWires.getBoundingClientRect();
     if (!box.width || !box.height) return;
-    const w = box.width, h = box.height, r = Math.min(14, h / 3);
-    const s = partnerSchool.getBoundingClientRect();
-    const cx = s.left + s.width / 2 - box.left;
-    const xs = partnerKids.map(k => { const b = k.getBoundingClientRect(); return b.left + b.width / 2 - box.left; });
-    const end = partnerKids[0].getBoundingClientRect().top - box.top;
-    const y = Math.round(Math.max(r + 4, Math.min(end - r - 8, h * .46)));
     const f = n => Math.round(n * 10) / 10;
-    const first = xs[0], last = xs[xs.length - 1];
-    const d = [`M${f(cx)} 0V${y}`,
-      `M${f(cx)} ${y}H${f(first + r)}Q${f(first)} ${y} ${f(first)} ${y + r}V${f(end)}`,
-      `M${f(cx)} ${y}H${f(last - r)}Q${f(last)} ${y} ${f(last)} ${y + r}V${f(end)}`,
-      ...xs.slice(1, -1).map(x => `M${f(x)} ${y}V${f(end)}`)];
-    partnerWires.setAttribute('viewBox', `0 0 ${f(w)} ${f(h)}`);
-    partnerWires.innerHTML = d.map(p => `<path d="${p}"/>`).join('');
+    const s = partnerSchool.getBoundingClientRect();
+    const cx = s.left + s.width / 2 - box.left, sy = s.bottom - box.top - partnerSchool.clientTop;   // 점 가운데 = 테두리 안쪽 끝(clientTop)
+    partnerWires.setAttribute('viewBox', `0 0 ${f(box.width)} ${f(box.height)}`);
+    partnerWires.innerHTML = partnerKids.map(k => {
+      const b = k.getBoundingClientRect(), x = b.left + b.width / 2 - box.left, ey = b.top - box.top + k.clientTop, h = ey - sy;
+      return `<path d="M${f(cx)} ${f(sy)}C${f(cx + (x - cx) * .14)} ${f(sy + h * .55)} ${f(x)} ${f(sy + h * .4)} ${f(x)} ${f(ey)}"/>`;   // 원래 곡선(조절점 55 · 40)에서 첫 조절점만 목표 쪽으로 조금 — 네 선이 점에서 겹쳐 뭉치지 않고 바로 갈라짐
+    }).join('');
   };
   drawPartnerWires();
   if ('ResizeObserver' in window) new ResizeObserver(drawPartnerWires).observe(partnerNetwork);

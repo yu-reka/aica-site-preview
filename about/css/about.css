@@ -485,3 +485,7 @@ html.school-about main#main #why-school .why-school-card > p:not(.why-school-car
 @media (max-width: 1199px){ html.school-about main#main #why-school .why-school-card h4{ font-size: 24px!important; } html.school-about main#main #why-school .why-school-card > p.why-school-card-lead{ font-size: 18px; } }
 @media (max-width: 1000px){ html.school-about main#main #why-school .why-school-card h4{ font-size: 22px!important; } html.school-about main#main #why-school .why-school-card > p.why-school-card-lead{ margin-top: 14px; font-size: 17px; } .why-school-card-kicker{ font-size: 13px; } }
 @media (max-width: 760px){ html.school-about main#main #why-school .why-school-cards{ margin-top: 32px; } html.school-about main#main #why-school .why-school-card h4{ font-size: 26px!important; } html.school-about main#main #why-school .why-school-card > p.why-school-card-lead{ margin-top: 16px; font-size: 19px; } .why-school-card-kicker{ font-size: 14px; } }
+
+/* 관련 기관 연결점(10-14): 점을 카드 테두리 가운데에 정확히(원래 calc(50% - 4px) · -4px라 1~2px 비껴 있었음) — 선이 점 정가운데에서 나가고 들어감 */
+.partner-network .partner-node::after{ left: 50%; top: 0; transform: translate(-50%, -50%); }
+.partner-network .partner-node-school::after{ top: auto; bottom: 0; transform: translate(-50%, 50%); }

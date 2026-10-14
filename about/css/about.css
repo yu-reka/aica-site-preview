@@ -462,8 +462,9 @@
 
 /* 하루 일과 영상(10-14): 유튜브 미리보기 그림을 깔고, 누르면 그 자리에서 재생 */
 .drv .drv-video--yt{ width: 100%; border: 0; font: inherit; text-align: left; cursor: pointer; background: #0b1b44; }
-.drv .drv-video--yt .drv-poster{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
-.drv .drv-video--yt::before{ z-index: 1; background: linear-gradient(to top, rgba(8, 18, 48, .78), rgba(8, 18, 48, .1) 48%, rgba(8, 18, 48, .25)); }
+.drv .drv-video--yt .drv-poster{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transition: transform .5s ease; }   /* 칸이 16:9보다 길어 그림은 잘리지 않게 담고, 위아래 남색 띠에 꼬리표 · 제목 */
+.drv .drv-video--yt::before{ z-index: 1; background: rgba(8, 18, 48, .12); }
+@media (max-width: 900px){ .drv .drv-video--yt .drv-cap{ display: none; } }   /* 900 이하는 칸이 16:9라 띠가 없음 — 그림 속 제목과 겹치지 않게 */
 .drv .drv-video--yt :is(.drv-play, .drv-tag, .drv-cap){ z-index: 2; }
 .drv .drv-video--yt .drv-play{ transition: transform .2s ease; }
 .drv .drv-video--yt:hover .drv-poster{ transform: scale(1.03); }

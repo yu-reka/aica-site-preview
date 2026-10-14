@@ -30,10 +30,6 @@
 .logo-mark{width:31px;height:26px;flex:none;background:url("../assets/brand/symbol-blue.png") center/contain no-repeat}
 .hdr-bar .logo-mark{background-image:url("../assets/brand/symbol-white.png")}
 .logo-text{font-weight:700;font-size:17px;letter-spacing:-.03em}
-/* 헤더 막대에만 있음 */
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]) .logo-mark{background-image:url("../assets/brand/symbol-white.png")}
-}
 
 .site-header .hdr-nav{display:flex;flex:1;height:100%}
 .site-header .gnb{display:flex;height:100%;margin:0 auto 0 12px;padding:0;list-style:none}

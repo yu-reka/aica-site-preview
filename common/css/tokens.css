@@ -69,10 +69,5 @@
   :root[data-menu]:not([data-subnav="off"]){--sub:48px}
 }
 
-/* 시스템 다크 모드: data-theme="light"가 없는 페이지(지금은 홈)만 따름. 카테고리 페이지 · 알아보기는 밝은 화면 고정 */
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --paper:#0E1522; --paper-2:#141E31; --ink:#E6EBF2; --graphite:#A2ADBF;
-    --line:#263249; --primary:#7C9CFF; --primary-soft:#1C2A4A; --surface:#131C2C;
-  }
-}
+/* 밝은 화면 고정(10-14): 기기 · 브라우저가 다크 모드여도 색이 바뀌지 않게(Chrome 자동 어둡게도 막음) */
+:root{color-scheme:only light}

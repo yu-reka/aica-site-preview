@@ -3,8 +3,11 @@
 const SiteLayout = ({ $, ROOT, href, current, subnavOn, sideNav, html }) => {
   const text = value => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
   const ICON = {
-    chev:'<svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>'
+    chev:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>'
   };
+  /* 모바일 메뉴에서 하위 목록을 접고 펼치는 메뉴(10-15): 네 메뉴 모두. 여기서 뺀 메뉴는 누르면 그 페이지로 바로 가는 링크가 됨 */
+  const DRAWER_ACC = ['about', 'stories', 'life', 'check'];
+  const num = i => String(i + 1).padStart(2, '0');
   /* 바깥 연결처(menu.js SITE_LINKS) 링크 속성. 주소가 아직 없으면 누를 때 안내만 */
   function ext(key){
     const l = SITE_LINKS[key];
@@ -32,7 +35,7 @@ const SiteLayout = ({ $, ROOT, href, current, subnavOn, sideNav, html }) => {
           <a class="official-link" ${ext('official')}>공식 홈페이지</a>
           <a class="btn-apply btn-ask" ${ext('kakao')}><svg class="ic-kakao" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C6.5 3 2 6.4 2 10.7c0 2.7 1.8 5.1 4.5 6.5L5.5 21l4.3-2.4c.7.1 1.5.2 2.2.2 5.5 0 10-3.4 10-7.7S17.5 3 12 3z"/></svg>문의하기</a>
           <button class="icon-btn menu-toggle" id="menuBtn" aria-label="전체 메뉴 열기" aria-expanded="false" aria-controls="drawer">
-            <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg><span class="menu-label" aria-hidden="true">메뉴</span>
           </button>
         </div>
       </div>
@@ -48,21 +51,28 @@ const SiteLayout = ({ $, ROOT, href, current, subnavOn, sideNav, html }) => {
     </nav>` : ''}
     <div class="drop-bg" id="dropBg" aria-hidden="true"></div>`;
 
+    /* 모바일 메뉴(10-15 B4 아코디언형): 오른쪽 80% 드로어 + 뒤 딤. 01~04 번호, DRAWER_ACC 메뉴는 하위를 접고 펼침(지금 메뉴는 site.js가 펼친 채로 엶) */
     if (!$('#drawer')) el.insertAdjacentHTML('afterend', `
+    <div class="drawer-dim" id="drawerDim" aria-hidden="true"></div>
     <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="전체 메뉴">
       <div class="drawer-top">
         <a class="logo" href="${text(ROOT + SITE_HOME)}">${logo()}</a>
-        <button class="icon-btn" id="drawerClose" aria-label="전체 메뉴 닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+        <button class="drawer-close" id="drawerClose" aria-label="전체 메뉴 닫기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span aria-hidden="true">닫기</span></button>
       </div>
-      <div>${SITE_MENU.map(m => `
+      <nav class="drawer-nav" aria-label="주 메뉴">${SITE_MENU.map((m, i) => DRAWER_ACC.includes(m.id) ? `
         <div class="drawer-acc">
-          <button class="acc-btn${m === current ? ' is-current' : ''}" aria-expanded="false" aria-controls="acc-${text(m.id)}" id="accb-${text(m.id)}">${text(m.label)}${ICON.chev}</button>
+          <button class="acc-btn${m === current ? ' is-current' : ''}" aria-expanded="false" aria-controls="acc-${text(m.id)}" id="accb-${text(m.id)}"><span class="acc-no">${num(i)}</span><span class="acc-tx">${text(m.label)}</span>${ICON.chev}</button>
           <div class="acc-panel" id="acc-${text(m.id)}" role="region" aria-labelledby="accb-${text(m.id)}"><div>
             ${m.children.map(c => `<a href="${text(href(m, c))}"${m === current ? ` data-sub="${text(c.id)}"` : ''}>${text(c.label)}</a>`).join('')}
           </div></div>
+        </div>` : `
+        <div class="drawer-acc">
+          <a class="acc-btn${m === current ? ' is-current' : ''}" href="${text(href(m))}"${m === current ? ' aria-current="page"' : ''}><span class="acc-no">${num(i)}</span><span class="acc-tx">${text(m.label)}</span></a>
         </div>`).join('')}
+      </nav>
+      <div class="drawer-foot">
+        <a class="drawer-cta" ${ext('kakao')}><svg class="ic-kakao" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C6.5 3 2 6.4 2 10.7c0 2.7 1.8 5.1 4.5 6.5L5.5 21l4.3-2.4c.7.1 1.5.2 2.2.2 5.5 0 10-3.4 10-7.7S17.5 3 12 3z"/></svg>문의하기</a>
       </div>
-      <a class="drawer-cta" ${ext('kakao')}><svg class="ic-kakao" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C6.5 3 2 6.4 2 10.7c0 2.7 1.8 5.1 4.5 6.5L5.5 21l4.3-2.4c.7.1 1.5.2 2.2.2 5.5 0 10-3.4 10-7.7S17.5 3 12 3z"/></svg>문의하기</a>
     </aside>`);
     if (!$('.skip-link')) document.body.insertAdjacentHTML('afterbegin', '<a class="skip-link" href="#main">본문으로 바로가기</a>');
   }

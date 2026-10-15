@@ -167,6 +167,7 @@ const Site = (() => {
   /* ---------- 동작 ---------- */
   function openDrawer(){
     $('#drawer').classList.add('is-open');
+    $('#drawerDim')?.classList.add('is-open');
     $('#menuBtn').setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
     if (html.dataset.menu) $('#accb-' + html.dataset.menu)?.setAttribute('aria-expanded', 'true');
@@ -176,6 +177,7 @@ const Site = (() => {
     const d = $('#drawer');
     if (!d || !d.classList.contains('is-open')) return;
     d.classList.remove('is-open');
+    $('#drawerDim')?.classList.remove('is-open');
     $('#menuBtn').setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
     if (refocus) $('#menuBtn').focus();
@@ -231,7 +233,8 @@ const Site = (() => {
     const header = $('#siteHeader'), fabTop = $('#fabTop');
     $('#menuBtn').addEventListener('click', openDrawer);
     $('#drawerClose').addEventListener('click', () => closeDrawer(true));
-    $$('#drawer .acc-btn').forEach(b => b.addEventListener('click', () => {
+    $('#drawerDim')?.addEventListener('click', () => closeDrawer(true));   // 딤을 눌러도 닫힘(10-15)
+    $$('#drawer button.acc-btn').forEach(b => b.addEventListener('click', () => {   // 링크로 바꾼 메뉴(a.acc-btn)는 제외
       b.setAttribute('aria-expanded', String(b.getAttribute('aria-expanded') !== 'true'));
     }));
     // 드롭다운: 마우스가 메뉴나 펼친 영역 위에 있는 동안, 키보드 초점이 메뉴 안에 있는 동안 열림(터치는 누르면 바로 이동)

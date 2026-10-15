@@ -57,6 +57,9 @@
 .icon-btn:hover{background:var(--paper-2)}
 .icon-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7}
 .site-header .menu-toggle{display:none}
+/* 10-15: ☰ 옆 "메뉴" 글자. 버튼 이름은 aria-label("전체 메뉴 열기")이라 글자는 aria-hidden */
+.site-header .hdr-util .icon-btn.menu-toggle{width:auto;height:44px;grid-auto-flow:column;align-items:center;gap:6px;padding:0 12px 0 10px;border-radius:22px;font-size:15px;font-weight:700;line-height:1}   /* 홈 860px 이하 .icon-btn 40px 규칙보다 앞서게 */
+@media (max-width:374px){.site-header .hdr-util .icon-btn.menu-toggle{gap:4px;padding:0 8px 0 6px;font-size:14px}}   /* 홈은 헤더에 문의하기도 있어 360px에서 ☰가 화면 밖으로 밀리지 않게 */
 .site-header .official-link{font-size:16px;font-weight:700;text-decoration:none;margin-right:12px} /* 다른 메뉴(gnb-link)와 같은 글씨(10-13) */
 .site-header .official-link:hover{color:var(--on-header);text-decoration:underline}
 .site-header .btn-apply{display:inline-flex;align-items:center;height:40px;padding:0 18px;border-radius:40px;font-size:15px;text-decoration:none;}
@@ -113,24 +116,40 @@
 /* =========================================================
    모바일 메뉴(1080px 이하)
    ========================================================= */
-.drawer{position:fixed;inset:0;z-index:60;background:var(--paper);color:var(--ink);padding:calc(env(safe-area-inset-top,0px) + 12px) var(--gutter) calc(env(safe-area-inset-bottom,0px) + 100px);overflow-y:auto;transform:translateX(100%);transition:transform .45s var(--ease),visibility 0s .45s;visibility:hidden}
-.drawer.is-open{transform:none;visibility:visible;transition:transform .45s var(--ease)}   /* 닫을 때도 밀려 나간 뒤 숨김 */
-.drawer .drawer-top{display:flex;justify-content:space-between;align-items:center;height:48px;margin-bottom:24px}
-.drawer .drawer-acc{border-top:1px solid var(--line)}
-.drawer .drawer-acc:last-of-type{border-bottom:1px solid var(--line)}
-.drawer .acc-btn{width:100%;display:flex;justify-content:space-between;align-items:center;background:none;border:0;padding:20px 0;font-size:21px;font-weight:700;letter-spacing:-.03em;cursor:pointer;text-align:left;color:inherit}
-.drawer .acc-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;transition:transform .3s}
+/* 10-15 B4 아코디언형: 오른쪽에서 화면 폭 80%(최대 360px)로 들어오고 뒤는 딤. 흰 면, 01~04 번호 + 이름 한 줄, 네 메뉴 모두 하위를 접고 펼침(site.js DRAWER_ACC) */
+.drawer-dim{position:fixed;inset:0;z-index:59;background:rgba(11,11,12,.45);opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility 0s .35s}   /* --ink-strong 45% */
+.drawer-dim.is-open{opacity:1;visibility:visible;transition:opacity .35s var(--ease)}
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:60;width:80%;max-width:360px;display:flex;flex-direction:column;background:var(--surface);color:var(--ink);padding:env(safe-area-inset-top,0px) 0 0;overflow-y:auto;transform:translateX(100%);transition:transform .4s var(--ease),visibility 0s .4s;visibility:hidden}
+.drawer.is-open{transform:none;visibility:visible;transition:transform .4s var(--ease)}   /* 닫을 때도 밀려 나간 뒤 숨김 */
+.drawer .drawer-top{flex:none;display:flex;justify-content:space-between;align-items:center;height:calc(var(--hdr) + 1px);margin:0 var(--gutter);border-bottom:1px solid var(--line)}   /* 10-15: 구분선을 로고 줄 바로 아래로 → 로고 · 닫기가 선과 위 끝 사이 가운데 */
+.drawer .drawer-top .drawer-close{margin-right:-12px}   /* 닫기 글자 끝을 구분선 · 목록 오른쪽 끝에 맞춤(버튼 오른쪽 안쪽 여백만큼) */
+.drawer .drawer-top .logo{gap:9px;font-size:16px}
+.drawer .drawer-top .logo-mark{width:28px;height:24px}
+.drawer .drawer-top .logo-text{font-size:16px}
+.drawer .drawer-close{display:flex;align-items:center;gap:6px;height:44px;min-width:44px;padding:0 12px 0 10px;border:0;border-radius:22px;background:none;color:var(--ink);font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.drawer .drawer-close:hover{background:var(--paper)}
+.drawer .drawer-close svg{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round}
+.drawer .drawer-nav{padding:0 var(--gutter)}
+.drawer .drawer-acc{border-bottom:1px solid var(--line)}
+.drawer .acc-btn{width:100%;display:flex;align-items:center;gap:12px;min-height:60px;padding:0;background:none;border:0;font-size:18px;font-weight:700;letter-spacing:-.03em;line-height:1.3;cursor:pointer;text-align:left;color:inherit;text-decoration:none}
+.drawer .acc-no{width:22px;flex:none;font-family:var(--ff-title);font-size:15px;font-weight:400;color:var(--muted);font-variant-numeric:tabular-nums}   /* 번호: 모든 페이지에 있는 Giants(Anton은 일부 페이지만 불러옴) */
+.drawer .acc-tx{flex:1}
+.drawer .acc-btn:hover .acc-tx{text-decoration:underline;text-underline-offset:6px}
+.drawer .acc-btn svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:2;transition:transform .3s}
 .drawer .acc-btn[aria-expanded="true"] svg{transform:rotate(180deg)}
 .drawer .acc-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s var(--ease)}
 .drawer .acc-panel>div{overflow:hidden;visibility:hidden;transition:visibility 0s .35s}   /* 접힌 목록의 링크는 Tab으로 안 잡힘 */
 .drawer .acc-btn[aria-expanded="true"] + .acc-panel{grid-template-rows:1fr}
 .drawer .acc-btn[aria-expanded="true"] + .acc-panel>div{visibility:inherit;transition:none}   /* inherit: 메뉴가 닫히면(.drawer 숨김) 펼친 목록 링크도 같이 숨음 */
-.drawer .acc-panel a{display:block;padding:9px 0;color:var(--graphite);text-decoration:none;font-size:16.5px}
-/* 지금 위치: 지금 카테고리 이름은 메인 색, 지금 세부 항목은 하위 메뉴 바처럼 잉크 · 굵게 · 밑줄(site.js가 aria-current) */
-.drawer .acc-btn.is-current{color:var(--primary)}
+.drawer .acc-panel a{display:flex;align-items:center;min-height:44px;padding:0 0 0 34px;color:var(--graphite);text-decoration:none;font-size:15.5px}   /* 34px: 번호 칸 22 + 간격 12, 이름 줄에 맞춤 */
+.drawer .acc-panel a:hover{color:var(--ink)}
+.drawer .acc-panel a:last-child{margin-bottom:12px}
+/* 지금 위치: 지금 카테고리 번호 · 이름은 메인 색, 지금 세부 항목은 하위 메뉴 바처럼 잉크 · 굵게 · 밑줄(site.js가 aria-current) */
+.drawer .acc-btn.is-current,.drawer .acc-btn.is-current .acc-no{color:var(--primary)}
 .drawer .acc-panel a[aria-current]{color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:7px}
-.drawer .acc-panel a:last-child{margin-bottom:18px}
-.drawer .drawer-cta{position:fixed;left:var(--gutter);right:var(--gutter);bottom:calc(20px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;height:54px;align-items:center;border-radius:54px;background:var(--cta);color:var(--on-cta);font-weight:700;text-decoration:none;border:2px solid var(--ink-strong);box-shadow:3px 3px 0 var(--ink-strong)}   /* 10-14: 노랑 → 헤더와 같은 흰 알약 */
+.drawer .drawer-foot{margin-top:auto;display:flex;justify-content:flex-end;padding:20px var(--gutter) calc(20px + env(safe-area-inset-bottom,0px))}   /* 10-15: 문의하기만 오른쪽 정렬(오시는 길 링크는 라이프 하위 메뉴에 있어 뺌) */
+.drawer .drawer-cta{display:inline-flex;align-items:center;gap:7px;height:44px;padding:0 18px;border-radius:44px;background:var(--cta);color:var(--ink-strong);font-size:15px;font-weight:700;text-decoration:none;border:2px solid var(--ink-strong);box-shadow:3px 3px 0 var(--ink-strong)}   /* 10-14 흰 알약. 10-15: 드로어 맨 아래 오른쪽, 글자 폭에 맞춘 칩(높이 44 · 좌우 18), 글자 검정 */
+.drawer .drawer-cta:focus-visible{border-radius:44px}
 
 /* =========================================================
    반응형

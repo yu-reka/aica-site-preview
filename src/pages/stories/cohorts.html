@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko" data-menu="stories" data-sub="cohorts" data-nav="side" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="only light">
+  <title>기수별 이모저모 — 선배들의 이야기 — 인공지능사관학교</title>
+  <meta name="description" content="입교식부터 수료식까지, 기수마다 있었던 일을 모아 봅니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="기수별 이모저모 — 선배들의 이야기 — 인공지능사관학교">
+  <meta property="og:description" content="입교식부터 수료식까지, 기수마다 있었던 일을 모아 봅니다.">
+  <link rel="icon" type="image/png" href="../common/assets/brand/symbol-blue.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&display=swap">
+  <link rel="stylesheet" href="../common/css/tokens.css?v=1014L">
+  <link rel="stylesheet" href="../common/css/base.css">
+  <link rel="stylesheet" href="../common/css/site.css?v=1014L">
+  <link rel="stylesheet" href="css/stories.css">
+  <link rel="stylesheet" href="css/stories-sections.css">
+  <link rel="stylesheet" href="../common/css/unify.css?v=1014L">
+  <link rel="stylesheet" href="../common/css/lnb.css">
+  <link rel="stylesheet" href="css/mast.css">
+  <link rel="stylesheet" href="css/cohort-v3.css">
+  <script src="js/cohort-v3.js" defer></script>
+  <script src="js/mast-fix.js" defer></script>
+  <script src="../common/js/menu.js" defer></script>
+  <script src="../common/js/site-layout.js" defer></script>
+<script src="../common/js/site.js" defer></script>
+  <script src="js/stories.js" defer></script>
+</head>
+<body>
+<header class="site-header" id="siteHeader"></header>
+<!-- 본문: 디자이너 시안 '선배들의이야기_최신'(2026-10-08) → 2026-10-13 한 페이지 탭을 2뎁스별 페이지로 나눔(사용자 요청: 한눈에 보기 + 하위 메뉴마다 페이지).
+     stories/index.html = 한눈에 보기(각 2뎁스 요약 + 전체 보기) · reviews.html = 후기 · interviews.html = 인터뷰 · projects.html = 프로젝트 · cohorts.html = 기수별 이모저모
+     각 페이지는 옛 탭 라디오(t1~t4) 중 자기 것만 checked — CSS(stories.css .pane)와 js/stories.js가 그대로 동작. 다른 페이지 글 주소는 그 페이지.html#글id로 고쳐 둠
+     반복 단위(첫 항목에만 data-field 표시, 나머지는 같은 구조): 후기 카드 .idc · 후기 리스트 행 .rvr · 글 창 .ov · 인터뷰 카드 .iv · 인터뷰 상세 .ivd · 프로젝트 .pp · 기수 카드 a.st
+     칸 이름: title · summary · body · category · cohort · tag · thumbnail · author · date(common 게시판과 같음) + track · duration · question · answer · team · type -->
+<main id="main" class="stories-page" tabindex="-1">
+<h1 class="sr">기수별 이모저모 — 선배들의 이야기</h1>   <!-- 10-13 사본: 나눈 페이지 제목(화면엔 안 보임, 원본 h1.sr과 같은 방식) -->
+{{> stories/masthead-2}}
+<input class="tr tb" autocomplete="off" type="radio" name="tab" id="t1" tabindex="-1" aria-hidden="true">
+<input class="tr tb" autocomplete="off" type="radio" name="tab" id="t2" tabindex="-1" aria-hidden="true">
+<input class="tr tb" autocomplete="off" type="radio" name="tab" id="t3" tabindex="-1" aria-hidden="true">
+<input class="tr tb" autocomplete="off" type="radio" name="tab" id="t4" checked tabindex="-1" aria-hidden="true">
+<span class="tgt2" id="go-iv"></span>
+<span class="tgt2" id="go-pr"></span>
+<span class="tgt2" id="go-coh"></span>
+<div class="st-main">
+  <section class="wrap pane" id="p-coh">
+    <div class="sh sh-row">
+      <div><p class="sh-k">기수별 이모저모</p><h2>입교식부터 수료식까지, 기수마다 이런 일이 있었어요</h2></div>
+    </div>
+    <div class="cv3" id="cv3">
+      <div class="cv3-chips" role="tablist" aria-label="기수 고르기"></div>
+      <div class="cv3-ig">
+        <div class="cv3-prof"></div>
+        <div class="cv3-diff" hidden><div class="cv3-dt"></div></div>
+        <div class="cv3-hl" role="group" aria-label="달별로 보기"></div>
+        <p class="cv3-gt"></p>
+        <div class="cv3-grid"></div>
+      </div>
+      <nav class="cv3-pg" aria-label="기수 기록 페이지"></nav>
+      <template id="cv3-diff7"><table>
+              <tr><th scope="row">수업 방식</th><td class="old">준비·성장 일부 온라인 병행</td><td class="new">AI 준비과정(VOD) 외 전 과정 오프라인</td></tr>
+              <tr><th scope="row">프로젝트</th><td class="old">520시간</td><td class="new">720시간 — 기업연계·실증·창업 중 택 1</td></tr>
+              <tr><th scope="row">해커톤</th><td class="old">전 직군 통합 2박 3일</td><td class="new">폐지</td></tr>
+              <tr><th scope="row">트랙 구성</th><td class="old">7개 트랙</td><td class="new">직군별 심화 + 산업 도메인 2층 구조</td></tr>
+              <tr><th scope="row">전형</th><td class="old">서류 → 인터뷰 → Pre-Training → 퀴즈</td><td class="new">서류 → 코딩테스트 → 면접·인적성</td></tr>
+              <tr><th scope="row">지원금</th><td class="old">생활지원금</td><td class="new">생활지원금 + 프로젝트 지원금 200만원 신설</td></tr>
+              <tr><th scope="row">지원 대상</th><td class="old">4학년·졸업예정·졸업유예자 중심</td><td class="new">졸업생·스타트업 재직자까지 확대</td></tr>
+            </table></template>
+      <template id="cv3-data">
+{{#each stories.cohorts}}{{> @view.card.template}}
+{{/each}}
+      </template>
+    </div>
+  </section>
+</div>
+<div class="cv3-m" role="dialog" aria-modal="true" aria-labelledby="cv3m-t" hidden>
+  <div class="cv3-m-bg"></div>
+  <div class="cv3-m-box">
+    <div class="cv3-m-media"></div>
+    <div class="cv3-m-side">
+      <div class="cv3-m-hd"><span class="cv3-av"></span><b class="cv3-m-acc"></b><button class="cv3-m-x" type="button" aria-label="닫기">&times;</button></div>
+      <div class="cv3-m-body"><h3 id="cv3m-t"></h3><p></p></div>
+      <div class="cv3-m-ft"><div class="cv3-m-act"><button type="button" class="cv3-like" aria-pressed="false" aria-label="좋아요"><svg viewBox="0 0 24 24"><path d="M12 20.3s-8-4.9-9.4-10C1.6 6.6 4 3.7 7.2 3.7c2.2 0 3.7 1.2 4.8 3 1.1-1.8 2.6-3 4.8-3 3.2 0 5.6 2.9 4.6 6.6C20 15.4 12 20.3 12 20.3z"/></svg></button><button type="button" class="cv3-save" aria-pressed="false" aria-label="저장"><svg viewBox="0 0 24 24"><polygon points="20 21 12 13.44 4 21 4 3 20 3 20 21"/></svg></button></div><time></time></div>
+    </div>
+  </div>
+  <div class="cv3-m-nav"><button type="button" class="pv">← 이전</button><b class="no"></b><button type="button" class="nx">다음 →</button></div>
+</div>
+</div>
+</main>
+<footer class="site-footer" id="siteFooter" data-note="본 사이트는 카테고리·콘텐츠 구성안을 확인하기 위한 시안이며, 표시된 수치·일정·혜택은 모두 더미 데이터입니다."></footer>
+</body>
+</html>

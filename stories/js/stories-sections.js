@@ -19,7 +19,8 @@
   function chips(){
     var cb=sec.querySelector('[data-f=coh]');cb.innerHTML='';
     chip(cb,'all','전체 기수',coh);
-    [['7','7기'],['6','6기'],['3-5','3–5기']].forEach(function(g){chip(cb,g[0],g[1],coh)});
+    var groups=[]; D.forEach(function(d){var c=d.c>=3&&d.c<=5?'3-5':String(d.c);if(d.c&&groups.indexOf(c)<0)groups.push(c)});
+    groups.sort(function(a,b){return parseInt(b,10)-parseInt(a,10)}).forEach(function(c){chip(cb,c,c==='3-5'?'3–5기':c+'기',coh)});
   }
   function card(d){
     var a=document.createElement('a');a.className='iva-c';a.href=d.a.getAttribute('href');
@@ -59,13 +60,15 @@
 })();
 
 (function(){
-  var box=document.querySelector('#iv-7 .ivvid');if(!box)return;var orig=box.innerHTML;
-  function bind(){var b=box.querySelector('.ivplay');if(b)b.onclick=function(){
-    var f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+box.dataset.yt+'?autoplay=1&rel=0&playsinline=1';
-    f.title='6기 수료생 인터뷰 — 인프라 직군';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;
-    var tag=box.querySelector('.ivtag');box.innerHTML='';if(tag)box.appendChild(tag);box.appendChild(f);f.focus();
-  }}
-  bind();
-  // 다른 곳으로 가면 재생을 멈추고 처음 그림으로 되돌림
-  addEventListener('hashchange',function(){if(location.hash!=='#iv-7'&&box.querySelector('iframe')){box.innerHTML=orig;bind()}});
+  document.querySelectorAll('.ivvid[data-yt]').forEach(function(box){
+    var id=box.dataset.yt;if(!/^[A-Za-z0-9_-]{11}$/.test(id))return;
+    var orig=box.innerHTML,detail=box.closest('.ivd');
+    function bind(){var b=box.querySelector('.ivplay');if(b)b.onclick=function(){
+      var f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1';
+      f.title=(detail.querySelector('h2')||{}).textContent||'인터뷰 영상';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;
+      var tag=box.querySelector('.ivtag');box.replaceChildren();if(tag)box.appendChild(tag);box.appendChild(f);f.focus();
+    }}
+    bind();
+    addEventListener('hashchange',function(){if(location.hash!=='#'+detail.id&&box.querySelector('iframe')){box.innerHTML=orig;bind()}});
+  });
 })();

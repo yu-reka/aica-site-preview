@@ -1,0 +1,189 @@
+[
+  {
+    "id": "bx9s-1-0",
+    "caption": "교육장 건물 외관",
+    "name": "정문(입구)",
+    "galleryLabel": "정문(입구) 사진 3장",
+    "floorKey": "1",
+    "spaceKey": "0",
+    "photos": [
+      {
+        "alt": "교육장 건물 외관",
+        "thumbnailLabel": "교육장 건물 외관 보기"
+      },
+      {
+        "alt": "입구 안쪽 사인",
+        "thumbnailLabel": "입구 안쪽 사인 보기"
+      },
+      {
+        "alt": "건물 정문 쪽",
+        "thumbnailLabel": "건물 정문 쪽 보기"
+      }
+    ],
+    "notes": [
+      "출입 방법 ○○",
+      "2 · 3층 교육장은 엘리베이터로"
+    ]
+  },
+  {
+    "id": "bx9s-1-1",
+    "caption": "1층 AI 카페",
+    "name": "AI 카페",
+    "galleryLabel": "AI 카페 사진 3장",
+    "floorKey": "1",
+    "spaceKey": "1",
+    "photos": [
+      {
+        "alt": "1층 AI 카페",
+        "thumbnailLabel": "1층 AI 카페 보기"
+      },
+      {
+        "alt": "테이블 좌석",
+        "thumbnailLabel": "테이블 좌석 보기"
+      },
+      {
+        "alt": "스크린 · 회의 테이블",
+        "thumbnailLabel": "스크린 · 회의 테이블 보기"
+      }
+    ],
+    "notes": [
+      "이용 시간 ○○",
+      "전자레인지 · 냉장고 · 도시락 가능"
+    ]
+  },
+  {
+    "id": "bx9s-1-2",
+    "caption": "회의실 전경",
+    "name": "회의실",
+    "galleryLabel": "회의실 사진 3장",
+    "floorKey": "1",
+    "spaceKey": "2",
+    "photos": [
+      {
+        "alt": "회의실 전경",
+        "thumbnailLabel": "회의실 전경 보기"
+      },
+      {
+        "alt": "회의 테이블",
+        "thumbnailLabel": "회의 테이블 보기"
+      },
+      {
+        "alt": "발표 스크린",
+        "thumbnailLabel": "발표 스크린 보기"
+      }
+    ],
+    "notes": [
+      "예약 방법 · 이용 시간 ○○",
+      "수용 인원 ○○명"
+    ]
+  },
+  {
+    "id": "bx9s-23-0",
+    "caption": "강의실 전경",
+    "name": "강의실",
+    "galleryLabel": "강의실 사진 3장",
+    "floorKey": "23",
+    "spaceKey": "0",
+    "photos": [
+      {
+        "alt": "강의실 전경",
+        "thumbnailLabel": "강의실 전경 보기"
+      },
+      {
+        "alt": "개인 모니터 · 노트북 자리",
+        "thumbnailLabel": "개인 모니터 · 노트북 자리 보기"
+      },
+      {
+        "alt": "앞쪽 화이트보드 · 창가",
+        "thumbnailLabel": "앞쪽 화이트보드 · 창가 보기"
+      }
+    ],
+    "notes": [
+      "평일 9시 ~ 18시 오프라인 수업",
+      "교육 기간 동안 개인 노트북 · 모니터 대여"
+    ]
+  },
+  {
+    "id": "bx9s-23-1",
+    "caption": "휴게 공간 전경",
+    "name": "휴게 공간",
+    "galleryLabel": "휴게 공간 사진 3장",
+    "floorKey": "23",
+    "spaceKey": "1",
+    "photos": [
+      {
+        "alt": "휴게 공간 전경",
+        "thumbnailLabel": "휴게 공간 전경 보기"
+      },
+      {
+        "alt": "창가 바 좌석",
+        "thumbnailLabel": "창가 바 좌석 보기"
+      },
+      {
+        "alt": "소파 · 테이블 좌석",
+        "thumbnailLabel": "소파 · 테이블 좌석 보기"
+      }
+    ],
+    "notes": [
+      "2 · 3층 모두 있음"
+    ]
+  },
+  {
+    "id": "bx9s-23-2",
+    "caption": "팀 프로젝트 모습",
+    "name": "프로젝트 공간",
+    "galleryLabel": "프로젝트 공간 사진 3장",
+    "floorKey": "23",
+    "spaceKey": "2",
+    "photos": [
+      {
+        "alt": "팀 프로젝트 모습",
+        "thumbnailLabel": "팀 프로젝트 모습 보기"
+      },
+      {
+        "alt": "회의 테이블 · 스크린",
+        "thumbnailLabel": "회의 테이블 · 스크린 보기"
+      },
+      {
+        "alt": "노트북 협업",
+        "thumbnailLabel": "노트북 협업 보기"
+      }
+    ],
+    "notes": [
+      "도약과정 팀 프로젝트용",
+      "이용 시간 · 예약 방법 ○○"
+    ]
+  },
+  {
+    "id": "bx9s-8-0",
+    "caption": "구내식당 전경",
+    "name": "구내식당",
+    "note2RichText": [
+      {
+        "tag": "a",
+        "attrs": {
+          "href": "../check/index.html#benefits"
+        },
+        "children": [
+          "식비 지원은 지원 혜택에서 →"
+        ]
+      }
+    ],
+    "galleryLabel": "구내식당 사진 2장",
+    "floorKey": "8",
+    "spaceKey": "0",
+    "photos": [
+      {
+        "alt": "구내식당 전경",
+        "thumbnailLabel": "구내식당 전경 보기"
+      },
+      {
+        "alt": "배식대",
+        "thumbnailLabel": "배식대 보기"
+      }
+    ],
+    "notes": [
+      "이용 방법 · 가격 ○○"
+    ]
+  }
+]

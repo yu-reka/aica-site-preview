@@ -1,0 +1,570 @@
+[
+  {
+    "id": "area-1",
+    "panelId": "hzp-0",
+    "index": 0,
+    "name": "서남동",
+    "summary": "교육장이 있는 동 · 교육장 둘레 주택가에 다가구 원룸",
+    "densityRichText": [
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzm lv1",
+          "aria-hidden": "true"
+        },
+        "children": [
+          {
+            "tag": "i",
+            "attrs": {},
+            "children": []
+          },
+          {
+            "tag": "i",
+            "attrs": {
+              "class": "off"
+            },
+            "children": []
+          },
+          {
+            "tag": "i",
+            "attrs": {
+              "class": "off"
+            },
+            "children": []
+          }
+        ]
+      },
+      "적은 편 · 48곳",
+      {
+        "tag": "small",
+        "attrs": {},
+        "children": [
+          "다가구 45 · 오피스텔 3 · 2015년 이후 8곳"
+        ]
+      }
+    ],
+    "typeRichText": [
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzt"
+        },
+        "children": [
+          "원룸(다세대)"
+        ]
+      },
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzt"
+        },
+        "children": [
+          "다가구"
+        ]
+      }
+    ],
+    "gosiwonRichText": [
+      "확인된 곳 없음"
+    ],
+    "rentRichText": [
+      {
+        "tag": "b",
+        "attrs": {},
+        "children": [
+          "월 약 36만 원"
+        ]
+      },
+      {
+        "tag": "small",
+        "attrs": {},
+        "children": [
+          "보증금 300만 원 안팎 · 30건"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "area-2",
+    "panelId": "hzp-1",
+    "index": 1,
+    "name": "동명동",
+    "summary": "카페거리 뒤 주택가 원룸 · 고시원 3곳",
+    "densityRichText": [
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzm lv2",
+          "aria-hidden": "true"
+        },
+        "children": [
+          {
+            "tag": "i",
+            "attrs": {},
+            "children": []
+          },
+          {
+            "tag": "i",
+            "attrs": {},
+            "children": []
+          },
+          {
+            "tag": "i",
+            "attrs": {
+              "class": "off"
+            },
+            "children": []
+          }
+        ]
+      },
+      "보통 · 70곳",
+      {
+        "tag": "small",
+        "attrs": {},
+        "children": [
+          "다가구 67 · 오피스텔 3 · 2015년 이후 12곳"
+        ]
+      }
+    ],
+    "typeRichText": [
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzt"
+        },
+        "children": [
+          "원룸(다세대·다가구)"
+        ]
+      },
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzt"
+        },
+        "children": [
+          "고시원"
+        ]
+      }
+    ],
+    "gosiwonRichText": [
+      "월 25~33만 원 · 3곳"
+    ],
+    "rentRichText": [
+      {
+        "tag": "b",
+        "attrs": {},
+        "children": [
+          "월 30만 원 안팎"
+        ]
+      },
+      {
+        "tag": "small",
+        "attrs": {},
+        "children": [
+          "보증금 200~300만 원 · 10건"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "area-3",
+    "panelId": "hzp-2",
+    "index": 2,
+    "name": "지산1동",
+    "summary": "조선대 후문 바깥쪽 주택가 · 다가구 원룸 위주",
+    "densityRichText": [
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzm lv2",
+          "aria-hidden": "true"
+        },
+        "children": [
+          {
+            "tag": "i",
+            "attrs": {},
+            "children": []
+          },
+          {
+            "tag": "i",
+            "attrs": {},
+            "children": []
+          },
+          {
+            "tag": "i",
+            "attrs": {
+              "class": "off"
+            },
+            "children": []
+          }
+        ]
+      },
+      "보통 · 84곳",
+      {
+        "tag": "small",
+        "attrs": {},
+        "children": [
+          "다가구 80 · 오피스텔 4 · 2015년 이후 10곳"
+        ]
+      }
+    ],
+    "typeRichText": [
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzt"
+        },
+        "children": [
+          "원룸(다세대)"
+        ]
+      },
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzt"
+        },
+        "children": [
+          "고시원"
+        ]
+      }
+    ],
+    "gosiwonRichText": [
+      "확인된 곳 없음"
+    ],
+    "rentRichText": [
+      {
+        "tag": "b",
+        "attrs": {},
+        "children": [
+          "월 약 31만 원"
+        ]
+      },
+      {
+        "tag": "small",
+        "attrs": {},
+        "children": [
+          "보증금 100~200만 원 · 28건"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "area-4",
+    "panelId": "hzp-3",
+    "index": 3,
+    "name": "충장동",
+    "summary": "번화가 · 원룸 거래는 드물고 오피스텔 · 고시원 위주",
+    "densityRichText": [
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzm lv1",
+          "aria-hidden": "true"
+        },
+        "children": [
+          {
+            "tag": "i",
+            "attrs": {},
+            "children": []
+          },
+          {
+            "tag": "i",
+            "attrs": {
+              "class": "off"
+            },
+            "children": []
+          },
+          {
+            "tag": "i",
+            "attrs": {
+              "class": "off"
+            },
+            "children": []
+          }
+        ]
+      },
+      "적은 편 · 36곳",
+      {
+        "tag": "small",
+        "attrs": {},
+        "children": [
+          "오피스텔 18 · 다가구 18 · 2015년 이후 18곳"
+        ]
+      }
+    ],
+    "typeRichText": [
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzt"
+        },
+        "children": [
+          "오피스텔"
+        ]
+      },
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzt"
+        },
+        "children": [
+          "다가구"
+        ]
+      },
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzt"
+        },
+        "children": [
+          "고시원"
+        ]
+      }
+    ],
+    "gosiwonRichText": [
+      "월 10~15만 원 · 1곳(공용 욕실)"
+    ],
+    "rentRichText": [
+      {
+        "tag": "b",
+        "attrs": {},
+        "children": [
+          "월 약 55만 원"
+        ]
+      },
+      {
+        "tag": "small",
+        "attrs": {},
+        "children": [
+          "오피스텔 · 보증금 500만 원 · 3건"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "area-5",
+    "panelId": "hzp-4",
+    "index": 4,
+    "name": "조선대 주변",
+    "area": "서석동 · 지산동 일대",
+    "summary": "조선대 정문 · 후문 앞 원룸촌 · 원룸 건물이 가장 많고 2015년 이후 지은 곳도 31곳",
+    "densityRichText": [
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzm lv3",
+          "aria-hidden": "true"
+        },
+        "children": [
+          {
+            "tag": "i",
+            "attrs": {},
+            "children": []
+          },
+          {
+            "tag": "i",
+            "attrs": {},
+            "children": []
+          },
+          {
+            "tag": "i",
+            "attrs": {},
+            "children": []
+          }
+        ]
+      },
+      "많은 편 · 102곳",
+      {
+        "tag": "small",
+        "attrs": {},
+        "children": [
+          "다가구 100 · 오피스텔 2 · 2015년 이후 31곳"
+        ]
+      }
+    ],
+    "typeRichText": [
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzt"
+        },
+        "children": [
+          "원룸"
+        ]
+      },
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzt"
+        },
+        "children": [
+          "고시원(원룸형)"
+        ]
+      }
+    ],
+    "gosiwonRichText": [
+      "월 18~38만 원 · 8곳(대부분 개인 욕실 · 보증금 없음~50만 원)"
+    ],
+    "rentRichText": [
+      {
+        "tag": "b",
+        "attrs": {},
+        "children": [
+          "월 약 23~37만 원"
+        ]
+      },
+      {
+        "tag": "small",
+        "attrs": {},
+        "children": [
+          "보증금 20~300만 원 · 학교 게시판 · 중고거래 매물 4건(2025~2026)"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "area-6",
+    "panelId": "hzp-5",
+    "index": 5,
+    "name": "산수동",
+    "area": "동명동 북동쪽",
+    "summary": "산수시장 둘레 주택가 · 다가구 원룸 위주",
+    "densityRichText": [
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzm lv2",
+          "aria-hidden": "true"
+        },
+        "children": [
+          {
+            "tag": "i",
+            "attrs": {},
+            "children": []
+          },
+          {
+            "tag": "i",
+            "attrs": {},
+            "children": []
+          },
+          {
+            "tag": "i",
+            "attrs": {
+              "class": "off"
+            },
+            "children": []
+          }
+        ]
+      },
+      "보통 · 95곳",
+      {
+        "tag": "small",
+        "attrs": {},
+        "children": [
+          "다가구 94 · 오피스텔 1 · 2015년 이후 8곳"
+        ]
+      }
+    ],
+    "typeRichText": [
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzt"
+        },
+        "children": [
+          "다가구"
+        ]
+      }
+    ],
+    "gosiwonRichText": [
+      "확인된 곳 없음"
+    ],
+    "rentRichText": [
+      {
+        "tag": "b",
+        "attrs": {},
+        "children": [
+          "월 약 40만 원"
+        ]
+      },
+      {
+        "tag": "small",
+        "attrs": {},
+        "children": [
+          "다가구 41㎡ · 보증금 200만 원 · 1건(2026년 8월) · 표본 1건"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "area-7",
+    "panelId": "hzp-6",
+    "index": 6,
+    "name": "계림동",
+    "area": "동명동 북쪽",
+    "summary": "광주고 · 호남시장 둘레 주택가 · 동구에서 원룸 건물이 가장 많아요",
+    "densityRichText": [
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzm lv3",
+          "aria-hidden": "true"
+        },
+        "children": [
+          {
+            "tag": "i",
+            "attrs": {},
+            "children": []
+          },
+          {
+            "tag": "i",
+            "attrs": {},
+            "children": []
+          },
+          {
+            "tag": "i",
+            "attrs": {},
+            "children": []
+          }
+        ]
+      },
+      "많은 편 · 143곳",
+      {
+        "tag": "small",
+        "attrs": {},
+        "children": [
+          "다가구 142 · 오피스텔 1 · 2015년 이후 12곳"
+        ]
+      }
+    ],
+    "typeRichText": [
+      {
+        "tag": "span",
+        "attrs": {
+          "class": "hzt"
+        },
+        "children": [
+          "다가구"
+        ]
+      }
+    ],
+    "gosiwonRichText": [
+      "확인된 곳 없음"
+    ],
+    "rentRichText": [
+      {
+        "tag": "b",
+        "attrs": {},
+        "children": [
+          "월 약 27~35만 원"
+        ]
+      },
+      {
+        "tag": "small",
+        "attrs": {},
+        "children": [
+          "다가구 20~24㎡ · 보증금 200만 원 · 3건(2026년 9월)"
+        ]
+      }
+    ]
+  }
+]

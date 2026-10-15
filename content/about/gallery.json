@@ -1,0 +1,122 @@
+[
+  {
+    "id": "gallery-1",
+    "title": "오리엔테이션 · 팀 활동",
+    "category": "orientation",
+    "description": "팀원들과 의견을 나누며 함께 배울 준비를 해요.",
+    "image": "assets/activities/orientation-hall-6th.webp",
+    "alt": "인공지능사관학교 오리엔테이션 행사장에서 함께 활동하는 교육생들"
+  },
+  {
+    "id": "gallery-2",
+    "title": "7기 입교식 · 단체사진",
+    "category": "orientation",
+    "description": "새로 만난 동료들과 교육의 시작을 기념해요.",
+    "image": "assets/activities/orientation-group-photo.webp",
+    "alt": "인공지능사관학교 7기 입교식 및 오리엔테이션 단체 기념사진"
+  },
+  {
+    "id": "gallery-3",
+    "title": "오리엔테이션 · 소통 시간",
+    "category": "orientation",
+    "description": "동료들과 인사를 나누고 학교생활 이야기를 함께 나눠요.",
+    "image": "assets/activities/orientation-conversation.webp",
+    "alt": "오리엔테이션에서 테이블에 둘러앉아 대화를 나누는 교육생들"
+  },
+  {
+    "id": "gallery-4",
+    "title": "네이버클라우드 AI 특강",
+    "category": "lecture",
+    "description": "디지털 전환을 넘어 AI 시대로, 현직자의 이야기를 들어요.",
+    "image": "assets/activities/guest-lecture-naver-retouched.webp",
+    "alt": "네이버클라우드 AI 특강에서 강연하는 강사와 교육생들"
+  },
+  {
+    "id": "gallery-5",
+    "title": "AIPLUS 생성형 AI 특강",
+    "category": "lecture",
+    "description": "생성형 AI를 어떻게 바라보고 활용할지 함께 생각해 봐요.",
+    "image": "assets/activities/lecture-aiplus-retouched.webp",
+    "alt": "AIPLUS 행사에서 생성형 AI에 대해 강연하는 강사와 교육생들"
+  },
+  {
+    "id": "gallery-6",
+    "title": "AI 서비스 실무 특강",
+    "category": "lecture",
+    "description": "현직자의 시연을 보며, AI 기술을 서비스에 적용하는 방법을 살펴봐요.",
+    "image": "assets/activities/lecture-practice-demo.webp",
+    "alt": "AI 서비스 시연을 진행하는 강사와 강연을 듣는 참가자들"
+  },
+  {
+    "id": "gallery-7",
+    "title": "네이버 기업탐방 · 현장 이야기",
+    "category": "field",
+    "description": "기업을 직접 찾아가 현장에서 일하는 사람들의 이야기를 들어요.",
+    "image": "assets/activities/visit-naver-room-retouched.webp",
+    "alt": "네이버 기업탐방에서 실무자의 설명을 듣는 교육생들"
+  },
+  {
+    "id": "gallery-8",
+    "title": "AICON 행사",
+    "category": "field",
+    "description": "AI 행사에 참여해 새로운 기술과 다양한 현장 이야기를 접해요.",
+    "image": "assets/activities/field-aicon-retouched.webp",
+    "alt": "AICON 행사장 무대와 강연을 듣는 참석자들"
+  },
+  {
+    "id": "gallery-9",
+    "title": "AI 프론티어 챌린지 해커톤",
+    "category": "field",
+    "description": "함께 기획하고 개발하며, 팀의 아이디어를 프로젝트로 완성해요.",
+    "image": "assets/activities/hackathon-scene-retouched.webp",
+    "alt": "인공지능사관학교 6기 AI 프론티어 챌린지 해커톤에서 프로젝트를 만드는 팀들"
+  },
+  {
+    "id": "gallery-10",
+    "title": "기업 담당자와의 채용 상담",
+    "category": "jobfair",
+    "description": "관심 있는 직무를 이야기하고, 기업이 찾는 역량을 알아봐요.",
+    "image": "assets/activities/jobfair-consultation-demo.webp",
+    "alt": "취업박람회 상담 테이블에서 채용 담당자와 대화하는 참가자들"
+  },
+  {
+    "id": "gallery-11",
+    "title": "프로젝트와 포트폴리오 상담",
+    "category": "jobfair",
+    "description": "직접 만든 프로젝트를 소개하고, 다음 준비에 도움이 될 피드백을 받아요.",
+    "image": "assets/activities/jobfair-portfolio-demo.webp",
+    "alt": "노트북으로 프로젝트 포트폴리오를 검토하는 채용 담당자와 참가자들"
+  },
+  {
+    "id": "gallery-12",
+    "title": "다음 도전을 위한 기업과의 만남",
+    "category": "jobfair",
+    "description": "여러 기업을 만나 보며, 나에게 맞는 기회를 찾아봐요.",
+    "image": "assets/activities/jobfair-meeting-demo.webp",
+    "alt": "여러 상담 테이블에서 기업 관계자와 만나는 취업박람회 참가자들"
+  },
+  {
+    "id": "gallery-13",
+    "title": "수료식 · 함께 남긴 기념사진",
+    "category": "graduation",
+    "description": "함께 배우고 만든 시간을 돌아보며, 다음 도전을 응원해요.",
+    "image": "assets/activities/graduation-group-photo.webp",
+    "alt": "인공지능사관학교 성과발표회 및 수료식 무대에서 함께 촬영한 단체 기념사진"
+  },
+  {
+    "id": "gallery-14",
+    "title": "수료증을 받는 순간",
+    "category": "graduation",
+    "description": "그동안 쌓은 경험을 돌아보고, 새로운 출발을 함께 축하해요.",
+    "image": "assets/activities/graduation-certificate-demo.webp",
+    "alt": "수료식 무대에서 수료증을 전달받는 교육생"
+  },
+  {
+    "id": "gallery-15",
+    "title": "팀 프로젝트 성과 발표",
+    "category": "graduation",
+    "description": "팀이 만든 결과를 소개하고, 서로의 배움을 나눠요.",
+    "image": "assets/activities/graduation-showcase-demo.webp",
+    "alt": "수료 행사 무대에서 팀 프로젝트 결과를 발표하는 참가자들"
+  }
+]

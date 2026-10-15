@@ -1,0 +1,178 @@
+[
+  {
+    "id": "cohort-story-1",
+    "href": "#",
+    "title": "AI카페에서 시작된 팀",
+    "summary": "도시락 데우다 만난 사람들과 그대로 한 팀이 됐습니다. 프로젝트룸 예약 전쟁의 서막.",
+    "cohort": "7기",
+    "date": "2026. 08. 20",
+    "thumbnail": "assets/lobby-laptops-sm.jpg",
+    "thumbnailAlt": "로비 테이블에서 노트북을 펴고 함께 작업하는 교육생들"
+  },
+  {
+    "id": "cohort-story-2",
+    "href": "#",
+    "title": "도메인 선택의 날",
+    "summary": "헬스케어부터 기획까지 여섯 갈래. 반쯤은 흥미로, 반쯤은 취업 시장을 보고 골랐습니다.",
+    "cohort": "7기",
+    "date": "2026. 07. 11"
+  },
+  {
+    "id": "cohort-story-3",
+    "href": "#",
+    "youtubeUrl": "https://www.youtube.com/watch?v=asfChHljIC0",
+    "title": "AI카페·프로젝트룸 둘러보기",
+    "summary": "수업 말고 나머지 시간을 보내는 공간들을 한 바퀴 돌았습니다.",
+    "cohort": "7기",
+    "date": "2026. 06. 10",
+    "duration": "5:40",
+    "thumbnail": "assets/monitor-briefing.jpg",
+    "thumbnailAlt": ""
+  },
+  {
+    "id": "cohort-story-4",
+    "href": "#",
+    "title": "전면 오프라인으로 바뀐 첫 학기",
+    "summary": "준비과정만 VOD로 남고 나머지가 전부 강의장으로 들어왔습니다. 출석과 팀 작업의 리듬이 어떻게 달라졌는지.",
+    "cohort": "7기",
+    "date": "2026. 06. 02",
+    "thumbnail": "assets/classroom-laptops-sm.jpg",
+    "thumbnailAlt": "강의실에서 노트북으로 실습하는 교육생들"
+  },
+  {
+    "id": "cohort-story-5",
+    "href": "#",
+    "youtubeUrl": "https://www.youtube.com/watch?v=47e6pa3Z-Mg",
+    "title": "7기 입교식 하이라이트",
+    "summary": "테이프를 끊고 여덟 달이 시작된 날을 3분으로 담았습니다.",
+    "cohort": "7기",
+    "date": "2026. 05. 29",
+    "duration": "3:12",
+    "thumbnail": "assets/event-hall.jpg",
+    "thumbnailAlt": ""
+  },
+  {
+    "id": "cohort-story-6",
+    "href": "#",
+    "title": "AI커리어 빌드업 & 동문 네트워크",
+    "summary": "김대중컨벤션센터에서 선배 기수들과 처음 마주 앉은 날.",
+    "cohort": "6기",
+    "date": "2025. 11. 26",
+    "thumbnail": "assets/table-team-sm.jpg",
+    "thumbnailAlt": "책상에 둘러앉아 이야기를 나누는 교육생들"
+  },
+  {
+    "id": "cohort-story-7",
+    "href": "#",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Ye5XEwUNUxk",
+    "title": "도약과정 중간발표회 현장",
+    "summary": "절반쯤 온 팀들이 무엇을 보여줬는지 기록했습니다.",
+    "cohort": "6기",
+    "date": "2025. 10. 22",
+    "duration": "4:47",
+    "thumbnail": "assets/presentation-books.jpg",
+    "thumbnailAlt": ""
+  },
+  {
+    "id": "cohort-story-8",
+    "href": "#",
+    "title": "마지막 해커톤, 소노벨 변산 2박 3일",
+    "summary": "전 직군이 한자리에 모인 마지막 기수. 밤새 만들고 아침에 발표했습니다.",
+    "cohort": "6기",
+    "date": "2025. 10. 18",
+    "thumbnail": "assets/team-pointing.jpg",
+    "thumbnailAlt": "화면을 가리키며 함께 문제를 푸는 팀"
+  },
+  {
+    "id": "cohort-story-9",
+    "href": "#",
+    "youtubeUrl": "https://www.youtube.com/watch?v=o8zNKqk8riA",
+    "title": "기업탐방 브이로그 — 네이버·AWS",
+    "summary": "하루에 두 곳을 돌며 실무자에게 직접 들은 이야기입니다.",
+    "cohort": "6기",
+    "date": "2025. 09. 19",
+    "duration": "6:22",
+    "thumbnail": "assets/exhibition-booth.jpg",
+    "thumbnailAlt": ""
+  },
+  {
+    "id": "cohort-story-10",
+    "href": "#",
+    "title": "1,551명이 지원한 해",
+    "summary": "10개 반, 7개 트랙. 입교생 열에 여덟이 비전공자였습니다.",
+    "cohort": "6기",
+    "date": "2025. 05. 12",
+    "thumbnail": "assets/event-hall.jpg",
+    "thumbnailAlt": "행사장을 가득 채운 교육생들"
+  },
+  {
+    "id": "cohort-story-11",
+    "href": "#",
+    "title": "중간발표회에서 갈린 팀들",
+    "summary": "절반은 방향을 틀었고, 절반은 그대로 갔습니다. 돌아보면 둘 다 맞았습니다.",
+    "cohort": "5기",
+    "date": "2024. 10. 22",
+    "thumbnail": "assets/presentation-books.jpg",
+    "thumbnailAlt": "책상 위에 쌓인 발표 자료집"
+  },
+  {
+    "id": "cohort-story-12",
+    "href": "#",
+    "title": "기업탐방 — 이스트소프트·네이버·AWS",
+    "summary": "회사가 실제로 어떻게 굴러가는지 처음 본 3일.",
+    "cohort": "5기",
+    "date": "2024. 09. 05",
+    "thumbnail": "assets/monitor-briefing.jpg",
+    "thumbnailAlt": "모니터 앞에서 설명을 듣는 교육생들"
+  },
+  {
+    "id": "cohort-story-13",
+    "href": "#",
+    "title": "첫 성과공유회",
+    "summary": "강당을 빌려 한 해를 정리했습니다. 발표 10분, 준비 2주.",
+    "cohort": "4기",
+    "date": "2023. 12. 14",
+    "thumbnail": "assets/award-team.jpg",
+    "thumbnailAlt": "성과공유회에서 상장을 든 수상 팀"
+  },
+  {
+    "id": "cohort-story-14",
+    "href": "#",
+    "title": "취업박람회 부스를 돌던 하루",
+    "summary": "이력서 30부를 들고 갔는데 마지막 한 장까지 돌렸습니다.",
+    "cohort": "4기",
+    "date": "2023. 11. 30",
+    "thumbnail": "assets/exhibition-booth.jpg",
+    "thumbnailAlt": "전시 부스를 둘러보는 참가자들"
+  },
+  {
+    "id": "cohort-story-15",
+    "href": "#",
+    "title": "성과공유회 및 수료식",
+    "summary": "여덟 달을 함께 보낸 사람들이 마지막으로 모였습니다.",
+    "cohort": "3기",
+    "date": "2022. 12. 15"
+  },
+  {
+    "id": "cohort-story-16",
+    "href": "#",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5eW1KVnAvlY",
+    "title": "3기 성과공유회 및 수료식",
+    "summary": "성과 발표부터 수료증 수여까지, 하루를 통째로 담았습니다.",
+    "cohort": "3기",
+    "date": "2022. 12. 15",
+    "duration": "11:30",
+    "thumbnail": "assets/award-team.jpg",
+    "thumbnailAlt": ""
+  },
+  {
+    "id": "cohort-story-17",
+    "href": "#",
+    "title": "3기 입교식 — 테이프를 끊던 날",
+    "summary": "광주 동구 제봉로 92에 처음 모인 날의 기록.",
+    "cohort": "3기",
+    "date": "2022. 06. 15",
+    "thumbnail": "assets/event-hall.jpg",
+    "thumbnailAlt": "입교식 행사장 모습"
+  }
+]

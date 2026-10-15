@@ -1,0 +1,119 @@
+[
+  {
+    "id": "leisure-1",
+    "photoLabel": "푸른길 공원",
+    "name": "푸른길 공원",
+    "distance": "동쪽 · 약 1km",
+    "fee": "무료 · 상시 개방",
+    "summary": "폐선된 철길을 공원으로 바꾼 약 8km 산책로예요. 나무가 우거져 걷거나 달리기 좋아요.",
+    "group": "walk"
+  },
+  {
+    "id": "leisure-2",
+    "photoLabel": "광주천 산책로",
+    "name": "광주천 산책로",
+    "distance": "남쪽 · 약 1km",
+    "fee": "무료 · 상시 개방",
+    "summary": "도심을 가로지르는 하천을 따라 걷는 길이에요. 양림마을 · 사직공원과 이어서 걷기 좋아요.",
+    "group": "walk"
+  },
+  {
+    "id": "leisure-3",
+    "photoLabel": "동명동 카페거리",
+    "name": "동명동 카페거리",
+    "distance": "북동쪽 · 약 500m",
+    "fee": "가게별 요금",
+    "summary": "카페와 골목 벽화, 작은 공원이 모여 있는 동네예요.",
+    "group": "walk"
+  },
+  {
+    "id": "leisure-4",
+    "photoLabel": "양림역사문화마을",
+    "name": "양림역사문화마을",
+    "distance": "남서쪽 · 약 1km",
+    "fee": "상시 개방",
+    "summary": "근대 서양 건축물과 한옥이 어우러진 마을이에요. 펭귄마을 · 정율성 음악거리가 있어요.",
+    "group": "walk"
+  },
+  {
+    "id": "leisure-5",
+    "photoLabel": "국립아시아문화전당(ACC)",
+    "name": "국립아시아문화전당(ACC)",
+    "distance": "북동쪽 · 약 300m",
+    "fee": "무료 전시 있음",
+    "summary": "교육장에서 가까운 복합문화시설이에요. 전시 · 공연 일정은 ACC 홈페이지에서 확인하세요.",
+    "group": "near"
+  },
+  {
+    "id": "leisure-6",
+    "photoLabel": "5·18민주광장 · 옛 전남도청",
+    "name": "5·18민주광장 · 옛 전남도청",
+    "distance": "북동쪽 · 약 200m",
+    "fee": "무료",
+    "summary": "1980년 5·18 최후 항쟁지예요. 원형 복원을 마친 옛 전남도청 앞 광장이에요.",
+    "group": "near"
+  },
+  {
+    "id": "leisure-7",
+    "photoLabel": "충장로",
+    "name": "충장로",
+    "distance": "북서쪽 · 약 300m",
+    "fee": "상가별 요금",
+    "summary": "광주의 대표 번화가예요. 매년 10월에는 추억의 충장축제가 열려요.",
+    "group": "near"
+  },
+  {
+    "id": "leisure-8",
+    "photoLabel": "대인시장",
+    "name": "대인시장",
+    "distance": "북쪽 · 약 1km",
+    "fee": "유료",
+    "summary": "1959년에 문을 연 전통시장이에요. 토요일 저녁에는 예술야시장으로 붐벼요.",
+    "group": "near"
+  },
+  {
+    "id": "leisure-9",
+    "photoLabel": "사직공원 빛의 숲 · 전망타워",
+    "name": "사직공원 빛의 숲 · 전망타워",
+    "distance": "남서쪽 · 약 1.7km",
+    "fee": "무료",
+    "summary": "미디어아트 산책길 「빛의 숲」이 저녁마다 켜지고, 전망타워에서 시내 야경을 볼 수 있어요.",
+    "group": "far"
+  },
+  {
+    "id": "leisure-10",
+    "photoLabel": "광주-기아 챔피언스 필드",
+    "name": "광주-기아 챔피언스 필드",
+    "distance": "북서쪽 · 약 4km",
+    "fee": "경기별 요금",
+    "summary": "KIA 타이거즈의 홈구장이에요. 경기 일정 · 예매는 구단 홈페이지에서 확인하세요.",
+    "group": "far"
+  },
+  {
+    "id": "leisure-11",
+    "photoLabel": "중외공원 문화예술벨트",
+    "name": "중외공원 문화예술벨트",
+    "distance": "북서쪽 · 약 5km",
+    "fee": "무료 전시 있음",
+    "summary": "광주비엔날레 전시관 · 광주시립미술관 · 국립광주박물관이 모여 있어요.",
+    "group": "far"
+  },
+  {
+    "id": "leisure-12",
+    "photoLabel": "무등산국립공원",
+    "name": "무등산국립공원",
+    "distance": "동쪽 · 정상까지 약 7km",
+    "fee": "무료",
+    "summary": "광주 동쪽의 국립공원이에요. 탐방로 · 통제 여부는 국립공원공단 안내를 확인하세요.",
+    "group": "far"
+  },
+  {
+    "id": "leisure-13",
+    "photoLabel": "1913송정역시장",
+    "name": "1913송정역시장",
+    "distance": "서쪽 · 약 12km · 지하철 1호선",
+    "fee": "유료",
+    "summary": "1913년부터 이어 온 광주송정역 앞 시장이에요. 먹거리 골목으로 붐벼요.",
+    "group": "far"
+  }
+]

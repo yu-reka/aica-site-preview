@@ -1,0 +1,76 @@
+{
+  "facilities": [
+    {
+      "id": "bx9s-1-0",
+      "floorKey": "1",
+      "spaceKey": "0"
+    },
+    {
+      "id": "bx9s-1-1",
+      "floorKey": "1",
+      "spaceKey": "1"
+    },
+    {
+      "id": "bx9s-1-2",
+      "floorKey": "1",
+      "spaceKey": "2"
+    },
+    {
+      "id": "bx9s-23-0",
+      "floorKey": "23",
+      "spaceKey": "0"
+    },
+    {
+      "id": "bx9s-23-1",
+      "floorKey": "23",
+      "spaceKey": "1"
+    },
+    {
+      "id": "bx9s-23-2",
+      "floorKey": "23",
+      "spaceKey": "2"
+    },
+    {
+      "id": "bx9s-8-0",
+      "floorKey": "8",
+      "spaceKey": "0"
+    }
+  ],
+  "housing": [
+    {
+      "id": "area-1",
+      "panelId": "hzp-0",
+      "index": 0
+    },
+    {
+      "id": "area-2",
+      "panelId": "hzp-1",
+      "index": 1
+    },
+    {
+      "id": "area-3",
+      "panelId": "hzp-2",
+      "index": 2
+    },
+    {
+      "id": "area-4",
+      "panelId": "hzp-3",
+      "index": 3
+    },
+    {
+      "id": "area-5",
+      "panelId": "hzp-4",
+      "index": 4
+    },
+    {
+      "id": "area-6",
+      "panelId": "hzp-5",
+      "index": 5
+    },
+    {
+      "id": "area-7",
+      "panelId": "hzp-6",
+      "index": 6
+    }
+  ]
+}

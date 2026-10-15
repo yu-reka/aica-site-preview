@@ -1,0 +1,38 @@
+<div class="ivd" id="{{id}}">
+      <a class="ivback" href="#p-iv">← 인터뷰 목록</a>
+      <div class="ivwrap">
+        <div>
+          <div class="ivhero"><span class="ivtag">{{byline}}</span><img class="illu" src="{{heroImage}}" alt="{{heroAlt}}" loading="lazy" decoding="async" width="1000" height="562"></div>
+          <h2>{{title}}</h2>
+          <p class="lead">{{summary}}</p>
+          <div class="who2"><span class="av">{{cohort}}<i>기</i></span><div><b>{{author}}</b><em>{{track}}</em></div></div>
+          <div class="qa">
+            <div id="q-2-1">
+              <div class="q"><i>1</i><span>{{questions.0.question}}</span></div>
+              <p class="a">{{questions.0.answer}}</p>
+            </div>
+            <div id="q-2-2">
+              <div class="q"><i>2</i><span>{{questions.1.question}}</span></div>
+              <p class="a">{{questions.1.answer}}</p>
+            </div>
+            <div id="q-2-3">
+              <div class="q"><i>3</i><span>{{questions.2.question}}</span></div>
+              <p class="a">{{questions.2.answer}}</p>
+            </div>
+            <div id="q-2-4">
+              <div class="q"><i>4</i><span>{{questions.3.question}}</span></div>
+              <p class="a">{{questions.3.answer}}</p>
+            </div>
+          </div>
+        </div>
+        <aside class="sidebox">
+          <h3>이 인터뷰에서 묻는 것</h3>
+          <ol>
+            <li><a href="#q-2-1">{{questions.0.navLabel}}</a></li>
+            <li><a href="#q-2-2">{{questions.1.navLabel}}</a></li>
+            <li><a href="#q-2-3">{{questions.2.navLabel}}</a></li>
+            <li><a href="#q-2-4">{{questions.3.navLabel}}</a></li>
+          </ol>
+        </aside>
+      </div>
+    </div>

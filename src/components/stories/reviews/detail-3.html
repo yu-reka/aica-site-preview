@@ -1,0 +1,20 @@
+<div class="{{view.detail.className}}" id="{{id}}" style="{{view.detail.style}}" role="dialog" aria-modal="true" aria-labelledby="{{id}}-t">
+  <a class="back" href="#p-rev" aria-label="닫기"></a>
+  <div class="sheet">
+    <a class="x" href="#p-rev" aria-label="닫기">&times;</a>
+    <div class="mscroll">
+      <div class="mtop"><div class="mcat">{{category}}</div><h3 id="{{id}}-t">{{title}}</h3>
+        <div class="mby"><span class="mav">{{cohort}}<i>기</i></span><div><b>{{author}}</b><em>{{track}}</em></div></div>
+      </div>
+      <div class="mbody">
+        <p class="lead">{{summary}}</p>
+        {{{bodyHtml}}}
+        <div class="mtags">
+          <a class="t" href="{{tags.0.href}}">{{tags.0.label}}</a>
+          <a class="t" href="{{tags.1.href}}">{{tags.1.label}}</a>
+          <span class="hint">태그를 누르면 창이 닫히고 그 태그의 후기만 모여요</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

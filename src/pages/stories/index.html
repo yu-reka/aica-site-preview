@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ko" data-menu="stories" data-sub="overview" data-nav="side" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="only light">
+  <title>선배들의 이야기 — 인공지능사관학교</title>
+  <meta name="description" content="먼저 다녀온 선배들의 후기 · 인터뷰 · 프로젝트 · 기수별 기록을 모아 봅니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="선배들의 이야기 — 인공지능사관학교">
+  <meta property="og:description" content="먼저 다녀온 선배들의 후기 · 인터뷰 · 프로젝트 · 기수별 기록을 모아 봅니다.">
+  <link rel="icon" type="image/png" href="../common/assets/brand/symbol-blue.png">
+  <!-- 옛 주소(#reviews · #iv-3 · #r-life-0 …)는 그려지기 전에 나뉜 페이지로 보냄: defer 없이 가장 먼저 -->
+  <script src="js/old-hash.js"></script>
+  <link rel="stylesheet" href="../common/css/tokens.css?v=1014L">
+  <link rel="stylesheet" href="../common/css/base.css">
+  <link rel="stylesheet" href="../common/css/site.css?v=1014L">
+  <link rel="stylesheet" href="css/hub.css">
+  <link rel="stylesheet" href="../common/css/unify.css?v=1014L">
+  <link rel="stylesheet" href="../common/css/lnb.css">
+  <link rel="stylesheet" href="css/mast.css">
+  <script src="js/mast-fix.js" defer></script>
+  <script src="../common/js/menu.js" defer></script>
+  <script src="../common/js/site-layout.js" defer></script>
+<script src="../common/js/site.js" defer></script>
+  <script src="js/hub.js" defer></script>
+</head>
+<body>
+<header class="site-header" id="siteHeader"></header>
+<!-- 본문: 선배들의 이야기 '한눈에 보기'(10-13 사본). 사용자 요청: 후기 · 인터뷰 · 프로젝트 · 기수별 이모저모 각 페이지의 머리를 한 번에, 랜딩처럼 그 안은 내용에 맞는 배치로
+     구조: 작은 제목 줄(전체 화면 히어로 아님) → 구역 4개(메뉴 순서). 구역 = 머리(각 페이지 .sh-row 문구 그대로) + 미리보기 + 전체 보기(그 페이지)
+     글은 모두 각 페이지 마크업에서 그대로 옮김(지어 쓴 글 없음). 미리보기를 누르면 그 페이지의 글 창 · 상세(reviews.html#r-… · interviews.html#iv-N · projects.html#pj-N) 또는 기수 목록
+     이 페이지 안 id는 hub- 로 시작: js/old-hash.js가 reviews · interviews · r- · iv- · q- · pj- · tg- 같은 주소를 다른 페이지로 보내기 때문
+     모양은 css/hub.css. 머리(.sh · .sh-k)는 다른 이야기 페이지와 같은 규칙(unify.css)을 받음 -->
+<main id="main" class="stories-page stories-hub" tabindex="-1">
+<!-- 제목 줄(10-13 사본, 사용자 결정 '1번'): 이야기 5페이지에 같은 큰 제목 줄(css/mast.css). 1200 이상은 왼쪽 메뉴 위로 화면 폭 전체, 메뉴는 그 아래서 따라옴.
+     .hb 밖(main 바로 아래)에 둬서 site.js가 메뉴를 이 뒤에 그림 — 좁은 화면에서 제목 → 알약 줄 순서 -->
+{{> stories/masthead}}
+<div class="hb">
+  <!-- 01 후기: 모눈 종이 띠 위에 흐르는 한마디(손글씨) + 포스트잇 4장(분류 · 기수가 겹치지 않게 고름, 흐르는 한마디와 다른 글) -->
+  <section class="hb-sec hb-iv" id="hub-interviews" aria-labelledby="hub-interviews-t">
+    <div class="wrap hb-in">
+      <div class="sh hb-hd"><p class="sh-k">인터뷰</p><h2 id="hub-interviews-t">여덟 달을 먼저 지나온 선배들에게 물어봤어요</h2></div>
+      <a class="hb-more" href="interviews.html"><span class="hb-sr">인터뷰 </span>전체 보기<span aria-hidden="true">→</span></a>
+      <div class="hb-body hb-ivg">
+        <a class="hb-ivf" href="interviews.html#iv-1">
+          <img class="hb-ph" src="assets/team-pointing.jpg" alt="" width="1000" height="562" loading="lazy" decoding="async">
+          <div class="hb-ivf-tx">
+            <em>비전공자라면</em>
+            <h3>{{stories.interviewsById.iv-1.title}}</h3>
+            <p class="hb-ivf-q">{{stories.interviewsById.iv-1.quote}}</p>
+            <span class="hb-by">{{stories.interviewsById.iv-1.cohort}}기 · {{stories.interviewsById.iv-1.author}} · {{stories.interviewsById.iv-1.track}}</span>
+          </div>
+        </a>
+        <ul class="hb-ivl" role="list">
+          <li><a href="interviews.html#iv-2">
+            <span class="hb-ivl-ph"><img class="hb-ph" src="assets/table-team-sm.jpg" alt="" width="880" height="550" loading="lazy" decoding="async"></span>
+            <div><h3>{{stories.interviewsById.iv-2.title}}</h3><span class="hb-by">{{stories.interviewsById.iv-2.cohort}}기 · {{stories.interviewsById.iv-2.author}} · {{stories.interviewsById.iv-2.track}}</span></div>
+          </a></li>
+          <li><a href="interviews.html#iv-3">
+            <span class="hb-ivl-ph"><img class="hb-ph" src="assets/classroom-laptops-sm.jpg" alt="" width="880" height="550" loading="lazy" decoding="async"></span>
+            <div><h3>{{stories.interviewsById.iv-3.title}}</h3><span class="hb-by">{{stories.interviewsById.iv-3.cohort}}기 · {{stories.interviewsById.iv-3.author}} · {{stories.interviewsById.iv-3.track}}</span></div>
+          </a></li>
+          <li><a href="interviews.html#iv-6">
+            <span class="hb-ivl-ph"><img class="hb-ph" src="assets/lobby-laptops-sm.jpg" alt="" width="880" height="550" loading="lazy" decoding="async"></span>
+            <div><h3>{{stories.interviewsById.iv-6.title}}</h3><span class="hb-by">{{stories.interviewsById.iv-6.cohort}}기 · {{stories.interviewsById.iv-6.author}} · {{stories.interviewsById.iv-6.track}}</span></div>
+          </a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 인터뷰: 대표 1개(사진 위 글) + 나머지 3개 목록. 사진이 있는 인터뷰만(일러스트 · 영상 카드는 전체 목록에서) -->
+  <section class="hb-sec hb-rev" id="hub-reviews" aria-labelledby="hub-reviews-t">
+    <div class="wrap hb-in">
+      <div class="sh hb-hd"><p class="sh-k">후기</p><h2 id="hub-reviews-t">먼저 겪어 본 선배들이 솔직하게 남겼어요</h2></div>
+      <a class="hb-more" href="reviews.html"><span class="hb-sr">후기 </span>전체 보기<span aria-hidden="true">→</span></a>
+      <div class="hb-lqw hb-lq-out">
+        <div class="hb-lq hb-x" role="group" aria-label="후기 한마디">
+          <div class="hb-lq-t">
+            <a href="reviews.html#r-life-0"><span class="t">{{stories.reviewsById.r-life-0.quote}}</span><span class="a">{{stories.reviewsById.r-life-0.author}} · {{stories.reviewsById.r-life-0.cohort}}기</span></a>
+            <a href="reviews.html#r-class-0"><span class="t">{{stories.reviewsById.r-class-0.quote}}</span><span class="a">{{stories.reviewsById.r-class-0.author}} · {{stories.reviewsById.r-class-0.cohort}}기</span></a>
+            <a href="reviews.html#r-proj-0"><span class="t">{{stories.reviewsById.r-proj-0.quote}}</span><span class="a">{{stories.reviewsById.r-proj-0.author}} · {{stories.reviewsById.r-proj-0.cohort}}기</span></a>
+            <a href="reviews.html#r-career-0"><span class="t">{{stories.reviewsById.r-career-0.quote}}</span><span class="a">{{stories.reviewsById.r-career-0.author}} · {{stories.reviewsById.r-career-0.cohort}}기</span></a>
+            <a href="reviews.html#r-life-1"><span class="t">{{stories.reviewsById.r-life-1.quote}}</span><span class="a">{{stories.reviewsById.r-life-1.author}} · {{stories.reviewsById.r-life-1.cohort}}기</span></a>
+            <a href="reviews.html#r-class-1"><span class="t">{{stories.reviewsById.r-class-1.quote}}</span><span class="a">{{stories.reviewsById.r-class-1.author}} · {{stories.reviewsById.r-class-1.cohort}}기</span></a>
+            <a href="reviews.html#r-proj-1"><span class="t">{{stories.reviewsById.r-proj-1.quote}}</span><span class="a">{{stories.reviewsById.r-proj-1.author}} · {{stories.reviewsById.r-proj-1.cohort}}기</span></a>
+            <a href="reviews.html#r-career-1"><span class="t">{{stories.reviewsById.r-career-1.quote}}</span><span class="a">{{stories.reviewsById.r-career-1.author}} · {{stories.reviewsById.r-career-1.cohort}}기</span></a>
+            <a href="reviews.html#r-life-2"><span class="t">{{stories.reviewsById.r-life-2.quote}}</span><span class="a">{{stories.reviewsById.r-life-2.author}} · {{stories.reviewsById.r-life-2.cohort}}기</span></a>
+            <a href="reviews.html#r-class-2"><span class="t">{{stories.reviewsById.r-class-2.quote}}</span><span class="a">{{stories.reviewsById.r-class-2.author}} · {{stories.reviewsById.r-class-2.cohort}}기</span></a>
+            <a href="reviews.html#r-proj-2"><span class="t">{{stories.reviewsById.r-proj-2.quote}}</span><span class="a">{{stories.reviewsById.r-proj-2.author}} · {{stories.reviewsById.r-proj-2.cohort}}기</span></a>
+            <a href="reviews.html#r-career-2"><span class="t">{{stories.reviewsById.r-career-2.quote}}</span><span class="a">{{stories.reviewsById.r-career-2.author}} · {{stories.reviewsById.r-career-2.cohort}}기</span></a>
+            <!-- 끊김 없이 돌게 같은 줄을 한 번 더(읽기 · 초점에서 뺌) -->
+            <a href="reviews.html#r-life-0" aria-hidden="true" tabindex="-1"><span class="t">{{stories.reviewsById.r-life-0.quote}}</span><span class="a">{{stories.reviewsById.r-life-0.author}} · {{stories.reviewsById.r-life-0.cohort}}기</span></a>
+            <a href="reviews.html#r-class-0" aria-hidden="true" tabindex="-1"><span class="t">{{stories.reviewsById.r-class-0.quote}}</span><span class="a">{{stories.reviewsById.r-class-0.author}} · {{stories.reviewsById.r-class-0.cohort}}기</span></a>
+            <a href="reviews.html#r-proj-0" aria-hidden="true" tabindex="-1"><span class="t">{{stories.reviewsById.r-proj-0.quote}}</span><span class="a">{{stories.reviewsById.r-proj-0.author}} · {{stories.reviewsById.r-proj-0.cohort}}기</span></a>
+            <a href="reviews.html#r-career-0" aria-hidden="true" tabindex="-1"><span class="t">{{stories.reviewsById.r-career-0.quote}}</span><span class="a">{{stories.reviewsById.r-career-0.author}} · {{stories.reviewsById.r-career-0.cohort}}기</span></a>
+            <a href="reviews.html#r-life-1" aria-hidden="true" tabindex="-1"><span class="t">{{stories.reviewsById.r-life-1.quote}}</span><span class="a">{{stories.reviewsById.r-life-1.author}} · {{stories.reviewsById.r-life-1.cohort}}기</span></a>
+            <a href="reviews.html#r-class-1" aria-hidden="true" tabindex="-1"><span class="t">{{stories.reviewsById.r-class-1.quote}}</span><span class="a">{{stories.reviewsById.r-class-1.author}} · {{stories.reviewsById.r-class-1.cohort}}기</span></a>
+            <a href="reviews.html#r-proj-1" aria-hidden="true" tabindex="-1"><span class="t">{{stories.reviewsById.r-proj-1.quote}}</span><span class="a">{{stories.reviewsById.r-proj-1.author}} · {{stories.reviewsById.r-proj-1.cohort}}기</span></a>
+            <a href="reviews.html#r-career-1" aria-hidden="true" tabindex="-1"><span class="t">{{stories.reviewsById.r-career-1.quote}}</span><span class="a">{{stories.reviewsById.r-career-1.author}} · {{stories.reviewsById.r-career-1.cohort}}기</span></a>
+            <a href="reviews.html#r-life-2" aria-hidden="true" tabindex="-1"><span class="t">{{stories.reviewsById.r-life-2.quote}}</span><span class="a">{{stories.reviewsById.r-life-2.author}} · {{stories.reviewsById.r-life-2.cohort}}기</span></a>
+            <a href="reviews.html#r-class-2" aria-hidden="true" tabindex="-1"><span class="t">{{stories.reviewsById.r-class-2.quote}}</span><span class="a">{{stories.reviewsById.r-class-2.author}} · {{stories.reviewsById.r-class-2.cohort}}기</span></a>
+            <a href="reviews.html#r-proj-2" aria-hidden="true" tabindex="-1"><span class="t">{{stories.reviewsById.r-proj-2.quote}}</span><span class="a">{{stories.reviewsById.r-proj-2.author}} · {{stories.reviewsById.r-proj-2.cohort}}기</span></a>
+            <a href="reviews.html#r-career-2" aria-hidden="true" tabindex="-1"><span class="t">{{stories.reviewsById.r-career-2.quote}}</span><span class="a">{{stories.reviewsById.r-career-2.author}} · {{stories.reviewsById.r-career-2.cohort}}기</span></a>
+          </div>
+        </div>
+        <!-- 멈춤 단추(10-13 사본): 터치에서는 마우스 · 초점으로 멈출 수 없어 둠. 스크립트(js/hub.js)가 있어야 동작하니 hidden으로 두고 거기서 보이게 -->
+        <button class="hb-lq-pp" type="button" aria-pressed="false" aria-label="흐르는 후기 멈춤" hidden><i aria-hidden="true"></i></button>
+        </div>
+      <div class="hb-body">
+        <div class="hb-pis hb-x">
+          <a class="hb-pi" href="reviews.html#r-career-5">
+            <span class="hb-pi-c"><b>{{stories.reviewsById.r-career-5.category}}</b><span>{{stories.reviewsById.r-career-5.cohort}}기</span></span>
+            <h3>{{stories.reviewsById.r-career-5.title}}</h3>
+            <p>{{stories.reviewsById.r-career-5.summary}}</p>
+            <span class="hb-pi-by"><b>{{stories.reviewsById.r-career-5.author}}</b><span>{{stories.reviewsById.r-career-5.track}}</span></span>
+          </a>
+          <a class="hb-pi" href="reviews.html#r-life-6">
+            <span class="hb-pi-c"><b>{{stories.reviewsById.r-life-6.category}}</b><span>{{stories.reviewsById.r-life-6.cohort}}기</span></span>
+            <h3>{{stories.reviewsById.r-life-6.title}}</h3>
+            <p>{{stories.reviewsById.r-life-6.summary}}</p>
+            <span class="hb-pi-by"><b>{{stories.reviewsById.r-life-6.author}}</b><span>{{stories.reviewsById.r-life-6.track}}</span></span>
+          </a>
+          <a class="hb-pi" href="reviews.html#r-class-12">
+            <span class="hb-pi-c"><b>{{stories.reviewsById.r-class-12.category}}</b><span>{{stories.reviewsById.r-class-12.cohort}}기</span></span>
+            <h3>{{stories.reviewsById.r-class-12.title}}</h3>
+            <p>{{stories.reviewsById.r-class-12.summary}}</p>
+            <span class="hb-pi-by"><b>{{stories.reviewsById.r-class-12.author}}</b><span>{{stories.reviewsById.r-class-12.track}}</span></span>
+          </a>
+          <a class="hb-pi" href="reviews.html#r-proj-8">
+            <span class="hb-pi-c"><b>{{stories.reviewsById.r-proj-8.category}}</b><span>{{stories.reviewsById.r-proj-8.cohort}}기</span></span>
+            <h3>{{stories.reviewsById.r-proj-8.title}}</h3>
+            <p>{{stories.reviewsById.r-proj-8.summary}}</p>
+            <span class="hb-pi-by"><b>{{stories.reviewsById.r-proj-8.author}}</b><span>{{stories.reviewsById.r-proj-8.track}}</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 프로젝트: 결과물 카드 3장. 유형이 겹치지 않게(실증 · 기업연계 · 창업) 고름. 번호는 프로젝트 페이지 순서라 여기선 뺌 -->
+  <section class="hb-sec hb-pj" id="hub-projects" aria-labelledby="hub-projects-t">
+    <div class="wrap hb-in">
+      <div class="sh hb-hd"><p class="sh-k">프로젝트 아카이브</p><h2 id="hub-projects-t">선배들은 여기서 이런 걸 만들었어요</h2></div>
+      <a class="hb-more" href="projects.html"><span class="hb-sr">프로젝트 </span>전체 보기<span aria-hidden="true">→</span></a>
+      <div class="hb-body hb-pjs hb-x">
+        <a class="hb-pjc" href="projects.html#pj-1">
+          <span class="hb-pjc-ph">
+            <svg aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#FFE600"/>
+   <rect x="86" y="62" width="228" height="134" rx="12" fill="#fff"/>
+   <rect x="106" y="82" width="104" height="54" rx="7" fill="#2457F5"/>
+   <rect x="226" y="82" width="68" height="18" rx="6" fill="#E4E9F7"/>
+   <rect x="226" y="112" width="48" height="12" rx="6" fill="#FFE600"/>
+   <rect x="106" y="152" width="136" height="12" rx="6" fill="#E4E9F7"/>
+   <rect x="60" y="204" width="280" height="14" rx="7" fill="#E35B28"/>
+   <circle cx="320" cy="150" r="22" fill="#2457F5"/><rect x="310" y="142" width="20" height="4" rx="2" fill="#fff"/></svg>
+            <span class="hb-pjc-type">{{stories.projectsById.pj-1.type}}</span>
+          </span>
+          <div class="hb-pjc-tx">
+            <p class="hb-pjc-nm">{{stories.projectsById.pj-1.name}}</p>
+            <h3>{{stories.projectsById.pj-1.title}}</h3>
+            <p class="hb-pjc-s">{{stories.projectsById.pj-1.summary}}</p>
+            <span class="hb-pjc-tm">{{stories.projectsById.pj-1.team}}</span>
+          </div>
+        </a>
+        <a class="hb-pjc" href="projects.html#pj-2">
+          <span class="hb-pjc-ph">
+            <svg aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#2457F5"/>
+   <rect x="54" y="44" width="212" height="132" rx="12" fill="#fff"/>
+   <rect x="76" y="68" width="120" height="12" rx="6" fill="#2457F5"/>
+   <rect x="76" y="94" width="168" height="8" rx="4" fill="#D7DEF4"/>
+   <rect x="76" y="112" width="140" height="8" rx="4" fill="#D7DEF4"/>
+   <rect x="76" y="136" width="76" height="20" rx="10" fill="#FFE600"/>
+   <path d="M286 92h76a14 14 0 0 1 14 14v46a14 14 0 0 1-14 14h-30l-14 18v-18h-32a14 14 0 0 1-14-14v-46a14 14 0 0 1 14-14z" fill="#22D3EE"/>
+   <rect x="296" y="112" width="52" height="7" rx="3.5" fill="#fff"/>
+   <rect x="296" y="128" width="36" height="7" rx="3.5" fill="#fff" opacity=".66"/>
+   <rect x="92" y="204" width="216" height="16" rx="8" fill="#15368F"/></svg>
+            <span class="hb-pjc-type">{{stories.projectsById.pj-2.type}}</span>
+          </span>
+          <div class="hb-pjc-tx">
+            <p class="hb-pjc-nm">{{stories.projectsById.pj-2.name}}</p>
+            <h3>{{stories.projectsById.pj-2.title}}</h3>
+            <p class="hb-pjc-s">{{stories.projectsById.pj-2.summary}}</p>
+            <span class="hb-pjc-tm">{{stories.projectsById.pj-2.team}}</span>
+          </div>
+        </a>
+        <a class="hb-pjc" href="projects.html#pj-5">
+          <span class="hb-pjc-ph">
+            <svg aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#E4E9F7"/>
+   <rect x="34" y="78" width="150" height="104" rx="10" fill="#fff"/>
+   <rect x="54" y="98" width="86" height="10" rx="5" fill="#2457F5"/>
+   <rect x="54" y="120" width="110" height="7" rx="3.5" fill="#CBD5F0"/>
+   <rect x="54" y="138" width="64" height="18" rx="9" fill="#FFE600"/>
+   <rect x="216" y="62" width="150" height="120" rx="10" fill="#fff"/>
+   <rect x="236" y="82" width="70" height="10" rx="5" fill="#22D3EE"/>
+   <rect x="236" y="104" width="110" height="7" rx="3.5" fill="#CBD5F0"/>
+   <rect x="236" y="122" width="92" height="7" rx="3.5" fill="#CBD5F0"/>
+   <g fill="#2457F5"><circle cx="112" cy="206" r="16"/><rect x="92" y="226" width="40" height="22" rx="11"/>
+   <circle cx="200" cy="212" r="14"/><rect x="182" y="230" width="36" height="20" rx="10"/>
+   <circle cx="288" cy="206" r="16"/><rect x="268" y="226" width="40" height="22" rx="11"/></g></svg>
+            <span class="hb-pjc-type">{{stories.projectsById.pj-5.type}}</span>
+          </span>
+          <div class="hb-pjc-tx">
+            <p class="hb-pjc-nm">{{stories.projectsById.pj-5.name}}</p>
+            <h3>{{stories.projectsById.pj-5.title}}</h3>
+            <p class="hb-pjc-s">{{stories.projectsById.pj-5.summary}}</p>
+            <span class="hb-pjc-tm">{{stories.projectsById.pj-5.team}}</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 기수별 이모저모: 사진 묶음. 입교식 → 중간발표 → 기업탐방 → 취업박람회 → 수료식 순(기수 하나씩)
+       영상 카드(입교식 · 중간발표 · 수료식)는 기수 페이지 카드의 유튜브 주소(data-yt)로 바로 감(10-13 사본: 기수 페이지 카드에 id가 없어 그 카드로 바로 갈 수 없음), 기록 카드는 기수 목록 -->
+  <section class="hb-sec hb-coh" id="hub-cohorts" aria-labelledby="hub-cohorts-t">
+    <div class="wrap hb-in">
+      <div class="sh hb-hd"><p class="sh-k">기수별 이모저모</p><h2 id="hub-cohorts-t">입교식부터 수료식까지, 기수마다 이런 일이 있었어요</h2></div>
+      <a class="hb-more" href="cohorts.html"><span class="hb-sr">기수별 이모저모 </span>전체 보기<span aria-hidden="true">→</span></a>
+      <ul class="hb-body hb-mos" role="list">
+        <li class="is-big"><a href="https://www.youtube.com/watch?v=47e6pa3Z-Mg" target="_blank" rel="noopener">
+          <img class="hb-ph" src="assets/event-hall.jpg" alt="" width="880" height="495" loading="lazy" decoding="async">
+          <div class="hb-mos-tx"><span class="hb-mos-m">7기<span class="hb-mos-d"> · 2026. 05. 29</span><span class="hb-vd"><span class="hb-sr">유튜브 영상(새 창), 길이 </span>3:12</span></span><h3>7기 입교식 하이라이트</h3><p>테이프를 끊고 여덟 달이 시작된 날을 3분으로 담았습니다.</p></div>
+        </a></li>
+        <li><a href="https://www.youtube.com/watch?v=Ye5XEwUNUxk" target="_blank" rel="noopener">
+          <img class="hb-ph" src="assets/presentation-books.jpg" alt="" width="880" height="495" loading="lazy" decoding="async">
+          <div class="hb-mos-tx"><span class="hb-mos-m">6기<span class="hb-mos-d"> · 2025. 10. 22</span><span class="hb-vd"><span class="hb-sr">유튜브 영상(새 창), 길이 </span>4:47</span></span><h3>도약과정 중간발표회 현장</h3></div>
+        </a></li>
+        <li><a href="cohorts.html">
+          <img class="hb-ph" src="assets/monitor-briefing.jpg" alt="" width="880" height="495" loading="lazy" decoding="async">
+          <div class="hb-mos-tx"><span class="hb-mos-m">5기<span class="hb-mos-d"> · 2024. 09. 05</span></span><h3>기업탐방 — <span class="hb-nw">이스트소프트·네이버·AWS</span></h3></div>
+        </a></li>
+        <li><a href="cohorts.html">
+          <img class="hb-ph" src="assets/exhibition-booth.jpg" alt="" width="880" height="495" loading="lazy" decoding="async">
+          <div class="hb-mos-tx"><span class="hb-mos-m">4기<span class="hb-mos-d"> · 2023. 11. 30</span></span><h3>취업박람회 부스를 돌던 하루</h3></div>
+        </a></li>
+        <li><a href="https://www.youtube.com/watch?v=5eW1KVnAvlY" target="_blank" rel="noopener">
+          <img class="hb-ph" src="assets/award-team.jpg" alt="" width="880" height="495" loading="lazy" decoding="async">
+          <div class="hb-mos-tx"><span class="hb-mos-m">3기<span class="hb-mos-d"> · 2022. 12. 15</span><span class="hb-vd"><span class="hb-sr">유튜브 영상(새 창), 길이 </span>11:30</span></span><h3>3기 성과공유회 및 수료식</h3></div>
+        </a></li>
+      </ul>
+    </div>
+  </section>
+</div>
+</main>
+<footer class="site-footer" id="siteFooter" data-note="본 사이트는 카테고리·콘텐츠 구성안을 확인하기 위한 시안이며, 표시된 수치·일정·혜택은 모두 더미 데이터입니다."></footer>
+</body>
+</html>

@@ -1,0 +1,121 @@
+[
+  {
+    "id": "process-1",
+    "step": "STEP 01",
+    "title": "서류 전형",
+    "bodyRichText": [
+      {
+        "tag": "p",
+        "attrs": {},
+        "children": [
+          "지원자님의 지원 자격, 지원 동기 등을 확인하는 과정이에요."
+        ]
+      }
+    ],
+    "image": "assets/process-doc.webp",
+    "label": "STEP 01 서류 전형"
+  },
+  {
+    "id": "process-2",
+    "step": "STEP 02",
+    "title": "테스트 전형",
+    "bodyRichText": [
+      {
+        "tag": "p",
+        "attrs": {},
+        "children": [
+          "서류 지원이 확인되면 기본적인 AI 지식과 역량을 검증하기 위한 코딩 테스트를 진행해요."
+        ]
+      },
+      {
+        "tag": "p",
+        "attrs": {
+          "class": "pf-note"
+        },
+        "children": [
+          {
+            "tag": "b",
+            "attrs": {},
+            "children": [
+              "코딩 테스트 면제"
+            ]
+          },
+          "지원 시 AI 관련 역량을 검증할 수 있는 포트폴리오를 제출하면 코딩 테스트가 면제돼요."
+        ]
+      }
+    ],
+    "image": "assets/process-test.webp",
+    "label": "STEP 02 테스트 전형"
+  },
+  {
+    "id": "process-3",
+    "step": "STEP 03",
+    "title": "면접 전형 및 인적성 검사",
+    "bodyRichText": [
+      {
+        "tag": "dl",
+        "attrs": {},
+        "children": [
+          {
+            "tag": "div",
+            "attrs": {},
+            "children": [
+              {
+                "tag": "dt",
+                "attrs": {},
+                "children": [
+                  "면접 전형"
+                ]
+              },
+              {
+                "tag": "dd",
+                "attrs": {},
+                "children": [
+                  "앞선 테스트 전형에 참여한 방식에 따라 면접 유형이 나뉘어 진행돼요."
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "div",
+            "attrs": {},
+            "children": [
+              {
+                "tag": "dt",
+                "attrs": {},
+                "children": [
+                  "인적성 검사"
+                ]
+              },
+              {
+                "tag": "dd",
+                "attrs": {},
+                "children": [
+                  "온라인으로 응시하며, 지원자의 인성과 적성을 검사해요."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "image": "assets/process-interview.webp",
+    "label": "STEP 03 면접 전형 및 인적성 검사"
+  },
+  {
+    "id": "process-4",
+    "step": "STEP 04",
+    "title": "최종 발표",
+    "bodyRichText": [
+      {
+        "tag": "p",
+        "attrs": {},
+        "children": [
+          "각 전형별 결과를 종합해 최종 합격자를 선발하고, 문자나 유선으로 개별 안내해요."
+        ]
+      }
+    ],
+    "image": "assets/process-pass.webp",
+    "label": "STEP 04 최종 발표"
+  }
+]

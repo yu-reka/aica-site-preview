@@ -5,11 +5,11 @@
   var tpl=document.getElementById('cv3-data').content;
   var D=[].slice.call(tpl.querySelectorAll('a.st')).map(function(a){
     var dt=(a.querySelector('.dt')||{}).textContent||'', m=dt.match(/(\d{4})\.\s*(\d{2})\.\s*(\d{2})/);
-    return {coh:parseInt((a.querySelector('.cg')||{}).textContent,10)||0, date:dt.trim(), y:m?+m[1]:0, mo:m?+m[2]:0,
+    return {id:a.id||'', body:[].slice.call(a.querySelectorAll('[data-story-body] p')).map(function(p){return p.textContent}), photos:[].slice.call(a.querySelectorAll('[data-story-photos] img')), coh:parseInt((a.querySelector('.cg')||{}).textContent,10)||0, date:dt.trim(), y:m?+m[1]:0, mo:m?+m[2]:0,
       title:(a.querySelector('h3')||{}).textContent||'', sum:(a.querySelector('p')||{}).textContent||'',
       illu:a.querySelector('.illu'), yt:a.getAttribute('data-yt')||''};
   });
-  var COHS=[]; D.forEach(function(d){ var k=d.coh>=6?String(d.coh):'3-5'; if(COHS.indexOf(k)<0) COHS.push(k); });
+  var COHS=[]; D.forEach(function(d){ var k=d.coh>=3&&d.coh<=5?'3-5':String(d.coh); if(COHS.indexOf(k)<0) COHS.push(k); });
   /* 가장 최근 기수(지금은 7기)만 인스타 스토리 그라데이션 링, 나머지는 회색 링(10-14) */
   var LIVE=String(Math.max.apply(null,D.map(function(d){return d.coh})));
   COHS.sort(function(a,b){return parseInt(b,10)-parseInt(a,10)});   // 10-13: 3~5기는 한 칩(3–5기)으로 묶음
@@ -45,7 +45,7 @@
     var db=$('.cv3-dbtn'); if(db) db.onclick=function(){ st.diff=!st.diff; draw(); };
     var box=$('.cv3-diff'); box.hidden=!(hasDiff&&st.diff);
     if(hasDiff&&st.diff){ var t=document.getElementById('cv3-diff'+st.coh).content.querySelector('table'); var g=$('.cv3-dt'); g.innerHTML='';
-      [].slice.call(t.querySelectorAll('tr')).forEach(function(tr){ var c=tr.children; g.insertAdjacentHTML('beforeend','<b>'+c[0].textContent+'</b><s>'+c[1].textContent+'</s><span>'+c[2].textContent+'</span>'); }); }
+      [].slice.call(t.querySelectorAll('tr')).forEach(function(tr){ var c=tr.children; ['b','s','span'].forEach(function(tag,i){var el=document.createElement(tag);el.textContent=c[i].textContent;g.appendChild(el)}); }); }
   }
   function highlights(){
     var all=D.filter(function(d){return inC(d,st.coh)});
@@ -67,8 +67,9 @@
   function pinOn(){ return !!CURR[st.coh] && !st.mo; }
   function pinEl(){ var d=document.createElement('div'); d.className='cv3-pin'; d.setAttribute('role','group'); d.setAttribute('aria-label',st.coh+'기 교육과정');
     d.innerHTML='<span class="k">CURRICULUM</span><b>'+st.coh+'기<br>교육과정</b><div class="cc">'+CURR[st.coh].map(function(t){return '<span>'+t+'</span>'}).join('')+'</div>'
-      +'<div class="ft"><p>자세한 내용은 공식 홈페이지에서 확인하세요.</p><a href="'+OFFICIAL+'" target="_blank" rel="noopener">공식 홈페이지 <span aria-hidden="true">↗</span></a></div>'
+      +'<div class="ft"><p>자세한 내용은 공식 홈페이지에서 확인하세요.</p><a target="_blank" rel="noopener">공식 홈페이지 <span aria-hidden="true">↗</span></a></div>'
       +'<img class="pn" src="assets/pin-white.png" alt="고정됨" width="96" height="96">';
+    d.querySelector('.ft a').href=OFFICIAL;
     return d; }
   function grid(){
     var L=list(), P=pinOn(), first=P?PER-1:PER, pages=Math.max(1,1+Math.ceil(Math.max(0,L.length-first)/PER)); if(st.pg>pages) st.pg=pages;
@@ -79,7 +80,9 @@
       var a=document.createElement('a'); a.href='#'; a.className='cv3-it'; a.setAttribute('aria-label',d.title+(d.yt?' (영상)':''));
       a.appendChild(media(d));
       if(d.yt) a.insertAdjacentHTML('beforeend','<svg class="cv3-reel" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M3 8h18M8 3l3 5M14 3l3 5"/><path d="M10 11.5v5l4.5-2.5z" fill="#fff"/></svg>');
-      a.insertAdjacentHTML('beforeend','<span class="cv3-ov"><b>'+d.title+'</b><span>'+d.date+'</span></span>');
+      var overlay=document.createElement('span'); overlay.className='cv3-ov';
+      var title=document.createElement('b'); title.textContent=d.title; overlay.appendChild(title);
+      var date=document.createElement('span'); date.textContent=d.date; overlay.appendChild(date); a.appendChild(overlay);
       a.onclick=function(e){ e.preventDefault(); openM(L.indexOf(d)); };
       g.appendChild(a);
     });
@@ -99,18 +102,30 @@
   function fill(){
     var L=list(), d=L[cur]; if(!d) return;
     var md=M.querySelector('.cv3-m-media'); md.innerHTML=''; md.classList.remove('can-zoom'); md.appendChild(media(d));
-    if(d.yt){ var id=(d.yt.match(/[?&]v=([^&]+)/)||d.yt.match(/youtu\.be\/([^?]+)/)||[])[1];
+    if(d.yt){ var id=null;
+      try { var url=new URL(d.yt), host=url.hostname.toLowerCase();
+        id=host==='youtu.be'?url.pathname.slice(1):['youtube.com','www.youtube.com','m.youtube.com'].indexOf(host)>-1?url.searchParams.get('v'):null;
+      } catch(e) {}
+      if(!id || !/^[A-Za-z0-9_-]{11}$/.test(id)) id=null;
       var p=document.createElement('button'); p.type='button'; p.className='cv3-play'; p.setAttribute('aria-label','영상 재생'); p.innerHTML='<i></i>';
-      p.onclick=function(){ md.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1" title="'+d.title.replace(/"/g,'')+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>'; };
-      md.appendChild(p); }
+      p.onclick=function(){ if(!id) return;
+        var frame=document.createElement('iframe'); frame.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1';
+        frame.title=d.title; frame.allow='autoplay; encrypted-media; picture-in-picture; fullscreen'; frame.allowFullscreen=true;
+        md.replaceChildren(frame); };
+      if(id) md.appendChild(p); }
     else { /* 사진 크게 보기(10-14): 오른쪽 위 버튼 · 사진 클릭 */
       var z=document.createElement('button'); z.type='button'; z.className='cv3-zoom'; z.setAttribute('aria-label','사진 크게 보기');
       z.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg>';
       z.onclick=openZ; md.firstChild.addEventListener('click',openZ); md.classList.add('can-zoom'); md.appendChild(z); }
     M.querySelector('.cv3-av').innerHTML='<b>'+d.coh+'</b>';
     M.querySelector('.cv3-m-acc').textContent=acc(d.coh);
-    M.querySelector('h3').innerHTML='<b>'+acc(d.coh)+'</b> '+d.title;
+    var heading=M.querySelector('h3'), account=document.createElement('b'); account.textContent=acc(d.coh);
+    heading.replaceChildren(account, document.createTextNode(' '+d.title));
     M.querySelector('.cv3-m-body p').textContent=d.sum;
+    M.querySelectorAll('[data-extra-story]').forEach(function(e){e.remove()});
+    var bodyBox=M.querySelector('.cv3-m-body');
+    (d.body||[]).forEach(function(text){var p=document.createElement('p');p.dataset.extraStory='';p.textContent=text;bodyBox.appendChild(p)});
+    (d.photos||[]).forEach(function(photo){if(d.illu&&photo.getAttribute('src')===d.illu.getAttribute('src'))return;var img=photo.cloneNode(true);img.dataset.extraStory='';img.style.maxWidth='100%';img.style.height='auto';bodyBox.appendChild(img)});
     M.querySelector('time').textContent=d.date;
     M.querySelectorAll('.cv3-like,.cv3-save').forEach(function(b){b.setAttribute('aria-pressed','false')});
     M.querySelector('.no').textContent=(cur+1)+' / '+L.length;
@@ -135,5 +150,10 @@
   M.querySelectorAll('.cv3-like,.cv3-save').forEach(function(b){ b.onclick=function(){ b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true'); }; });
   document.addEventListener('keydown',function(e){ if(M.hidden) return; if(e.key==='Escape'){ if(!Z.hidden) closeZ(); else closeM(); return; } if(e.key==='ArrowLeft') M.querySelector('.pv').click(); if(e.key==='ArrowRight') M.querySelector('.nx').click(); if(!Z.hidden) zfill(); });
 
-  draw();
+  function hashOpen(){
+    var id=location.hash.slice(1), d=D.find(function(item){return item.id&&item.id===id});if(!d)return;
+    st.coh=d.coh>=3&&d.coh<=5?'3-5':String(d.coh);st.mo=0;st.pg=1;draw();openM(list().indexOf(d));
+  }
+  if(!D.length){var message=document.createElement('p');message.textContent='아직 발행된 기수 기록이 없습니다.';message.setAttribute('role','status');root.querySelector('.cv3-ig').replaceChildren(message);root.querySelector('.cv3-pg').hidden=true;return;}
+  draw();hashOpen();addEventListener('hashchange',hashOpen);
 })();

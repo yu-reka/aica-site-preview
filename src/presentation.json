@@ -1,0 +1,1936 @@
+{
+  "stories/reviews": {
+    "r-life-0": {
+      "card": {
+        "className": "idc cat-life coh7 fld3 tg4 pg1",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/card"
+      },
+      "row": {
+        "className": "rvr cat-life coh7 fld3 tg4 pg1",
+        "cgStyle": "background:#22D3EE",
+        "tgStyle": "background:#DFF8FC;color:#0B5563",
+        "template": "stories/reviews/row-2"
+      },
+      "detail": {
+        "className": "ov cat-life coh7 fld3 tg4",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/detail"
+      }
+    },
+    "r-class-0": {
+      "card": {
+        "className": "idc cat-class coh6 fld0 tg4 pg1",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-class coh6 fld0 tg4 pg1",
+        "cgStyle": "background:#FFE600",
+        "tgStyle": "background:#FFF8C2;color:#5A4F00",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-class coh6 fld0 tg4",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-proj-0": {
+      "card": {
+        "className": "idc cat-proj coh6 fld1 tg5 tg6 pg1",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-proj coh6 fld1 tg5 tg6 pg1",
+        "cgStyle": "background:#8CFF3F",
+        "tgStyle": "background:#ECFFD9;color:#2F5A12",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-proj coh6 fld1 tg5 tg6",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/detail-3"
+      }
+    },
+    "r-career-0": {
+      "card": {
+        "className": "idc cat-career cat-job coh6 fld1 tg4 tg6 pg1",
+        "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-career cat-job coh6 fld1 tg4 tg6 pg1",
+        "cgStyle": "background:#2457F5",
+        "tgStyle": "background:#DCE5F7;color:#15368F",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-career cat-job coh6 fld1 tg4 tg6",
+        "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
+        "template": "stories/reviews/detail-3"
+      }
+    },
+    "r-life-1": {
+      "card": {
+        "className": "idc cat-life coh7 fld1 tg5 pg1",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-life coh7 fld1 tg5 pg1",
+        "cgStyle": "background:#22D3EE",
+        "tgStyle": "background:#DFF8FC;color:#0B5563",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-life coh7 fld1 tg5",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-class-1": {
+      "card": {
+        "className": "idc cat-class coh5 fld1 tg5 pg1",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-class coh5 fld1 tg5 pg1",
+        "cgStyle": "background:#FFE600",
+        "tgStyle": "background:#FFF8C2;color:#5A4F00",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-class coh5 fld1 tg5",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-proj-1": {
+      "card": {
+        "className": "idc cat-proj coh5 fld2 tg5 pg1",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-proj coh5 fld2 tg5 pg1",
+        "cgStyle": "background:#8CFF3F",
+        "tgStyle": "background:#ECFFD9;color:#2F5A12",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-proj coh5 fld2 tg5",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-career-1": {
+      "card": {
+        "className": "idc cat-career cat-path coh7 fld2 tg4 pg1",
+        "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-career cat-path coh7 fld2 tg4 pg1",
+        "cgStyle": "background:#2457F5",
+        "tgStyle": "background:#DCE5F7;color:#15368F",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-career cat-path coh7 fld2 tg4",
+        "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-life-2": {
+      "card": {
+        "className": "idc cat-life coh6 fld2 tg5 pg1",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-life coh6 fld2 tg5 pg1",
+        "cgStyle": "background:#22D3EE",
+        "tgStyle": "background:#DFF8FC;color:#0B5563",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-life coh6 fld2 tg5",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-class-2": {
+      "card": {
+        "className": "idc cat-class coh4 fld2 tg5 tg6 pg1",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-class coh4 fld2 tg5 tg6 pg1",
+        "cgStyle": "background:#FFE600",
+        "tgStyle": "background:#FFF8C2;color:#5A4F00",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-class coh4 fld2 tg5 tg6",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/detail-3"
+      }
+    },
+    "r-proj-2": {
+      "card": {
+        "className": "idc cat-proj coh6 fld0 tg5 pg1",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-proj coh6 fld0 tg5 pg1",
+        "cgStyle": "background:#8CFF3F",
+        "tgStyle": "background:#ECFFD9;color:#2F5A12",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-proj coh6 fld0 tg5",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-career-2": {
+      "card": {
+        "className": "idc cat-career cat-job coh5 fld1 tg4 pg1",
+        "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-career cat-job coh5 fld1 tg4 pg1",
+        "cgStyle": "background:#2457F5",
+        "tgStyle": "background:#DCE5F7;color:#15368F",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-career cat-job coh5 fld1 tg4",
+        "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-life-3": {
+      "card": {
+        "className": "idc cat-life coh6 fld3 tg1 tg5 pg2",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-life coh6 fld3 tg1 tg5 pg2",
+        "cgStyle": "background:#22D3EE",
+        "tgStyle": "background:#DFF8FC;color:#0B5563",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-life coh6 fld3 tg1 tg5",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/detail-3"
+      }
+    },
+    "r-class-3": {
+      "card": {
+        "className": "idc cat-class coh7 fld0 tg4 pg2",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-class coh7 fld0 tg4 pg2",
+        "cgStyle": "background:#FFE600",
+        "tgStyle": "background:#FFF8C2;color:#5A4F00",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-class coh7 fld0 tg4",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-proj-3": {
+      "card": {
+        "className": "idc cat-proj coh5 fld0 tg4 pg2",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-proj coh5 fld0 tg4 pg2",
+        "cgStyle": "background:#8CFF3F",
+        "tgStyle": "background:#ECFFD9;color:#2F5A12",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-proj coh5 fld0 tg4",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-career-3": {
+      "card": {
+        "className": "idc cat-career cat-path coh6 fld3 tg6 pg2",
+        "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-career cat-path coh6 fld3 tg6 pg2",
+        "cgStyle": "background:#2457F5",
+        "tgStyle": "background:#DCE5F7;color:#15368F",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-career cat-path coh6 fld3 tg6",
+        "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-life-4": {
+      "card": {
+        "className": "idc cat-life coh6 fld1 tg5 pg2",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-life coh6 fld1 tg5 pg2",
+        "cgStyle": "background:#22D3EE",
+        "tgStyle": "background:#DFF8FC;color:#0B5563",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-life coh6 fld1 tg5",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-class-4": {
+      "card": {
+        "className": "idc cat-class coh6 fld2 tg5 pg2",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-class coh6 fld2 tg5 pg2",
+        "cgStyle": "background:#FFE600",
+        "tgStyle": "background:#FFF8C2;color:#5A4F00",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-class coh6 fld2 tg5",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-proj-4": {
+      "card": {
+        "className": "idc cat-proj coh7 fld0 tg5 pg2",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-proj coh7 fld0 tg5 pg2",
+        "cgStyle": "background:#8CFF3F",
+        "tgStyle": "background:#ECFFD9;color:#2F5A12",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-proj coh7 fld0 tg5",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-career-4": {
+      "card": {
+        "className": "idc cat-career cat-path coh7 fld0 tg6 pg2",
+        "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-career cat-path coh7 fld0 tg6 pg2",
+        "cgStyle": "background:#2457F5",
+        "tgStyle": "background:#DCE5F7;color:#15368F",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-career cat-path coh7 fld0 tg6",
+        "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-life-5": {
+      "card": {
+        "className": "idc cat-life coh4 fld2 tg4 pg2",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-life coh4 fld2 tg4 pg2",
+        "cgStyle": "background:#22D3EE",
+        "tgStyle": "background:#DFF8FC;color:#0B5563",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-life coh4 fld2 tg4",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-class-5": {
+      "card": {
+        "className": "idc cat-class coh5 fld1 tg0 pg2",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-class coh5 fld1 tg0 pg2",
+        "cgStyle": "background:#FFE600",
+        "tgStyle": "background:#FFF8C2;color:#5A4F00",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-class coh5 fld1 tg0",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-proj-5": {
+      "card": {
+        "className": "idc cat-proj coh7 fld3 tg5 pg2",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-proj coh7 fld3 tg5 pg2",
+        "cgStyle": "background:#8CFF3F",
+        "tgStyle": "background:#ECFFD9;color:#2F5A12",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-proj coh7 fld3 tg5",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-career-5": {
+      "card": {
+        "className": "idc cat-career cat-job coh4 fld2 tg4 tg6 pg2",
+        "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-career cat-job coh4 fld2 tg4 tg6 pg2",
+        "cgStyle": "background:#2457F5",
+        "tgStyle": "background:#DCE5F7;color:#15368F",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-career cat-job coh4 fld2 tg4 tg6",
+        "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
+        "template": "stories/reviews/detail-3"
+      }
+    },
+    "r-life-6": {
+      "card": {
+        "className": "idc cat-life coh5 fld2 tg2 pg3",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-life coh5 fld2 tg2 pg3",
+        "cgStyle": "background:#22D3EE",
+        "tgStyle": "background:#DFF8FC;color:#0B5563",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-life coh5 fld2 tg2",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-class-6": {
+      "card": {
+        "className": "idc cat-class coh3 fld3 tg6 pg3",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-class coh3 fld3 tg6 pg3",
+        "cgStyle": "background:#FFE600",
+        "tgStyle": "background:#FFF8C2;color:#5A4F00",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-class coh3 fld3 tg6",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-proj-6": {
+      "card": {
+        "className": "idc cat-proj coh4 fld0 tg4 tg6 pg3",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-proj coh4 fld0 tg4 tg6 pg3",
+        "cgStyle": "background:#8CFF3F",
+        "tgStyle": "background:#ECFFD9;color:#2F5A12",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-proj coh4 fld0 tg4 tg6",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/detail-3"
+      }
+    },
+    "r-career-6": {
+      "card": {
+        "className": "idc cat-career cat-job coh5 fld1 tg6 pg3",
+        "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-career cat-job coh5 fld1 tg6 pg3",
+        "cgStyle": "background:#2457F5",
+        "tgStyle": "background:#DCE5F7;color:#15368F",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-career cat-job coh5 fld1 tg6",
+        "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-life-7": {
+      "card": {
+        "className": "idc cat-life coh7 fld2 tg4 pg3",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-life coh7 fld2 tg4 pg3",
+        "cgStyle": "background:#22D3EE",
+        "tgStyle": "background:#DFF8FC;color:#0B5563",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-life coh7 fld2 tg4",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-class-7": {
+      "card": {
+        "className": "idc cat-class coh6 fld3 tg1 tg5 pg3",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-class coh6 fld3 tg1 tg5 pg3",
+        "cgStyle": "background:#FFE600",
+        "tgStyle": "background:#FFF8C2;color:#5A4F00",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-class coh6 fld3 tg1 tg5",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/detail-3"
+      }
+    },
+    "r-proj-7": {
+      "card": {
+        "className": "idc cat-proj coh7 fld1 tg4 pg3",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-proj coh7 fld1 tg4 pg3",
+        "cgStyle": "background:#8CFF3F",
+        "tgStyle": "background:#ECFFD9;color:#2F5A12",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-proj coh7 fld1 tg4",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-career-7": {
+      "card": {
+        "className": "idc cat-career cat-job coh3 fld3 tg5 tg6 pg3",
+        "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-career cat-job coh3 fld3 tg5 tg6 pg3",
+        "cgStyle": "background:#2457F5",
+        "tgStyle": "background:#DCE5F7;color:#15368F",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-career cat-job coh3 fld3 tg5 tg6",
+        "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
+        "template": "stories/reviews/detail-3"
+      }
+    },
+    "r-life-8": {
+      "card": {
+        "className": "idc cat-life coh5 fld1 tg4 pg3",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-life coh5 fld1 tg4 pg3",
+        "cgStyle": "background:#22D3EE",
+        "tgStyle": "background:#DFF8FC;color:#0B5563",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-life coh5 fld1 tg4",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-class-8": {
+      "card": {
+        "className": "idc cat-class coh4 fld0 tg4 pg3",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-class coh4 fld0 tg4 pg3",
+        "cgStyle": "background:#FFE600",
+        "tgStyle": "background:#FFF8C2;color:#5A4F00",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-class coh4 fld0 tg4",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-proj-8": {
+      "card": {
+        "className": "idc cat-proj coh6 fld1 tg0 tg5 pg3",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-proj coh6 fld1 tg0 tg5 pg3",
+        "cgStyle": "background:#8CFF3F",
+        "tgStyle": "background:#ECFFD9;color:#2F5A12",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-proj coh6 fld1 tg0 tg5",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/detail-3"
+      }
+    },
+    "r-life-9": {
+      "card": {
+        "className": "idc cat-life coh3 fld0 tg3 tg4 pg3",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-life coh3 fld0 tg3 tg4 pg3",
+        "cgStyle": "background:#22D3EE",
+        "tgStyle": "background:#DFF8FC;color:#0B5563",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-life coh3 fld0 tg3 tg4",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/detail-3"
+      }
+    },
+    "r-class-9": {
+      "card": {
+        "className": "idc cat-class coh7 fld1 tg4 pg4",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-class coh7 fld1 tg4 pg4",
+        "cgStyle": "background:#FFE600",
+        "tgStyle": "background:#FFF8C2;color:#5A4F00",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-class coh7 fld1 tg4",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-proj-9": {
+      "card": {
+        "className": "idc cat-proj coh3 fld0 tg5 pg4",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-proj coh3 fld0 tg5 pg4",
+        "cgStyle": "background:#8CFF3F",
+        "tgStyle": "background:#ECFFD9;color:#2F5A12",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-proj coh3 fld0 tg5",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-life-10": {
+      "card": {
+        "className": "idc cat-life coh7 fld0 tg5 pg4",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-life coh7 fld0 tg5 pg4",
+        "cgStyle": "background:#22D3EE",
+        "tgStyle": "background:#DFF8FC;color:#0B5563",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-life coh7 fld0 tg5",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-class-10": {
+      "card": {
+        "className": "idc cat-class coh5 fld3 tg5 tg6 pg4",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-class coh5 fld3 tg5 tg6 pg4",
+        "cgStyle": "background:#FFE600",
+        "tgStyle": "background:#FFF8C2;color:#5A4F00",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-class coh5 fld3 tg5 tg6",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/detail-3"
+      }
+    },
+    "r-proj-10": {
+      "card": {
+        "className": "idc cat-proj coh5 fld2 tg5 pg4",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-proj coh5 fld2 tg5 pg4",
+        "cgStyle": "background:#8CFF3F",
+        "tgStyle": "background:#ECFFD9;color:#2F5A12",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-proj coh5 fld2 tg5",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-life-11": {
+      "card": {
+        "className": "idc cat-life coh6 fld1 tg0 tg4 pg4",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-life coh6 fld1 tg0 tg4 pg4",
+        "cgStyle": "background:#22D3EE",
+        "tgStyle": "background:#DFF8FC;color:#0B5563",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-life coh6 fld1 tg0 tg4",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/detail-3"
+      }
+    },
+    "r-class-11": {
+      "card": {
+        "className": "idc cat-class coh7 fld2 tg2 pg4",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-class coh7 fld2 tg2 pg4",
+        "cgStyle": "background:#FFE600",
+        "tgStyle": "background:#FFF8C2;color:#5A4F00",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-class coh7 fld2 tg2",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-proj-11": {
+      "card": {
+        "className": "idc cat-proj coh7 fld2 tg5 pg4",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-proj coh7 fld2 tg5 pg4",
+        "cgStyle": "background:#8CFF3F",
+        "tgStyle": "background:#ECFFD9;color:#2F5A12",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-proj coh7 fld2 tg5",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-life-12": {
+      "card": {
+        "className": "idc cat-life coh6 fld3 tg5 pg4",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-life coh6 fld3 tg5 pg4",
+        "cgStyle": "background:#22D3EE",
+        "tgStyle": "background:#DFF8FC;color:#0B5563",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-life coh6 fld3 tg5",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-class-12": {
+      "card": {
+        "className": "idc cat-class coh7 fld0 tg4 tg5 pg4",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-class coh7 fld0 tg4 tg5 pg4",
+        "cgStyle": "background:#FFE600",
+        "tgStyle": "background:#FFF8C2;color:#5A4F00",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-class coh7 fld0 tg4 tg5",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/detail-3"
+      }
+    },
+    "r-proj-12": {
+      "card": {
+        "className": "idc cat-proj coh7 fld0 tg6 pg4",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-proj coh7 fld0 tg6 pg4",
+        "cgStyle": "background:#8CFF3F",
+        "tgStyle": "background:#ECFFD9;color:#2F5A12",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-proj coh7 fld0 tg6",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-life-13": {
+      "card": {
+        "className": "idc cat-life coh4 fld1 tg4 pg4",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-life coh4 fld1 tg4 pg4",
+        "cgStyle": "background:#22D3EE",
+        "tgStyle": "background:#DFF8FC;color:#0B5563",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-life coh4 fld1 tg4",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-class-13": {
+      "card": {
+        "className": "idc cat-class coh6 fld1 tg5 pg5",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-class coh6 fld1 tg5 pg5",
+        "cgStyle": "background:#FFE600",
+        "tgStyle": "background:#FFF8C2;color:#5A4F00",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-class coh6 fld1 tg5",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-proj-13": {
+      "card": {
+        "className": "idc cat-proj coh6 fld2 tg5 pg5",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-proj coh6 fld2 tg5 pg5",
+        "cgStyle": "background:#8CFF3F",
+        "tgStyle": "background:#ECFFD9;color:#2F5A12",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-proj coh6 fld2 tg5",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-life-14": {
+      "card": {
+        "className": "idc cat-life coh7 fld2 tg4 pg5",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-life coh7 fld2 tg4 pg5",
+        "cgStyle": "background:#22D3EE",
+        "tgStyle": "background:#DFF8FC;color:#0B5563",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-life coh7 fld2 tg4",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-class-14": {
+      "card": {
+        "className": "idc cat-class coh5 fld2 tg4 pg5",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-class coh5 fld2 tg4 pg5",
+        "cgStyle": "background:#FFE600",
+        "tgStyle": "background:#FFF8C2;color:#5A4F00",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-class coh5 fld2 tg4",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-proj-14": {
+      "card": {
+        "className": "idc cat-proj coh5 fld0 tg5 pg5",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-proj coh5 fld0 tg5 pg5",
+        "cgStyle": "background:#8CFF3F",
+        "tgStyle": "background:#ECFFD9;color:#2F5A12",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-proj coh5 fld0 tg5",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-life-15": {
+      "card": {
+        "className": "idc cat-life coh5 fld1 tg0 pg5",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-life coh5 fld1 tg0 pg5",
+        "cgStyle": "background:#22D3EE",
+        "tgStyle": "background:#DFF8FC;color:#0B5563",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-life coh5 fld1 tg0",
+        "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-class-15": {
+      "card": {
+        "className": "idc cat-class coh3 fld3 tg4 pg5",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-class coh3 fld3 tg4 pg5",
+        "cgStyle": "background:#FFE600",
+        "tgStyle": "background:#FFF8C2;color:#5A4F00",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-class coh3 fld3 tg4",
+        "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
+        "template": "stories/reviews/detail-2"
+      }
+    },
+    "r-proj-15": {
+      "card": {
+        "className": "idc cat-proj coh4 fld0 tg4 pg5",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/card-2"
+      },
+      "row": {
+        "className": "rvr cat-proj coh4 fld0 tg4 pg5",
+        "cgStyle": "background:#8CFF3F",
+        "tgStyle": "background:#ECFFD9;color:#2F5A12",
+        "template": "stories/reviews/row"
+      },
+      "detail": {
+        "className": "ov cat-proj coh4 fld0 tg4",
+        "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
+        "template": "stories/reviews/detail-2"
+      }
+    }
+  },
+  "stories/interviews": {
+    "iv-1": {
+      "card": {
+        "template": "stories/interviews/card"
+      },
+      "detail": {
+        "template": "stories/interviews/detail"
+      }
+    },
+    "iv-2": {
+      "card": {
+        "template": "stories/interviews/card-2"
+      },
+      "detail": {
+        "template": "stories/interviews/detail-5"
+      }
+    },
+    "iv-7": {
+      "card": {
+        "template": "stories/interviews/card-5"
+      },
+      "detail": {
+        "template": "stories/interviews/detail-3"
+      }
+    },
+    "iv-3": {
+      "card": {
+        "template": "stories/interviews/card-2"
+      },
+      "detail": {
+        "template": "stories/interviews/detail-7"
+      }
+    },
+    "iv-4": {
+      "card": {
+        "template": "stories/interviews/card-3"
+      },
+      "detail": {
+        "template": "stories/interviews/detail-4"
+      }
+    },
+    "iv-5": {
+      "card": {
+        "template": "stories/interviews/card-4"
+      },
+      "detail": {
+        "template": "stories/interviews/detail-6"
+      }
+    },
+    "iv-6": {
+      "card": {
+        "template": "stories/interviews/card-2"
+      },
+      "detail": {
+        "template": "stories/interviews/detail-2"
+      }
+    }
+  },
+  "stories/projects": {
+    "pj-1": {
+      "card": {
+        "template": "stories/projects/card"
+      },
+      "detail": {
+        "template": "stories/projects/detail-5"
+      }
+    },
+    "pj-2": {
+      "card": {
+        "template": "stories/projects/card-5"
+      },
+      "detail": {
+        "template": "stories/projects/detail-4"
+      }
+    },
+    "pj-3": {
+      "card": {
+        "template": "stories/projects/card-6"
+      },
+      "detail": {
+        "template": "stories/projects/detail"
+      }
+    },
+    "pj-4": {
+      "card": {
+        "template": "stories/projects/card-3"
+      },
+      "detail": {
+        "template": "stories/projects/detail-2"
+      }
+    },
+    "pj-5": {
+      "card": {
+        "template": "stories/projects/card-2"
+      },
+      "detail": {
+        "template": "stories/projects/detail-6"
+      }
+    },
+    "pj-6": {
+      "card": {
+        "template": "stories/projects/card-4"
+      },
+      "detail": {
+        "template": "stories/projects/detail-3"
+      }
+    }
+  },
+  "stories/cohorts": {
+    "cohort-story-1": {
+      "card": {
+        "className": "st c7 g6",
+        "style": "--c:#10203D",
+        "template": "stories/cohorts/card-7"
+      }
+    },
+    "cohort-story-2": {
+      "card": {
+        "className": "st c7 g2",
+        "style": "--c:#10203D",
+        "template": "stories/cohorts/card-3"
+      }
+    },
+    "cohort-story-3": {
+      "card": {
+        "className": "st c7 g1",
+        "style": "--c:#10203D",
+        "template": "stories/cohorts/card-6"
+      }
+    },
+    "cohort-story-4": {
+      "card": {
+        "className": "st c7 g0 g1",
+        "style": "--c:#10203D",
+        "template": "stories/cohorts/card-8"
+      }
+    },
+    "cohort-story-5": {
+      "card": {
+        "className": "st c7 g0",
+        "style": "--c:#10203D",
+        "template": "stories/cohorts/card-6"
+      }
+    },
+    "cohort-story-6": {
+      "card": {
+        "className": "st c6 g9 g7",
+        "style": "--c:#2457F5",
+        "template": "stories/cohorts/card-8"
+      }
+    },
+    "cohort-story-7": {
+      "card": {
+        "className": "st c6 g4 g6",
+        "style": "--c:#2457F5",
+        "template": "stories/cohorts/card-6"
+      }
+    },
+    "cohort-story-8": {
+      "card": {
+        "className": "st c6 g5",
+        "style": "--c:#2457F5",
+        "template": "stories/cohorts/card-2"
+      }
+    },
+    "cohort-story-9": {
+      "card": {
+        "className": "st c6 g3",
+        "style": "--c:#2457F5",
+        "template": "stories/cohorts/card-5"
+      }
+    },
+    "cohort-story-10": {
+      "card": {
+        "className": "st c6 g0",
+        "style": "--c:#2457F5",
+        "template": "stories/cohorts/card-4"
+      }
+    },
+    "cohort-story-11": {
+      "card": {
+        "className": "st c5 g4 g6",
+        "style": "--c:#2457F5",
+        "template": "stories/cohorts/card"
+      }
+    },
+    "cohort-story-12": {
+      "card": {
+        "className": "st c5 g3",
+        "style": "--c:#2457F5",
+        "template": "stories/cohorts/card"
+      }
+    },
+    "cohort-story-13": {
+      "card": {
+        "className": "st c4 g8",
+        "style": "--c:#6E97F2",
+        "template": "stories/cohorts/card"
+      }
+    },
+    "cohort-story-14": {
+      "card": {
+        "className": "st c4 g7",
+        "style": "--c:#6E97F2",
+        "template": "stories/cohorts/card"
+      }
+    },
+    "cohort-story-15": {
+      "card": {
+        "className": "st c3 g8",
+        "style": "--c:#8FA8D8",
+        "template": "stories/cohorts/card-9"
+      }
+    },
+    "cohort-story-16": {
+      "card": {
+        "className": "st c3 g8",
+        "style": "--c:#8FA8D8",
+        "template": "stories/cohorts/card-6"
+      }
+    },
+    "cohort-story-17": {
+      "card": {
+        "className": "st c3 g0",
+        "style": "--c:#8FA8D8",
+        "template": "stories/cohorts/card"
+      }
+    }
+  },
+  "life/food": {
+    "place-1": {
+      "card": {
+        "groupClass": "fdc-g solo",
+        "template": "life/food/card-2"
+      }
+    },
+    "place-2": {
+      "card": {
+        "groupClass": "fdc-g group",
+        "template": "life/food/card-2"
+      }
+    },
+    "place-3": {
+      "card": {
+        "groupClass": "fdc-g group",
+        "template": "life/food/card-2"
+      }
+    },
+    "place-4": {
+      "card": {
+        "groupClass": "fdc-g group",
+        "template": "life/food/card-2"
+      }
+    },
+    "place-5": {
+      "card": {
+        "groupClass": "fdc-g solo",
+        "template": "life/food/card-2"
+      }
+    },
+    "place-6": {
+      "card": {
+        "groupClass": "fdc-g group",
+        "template": "life/food/card-2"
+      }
+    },
+    "place-7": {
+      "card": {
+        "groupClass": "fdc-g group",
+        "template": "life/food/card-2"
+      }
+    },
+    "place-8": {
+      "card": {
+        "groupClass": "fdc-g solo",
+        "template": "life/food/card-2"
+      }
+    },
+    "place-9": {
+      "card": {
+        "groupClass": "fdc-g group",
+        "template": "life/food/card-2"
+      }
+    },
+    "place-10": {
+      "card": {
+        "groupClass": "fdc-g solo",
+        "template": "life/food/card-2"
+      }
+    },
+    "place-11": {
+      "card": {
+        "groupClass": "fdc-g solo",
+        "template": "life/food/card-2"
+      }
+    },
+    "place-12": {
+      "card": {
+        "groupClass": "fdc-g solo",
+        "template": "life/food/card-2"
+      }
+    },
+    "place-13": {
+      "card": {
+        "groupClass": "fdc-g solo",
+        "template": "life/food/card-2"
+      }
+    },
+    "place-14": {
+      "card": {
+        "groupClass": "fdc-g solo",
+        "template": "life/food/card"
+      }
+    },
+    "place-15": {
+      "card": {
+        "groupClass": "fdc-g solo",
+        "template": "life/food/card"
+      }
+    },
+    "place-16": {
+      "card": {
+        "groupClass": "fdc-g group",
+        "template": "life/food/card"
+      }
+    },
+    "place-17": {
+      "card": {
+        "groupClass": "fdc-g group",
+        "template": "life/food/card"
+      }
+    },
+    "place-18": {
+      "card": {
+        "groupClass": "fdc-g solo",
+        "template": "life/food/card"
+      }
+    },
+    "place-19": {
+      "card": {
+        "groupClass": "fdc-g solo",
+        "template": "life/food/card"
+      }
+    },
+    "place-20": {
+      "card": {
+        "groupClass": "fdc-g group",
+        "template": "life/food/card"
+      }
+    }
+  },
+  "life/housing": {
+    "area-1": {
+      "panel": {
+        "template": "life/housing/panel"
+      }
+    },
+    "area-2": {
+      "panel": {
+        "template": "life/housing/panel-5"
+      }
+    },
+    "area-3": {
+      "panel": {
+        "template": "life/housing/panel-7"
+      }
+    },
+    "area-4": {
+      "panel": {
+        "template": "life/housing/panel-3"
+      }
+    },
+    "area-5": {
+      "panel": {
+        "template": "life/housing/panel-4"
+      }
+    },
+    "area-6": {
+      "panel": {
+        "template": "life/housing/panel-2"
+      }
+    },
+    "area-7": {
+      "panel": {
+        "template": "life/housing/panel-6"
+      }
+    }
+  },
+  "life/leisure": {
+    "leisure-1": {
+      "card": {
+        "style": "--i:0;--rt:-5deg;--z:4",
+        "photoClass": "fsc-ph im-trailp",
+        "template": "life/leisure/card"
+      }
+    },
+    "leisure-2": {
+      "card": {
+        "style": "--i:1;--rt:3deg;--z:3",
+        "photoClass": "fsc-ph im-riverp",
+        "template": "life/leisure/card"
+      }
+    },
+    "leisure-3": {
+      "card": {
+        "style": "--i:2;--rt:-2deg;--z:2",
+        "photoClass": "fsc-ph im-cafest",
+        "template": "life/leisure/card"
+      }
+    },
+    "leisure-4": {
+      "card": {
+        "style": "--i:3;--rt:4deg;--z:1",
+        "photoClass": "fsc-ph im-yl_tmp",
+        "template": "life/leisure/card"
+      }
+    },
+    "leisure-5": {
+      "card": {
+        "style": "--i:0;--rt:-5deg;--z:4",
+        "photoClass": "fsc-ph im-acc_tmp",
+        "template": "life/leisure/card"
+      }
+    },
+    "leisure-6": {
+      "card": {
+        "style": "--i:1;--rt:3deg;--z:3",
+        "photoClass": "fsc-ph im-plaza_tmp",
+        "template": "life/leisure/card"
+      }
+    },
+    "leisure-7": {
+      "card": {
+        "style": "--i:2;--rt:-2deg;--z:2",
+        "photoClass": "fsc-ph im-cj_tmp",
+        "template": "life/leisure/card"
+      }
+    },
+    "leisure-8": {
+      "card": {
+        "style": "--i:3;--rt:4deg;--z:1",
+        "photoClass": "fsc-ph im-mkt_tmp",
+        "template": "life/leisure/card"
+      }
+    },
+    "leisure-9": {
+      "card": {
+        "style": "--i:0;--rt:-5deg;--z:5",
+        "photoClass": "fsc-ph im-sajikp",
+        "template": "life/leisure/card"
+      }
+    },
+    "leisure-10": {
+      "card": {
+        "style": "--i:1;--rt:3deg;--z:4",
+        "photoClass": "fsc-ph im-std_tmp",
+        "template": "life/leisure/card"
+      }
+    },
+    "leisure-11": {
+      "card": {
+        "style": "--i:2;--rt:-2deg;--z:3",
+        "photoClass": "fsc-ph im-park_tmp",
+        "template": "life/leisure/card"
+      }
+    },
+    "leisure-12": {
+      "card": {
+        "style": "--i:3;--rt:4deg;--z:2",
+        "photoClass": "fsc-ph im-mud_tmp",
+        "template": "life/leisure/card"
+      }
+    },
+    "leisure-13": {
+      "card": {
+        "style": "--i:4;--rt:-3deg;--z:1",
+        "photoClass": "fsc-ph im-sj_tmp",
+        "template": "life/leisure/card"
+      }
+    }
+  },
+  "life/facilities": {
+    "bx9s-1-0": {
+      "panel": {
+        "template": "life/facilities/panel-4",
+        "photos": [
+          {
+            "className": "bx9-sl im-building",
+            "thumbnailClass": "bx9-tb im-building"
+          },
+          {
+            "className": "bx9-sl im-entrance",
+            "thumbnailClass": "bx9-tb im-entrance"
+          },
+          {
+            "className": "bx9-sl im-building",
+            "style": "--bs:220%;--bp:30% 78%;",
+            "thumbnailClass": "bx9-tb im-building",
+            "thumbnailStyle": "--bs:220%;--bp:30% 78%;"
+          }
+        ]
+      }
+    },
+    "bx9s-1-1": {
+      "panel": {
+        "template": "life/facilities/panel-2",
+        "photos": [
+          {
+            "className": "bx9-sl im-cafe_k",
+            "thumbnailClass": "bx9-tb im-cafe_k"
+          },
+          {
+            "className": "bx9-sl im-b_cafe",
+            "style": "--bs:230%;--bp:70% 40%;",
+            "thumbnailClass": "bx9-tb im-b_cafe",
+            "thumbnailStyle": "--bs:230%;--bp:70% 40%;"
+          },
+          {
+            "className": "bx9-sl im-x3_table",
+            "thumbnailClass": "bx9-tb im-x3_table"
+          }
+        ]
+      }
+    },
+    "bx9s-1-2": {
+      "panel": {
+        "template": "life/facilities/panel-3",
+        "photos": [
+          {
+            "className": "bx9-sl im-x2_room",
+            "thumbnailClass": "bx9-tb im-x2_room"
+          },
+          {
+            "className": "bx9-sl im-x3_table",
+            "style": "--bs:220%;--bp:70% 60%;",
+            "thumbnailClass": "bx9-tb im-x3_table",
+            "thumbnailStyle": "--bs:220%;--bp:70% 60%;"
+          },
+          {
+            "className": "bx9-sl im-x2_room",
+            "style": "--bs:230%;--bp:78% 30%;",
+            "thumbnailClass": "bx9-tb im-x2_room",
+            "thumbnailStyle": "--bs:230%;--bp:78% 30%;"
+          }
+        ]
+      }
+    },
+    "bx9s-23-0": {
+      "panel": {
+        "template": "life/facilities/panel",
+        "photos": [
+          {
+            "className": "bx9-sl im-classroom",
+            "thumbnailClass": "bx9-tb im-classroom"
+          },
+          {
+            "className": "bx9-sl im-b_class",
+            "style": "--bs:240%;--bp:28% 72%;",
+            "thumbnailClass": "bx9-tb im-b_class",
+            "thumbnailStyle": "--bs:240%;--bp:28% 72%;"
+          },
+          {
+            "className": "bx9-sl im-classroom",
+            "style": "--bs:230%;--bp:14% 18%;",
+            "thumbnailClass": "bx9-tb im-classroom",
+            "thumbnailStyle": "--bs:230%;--bp:14% 18%;"
+          }
+        ]
+      }
+    },
+    "bx9s-23-1": {
+      "panel": {
+        "template": "life/facilities/panel-7",
+        "photos": [
+          {
+            "className": "bx9-sl im-rest_tmp",
+            "style": "--bp:left bottom;",
+            "thumbnailClass": "bx9-tb im-rest_tmp",
+            "thumbnailStyle": "--bp:left bottom;"
+          },
+          {
+            "className": "bx9-sl im-rest_tmp",
+            "style": "--bs:210%;--bp:78% 72%;",
+            "thumbnailClass": "bx9-tb im-rest_tmp",
+            "thumbnailStyle": "--bs:210%;--bp:78% 72%;"
+          },
+          {
+            "className": "bx9-sl im-rest_tmp",
+            "style": "--bs:230%;--bp:4% 72%;",
+            "thumbnailClass": "bx9-tb im-rest_tmp",
+            "thumbnailStyle": "--bs:230%;--bp:4% 72%;"
+          }
+        ]
+      }
+    },
+    "bx9s-23-2": {
+      "panel": {
+        "template": "life/facilities/panel-6",
+        "photos": [
+          {
+            "className": "bx9-sl im-project",
+            "thumbnailClass": "bx9-tb im-project"
+          },
+          {
+            "className": "bx9-sl im-x3_table",
+            "thumbnailClass": "bx9-tb im-x3_table"
+          },
+          {
+            "className": "bx9-sl im-b_project",
+            "style": "--bs:230%;--bp:62% 88%;",
+            "thumbnailClass": "bx9-tb im-b_project",
+            "thumbnailStyle": "--bs:230%;--bp:62% 88%;"
+          }
+        ]
+      }
+    },
+    "bx9s-8-0": {
+      "panel": {
+        "template": "life/facilities/panel-5",
+        "photos": [
+          {
+            "className": "bx9-sl im-cafe8_tmp",
+            "thumbnailClass": "bx9-tb im-cafe8_tmp"
+          },
+          {
+            "className": "bx9-sl im-counter_tmp",
+            "thumbnailClass": "bx9-tb im-counter_tmp"
+          }
+        ]
+      }
+    }
+  },
+  "check/faq": {
+    "faq-1": {
+      "item": {
+        "template": "check/faq/item-2"
+      }
+    },
+    "faq-2": {
+      "item": {
+        "template": "check/faq/item-2"
+      }
+    },
+    "faq-3": {
+      "item": {
+        "template": "check/faq/item-2"
+      }
+    },
+    "faq-4": {
+      "item": {
+        "template": "check/faq/item-2"
+      }
+    },
+    "faq-5": {
+      "item": {
+        "template": "check/faq/item-2"
+      }
+    },
+    "faq-6": {
+      "item": {
+        "template": "check/faq/item"
+      }
+    },
+    "faq-7": {
+      "item": {
+        "template": "check/faq/item"
+      }
+    },
+    "faq-8": {
+      "item": {
+        "template": "check/faq/item"
+      }
+    },
+    "faq-9": {
+      "item": {
+        "template": "check/faq/item"
+      }
+    },
+    "faq-10": {
+      "item": {
+        "template": "check/faq/item"
+      }
+    },
+    "faq-11": {
+      "item": {
+        "template": "check/faq/item"
+      }
+    },
+    "faq-12": {
+      "item": {
+        "template": "check/faq/item"
+      }
+    },
+    "faq-13": {
+      "item": {
+        "template": "check/faq/item"
+      }
+    },
+    "faq-14": {
+      "item": {
+        "template": "check/faq/item"
+      }
+    },
+    "faq-15": {
+      "item": {
+        "template": "check/faq/item"
+      }
+    },
+    "faq-16": {
+      "item": {
+        "template": "check/faq/item"
+      }
+    },
+    "faq-17": {
+      "item": {
+        "template": "check/faq/item"
+      }
+    },
+    "faq-18": {
+      "item": {
+        "template": "check/faq/item"
+      }
+    },
+    "faq-19": {
+      "item": {
+        "template": "check/faq/item"
+      }
+    },
+    "faq-20": {
+      "item": {
+        "template": "check/faq/item"
+      }
+    },
+    "faq-21": {
+      "item": {
+        "template": "check/faq/item"
+      }
+    }
+  },
+  "check/criteria": {
+    "criteria-1": {
+      "item": {
+        "template": "check/criteria/item"
+      }
+    },
+    "criteria-2": {
+      "item": {
+        "template": "check/criteria/item"
+      }
+    },
+    "criteria-3": {
+      "item": {
+        "template": "check/criteria/item"
+      }
+    }
+  },
+  "check/checklist": {
+    "checklist-1": {
+      "item": {
+        "template": "check/checklist/item"
+      }
+    },
+    "checklist-2": {
+      "item": {
+        "template": "check/checklist/item"
+      }
+    },
+    "checklist-3": {
+      "item": {
+        "template": "check/checklist/item"
+      }
+    },
+    "checklist-4": {
+      "item": {
+        "template": "check/checklist/item"
+      }
+    },
+    "checklist-5": {
+      "item": {
+        "template": "check/checklist/item"
+      }
+    }
+  },
+  "check/process": {
+    "process-1": {
+      "item": {
+        "template": "check/process/item"
+      }
+    },
+    "process-2": {
+      "item": {
+        "template": "check/process/item-2"
+      }
+    },
+    "process-3": {
+      "item": {
+        "template": "check/process/item-3"
+      }
+    },
+    "process-4": {
+      "item": {
+        "template": "check/process/item-4"
+      }
+    }
+  },
+  "check/benefits": {
+    "benefits-1": {
+      "item": {
+        "template": "check/benefits/item"
+      }
+    },
+    "benefits-2": {
+      "item": {
+        "template": "check/benefits/item-2"
+      }
+    },
+    "benefits-3": {
+      "item": {
+        "template": "check/benefits/item-3"
+      }
+    },
+    "benefits-4": {
+      "item": {
+        "template": "check/benefits/item-4"
+      }
+    },
+    "benefits-5": {
+      "item": {
+        "template": "check/benefits/item-5"
+      }
+    },
+    "benefits-6": {
+      "item": {
+        "template": "check/benefits/item-6"
+      }
+    },
+    "benefits-7": {
+      "item": {
+        "template": "check/benefits/item-7"
+      }
+    },
+    "benefits-8": {
+      "item": {
+        "template": "check/benefits/item-8"
+      }
+    }
+  },
+  "about/gallery": {
+    "gallery-1": {
+      "slide": {
+        "template": "about/gallery/slide"
+      }
+    },
+    "gallery-2": {
+      "slide": {
+        "template": "about/gallery/slide-2"
+      }
+    },
+    "gallery-3": {
+      "slide": {
+        "template": "about/gallery/slide-3"
+      }
+    },
+    "gallery-4": {
+      "slide": {
+        "template": "about/gallery/slide-4"
+      }
+    },
+    "gallery-5": {
+      "slide": {
+        "template": "about/gallery/slide-4"
+      }
+    },
+    "gallery-6": {
+      "slide": {
+        "template": "about/gallery/slide-4"
+      }
+    },
+    "gallery-7": {
+      "slide": {
+        "template": "about/gallery/slide-5"
+      }
+    },
+    "gallery-8": {
+      "slide": {
+        "template": "about/gallery/slide-6"
+      }
+    },
+    "gallery-9": {
+      "slide": {
+        "template": "about/gallery/slide-4"
+      }
+    },
+    "gallery-10": {
+      "slide": {
+        "template": "about/gallery/slide-4"
+      }
+    },
+    "gallery-11": {
+      "slide": {
+        "template": "about/gallery/slide-4"
+      }
+    },
+    "gallery-12": {
+      "slide": {
+        "template": "about/gallery/slide-4"
+      }
+    },
+    "gallery-13": {
+      "slide": {
+        "template": "about/gallery/slide-7"
+      }
+    },
+    "gallery-14": {
+      "slide": {
+        "template": "about/gallery/slide-4"
+      }
+    },
+    "gallery-15": {
+      "slide": {
+        "template": "about/gallery/slide-4"
+      }
+    }
+  }
+}

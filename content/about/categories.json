@@ -1,0 +1,22 @@
+[
+  {
+    "id": "orientation",
+    "label": "오리엔테이션"
+  },
+  {
+    "id": "lecture",
+    "label": "특강"
+  },
+  {
+    "id": "field",
+    "label": "현장학습"
+  },
+  {
+    "id": "jobfair",
+    "label": "취업박람회"
+  },
+  {
+    "id": "graduation",
+    "label": "수료식"
+  }
+]

@@ -1,0 +1,166 @@
+[
+  {
+    "id": "benefits-1",
+    "number": "BENEFIT 01",
+    "title": "교육지원금",
+    "descriptionRichText": [
+      "교육지원금 ",
+      {
+        "tag": "b",
+        "attrs": {},
+        "children": [
+          "최대 50만원"
+        ]
+      },
+      " 지원"
+    ],
+    "noteRichText": [
+      {
+        "tag": "small",
+        "attrs": {},
+        "children": [
+          "광주 시외 거주자가 광주 시내로 거주지를 이동한 경우 주거지원비 ",
+          {
+            "tag": "b",
+            "attrs": {},
+            "children": [
+              "최대 35만원"
+            ]
+          },
+          " 추가 지원"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "benefits-2",
+    "number": "BENEFIT 02",
+    "title": "프로젝트 지원금",
+    "descriptionRichText": [
+      "프로젝트 기간 동안 쾌적하게 진행할 수 있도록 ",
+      {
+        "tag": "b",
+        "attrs": {},
+        "children": [
+          "지원금"
+        ]
+      },
+      "을 제공해요."
+    ]
+  },
+  {
+    "id": "benefits-3",
+    "number": "BENEFIT 03",
+    "title": "개별 노트북 지원",
+    "descriptionRichText": [
+      "교육 기간 동안 사용할 수 있는",
+      {
+        "tag": "br",
+        "attrs": {},
+        "children": []
+      },
+      {
+        "tag": "b",
+        "attrs": {},
+        "children": [
+          "개별 노트북과 모니터"
+        ]
+      },
+      "를 대여해요."
+    ]
+  },
+  {
+    "id": "benefits-4",
+    "number": "BENEFIT 04",
+    "title": "교재 및 실습 자료 제공",
+    "descriptionRichText": [
+      "수업을 위한 교재와 실습 자료를",
+      {
+        "tag": "br",
+        "attrs": {},
+        "children": []
+      },
+      {
+        "tag": "b",
+        "attrs": {},
+        "children": [
+          "무료"
+        ]
+      },
+      "로 제공해요."
+    ]
+  },
+  {
+    "id": "benefits-5",
+    "number": "BENEFIT 05",
+    "title": "프로젝트 전문 지원",
+    "descriptionRichText": [
+      "완성도 높은 결과물을 낼 수 있도록",
+      {
+        "tag": "br",
+        "attrs": {},
+        "children": []
+      },
+      {
+        "tag": "b",
+        "attrs": {},
+        "children": [
+          "현직 멘토"
+        ]
+      },
+      "를 매칭해요."
+    ]
+  },
+  {
+    "id": "benefits-6",
+    "number": "BENEFIT 06",
+    "title": "인턴십 기회 제공",
+    "descriptionRichText": [
+      "우수 교육생으로 수료하면",
+      {
+        "tag": "br",
+        "attrs": {},
+        "children": []
+      },
+      {
+        "tag": "b",
+        "attrs": {},
+        "children": [
+          "이스트소프트 인턴십"
+        ]
+      },
+      " 기회를 제공해요."
+    ]
+  },
+  {
+    "id": "benefits-7",
+    "number": "BENEFIT 07",
+    "title": "취·창업 지원",
+    "descriptionRichText": [
+      "교육생의 취업과 창업을 ",
+      {
+        "tag": "b",
+        "attrs": {},
+        "children": [
+          "전문가와 함께"
+        ]
+      },
+      " 지원해요."
+    ]
+  },
+  {
+    "id": "benefits-8",
+    "number": "BENEFIT 08",
+    "title": "자격증 취득 지원",
+    "descriptionRichText": [
+      {
+        "tag": "b",
+        "attrs": {},
+        "children": [
+          "AI·IT·SW 자격증"
+        ]
+      },
+      "을 취득할 수 있도록 지원해요."
+    ]
+  }
+]

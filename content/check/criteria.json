@@ -1,0 +1,47 @@
+[
+  {
+    "id": "criteria-1",
+    "label": "나이",
+    "valueRichText": [
+      {
+        "tag": "mark",
+        "attrs": {},
+        "children": [
+          "만 18~39세"
+        ]
+      },
+      " 이하"
+    ],
+    "description": "전국 청년 미취업자"
+  },
+  {
+    "id": "criteria-2",
+    "label": "학력",
+    "valueRichText": [
+      {
+        "tag": "mark",
+        "attrs": {},
+        "children": [
+          "학력"
+        ]
+      },
+      " 무관"
+    ],
+    "description": "학력과 상관없이 지원할 수 있어요"
+  },
+  {
+    "id": "criteria-3",
+    "label": "전공",
+    "valueRichText": [
+      {
+        "tag": "mark",
+        "attrs": {},
+        "children": [
+          "전공"
+        ]
+      },
+      " 무관"
+    ],
+    "description": "비전공자도 지원할 수 있어요"
+  }
+]

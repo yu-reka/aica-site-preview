@@ -159,8 +159,10 @@
     var lay = function(){
       if (!mq.matches){ var pf = $('.cv3-prof', root); if (pf) pf.classList.remove('sm-cv-prof'); return; }
       if (busy) return;
+      var prof = $('.cv3-prof', root), gt = $('.cv3-gt', root);
+      if (!prof || !gt) return; // 발행된 기수 기록이 없는 Spring 빈 상태
       busy = true;
-      var prof = $('.cv3-prof', root), info = $('.cv3-info', prof);
+      var info = $('.cv3-info', prof);
       if (info && !$('.sm-cv-top', prof)){
         var acc = $('.cv3-acc', prof), ring = $('.cv3-ring', prof), stat = $('.cv3-stat', prof), bio = $('.cv3-bio', prof), db = $('.cv3-dbtn', prof);
         var top = document.createElement('div'); top.className = 'sm-cv-top';
@@ -176,7 +178,6 @@
         prof.classList.add('sm-cv-prof');
       }
       /* 보기 방식 탭(전체 게시물 · 영상만) */
-      var gt = $('.cv3-gt', root);
       var tabs = $('.sm-cv-views', root);
       if (!tabs){
         tabs = document.createElement('div'); tabs.className = 'sm-cv-views'; tabs.setAttribute('role', 'group'); tabs.setAttribute('aria-label', '보기 방식');
@@ -200,12 +201,14 @@
       /* 교육과정 고정 칸: 시안처럼 한 칸, 누르면 펼침 */
       var pin = $('.cv3-pin', root);
       if (pin && !pin.dataset.sm){
-        pin.dataset.sm = '1'; pin.tabIndex = 0; pin.setAttribute('aria-expanded', 'false');
-        var more = document.createElement('span'); more.className = 'sm-pin-more'; more.textContent = '트랙 보기 +';
+        pin.dataset.sm = '1';
+        var tracks = $('.cc', pin); tracks.id = 'sm-cv-tracks';
+        var more = document.createElement('button'); more.type = 'button'; more.className = 'sm-pin-more'; more.textContent = '트랙 보기 +';
+        more.setAttribute('aria-expanded', 'false'); more.setAttribute('aria-controls', tracks.id);
         pin.insertBefore(more, $('.cc', pin));
-        var tog = function(){ var o = !pin.classList.contains('sm-open'); pin.classList.toggle('sm-open', o); pin.setAttribute('aria-expanded', String(o)); more.textContent = o ? '' : '트랙 보기 +'; more.hidden = o; };
-        pin.addEventListener('click', function(e){ if (!e.target.closest('a')) tog(); });
-        pin.addEventListener('keydown', function(e){ if ((e.key === 'Enter' || e.key === ' ') && e.target === pin){ e.preventDefault(); tog(); } });
+        var tog = function(){ var o = !pin.classList.contains('sm-open'); pin.classList.toggle('sm-open', o); more.setAttribute('aria-expanded', String(o)); more.textContent = o ? '트랙 닫기 −' : '트랙 보기 +'; };
+        more.addEventListener('click', function(e){ e.stopPropagation(); tog(); });
+        pin.addEventListener('click', function(e){ if (!e.target.closest('a,button')) tog(); });
       }
       /* 달별 고정 스토리: 많아지면 화살표로 넘김 */
       var hl = $('.cv3-hl', root);

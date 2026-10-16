@@ -46,3 +46,12 @@ test('Spring public templates retain both presentation stylesheets', () => {
     assert.ok(!links.some(link => link.includes('unify.css')), file);
   }
 });
+
+test('older Spring story templates can resolve their legacy stylesheet URL', () => {
+  const legacy = join(root, 'common/css/unify.css');
+  const imports = [...readFileSync(legacy, 'utf8').matchAll(/@import url\("([^"]+)"\)/g)].map(match => match[1].split('?')[0]);
+  assert.deepEqual(imports.map(url => resolve(dirname(legacy), url)), [
+    join(root, 'common/css/presentation.css'), join(root, 'stories/css/presentation.css'),
+  ]);
+  for (const url of imports) assert.ok(existsSync(resolve(dirname(legacy), url)), url);
+});

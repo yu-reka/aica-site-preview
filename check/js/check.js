@@ -33,10 +33,13 @@
     if (!el) return;
     let y = 0;
     if (el.id !== 'overview') {
-      const pick = el.matches('.v3-sec') ? ($('.k-head, .s-head', el) || el) : el;   // 섹션은 머리(.k-head) 기준
+      const section = el.matches('.v3-sec');
+      const chapter = section && mobile.matches ? $('.cm-chapter', el) : null;
+      const pick = chapter || (section ? ($('.k-head, .s-head', el) || el) : el);
       const faqItem = el.closest('.faq-item');
       const tools = faqItem && mobile.matches ? $('.faq-tools', main).offsetHeight : 0;
-      y = layoutTop(pick) - ((header ? header.offsetHeight : 0) + tools + (mobile.matches ? 16 : 64));
+      const gap = chapter ? 0 : (mobile.matches ? 16 : 64);
+      y = layoutTop(pick) - ((header ? header.offsetHeight : 0) + tools + gap);
     }
     scrollToY(Math.max(0, Math.round(y)), instant);
     // 접근성: 이동한 섹션 제목으로 초점

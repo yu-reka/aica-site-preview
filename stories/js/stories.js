@@ -136,7 +136,7 @@
 
 })();
 
-/* 후기 글 창(모달) 색 = 그 창을 여는 후기 카드의 포스트잇 색(10-13). 카드 색은 unify.css가 자리 순서로 정함 */
+/* 후기 글 창(모달) 색 = 그 창을 여는 후기 카드의 포스트잇 색(10-13). 카드 색은 stories/css/presentation.css가 자리 순서로 정함 */
 (function(){
   var cards = document.querySelectorAll('#p-rev .idgrid .idc[href^="#r-"]');
   [].forEach.call(cards, function(c){

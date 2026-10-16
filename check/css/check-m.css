@@ -1,0 +1,143 @@
+/* =========================================================
+   지원 전 체크 모바일(10-16, 캔버스 '지원 전 체크' 모바일 시안 반영)
+   600px 이하에서만 적용. 웹(601px 이상)은 그대로(.cm-* 요소는 숨김).
+   마크업: src/pages/check/index.html(.cm-*) · 동작: js/check-m.js
+   ========================================================= */
+.cm-tabs,.cm-more,.cm-step-btn{display:none}
+
+@media (max-width:600px){
+  html[data-menu="check"]{--cm-ink:#14233F;--cm-muted:#566175;--cm-line:#D3D9E1;--cm-soft:#F5F7F6;--cm-blue:#2457F5;--cm-black:#0B0B0C}
+  html[data-menu="check"] main#main .v3-sec{scroll-margin-top:calc(var(--hdr,60px) + 76px)}
+
+  /* ── 인트로: 굵은 테두리 카드(제목 · 한 줄), 체크리스트 목차는 아래 탭이 대신함 ── */
+  html[data-menu="check"] main#main .cb1{padding:24px 0 0;background:none}
+  html[data-menu="check"] main#main .cb1 .wrap{width:auto;margin:0 20px;padding:0}
+  html[data-menu="check"] main#main .cbx{display:block;margin:0;padding:22px;border:3px solid var(--cm-black);border-radius:24px;background:#F8F7F2;box-shadow:6px 6px 0 var(--cm-black);min-height:0}
+  html[data-menu="check"] main#main .cbx::before,html[data-menu="check"] main#main .cbx::after{display:none}
+  html[data-menu="check"] main#main .cbw,html[data-menu="check"] main#main .cbt .d{display:none}
+  html[data-menu="check"] main#main .cbt{display:flex;flex-direction:column;gap:8px;padding:0;text-align:left}
+  html[data-menu="check"] main#main .cbt h1{margin:0;font:900 32px/1.15 "Paperlogy",var(--ff-sans,sans-serif)!important;letter-spacing:-.03em;color:var(--cm-ink)}
+  html[data-menu="check"] main#main .cbt h1 b{font-family:"Giants",var(--ff-sans,sans-serif);font-weight:700;color:var(--cm-blue);-webkit-text-stroke:0}
+  html[data-menu="check"] main#main .cbt .q{margin:0;font:400 15px/1.65 var(--ff-sans,sans-serif)!important;color:var(--cm-muted)}
+  html[data-menu="check"] main#main .cbt .q mark{padding:0 2px;background:#FCE98C;color:var(--cm-ink)}
+
+  /* ── 바로가기 탭: 헤더 아래에 붙어 따라옴 ── */
+  .cm-tabs{display:block;position:sticky;top:var(--hdr,60px);z-index:30;margin-top:20px;padding:12px 20px;background:#fff;border-bottom:1px solid #E9EEF3}
+  .cm-seg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:4px;border-radius:14px;background:var(--cm-soft)}
+  .cm-seg a{display:flex;align-items:center;justify-content:center;min-height:44px;border:2px solid transparent;border-radius:10px;font:600 14px/1.2 var(--ff-sans,sans-serif);letter-spacing:-.02em;color:var(--cm-muted);text-decoration:none;white-space:nowrap}
+  .cm-seg a[aria-current="true"]{border-color:var(--cm-black);background:#fff;color:var(--cm-ink);font-weight:800;box-shadow:2px 2px 0 var(--cm-black)}
+  .cm-seg a:focus-visible{outline:2px solid var(--cm-blue);outline-offset:2px}
+
+  /* ── 구역 머리 ── */
+  html[data-menu="check"] main#main .v3-sec{padding:40px 0 0}
+  html[data-menu="check"] main#main #eligibility{padding-top:32px}
+  html[data-menu="check"] main#main .v3-sec > .wrap{width:auto;margin:0 20px;padding:0}
+  html[data-menu="check"] main#main .s-head{margin:0 0 14px;text-align:left}
+  html[data-menu="check"] main#main .k-label{display:flex;align-items:center;gap:10px;margin:0 0 6px;font:700 14px/1.4 var(--ff-sans,sans-serif);color:var(--cm-blue)}
+  html[data-menu="check"] main#main .s-head h2{margin:0;font:800 25px/1.35 "Paperlogy",var(--ff-sans,sans-serif)!important;letter-spacing:-.03em!important;color:var(--cm-ink)}
+
+  /* ── 모집 대상: 3칸 요약 ── */
+  html[data-menu="check"] main#main #eligibility .v3-h3:first-of-type{display:none}
+  html[data-menu="check"] main#main .chk-crit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0;padding:0;border:0}
+  html[data-menu="check"] main#main .chk-crit > div{display:flex;flex-direction:column;gap:3px;margin:0;padding:14px 10px;border:0;border-radius:16px;background:var(--cm-soft)}
+  html[data-menu="check"] main#main .chk-crit-label{margin:0;font-size:12px;color:var(--cm-muted)}
+  html[data-menu="check"] main#main .chk-crit-main{margin:0;font:900 17px/1.3 "Paperlogy",var(--ff-sans,sans-serif)!important;color:var(--cm-blue);word-break:keep-all}
+  html[data-menu="check"] main#main .chk-crit-main mark{background:none;color:inherit;padding:0}
+  html[data-menu="check"] main#main .chk-crit-sub{margin:2px 0 0;font-size:11.5px;line-height:1.45;color:var(--cm-muted)}
+  html[data-menu="check"] main#main .chk-crit-note{margin:8px 0 0;font-size:12px;line-height:1.55;color:#666F81}
+
+  /* 다른 정부지원사업 안내: 노란 상자 */
+  html[data-menu="check"] main#main .chk-notice{display:block;margin:14px 0 0;padding:12px 14px;border:0;border-radius:14px;background:#FFF6D8;box-shadow:none}
+  html[data-menu="check"] main#main .chk-notice-ico{display:none}
+  html[data-menu="check"] main#main .chk-notice h4{display:inline;margin:0;font-size:13px;font-weight:800;color:var(--cm-ink)}
+  html[data-menu="check"] main#main .chk-notice h4::after{content:" "}
+  html[data-menu="check"] main#main .chk-notice p{display:inline;margin:0;font-size:13px;line-height:1.6;color:#3B4A63}
+  html[data-menu="check"] main#main .chk-notice mark{background:none;color:inherit;font-weight:700}
+
+  /* 스스로 체크: 굵은 테두리 카드, 진행 막대가 위 */
+  html[data-menu="check"] main#main #eligibility .v3-h3{margin:20px 0 10px;padding:0;border:0;font:800 17px/1.4 var(--ff-sans,sans-serif);color:var(--cm-ink)}
+  html[data-menu="check"] main#main .chk-self{display:flex;flex-direction:column;gap:10px;margin:0;padding:18px;border:3px solid var(--cm-black);border-radius:22px;background:#fff;box-shadow:5px 5px 0 var(--cm-black)}
+  html[data-menu="check"] main#main .chk-progress{order:-1;display:flex;flex-direction:column;gap:10px;margin:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none}
+  html[data-menu="check"] main#main .chk-progress p{margin:0;font:400 14px/1.2 var(--ff-sans,sans-serif);color:var(--cm-muted)}
+  html[data-menu="check"] main#main .chk-progress p b{font:400 18px/1 "Giants",var(--ff-sans,sans-serif);color:var(--cm-blue)}
+  html[data-menu="check"] main#main .chk-bar{height:8px;margin:0;border:0;border-radius:4px;background:#E9EEF3;overflow:hidden}
+  html[data-menu="check"] main#main .chk-bar i{display:block;height:100%;border-radius:4px;background:var(--cm-blue)}
+  html[data-menu="check"] main#main .chk-go{margin:0;font-size:14px}
+  html[data-menu="check"] main#main .chk-list{margin:0;padding:0;border:0}
+  html[data-menu="check"] main#main .chk-list li{margin:0;padding:0;border:0;border-top:1px solid #E9EEF3}
+  html[data-menu="check"] main#main .chk-list label{display:flex;align-items:center;gap:12px;min-height:52px;padding:10px 0;cursor:pointer}
+  html[data-menu="check"] main#main .chk-mark{flex:none;width:26px;height:26px;border:2px solid #A9B3C2;border-radius:8px;background:#fff}
+  html[data-menu="check"] main#main .chk-box:checked + .chk-mark{border-color:var(--cm-black);background:var(--cm-blue)}
+  html[data-menu="check"] main#main .chk-text{font-size:15px;line-height:1.45;color:var(--cm-ink)}
+
+  /* ── 모집 프로세스: 단계 펼침 카드 ── */
+  html[data-menu="check"] main#main .pf{display:flex;flex-direction:column;gap:8px;margin:0;padding:0}
+  html[data-menu="check"] main#main .pf::before,html[data-menu="check"] main#main .pf::after{display:none}
+  html[data-menu="check"] main#main .pf-col{position:relative;display:block;margin:0;padding:0;opacity:1;transform:none}
+  html[data-menu="check"] main#main .pf-dot{display:none}
+  html[data-menu="check"] main#main .pf-illus{position:absolute;z-index:2;left:14px;top:12px;width:48px;height:40px;margin:0;padding:0;pointer-events:none;transform:none}
+  html[data-menu="check"] main#main .pf-illus img{width:48px;height:40px;object-fit:contain}
+  html[data-menu="check"] main#main .pf-card{display:block;margin:0;padding:0;border:1px solid var(--cm-line);border-radius:18px;background:var(--cm-soft);box-shadow:none;min-height:0;transform:none;opacity:1}
+  html[data-menu="check"] main#main .pf-col.cm-open .pf-card{border:3px solid var(--cm-black);background:#fff;box-shadow:4px 4px 0 var(--cm-black)}
+  html[data-menu="check"] main#main .pf-col.cm-open .pf-illus{left:16px;top:14px}
+  html[data-menu="check"] main#main .pf-card > :is(.pf-step,h3){display:none}
+  html[data-menu="check"] main#main .cm-step-btn{display:flex;align-items:center;gap:12px;width:100%;min-height:64px;margin:0;padding:10px 14px 10px 74px;border:0;background:transparent;color:var(--cm-ink);font:inherit;text-align:left;cursor:pointer}
+  html[data-menu="check"] main#main .cm-step-tx{display:flex;flex-direction:column;gap:1px;flex:1;min-width:0}
+  html[data-menu="check"] main#main .cm-step-no{font:400 12px/1.3 "Giants",var(--ff-sans,sans-serif);color:var(--cm-blue)}
+  html[data-menu="check"] main#main .cm-step-t{font:800 16px/1.35 var(--ff-sans,sans-serif)}
+  html[data-menu="check"] main#main .cm-step-btn svg{flex:none;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+  html[data-menu="check"] main#main .pf-col.cm-open .cm-step-btn svg{transform:rotate(180deg)}
+  html[data-menu="check"] main#main .cm-step-btn:focus-visible{outline:2px solid var(--cm-blue);outline-offset:-4px;border-radius:14px}
+  html[data-menu="check"] main#main .pf-col:not(.cm-open) .pf-body{display:none}
+  html[data-menu="check"] main#main .pf-body{display:flex;flex-direction:column;gap:8px;margin:0;padding:0 16px 16px 74px;max-height:none;opacity:1;overflow:visible}
+  html[data-menu="check"] main#main .pf-body p,html[data-menu="check"] main#main .pf-body dd{margin:0;font-size:14px;line-height:1.6;color:#3B4A63}
+  html[data-menu="check"] main#main .pf-body dl{display:flex;flex-direction:column;gap:6px;margin:0}
+  html[data-menu="check"] main#main .pf-body dt{font-size:14px;font-weight:800;color:var(--cm-ink)}
+  html[data-menu="check"] main#main .pf-body .pf-note{padding:10px 12px;border:0;border-radius:12px;background:#DCE5F7;font-size:13px;line-height:1.55;color:#102D80}
+  html[data-menu="check"] main#main .pf-body .pf-note b{display:inline;margin-right:4px}
+
+  /* ── 지원 혜택: 첫 번째는 파란 상자, 나머지는 2칸 ── */
+  html[data-menu="check"] main#main .ben2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0}
+  html[data-menu="check"] main#main .b2{display:flex;flex-direction:column;gap:4px;margin:0;padding:14px;border:0;border-radius:16px;background:var(--cm-soft);box-shadow:none;min-height:0;text-align:left;transform:none}
+  html[data-menu="check"] main#main .b2:last-child:nth-child(even){grid-column:span 2}
+  html[data-menu="check"] main#main .b2-ico{display:none}
+  html[data-menu="check"] main#main .b2-no{margin:0;font:400 12px/1.3 "Giants",var(--ff-sans,sans-serif);color:var(--cm-blue)}
+  html[data-menu="check"] main#main .b2 h3{margin:0;font:800 15px/1.4 var(--ff-sans,sans-serif)!important;letter-spacing:-.02em!important;color:var(--cm-ink)}
+  html[data-menu="check"] main#main .b2-desc,html[data-menu="check"] main#main .b2-sub{margin:0;font-size:12.5px;line-height:1.5;color:var(--cm-muted)}
+  html[data-menu="check"] main#main .b2 b{font-weight:700;color:var(--cm-ink)}
+  html[data-menu="check"] main#main .b2:first-child{grid-column:span 2;padding:18px;border-radius:20px;background:var(--cm-blue)}
+  html[data-menu="check"] main#main .b2:first-child .b2-no{font:400 13px/1.3 var(--ff-sans,sans-serif);color:#DCE5F7}
+  html[data-menu="check"] main#main .b2:first-child h3{color:#fff;font-size:17px!important}
+  html[data-menu="check"] main#main .b2:first-child :is(.b2-desc,.b2-sub){color:#DCE5F7;font-size:13px}
+  html[data-menu="check"] main#main .b2:first-child .b2-desc{font:700 15px/1.4 var(--ff-sans,sans-serif);color:#fff}
+  html[data-menu="check"] main#main .b2:first-child .b2-desc b{font:900 24px/1.3 "Paperlogy",var(--ff-sans,sans-serif);color:#fff}
+  html[data-menu="check"] main#main .b2:first-child b{color:#fff}
+  html[data-menu="check"] main#main .ben-foot{margin:12px 0 0;text-align:left}
+  html[data-menu="check"] main#main .ben-foot p{margin:0;font-size:12px;line-height:1.6;color:#666F81}
+  html[data-menu="check"] main#main .ben-foot mark{background:none;color:inherit}
+  html[data-menu="check"] main#main .ben-foot .text-link{display:inline-flex;margin-top:8px;font-size:13px}
+
+  /* ── 자주 묻는 질문: 한 줄 분류 + 목록 + 더 보기 ── */
+  html[data-menu="check"] main#main #faq{padding-bottom:48px}
+  html[data-menu="check"] main#main .faq-tools{margin:0 0 14px;padding:0;border:0;background:none}
+  html[data-menu="check"] main#main .faq-tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;margin:0;padding:4px;border:0;border-radius:14px;background:var(--cm-soft);box-shadow:none}
+  html[data-menu="check"] main#main .faq-tab{min-width:0;min-height:44px;margin:0;padding:0 2px;border:2px solid transparent;border-radius:10px;background:transparent;box-shadow:none;color:var(--cm-muted);font:600 12.5px/1.2 var(--ff-sans,sans-serif);letter-spacing:-.04em;white-space:nowrap}
+  html[data-menu="check"] main#main .faq-tab[aria-pressed="true"]{border-color:var(--cm-black);background:#fff;color:var(--cm-ink);font-weight:800;box-shadow:2px 2px 0 var(--cm-black)}
+  html[data-menu="check"] main#main .faq-tab .faq-cnt{display:none}
+  html[data-menu="check"] main#main .faq-count{margin:0 0 8px;font-size:13px;color:var(--cm-muted)}
+  html[data-menu="check"] main#main .faq-list{margin:0;padding:0;border-top:2px solid var(--cm-ink);min-height:0!important}
+  html[data-menu="check"] main#main .faq-item{margin:0;padding:0;border:0;border-bottom:1px solid var(--cm-line)}
+  html[data-menu="check"] main#main .faq-item h3{margin:0}
+  html[data-menu="check"] main#main .faq-q{display:flex;align-items:flex-start;gap:10px;width:100%;min-height:60px;padding:14px 0;border:0;background:transparent;text-align:left}
+  html[data-menu="check"] main#main .faq-q .faq-qa{flex:none;font:400 17px/1.4 "Giants",var(--ff-sans,sans-serif);color:var(--cm-blue)}
+  html[data-menu="check"] main#main .faq-qt{flex:1;font:700 15px/1.5 var(--ff-sans,sans-serif)!important;color:var(--cm-ink);white-space:normal}
+  html[data-menu="check"] main#main .faq-arrow{flex:none;margin-top:2px}
+  html[data-menu="check"] main#main .faq-item{height:auto;min-height:0}
+  html[data-menu="check"] main#main .faq-item.is-open .faq-a > div{margin:0 0 16px;padding:14px;border-radius:14px;background:var(--cm-soft);display:block}
+  html[data-menu="check"] main#main .faq-a .faq-qa{display:none}
+  html[data-menu="check"] main#main .faq-at{font-size:14px;line-height:1.65;color:#3B4A63}
+  html[data-menu="check"] main#main .faq-pager{display:none}
+  .cm-more{display:flex;align-items:center;justify-content:center;width:100%;min-height:48px;margin-top:16px;border:2px solid var(--cm-ink);border-radius:40px;background:#fff;color:var(--cm-ink);font:700 15px/1 var(--ff-sans,sans-serif);cursor:pointer}
+  .cm-more[hidden]{display:none}
+}
+@media (max-width:600px) and (prefers-reduced-motion:reduce){html[data-menu="check"] main#main :is(.cm-step-btn svg){transition:none}}

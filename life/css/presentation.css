@@ -509,7 +509,7 @@ body .life-page .tp-htx b{font-size:18px}
 .lnb .lnb-tp a::after{content:none!important;display:none!important}
 .lnb .lnb-tp a{padding-left:0!important}
 
-.lnb .lnb-list a:has(+ .lnb-tp){border-bottom:0!important}
+@media (min-width:601px){.lnb .lnb-list a:has(+ .lnb-tp){border-bottom:0!important}}
 
 /* 생활 꿀팁과 그 아래 주제 사이 선 없음(10-13) */
 body .life-page .disc.inset .wrap{border-left:0;padding-left:0}
@@ -517,7 +517,7 @@ body .life-page .disc.inset .wrap{border-left:0;padding-left:0}
 /* 왼쪽 메뉴 생활 꿀팁 하위 네 개: 생활 꿀팁 화면일 때만 펼침, 다른 화면이면 접음(10-13). html[data-sub]는 life.js route()가 정함 */
 html:not([data-sub="tips"]) .lnb .lnb-tp{display:none}
 
-html:not([data-sub="tips"]) .lnb .lnb-list a:has(+ .lnb-tp){border-bottom:1px solid rgb(211,217,225)!important}
+@media (min-width:601px){html:not([data-sub="tips"]) .lnb .lnb-list a:has(+ .lnb-tp){border-bottom:1px solid rgb(211,217,225)!important}}
 
 html[data-sub="tips"] .lnb .lnb-tp{animation:lnbTpOpen .28s ease-out}
 

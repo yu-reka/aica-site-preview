@@ -105,3 +105,11 @@ html[data-menu="stories"] .st-mh .st-mh-t b{position:relative}
 html[data-menu="stories"] .st-mh .st-mh-t b::after{content:"";position:absolute;right:-.95em;top:-.32em;width:.72em;height:.72em;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='none' stroke='%235B8DEF' stroke-width='2.6' stroke-linecap='round'%3E%3Cpath d='M20 4v10M20 26v10M4 20h10M26 20h10M9 9l6 6M25 25l6 6M31 9l-6 6M15 25l-6 6'/%3E%3C/svg%3E") center/contain no-repeat;-webkit-text-stroke:0}
 @media (max-width:1100px){html[data-menu="stories"] .st-mh .mhb-deco :is(.dc-scrap,.dc-blob,.dc-swoosh){display:none}}
+
+/* Mobile banners share one title-only height; desktop descriptions remain available. */
+@media (max-width:600px){
+  html[data-menu="stories"] .st-mh .st-mh-lead,
+  html[data-menu="life"] .st-mh .st-mh-lead{display:none}
+  html[data-menu="stories"] .st-mh .mhb,
+  html[data-menu="life"] .st-mh .mhb{min-height:128px;padding:22px 20px;align-items:center}
+}

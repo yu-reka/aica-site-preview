@@ -6,7 +6,8 @@
 .am-tabs,.am-dock,.am-ch,.am-seg,.am-more,.am-acc-h,.am-intro-photo,.am-cta,.am-arrow{display:none}
 
 @media (max-width:600px){
-  .school-about{--am-ink:#14233F;--am-muted:#566175;--am-line:#D3D9E1;--am-soft:#F5F7F6;--am-blue:#2457F5;--am-black:#0B0B0C}
+  .school-about{--about-paper:#fff;--am-ink:#14233F;--am-muted:#566175;--am-line:#D3D9E1;--am-soft:#F5F7F6;--am-blue:#2457F5;--am-black:#0B0B0C}
+  :root.school-about{background:var(--about-paper)}
 
   /* ── 히어로: 큰 제목 기준 가운데 정렬, '인사교를 알아보세요'는 오른쪽 ── */
   html.school-about main#main .hero-masthead{left:20px;right:20px;text-align:center}

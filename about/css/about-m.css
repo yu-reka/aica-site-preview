@@ -119,7 +119,7 @@
 
   /* 지원 대상: 2칸 */
   html.school-about main#main .eligibility-panel{margin-top:36px;padding:0;border:0;background:none}
-  html.school-about main#main .eligibility-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+  html.school-about main#main .eligibility-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:8px;margin-top:12px}
   html.school-about main#main .eligibility-condition{display:flex;flex-direction:column;gap:6px;margin:0;padding:16px 14px;border:0;border-radius:16px;background:var(--am-soft);text-align:left}
   html.school-about main#main .eligibility-condition::before,html.school-about main#main .eligibility-condition::after{display:none}
   html.school-about main#main .eligibility-icon{display:none}
@@ -154,8 +154,8 @@
   html.school-about main#main .why-school-section{margin:36px 0 0;padding:0;background:none}
   html.school-about main#main .why-school-heading p{margin:4px 0 0;font-size:14px;line-height:1.6;color:var(--am-muted)}
   html.school-about main#main .why-school-cards.am-on{display:flex;flex-direction:column;gap:12px;margin-top:12px;max-width:none}
-  html.school-about main#main .why-school-card.am-acc{min-height:0!important;margin:0;padding:0!important;border:1px solid var(--am-line);border-radius:16px;background:#fff;box-shadow:none;animation:none;opacity:1;transform:none}
-  html.school-about main#main .why-school-card.am-acc.is-open{border:2px solid var(--am-blue);background:#F3F6FE}
+  html.school-about main#main .why-school-card.am-acc{min-height:0!important;margin:0;padding:0 0 var(--am-acc-bottom,0)!important;border:1px solid var(--am-line);border-radius:16px;background:#fff;box-shadow:none;animation:none;opacity:1;transform:none}
+  html.school-about main#main .why-school-card.am-acc.is-open{--am-acc-bottom:18px;border:2px solid var(--am-blue);background:#F3F6FE}
   html.school-about main#main .why-school-card.am-acc > .am-acc-h{display:block;margin:0}
   html.school-about main#main .why-school-card.am-acc > :is(.why-school-card-kicker,h4:not(.am-acc-h),html.school-about main#main .why-school-visual){display:none!important}
   html.school-about main#main .why-school-card.am-acc:not(.is-open) > :not(.am-acc-h){display:none!important}
@@ -168,7 +168,6 @@
   html.school-about main#main .why-school-card.am-acc.is-open .am-acc-btn svg{transform:rotate(180deg)}
   html.school-about main#main .why-school-card.am-acc.is-open > p{margin:0 16px 0 50px;font-size:14px;line-height:1.65;color:#3B4A63}
   html.school-about main#main .why-school-card.am-acc.is-open > .why-school-card-lead{margin-bottom:4px;font-weight:700;color:var(--am-ink)}
-  html.school-about main#main .why-school-card.am-acc.is-open > :last-child{margin-bottom:16px}
 
   /* ── 02 무엇을 배우나요? ── */
   html.school-about main#main #learning{padding-top:24px}
@@ -196,6 +195,8 @@
   html.school-about main#main .education-hours-stat > span{display:none}
   html.school-about main#main .education-hours-stat strong{display:flex;align-items:baseline;font:900 24px/1 "Paperlogy",var(--ff-sans,sans-serif);color:var(--am-blue);white-space:nowrap}
   html.school-about main#main .education-hours-stat strong small{font-size:inherit;font-weight:inherit;color:inherit}
+  /* 수료생 숫자처럼 실제 숫자 끝에서 같은 단위 간격을 둔다. */
+  html.school-about main#main .education-hours-stat .education-hours-number{min-width:0}
   html.school-about main#main .education-time-stages{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
   html.school-about main#main .education-time-stages > li{display:grid;grid-template-columns:104px minmax(0,1fr);grid-template-areas:"p s" "p t" "p b";column-gap:12px;row-gap:3px;align-items:center;margin:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;min-height:0}
   html.school-about main#main .education-time-stages > li::before,html.school-about main#main .education-time-stages > li::after{display:none}
@@ -245,13 +246,12 @@
   html.school-about main#main .am-rail-box{position:relative}
   html.school-about main#main .am-rail{scrollbar-width:none;-webkit-overflow-scrolling:touch}
   html.school-about main#main .am-rail::-webkit-scrollbar{display:none}
-  html.school-about main#main .am-arrow{display:grid;place-items:center;position:absolute;z-index:4;top:50%;width:36px;height:36px;padding:0;border:1px solid #E9EDF4;border-radius:50%;background:#fff;color:#546176;box-shadow:0 5px 20px #0c183b20;transform:translateY(-50%);cursor:pointer}
+  html.school-about main#main .am-arrow{display:grid;place-items:center;position:absolute;z-index:4;top:var(--am-arrow-y,50%);width:36px;height:36px;padding:0;border:1px solid #E9EDF4;border-radius:50%;background:#fff;color:#546176;box-shadow:0 5px 20px #0c183b20;transform:translateY(-50%);cursor:pointer}
   html.school-about main#main .am-arrow[hidden]{display:none}
   html.school-about main#main .am-arrow--prev{left:10px}
   html.school-about main#main .am-arrow--next{right:10px}
   html.school-about main#main .am-arrow svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
   html.school-about main#main .am-arrow:focus-visible{outline:2px solid var(--am-blue);outline-offset:2px}
-  html.school-about main#main .activity-gallery.am-rail-box .am-arrow,.activity-gallery-viewport.am-rail-box .am-arrow{top:64px}
 
   /* ── 04 취업·창업 지원 ── */
   html.school-about main#main #career{padding-top:24px;background:none}
@@ -326,7 +326,6 @@
   html.school-about main#main .graduate-card .graduate-cohort{padding:0;border-radius:0;background:none;color:var(--am-ink);font-size:13px;font-weight:800}
   html.school-about main#main #why-school .why-school-card.am-acc.is-open > p{margin:0 16px 0 50px;font-family:var(--ff-sans,sans-serif);font-size:14px;line-height:1.65;font-weight:400;letter-spacing:-.01em;color:#3B4A63}
   html.school-about main#main #why-school .why-school-card.am-acc.is-open > p.why-school-card-lead{margin:0 16px 4px 50px;font-weight:700;color:var(--am-ink)}
-  html.school-about main#main #why-school .why-school-card.am-acc.is-open > :last-child{margin-bottom:16px}
   html.school-about main#main .common-courses .common-course-caption h3{white-space:normal;font-family:var(--ff-sans,sans-serif);font-size:14px;font-weight:800}
   html.school-about main#main .education-hours .education-phase-band h4{font-family:var(--ff-sans,sans-serif);font-size:16px;font-weight:800;white-space:normal}
   html.school-about main#main :is(.intro-platform-features article,.partner-node,.eligibility-condition,.career-stage-card) :is(h3,h4){font-family:var(--ff-sans,sans-serif);font-weight:800}

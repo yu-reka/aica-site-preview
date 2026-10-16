@@ -115,12 +115,22 @@
       box.appendChild(b); return b;
     };
     var p = mk('prev'), n = mk('next');
+    var media = $('.activity-project-player, .activity-gallery-photo', scroller);
     var upd = function(){
+      // 사진·영상의 가운데를 기준으로 두 화살표를 맞춘다.
+      if (media && mq.matches){
+        var frame = media.getBoundingClientRect(), bounds = box.getBoundingClientRect();
+        box.style.setProperty('--am-arrow-y', (frame.top - bounds.top + frame.height / 2) + 'px');
+      } else box.style.removeProperty('--am-arrow-y');
       p.hidden = scroller.scrollLeft <= 4;
       n.hidden = scroller.scrollLeft + scroller.clientWidth >= scroller.scrollWidth - 4;
     };
     scroller.addEventListener('scroll', upd, { passive: true });
-    addEventListener('resize', upd); upd();
+    addEventListener('resize', upd);
+    if (media && typeof ResizeObserver !== 'undefined'){
+      var observer = new ResizeObserver(upd); observer.observe(box); observer.observe(media);
+    }
+    upd();
     setTimeout(upd, 600);
   }
   /* 활동 사진: 모바일에선 한 장씩 넘기던 갤러리 대신 모든 사진을 한 줄로 보여 줌.

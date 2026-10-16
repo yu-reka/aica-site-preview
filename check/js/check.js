@@ -38,7 +38,8 @@
     let y = 0;
     if (el.id !== 'overview') {
       const pick = el.matches('.v3-sec') ? ($('.k-head, .s-head', el) || el) : el;   // 섹션은 머리(.k-head) 기준
-      y = layoutTop(pick) - ((header ? header.offsetHeight : 0) + (matchMedia('(max-width:760px)').matches ? 40 : 64));   // 10-13: 바 ↔ 제목 여백 통일(전에는 32px)   // 헤더 높이에 하위 메뉴 바 포함
+      const tabs = $('.cm-tabs', main);
+      y = layoutTop(pick) - ((header ? header.offsetHeight : 0) + (tabs ? tabs.offsetHeight : 0) + (matchMedia('(max-width:760px)').matches ? 40 : 64));   // 모바일 고정 탭 높이까지 빼서 제목이 가리지 않게 함. 숨겨진 데스크톱 탭 높이는 0.
     }
     scrollToY(Math.max(0, Math.round(y)), instant);
     // 접근성: 이동한 섹션 제목으로 초점

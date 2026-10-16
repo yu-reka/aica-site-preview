@@ -33,6 +33,13 @@
     };
     cols.forEach(function(col, i){
       var card = $('.pf-card', col); if (!card) return;
+      var originalTabindex = card.getAttribute('tabindex');
+      var syncFocus = function(){
+        if (mq.matches || originalTabindex === null) card.removeAttribute('tabindex');
+        else card.setAttribute('tabindex', originalTabindex);
+      };
+      syncFocus();
+      if (mq.addEventListener) mq.addEventListener('change', syncFocus);
       var step = $('.pf-step', card), title = $('h3', card), body = $('.pf-body', card);
       if (body && !body.id) body.id = 'cm-step-' + (i + 1);
       var b = document.createElement('button');

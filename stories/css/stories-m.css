@@ -1,0 +1,91 @@
+/* =========================================================
+   선배들의 이야기 모바일(10-16, 캔버스 '선배들의 이야기' 시안의 탭만 반영)
+   600px 이하에서만 적용. 웹(601px 이상)은 그대로.
+   1) 알약 줄 메뉴(#siteLnb) → 다섯 칸 세그먼트 탭(인사교 알아보기 모바일 탭과 같은 모양)
+      탭이 헤더 뒤로 지나가면 같은 탭을 화면 아래에 고정(.sm-dock, js/stories-m.js)
+   2) 한눈에 보기의 옆으로 넘기는 줄(후기 포스트잇 · 프로젝트)에 알아보기와 같은 화살표
+   ========================================================= */
+.sm-dock,.sm-arrow{display:none}
+.sm-rail-box{display:contents}
+
+@media (max-width:600px){
+  html[data-nav="side"]{--sm-ink:#14233F;--sm-muted:#566175;--sm-line:#D3D9E1;--sm-soft:#F5F7F6;--sm-blue:#2457F5;--sm-black:#0B0B0C}
+
+  /* ── 세그먼트 탭 ── */
+  html[data-nav="side"] #siteLnb{padding:0 20px}
+  html[data-nav="side"] #siteLnb .lnb-list,.sm-dock .lnb-list{display:grid;grid-auto-columns:minmax(0,1fr);grid-auto-flow:column;gap:4px;margin:16px 0 0;padding:4px;overflow:visible;border:0;border-radius:14px;background:var(--sm-soft);-webkit-mask-image:none;mask-image:none;list-style:none}
+  .sm-dock .lnb-list{margin:0}
+  html[data-nav="side"] #siteLnb .lnb-list li,.sm-dock .lnb-list li{min-width:0}
+  html[data-nav="side"] #siteLnb .lnb-list a,.sm-dock .lnb-list a{position:static;display:flex;align-items:center;justify-content:center;height:auto;min-height:44px;margin:0;padding:0 2px;border:2px solid transparent;border-radius:10px;background:transparent;color:var(--sm-muted);font:600 14px/1.2 var(--ff-sans,"Pretendard",sans-serif);letter-spacing:-.03em;white-space:nowrap;text-decoration:none}
+  html[data-nav="side"] #siteLnb .lnb-list a::before,.sm-dock .lnb-list a::before{content:none}
+  html[data-nav="side"] #siteLnb .lnb-list a[aria-current],.sm-dock .lnb-list a[aria-current]{border-color:var(--sm-black);background:#fff;color:var(--sm-ink);font-weight:800;box-shadow:2px 2px 0 var(--sm-black)}
+  html[data-nav="side"] #siteLnb .lnb-list a:focus-visible,.sm-dock .lnb-list a:focus-visible{outline:2px solid var(--sm-blue);outline-offset:2px}
+
+  /* ── 아래 고정 탭 ── */
+  .sm-dock{display:block;position:fixed;left:0;right:0;bottom:0;z-index:45;padding:10px 20px calc(14px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.97);border-top:1px solid var(--sm-line);box-shadow:0 -6px 18px rgba(20,35,63,.08);transform:translateY(110%);visibility:hidden;transition:transform .3s cubic-bezier(.3,.7,.2,1),visibility 0s .3s}
+  html.sm-docked .sm-dock{transform:none;visibility:visible;transition:transform .3s cubic-bezier(.3,.7,.2,1)}
+  html.sm-docked .floating{transform:translateY(-78px);transition:transform .3s}
+  html[data-nav="side"] #siteFooter::after{content:"";display:block;height:78px}   /* 아래 고정 탭에 푸터 끝이 가리지 않게(높이가 바뀌지 않도록 늘 둠) */
+
+  /* ── 옆으로 넘기는 줄 화살표(알아보기 모바일과 같은 모양) ── */
+  .sm-rail-box{display:block;position:relative}
+  .sm-arrow{display:grid;place-items:center;position:absolute;z-index:4;top:50%;width:36px;height:36px;padding:0;border:1px solid #E9EDF4;border-radius:50%;background:#fff;color:#546176;box-shadow:0 5px 20px #0c183b20;transform:translateY(-50%);cursor:pointer}
+  .sm-arrow[hidden]{display:none}
+  .sm-arrow--prev{left:10px}
+  .sm-arrow--next{right:10px}
+  .sm-rail-box--pis .sm-arrow--prev{left:calc(10px - var(--hb-pad,0px))}
+  .sm-rail-box--pis .sm-arrow--next{right:calc(10px - var(--hb-pad,0px))}
+  .sm-rail-box--pjs .sm-arrow--prev{left:calc(10px - var(--gutter,20px))}
+  .sm-rail-box--pjs .sm-arrow--next{right:calc(10px - var(--gutter,20px))}
+  .sm-arrow svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+  .sm-arrow:focus-visible{outline:2px solid var(--sm-blue);outline-offset:2px}
+}
+@media (max-width:370px){
+  html[data-nav="side"] #siteLnb .lnb-list a,.sm-dock .lnb-list a{font-size:13px;letter-spacing:-.05em}
+}
+@media (max-width:600px) and (prefers-reduced-motion:reduce){.sm-dock,html.sm-docked .sm-dock,html.sm-docked .floating{transition:none}}
+
+/* =========================================================
+   인터뷰 페이지 모바일(10-16, 캔버스 '인터뷰' 시안)
+   추천 인터뷰 카드 넘김(js가 .ivgrid에서 글귀 있는 인터뷰로 만듦) + 전체 인터뷰 짧은 목록
+   시안보다 카드 길이를 줄이고(사진 150 · 글 2줄), 넘김 숫자는 빼고, 화살표는 알아보기와 같은 모양
+   ========================================================= */
+.sm-ivf,.sm-ivcount{display:none}
+@media (max-width:600px){
+  .stories-page .sm-ivf{display:block;position:relative;--cw:min(300px,calc(100vw - 90px));margin:18px calc(-1 * var(--gutter,20px)) 0}
+  .stories-page .sm-ivf-track{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:6px calc(50% - var(--cw) / 2) 12px;list-style:none;margin:0}
+  .stories-page .sm-ivf-track::-webkit-scrollbar{display:none}
+  .stories-page .sm-ivf-c{flex:none;width:var(--cw);scroll-snap-align:center;box-sizing:border-box;display:flex;flex-direction:column;border:2px solid #D3D9E1;border-radius:22px;overflow:hidden;background:#fff;color:#14233F;text-decoration:none;opacity:.5;transition:opacity .25s,border-color .25s,box-shadow .25s}
+  .stories-page .sm-ivf-c.is-on{opacity:1;border:3px solid #0B0B0C;box-shadow:5px 5px 0 #0B0B0C}
+  .stories-page .sm-ivf-c .ph{position:relative;height:150px;aspect-ratio:auto;border-radius:0;overflow:hidden;background:#E9EEF3}
+  .stories-page .sm-ivf-c .ph .illu{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .stories-page .sm-ivf-c .ph .play i{transform:scale(.8)}
+  .stories-page .sm-ivf-tag{position:absolute;left:12px;top:12px;z-index:3;padding:4px 10px;border-radius:40px;background:#0B0B0C;color:#fff;font-size:12px;font-weight:700;line-height:1.3}
+  .stories-page .sm-ivf-tx{display:flex;flex-direction:column;gap:6px;padding:14px 16px 16px}
+  .stories-page .sm-ivf-tx b{font-size:17px;font-weight:800;line-height:1.4;letter-spacing:-.02em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .stories-page .sm-ivf-tx q{font-family:"Nanum Pen Script",cursive;font-size:20px;line-height:1.2;color:#2457F5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .stories-page .sm-ivf-tx span{font-size:13px;color:#566175}
+  .stories-page .sm-ivf .sm-arrow{top:calc(6px + 75px + 3px)}
+  .stories-page .sm-ivf .sm-arrow--prev{left:calc(50% - var(--cw) / 2 + 12px)}
+  .stories-page .sm-ivf .sm-arrow--next{right:calc(50% - var(--cw) / 2 + 12px)}
+
+  /* 전체 인터뷰: 제목 + 개수, 기수 세그먼트, 짧은 목록(사진 썸네일 · 제목 · 기수/이름/분야) */
+  .stories-page #iv-all{margin-top:36px}
+  .stories-page #iv-all #iva-t.sr{position:static;width:auto;height:auto;overflow:visible;clip:auto;clip-path:none;white-space:normal;margin:0 0 12px;font-family:"Paperlogy",var(--ff-sans,sans-serif);font-size:21px;font-weight:800;color:#14233F}
+  .stories-page .sm-ivcount{display:inline;margin-left:4px;font-family:"Giants",var(--ff-sans,sans-serif);font-size:16px;color:#2457F5}
+  .stories-page #iv-all .iva-tools{display:block}
+  .stories-page #iv-all .iva-seg{display:none}
+  .stories-page #iv-all .iva-chips{display:grid;grid-auto-columns:minmax(0,1fr);grid-auto-flow:column;gap:4px;padding:4px;border-radius:14px;background:#F5F7F6;flex-wrap:nowrap}
+  .stories-page #iv-all .iva-chips button{height:auto;min-height:44px;padding:0 2px;border:2px solid transparent;border-radius:10px;background:transparent;color:#566175;font-size:14px;font-weight:600;letter-spacing:-.02em;white-space:nowrap;box-shadow:none}
+  .stories-page #iv-all .iva-chips button[aria-pressed="true"]{border-color:#0B0B0C;background:#fff;color:#14233F;font-weight:800;box-shadow:2px 2px 0 #0B0B0C}
+  .stories-page #iv-all .iva-out{display:flex;flex-direction:column;gap:0;margin-top:12px;border-top:2px solid #14233F}
+  .stories-page #iv-all .iva-out .iva-c{display:grid;grid-template-columns:72px minmax(0,1fr);grid-template-rows:auto auto;column-gap:12px;row-gap:3px;align-items:center;min-height:84px;padding:12px 0;border-bottom:1px solid #D3D9E1;box-sizing:border-box}
+  .stories-page #iv-all .iva-out .iva-c > div:not(.by):not(.ph){display:contents}
+  .stories-page #iv-all .iva-out .iva-c .ph{grid-row:1 / span 2;width:72px;height:56px;aspect-ratio:auto;border-radius:12px}
+  .stories-page #iv-all .iva-out .iva-c .ph .play i{transform:scale(.55)}
+  .stories-page #iv-all .iva-out .iva-c .ph .dur{display:none}
+  .stories-page #iv-all .iva-out .iva-c h4{grid-column:2;align-self:end;margin:0;font-size:15px;font-weight:800;line-height:1.4}
+  .stories-page #iv-all .iva-out .iva-c p{display:none}
+  .stories-page #iv-all .iva-out .iva-c .by{display:block;grid-column:2;align-self:start;margin:0;font-size:12px;color:#666F81}
+  .stories-page #iv-all .cpager{margin-top:28px}
+}

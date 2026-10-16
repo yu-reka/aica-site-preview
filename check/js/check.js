@@ -47,7 +47,7 @@
     if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
   }
   const targetOf = hash => {
-    const id = hash && hash.length > 1 ? decodeURIComponent(hash.slice(1)) : '';
+    const id = hash && hash.length > 1 ? Site.decodeHash(hash.slice(1)) : '';
     revealFAQ(id);
     const el = id && document.getElementById(id);
     return el && main.contains(el) ? el : null;

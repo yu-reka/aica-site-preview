@@ -42,6 +42,8 @@ npm run preview     # Python 3 로컬 서버: http://127.0.0.1:4173
 
 기존 `common/css/unify.css`의 페이지별 규칙은 `about/`, `check/`, `life/`, `stories/`의 `css/presentation.css`로 나눴습니다. 공통 팔레트·폰트·푸터 규칙만 `common/css/presentation.css`에 둡니다. 이야기·라이프 모바일 PR의 수정 위치와 CSS 적용 순서는 [CSS 관리 기준](docs/css-ownership.md)을 참고하세요.
 
+이야기·라이프 공통 배너는 `common/css/masthead.css`가 관리합니다. 이야기 세부 페이지의 반복된 head 선언은 `src/components/stories/head-*.html`로 공유합니다. 라이프 모바일은 `life-m-view.js`가 데이터 읽기·마크업을, `life-m.js`가 상태·이벤트를 맡습니다. 후기 모바일 목록은 `stories-m-reviews.js`로 분리했습니다. 로딩 순서와 이전 Spring 템플릿 호환 방식은 [프론트 유지보수 구조](docs/frontend-structure.md)에 정리했습니다.
+
 루트의 HTML과 `common/js/menu.js`는 **생성 결과물**입니다. 직접 수정하면 다음 빌드에서 덮어씁니다. 원본을 수정하고 `npm run build`를 실행하세요. CSS 분리는 기존 선언과 페이지 내 적용 순서를 보존하며, 이미지·폰트 파일은 변경하지 않았습니다.
 
 ## 데이터와 화면의 관계

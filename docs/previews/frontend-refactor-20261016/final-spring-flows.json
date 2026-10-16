@@ -1,0 +1,94 @@
+[
+  {
+    "width": 390,
+    "case": "Spring malformed review Escape",
+    "pass": true
+  },
+  {
+    "width": 390,
+    "case": "Spring cohort Tab/inert",
+    "pass": true,
+    "observed": {
+      "footer": true,
+      "inside": true
+    }
+  },
+  {
+    "width": 390,
+    "case": "Spring nested photo zoom",
+    "pass": true,
+    "observed": {
+      "parent": true,
+      "zoom": true
+    }
+  },
+  {
+    "width": 390,
+    "case": "Spring restore background/opener",
+    "pass": true,
+    "observed": {
+      "focus": "cv3-it",
+      "footer": false
+    }
+  },
+  {
+    "width": 390,
+    "case": "Spring static Check malformed hash",
+    "pass": true
+  },
+  {
+    "width": 1440,
+    "case": "Spring malformed review Escape",
+    "pass": true
+  },
+  {
+    "width": 1440,
+    "case": "Spring cohort Tab/inert",
+    "pass": true,
+    "observed": {
+      "footer": true,
+      "inside": true
+    }
+  },
+  {
+    "width": 1440,
+    "case": "Spring nested photo zoom",
+    "pass": true,
+    "observed": {
+      "parent": true,
+      "zoom": true
+    }
+  },
+  {
+    "width": 1440,
+    "case": "Spring restore background/opener",
+    "pass": true,
+    "observed": {
+      "focus": "cv3-it",
+      "footer": false
+    }
+  },
+  {
+    "width": 1440,
+    "case": "Spring static Check malformed hash",
+    "pass": true
+  },
+  {
+    "width": 390,
+    "case": "Legacy Spring dynamic reviews + malformed hash Escape",
+    "pass": true,
+    "observed": {
+      "cards": 10,
+      "scripts": [
+        {
+          "defer": true,
+          "src": "http://127.0.0.1:51988/stories/js/stories-m.js?v=1016cleanup"
+        },
+        {
+          "defer": false,
+          "src": "http://127.0.0.1:51988/stories/js/stories-m-reviews.js?v=1016cleanup"
+        }
+      ]
+    }
+  }
+]

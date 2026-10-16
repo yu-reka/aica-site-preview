@@ -1,0 +1,91 @@
+{
+  "static": [
+    {
+      "file": "index.html",
+      "bodyIdentical": true
+    },
+    {
+      "file": "home/index.html",
+      "bodyIdentical": true
+    },
+    {
+      "file": "about/index.html",
+      "bodyIdentical": true
+    },
+    {
+      "file": "check/index.html",
+      "bodyIdentical": true
+    },
+    {
+      "file": "life/index.html",
+      "bodyIdentical": true
+    },
+    {
+      "file": "stories/index.html",
+      "bodyIdentical": true
+    },
+    {
+      "file": "stories/interviews.html",
+      "bodyIdentical": true
+    },
+    {
+      "file": "stories/projects.html",
+      "bodyIdentical": true
+    },
+    {
+      "file": "stories/cohorts.html",
+      "bodyIdentical": true
+    },
+    {
+      "file": "stories/reviews.html",
+      "bodyIdentical": true
+    }
+  ],
+  "spring": [
+    {
+      "file": "review-seed.json",
+      "identical": true,
+      "bodyIdentical": true
+    },
+    {
+      "file": "story-seed.json",
+      "identical": true,
+      "bodyIdentical": true
+    },
+    {
+      "file": "templates/public-site/interviews.html",
+      "identical": false,
+      "bodyIdentical": true
+    },
+    {
+      "file": "templates/public-site/projects.html",
+      "identical": false,
+      "bodyIdentical": true
+    },
+    {
+      "file": "templates/public-site/cohorts.html",
+      "identical": false,
+      "bodyIdentical": true
+    },
+    {
+      "file": "templates/public-site/stories.html",
+      "identical": false,
+      "bodyIdentical": true
+    },
+    {
+      "file": "templates/public-site/reviews.html",
+      "identical": false,
+      "bodyIdentical": true
+    },
+    {
+      "file": "templates/public-site/review-fragments.html",
+      "identical": true,
+      "bodyIdentical": true
+    },
+    {
+      "file": "templates/public-site/story-fragments.html",
+      "identical": true,
+      "bodyIdentical": true
+    }
+  ]
+}

@@ -12,7 +12,7 @@
 | 모바일 메뉴 | `common/css/navigation-mobile.css` | 1080px 이하 헤더·햄버거·드로어의 공통 기준 |
 | 알아보기 | `about/css/about.css`, `presentation.css`, `about-m.css` | 알아보기 본문과 600px 이하 모바일 화면 |
 | 지원 전 체크 | `check/css/check.css`, `presentation.css`, `check-m.css` | 체크 본문과 600px 이하 모바일 화면 |
-| 라이프 | `life/css/life.css`, `presentation.css` | 시설·주거·먹거리·여가·오시는 길 |
+| 라이프 | `life/css/life.css`, `presentation.css`, `life-m.css` | 시설·주거·먹거리·여가·오시는 길 |
 | 선배들의 이야기 | `stories/css/stories.css`, `stories-sections.css`, `presentation.css`, 세부 페이지 CSS | 허브·인터뷰·후기·프로젝트·기수별 기록 |
 | 이야기 모바일 | `stories/css/stories-m.css` | 600px 이하 이야기 본문 |
 | Spring 공개 화면 | `stories/css/*-live.css` | DB에서 발행된 글을 표시하는 화면의 보정 |

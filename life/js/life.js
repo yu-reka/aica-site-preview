@@ -25,7 +25,7 @@ var NAME = { home:'인사교 LIFE', facility:'시설 둘러보기', tips:'생활
 var SUB = { home:'overview', facility:'facilities', tips:'tips', way:'directions' };   // home: 하위 메뉴 바에 표시 없음   // menu.js 하위 메뉴 id
 var BASE_TITLE = document.title;
 function route(){
-  var raw = decodeURIComponent(location.hash.slice(1)), part = raw.split('/'), id = SCREEN[part[0]], target = null;
+  var raw = Site.decodeHash(location.hash.slice(1)), part = raw.split('/'), id = SCREEN[part[0]], target = null;
   if (id && part[1]) {
     target = document.getElementById('tp-' + part[1]);
     history.replaceState(null, '', target ? '#tp-' + part[1] : (CANON[part[0]] || '#' + part[0]));
@@ -60,7 +60,7 @@ addEventListener('hashchange', route);
 var TPG = document.getElementById('pg-tips');
 function topic(){
   if (!TPG) return;
-  var h = decodeURIComponent(location.hash.slice(1)), el = h && document.getElementById(h);
+  var h = Site.decodeHash(location.hash.slice(1)), el = h && document.getElementById(h);
   var sec = el && el.closest ? el.closest('.tp-sec') : null, was = TPG.dataset.topic || '';
   if (sec) TPG.dataset.topic = sec.id; else if (!TPG.hidden) delete TPG.dataset.topic;
   var now = TPG.dataset.topic || '';
@@ -73,8 +73,8 @@ function topic(){
 }
 addEventListener('hashchange', topic);
 function lnbTopics(){
-  $$('.lnb a, .side-nav a', document).forEach(function(a){
-    if (a.textContent.trim() !== '생활 꿀팁' || (a.nextElementSibling && a.nextElementSibling.classList.contains('lnb-tp'))) return;
+  $$('.lnb a[data-sub="tips"], .side-nav a[data-sub="tips"]', document).forEach(function(a){
+    if (a.nextElementSibling && a.nextElementSibling.classList.contains('lnb-tp')) return;
     var d = document.createElement('div'); d.className = 'lnb-tp';
     d.innerHTML = $$('.tp-bar nav a', TPG).map(function(x){ return '<a href="' + x.getAttribute('href') + '">' + x.textContent + '</a>'; }).join('');
     a.parentNode.insertBefore(d, a.nextSibling); topic();
@@ -304,7 +304,9 @@ if (BX) (function(){
   setTimeout(place, 50);
 })();
 
+// Topic selection must not depend on the optional navigation being present.
 route();
+topic();
 })();
 
 /* 라이프 인터랙션 */

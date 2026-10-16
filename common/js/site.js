@@ -15,7 +15,7 @@
      <script src="../common/js/menu.js" defer></script>
      <script src="../common/js/site-layout.js" defer></script>
      <script src="../common/js/site.js" defer></script>
-   페이지 스크립트에서 쓸 수 있는 것: Site.href(메뉴 id, 하위 id) · Site.menu(메뉴 id) · Site.toast(글) · Site.reduce · Site.syncSubnav()
+   페이지 스크립트에서 쓸 수 있는 것: Site.href(메뉴 id, 하위 id) · Site.menu(메뉴 id) · Site.toast(글) · Site.reduce · Site.syncSubnav() · Site.decodeHash(해시)
    본문에서 쓰는 속성(마크업 예는 common/css/site.css 맨 아래 절):
      <a data-site-link="apply">   바깥 연결처(menu.js SITE_LINKS 키). 주소가 있으면 href로, 없으면 누를 때 안내 토스트
      data-scroll-fade               가로로 넘치는 탭 줄. 더 있는 쪽 끝을 흐리게(.fade-l · .fade-r)
@@ -29,6 +29,10 @@ const Site = (() => {
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const html = document.documentElement;
+  // A pasted URL can contain an incomplete percent escape. Treat it as the default screen.
+  function decodeHash(hash){
+    try { return decodeURIComponent(hash); } catch { return ''; }
+  }
 
   /* 지금 페이지에서 사이트 폴더(site/)까지의 상대 경로 — 페이지가 어느 폴더 깊이에 있어도 링크가 맞게 */
   const ROOT = (() => {
@@ -65,10 +69,10 @@ const Site = (() => {
      글 상세처럼 하위 메뉴 주소와 다른 페이지는 <html data-sub="하위 메뉴 id">로 정해 줌 */
   function currentSub(){
     if (html.dataset.sub) return html.dataset.sub;
-    const hash = decodeURIComponent(location.hash);
+    const hash = decodeHash(location.hash);
     const links = $$('#subnav a[data-sub], #siteLnb a[data-sub]').map(a => ({ id: a.dataset.sub, u: new URL(a.href) }));
     const here = links.filter(x => samePage(x.u));
-    const hit = here.find(x => hash && decodeURIComponent(x.u.hash) === hash) || here.find(x => !x.u.hash) || here[0];
+    const hit = here.find(x => hash && decodeHash(x.u.hash) === hash) || here.find(x => !x.u.hash) || here[0];
     return (hit || links[0])?.id;
   }
 
@@ -118,7 +122,7 @@ const Site = (() => {
     if (!nav || nav.dataset.type !== 'anchor' || !('IntersectionObserver' in window)) return;
     const pairs = $$('a[data-sub]', nav).map(a => {
       const u = new URL(a.href);
-      return { id: a.dataset.sub, el: samePage(u) && u.hash ? document.getElementById(decodeURIComponent(u.hash.slice(1))) : null };
+      return { id: a.dataset.sub, el: samePage(u) && u.hash ? document.getElementById(decodeHash(u.hash.slice(1))) : null };
     }).filter(p => p.el);
     if (!pairs.length) return;
     const io = new IntersectionObserver(es => es.forEach(e => {
@@ -224,7 +228,7 @@ const Site = (() => {
      #위치는 브라우저 이동(location.hash)으로 바꿔 :target · scroll-margin 같은 페이지의 위치 규칙이 그대로 적용되게 함.
      부드러운 스크롤은 CSS scroll-behavior(움직임 줄이기 설정이면 끔) */
   function goTo(hash){
-    const id = decodeURIComponent(hash.slice(1));
+    const id = decodeHash(hash.slice(1));
     const target = id && document.getElementById(id);
     if (!hash) {
       window.scrollTo({ top: 0 });
@@ -327,5 +331,5 @@ const Site = (() => {
   }
 
   // syncSubnav: 탭 화면 페이지(라이프 · 선배들의 이야기)가 <html data-sub>를 바꾼 뒤 하위 메뉴 바 표시를 다시 맞출 때
-  return { href, menu: menuOf, toast, reduce, syncSubnav };
+  return { href, menu: menuOf, toast, reduce, syncSubnav, decodeHash };
 })();

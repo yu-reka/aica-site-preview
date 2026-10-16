@@ -305,9 +305,9 @@
       footer.appendChild(el('b', '', ($('.who b', card) || {}).textContent || ''));
       var tg = $('.who .tg', card); if (tg) footer.appendChild(el('span', 'sm-review-tag', tg.textContent));
       note.appendChild(footer);
-      var cl = Array.from(card.classList), cat = cl.find(function(c){ return /^cat-/.test(c); });
+      var cl = Array.from(card.classList);
       var co = cl.find(function(c){ return /^coh\d+$/.test(c); });
-      return {node:note, details:details, category:cat ? cat.slice(4) : '', cohort:co ? co.slice(3) : '', tags:cl};
+      return {node:note, details:details, cohort:co ? co.slice(3) : '', classes:cl};
     });
     var categoryNames = [['all','전체'],['life','생활'],['class','수업'],['proj','프로젝트'],['job','취업'],['path','진로']];
     categoryNames.forEach(function(c){
@@ -338,7 +338,7 @@
       $$('button', categories).forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.value === category)); });
       $$('button', cohorts).forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.value === cohort)); });
       var matching = entries.filter(function(e){
-        return (category === 'all' || e.category === category) && (!cohort || e.cohort === cohort) && (!tag || e.tags.indexOf('tg' + tag) >= 0);
+        return (category === 'all' || e.classes.indexOf('cat-' + category) >= 0) && (!cohort || e.cohort === cohort) && (!tag || e.classes.indexOf('tg' + tag) >= 0);
       });
       var total = Math.max(1, Math.ceil(matching.length / pageSize)); page = Math.min(page, total);
       count.textContent = matching.length + '개의 후기';

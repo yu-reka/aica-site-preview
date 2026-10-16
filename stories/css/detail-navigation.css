@@ -21,3 +21,6 @@
 .stories-page .pjnav[hidden]{display:none}
 
 .stories-page .ivwrap > .sd-nav{grid-column:1/-1;margin-top:0}
+
+/* The navigation supplies its own bottom spacing; remove the paper scroll area inset. */
+.stories-page .ov .sheet:has(.sd-nav) .mscroll{padding-bottom:0}

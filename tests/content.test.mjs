@@ -28,7 +28,8 @@ test('all generated pages and site settings render from source', () => {
     assert.match(html, /<!doctype html>/i);
     assert.doesNotMatch(html, /\{\{(?:>|#each|\/each)/);
     if (path !== 'index.html') {
-      const scripts = [...html.matchAll(/<script src="([^"]+)"/g)].map(match => match[1]);
+      const scripts = [...html.matchAll(/<script src="([^"]+)"/g)].map(match => match[1].split('?')[0]);
+      for (const name of ['menu', 'site-layout', 'site']) assert.ok(scripts.includes(`../common/js/${name}.js`));
       assert.ok(scripts.indexOf('../common/js/menu.js') < scripts.indexOf('../common/js/site-layout.js'));
       assert.ok(scripts.indexOf('../common/js/site-layout.js') < scripts.indexOf('../common/js/site.js'));
     }

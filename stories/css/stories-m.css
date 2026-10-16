@@ -75,10 +75,13 @@
   .stories-page .sm-ivcount{display:inline;margin-left:4px;font-family:"Giants",var(--ff-sans,sans-serif);font-size:16px;color:#2457F5}
   .stories-page #iv-all .iva-tools{display:block}
   .stories-page #iv-all .iva-seg{display:none}
-  .stories-page #iv-all .iva-chips{display:grid;grid-auto-columns:minmax(0,1fr);grid-auto-flow:column;gap:4px;padding:4px;border-radius:14px;background:#F5F7F6;flex-wrap:nowrap}
-  .stories-page #iv-all .iva-chips button{height:auto;min-height:44px;padding:0 2px;border:2px solid transparent;border-radius:10px;background:transparent;color:#566175;font-size:14px;font-weight:600;letter-spacing:-.02em;white-space:nowrap;box-shadow:none}
-  .stories-page #iv-all .iva-chips button[aria-pressed="true"]{border-color:#0B0B0C;background:#fff;color:#14233F;font-weight:800;box-shadow:2px 2px 0 #0B0B0C}
-  .stories-page #iv-all .iva-out{display:flex;flex-direction:column;gap:0;margin-top:12px;border-top:2px solid #14233F}
+  /* 기수 거르기: 밑줄 글자 탭(위아래 메뉴의 상자 탭과 구분, 후기 · 기수 기록 시안과 같은 방식) */
+  .stories-page #iv-all .iva-chips{display:flex;flex-wrap:nowrap;gap:22px;padding:0 2px;border-bottom:1px solid #D3D9E1}
+  .stories-page #iv-all .iva-chips button{position:relative;height:auto;min-height:44px;margin:0 0 -1px;padding:0 1px;border:0;border-bottom:3px solid transparent;border-radius:0;background:transparent;color:#566175;font-size:15px;font-weight:600;letter-spacing:-.02em;white-space:nowrap;box-shadow:none}
+  .stories-page #iv-all .iva-chips button[aria-pressed="true"]{border-bottom-color:#14233F;color:#14233F;font-weight:800;box-shadow:none}
+  .stories-page #iv-all .iva-chips button:focus-visible{outline:2px solid #2457F5;outline-offset:-2px}
+  .stories-page #iv-all .iva-out .iva-c:first-child{border-top:0}
+  .stories-page #iv-all .iva-out{display:flex;flex-direction:column;gap:0;margin-top:4px}
   .stories-page #iv-all .iva-out .iva-c{display:grid;grid-template-columns:72px minmax(0,1fr);grid-template-rows:auto auto;column-gap:12px;row-gap:3px;align-items:center;min-height:84px;padding:12px 0;border-bottom:1px solid #D3D9E1;box-sizing:border-box}
   .stories-page #iv-all .iva-out .iva-c > div:not(.by):not(.ph){display:contents}
   .stories-page #iv-all .iva-out .iva-c .ph{grid-row:1 / span 2;width:72px;height:56px;aspect-ratio:auto;border-radius:12px}

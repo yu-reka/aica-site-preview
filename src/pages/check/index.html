@@ -16,10 +16,12 @@
 <link rel="stylesheet" href="../common/css/site.css?v=1015m">
 <link rel="stylesheet" href="css/check.css">
   <link rel="stylesheet" href="../common/css/unify.css?v=1014L">
+<link rel="stylesheet" href="css/check-m.css?v=1016m">
 <script src="../common/js/menu.js" defer></script>
 <script src="../common/js/site-layout.js" defer></script>
 <script src="../common/js/site.js" defer></script>
 <script src="js/check.js" defer></script>
+<script src="js/check-m.js?v=1016m" defer></script>
 </head>
 <body data-cat="check">
 <header class="site-header" id="siteHeader"></header>
@@ -29,6 +31,7 @@
 <main id="main" class="check-page" tabindex="-1">
 
 <header class="ckx cb cb1" id="overview"><div class="wrap"><div class="cbx"><div class="cbt"><h1>지원 전 <b>CHECK</b></h1><p class="q">지원할까 말까 <mark>고민 중</mark>이죠?<br>일단 여기부터 같이 봐요!</p><p class="d">키워드 체크와 셀프 점검을 통해 내가 지원 가능할지 미리 확인해요.<br>궁금했던 전형과 수업, 준비 과정까지 한눈에 정리했어요.</p></div><div class="cbw"><nav class="cbl" aria-label="지원 전 체크 목차"><p>MY CHECKLIST</p><a href="#eligibility"><span class="bx"></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span class="tx"><b>나는 지원 자격에 해당할까?</b><small>나이, 학력, 전공 확인하기</small></span></a><a href="#schedule"><span class="bx"></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span class="tx"><b>어떤 과정을 준비해야 할까?</b><small>전형 일정과 준비 서류 미리 보기</small></span></a><a href="#benefits"><span class="bx"></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c2 2 4 3 6 3s4-1 6-3v-5"/><path d="M22 9v6"/></svg><span class="tx"><b>어떤 지원을 받을 수 있을까?</b><small>지원금 · 노트북 · 취업 지원 확인하기</small></span></a><a href="#faq"><span class="bx"></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M9 10.5h.01M12 10.5h.01M15 10.5h.01" stroke-width="2.6"/></svg><span class="tx"><b>궁금한 점을 미리 해결하자!</b><small>자주 묻는 질문 모아보기</small></span></a></nav><span class="ok" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div></div></div></header>
+<nav class="cm-tabs" aria-label="지원 전 체크 바로가기"><div class="cm-seg"><a href="#eligibility" aria-current="true">모집 대상</a><a href="#schedule">프로세스</a><a href="#benefits">지원 혜택</a><a href="#faq">FAQ</a></div></nav>   <!-- 10-16 모바일(600px 이하) 바로가기 탭, 웹에선 숨김(css/check-m.css) -->
 <nav class="sec-float" aria-label="지원 전 체크 목차"><ul>
   <li><button type="button" class="sf-btn is-active" data-jump="eligibility" aria-current="true"><i class="sf-slash" aria-hidden="true"></i><span class="sf-label">모집 대상</span></button></li><li><button type="button" class="sf-btn" data-jump="schedule"><i class="sf-slash" aria-hidden="true"></i><span class="sf-label">모집 프로세스</span></button></li><li><button type="button" class="sf-btn" data-jump="benefits"><i class="sf-slash" aria-hidden="true"></i><span class="sf-label">지원 혜택</span></button></li><li><button type="button" class="sf-btn" data-jump="faq"><i class="sf-slash" aria-hidden="true"></i><span class="sf-label">자주 묻는 질문</span></button></li>
 </ul></nav>
@@ -88,6 +91,7 @@
     <ul class="faq-list" id="faqList">
       {{#each check.faq}}{{> @view.item.template}}{{/each}}
     </ul>
+    <button type="button" class="cm-more" id="cmFaqMore" aria-controls="faqList">질문 더 보기 ↓</button>   <!-- 10-16 모바일 전용: 페이지 번호 대신 더 보기 -->
     <nav class="faq-pager" id="faqPager" aria-label="자주 묻는 질문 페이지" aria-hidden="false">
       <button type="button" class="fp-btn faq-pb" id="faqPrev" aria-label="이전 페이지" disabled=""><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
       <div class="faq-pages" id="faqPages"><button type="button" class="faq-pn" data-p="0" aria-current="page" aria-label="1페이지">1</button><button type="button" class="faq-pn" data-p="1" aria-label="2페이지">2</button><button type="button" class="faq-pn" data-p="2" aria-label="3페이지">3</button><button type="button" class="faq-pn" data-p="3" aria-label="4페이지">4</button><button type="button" class="faq-pn" data-p="4" aria-label="5페이지">5</button></div>

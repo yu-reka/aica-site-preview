@@ -291,7 +291,7 @@
   html.school-about main#main .am-cta{display:flex;align-items:center;justify-content:center;min-height:54px;margin:16px 0 48px;border:2px solid var(--am-black);border-radius:40px;background:var(--am-blue);box-shadow:3px 3px 0 var(--am-black);color:#fff;font:700 16px/1.2 var(--ff-sans,sans-serif);text-decoration:none}
   html.school-about main#main .am-cta:focus-visible{outline:2px solid var(--am-blue);outline-offset:3px}
 
-  /* unify.css의 카드 제목 규칙(!important)을 모바일 시안 크기로 */
+  /* presentation.css의 카드 제목 규칙(!important)을 모바일 시안 크기로 */
   html.school-about main#main :is(.intro-news-body h4,.intro-platform-features article h4,.common-course-caption h3,.education-phase-band h4,.activity-project-body h4,.career-stage-copy h3){font-family:var(--ff-sans,sans-serif)!important;font-weight:800!important;letter-spacing:-.02em!important}
   html.school-about main#main :is(.intro-news-body h4,.activity-project-body h4,.career-stage-copy h3){font-size:15px!important;line-height:1.45!important}
   html.school-about main#main :is(.intro-platform-features article h4,.education-phase-band h4){font-size:16px!important;line-height:1.35!important}

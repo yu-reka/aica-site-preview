@@ -1,5 +1,5 @@
 /* Approved standalone Check prototype, adapted to the existing document and
-   shared navigation. Desktop rules remain in check.css / unify.css. */
+   shared navigation. Desktop rules remain in check.css / presentation.css. */
 .cm-only,.cm-tabs,.cm-dock{display:none}
 
 @media (max-width:600px){
@@ -33,7 +33,7 @@
   #main .cb1 .cbl .ic{width:22px;height:22px}
   #main .cb1 .cbl .tx{min-width:0;gap:3px}
   #main .cb1 .cbl b{font:700 clamp(14px,3.9vw,16px)/1.4 var(--cm-heading);letter-spacing:-.02em}
-  /* unify.css fixes these captions to Paperlogy with !important. */
+  /* presentation.css fixes these captions to Paperlogy with !important. */
   html body #main .cb1 .cbl small{font:400 13px/1.45 var(--cm-body)!important;color:var(--cm-muted)}
   #main .cb1 .ok{right:-7px;bottom:-10px;width:40px;height:40px;box-shadow:2px 2px 0 var(--cm-black)}
   #main .cb1 .ok svg{width:21px;height:21px}

@@ -7,7 +7,7 @@
    - 배치 구간은 화면 폭이 아니라 본문 칸 폭(@container hub): 왼쪽 메뉴(lnb.css)가 붙으면 본문 칸이 좁아지기 때문
    - 10-13 다듬기: 하위 페이지와 '같은 카테고리의 한 페이지'로 — 제목 줄은 하위 페이지 첫 머리와 같은 틀 · 같은 자리,
      구역은 모든 폭에서 흰 바탕 + 칸 안의 판(전에는 1200 미만만 화면 끝까지 띠), 카드는 하위 페이지 카드 모양으로 되돌림
-   - 구역 머리(.sh · .sh-k · h2)의 글꼴 · 색은 unify.css의 .stories-page .sh 규칙을 받고, 크기만 한 단계 낮춤(아래)
+   - 구역 머리(.sh · .sh-k · h2)의 글꼴 · 색은 presentation.css의 .stories-page .sh 규칙을 받고, 크기만 한 단계 낮춤(아래)
    - 불러오는 순서: tokens → base → site → 이 파일 → unify → lnb (stories.css는 안 씀: 탭 · 카드 규칙이 섞이지 않게)
    ========================================================= */
 
@@ -43,7 +43,7 @@ html[data-nav="side"] .stories-hub{background:var(--surface)}
 .hb-in{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"hd more" "body body";align-items:end;column-gap:24px}
 .hb-hd{grid-area:hd;margin:0}
 .hb-hd h2{margin:0}
-/* 구역 제목은 맨 위 제목(38px)보다 한 단계 아래(10-13 다듬기): 목차처럼 읽히게 + 04 제목이 좁은 칸에서도 한 줄. unify.css가 뒤에 오니 특이도 (0,3,1) */
+/* 구역 제목은 맨 위 제목(38px)보다 한 단계 아래(10-13 다듬기): 목차처럼 읽히게 + 04 제목이 좁은 칸에서도 한 줄. presentation.css가 뒤에 오니 특이도 (0,3,1) */
 /* 전체 보기: 인터뷰 페이지 .ivall과 같은 크기(36px). 누르는 칸은 ::after로 44px */
 .hb-more{position:relative;grid-area:more;justify-self:end;display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px 0 16px;border:1.5px solid var(--ink);border-radius:999px;
   background:transparent;font-size:14px;font-weight:700;line-height:1;color:var(--ink);white-space:nowrap;transition:background .2s,color .2s}

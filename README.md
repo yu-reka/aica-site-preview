@@ -40,7 +40,9 @@ npm run preview     # Python 3 로컬 서버: http://127.0.0.1:4173
 
 모바일 헤더·햄버거·카테고리는 지원 전 체크 기준으로 공통 관리합니다. `common/css/navigation-mobile.css`를 각 페이지 CSS 뒤에 불러오며, 1080px 이하의 `.site-header`·`.drawer`에만 적용합니다. 페이지별 CSS에서 모바일 로고·메뉴 크기를 다시 지정하지 않고, 본문 폰트·색상은 본문 범위에서 관리합니다.
 
-루트의 HTML과 `common/js/menu.js`는 **생성 결과물**입니다. 직접 수정하면 다음 빌드에서 덮어씁니다. 원본을 수정하고 `npm run build`를 실행하세요. 코드 분리 중 기존 CSS와 이미지·폰트 파일은 변경하지 않았습니다.
+기존 `common/css/unify.css`의 페이지별 규칙은 `about/`, `check/`, `life/`, `stories/`의 `css/presentation.css`로 나눴습니다. 공통 팔레트·폰트·푸터 규칙만 `common/css/presentation.css`에 둡니다. 이야기·라이프 모바일 PR의 수정 위치와 CSS 적용 순서는 [CSS 관리 기준](docs/css-ownership.md)을 참고하세요.
+
+루트의 HTML과 `common/js/menu.js`는 **생성 결과물**입니다. 직접 수정하면 다음 빌드에서 덮어씁니다. 원본을 수정하고 `npm run build`를 실행하세요. CSS 분리는 기존 선언과 페이지 내 적용 순서를 보존하며, 이미지·폰트 파일은 변경하지 않았습니다.
 
 ## 데이터와 화면의 관계
 

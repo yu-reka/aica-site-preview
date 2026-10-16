@@ -62,13 +62,25 @@ test('malformed Stories URL still registers modal Escape and focus handling', ()
   vm.runInContext(source('../stories/js/stories.js'), context);
   const close = { focus() { document.activeElement = close; }, click() { closed = true; } };
   const modal = { contains: () => false, querySelector: selector => selector === '.x' ? close : null };
-  document.activeElement = { href: '#r-life-0' };
+  const original = { href: '#r-life-0', closest: () => null, getClientRects: () => [1], focus() { document.activeElement = original; } };
+  document.activeElement = original;
+  document.contains = () => true;
   target = modal;
   context.location.hash = '#r-life-0';
   events.hashchange.forEach(handler => handler());
   assert.equal(document.activeElement, close);
   documentEvents.keydown.forEach(handler => handler({ key: 'Escape' }));
   assert.equal(closed, true);
+  // A next-review link lives in the old modal, not in the newly opened modal.
+  // Closing after navigating must return to the original visible card.
+  const next = { href: 'https://example.test/stories/reviews.html#r-class-0', closest: selector => selector === '.ov' ? modal : next };
+  documentEvents.click.forEach(handler => handler({ target: next }));
+  context.location.hash = '#r-class-0';
+  events.hashchange.forEach(handler => handler());
+  target = null;
+  context.location.hash = '#p-rev';
+  events.hashchange.forEach(handler => handler());
+  assert.equal(document.activeElement, original);
 });
 
 test('early legacy router ignores malformed hashes but keeps encoded canonical links', () => {

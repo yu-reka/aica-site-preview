@@ -104,7 +104,7 @@
     addEventListener('hashchange', function(){
       var d = open(), a = link || document.activeElement; link = null;
       if (d) {
-        if (a && a !== document.body && !d.contains(a)) opener = a;
+        if (a && a !== document.body && !d.contains(a) && !a.closest('.ov')) opener = a;
         var x = d.querySelector('.x'); if (x) x.focus({ preventScroll: true });
       } else if (opener) {
         // 창 안 태그 링크(#tg-…)로 나가면 화면이 태그 목록 자리로 가므로 연 카드로 돌려주지 않음(다음 Tab은 브라우저가 그 자리부터)

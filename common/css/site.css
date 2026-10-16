@@ -261,3 +261,19 @@
 .site-header .btn-ask,.drawer .drawer-cta{gap:7px}
 .site-header .btn-ask .ic-kakao{width:18px;height:18px;flex:none;fill:#191919}
 .drawer .drawer-cta .ic-kakao{width:20px;height:20px;flex:none;fill:#191919}
+
+/* 10-15 모바일 메뉴 정리: ☰ 세 줄 같은 길이 · '메뉴' 글자 없음 → 버튼은 44px 정사각형. 열린 메뉴의 X · 닫기는 화면에서 숨김(딤을 누르거나 Esc로 닫힘, 키보드 초점이 오면 보임) */
+.site-header .hdr-util .icon-btn.menu-toggle{width:44px;padding:0;gap:0;justify-content:center}
+.site-header .hdr-util .icon-btn.menu-toggle svg{width:24px;height:24px;stroke-width:2.6;stroke-linecap:butt}
+.drawer .drawer-top .drawer-close:not(:focus-visible){position:absolute;width:1px;height:1px;min-width:0;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+/* 10-15 모바일 메뉴: 큰 메뉴 이름은 그 페이지 첫 화면 링크, 오른쪽 화살표 버튼만 하위 목록을 펼침(한 번에 하나) */
+.drawer .acc-head{display:flex;align-items:center}
+.drawer .acc-head .acc-btn{flex:1;min-width:0}
+.drawer .acc-tog{flex:none;display:grid;place-items:center;width:44px;height:60px;margin-right:-13px;padding:0;border:0;background:none;color:inherit;cursor:pointer}
+.drawer .acc-tog svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;transition:transform .3s}
+.drawer .acc-tog[aria-expanded="true"] svg{transform:rotate(180deg)}
+.drawer .acc-tog.is-current{color:var(--primary)}
+.drawer .acc-tog:focus-visible{outline:2px solid var(--primary);outline-offset:-4px;border-radius:8px}
+.drawer .drawer-acc.is-open .acc-panel{grid-template-rows:1fr}
+.drawer .drawer-acc.is-open .acc-panel>div{visibility:inherit;transition:none}
+@media (prefers-reduced-motion:reduce){.drawer .acc-tog svg{transition:none}}

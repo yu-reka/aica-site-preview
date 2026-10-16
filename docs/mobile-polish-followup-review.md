@@ -54,3 +54,16 @@
 ![이야기 웹](screenshots/banner-followup/stories-desktop-1440.png)
 ![라이프 웹](screenshots/banner-followup/life-desktop-1440.png)
 ![체크 웹 최종 유지 상태](screenshots/banner-followup/check-desktop-1440.png)
+
+
+## 체크리스트·탭 최종 조정
+
+- 라이프 문화·여가 모바일 탭의 “가까운 시설”을 “가까운 곳”으로 변경. 데이터와 필터 계약 유지.
+- 체크 테이프는 기존 불투명 연두색 유지, 검은 테두리 제거 및 양 끝을 불규칙하게 찢긴 모양으로 변경. 웹·모바일 공통.
+- 600px 이하에서만 체크리스트 카드 회전 제거, 오른쪽 아래 원형 체크 장식 숨김. 웹의 2도 회전과 원형 체크 유지.
+- 360·390·430px 및 1440px 스타일·가로 넘침 확인. 모바일 “가까운 곳” 탭 전환 확인.
+- build / test 21개 / check / diff --check 통과. 데이터·Spring 연동 JS·DB 계약 변경 없음. Spring 실환경은 미검증.
+
+![체크 모바일 최종](screenshots/banner-followup/check-final-mobile-390.png)
+![체크 웹 최종](screenshots/banner-followup/check-final-desktop-1440.png)
+![가까운 곳 탭](screenshots/banner-followup/life-nearby-label-390.png)

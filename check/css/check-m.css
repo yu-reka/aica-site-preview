@@ -25,7 +25,8 @@
   #main .cb .q{margin-top:16px;font:700 18px/1.4 var(--cm-heading);letter-spacing:-.03em}
   #main.check-page .cb .d{display:none}
   #main .cb1 .cbw{margin-top:26px}
-  #main .cb1 .cbl{padding:22px 14px 6px;box-shadow:3px 3px 0 var(--cm-black);transform:rotate(.7deg)}
+  #main .cb1 .cbl{padding:22px 14px 6px;box-shadow:3px 3px 0 var(--cm-black);transform:none}
+  #main .cb1 .ok{display:none}
   #main .cb1 .cbl::before{left:50%;right:auto;width:84px;height:22px;transform:translateX(-50%) rotate(-3deg)}
   #main .cb1 .cbl>p{font:400 14px/1.2 var(--ff-title);letter-spacing:.06em}
   #main .cb1 .cbl a{display:grid;grid-template-columns:20px 22px minmax(0,1fr);gap:10px;min-height:72px;padding:12px 0;border-radius:2px}

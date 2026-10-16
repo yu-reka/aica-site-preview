@@ -55,3 +55,17 @@ test('older Spring story templates can resolve their legacy stylesheet URL', () 
   ]);
   for (const url of imports) assert.ok(existsSync(resolve(dirname(legacy), url)), url);
 });
+
+
+test('Stories and Life own one shared masthead with a legacy Spring entry', () => {
+  for (const [page, html] of build()) {
+    if (!/^(life|stories)\//.test(page)) continue;
+    const links = styles(html);
+    assert.equal(links.filter(link => link === '../common/css/masthead.css').length, 1, page);
+    assert.ok(!links.some(link => /(?:^|\/)mast\.css$/.test(link)), page);
+    assert.ok(links.indexOf('../common/css/masthead.css') < links.indexOf('../common/css/navigation-mobile.css'), page);
+  }
+  const legacy = join(root, 'stories/css/mast.css');
+  const imported = /@import url\("([^"?]+)/.exec(readFileSync(legacy, 'utf8'))[1];
+  assert.equal(resolve(dirname(legacy), imported), join(root, 'common/css/masthead.css'));
+});

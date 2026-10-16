@@ -51,7 +51,7 @@
     if (typeof Site !== 'undefined' && Site.syncSubnav) Site.syncSubnav();
   });
   function fromHash(instant){
-    var id = TAB[decodeURIComponent(location.hash.slice(1))];
+    var id = TAB[Site.decodeHash(location.hash.slice(1))];
     if (elsewhere(id)) return;
     if (id && pick(id)) toTabs(instant);
     else if (!id) paneTab();
@@ -61,7 +61,7 @@
   // 10-13: 다른 탭 안 주소(후기 탭의 '이번 주 인터뷰' → #iv-1 등)로 가면 그 탭으로 바꾸고 그 자리로 스크롤
   var PANE_TAB = { 'p-rev':'t1', 'p-iv':'t2', 'p-pr':'t3', 'p-coh':'t4' };
   function paneTab(){
-    var el = document.getElementById(decodeURIComponent(location.hash.slice(1))), p = el && page.contains(el) && el.closest('.pane');
+    var el = document.getElementById(Site.decodeHash(location.hash.slice(1))), p = el && page.contains(el) && el.closest('.pane');
     if (!p || !PANE_TAB[p.id]) return;
     var r = document.getElementById(PANE_TAB[p.id]);
     if (r && !r.checked) {
@@ -76,17 +76,17 @@
     var a = e.target.closest('#siteHeader a[href], #drawer a[href], .stories-page a[href^="#"]');
     if (!a) return;
     var u = new URL(a.href);
-    if (u.pathname === location.pathname && u.hash && u.hash === location.hash && TAB[decodeURIComponent(u.hash.slice(1))])
+    if (u.pathname === location.pathname && u.hash && u.hash === location.hash && TAB[Site.decodeHash(u.hash.slice(1))])
       setTimeout(function(){ fromHash(false); }, 0);
   }, true);
-  if (elsewhere(TAB[decodeURIComponent(location.hash.slice(1))])) {
+  if (elsewhere(TAB[Site.decodeHash(location.hash.slice(1))])) {
     // 다른 페이지로 가는 중
-  } else if (TAB[decodeURIComponent(location.hash.slice(1))]) {
+  } else if (TAB[Site.decodeHash(location.hash.slice(1))]) {
     // 처음 열 때: 탭만 먼저 켜고, 글꼴 · 레이아웃이 자리 잡은 뒤 탭 내용으로
-    pick(TAB[decodeURIComponent(location.hash.slice(1))]);
+    pick(TAB[Site.decodeHash(location.hash.slice(1))]);
     var go = function(){ fromHash(true); };
     if (document.readyState === 'complete') requestAnimationFrame(go); else addEventListener('load', go, { once: true });
-  } else if ((function(p){ return p && p.classList.contains('pane') && page.contains(p) && p.getClientRects().length; })(document.getElementById(decodeURIComponent(location.hash.slice(1))))) {
+  } else if ((function(p){ return p && p.classList.contains('pane') && page.contains(p) && p.getClientRects().length; })(document.getElementById(Site.decodeHash(location.hash.slice(1))))) {
     // 탭 내용 주소(#p-rev 등, 글 창을 닫은 뒤의 주소)로 새로 열 때: 브라우저는 .pane이 들어오는(translateY 18px) 중에 스크롤해
     // 제목이 바 아래 14px에 왔음 → 자리 잡은 뒤 탭 주소와 같은 32px로(2026-10-07)
     var goPane = function(){ toTabs(true); };
@@ -108,7 +108,7 @@
         var x = d.querySelector('.x'); if (x) x.focus({ preventScroll: true });
       } else if (opener) {
         // 창 안 태그 링크(#tg-…)로 나가면 화면이 태그 목록 자리로 가므로 연 카드로 돌려주지 않음(다음 Tab은 브라우저가 그 자리부터)
-        var to = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+        var to = document.getElementById(Site.decodeHash(location.hash.slice(1)));
         if (!(to && to.classList.contains('tgt')) && document.contains(opener) && opener.getClientRects().length) opener.focus({ preventScroll: true });
         opener = null;
       }

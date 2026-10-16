@@ -1,0 +1,415 @@
+[
+  {
+    "name": "malformed-check-checklist",
+    "width": 360,
+    "pass": true,
+    "observed": {
+      "count": "1",
+      "hash": "#%E0%A4%A"
+    }
+  },
+  {
+    "name": "malformed-check-faq-initialized",
+    "width": 360,
+    "pass": true,
+    "observed": 5
+  },
+  {
+    "name": "malformed-review-focus-and-escape",
+    "width": 360,
+    "pass": true,
+    "observed": {
+      "inside": true,
+      "closed": true
+    }
+  },
+  {
+    "name": "cohort-background-isolated",
+    "width": 360,
+    "pass": true,
+    "observed": {
+      "footer": true,
+      "header": true,
+      "modal": false
+    }
+  },
+  {
+    "name": "cohort-tab-wrap",
+    "width": 360,
+    "pass": true,
+    "observed": {
+      "cls": "cv3-zoom",
+      "inside": true
+    }
+  },
+  {
+    "name": "cohort-shift-tab-wrap",
+    "width": 360,
+    "pass": true,
+    "observed": "nx"
+  },
+  {
+    "name": "cohort-zoom-focus-isolated",
+    "width": 360,
+    "pass": true,
+    "observed": {
+      "backgroundModal": true,
+      "focus": "cv3-zv-x"
+    }
+  },
+  {
+    "name": "cohort-zoom-restore-parent",
+    "width": 360,
+    "pass": true,
+    "observed": {
+      "focus": "cv3-zoom",
+      "footer": true,
+      "modalInert": false
+    }
+  },
+  {
+    "name": "cohort-close-restores-background-and-opener",
+    "width": 360,
+    "pass": true,
+    "observed": {
+      "closed": true,
+      "focus": "cv3-it",
+      "footer": false,
+      "header": false
+    }
+  },
+  {
+    "name": "malformed-check-checklist",
+    "width": 390,
+    "pass": true,
+    "observed": {
+      "count": "1",
+      "hash": "#%E0%A4%A"
+    }
+  },
+  {
+    "name": "malformed-check-faq-initialized",
+    "width": 390,
+    "pass": true,
+    "observed": 5
+  },
+  {
+    "name": "malformed-review-focus-and-escape",
+    "width": 390,
+    "pass": true,
+    "observed": {
+      "inside": true,
+      "closed": true
+    }
+  },
+  {
+    "name": "cohort-background-isolated",
+    "width": 390,
+    "pass": true,
+    "observed": {
+      "footer": true,
+      "header": true,
+      "modal": false
+    }
+  },
+  {
+    "name": "cohort-tab-wrap",
+    "width": 390,
+    "pass": true,
+    "observed": {
+      "cls": "cv3-zoom",
+      "inside": true
+    }
+  },
+  {
+    "name": "cohort-shift-tab-wrap",
+    "width": 390,
+    "pass": true,
+    "observed": "nx"
+  },
+  {
+    "name": "cohort-zoom-focus-isolated",
+    "width": 390,
+    "pass": true,
+    "observed": {
+      "backgroundModal": true,
+      "focus": "cv3-zv-x"
+    }
+  },
+  {
+    "name": "cohort-zoom-restore-parent",
+    "width": 390,
+    "pass": true,
+    "observed": {
+      "focus": "cv3-zoom",
+      "footer": true,
+      "modalInert": false
+    }
+  },
+  {
+    "name": "cohort-close-restores-background-and-opener",
+    "width": 390,
+    "pass": true,
+    "observed": {
+      "closed": true,
+      "focus": "cv3-it",
+      "footer": false,
+      "header": false
+    }
+  },
+  {
+    "name": "malformed-check-checklist",
+    "width": 430,
+    "pass": true,
+    "observed": {
+      "count": "1",
+      "hash": "#%E0%A4%A"
+    }
+  },
+  {
+    "name": "malformed-check-faq-initialized",
+    "width": 430,
+    "pass": true,
+    "observed": 5
+  },
+  {
+    "name": "malformed-review-focus-and-escape",
+    "width": 430,
+    "pass": true,
+    "observed": {
+      "inside": true,
+      "closed": true
+    }
+  },
+  {
+    "name": "cohort-background-isolated",
+    "width": 430,
+    "pass": true,
+    "observed": {
+      "footer": true,
+      "header": true,
+      "modal": false
+    }
+  },
+  {
+    "name": "cohort-tab-wrap",
+    "width": 430,
+    "pass": true,
+    "observed": {
+      "cls": "cv3-zoom",
+      "inside": true
+    }
+  },
+  {
+    "name": "cohort-shift-tab-wrap",
+    "width": 430,
+    "pass": true,
+    "observed": "nx"
+  },
+  {
+    "name": "cohort-zoom-focus-isolated",
+    "width": 430,
+    "pass": true,
+    "observed": {
+      "backgroundModal": true,
+      "focus": "cv3-zv-x"
+    }
+  },
+  {
+    "name": "cohort-zoom-restore-parent",
+    "width": 430,
+    "pass": true,
+    "observed": {
+      "focus": "cv3-zoom",
+      "footer": true,
+      "modalInert": false
+    }
+  },
+  {
+    "name": "cohort-close-restores-background-and-opener",
+    "width": 430,
+    "pass": true,
+    "observed": {
+      "closed": true,
+      "focus": "cv3-it",
+      "footer": false,
+      "header": false
+    }
+  },
+  {
+    "name": "malformed-check-checklist",
+    "width": 1280,
+    "pass": true,
+    "observed": {
+      "count": "1",
+      "hash": "#%E0%A4%A"
+    }
+  },
+  {
+    "name": "malformed-check-faq-initialized",
+    "width": 1280,
+    "pass": true,
+    "observed": 8
+  },
+  {
+    "name": "malformed-review-focus-and-escape",
+    "width": 1280,
+    "pass": true,
+    "observed": {
+      "inside": true,
+      "closed": true
+    }
+  },
+  {
+    "name": "cohort-background-isolated",
+    "width": 1280,
+    "pass": true,
+    "observed": {
+      "footer": true,
+      "header": true,
+      "modal": false
+    }
+  },
+  {
+    "name": "cohort-tab-wrap",
+    "width": 1280,
+    "pass": true,
+    "observed": {
+      "cls": "cv3-zoom",
+      "inside": true
+    }
+  },
+  {
+    "name": "cohort-shift-tab-wrap",
+    "width": 1280,
+    "pass": true,
+    "observed": "nx"
+  },
+  {
+    "name": "cohort-zoom-focus-isolated",
+    "width": 1280,
+    "pass": true,
+    "observed": {
+      "backgroundModal": true,
+      "focus": "cv3-zv-x"
+    }
+  },
+  {
+    "name": "cohort-zoom-restore-parent",
+    "width": 1280,
+    "pass": true,
+    "observed": {
+      "focus": "cv3-zoom",
+      "footer": true,
+      "modalInert": false
+    }
+  },
+  {
+    "name": "cohort-close-restores-background-and-opener",
+    "width": 1280,
+    "pass": true,
+    "observed": {
+      "closed": true,
+      "focus": "cv3-it",
+      "footer": false,
+      "header": false
+    }
+  },
+  {
+    "name": "malformed-check-checklist",
+    "width": 1440,
+    "pass": true,
+    "observed": {
+      "count": "1",
+      "hash": "#%E0%A4%A"
+    }
+  },
+  {
+    "name": "malformed-check-faq-initialized",
+    "width": 1440,
+    "pass": true,
+    "observed": 8
+  },
+  {
+    "name": "malformed-review-focus-and-escape",
+    "width": 1440,
+    "pass": true,
+    "observed": {
+      "inside": true,
+      "closed": true
+    }
+  },
+  {
+    "name": "cohort-background-isolated",
+    "width": 1440,
+    "pass": true,
+    "observed": {
+      "footer": true,
+      "header": true,
+      "modal": false
+    }
+  },
+  {
+    "name": "cohort-tab-wrap",
+    "width": 1440,
+    "pass": true,
+    "observed": {
+      "cls": "cv3-zoom",
+      "inside": true
+    }
+  },
+  {
+    "name": "cohort-shift-tab-wrap",
+    "width": 1440,
+    "pass": true,
+    "observed": "nx"
+  },
+  {
+    "name": "cohort-zoom-focus-isolated",
+    "width": 1440,
+    "pass": true,
+    "observed": {
+      "backgroundModal": true,
+      "focus": "cv3-zv-x"
+    }
+  },
+  {
+    "name": "cohort-zoom-restore-parent",
+    "width": 1440,
+    "pass": true,
+    "observed": {
+      "focus": "cv3-zoom",
+      "footer": true,
+      "modalInert": false
+    }
+  },
+  {
+    "name": "cohort-close-restores-background-and-opener",
+    "width": 1440,
+    "pass": true,
+    "observed": {
+      "closed": true,
+      "focus": "cv3-it",
+      "footer": false,
+      "header": false
+    }
+  },
+  {
+    "name": "cohort-final-disabled-next-tab",
+    "width": 390,
+    "pass": true,
+    "observed": {
+      "cls": "cv3-play",
+      "inside": true
+    }
+  },
+  {
+    "name": "cohort-final-disabled-next-tab",
+    "width": 1440,
+    "pass": true,
+    "observed": {
+      "cls": "cv3-play",
+      "inside": true
+    }
+  }
+]

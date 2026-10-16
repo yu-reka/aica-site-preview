@@ -2,7 +2,9 @@
    한눈에 보기(index.html)의 <head>에서 defer 없이 읽음 → 한눈에 보기 안 id는 r- · iv- · q- · pj- · tg- 로 시작하지 않게 */
 (function(){
   function go(){
-  var h = decodeURIComponent(location.hash.slice(1)); if (!h) return;
+  // This early head script runs before the deferred Site helper is available.
+  var h; try { h = decodeURIComponent(location.hash.slice(1)); } catch (_) { return; }
+  if (!h) return;
   var to = { reviews:'reviews.html', interviews:'interviews.html', projects:'projects.html', cohorts:'cohorts.html',
     'go-iv':'interviews.html', 'go-pr':'projects.html', 'go-coh':'cohorts.html',
     'p-rev':'reviews.html', 'p-iv':'interviews.html', 'p-pr':'projects.html', 'p-coh':'cohorts.html', 'iv-all':'interviews.html',

@@ -18,6 +18,9 @@ test('Spring review export has no static records and uses escaped live fragments
   assert.ok(!fragments.includes('{{'));
   assert.ok(fragments.includes('th:text="${paragraph}"'));
   assert.ok(reviews.includes('src="/stories/js/reviews-live.js"'));
+  assert.ok(reviews.includes('src="/stories/js/stories-m-reviews.js?v=1016cleanup"'));
+  assert.ok(reviews.indexOf('stories-m-reviews.js') < reviews.indexOf('stories-m.js?'));
+  assert.ok(reviews.includes('href="/common/css/masthead.css?v=1016cleanup"'));
 });
 
 test('opt-in review seed preserves anchors, content order and every body paragraph', () => {

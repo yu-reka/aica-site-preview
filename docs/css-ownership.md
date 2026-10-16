@@ -8,6 +8,7 @@
 | --- | --- | --- |
 | 공통 기반 | `common/css/tokens.css`, `base.css` | 브랜드 변수·폰트, 기본 요소 |
 | 공통 구조 | `common/css/site.css`, `lnb.css` | 헤더·드로어·푸터, 데스크톱 좌측 메뉴 |
+| 이야기·라이프 배너 | `common/css/masthead.css` | 마스트헤드 구조·페이지 변형·반응형 규칙 |
 | 공통 표현 | `common/css/presentation.css` | 콘텐츠 페이지의 공통 팔레트·손글씨 폰트·입력 폰트 상속·푸터 색상 |
 | 모바일 메뉴 | `common/css/navigation-mobile.css` | 1080px 이하 헤더·햄버거·드로어의 공통 기준 |
 | 알아보기 | `about/css/about.css`, `presentation.css`, `about-m.css` | 알아보기 본문과 600px 이하 모바일 화면 |
@@ -36,6 +37,8 @@
 CSS 링크를 추가하거나 바꿀 때는 `src/pages/`에서 수정하고 빌드합니다. 생성 HTML만 수정하지 않습니다. 배포 캐시 갱신이 필요하면 변경한 링크의 버전도 갱신합니다. 새 CSS의 `url()`은 **그 CSS 파일 위치**를 기준으로 하므로 이동 시 이미지·폰트 경로를 함께 확인합니다.
 
 이전 Spring 이야기 템플릿이 참조하는 `common/css/unify.css`는 공통·이야기 `presentation.css`를 불러오는 호환 진입 파일로 남깁니다. 디자인 규칙을 복사하거나 이 파일에 새 규칙을 작성하지 않습니다. 새 정적 페이지와 새 내보내기 결과는 이 파일을 사용하지 않습니다. 모든 Spring 템플릿을 최신 내보내기 결과로 교체했는지 확인하기 전에는 호환 경로를 삭제하지 않습니다.
+
+이야기와 라이프가 함께 사용하던 `stories/css/mast.css`의 선언은 순서 그대로 `common/css/masthead.css`로 이동했습니다. 두 페이지의 배너 변형도 이 컴포넌트 안에서 기존 선택자로 관리합니다. 페이지 본문·폰트 규칙을 추가하는 파일은 아닙니다. 이전 `stories/css/mast.css` URL은 새 파일을 import하는 호환 경로로 유지합니다. 신규 페이지에서는 새 공통 파일만 직접 불러오고 두 파일을 중복해서 연결하지 않습니다.
 
 ## 다음 이야기·라이프 모바일 PR
 

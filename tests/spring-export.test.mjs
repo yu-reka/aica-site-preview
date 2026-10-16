@@ -47,6 +47,9 @@ test('every story kind exports only live slots, canonical links and build-owned 
     assert.ok(!page.includes('{{'));
   }
   const fragments=artifacts.get('templates/public-site/story-fragments.html');
+  // Every card variant, including the fallback, exposes the escaped public quote.
+  assert.equal((fragments.match(/data-interview-quote=\$\{s.quote\}/g)||[]).length,source.stories.interviews.length);
+  for (const [tag] of fragments.matchAll(/<a\b[^>]*>/g)) assert.ok((tag.match(/th:attr=/g)||[]).length<=1,'Thymeleaf attributes must be combined');
   assert.ok(!fragments.includes('th:utext'));
   assert.ok(fragments.includes('th:each="q, n : ${s.questions}"'));
   assert.ok(fragments.includes('th:each="section : ${s.sections}"'));

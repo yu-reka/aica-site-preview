@@ -85,9 +85,14 @@
     addEventListener('resize', upd); upd(); setTimeout(upd, 600);
   }
   /* 3) 인터뷰 페이지: 추천 인터뷰 카드 넘김(글귀 있는 인터뷰) + 전체 인터뷰 개수 */
+  function interviewQuote(a){
+    // Spring은 모든 카드 변형에 공개 quote를 전달합니다. 정적 시안은 기존 인용문을 읽습니다.
+    var quote = a.getAttribute('data-interview-quote');
+    return (quote !== null ? quote : (($('.ivq', a) || {}).textContent || '')).trim();
+  }
   function initInterviews(){
     var head = $('#p-iv .ivlist > .sh-row');
-    var src = $$('#p-iv .ivgrid a.iv').filter(function(a){ return $('.ivq', a); });
+    var src = $$('#p-iv .ivgrid a.iv').filter(function(a){ return interviewQuote(a); });
     if (!head || !src.length || $('.sm-ivf')) return;
     var box = document.createElement('section');
     box.className = 'sm-ivf'; box.setAttribute('aria-label', '추천 인터뷰');
@@ -101,7 +106,7 @@
       c.appendChild(ph);
       var tx = document.createElement('span'); tx.className = 'sm-ivf-tx';
       var b = document.createElement('b'); b.textContent = ($('h3', a) || {}).textContent || '';
-      var q = document.createElement('q'); q.textContent = ($('.ivq', a) || {}).textContent || '';
+      var q = document.createElement('q'); q.textContent = interviewQuote(a);
       var by = $('.by', a), m = document.createElement('span');
       m.textContent = [($('.av', by) || {}).textContent, ($('b', by) || {}).textContent, ($('em', by) || {}).textContent].filter(Boolean).join(' · ');
       tx.appendChild(b); tx.appendChild(q); tx.appendChild(m); c.appendChild(tx);
@@ -118,8 +123,10 @@
     track.addEventListener('scroll', function(){ requestAnimationFrame(on); }, { passive: true });
     on();
     arrows(box, track, '인터뷰', function(){ return cards[0].offsetWidth + 12; });
+  }
 
-    /* 전체 인터뷰 개수(고른 기수 기준) */
+  /* 추천 인용문이 하나도 없어도 전체 인터뷰 개수는 표시합니다. */
+  function initInterviewCount(){
     var t = $('#iva-t'), out = $('#iv-all .iva-out');
     if (!t || !out) return;
     var cnt = document.createElement('span'); cnt.className = 'sm-ivcount'; t.appendChild(cnt);
@@ -141,6 +148,7 @@
   function init(){
     initTabs();
     initInterviews();
+    initInterviewCount();
     rail($('.hb-pis'), 'pis', '후기');
     rail($('.hb-pjs'), 'pjs', '프로젝트');
   }

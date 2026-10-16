@@ -2,6 +2,7 @@
    1) 메뉴 탭: 짧은 이름(All → 전체, 기수별 이모저모 → 기수 기록), 탭이 헤더 뒤로 지나가면 같은 탭을 아래 고정
    2) 옆으로 넘기는 줄(한눈에 보기의 후기 포스트잇 · 프로젝트): 오른쪽에 더 있으면 다음 화살표, 넘기면 이전 화살표
    3) 인터뷰: 추천 인터뷰 카드 넘김(숫자 없이 화살표) · 전체 인터뷰 개수 · 짧은 목록
+   4) 기수 기록: 캔버스 시안 배치(계정 줄 → 동그라미 + 숫자 3칸 → 소개 → 회색 버튼 2개), 달별 고정 스토리 화살표, 전체/영상 탭
    웹(601px 이상)은 그대로. */
 (function(){
   var mq = matchMedia('(max-width: 600px)');
@@ -138,9 +139,84 @@
     count();
   }
 
+  /* 4) 기수 기록(cohort-v3.js가 그린 화면을 600px 이하에서만 시안 배치로) */
+  var BADGE = '<svg class="sm-cv-badge" viewBox="0 0 24 24" aria-label="공식 계정" role="img"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>';
+  var ICON = { all: 'M3 3h18v18H3zM3 9h18M3 15h18M9 3v18M15 3v18', video: 'M3 4h18v16H3zM3 9h18M8 4l3 5M14 4l3 5M10 12v5l4-2.5z' };
+  function initCohorts(){
+    var root = $('#cv3');
+    if (!root || !root.cv3View || root.dataset.sm) return;
+    root.dataset.sm = '1';
+    var official = (typeof SITE_LINKS !== 'undefined' && SITE_LINKS.official && SITE_LINKS.official.url) || 'https://support.gj-aischool.or.kr/fo/main';
+    var view = 'all', busy = false;
+    var hlDone = null;
+    var lay = function(){
+      if (!mq.matches){ var pf = $('.cv3-prof', root); if (pf) pf.classList.remove('sm-cv-prof'); return; }
+      if (busy) return;
+      busy = true;
+      var prof = $('.cv3-prof', root), info = $('.cv3-info', prof);
+      if (info && !$('.sm-cv-top', prof)){
+        var acc = $('.cv3-acc', prof), ring = $('.cv3-ring', prof), stat = $('.cv3-stat', prof), bio = $('.cv3-bio', prof), db = $('.cv3-dbtn', prof);
+        var top = document.createElement('div'); top.className = 'sm-cv-top';
+        top.appendChild(acc); top.insertAdjacentHTML('beforeend', BADGE);
+        var mid = document.createElement('div'); mid.className = 'sm-cv-mid';
+        mid.appendChild(ring); mid.appendChild(stat);
+        var btns = document.createElement('div'); btns.className = 'sm-cv-btns';
+        if (db) btns.appendChild(db);
+        var a = document.createElement('a'); a.className = 'sm-cv-off'; a.href = official; a.target = '_blank'; a.rel = 'noopener';
+        a.innerHTML = '공식 홈페이지 <span aria-hidden="true">↗</span>';
+        btns.appendChild(a);
+        prof.replaceChildren(top, mid, bio, btns);
+        prof.classList.add('sm-cv-prof');
+      }
+      /* 보기 방식 탭(전체 게시물 · 영상만) */
+      var gt = $('.cv3-gt', root);
+      var tabs = $('.sm-cv-views', root);
+      if (!tabs){
+        tabs = document.createElement('div'); tabs.className = 'sm-cv-views'; tabs.setAttribute('role', 'group'); tabs.setAttribute('aria-label', '보기 방식');
+        ['all', 'video'].forEach(function(k){
+          var b = document.createElement('button'); b.type = 'button'; b.dataset.v = k;
+          b.addEventListener('click', function(){ if (view !== k){ view = k; root.cv3View(k); } });
+          tabs.appendChild(b);
+        });
+        gt.parentNode.insertBefore(tabs, gt);
+      }
+      var nums = $$('.cv3-stat b', root).map(function(b){ return b.textContent; });
+      $$('button', tabs).forEach(function(b){
+        var k = b.dataset.v;
+        b.setAttribute('aria-pressed', String(k === view));
+        b.setAttribute('aria-label', (k === 'all' ? '전체 게시물 ' : '영상만 보기 ') + (k === 'all' ? nums[0] : nums[1]) + '개');
+        b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + ICON[k] + '"/></svg><span>' + (k === 'all' ? nums[0] : nums[1]) + '</span>';
+      });
+      /* 기록 기간: '26.05.–' / '26.08.' 두 줄 */
+      var rg = $$('.cv3-stat b', root)[2];
+      if (rg && !rg.dataset.sm){ var t = rg.textContent.replace(/\s+/g, ''); rg.dataset.sm = '1'; rg.textContent = ''; t.split('–').forEach(function(x, i){ if (i){ rg.appendChild(document.createTextNode('–')); rg.appendChild(document.createElement('br')); } rg.appendChild(document.createTextNode(x)); }); }
+      /* 교육과정 고정 칸: 시안처럼 한 칸, 누르면 펼침 */
+      var pin = $('.cv3-pin', root);
+      if (pin && !pin.dataset.sm){
+        pin.dataset.sm = '1'; pin.tabIndex = 0; pin.setAttribute('aria-expanded', 'false');
+        var more = document.createElement('span'); more.className = 'sm-pin-more'; more.textContent = '트랙 보기 +';
+        pin.insertBefore(more, $('.cc', pin));
+        var tog = function(){ var o = !pin.classList.contains('sm-open'); pin.classList.toggle('sm-open', o); pin.setAttribute('aria-expanded', String(o)); more.textContent = o ? '' : '트랙 보기 +'; more.hidden = o; };
+        pin.addEventListener('click', function(e){ if (!e.target.closest('a')) tog(); });
+        pin.addEventListener('keydown', function(e){ if ((e.key === 'Enter' || e.key === ' ') && e.target === pin){ e.preventDefault(); tog(); } });
+      }
+      /* 달별 고정 스토리: 많아지면 화살표로 넘김 */
+      var hl = $('.cv3-hl', root);
+      if (hl && hlDone !== hl){ hlDone = hl; rail(hl, 'hl', '고정 스토리'); }
+      if (hl) hl.dispatchEvent(new Event('scroll'));
+      busy = false;
+    };
+    root.addEventListener('cv3:draw', lay);
+    lay();
+    if (mq.addEventListener) mq.addEventListener('change', function(){
+      if (!mq.matches && view !== 'all'){ view = 'all'; root.cv3View('all'); } else root.cv3Redraw();
+    });
+  }
+
   function init(){
     initTabs();
     initInterviews();
+    initCohorts();
     rail($('.hb-pis'), 'pis', '후기');
     rail($('.hb-pjs'), 'pjs', '프로젝트');
   }

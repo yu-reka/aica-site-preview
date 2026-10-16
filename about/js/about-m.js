@@ -131,6 +131,11 @@
     var openSlides = function(){
       $$('.activity-gallery-slide').forEach(function(s){
         if (mq.matches){ s.removeAttribute('aria-hidden'); s.inert = false; }
+        else {
+          var inactive = s.dataset.galleryPosition !== 'current';
+          s.setAttribute('aria-hidden', String(inactive));
+          s.inert = inactive;
+        }
       });
     };
     openSlides();

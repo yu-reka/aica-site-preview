@@ -277,37 +277,27 @@
     if (!cards.length) return; // Keep the server's published-empty state.
     var box = el('section', 'sm-reviews'); box.setAttribute('aria-label', '후기 목록');
     var categories = tabs('후기 카테고리'), cohorts = tabs('후기 기수');
+    cohorts.classList.add('sm-cohort-chips');
     var count = el('p', 'sm-review-count'); count.setAttribute('role', 'status');
     var board = el('div', 'sm-review-board');
     var empty = el('p', 'sm-review-empty', '선택한 조건에 맞는 후기가 없습니다.');
     var pager = el('nav', 'sm-review-pager cpager'); pager.setAttribute('aria-label', '후기 페이지');
-    var category = 'all', cohort = '', page = 1, tag = '', pageSize = 12;
+    var category = 'all', cohort = '', page = 1, tag = '', pageSize = 10;
     var entries = cards.map(function(card){
-      var note = el('article', 'sm-review-note');
-      var details = el('details', 'sm-review-details'), summary = el('summary', 'sm-review-summary');
+      var note = el('a', 'sm-review-note');
+      note.href = card.getAttribute('href'); note.setAttribute('aria-haspopup', 'dialog');
+      var summary = el('div', 'sm-review-summary');
       var bar = cleanClone($('.cbar', card)); if (bar) summary.appendChild(bar);
       summary.appendChild(el('h3', '', ($('h3', card) || {}).textContent || ''));
       summary.appendChild(el('span', 'sm-review-preview', ($('.in > p', card) || {}).textContent || ''));
-      var hint = el('span', 'sm-review-hint');
-      hint.appendChild(el('span', 'sm-review-expand', '본문 펼치기 ⌄'));
-      hint.appendChild(el('span', 'sm-review-collapse', '본문 접기 ⌃')); summary.appendChild(hint);
-      details.appendChild(summary);
-      var body = el('div', 'sm-review-body');
-      var modal = document.getElementById(card.getAttribute('href').slice(1));
-      var published = modal && $('.mbody', modal);
-      if (published) Array.from(published.children).forEach(function(n){
-        if (!n.classList.contains('mtags')) body.appendChild(cleanClone(n));
-      });
-      else body.appendChild(el('p', '', ($('.in > p', card) || {}).textContent || ''));
-      var link = el('a', 'sm-review-link', '상세 보기 →'); link.href = card.getAttribute('href'); body.appendChild(link);
-      details.appendChild(body); note.appendChild(details);
+      note.appendChild(summary);
       var footer = el('div', 'sm-review-by');
       footer.appendChild(el('b', '', ($('.who b', card) || {}).textContent || ''));
       var tg = $('.who .tg', card); if (tg) footer.appendChild(el('span', 'sm-review-tag', tg.textContent));
       note.appendChild(footer);
       var cl = Array.from(card.classList);
       var co = cl.find(function(c){ return /^coh\d+$/.test(c); });
-      return {node:note, details:details, cohort:co ? co.slice(3) : '', classes:cl};
+      return {node:note, cohort:co ? co.slice(3) : '', classes:cl};
     });
     var categoryNames = [['all','전체'],['life','생활'],['class','수업'],['proj','프로젝트'],['job','취업'],['path','진로']];
     categoryNames.forEach(function(c){

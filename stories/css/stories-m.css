@@ -71,7 +71,6 @@
 
   /* 전체 인터뷰: 제목과 기수 탭, 짧은 목록(사진 썸네일 · 제목 · 기수/이름/분야) */
   .stories-page #iv-all{margin-top:36px}
-  .stories-page #iv-all #iva-t.sr{position:static;width:auto;height:auto;overflow:visible;clip:auto;clip-path:none;white-space:normal;margin:0 0 12px;font-family:"Paperlogy",var(--ff-sans,sans-serif);font-size:21px;font-weight:800;color:#14233F}
   .stories-page #iv-all .iva-tools{display:block}
   .stories-page #iv-all .iva-seg{display:none}
   /* 기수 거르기: 밑줄 글자 탭(위아래 메뉴의 상자 탭과 구분, 후기 · 기수 기록 시안과 같은 방식) */
@@ -174,11 +173,10 @@
 .sm-projects,.sm-reviews{display:none}
 .sm-review-source{display:contents}
 @media (max-width:600px){
-  .stories-page #iv-all .iva-hd{display:flex;align-items:center;gap:14px;flex-wrap:nowrap}
-  .stories-page #iv-all .iva-hd #iva-t.sr{flex:none;margin:0;font:800 19px/1.35 "Paperlogy",sans-serif;letter-spacing:-.05em;white-space:nowrap}
-  .stories-page #iv-all .iva-tools{flex:1;min-width:0;margin:0}
-  .stories-page #iv-all .iva-chips{gap:0;justify-content:space-between;padding:0}
-  .stories-page #iv-all .iva-chips button{font-size:14px;padding:0 2px}
+  .stories-page #iv-all .iva-hd{display:block}
+  .stories-page #iv-all .iva-tools{width:100%;min-width:0;margin:0}
+  .stories-page #iv-all .iva-chips{gap:22px;justify-content:flex-start;padding:0}
+  .stories-page #iv-all .iva-chips button{flex:0 0 auto;font-size:14px;padding:0 2px}
   .stories-page .sm-ivf-track{padding-bottom:6px}
   .stories-page .sm-ivf-c{margin-bottom:6px}
   /* Center against the card itself, excluding the rail's bottom shadow gutter. */
@@ -189,7 +187,7 @@
   .stories-page .sm-filter-tabs{display:flex;gap:12px;border-bottom:1px solid var(--sm-line);margin:0 0 16px;overflow-x:auto;scrollbar-width:none}
   .stories-page .sm-filter-tabs button{flex:1;min-width:max-content;min-height:44px;padding:0 2px;border:0;border-bottom:3px solid transparent;background:transparent;color:var(--sm-muted);font:600 13px/1.2 var(--ff-sans);white-space:nowrap;cursor:pointer}
   .stories-page .sm-filter-tabs button[aria-pressed="true"]{border-bottom-color:var(--sm-ink);color:var(--sm-ink);font-weight:800}
-  .stories-page .sm-filter-tabs button:focus-visible,.stories-page .sm-project summary:focus-visible,.stories-page .sm-review-details summary:focus-visible{outline:2px solid var(--sm-blue);outline-offset:-3px}
+  .stories-page .sm-filter-tabs button:focus-visible,.stories-page .sm-project summary:focus-visible,.stories-page .sm-review-note:focus-visible{outline:2px solid var(--sm-blue);outline-offset:-3px}
   .stories-page .sm-project-list{display:grid;gap:10px}
   .stories-page .sm-project{min-width:0;border:1px solid var(--sm-line);border-radius:18px;background:var(--sm-soft)}
   .stories-page .sm-project[hidden]{display:none}
@@ -211,17 +209,21 @@
   .stories-page .sm-project-body .tags span{padding:2px 7px;border-radius:20px;background:#DCE5F7;color:var(--sm-ink);font-size:11px;font-weight:700}
   .stories-page .sm-project-body .team{margin:12px 0;color:var(--sm-muted);font-size:12px}
   .stories-page .sm-project-link{display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 8px;border:2px solid var(--sm-black);border-radius:30px;color:var(--sm-ink);font-size:12px;font-weight:800;text-decoration:none}
-  .stories-page .sm-project-link:focus-visible,.stories-page .sm-review-link:focus-visible{outline:2px solid var(--sm-blue);outline-offset:3px}
+  .stories-page .sm-project-link:focus-visible{outline:2px solid var(--sm-blue);outline-offset:3px}
 
   .stories-page #p-rev.sm-review-ready > input.tr,.stories-page #p-rev .sm-review-source{display:none}
   .stories-page .sm-reviews{scroll-margin-top:calc(var(--hdr,60px) + 24px)}
   .stories-page .sm-reviews .sm-filter-tabs{gap:10px;margin-bottom:8px}
   .stories-page .sm-reviews .sm-filter-tabs button{flex:none;min-width:36px;font-size:13px}
+  /* 기수는 카테고리 밑줄 탭과 구분되는 작은 필터 버튼. */
+  .stories-page .sm-reviews .sm-cohort-chips{gap:6px;margin:12px 0 0;padding:2px 0;border-bottom:0}
+  .stories-page .sm-reviews .sm-cohort-chips button{min-width:0;min-height:38px;padding:0 12px;border:1px solid var(--sm-line);border-radius:30px;background:#fff;color:var(--sm-muted);font-size:12px}
+  .stories-page .sm-reviews .sm-cohort-chips button[aria-pressed="true"]{border-color:var(--sm-ink);background:var(--sm-ink);color:#fff;font-weight:800}
   .stories-page .sm-review-count{margin:16px 0 18px;font:600 12px/1.5 var(--ff-sans)}
   .stories-page .sm-review-board{position:relative;isolation:isolate;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:20px 12px;padding:38px 12px 24px;border-radius:14px;background-color:#F4F5FB;background-image:linear-gradient(rgba(70,80,150,.11) 1px,transparent 1px),linear-gradient(90deg,rgba(70,80,150,.11) 1px,transparent 1px);background-size:18px 18px;box-shadow:inset 0 0 0 1px rgba(20,35,63,.08)}
   .stories-page .sm-review-board::before{content:"☆";position:absolute;left:12px;top:5px;font:32px/1 var(--ff-sans);transform:rotate(-12deg)}
   .stories-page .sm-review-board::after{content:"SSUL";position:absolute;right:10px;top:-9px;padding:6px 12px;border:2px solid var(--sm-blue);border-radius:50%;font:italic 20px/1 "Caveat",cursive;color:var(--sm-blue);transform:rotate(-12deg)}
-  .stories-page .sm-review-note{position:relative;min-width:0;background:#FFF1A6;box-shadow:0 5px 9px #14233f18;transform:rotate(-1deg);font-family:var(--ff-sans)}
+  .stories-page .sm-review-note{display:block;color:var(--sm-ink);text-decoration:none;position:relative;min-width:0;background:#FFF1A6;box-shadow:0 5px 9px #14233f18;transform:rotate(-1deg);font-family:var(--ff-sans)}
   .stories-page .sm-review-note:nth-child(6n+2){background:#D6ECFF;transform:translateY(12px) rotate(1deg)}
   .stories-page .sm-review-note:nth-child(6n+3){background:#FFE2C2;transform:rotate(.5deg)}
   .stories-page .sm-review-note:nth-child(6n+4){background:#D6F5E3;transform:translateY(12px) rotate(-.6deg)}
@@ -229,20 +231,13 @@
   .stories-page .sm-review-note:nth-child(6n){background:#E7DEFF;transform:translateY(12px) rotate(.7deg)}
   .stories-page .sm-review-note::before{content:"";position:absolute;z-index:1;top:-7px;left:32%;width:38px;height:14px;background:#a8ccefaa;transform:rotate(-8deg);pointer-events:none}
   .stories-page .sm-review-note:nth-child(2n)::before{background:#ffe186b8;transform:rotate(9deg)}
-  .stories-page .sm-review-summary{padding:16px 10px 0;list-style:none;cursor:pointer}
+  .stories-page .sm-review-summary{padding:16px 10px 12px;list-style:none;cursor:pointer}
   .stories-page .sm-review-summary .cbar{display:flex;align-items:center;justify-content:space-between;gap:4px;font-size:10px;line-height:1.4;color:var(--sm-muted)}
   .stories-page .sm-review-summary .cbar b{font-weight:500}
   .stories-page .sm-review-summary .cbar span{font-weight:800;white-space:nowrap}
   .stories-page .sm-review-summary .cbar i{font-style:normal}
   .stories-page .sm-review-summary h3{margin:7px 0;font:800 13px/1.5 "Paperlogy",sans-serif;letter-spacing:-.05em;word-break:keep-all;overflow-wrap:anywhere}
   .stories-page .sm-review-preview{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;font-size:12px;line-height:1.6;color:#34435A;word-break:normal;overflow-wrap:anywhere}
-  .stories-page .sm-review-hint{display:block;padding:10px 0;font-size:10px;font-weight:700;color:var(--sm-ink)}
-  .stories-page .sm-review-collapse,.stories-page .sm-review-details[open] .sm-review-expand,.stories-page .sm-review-details[open] .sm-review-preview{display:none}
-  .stories-page .sm-review-details[open] .sm-review-collapse{display:inline}
-  .stories-page .sm-review-body{padding:0 10px 12px;font-size:12px;line-height:1.7;overflow-wrap:anywhere}
-  .stories-page .sm-review-body p{margin:0 0 12px}
-  .stories-page .sm-review-body img{display:block;max-width:100%;height:auto}
-  .stories-page .sm-review-link{display:inline-flex;align-items:center;min-height:44px;font-size:11px;font-weight:700;color:var(--sm-ink)}
   .stories-page .sm-review-by{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:5px;margin:0 10px;padding:9px 0;border-top:1px dashed #14233f33;font-size:10px}
   .stories-page .sm-review-by b{font-weight:600}
   .stories-page .sm-review-tag{padding:3px 6px;border-radius:20px;background:var(--sm-blue);color:#fff;font-size:9px;font-weight:700}
@@ -250,4 +245,12 @@
   .stories-page .sm-review-pager button{min-width:36px;height:44px;padding:0 4px}
   .stories-page .sm-review-empty{padding:32px 0;color:var(--sm-muted);font-size:14px}
   .stories-page .sm-reviews [hidden]{display:none}
+}
+
+/* 모바일 밑줄 탭 공통: 인터뷰 기수 · 후기 분류 · 프로젝트 유형 · 기수 기록/보기 방식. */
+@media (max-width:600px){
+html[data-nav="side"] .stories-page :is(#iv-all .iva-chips,.cv3-chips,.sm-filter-tabs:not(.sm-cohort-chips),.sm-cv-views){display:flex;grid-template-columns:none;justify-content:flex-start;align-items:stretch;flex-wrap:nowrap;gap:22px;margin-inline:0;padding:0;border:0;border-bottom:1px solid #D3D9E1;border-radius:0;background:transparent;box-shadow:none;overflow-x:auto;scrollbar-width:none}
+html[data-nav="side"] .stories-page :is(#iv-all .iva-chips,.cv3-chips,.sm-filter-tabs:not(.sm-cohort-chips),.sm-cv-views) button{display:flex;align-items:center;justify-content:center;flex:0 0 auto;min-width:max-content;height:auto;min-height:44px;margin:0 0 -1px;padding:0 2px;border:0;border-bottom:3px solid transparent;border-radius:0;background:transparent;color:#566175;font:600 14px/1.2 var(--ff-sans,"Pretendard",sans-serif);letter-spacing:-.02em;white-space:nowrap;box-shadow:none;cursor:pointer}
+html[data-nav="side"] .stories-page :is(#iv-all .iva-chips,.cv3-chips,.sm-filter-tabs:not(.sm-cohort-chips),.sm-cv-views) button:is([aria-pressed="true"],[aria-selected="true"]){border-bottom-color:#14233F;background:transparent;color:#14233F;font-weight:800;box-shadow:none}
+html[data-nav="side"] .stories-page :is(#iv-all .iva-chips,.cv3-chips,.sm-filter-tabs:not(.sm-cohort-chips),.sm-cv-views) button:focus-visible{outline:2px solid #2457F5;outline-offset:-2px}
 }

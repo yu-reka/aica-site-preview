@@ -246,10 +246,14 @@
       var badge = el('span', 'sm-project-type', type);
       badge.dataset.type = type.trim(); tx.appendChild(badge);
       tx.appendChild(el('strong', '', ($('.pjname', card) || {}).textContent || ''));
-      tx.appendChild(el('span', 'sm-project-description', ($('h3', card) || {}).textContent || ''));
       summary.appendChild(tx); item.appendChild(summary);
       var body = el('div', 'sm-project-body');
-      ['.sum', '.tags', '.team'].forEach(function(s){ var c = cleanClone($(s, card)); if (c) body.appendChild(c); });
+      var artwork = cleanClone($('.ph .illu', card) || $('.ph img, .ph svg', card));
+      if (artwork){
+        var media = el('div', 'sm-project-media');
+        if (artwork.tagName.toLowerCase() === 'img'){ artwork.loading = 'lazy'; artwork.decoding = 'async'; }
+        media.appendChild(artwork); body.appendChild(media);
+      }
       var link = el('a', 'sm-project-link', '프로젝트 자세히 보기 →');
       link.href = card.getAttribute('href'); body.appendChild(link); item.appendChild(body);
       item.open = i === 0;

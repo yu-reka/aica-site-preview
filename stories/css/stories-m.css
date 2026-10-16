@@ -92,3 +92,81 @@
   .stories-page #iv-all .iva-out .iva-c .by{display:block;grid-column:2;align-self:start;margin:0;font-size:12px;color:#666F81}
   .stories-page #iv-all .cpager{margin-top:28px}
 }
+
+/* =========================================================
+   기수 기록 페이지 모바일(10-16, 캔버스 '기수 기록' 시안 배치)
+   기수 고르기 · 보기 방식 탭은 인터뷰의 기수 밑줄 탭과 같은 모양
+   ========================================================= */
+.sm-cv-top,.sm-cv-mid,.sm-cv-btns,.sm-cv-views{display:none}
+@media (max-width:600px){
+  /* 기수 고르기: 밑줄 글자 탭 */
+  html[data-nav="side"] .stories-page .cv3-chips{position:static;display:flex;flex-wrap:nowrap;gap:22px;margin:16px 0 0 !important;padding:0 2px;background:none;border-bottom:1px solid #D3D9E1}
+  html[data-nav="side"] .stories-page .cv3-chips button{height:auto;min-height:44px;margin:0 0 -1px;padding:0 1px;border:0;border-bottom:3px solid transparent;border-radius:0;background:transparent;color:#566175;font:600 15px/1 var(--ff-sans,"Pretendard",sans-serif);letter-spacing:-.02em}
+  html[data-nav="side"] .stories-page .cv3-chips button:hover{color:#14233F}
+  html[data-nav="side"] .stories-page .cv3-chips button[aria-selected="true"]{border-bottom-color:#14233F;background:transparent;color:#14233F;font-weight:800}
+  html[data-nav="side"] .stories-page .cv3-chips button i{display:none}
+  html[data-nav="side"] .stories-page .cv3-chips button:focus-visible{outline:2px solid #2457F5;outline-offset:-2px}
+
+  /* 프로필: 계정 줄 → 동그라미 + 숫자 3칸 → 소개 → 회색 버튼 2개 */
+  html[data-nav="side"] .stories-page .cv3-prof.sm-cv-prof{display:flex;flex-direction:column;align-items:stretch;gap:12px;padding:18px 0 0;color:#14233F}
+  html[data-nav="side"] .stories-page .sm-cv-top{display:flex;align-items:center;gap:8px}
+  html[data-nav="side"] .stories-page .sm-cv-top .cv3-acc{font-size:20px;font-weight:800;letter-spacing:-.01em}
+  html[data-nav="side"] .stories-page .sm-cv-badge{width:16px;height:16px;flex:none}
+  html[data-nav="side"] .stories-page .sm-cv-badge circle{fill:#2457F5}
+  html[data-nav="side"] .stories-page .sm-cv-badge path{fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  html[data-nav="side"] .stories-page .sm-cv-mid{display:flex;align-items:center;gap:18px}
+  html[data-nav="side"] .stories-page .sm-cv-mid .cv3-ring{width:84px}
+  html[data-nav="side"] .stories-page .sm-cv-mid .cv3-stat{flex:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;text-align:center;font-size:12px;color:#566175}
+  html[data-nav="side"] .stories-page .sm-cv-mid .cv3-stat span{display:flex;flex-direction:column-reverse;align-items:center;gap:2px}
+  html[data-nav="side"] .stories-page .sm-cv-mid .cv3-stat b{font-size:18px;font-weight:800;line-height:1.2;color:#14233F}
+  html[data-nav="side"] .stories-page .sm-cv-mid .cv3-stat span:nth-child(3) b{font-size:14px;line-height:1.3;padding-top:3px;word-spacing:-2px}
+  html[data-nav="side"] .stories-page .sm-cv-prof .cv3-bio{font-size:14px;line-height:1.55;color:#14233F}
+  html[data-nav="side"] .stories-page .sm-cv-btns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+  html[data-nav="side"] .stories-page .sm-cv-btns :is(.cv3-dbtn,.sm-cv-off){display:flex;align-items:center;justify-content:center;gap:4px;height:auto;min-height:40px;padding:0 6px;border:0;border-radius:9px;background:#EFF1F4;color:#14233F;font:700 13px/1.2 var(--ff-sans,"Pretendard",sans-serif);text-decoration:none;white-space:nowrap;filter:none}
+  html[data-nav="side"] .stories-page .sm-cv-btns .cv3-dbtn[aria-expanded="true"]{background:#14233F;color:#fff}
+  html[data-nav="side"] .stories-page .sm-cv-btns :is(.cv3-dbtn,.sm-cv-off):focus-visible{outline:2px solid #2457F5;outline-offset:2px}
+  html[data-nav="side"] .stories-page .sm-cv-btns:has(> :only-child){grid-template-columns:1fr}
+
+  /* 달라진 점: 항목 → 이전(흐리게) → 지금 세로로 */
+  html[data-nav="side"] .stories-page .cv3-diff{margin:12px 0 0;padding:4px 16px}
+  html[data-nav="side"] .stories-page .cv3-dt{grid-template-columns:minmax(0,1fr);min-width:0;font-size:13px}
+  html[data-nav="side"] .stories-page .cv3-dt>*{padding:0 0 2px;border:0}
+  html[data-nav="side"] .stories-page .cv3-dt>b{padding-top:10px;border-top:1px solid #E3E7EE;font-size:12px;color:#2457F5}
+  html[data-nav="side"] .stories-page .cv3-dt>b:first-child{border-top:0}
+  html[data-nav="side"] .stories-page .cv3-dt>span{padding-bottom:10px}
+
+  /* 달별 고정 스토리(화살표는 js) */
+  html[data-nav="side"] .stories-page .sm-rail-box--hl{margin:16px calc(-1 * var(--gutter,20px)) 0}
+  html[data-nav="side"] .stories-page .sm-rail-box--hl .cv3-hl{gap:12px;padding:0 var(--gutter,20px) 4px}
+  html[data-nav="side"] .stories-page .sm-rail-box--hl .cv3-hl button{width:66px;gap:5px}
+  html[data-nav="side"] .stories-page .sm-rail-box--hl .cv3-hr{width:62px;height:62px}
+  html[data-nav="side"] .stories-page .sm-rail-box--hl .cv3-hl b{font-size:12px;font-weight:600}
+  html[data-nav="side"] .stories-page .sm-rail-box--hl .cv3-hl button[aria-pressed="true"] b{font-weight:800}
+  html[data-nav="side"] .stories-page .sm-rail-box--hl .sm-arrow{top:31px}
+  html[data-nav="side"] .stories-page .sm-rail-box--hl .sm-arrow--prev{left:6px}
+  html[data-nav="side"] .stories-page .sm-rail-box--hl .sm-arrow--next{right:6px}
+
+  /* 보기 방식: 밑줄 아이콘 탭(전체 게시물 · 영상만) */
+  html[data-nav="side"] .stories-page .cv3-gt{display:none}
+  html[data-nav="side"] .stories-page .sm-cv-views{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:12px calc(-1 * var(--gutter,20px)) 0;border-top:1px solid #D3D9E1}
+  html[data-nav="side"] .stories-page .sm-cv-views button{display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px;margin:0;padding:0;border:0;border-bottom:3px solid transparent;background:transparent;color:#8A93A3;font:700 12px/1 var(--ff-sans,"Pretendard",sans-serif);cursor:pointer}
+  html[data-nav="side"] .stories-page .sm-cv-views button[aria-pressed="true"]{border-bottom-color:#14233F;color:#14233F}
+  html[data-nav="side"] .stories-page .sm-cv-views svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+  html[data-nav="side"] .stories-page .sm-cv-views button:focus-visible{outline:2px solid #2457F5;outline-offset:-2px}
+
+  /* 격자: 화면 끝까지, 틈 2px, 세로로 조금 긴 칸(4:5) */
+  html[data-nav="side"] .stories-page .cv3-grid{margin:2px calc(-1 * var(--gutter,20px)) 0;gap:2px}
+  html[data-nav="side"] .stories-page .cv3-it,html[data-nav="side"] .stories-page .cv3-pin{aspect-ratio:4 / 5}
+  /* 교육과정 고정 칸: 시안처럼 한 칸(제목만), 누르면 한 줄 전체로 펼쳐 트랙 · 공식 홈페이지가 보임(내용은 그대로) */
+  html[data-nav="side"] .stories-page .cv3-pin{grid-column:auto;padding:10px;cursor:pointer;justify-content:flex-end}
+  html[data-nav="side"] .stories-page .cv3-pin .k{font-size:9.5px;letter-spacing:.08em}
+  html[data-nav="side"] .stories-page .cv3-pin b{margin:6px 0 0;font-size:17px}
+  html[data-nav="side"] .stories-page .cv3-pin .pn{top:8px;right:8px;width:18px;height:18px}
+  html[data-nav="side"] .stories-page .cv3-pin:not(.sm-open) :is(.cc,.ft){display:none}
+  html[data-nav="side"] .stories-page .cv3-pin .sm-pin-more{margin-top:6px;font:700 11px/1.2 var(--ff-sans,"Pretendard",sans-serif);color:rgba(255,255,255,.75)}
+  html[data-nav="side"] .stories-page .cv3-pin.sm-open{grid-column:1 / -1;aspect-ratio:auto;padding:20px;justify-content:flex-start;cursor:default}
+  html[data-nav="side"] .stories-page .cv3-pin.sm-open b{margin:8px 0 12px;font-size:22px}
+  html[data-nav="side"] .stories-page .cv3-pin.sm-open .k{font-size:11.5px}
+  html[data-nav="side"] .stories-page .cv3-pin.sm-open .pn{top:20px;right:20px;width:22px;height:22px}
+  html[data-nav="side"] .stories-page .cv3-pin:focus-visible{outline:3px solid #2457F5;outline-offset:-3px}
+}

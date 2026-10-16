@@ -66,6 +66,7 @@ function interview(source,record,detail) {
     const side=`<aside class="sidebox"><th:block th:if="\${!#lists.isEmpty(s.questions)}"><h3>이 인터뷰에서 묻는 것</h3>${toc}</th:block><th:block th:if="\${!#strings.isEmpty(s.youtubeId)}"><h3>이 영상</h3><dl class="ivmeta"><div><dt>길이</dt><dd th:text="\${s.duration}"></dd></div><div><dt>기수</dt><dd th:text="\${s.cohort} + '기'"></dd></div><div><dt>직군</dt><dd th:text="\${s.track}"></dd></div></dl><a class="ivyt" th:href="\${s.youtubeUrl}" target="_blank" rel="noopener">유튜브에서 보기 ↗</a></th:block></aside>`;
     source=replaceElement(source,/<aside class="sidebox">/,side,true);
   } else {
+    source=source.replace(/^<a /,'<a data-interview-quote="{{quote}}" ');
     source=media(source,'thumbnail');
     if(!source.includes('class="dur"'))source=source.replace('<div class="ph">','<div class="ph"><span class="play" th:if="${!#strings.isEmpty(s.youtubeId)}"><i></i></span><span class="dur" th:if="${!#strings.isEmpty(s.youtubeId)}" th:text="${s.duration}"></span>');
     source=source.replace(/<span class="(?:play|dur)"(?! th:if)/g,all=>all.includes('th:if')?all:all.replace('<span','<span th:if="${!#strings.isEmpty(s.youtubeId)}"'));

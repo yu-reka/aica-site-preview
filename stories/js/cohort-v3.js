@@ -15,12 +15,12 @@
   COHS.sort(function(a,b){return parseInt(b,10)-parseInt(a,10)});   // 10-13: 3~5기는 한 칩(3–5기)으로 묶음
   function inC(d,k){ return k==='3-5'?(d.coh>=3&&d.coh<=5):String(d.coh)===k; }
   function lab(k){ return k==='3-5'?'3–5':k; }
-  var PER=9, st={coh:COHS[0], mo:0, pg:1, diff:false};
+  var PER=9, st={coh:COHS[0], mo:0, pg:1, diff:false, v:'all'};   // v: 보기 방식(모바일 '영상만' 탭, js/stories-m.js). 웹은 늘 'all'
   var $=function(s){return root.querySelector(s)};
   function acc(c){return 'aica_'+String(c).replace('-','to')+'th'}
   function media(d){ var n=d.illu.cloneNode(true); n.removeAttribute('loading'); n.setAttribute('alt',''); return n; }
   function ym(d){ return d.y*100+d.mo; }
-  function list(){ return D.filter(function(d){return inC(d,st.coh) && (!st.mo||ym(d)===st.mo)}).sort(function(a,b){return b.date.localeCompare(a.date)}); }
+  function list(){ return D.filter(function(d){return inC(d,st.coh) && (!st.mo||ym(d)===st.mo) && (st.v!=='video'||d.yt)}).sort(function(a,b){return b.date.localeCompare(a.date)}); }
   function yymm(d){ return String(d.y).slice(2)+'. '+String(d.mo).padStart(2,'0')+'.'; }
 
   function chips(){
@@ -64,7 +64,7 @@
   /* 교육과정 고정 게시물(10-13, 디자인통일v1과 같은 내용): 기수마다 격자 첫 칸에 고정. 3–5기는 자료가 없어 안 보임. 새 기수는 여기에 한 줄 */
   var CURR={'7':['AI 금융','AI 피지컬','AI 보안','AI 헬스케어','AI 융합'],'6':['데이터 기술','AI 모델링','AI 기반 서비스','AI 플랫폼&인프라','AI 비즈니스']};
   var OFFICIAL=(typeof SITE_LINKS!=='undefined'&&SITE_LINKS.official&&SITE_LINKS.official.url)||'https://support.gj-aischool.or.kr/fo/main';
-  function pinOn(){ return !!CURR[st.coh] && !st.mo; }
+  function pinOn(){ return !!CURR[st.coh] && !st.mo && st.v!=='video'; }
   function pinEl(){ var d=document.createElement('div'); d.className='cv3-pin'; d.setAttribute('role','group'); d.setAttribute('aria-label',st.coh+'기 교육과정');
     d.innerHTML='<span class="k">CURRICULUM</span><b>'+st.coh+'기<br>교육과정</b><div class="cc">'+CURR[st.coh].map(function(t){return '<span>'+t+'</span>'}).join('')+'</div>'
       +'<div class="ft"><p>자세한 내용은 공식 홈페이지에서 확인하세요.</p><a target="_blank" rel="noopener">공식 홈페이지 <span aria-hidden="true">↗</span></a></div>'
@@ -95,7 +95,10 @@
     var from=L.length?s0+1:0, to=Math.min(s1,L.length);
     nav.insertAdjacentHTML('beforeend','<p>'+L.length+'개 중 '+from+'–'+to+' · '+st.pg+' / '+pages+' 페이지</p>');
   }
-  function draw(){ chips(); profile(); highlights(); grid(); }
+  function draw(){ chips(); profile(); highlights(); grid(); root.dispatchEvent(new CustomEvent('cv3:draw',{detail:{v:st.v}})); }
+  /* 모바일 보기 방식 탭(js/stories-m.js)이 부름 */
+  root.cv3View=function(v){ st.v=v; st.pg=1; draw(); };
+  root.cv3Redraw=function(){ draw(); };
 
   /* 글 창 */
   var M=document.querySelector('.cv3-m'), cur=0, last=null;

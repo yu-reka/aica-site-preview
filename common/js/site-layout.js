@@ -35,7 +35,7 @@ const SiteLayout = ({ $, ROOT, href, current, subnavOn, sideNav, html }) => {
           <a class="official-link" ${ext('official')}>공식 홈페이지</a>
           <a class="btn-apply btn-ask" ${ext('kakao')}><svg class="ic-kakao" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C6.5 3 2 6.4 2 10.7c0 2.7 1.8 5.1 4.5 6.5L5.5 21l4.3-2.4c.7.1 1.5.2 2.2.2 5.5 0 10-3.4 10-7.7S17.5 3 12 3z"/></svg>문의하기</a>
           <button class="icon-btn menu-toggle" id="menuBtn" aria-label="전체 메뉴 열기" aria-expanded="false" aria-controls="drawer">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg><span class="menu-label" aria-hidden="true">메뉴</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg>
           </button>
         </div>
       </div>
@@ -61,8 +61,8 @@ const SiteLayout = ({ $, ROOT, href, current, subnavOn, sideNav, html }) => {
       </div>
       <nav class="drawer-nav" aria-label="주 메뉴">${SITE_MENU.map((m, i) => DRAWER_ACC.includes(m.id) ? `
         <div class="drawer-acc">
-          <button class="acc-btn${m === current ? ' is-current' : ''}" aria-expanded="false" aria-controls="acc-${text(m.id)}" id="accb-${text(m.id)}"><span class="acc-no">${num(i)}</span><span class="acc-tx">${text(m.label)}</span>${ICON.chev}</button>
-          <div class="acc-panel" id="acc-${text(m.id)}" role="region" aria-labelledby="accb-${text(m.id)}"><div>
+          <div class="acc-head"><a class="acc-btn${m === current ? ' is-current' : ''}" href="${text(href(m))}" id="accl-${text(m.id)}"${m === current ? ' aria-current="page"' : ''}><span class="acc-no">${num(i)}</span><span class="acc-tx">${text(m.label)}</span></a><button type="button" class="acc-tog${m === current ? ' is-current' : ''}" aria-expanded="false" aria-controls="acc-${text(m.id)}" id="accb-${text(m.id)}" aria-label="${text(m.label)} 하위 메뉴">${ICON.chev}</button></div>
+          <div class="acc-panel" id="acc-${text(m.id)}" role="region" aria-labelledby="accl-${text(m.id)}"><div>
             ${m.children.map(c => `<a href="${text(href(m, c))}"${m === current ? ` data-sub="${text(c.id)}"` : ''}>${text(c.label)}</a>`).join('')}
           </div></div>
         </div>` : `

@@ -170,8 +170,16 @@ const Site = (() => {
     $('#drawerDim')?.classList.add('is-open');
     $('#menuBtn').setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
-    if (html.dataset.menu) $('#accb-' + html.dataset.menu)?.setAttribute('aria-expanded', 'true');
+    setAcc(html.dataset.menu || '');
     setTimeout(() => $('#drawerClose').focus(), 50);
+  }
+  /* 모바일 메뉴 하위 목록: 한 번에 하나만 펼침(10-15). 이름을 누르면 그 페이지 첫 화면, 오른쪽 화살표는 펼침 · 접힘 */
+  function setAcc(id){
+    $$('#drawer .acc-tog').forEach(t => {
+      const on = !!id && t.id === 'accb-' + id;
+      t.setAttribute('aria-expanded', String(on));
+      t.closest('.drawer-acc')?.classList.toggle('is-open', on);
+    });
   }
   function closeDrawer(refocus){
     const d = $('#drawer');
@@ -234,8 +242,8 @@ const Site = (() => {
     $('#menuBtn').addEventListener('click', openDrawer);
     $('#drawerClose').addEventListener('click', () => closeDrawer(true));
     $('#drawerDim')?.addEventListener('click', () => closeDrawer(true));   // 딤을 눌러도 닫힘(10-15)
-    $$('#drawer button.acc-btn').forEach(b => b.addEventListener('click', () => {   // 링크로 바꾼 메뉴(a.acc-btn)는 제외
-      b.setAttribute('aria-expanded', String(b.getAttribute('aria-expanded') !== 'true'));
+    $$('#drawer .acc-tog').forEach(b => b.addEventListener('click', () => {
+      setAcc(b.getAttribute('aria-expanded') === 'true' ? '' : b.id.replace('accb-', ''));
     }));
     // 드롭다운: 마우스가 메뉴나 펼친 영역 위에 있는 동안, 키보드 초점이 메뉴 안에 있는 동안 열림(터치는 누르면 바로 이동)
     // 드롭다운에서 같은 페이지 위치를 고른 뒤에는 마우스가 메뉴 밖으로 나갔다 올 때까지 다시 열지 않음

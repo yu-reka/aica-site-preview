@@ -1,18 +1,14 @@
-/* =========================================================
-   지원 전 체크: 움직임만(본문은 index.html)
-   10-13: 사용자 제공 아티팩트 '인사교 A to Z'의 #/check 화면으로 교체. 아티팩트 script의 setupSecFloat · setupCheck를 옮김
-   - 위치 이동: 섹션 제목이 헤더 + 하위 메뉴 바 아래 64px(모바일 40px)에 오게. 본문 #링크 · 처음 주소 · 하위 메뉴 바 · 오른쪽 목차(data-jump)
-   - 스크롤 등장(.rv): 화면에 들어오면 .is-in. 움직임 줄이기면 바로 보임
-   - 오른쪽 플로팅 목차(.sec-float): 화면 40% 지점을 지난 마지막 섹션을 표시, 누르면 그 섹션으로
-   - 모집 프로세스(#procFlow): 화면에 보이는 동안 3.2초마다 다음 단계. 마우스 · 초점이 올라가면 그 단계에서 멈춤
-   - 스스로 체크: 고른 개수 · 막대 · 하나라도 고르면 '모집 프로세스 보러 가기'
-   - 자주 묻는 질문: 분류 탭 · 5개씩 페이지 · 하나씩 펼치기. 목록 높이를 질문 5개 높이로 고정해 분류를 바꿔도 아래가 안 움직임
-   ========================================================= */
+/* 지원 전 체크: existing content/IDs are shared by both layouts.
+   Desktop: floating chapters, animated process, eight FAQs per page.
+   Mobile <=600px: chapter dock, all process stages, search/five FAQ items,
+   single-answer expansion, and the approved checklist progress states. */
 (() => {
   const main = document.querySelector('.check-page');
   if (!main) return;
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const mobile = matchMedia('(max-width:600px)');
+  let revealFAQ = () => {};
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const root = document.documentElement;
   const header = $('#siteHeader');
@@ -38,8 +34,9 @@
     let y = 0;
     if (el.id !== 'overview') {
       const pick = el.matches('.v3-sec') ? ($('.k-head, .s-head', el) || el) : el;   // 섹션은 머리(.k-head) 기준
-      const tabs = $('.cm-tabs', main);
-      y = layoutTop(pick) - ((header ? header.offsetHeight : 0) + (tabs ? tabs.offsetHeight : 0) + (matchMedia('(max-width:760px)').matches ? 40 : 64));   // 모바일 고정 탭 높이까지 빼서 제목이 가리지 않게 함. 숨겨진 데스크톱 탭 높이는 0.
+      const faqItem = el.closest('.faq-item');
+      const tools = faqItem && mobile.matches ? $('.faq-tools', main).offsetHeight : 0;
+      y = layoutTop(pick) - ((header ? header.offsetHeight : 0) + tools + (mobile.matches ? 16 : 64));
     }
     scrollToY(Math.max(0, Math.round(y)), instant);
     // 접근성: 이동한 섹션 제목으로 초점
@@ -48,6 +45,7 @@
   }
   const targetOf = hash => {
     const id = hash && hash.length > 1 ? decodeURIComponent(hash.slice(1)) : '';
+    revealFAQ(id);
     const el = id && document.getElementById(id);
     return el && main.contains(el) ? el : null;
   };
@@ -124,46 +122,96 @@
     jumpTo(el);
   }));
 
-  /* ---------- 자주 묻는 질문: 분류 · 페이지 · 펼치기 ---------- */
+  /* ---------- FAQ: original records, mobile search and 5-item pages ---------- */
   const fl = $('#faqList', main);
   if (fl) {
     const items = $$('.faq-item', fl), tabs = $$('.faq-tab', main), cnt = $('#faqCount', main);
-    const pager = $('#faqPager', main), pagesEl = $('#faqPages', main), fprev = $('#faqPrev', main), fnext = $('#faqNext', main);
-    const PER = 8; let cat = 'all', fpage = 0;
+    const pager = $('#faqPager', main), pagesEl = $('#faqPages', main), prev = $('#faqPrev', main), next = $('#faqNext', main);
+    const search = $('#faqSearch', main), clear = $('#faqClear', main), empty = $('#cmFaqEmpty', main), position = $('#cmFaqPosition', main);
+    const normalize = value => value.toLocaleLowerCase('ko').replace(/\s+/g, ' ').trim();
+    const index = new Map(items.map(item => [item, normalize(item.textContent)]));
+    const perPage = () => mobile.matches ? 5 : 8;
+    let cat = 'all', page = 0, query = '', results = items;
+    const setOpen = (item, open) => {
+      item.classList.toggle('is-open', open);
+      $('.faq-q', item).setAttribute('aria-expanded', String(open));
+      $('.faq-a', item).inert = !open;
+    };
+    const closeAll = () => items.forEach(item => setOpen(item, false));
     const apply = () => {
-      let n = 0;
-      items.forEach(li => { const ok = cat === 'all' || li.dataset.cat === cat; li._ok = ok; if (ok) n++; });
-      const list = items.filter(li => li._ok), pages = Math.max(1, Math.ceil(list.length / PER));
-      fpage = Math.min(fpage, pages - 1);
-      items.forEach(li => { const k = list.indexOf(li); li.hidden = !(k >= fpage * PER && k < (fpage + 1) * PER); });
+      const words = mobile.matches ? normalize(query).split(' ').filter(Boolean) : [];
+      results = items.filter(item => (cat === 'all' || item.dataset.cat === cat) && words.every(word => index.get(item).includes(word)));
+      const per = perPage(), pages = Math.max(1, Math.ceil(results.length / per));
+      page = Math.min(page, pages - 1);
+      const start = page * per;
+      items.forEach(item => { const k = results.indexOf(item); item.hidden = k < start || k >= start + per; });
       pager.classList.toggle('is-off', pages <= 1); pager.setAttribute('aria-hidden', String(pages <= 1));
-      pagesEl.innerHTML = Array.from({ length: pages }, (_, k) => `<button type="button" class="faq-pn" data-p="${k}"${k === fpage ? ' aria-current="page"' : ''} aria-label="${k + 1}페이지">${k + 1}</button>`).join('');
-      fprev.disabled = fpage === 0; fnext.disabled = fpage === pages - 1;
-      cnt.textContent = cat !== 'all' ? n + '개의 질문' : '';
+      pagesEl.innerHTML = Array.from({length:pages}, (_, k) => `<button type="button" class="faq-pn" data-p="${k}"${k === page ? ' aria-current="page"' : ''} aria-label="${k + 1}페이지">${k + 1}</button>`).join('');
+      prev.disabled = page === 0; next.disabled = page === pages - 1;
+      const label = cat === 'all' ? '전체' : cat;
+      cnt.textContent = mobile.matches ? `${label} ${normalize(query) ? '검색 결과 ' : ''}${results.length}개${pages > 1 ? ` · ${start + 1}–${Math.min(start + per, results.length)}번째` : ''}` : cat !== 'all' ? results.length + '개의 질문' : '';
+      position.textContent = `${page + 1} / ${pages}`;
+      position.setAttribute('aria-label', `전체 ${pages}페이지 중 ${page + 1}페이지`);
+      clear.hidden = !query;
+      empty.hidden = !mobile.matches || results.length > 0;
     };
-    const goPage = k => {
-      fpage = k; apply();
-      const top = $('.faq-tools', main).getBoundingClientRect().top;
-      if (top < (header ? header.offsetHeight : 0) || top > innerHeight * .5) jumpTo($('#faq', main));
+    const alignResults = () => {
+      const gap = (header?.offsetHeight || 0) + $('.faq-tools', main).offsetHeight + 12;
+      scrollToY(Math.max(0, layoutTop(cnt) - gap), true);
     };
-    pagesEl.addEventListener('click', e => { const b = e.target.closest('.faq-pn'); if (b) goPage(+b.dataset.p); });
-    fprev.addEventListener('click', () => { if (fpage > 0) goPage(fpage - 1); });
-    fnext.addEventListener('click', () => goPage(fpage + 1));
-    tabs.forEach(t => t.addEventListener('click', () => { cat = t.dataset.cat; fpage = 0; tabs.forEach(b => b.setAttribute('aria-pressed', String(b === t))); apply(); }));
-    $$('.faq-q', fl).forEach(b => b.addEventListener('click', () => {
-      const li = b.closest('.faq-item'), open = !li.classList.contains('is-open');
-      if (open) items.forEach(o => { o.classList.remove('is-open'); $('.faq-q', o).setAttribute('aria-expanded', 'false'); });
-      li.classList.toggle('is-open', open); b.setAttribute('aria-expanded', String(open));
+    const goPage = (k, event) => {
+      if (k < 0 || k >= Math.ceil(results.length / perPage())) return;
+      page = k; closeAll(); apply();
+      if (mobile.matches) {
+        alignResults();
+        if (event?.detail === 0) $('.faq-q', results[page * perPage()])?.focus({preventScroll:true});
+      } else {
+        const top = $('.faq-tools', main).getBoundingClientRect().top;
+        if (top < (header?.offsetHeight || 0) || top > innerHeight * .5) jumpTo($('#faq', main));
+      }
+    };
+    pagesEl.addEventListener('click', event => { const b = event.target.closest('.faq-pn'); if (b) goPage(+b.dataset.p, event); });
+    prev.addEventListener('click', event => goPage(page - 1, event));
+    next.addEventListener('click', event => goPage(page + 1, event));
+    const selectCategory = value => { cat = value; tabs.forEach(tab => tab.setAttribute('aria-pressed', String(tab.dataset.cat === cat))); };
+    tabs.forEach(tab => tab.addEventListener('click', () => { selectCategory(tab.dataset.cat); page = 0; closeAll(); apply(); }));
+    const searchChanged = () => { query = search.value; page = 0; closeAll(); apply(); };
+    search.addEventListener('input', event => { if (!event.isComposing) searchChanged(); });
+    search.addEventListener('compositionend', searchChanged);
+    clear.addEventListener('click', () => { search.value = ''; searchChanged(); search.focus({preventScroll:true}); });
+    $('#cmFaqReset', main).addEventListener('click', () => { selectCategory('all'); search.value = ''; searchChanged(); search.focus({preventScroll:true}); });
+    $$('.faq-q', fl).forEach(button => button.addEventListener('click', () => {
+      const item = button.closest('.faq-item'), open = !item.classList.contains('is-open');
+      const top = button.getBoundingClientRect().top;
+      closeAll(); setOpen(item, open);
+      if (mobile.matches) {
+        const shift = button.getBoundingClientRect().top - top;
+        if (shift) scrollToY(scrollY + shift, true);
+        const gap = (header?.offsetHeight || 0) + $('.faq-tools', main).offsetHeight + 12;
+        if (button.getBoundingClientRect().top < gap) scrollToY(layoutTop(button) - gap, true);
+      }
     }));
     const sizeList = () => {
-      items.forEach(li => li.hidden = false);
-      const h = Math.max(...items.map(li => $('h3', li).offsetHeight)) + 1;
-      fl.style.minHeight = (h * PER + 2) + 'px';
+      if (mobile.matches) fl.style.minHeight = '';
+      else {
+        items.forEach(item => item.hidden = false);
+        const height = Math.max(...items.map(item => $('h3', item).offsetHeight)) + 1;
+        fl.style.minHeight = (height * perPage() + 2) + 'px';
+      }
       apply();
     };
-    sizeList();
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizeList);
-    let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(sizeList, 150); });
+    revealFAQ = id => {
+      const item = items.find(item => item.id === id || $('.faq-q', item).id === id || $('.faq-a', item).id === id);
+      if (!item) return;
+      query = ''; search.value = ''; selectCategory('all');
+      page = Math.floor(items.indexOf(item) / perPage());
+      closeAll(); apply(); setOpen(item, true);
+    };
+    closeAll(); sizeList();
+    document.fonts?.ready.then(sizeList);
+    let resize; addEventListener('resize', () => { clearTimeout(resize); resize = setTimeout(sizeList, 150); });
+    mobile.addEventListener('change', () => { page = 0; closeAll(); sizeList(); });
+    if (location.hash) { const target = targetOf(location.hash); if (target) jumpTo(target, true); }
   }
 
   /* ---------- 모집 프로세스: 단계 차례로 켜기 ---------- */
@@ -172,9 +220,9 @@
     const cols = $$('.pf-col', pf); let cur = 0, auto = 0, timer = null, inView = false, hold = false;
     const set = k => { cur = k; cols.forEach((c, i) => c.classList.toggle('is-on', i === k)); };
     const stop = () => { clearInterval(timer); timer = null; };
-    const start = () => { stop(); if (!reduce && inView && !hold) timer = setInterval(() => set((cur + 1) % cols.length), 3200); };
+    const start = () => { stop(); if (!mobile.matches && !reduce && inView && !hold) timer = setInterval(() => set((cur + 1) % cols.length), 3200); };
     cols.forEach((c, i) => {
-      const pick = () => { if (!hold) auto = cur; set(i); hold = true; stop(); };
+      const pick = () => { if (mobile.matches) return; if (!hold) auto = cur; set(i); hold = true; stop(); };
       c.addEventListener('mouseenter', pick); c.addEventListener('click', pick);
       const card = $('.pf-card', c); if (card) card.addEventListener('focus', pick);
     });
@@ -183,13 +231,21 @@
     pf.addEventListener('mouseleave', () => { if (pf.contains(document.activeElement)) document.activeElement.blur(); release(); });
     pf.addEventListener('focusout', e => { if (!pf.contains(e.relatedTarget)) release(); });
     new IntersectionObserver(es => es.forEach(e => { inView = e.isIntersecting; start(); }), { threshold: .3 }).observe(pf);
+    mobile.addEventListener('change', start);
     set(0);
   }
 
   /* ---------- 스스로 체크 ---------- */
   const boxes = $$('.chk-box', main), now = $('#chkNow', main), bar = $('#chkBar', main), go = $('#chkGo', main);
   if (boxes.length) {
-    const upd = () => { const n = boxes.filter(b => b.checked).length; now.textContent = n; bar.style.width = (n / boxes.length * 100) + '%'; go.hidden = n < 1; };
-    boxes.forEach(b => b.addEventListener('change', upd)); upd();
+    const upd = () => {
+      const n = boxes.filter(b => b.checked).length;
+      now.textContent = n; bar.style.width = (n / boxes.length * 100) + '%';
+      $('#cmCheckNow', main).textContent = n; $('#cmCheckProgress', main).value = n;
+      $('.chk-self', main).classList.toggle('is-complete', n === boxes.length);
+      $('#chkGoLabel', main).textContent = mobile.matches ? (n === boxes.length ? '체크 완료 · 선발 과정 확인하기' : '선발 과정 확인하기') : '모집 프로세스 보러 가기';
+      go.hidden = !mobile.matches && n < 1;
+    };
+    boxes.forEach(b => b.addEventListener('change', upd)); mobile.addEventListener('change', upd); upd();
   }
 })();

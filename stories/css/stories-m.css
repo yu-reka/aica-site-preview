@@ -202,10 +202,10 @@
   .stories-page .sm-project-type[data-type="실증"]{background:#A3ED64;color:var(--sm-ink)}
   .stories-page .sm-project-type[data-type="창업"]{background:#FFE688;color:var(--sm-ink)}
   .stories-page .sm-project-heading strong{font:800 15px/1.45 "Paperlogy",sans-serif;word-break:keep-all}
-  .stories-page .sm-project-body{padding:0 14px 16px;font:400 13px/1.65 var(--ff-sans)}
-  .stories-page .sm-project-media{width:100%;aspect-ratio:400/260;overflow:hidden;border-radius:14px;margin:0 0 14px;background:#F3F6FE}
+  .stories-page .sm-project-body{padding:0 14px 18px;font:400 13px/1.65 var(--ff-sans)}
+  .stories-page .sm-project-media{width:100%;aspect-ratio:400/260;overflow:hidden;border-radius:14px;margin:0 auto 18px;background:#F3F6FE}
   .stories-page .sm-project-media :is(img,svg){display:block;width:100%;height:100%;object-fit:cover}
-  .stories-page .sm-project-link{display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 8px;border:2px solid var(--sm-black);border-radius:30px;color:var(--sm-ink);font-size:12px;font-weight:800;text-decoration:none}
+  .stories-page .sm-project-link{display:flex;align-items:center;justify-content:center;width:fit-content;max-width:100%;min-height:44px;margin:0 auto;padding:0 18px;border:1px solid var(--sm-black);border-radius:30px;color:var(--sm-ink);font-size:12px;font-weight:800;text-decoration:none}
   .stories-page .sm-project-link:focus-visible{outline:2px solid var(--sm-blue);outline-offset:3px}
 
   .stories-page #p-rev.sm-review-ready > input.tr,.stories-page #p-rev .sm-review-source{display:none}

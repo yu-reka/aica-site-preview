@@ -224,24 +224,10 @@ body{background:var(--ax-bg)}
   .hq-map img{filter:grayscale(.2) contrast(1.05)}
 }
 
-/* 헤더 지원하기: 홈에서는 Primary 파랑(토큰 --cta를 위에서 바꿈). 좁은 화면에도 보이게 */
+/* 데스크톱 헤더 문의 버튼. 모바일 헤더는 common/css/에서 공통 관리합니다. */
 .site-header .btn-apply{font-weight:700}
 .site-header .btn-apply:hover{background:var(--hm-primary-strong)}
 .site-header .btn-apply:focus-visible{outline-color:#fff}
-@media (max-width:1080px){
-  .site-header .btn-apply{display:inline-flex;height:34px;padding:0 13px;font-size:14px}
-}
-@media (max-width:860px){
-  .site-header .hdr-bar .logo{min-width:0;gap:8px}
-  .site-header .logo-sub{display:none}
-  .site-header .logo-text{font-size:15.5px}
-  .site-header .hdr-util{gap:2px}
-  .site-header .hdr-util .icon-btn{width:40px;height:40px}
-  .site-header .btn-apply{margin:0 4px}
-}
-@media (max-width:349px){
-  .site-header .btn-apply{display:none}
-}
 
 /* 한 줄 로그 띠: 검정 터미널 줄이 흐름 */
 .tk{position:relative;z-index:2;flex:none;margin:0 calc(clamp(14px,2.2vw,34px) * -1);background:var(--ax-line);border-top:3px solid var(--hm-primary);overflow:hidden;height:44px;display:flex;align-items:center}

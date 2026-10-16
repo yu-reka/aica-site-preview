@@ -1,8 +1,9 @@
 /* 선배들의 이야기 모바일(10-16). 보이는 규칙은 css/stories-m.css(600px 이하).
    1) 메뉴 탭: 짧은 이름(All → 전체, 기수별 이모저모 → 기수 기록), 탭이 헤더 뒤로 지나가면 같은 탭을 아래 고정
    2) 옆으로 넘기는 줄(한눈에 보기의 후기 포스트잇 · 프로젝트): 오른쪽에 더 있으면 다음 화살표, 넘기면 이전 화살표
-   3) 인터뷰: 추천 인터뷰 카드 넘김(숫자 없이 화살표) · 전체 인터뷰 개수 · 짧은 목록
+   3) 인터뷰: 카드 중앙 화살표 · 제목과 기수 탭 정렬 · 짧은 목록
    4) 기수 기록: 캔버스 시안 배치(계정 줄 → 동그라미 + 숫자 3칸 → 소개 → 회색 버튼 2개), 달별 고정 스토리 화살표, 전체/영상 탭
+   5) 프로젝트: 유형별 아코디언 · 후기: 메모지 2열, 본문 펼침, 교차 필터와 페이지네이션
    웹(601px 이상)은 그대로. */
 (function(){
   var mq = matchMedia('(max-width: 600px)');
@@ -126,26 +127,6 @@
     arrows(box, track, '인터뷰', function(){ return cards[0].offsetWidth + 12; });
   }
 
-  /* 추천 인용문이 하나도 없어도 전체 인터뷰 개수는 표시합니다. */
-  function initInterviewCount(){
-    var t = $('#iva-t'), out = $('#iv-all .iva-out');
-    if (!t || !out) return;
-    var cnt = document.createElement('span'); cnt.className = 'sm-ivcount'; t.appendChild(cnt);
-    var all = $$('#p-iv .ivgrid a.iv').map(function(a){ return parseInt(($('.by .av', a) || {}).textContent, 10) || 0; });
-    var count = function(){
-      var pick = $('#iv-all .iva-chips button[aria-pressed="true"]');
-      var v = pick ? pick.textContent : '';
-      var n = all.filter(function(c){
-        if (!v || v.indexOf('전체') === 0) return true;
-        if (v.indexOf('–') > 0){ var r = v.replace('기', '').split('–'); return c >= +r[0] && c <= +r[1]; }
-        return c === parseInt(v, 10);
-      }).length;
-      cnt.textContent = String(n);
-    };
-    new MutationObserver(count).observe(out, { childList: true });
-    count();
-  }
-
   /* 4) 기수 기록(cohort-v3.js가 그린 화면을 600px 이하에서만 시안 배치로) */
   var BADGE = '<svg class="sm-cv-badge" viewBox="0 0 24 24" aria-label="공식 계정" role="img"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>';
   var ICON = { all: 'M3 3h18v18H3zM3 9h18M3 15h18M9 3v18M15 3v18', video: 'M3 4h18v16H3zM3 9h18M8 4l3 5M14 4l3 5M10 12v5l4-2.5z' };
@@ -195,9 +176,9 @@
         b.setAttribute('aria-label', (k === 'all' ? '전체 게시물 ' : '영상만 보기 ') + (k === 'all' ? nums[0] : nums[1]) + '개');
         b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + ICON[k] + '"/></svg><span>' + (k === 'all' ? nums[0] : nums[1]) + '</span>';
       });
-      /* 기록 기간: '26.05.–' / '26.08.' 두 줄 */
+      /* 기간을 한 줄로 유지하되 값은 발행된 기록 그대로 사용합니다. */
       var rg = $$('.cv3-stat b', root)[2];
-      if (rg && !rg.dataset.sm){ var t = rg.textContent.replace(/\s+/g, ''); rg.dataset.sm = '1'; rg.textContent = ''; t.split('–').forEach(function(x, i){ if (i){ rg.appendChild(document.createTextNode('–')); rg.appendChild(document.createElement('br')); } rg.appendChild(document.createTextNode(x)); }); }
+      if (rg) rg.textContent = rg.textContent.replace(/\s+/g, '');
       /* 교육과정 고정 칸: 시안처럼 한 칸, 누르면 펼침 */
       var pin = $('.cv3-pin', root);
       if (pin && !pin.dataset.sm){
@@ -223,11 +204,181 @@
     });
   }
 
+  // Mobile views read the existing, escaped static/Spring markup. IDs and detail links stay intact.
+  function el(tag, cls, text){
+    var node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (text != null) node.textContent = text;
+    return node;
+  }
+  function cleanClone(node){
+    if (!node) return null;
+    var copy = node.cloneNode(true);
+    copy.removeAttribute('id');
+    $$('[id]', copy).forEach(function(n){ n.removeAttribute('id'); });
+    return copy;
+  }
+  function tabButton(group, text, active, action){
+    var b = el('button', '', text); b.type = 'button';
+    b.setAttribute('aria-pressed', String(active));
+    b.addEventListener('click', action);
+    group.appendChild(b); return b;
+  }
+  function tabs(label){
+    var group = el('div', 'sm-filter-tabs');
+    group.setAttribute('role', 'group'); group.setAttribute('aria-label', label);
+    return group;
+  }
+
+  function initProjects(){
+    var grid = $('#p-pr .pjgrid');
+    if (!grid || $('.sm-projects')) return;
+    var cards = $$('.pjc', grid);
+    if (!cards.length) return;
+    var box = el('section', 'sm-projects'); box.setAttribute('aria-label', '프로젝트 아카이브');
+    var filters = tabs('프로젝트 유형'), list = el('div', 'sm-project-list');
+    var items = cards.map(function(card, i){
+      var type = ($('.pjc-type', card) || {}).textContent || '';
+      var item = el('details', 'sm-project'); item.dataset.type = type.trim();
+      var summary = el('summary', 'sm-project-summary');
+      summary.appendChild(el('span', 'sm-project-no', String(i + 1).padStart(2, '0')));
+      var tx = el('span', 'sm-project-heading');
+      var badge = el('span', 'sm-project-type', type);
+      badge.dataset.type = type.trim(); tx.appendChild(badge);
+      tx.appendChild(el('strong', '', ($('.pjname', card) || {}).textContent || ''));
+      tx.appendChild(el('span', 'sm-project-description', ($('h3', card) || {}).textContent || ''));
+      summary.appendChild(tx); item.appendChild(summary);
+      var body = el('div', 'sm-project-body');
+      ['.sum', '.tags', '.team'].forEach(function(s){ var c = cleanClone($(s, card)); if (c) body.appendChild(c); });
+      var link = el('a', 'sm-project-link', '프로젝트 자세히 보기 →');
+      link.href = card.getAttribute('href'); body.appendChild(link); item.appendChild(body);
+      item.open = i === 0;
+      item.addEventListener('toggle', function(){
+        if (item.open) items.forEach(function(other){ if (other !== item) other.open = false; });
+      });
+      list.appendChild(item); return item;
+    });
+    var types = ['전체'].concat(Array.from(new Set(['기업연계', '실증', '창업'].concat(items.map(function(n){ return n.dataset.type; })))));
+    types.forEach(function(type){
+      tabButton(filters, type, type === '전체', function(){
+        $$('button', filters).forEach(function(b){ b.setAttribute('aria-pressed', String(b.textContent === type)); });
+        items.forEach(function(n){ n.hidden = type !== '전체' && n.dataset.type !== type; if (n.hidden) n.open = false; });
+        var visible = items.filter(function(n){ return !n.hidden; });
+        if (!visible.some(function(n){ return n.open; }) && visible[0]) visible[0].open = true;
+      });
+    });
+    box.appendChild(filters); box.appendChild(list); grid.before(box); grid.classList.add('sm-project-source');
+  }
+
+  function initReviews(){
+    var section = $('#p-rev'), source = section && $('.idgrid', section);
+    if (!source || $('.sm-reviews', section)) return;
+    var cards = $$('.idc', source);
+    if (!cards.length) return; // Keep the server's published-empty state.
+    var box = el('section', 'sm-reviews'); box.setAttribute('aria-label', '후기 목록');
+    var categories = tabs('후기 카테고리'), cohorts = tabs('후기 기수');
+    var count = el('p', 'sm-review-count'); count.setAttribute('role', 'status');
+    var board = el('div', 'sm-review-board');
+    var empty = el('p', 'sm-review-empty', '선택한 조건에 맞는 후기가 없습니다.');
+    var pager = el('nav', 'sm-review-pager cpager'); pager.setAttribute('aria-label', '후기 페이지');
+    var category = 'all', cohort = '', page = 1, tag = '', pageSize = 12;
+    var entries = cards.map(function(card){
+      var note = el('article', 'sm-review-note');
+      var details = el('details', 'sm-review-details'), summary = el('summary', 'sm-review-summary');
+      var bar = cleanClone($('.cbar', card)); if (bar) summary.appendChild(bar);
+      summary.appendChild(el('h3', '', ($('h3', card) || {}).textContent || ''));
+      summary.appendChild(el('span', 'sm-review-preview', ($('.in > p', card) || {}).textContent || ''));
+      var hint = el('span', 'sm-review-hint');
+      hint.appendChild(el('span', 'sm-review-expand', '본문 펼치기 ⌄'));
+      hint.appendChild(el('span', 'sm-review-collapse', '본문 접기 ⌃')); summary.appendChild(hint);
+      details.appendChild(summary);
+      var body = el('div', 'sm-review-body');
+      var modal = document.getElementById(card.getAttribute('href').slice(1));
+      var published = modal && $('.mbody', modal);
+      if (published) Array.from(published.children).forEach(function(n){
+        if (!n.classList.contains('mtags')) body.appendChild(cleanClone(n));
+      });
+      else body.appendChild(el('p', '', ($('.in > p', card) || {}).textContent || ''));
+      var link = el('a', 'sm-review-link', '상세 보기 →'); link.href = card.getAttribute('href'); body.appendChild(link);
+      details.appendChild(body); note.appendChild(details);
+      var footer = el('div', 'sm-review-by');
+      footer.appendChild(el('b', '', ($('.who b', card) || {}).textContent || ''));
+      var tg = $('.who .tg', card); if (tg) footer.appendChild(el('span', 'sm-review-tag', tg.textContent));
+      note.appendChild(footer);
+      var cl = Array.from(card.classList), cat = cl.find(function(c){ return /^cat-/.test(c); });
+      var co = cl.find(function(c){ return /^coh\d+$/.test(c); });
+      return {node:note, details:details, category:cat ? cat.slice(4) : '', cohort:co ? co.slice(3) : '', tags:cl};
+    });
+    var categoryNames = [['all','전체'],['life','생활'],['class','수업'],['proj','프로젝트'],['job','취업'],['path','진로']];
+    categoryNames.forEach(function(c){
+      tabButton(categories, c[1], c[0] === category, function(){
+        category = c[0]; page = 1;
+        // Keep the original radio/link contract for desktop filters and Spring.
+        var radio = $('#rc_' + category, section);
+        if (radio){ radio.checked = true; radio.dispatchEvent(new Event('change', {bubbles:true})); }
+        refresh();
+      }).dataset.value = c[0];
+    });
+    [''].concat(Array.from(new Set(entries.map(function(e){ return e.cohort; }))).filter(Boolean).sort(function(a,b){ return +b - +a; })).forEach(function(c){
+      tabButton(cohorts, c ? c + '기' : '전체', c === cohort, function(){
+        cohort = c; page = 1; refresh();
+      }).dataset.value = c;
+    });
+    function pageButton(text, value, disabled){
+      var b = el('button', '', text); b.type = 'button'; b.disabled = disabled;
+      b.setAttribute('aria-label', text === '←' ? '이전 페이지' : text === '→' ? '다음 페이지' : value + '페이지');
+      if (String(value) === text && page === value) b.setAttribute('aria-current', 'page');
+      b.addEventListener('click', function(){
+        page = value; refresh();
+        var active = $('button[aria-current="page"]', pager); if (active) active.focus({preventScroll:true});
+        box.scrollIntoView({block:'start',behavior:reduce.matches ? 'auto' : 'smooth'});
+      }); return b;
+    }
+    function refresh(){
+      $$('button', categories).forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.value === category)); });
+      $$('button', cohorts).forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.value === cohort)); });
+      var matching = entries.filter(function(e){
+        return (category === 'all' || e.category === category) && (!cohort || e.cohort === cohort) && (!tag || e.tags.indexOf('tg' + tag) >= 0);
+      });
+      var total = Math.max(1, Math.ceil(matching.length / pageSize)); page = Math.min(page, total);
+      count.textContent = matching.length + '개의 후기';
+      board.replaceChildren();
+      matching.slice((page - 1) * pageSize, page * pageSize).forEach(function(e){ board.appendChild(e.node); });
+      empty.hidden = matching.length > 0; board.hidden = !matching.length;
+      pager.replaceChildren(); pager.hidden = !matching.length;
+      if (matching.length){
+        pager.appendChild(pageButton('←', page - 1, page === 1));
+        var start = Math.max(1, Math.min(page - 2, total - 4));
+        for (var n = start; n <= Math.min(total, start + 4); n++) pager.appendChild(pageButton(String(n), n, false));
+        pager.appendChild(pageButton('→', page + 1, page === total));
+      }
+    }
+    function fromHash(){
+      var hash = /^#tg-([0-6])$/.exec(location.hash);
+      if (hash){ tag = hash[1]; page = 1; }
+      else if (!/^#r-/.test(location.hash)) tag = '';
+      refresh();
+    }
+    box.append(categories, cohorts, count, board, empty, pager); source.before(box);
+    // Hide the legacy controls as a group on mobile, including integration-only pager styles.
+    ['.filters', '.idgrid', '.rvlist', '.pager'].forEach(function(selector){
+      var original = $(selector, section);
+      if (!original) return;
+      var wrapper = el('div', 'sm-review-source'); original.before(wrapper); wrapper.appendChild(original);
+    });
+    section.classList.add('sm-review-ready');
+    section.addEventListener('change', function(e){
+      if (e.target.name === 'rc'){ category = e.target.id.slice(3); page = 1; refresh(); }
+    });
+    addEventListener('hashchange', fromHash); fromHash();
+  }
+
   function init(){
     initTabs();
     initInterviews();
-    initInterviewCount();
     initCohorts();
+    initProjects();
+    initReviews();
     rail($('.hb-pis'), 'pis', '후기');
     rail($('.hb-pjs'), 'pjs', '프로젝트');
   }

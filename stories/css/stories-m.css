@@ -50,7 +50,7 @@
    추천 인터뷰 카드 넘김(js가 .ivgrid에서 글귀 있는 인터뷰로 만듦) + 전체 인터뷰 짧은 목록
    시안보다 카드 길이를 줄이고(사진 150 · 글 2줄), 넘김 숫자는 빼고, 화살표는 알아보기와 같은 모양
    ========================================================= */
-.sm-ivf,.sm-ivcount{display:none}
+.sm-ivf{display:none}
 @media (max-width:600px){
   .stories-page .sm-ivf{display:block;position:relative;--cw:min(300px,calc(100vw - 90px));margin:18px calc(-1 * var(--gutter,20px)) 0}
   .stories-page .sm-ivf-track{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:6px calc(50% - var(--cw) / 2) 12px;list-style:none;margin:0}
@@ -65,14 +65,13 @@
   .stories-page .sm-ivf-tx b{font-size:17px;font-weight:800;line-height:1.4;letter-spacing:-.02em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .stories-page .sm-ivf-tx q{font-family:"Nanum Pen Script",cursive;font-size:20px;line-height:1.2;color:#2457F5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .stories-page .sm-ivf-tx span{font-size:13px;color:#566175}
-  .stories-page .sm-ivf .sm-arrow{top:calc(6px + 75px + 3px)}
+  .stories-page .sm-ivf .sm-arrow{top:50%}
   .stories-page .sm-ivf .sm-arrow--prev{left:calc(50% - var(--cw) / 2 + 12px)}
   .stories-page .sm-ivf .sm-arrow--next{right:calc(50% - var(--cw) / 2 + 12px)}
 
-  /* 전체 인터뷰: 제목 + 개수, 기수 세그먼트, 짧은 목록(사진 썸네일 · 제목 · 기수/이름/분야) */
+  /* 전체 인터뷰: 제목과 기수 탭, 짧은 목록(사진 썸네일 · 제목 · 기수/이름/분야) */
   .stories-page #iv-all{margin-top:36px}
   .stories-page #iv-all #iva-t.sr{position:static;width:auto;height:auto;overflow:visible;clip:auto;clip-path:none;white-space:normal;margin:0 0 12px;font-family:"Paperlogy",var(--ff-sans,sans-serif);font-size:21px;font-weight:800;color:#14233F}
-  .stories-page .sm-ivcount{display:inline;margin-left:4px;font-family:"Giants",var(--ff-sans,sans-serif);font-size:16px;color:#2457F5}
   .stories-page #iv-all .iva-tools{display:block}
   .stories-page #iv-all .iva-seg{display:none}
   /* 기수 거르기: 밑줄 글자 탭(위아래 메뉴의 상자 탭과 구분, 후기 · 기수 기록 시안과 같은 방식) */
@@ -116,10 +115,10 @@
   html[data-nav="side"] .stories-page .sm-cv-badge path{fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
   html[data-nav="side"] .stories-page .sm-cv-mid{display:flex;align-items:center;gap:18px}
   html[data-nav="side"] .stories-page .sm-cv-mid .cv3-ring{width:84px}
-  html[data-nav="side"] .stories-page .sm-cv-mid .cv3-stat{flex:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;text-align:center;font-size:12px;color:#566175}
+  html[data-nav="side"] .stories-page .sm-cv-mid .cv3-stat{flex:1;display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,.7fr) minmax(0,1.6fr);gap:0;text-align:center;font-size:12px;color:#566175}
   html[data-nav="side"] .stories-page .sm-cv-mid .cv3-stat span{display:flex;flex-direction:column-reverse;align-items:center;gap:2px}
   html[data-nav="side"] .stories-page .sm-cv-mid .cv3-stat b{font-size:18px;font-weight:800;line-height:1.2;color:#14233F}
-  html[data-nav="side"] .stories-page .sm-cv-mid .cv3-stat span:nth-child(3) b{font-size:14px;line-height:1.3;padding-top:3px;word-spacing:-2px}
+  html[data-nav="side"] .stories-page .sm-cv-mid .cv3-stat span:nth-child(3) b{font-size:12px;line-height:1.3;white-space:nowrap;letter-spacing:-.04em}
   html[data-nav="side"] .stories-page .sm-cv-prof .cv3-bio{font-size:14px;line-height:1.55;color:#14233F}
   html[data-nav="side"] .stories-page .sm-cv-btns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
   html[data-nav="side"] .stories-page .sm-cv-btns :is(.cv3-dbtn,.sm-cv-off){display:flex;align-items:center;justify-content:center;gap:4px;height:auto;min-height:40px;padding:0 6px;border:0;border-radius:9px;background:#EFF1F4;color:#14233F;font:700 13px/1.2 var(--ff-sans,"Pretendard",sans-serif);text-decoration:none;white-space:nowrap;filter:none}
@@ -169,4 +168,86 @@
   html[data-nav="side"] .stories-page .cv3-pin.sm-open .k{font-size:11.5px}
   html[data-nav="side"] .stories-page .cv3-pin.sm-open .pn{top:20px;right:20px;width:22px;height:22px}
   html[data-nav="side"] .stories-page .sm-pin-more:focus-visible{outline:3px solid #2457F5;outline-offset:3px}
+}
+
+/* 10-16 review refinements: mobile projections keep the existing desktop/detail markup. */
+.sm-projects,.sm-reviews{display:none}
+.sm-review-source{display:contents}
+@media (max-width:600px){
+  .stories-page #iv-all .iva-hd{display:flex;align-items:center;gap:14px;flex-wrap:nowrap}
+  .stories-page #iv-all .iva-hd #iva-t.sr{flex:none;margin:0;font:800 19px/1.35 "Paperlogy",sans-serif;letter-spacing:-.05em;white-space:nowrap}
+  .stories-page #iv-all .iva-tools{flex:1;min-width:0;margin:0}
+  .stories-page #iv-all .iva-chips{gap:0;justify-content:space-between;padding:0}
+  .stories-page #iv-all .iva-chips button{font-size:14px;padding:0 2px}
+  .stories-page .sm-ivf-track{padding-bottom:6px}
+  .stories-page .sm-ivf-c{margin-bottom:6px}
+  /* Center against the card itself, excluding the rail's bottom shadow gutter. */
+  .stories-page .sm-ivf .sm-arrow{top:calc(50% - 3px)}
+
+  .stories-page #p-pr .pjgrid.sm-project-source{display:none}
+  .stories-page .sm-projects,.stories-page .sm-reviews{display:block;color:var(--sm-ink)}
+  .stories-page .sm-filter-tabs{display:flex;gap:12px;border-bottom:1px solid var(--sm-line);margin:0 0 16px;overflow-x:auto;scrollbar-width:none}
+  .stories-page .sm-filter-tabs button{flex:1;min-width:max-content;min-height:44px;padding:0 2px;border:0;border-bottom:3px solid transparent;background:transparent;color:var(--sm-muted);font:600 13px/1.2 var(--ff-sans);white-space:nowrap;cursor:pointer}
+  .stories-page .sm-filter-tabs button[aria-pressed="true"]{border-bottom-color:var(--sm-ink);color:var(--sm-ink);font-weight:800}
+  .stories-page .sm-filter-tabs button:focus-visible,.stories-page .sm-project summary:focus-visible,.stories-page .sm-review-details summary:focus-visible{outline:2px solid var(--sm-blue);outline-offset:-3px}
+  .stories-page .sm-project-list{display:grid;gap:10px}
+  .stories-page .sm-project{min-width:0;border:1px solid var(--sm-line);border-radius:18px;background:var(--sm-soft)}
+  .stories-page .sm-project[hidden]{display:none}
+  .stories-page .sm-project[open]{border:2px solid var(--sm-black);background:#fff;box-shadow:3px 4px 0 var(--sm-black)}
+  .stories-page .sm-project-summary{display:grid;grid-template-columns:26px minmax(0,1fr) 14px;gap:10px;padding:16px 14px;cursor:pointer;list-style:none}
+  .stories-page .sm-project-summary::-webkit-details-marker,.stories-page .sm-review-summary::-webkit-details-marker{display:none}
+  .stories-page .sm-project-summary::after{content:"";width:7px;height:7px;margin-top:5px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg)}
+  .stories-page .sm-project[open] .sm-project-summary::after{transform:translateY(4px) rotate(225deg)}
+  .stories-page .sm-project-no{color:var(--sm-blue);font:800 20px/1.1 "Paperlogy",sans-serif}
+  .stories-page .sm-project-heading{display:flex;flex-direction:column;gap:6px;min-width:0}
+  .stories-page .sm-project-type{align-self:flex-start;padding:3px 8px;border-radius:20px;background:var(--sm-blue);color:#fff;font:700 11px/1.2 var(--ff-sans)}
+  .stories-page .sm-project-type[data-type="실증"]{background:#A3ED64;color:var(--sm-ink)}
+  .stories-page .sm-project-type[data-type="창업"]{background:#FFE688;color:var(--sm-ink)}
+  .stories-page .sm-project-heading strong{font:800 15px/1.45 "Paperlogy",sans-serif;word-break:keep-all}
+  .stories-page .sm-project-description{font:400 13px/1.6 var(--ff-sans);color:var(--sm-muted);word-break:keep-all}
+  .stories-page .sm-project-body{padding:0 16px 16px 50px;font:400 13px/1.65 var(--ff-sans)}
+  .stories-page .sm-project-body .sum{margin:0 0 12px;color:var(--sm-muted)}
+  .stories-page .sm-project-body .tags{display:flex;flex-wrap:wrap;gap:5px}
+  .stories-page .sm-project-body .tags span{padding:2px 7px;border-radius:20px;background:#DCE5F7;color:var(--sm-ink);font-size:11px;font-weight:700}
+  .stories-page .sm-project-body .team{margin:12px 0;color:var(--sm-muted);font-size:12px}
+  .stories-page .sm-project-link{display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 8px;border:2px solid var(--sm-black);border-radius:30px;color:var(--sm-ink);font-size:12px;font-weight:800;text-decoration:none}
+  .stories-page .sm-project-link:focus-visible,.stories-page .sm-review-link:focus-visible{outline:2px solid var(--sm-blue);outline-offset:3px}
+
+  .stories-page #p-rev.sm-review-ready > input.tr,.stories-page #p-rev .sm-review-source{display:none}
+  .stories-page .sm-reviews{scroll-margin-top:calc(var(--hdr,60px) + 24px)}
+  .stories-page .sm-reviews .sm-filter-tabs{gap:10px;margin-bottom:8px}
+  .stories-page .sm-reviews .sm-filter-tabs button{flex:none;min-width:36px;font-size:13px}
+  .stories-page .sm-review-count{margin:16px 0 18px;font:600 12px/1.5 var(--ff-sans)}
+  .stories-page .sm-review-board{position:relative;isolation:isolate;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:20px 12px;padding:38px 12px 24px;border-radius:14px;background-color:#F4F5FB;background-image:linear-gradient(rgba(70,80,150,.11) 1px,transparent 1px),linear-gradient(90deg,rgba(70,80,150,.11) 1px,transparent 1px);background-size:18px 18px;box-shadow:inset 0 0 0 1px rgba(20,35,63,.08)}
+  .stories-page .sm-review-board::before{content:"☆";position:absolute;left:12px;top:5px;font:32px/1 var(--ff-sans);transform:rotate(-12deg)}
+  .stories-page .sm-review-board::after{content:"SSUL";position:absolute;right:10px;top:-9px;padding:6px 12px;border:2px solid var(--sm-blue);border-radius:50%;font:italic 20px/1 "Caveat",cursive;color:var(--sm-blue);transform:rotate(-12deg)}
+  .stories-page .sm-review-note{position:relative;min-width:0;background:#FFF1A6;box-shadow:0 5px 9px #14233f18;transform:rotate(-1deg);font-family:var(--ff-sans)}
+  .stories-page .sm-review-note:nth-child(6n+2){background:#D6ECFF;transform:translateY(12px) rotate(1deg)}
+  .stories-page .sm-review-note:nth-child(6n+3){background:#FFE2C2;transform:rotate(.5deg)}
+  .stories-page .sm-review-note:nth-child(6n+4){background:#D6F5E3;transform:translateY(12px) rotate(-.6deg)}
+  .stories-page .sm-review-note:nth-child(6n+5){background:#FFD9E8}
+  .stories-page .sm-review-note:nth-child(6n){background:#E7DEFF;transform:translateY(12px) rotate(.7deg)}
+  .stories-page .sm-review-note::before{content:"";position:absolute;z-index:1;top:-7px;left:32%;width:38px;height:14px;background:#a8ccefaa;transform:rotate(-8deg);pointer-events:none}
+  .stories-page .sm-review-note:nth-child(2n)::before{background:#ffe186b8;transform:rotate(9deg)}
+  .stories-page .sm-review-summary{padding:16px 10px 0;list-style:none;cursor:pointer}
+  .stories-page .sm-review-summary .cbar{display:flex;align-items:center;justify-content:space-between;gap:4px;font-size:10px;line-height:1.4;color:var(--sm-muted)}
+  .stories-page .sm-review-summary .cbar b{font-weight:500}
+  .stories-page .sm-review-summary .cbar span{font-weight:800;white-space:nowrap}
+  .stories-page .sm-review-summary .cbar i{font-style:normal}
+  .stories-page .sm-review-summary h3{margin:7px 0;font:800 13px/1.5 "Paperlogy",sans-serif;letter-spacing:-.05em;word-break:keep-all;overflow-wrap:anywhere}
+  .stories-page .sm-review-preview{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;font-size:12px;line-height:1.6;color:#34435A;word-break:normal;overflow-wrap:anywhere}
+  .stories-page .sm-review-hint{display:block;padding:10px 0;font-size:10px;font-weight:700;color:var(--sm-ink)}
+  .stories-page .sm-review-collapse,.stories-page .sm-review-details[open] .sm-review-expand,.stories-page .sm-review-details[open] .sm-review-preview{display:none}
+  .stories-page .sm-review-details[open] .sm-review-collapse{display:inline}
+  .stories-page .sm-review-body{padding:0 10px 12px;font-size:12px;line-height:1.7;overflow-wrap:anywhere}
+  .stories-page .sm-review-body p{margin:0 0 12px}
+  .stories-page .sm-review-body img{display:block;max-width:100%;height:auto}
+  .stories-page .sm-review-link{display:inline-flex;align-items:center;min-height:44px;font-size:11px;font-weight:700;color:var(--sm-ink)}
+  .stories-page .sm-review-by{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:5px;margin:0 10px;padding:9px 0;border-top:1px dashed #14233f33;font-size:10px}
+  .stories-page .sm-review-by b{font-weight:600}
+  .stories-page .sm-review-tag{padding:3px 6px;border-radius:20px;background:var(--sm-blue);color:#fff;font-size:9px;font-weight:700}
+  .stories-page .sm-review-pager{margin-top:32px;gap:4px}
+  .stories-page .sm-review-pager button{min-width:36px;height:44px;padding:0 4px}
+  .stories-page .sm-review-empty{padding:32px 0;color:var(--sm-muted);font-size:14px}
+  .stories-page .sm-reviews [hidden]{display:none}
 }

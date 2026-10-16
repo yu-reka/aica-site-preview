@@ -113,3 +113,47 @@ html[data-menu="stories"] .st-mh .st-mh-t b::after{content:"";position:absolute;
   html[data-menu="stories"] .st-mh .mhb,
   html[data-menu="life"] .st-mh .mhb{min-height:128px;padding:22px 20px;align-items:center}
 }
+
+/* Shared cool grid-paper tone across desktop and mobile banners. */
+html:is([data-menu="stories"],[data-menu="life"]) .st-mh .mhb{
+    background-color:#F6F8FC;
+    background-image:linear-gradient(rgba(36,87,245,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(36,87,245,.05) 1px,transparent 1px);
+    background-size:26px 26px;
+  }
+  html[data-menu="life"] .st-mh .mhb{
+    isolation:isolate;
+    background-image:linear-gradient(rgba(36,87,245,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(36,87,245,.05) 1px,transparent 1px),linear-gradient(rgba(246,248,252,.48),rgba(246,248,252,.48)),url("../../life/assets/banner-life-bg.webp");
+    background-size:26px 26px,26px 26px,100% 100%,auto 100%;
+    background-position:0 0,0 0,center,right center;
+    background-repeat:repeat,repeat,no-repeat,no-repeat;
+  }
+  html[data-menu="life"] .st-mh .mhb-tx{position:relative;z-index:1}
+@media (max-width:600px){
+  html[data-menu="stories"] .mhb-deco .dc-tape{left:-24px;top:-9px;width:118px;height:28px}
+  html[data-menu="stories"] .st-mh .mhb-deco .dc-blob{display:block;right:-34px;top:18px;width:72px;height:110px}
+  html[data-menu="stories"] .st-mh .mhb-deco .dc-scrap{display:block;right:-23px;top:17px;width:76px;height:108px;background-size:12px 12px;transform:rotate(10deg)}
+  html[data-menu="stories"] .mhb-deco .dc-scrap em{display:none}
+  html[data-menu="stories"] .mhb-deco .dc-pin{right:28px;top:8px;width:6px;height:6px}
+  html[data-menu="stories"] .mhb-deco .dc-tick{left:28px;top:35px}
+  html[data-menu="stories"] .mhb-deco .dc-tape2{left:14px;top:77px;width:50px;height:15px}
+  html[data-menu="stories"] .st-mh .mhb-deco .dc-swoosh{display:block;right:45px;bottom:-5px;width:92px;opacity:.7}
+  html[data-menu="life"] .st-mh .mhb::before,
+  html[data-menu="life"] .st-mh .mhb::after{content:"";position:absolute;z-index:0;pointer-events:none}
+  html[data-menu="life"] .st-mh .mhb::before{inset:0;border-radius:inherit;background:radial-gradient(ellipse at 2% 0%,rgba(153,189,230,.26) 0 20%,transparent 20.5%),radial-gradient(circle at 78% 20%,rgba(171,197,250,.3) 0 13px,transparent 14px),radial-gradient(circle at 86% 27%,rgba(91,141,239,.35) 0 3px,transparent 4px)}
+  html[data-menu="life"] .st-mh .mhb::after{left:12px;top:12px;width:105px;height:20px;border-bottom:1px solid rgba(113,167,195,.42);border-radius:0 0 80% 45%;transform:rotate(-15deg)}
+}
+
+/* LIFE uses a clipped map memo, echoing the Stories paper collage. */
+html[data-menu="life"] .st-mh .lf-banner-deco{display:block;position:absolute;inset:0;z-index:0;overflow:hidden;border-radius:inherit;pointer-events:none}
+  .lf-banner-deco::before{content:"";position:absolute;right:-18px;top:14px;width:82px;height:112px;border-radius:48% 52% 40% 60%;background:#CDEEF1;transform:rotate(12deg)}
+  .lf-banner-note{position:absolute;right:-8px;top:19px;width:92px;height:108px;transform:rotate(-9deg);border:1px solid #D2DEEE;background-color:#FCFDFF;background-image:linear-gradient(rgba(100,140,220,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(100,140,220,.16) 1px,transparent 1px);background-size:12px 12px;box-shadow:0 3px 8px rgba(20,35,63,.08)}
+  .lf-banner-note svg{display:block;width:92px;height:100px}
+  .lf-banner-tape{position:absolute;left:19px;top:-7px;width:51px;height:16px;background:rgba(139,193,246,.65);transform:rotate(5deg)}
+
+@media (min-width:601px){
+  html[data-menu="life"] .st-mh .mhb-tx{padding-right:clamp(120px,18vw,250px)}
+  .lf-banner-note{right:30px;top:20px;width:clamp(110px,16vw,210px);height:auto;aspect-ratio:92/108;background-size:18px 18px}
+  .lf-banner-note svg{width:100%;height:auto}
+  .lf-banner-tape{left:22%;top:-10px;width:56%;height:23px}
+  .lf-banner-deco::before{right:-22px;top:22px;width:clamp(100px,16vw,210px);height:180px}
+}

@@ -36,3 +36,21 @@
 ![라이프 수정](screenshots/mobile-polish-followup/desktop-after-1440.png)
 ![후기 main](screenshots/mobile-polish-followup/reviews-desktop-before-1440.png)
 ![후기 수정](screenshots/mobile-polish-followup/reviews-desktop-after-1440.png)
+
+
+## 배너 추가 보정: 모바일 및 웹
+
+사용자 요청에 따라 이야기·라이프 배너의 배경을 체크 배너와 같은 `#F6F8FC` / 파란 26px 모눈 톤으로 맞췄다. 이야기 모바일에서 숨겨졌던 메모·테이프·손그림 장식을 작은 크기로 표시한다. 라이프에는 도로·건물·공원과 위치 핀으로 구성한 장식용 약도 메모를 추가했다. 실제 위치 안내 지도가 아닌 aria-hidden 장식이며 기존 오시는 길 정보는 유지한다.
+
+라이프 약도 메모는 웹에서도 오른쪽에 확대해서 표시하고 제목·설명 공간을 확보한다. 모바일 128px 배너 높이와 웹 설명 문구를 유지한다. 체크는 추가했던 장식을 제거한 최종 상태로, 이번 추가 커밋에서는 변경하지 않는다. 앞선 데스크톱 비교 기록 이후, 이번 요청 범위의 웹 배너 배경과 라이프 장식은 의도적으로 변경했다.
+
+- `npm run build`, `npm test` 21개, `npm run check`, `git diff --check` 통과.
+- 세 페이지를 360·390·430·768·1440px에서 확인: 가로 넘침 없음. 모바일 높이 유지 및 웹 배너 화면 확인.
+- 체크리스트의 전형 일정 링크 이동 확인. 배너 장식은 pointer-events:none으로 기존 링크를 가리지 않음.
+- Spring 연동 JS·데이터·선택자·발행 계약 변경 없음. 자동 테스트의 공개 템플릿 검증 통과. Spring 서버/DB 실환경은 미검증.
+
+![이야기 모바일](screenshots/banner-followup/stories-mobile-390.png)
+![라이프 모바일](screenshots/banner-followup/life-mobile-390.png)
+![이야기 웹](screenshots/banner-followup/stories-desktop-1440.png)
+![라이프 웹](screenshots/banner-followup/life-desktop-1440.png)
+![체크 웹 최종 유지 상태](screenshots/banner-followup/check-desktop-1440.png)

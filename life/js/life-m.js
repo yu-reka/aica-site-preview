@@ -37,7 +37,7 @@ const arrow='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/
 const image=(path,alt='',cls='')=>`<img class="${cls}" src="${esc(path)}" alt="${esc(alt)}" loading="lazy">`;
 const heading=(k,t,lead='')=>`<div class="section-heading"><p class="kicker">${esc(k)}</p><h2>${esc(t)}</h2>${lead?`<p class="lead">${esc(lead)}</p>`:''}</div>`;
 const host=document.querySelector('#main');
-const main=document.createElement('div');main.className='lm-content';host.append(main);host.classList.add('lm-ready');
+const main=document.createElement('div');main.className='lm-content';host.append(main);
 let page='overview';const railObservers=[];
 const mqReduce=matchMedia('(prefers-reduced-motion:reduce)');
 function activeGroup(p){return p.startsWith('tp-')?'tips':p;}
@@ -70,7 +70,7 @@ function directions(){let routes=$$('.rt3 article',src);return `<section class="
 const renders={overview,facilities,tips,'tp-house':housing,'tp-food':food,'tp-fun':culturePage,directions};
 function render(){
  railObservers.forEach(o=>o.disconnect());railObservers.length=0;
- const raw=decodeURIComponent(location.hash.slice(1));
+ const raw=Site.decodeHash(location.hash.slice(1));
  const target=src.querySelector('[id="'+CSS.escape(raw)+'"]');
  const topic=target?.closest('.tp-sec')?.id;
  const aliases={home:'overview',facility:'facilities',way:'directions'};
@@ -87,6 +87,8 @@ function render(){
  main.innerHTML=(page.startsWith('tp-')?topicNav(page):'')+renders[page]();main.dataset.screen=page;
  wireRails();wireFacilities();if(page==='tp-house')wireHousing();if(page==='tp-food')renderFood();
  syncNav();
+ // Keep the original body available until the mobile screen has rendered and bound successfully.
+ host.classList.add('lm-ready');
 }
 function wireRails(){
  $$('.rail-wrap').forEach(w=>{let r=$('.rail',w),prev=$('.previous',w),next=$('.next',w);let sync=()=>{prev.hidden=r.scrollLeft<4;next.hidden=r.scrollLeft+r.clientWidth>=r.scrollWidth-4;};prev.onclick=()=>r.scrollBy({left:-r.clientWidth*.86,behavior:mqReduce.matches?'auto':'smooth'});next.onclick=()=>r.scrollBy({left:r.clientWidth*.86,behavior:mqReduce.matches?'auto':'smooth'});r.addEventListener('scroll',sync,{passive:true});let observer=new ResizeObserver(sync);observer.observe(r);railObservers.push(observer);sync();});

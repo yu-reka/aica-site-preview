@@ -47,3 +47,25 @@
 .stories-page .pjc-tx{padding:18px 8px 0}
 .stories-page .pjc:focus-visible{border-radius:24px}
 @media (prefers-reduced-motion:reduce){.stories-page .pjc{transition:none}.stories-page .pjc:hover{transform:none}}
+
+/* Same pill dimensions and palette as the review category chips. */
+.stories-page .pj-cohort-filters{margin-bottom:clamp(32px,3vw,40px)}
+.stories-page .pj-cohort-filters button{display:inline-flex;align-items:center;gap:7px;height:40px;padding:0 14px;border:1px solid var(--l-line);border-radius:999px;background:#fff;color:var(--g600);font-family:inherit;font-size:15px;font-weight:600;line-height:40px;cursor:pointer;transition:var(--ease)}
+.stories-page .pj-cohort-filters button:hover{color:var(--g900)}
+.stories-page .pj-cohort-filters button[aria-pressed="true"]{background:var(--g900);color:#fff}
+.stories-page .pj-cohort-filters button:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.stories-page .pjc[hidden]{display:none}
+/* Upcoming cohort panel follows the interview placeholder presentation. */
+.stories-page .pj-filter-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:590px;padding:72px 24px;border:1px dashed var(--line);border-radius:28px;text-align:center;color:var(--ink);font-family:var(--ff-sans)}
+.stories-page .pj-filter-empty[hidden]{display:none}
+.stories-page .pj-empty-badge{display:inline-flex;align-items:center;min-height:42px;padding:0 18px;border-radius:999px;background:#DCE5FA;color:var(--primary);font-size:18px;font-weight:700;line-height:1.4}
+.stories-page .pj-filter-empty h3{margin:18px 0 12px;font-size:clamp(22px,2vw,28px);font-weight:700;line-height:1.45;letter-spacing:-.04em;word-break:keep-all}
+.stories-page .pj-filter-empty p{margin:0;color:var(--graphite);font-size:20px;line-height:1.6;word-break:keep-all}
+.stories-page .pj-filter-empty .pj-empty-back{display:inline-flex;align-items:center;justify-content:center;min-height:56px;margin-top:40px;padding:12px 26px;border:0;border-radius:999px;background:var(--ink);color:#fff;font-family:inherit;font-size:18px;font-weight:700;line-height:1.5;cursor:pointer}
+.stories-page .pj-empty-back:focus-visible{outline:2px solid var(--primary);outline-offset:4px}
+@media(max-width:600px){
+  .stories-page .pj-filter-empty{min-height:430px;margin-top:20px;padding:42px 20px;border-radius:22px}
+  .stories-page .pj-empty-badge{min-height:36px;font-size:15px;padding:0 15px}
+  .stories-page .pj-filter-empty p{font-size:15px}
+  .stories-page .pj-filter-empty .pj-empty-back{min-height:48px;margin-top:28px;padding:10px 22px;font-size:15px}
+}

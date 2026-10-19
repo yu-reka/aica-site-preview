@@ -266,7 +266,8 @@
     types.forEach(function(type){
       tabButton(filters, type, type === '전체', function(){
         $$('button', filters).forEach(function(b){ b.setAttribute('aria-pressed', String(b.textContent === type)); });
-        items.forEach(function(n){ n.hidden = type !== '전체' && n.dataset.type !== type; if (n.hidden) n.open = false; });
+        var cohort = $('#p-pr .pj-cohort-filters [aria-pressed="true"]');
+        items.forEach(function(n, i){ n.hidden = (type !== '전체' && n.dataset.type !== type) || !!(cohort && cohort.dataset.cohort && cards[i].dataset.cohort !== cohort.dataset.cohort); if (n.hidden) n.open = false; });
         var visible = items.filter(function(n){ return !n.hidden; });
         if (!visible.some(function(n){ return n.open; }) && visible[0]) visible[0].open = true;
       });

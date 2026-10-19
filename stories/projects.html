@@ -36,10 +36,11 @@
   <script src="../common/js/site-layout.js?v=1016nav" defer></script>
 <script src="../common/js/site.js?v=1016integrity" defer></script>
 
-  <script src="js/detail-navigation.js?v=1020projectfilter" defer></script>
+  <script src="js/detail-navigation.js?v=1020cohortnav" defer></script>
 
   <script src="js/stories-m.js?v=1016projectimages" defer></script>
   <script src="js/stories.js?v=1016integrity" defer></script>
+  <script src="js/projects-filter.js" defer></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
@@ -76,8 +77,19 @@
          카드 글은 캐러셀 무대에 있던 것 그대로. 기간(TERM, 모두 도약과정 720H)은 카드마다 같아 빼고 상세에만 둠. 누르면 아래 상세(#pj-N)
          번호 알약(01~06)은 격자에선 순서 뜻이 없고 아래 '8개월 뒤의 나' 01~03과 겹쳐 뺌(허브 카드와 같음). 번호는 상세(.pjno)에만
          6번(파수) 그림: 시안에서 1번(손끝)과 같은 노랑 그림이었음 → 격자에 나란히 보여 다른 카드와 같은 평면 도형 · 색으로 다시 그림(문서 + 열람 그래프, 상세 대표 그림도 같게) -->
+    <div class="chips pj-cohort-filters sm-filter-tabs sm-cohort-chips" role="group" aria-label="프로젝트 기수">
+      <button type="button" data-cohort="" aria-pressed="true">전체</button>
+      <button type="button" data-cohort="7" aria-pressed="false">7기</button>
+      <button type="button" data-cohort="6" aria-pressed="false">6기</button>
+    </div>
+    <section class="pj-filter-empty" aria-labelledby="pj-empty-title" hidden>
+      <span class="pj-empty-badge">준비 중</span>
+      <h3 id="pj-empty-title">7기 선배 프로젝트를 정리하고 있어요</h3>
+      <p>그동안 6기 선배들이 만든 프로젝트를 먼저 살펴보세요.</p>
+      <button class="pj-empty-back" type="button">6기 프로젝트 보기 →</button>
+    </section>
     <div class="pjgrid">
-      <a class="pjc" href="#pj-1">
+      <a data-cohort="6" class="pjc" href="#pj-1">
         <div class="ph">
           <svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#FFE600"/>
    <rect x="86" y="62" width="228" height="134" rx="12" fill="#fff"/>
@@ -97,7 +109,7 @@
           <p class="team" data-field="team">AI 모델링 2반 · 5명</p>
         </div>
       </a>
-      <a class="pjc" href="#pj-2">
+      <a data-cohort="6" class="pjc" href="#pj-2">
         <div class="ph">
           <svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#2457F5"/>
    <rect x="54" y="44" width="212" height="132" rx="12" fill="#fff"/>
@@ -119,7 +131,7 @@
           <p class="team">데이터 분석 1반 · 4명</p>
         </div>
       </a>
-      <a class="pjc" href="#pj-3">
+      <a data-cohort="6" class="pjc" href="#pj-3">
         <div class="ph">
           <svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#22D3EE"/>
    <rect x="52" y="54" width="128" height="166" rx="10" fill="#fff"/>
@@ -142,7 +154,7 @@
           <p class="team">헬스케어 도메인 · 6명</p>
         </div>
       </a>
-      <a class="pjc" href="#pj-4">
+      <a data-cohort="6" class="pjc" href="#pj-4">
         <div class="ph">
           <svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#FFE600"/>
    <path d="M150 54h100v56c0 30-22 52-50 52s-50-22-50-52z" fill="#fff"/>
@@ -161,7 +173,7 @@
           <p class="team">인프라 1반 · 5명</p>
         </div>
       </a>
-      <a class="pjc" href="#pj-5">
+      <a data-cohort="6" class="pjc" href="#pj-5">
         <div class="ph">
           <svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#E4E9F7"/>
    <rect x="34" y="78" width="150" height="104" rx="10" fill="#fff"/>
@@ -185,7 +197,7 @@
           <p class="team">기획 2반 · 4명</p>
         </div>
       </a>
-      <a class="pjc" href="#pj-6">
+      <a data-cohort="6" class="pjc" href="#pj-6">
         <div class="ph">
           <svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#15368F"/>
    <rect x="84" y="40" width="150" height="152" rx="10" fill="#fff" opacity=".28"/>

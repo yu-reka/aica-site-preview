@@ -67,10 +67,12 @@
       return group.items.filter(item=>{const c=Number.parseInt(item.card.querySelector('.by .av')?.textContent,10);return value.includes('–')||value.includes('-')?c>=3&&c<=5:c===Number(cohort);});
     }
     if(group.kind.key==='project'){
+      const cohort=document.querySelector('.pj-cohort-filters [aria-pressed="true"]')?.dataset.cohort;
+      const items=group.items.filter(item=>!cohort||item.card.dataset.cohort===cohort);
       const mobile=document.querySelector('#p-pr .sm-projects');
-      if(!mobile||getComputedStyle(mobile).display==='none')return group.items;
+      if(!mobile||getComputedStyle(mobile).display==='none')return items;
       const type=mobile.querySelector('.sm-filter-tabs [aria-pressed="true"]')?.textContent.trim()||'전체';
-      return type==='전체'?group.items:group.items.filter(item=>item.card.querySelector('.pjc-type')?.textContent.trim()===type);
+      return type==='전체'?items:items.filter(item=>item.card.querySelector('.pjc-type')?.textContent.trim()===type);
     }
     return group.items;
   }

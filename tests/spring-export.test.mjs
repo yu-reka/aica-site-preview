@@ -103,7 +103,7 @@ test('Spring projects retain shared filters and read escaped metadata from publi
 test('published project details show confirmed cohort and course with legacy fallbacks', () => {
   const fragments=springArtifacts().get('templates/public-site/story-fragments.html');
   assert.ok(fragments.includes("${s.cohort > 0 ? '기수' : '기간'}"));
-  assert.ok(fragments.includes("${s.cohort > 0 ? s.cohort + '기' : s.term}"));
+  assert.ok(fragments.includes("${s.cohort > 0 ? s.cohort + '기' : s.duration}"));
   assert.ok(!fragments.includes('s.cohortClass'));
   for(const record of loadContent().stories.projects.filter(r=>['pj-3','pj-6'].includes(r.id)))
     assert.equal(record.cohortClass,record.cohort+'기');

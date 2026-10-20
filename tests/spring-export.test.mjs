@@ -82,13 +82,19 @@ test('hub selection retains the approved cohort slots without duplicate image al
 });
 
 
-test('static project subject filters and metadata do not alter Spring public templates', () => {
+test('Spring projects retain shared filters and read escaped metadata from published cards only', () => {
   const artifacts=springArtifacts();
   const html=artifacts.get('templates/public-site/projects.html');
-  assert.ok(!html.includes('pj-filter-row'));
-  assert.ok(!html.includes('pj-subject-empty'));
-  assert.ok(!html.includes('projects-filter.js'));
-  for(const [path,source] of artifacts){
-    if(path.startsWith('templates/public-site/')) assert.ok(!source.includes('data-subject='),path);
-  }
+  assert.ok(html.includes('pj-filter-row'));
+  assert.ok(html.includes('pj-subject-empty'));
+  assert.ok(html.includes('/stories/js/projects-filter.js?v=1020publishedfilters'));
+  assert.ok(!html.includes('data-cohort="7"'));
+  assert.ok(!html.includes('data-subject="컴퓨터비전"'));
+  assert.ok(!html.includes('pj-filter-empty'));
+  const fragments=artifacts.get('templates/public-site/story-fragments.html');
+  assert.ok(fragments.includes('data-cohort=${s.cohort},data-subject=${s.subject}'));
+  assert.ok(fragments.includes('${#strings.isEmpty(s.subject) ? s.type : s.subject}'));
+  const seed=JSON.parse(artifacts.get('story-seed.json')).filter(r=>r.kind==='project');
+  assert.deepEqual(seed.map(r=>[r.story.cohort,r.story.subject]),loadContent().stories.projects.map(r=>[r.cohort,r.subject]));
+  assert.ok(html.indexOf('stories-m.js')<html.indexOf('projects-filter.js'));
 });

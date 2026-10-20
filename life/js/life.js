@@ -384,7 +384,7 @@ topic();
     [].forEach.call(list.querySelectorAll('.fdc'),function(c){ c.classList.remove('pick','lit'); var x=c.querySelector('.fd-unpick'); if(x) x.remove(); }); }
   new MutationObserver(function(){
     var c=list.querySelector('.fdc.pick'); if(!c||c.querySelector('.fd-unpick')) return;
-    var b=document.createElement('button'); b.type='button'; b.className='fd-unpick'; b.innerHTML='<span aria-hidden="true">×</span>'; b.setAttribute('aria-label','주사위 결과 지우고 전체 다시 보기');
+    var b=document.createElement('button'); b.type='button'; b.className='fd-unpick'; b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 7l10 10M17 7 7 17"/></svg>';   /* 10-20: 글자 × 대신 선 그림 — 글꼴 높이에 따라 원 가운데서 어긋나지 않게 */ b.setAttribute('aria-label','주사위 결과 지우고 전체 다시 보기');
     b.addEventListener('click',function(e){ e.preventDefault(); e.stopPropagation(); reset(); });
     c.appendChild(b); b.focus({preventScroll:true});
   }).observe(list,{subtree:true,attributes:true,attributeFilter:['class']});

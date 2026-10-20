@@ -66,6 +66,12 @@
       if(!cohort)return group.items;
       return group.items.filter(item=>{const c=Number.parseInt(item.card.querySelector('.by .av')?.textContent,10);return value.includes('–')||value.includes('-')?c>=3&&c<=5:c===Number(cohort);});
     }
+    if(group.kind.key==='project'){
+      const mobile=document.querySelector('#p-pr .sm-projects');
+      if(!mobile||getComputedStyle(mobile).display==='none')return group.items;
+      const type=mobile.querySelector('.sm-filter-tabs [aria-pressed="true"]')?.textContent.trim()||'전체';
+      return type==='전체'?group.items:group.items.filter(item=>item.card.querySelector('.pjc-type')?.textContent.trim()===type);
+    }
     return group.items;
   }
   function refreshCurrent(){
@@ -73,6 +79,9 @@
     groups.forEach(group=>{const item=group.items.find(item=>'#'+item.detail.id===location.hash);if(!item)return;let items=matching(group);if(!items.includes(item))items=group.items;paint(group.kind,item,items,items.indexOf(item));});
   }
   setTimeout(refreshCurrent,0);
+  // The type tabs belong to the <=600px projection; desktop uses all projects.
+  if(groups.some(group=>group.kind.key==='project'))
+    matchMedia('(max-width:600px)').addEventListener('change',refreshCurrent);
   let navigating=false;
 
   document.addEventListener('click',event=>{

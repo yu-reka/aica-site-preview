@@ -40,3 +40,9 @@ PC와 모바일의 최종 프로젝트 필터 비교:
 ![후기 드롭다운](review-dropdown-desktop.png)
 ![수료 카드 순서](graduate-order-desktop.png)
 ![기수별 페이지네이션](cohort-pagination-mobile.png)
+
+## 모바일 교과목 배지 색상 추가 수정
+
+교과목 배지를 동일한 연한 파란 배경 `#E8EEFF`와 진한 파란 글씨 `#2457F5`로 변경했다. PC 배지는 유지한다. 모바일 360/390/430px에서 가로 넘침 없이 확인했으며 build/test 41개/check가 통과했다.
+
+![최종 모바일 교과목 배지](projects-soft-subject-badges-mobile.png)

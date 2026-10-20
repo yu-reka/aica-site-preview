@@ -200,7 +200,7 @@
   .stories-page .sm-project-heading{display:contents}
   .stories-page .sm-project-no{grid-column:1;grid-row:1}
   .stories-page .sm-project-summary::after{grid-column:3;grid-row:1}
-  .stories-page .sm-project-type{grid-column:2;grid-row:1;justify-self:start;align-self:flex-start;padding:3px 8px;border-radius:20px;background:var(--sm-blue);color:#fff;font:700 11px/1.2 var(--ff-sans)}
+  .stories-page .sm-project-type{grid-column:2;grid-row:1;justify-self:start;align-self:flex-start;padding:3px 8px;border-radius:20px;background:#E8EEFF;color:#2457F5;font:700 11px/1.2 var(--ff-sans)}
   .stories-page .sm-project-type[data-type="실증"]{background:#A3ED64;color:var(--sm-ink)}
   .stories-page .sm-project-type[data-type="창업"]{background:#FFE688;color:var(--sm-ink)}
   .stories-page .sm-project-heading strong{grid-column:1/-1;grid-row:2;font:800 15px/1.45 "Paperlogy",sans-serif;word-break:keep-all}

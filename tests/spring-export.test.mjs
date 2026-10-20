@@ -17,8 +17,8 @@ test('Spring review export has no static records and uses escaped live fragments
   assert.ok(!fragments.includes('th:utext'));
   assert.ok(!fragments.includes('{{'));
   assert.ok(fragments.includes('th:text="${paragraph}"'));
-  assert.ok(reviews.includes('src="/stories/js/reviews-live.js"'));
-  assert.ok(reviews.includes('src="/stories/js/stories-m-reviews.js?v=1016cleanup"'));
+  assert.ok(reviews.includes('src="/stories/js/reviews-live.js?v=1020states"'));
+  assert.ok(reviews.includes('src="/stories/js/stories-m-reviews.js?v=1020states"'));
   assert.ok(reviews.indexOf('stories-m-reviews.js') < reviews.indexOf('stories-m.js?'));
   assert.ok(reviews.includes('href="/common/css/masthead.css?v=1016cleanup"'));
 });
@@ -87,7 +87,7 @@ test('Spring projects retain shared filters and read escaped metadata from publi
   const html=artifacts.get('templates/public-site/projects.html');
   assert.ok(html.includes('pj-filter-row'));
   assert.ok(html.includes('pj-subject-empty'));
-  assert.ok(html.includes('/stories/js/projects-filter.js?v=1020integratedfilters'));
+  assert.ok(html.includes('/stories/js/projects-filter.js?v=1020states'));
   assert.ok(!html.includes('data-cohort="7"'));
   assert.ok(!html.includes('data-subject="컴퓨터비전"'));
   assert.ok(!html.includes('pj-filter-empty'));

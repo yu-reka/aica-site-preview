@@ -83,3 +83,10 @@ Spring `connected` 프로필에서 공개 사이트와 관리자 화면을 같�
 내보내기에는 `scripts/spring-stories.mjs`가 추가되어 기존 카드·상세의 일러스트와 마크업 변형을 소스에서 생성한다. 질문·태그·본문 섹션과 이전/다음 링크는 공개 데이터로 채운다. 기수 필터와 빈 목록·영상·사진 처리를 동적 데이터에 맞췄다. 최초 전체 가져오기는 `BACKOFFICE_IMPORT_STORIES=true`로 명시하며 이후 끈다. 기존 후기 데이터는 Flyway V14의 `story_origins`로 보존된다.
 
 현재 검증 DB는 로컬 H2 파일이다. 배포 시 프론트와 최상위관리자·서포터즈가 서버의 공용 DB를 함께 보도록 구성한다. 상세 운영 경계와 실행 방법은 백오피스 `백오피스/docs/story-publishing.md`를 참고한다.
+
+
+## 공개 목록의 빈 상태와 조회 실패
+
+네 목록 템플릿은 공통 상태 UI를 내보냅니다. 정상 빈 목록은 각 컬렉션 모델(`reviews`, `interviews`, `projects`, `cohorts`)의 0건으로 판단합니다. 조회 실패는 별도 모델 `publicContentUnavailable=true`를 `data-public-content-unavailable`로 전달하여 구분합니다. 플래그가 없거나 false이면 정상 동작을 유지합니다.
+
+이 플래그는 공개 목록 컨트롤러의 DB 접근 실패 시 HTTP 503과 함께 제공하는 표시 계약입니다. 예외 원문이나 DB 접속 정보는 템플릿으로 전달하지 않습니다. 공유용 정적 페이지나 공개 seed를 운영 DB의 fallback으로 사용하지 않습니다. 출력 파일은 기존 9개로 유지하며, backend 컨트롤러의 실패 처리는 백엔드 담당이 별도로 관리합니다.

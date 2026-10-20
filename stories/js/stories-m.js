@@ -256,7 +256,7 @@
       if (hl) hl.dispatchEvent(new Event('scroll'));
       busy = false;
     };
-    root.addEventListener('cv3:draw', lay);
+    root.addEventListener('cv3:draw', function(event){view=event.detail.v;lay();});
     lay();
     if (mq.addEventListener) mq.addEventListener('change', function(){
       if (!mq.matches && view !== 'all'){ view = 'all'; root.cv3View('all'); } else root.cv3Redraw();

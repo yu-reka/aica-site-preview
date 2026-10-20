@@ -112,7 +112,7 @@ function slotPage(page,kind,list,card,detail) {
   else page=replaceElement(page,new RegExp('<div class="'+(kind==='interview'?'ivgrid':'pjgrid')+'">'),loop(list,card));
   if(detail)page=replaceDetails(page,kind,loop(list,detail));
   page=page.replace('<html ','<html xmlns:th="http://www.thymeleaf.org" data-story-source="spring" ')
-    .replace('<body>','<body th:attr="data-preview-anchor=${previewAnchor}">')
+    .replace('<body>','<body th:attr="data-preview-anchor=${previewAnchor},data-public-content-unavailable=${publicContentUnavailable == true}">')
     .replace('</head>','<link rel="stylesheet" href="/stories/css/stories-live.css">\n<script src="/stories/js/stories-live.js" defer></script>\n</head>')
     .replace(/(href|src)="\.\.\/common\//g,'$1="/common/').replace(/(href|src)="(css|js)\//g,'$1="/stories/$2/');
   if(page.includes('<a class="'+cardClass+'" href="#'))throw new Error('Unreplaced static '+kind+' records');

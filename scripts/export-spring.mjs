@@ -13,11 +13,10 @@ export function springArtifacts() {
     .replace(/\s*<input[^>]+name="pgn"[^>]*>/g, '')
     .replace(/<div class="idgrid">[\s\S]*?<\/div>\s*<div class="rvlist">[\s\S]*?<\/div>\s*<div class="pager">[\s\S]*?<\/div>/, `<div class="idgrid"><th:block th:each="r : \${reviews}"><th:block th:replace="~{public-site/review-fragments :: card(\${r})}"></th:block></th:block></div>
     <div class="rvlist"><th:block th:each="r : \${reviews}"><th:block th:replace="~{public-site/review-fragments :: row(\${r})}"></th:block></th:block></div>
-    <p data-review-empty th:if="\${#lists.isEmpty(reviews)}" role="status">아직 발행된 후기가 없습니다.</p>
     <nav class="pager cpager" aria-label="후기 페이지" data-review-pager></nav>`)
     .replace(/<div class="ov [\s\S]*?(?=<\/main>)/, '<th:block th:each="r : ${reviews}"><th:block th:replace="~{public-site/review-fragments :: detail(${r})}"></th:block></th:block>\n')
-    .replace('<body>', '<body th:attr="data-preview-anchor=${previewAnchor}">')
-    .replace('</head>', '<link rel="stylesheet" href="/stories/css/reviews-live.css">\n<script src="/stories/js/reviews-live.js" defer></script>\n</head>');
+    .replace('<body>', '<body th:attr="data-preview-anchor=${previewAnchor},data-public-content-unavailable=${publicContentUnavailable == true}">')
+    .replace('</head>', '<link rel="stylesheet" href="/stories/css/reviews-live.css">\n<script src="/stories/js/reviews-live.js?v=1020states" defer></script>\n</head>');
   // Cohorts are data, not five fixed slots. Category/tag/view controls keep their existing IDs.
   page = page.replace(/\s*<input[^>]+name="fco"[^>]*>/g, '')
     .replace(/<div class="dwin"><label for="fco_all">[\s\S]*?<\/div>/, '<div class="dwin" data-review-cohorts></div>');

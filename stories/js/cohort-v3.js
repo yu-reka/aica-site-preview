@@ -175,7 +175,19 @@
     var L=list(), P=pinOn(), first=P?PER-1:PER, pages=Math.max(1,1+Math.ceil(Math.max(0,L.length-first)/PER)); if(st.pg>pages) st.pg=pages;
     var s0=st.pg===1?0:first+(st.pg-2)*PER, s1=st.pg===1?first:s0+PER;
     $('.cv3-gt').innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>'+lab(st.coh)+'기 · '+(st.mo?(st.mo%100)+'월':'전체')+' 기록 '+L.length+'개';
-    var g=$('.cv3-grid'); g.innerHTML=''; if(P&&st.pg===1) g.appendChild(pinEl());
+    var g=$('.cv3-grid'),empty=$('[data-cohort-filter-empty]');
+    if(!empty){empty=document.createElement('div');empty.setAttribute('data-cohort-filter-empty','');g.after(empty);}
+    empty.hidden=!!L.length;g.hidden=!L.length;$('.cv3-pg').hidden=!L.length;
+    g.innerHTML='';
+    if(!L.length){
+      $('.cv3-pg').replaceChildren();
+      if(typeof StoryState!=='undefined')StoryState.render(empty,'filter',{subject:'기수 이야기',onReset:function(){
+        st.mo=0;st.v='all';st.pg=1;draw();
+        var button=root.querySelector('.sm-cv-views [data-v="all"]')||root.querySelector('[role="tab"][aria-selected="true"]');if(button)button.focus({preventScroll:true});
+      }});
+      return;
+    }
+    if(P&&st.pg===1)g.appendChild(pinEl());
     L.slice(s0,s1).forEach(function(d){
       var tile=document.createElement('article');tile.className='cv3-it';
       var a=document.createElement('a');a.href='#';a.className='cv3-open';a.setAttribute('aria-label',d.title+(d.yt?' (영상)':''));
@@ -198,7 +210,7 @@
   }
   function draw(){ chips(); profile(); highlights(); grid(); root.dispatchEvent(new CustomEvent('cv3:draw',{detail:{v:st.v}})); }
   /* 모바일 보기 방식 탭(js/stories-m.js)이 부름 */
-  root.cv3View=function(v){ st.v=v; st.pg=1; draw(); };
+  if(D.length)root.cv3View=function(v){ st.v=v; st.pg=1; draw(); };
   root.cv3Redraw=function(){ draw(); };
 
   /* 글 창 */
@@ -295,6 +307,6 @@
     var id=location.hash.slice(1), d=D.find(function(item){return item.id&&item.id===id});if(!d)return;
     st.coh=d.coh>=3&&d.coh<=5?'3-5':String(d.coh);st.mo=0;st.pg=1;draw();openM(list().indexOf(d));
   }
-  if(!D.length){var message=document.createElement('p');message.textContent='아직 발행된 기수 기록이 없습니다.';message.setAttribute('role','status');root.querySelector('.cv3-ig').replaceChildren(message);root.querySelector('.cv3-pg').hidden=true;return;}
+  if(!D.length)return; // Shared list state; no mobile projection or profile for empty data.
   draw();hashOpen();addEventListener('hashchange',hashOpen);
 })();

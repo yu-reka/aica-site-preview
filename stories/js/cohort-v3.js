@@ -266,10 +266,19 @@
   document.body.appendChild(Z);
   function zfill(){ var d=list()[cur]; if(!d||d.yt){ closeZ(); return; } var n=galleryPhotos(d)[d.photoIndex||0].cloneNode(true);
     if(n.tagName==='IMG'){ var sm=n.getAttribute('src'); if(/-sm\.(jpe?g|png|webp)$/i.test(sm)){ n.src=sm.replace(/-sm(\.[a-z]+)$/i,'$1'); n.onerror=function(){ n.onerror=null; n.src=sm; }; } n.removeAttribute('width'); n.removeAttribute('height'); }
-    n.setAttribute('alt',d.title); var b=Z.querySelector('.cv3-zv-im'); b.innerHTML=''; b.appendChild(n);
+    n.setAttribute('alt',n.getAttribute('alt')||d.title); var b=Z.querySelector('.cv3-zv-im');
+    // Rebuilding the album must preserve the keyboard control that changed it.
+    var active=document.activeElement,restore=null;
+    if(b.contains(active)){
+      if(active.classList.contains('cv3-photo-prev'))restore='.cv3-photo-prev';
+      else if(active.classList.contains('cv3-photo-next'))restore='.cv3-photo-next';
+      else if(active.closest('.cv3-photo-dots'))restore='.cv3-photo-dots button[aria-pressed="true"]';
+    }
+    b.innerHTML=''; b.appendChild(n);
     var photos=galleryPhotos(d);
     b.cv3Record=d;b.cv3AfterSwipe=zfill;bindPhotoSwipe(b);
-    if(photos.length>1){var dots=photoDots(b,d,false,function(){zfill();Z.querySelector('.cv3-zv-x').focus({preventScroll:true});});paintDots(dots,d.photoIndex||0);photoArrows(b,d,function(){zfill();Z.querySelector('.cv3-zv-x').focus({preventScroll:true});});}
+    if(photos.length>1){var dots=photoDots(b,d,false,zfill);paintDots(dots,d.photoIndex||0);photoArrows(b,d,zfill);}
+    if(restore){var target=b.querySelector(restore);if(target)target.focus({preventScroll:true});}
     Z.querySelector('figcaption').textContent=d.title+' · '+d.date+' · '+((d.photoIndex||0)+1)+' / '+galleryPhotos(d).length; }
   function openZ(){ zfill(); Z.hidden=false; isolateDialog(Z); Z.querySelector('.cv3-zv-x').focus(); }
   function closeZ(){ if(Z.hidden) return; Z.hidden=true; Z.querySelector('.cv3-zv-im').innerHTML=''; isolateDialog(M); (M.querySelector('.cv3-zoom')||M.querySelector('.cv3-m-x')).focus(); }

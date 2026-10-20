@@ -3,4 +3,4 @@
             <h3 data-field="title">{{title}}</h3>
             <p data-field="summary">{{summary}}</p>
             <div class="mt"><span class="cg" data-field="cohort">{{cohort}}</span><span class="dt" data-field="date">{{date}}</span></div>
-          </a>
+          <div data-story-photos hidden>{{#each photos}}<img src="{{src}}" alt="{{alt}}" loading="lazy">{{/each}}</div></a>

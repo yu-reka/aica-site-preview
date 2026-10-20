@@ -29,6 +29,13 @@ function prepare(record) {
   }
   return output;
 }
+// The cover (including a build-owned illustration) is the first album image.
+export function validateCohortPhotos(record) {
+  const sources = new Set((record.photos || []).map(photo => photo.src));
+  if (record.thumbnail) sources.add(record.thumbnail);
+  const count = sources.size + (record.thumbnail ? 0 : 1);
+  if (count > 10) throw new Error(`Cohort post ${record.id}: photos must not exceed 10 including the cover (received ${count})`);
+}
 export function loadContent() {
   const presentation = readJson('src/presentation.json');
   const content = {};
@@ -45,6 +52,7 @@ export function loadContent() {
     parent[key] = records.map(record => {
       if (!record.id || ids.has(record.id)) throw new Error(`Missing or duplicate ID in ${domain}: ${record.id}`);
       ids.add(record.id);
+      if (domain === 'stories/cohorts') validateCohortPhotos(record);
       return { ...prepare(record), view: presentation[domain]?.[record.id] || {} };
     });
     parent[key + 'ById'] = Object.fromEntries(parent[key].map(record => [record.id, record]));

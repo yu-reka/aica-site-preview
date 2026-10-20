@@ -605,13 +605,14 @@ box-shadow:inset 0 0 0 1px rgba(120,86,48,.18),inset 0 2px 12px rgba(90,60,28,.1
 
 .stories-page .cv3-ring b{display:block;transform:translateY(.13em)}
 
-/* 기수별 이모저모 게시물 창(10-14): 글이 짧아 오른쪽이 비어 보여 비율 조정 — 사진 칸을 넓히고(남는 폭 전부), 글 칸은 300px로 좁히고, 창 높이를 낮춤. 글자는 한 단계 키움 */
+/* PC 게시물도 모바일과 같은 세로 카드 구성으로 표시 */
 @media (min-width:761px){
-  .stories-page .cv3-m-box{width:min(760px,100%);height:min(400px,calc(100vh - 160px))}
-
-  .stories-page .cv3-m-media{flex:1 1 auto}
-
-  .stories-page .cv3-m-side{flex:0 0 300px}
+  .stories-page .cv3-m-box{flex-direction:column;width:min(420px,max(280px,calc(100dvh - 380px)),100%);height:auto;max-height:calc(100dvh - 140px);overflow-y:auto}
+  .stories-page .cv3-m-media{flex:none;aspect-ratio:1}
+  .stories-page .cv3-m-media:has(.cv3-photo-dots){aspect-ratio:auto}
+  .stories-page .cv3-m-media:has(.cv3-photo-dots) .cv3-photo-stage{flex:none;aspect-ratio:1}
+  .stories-page .cv3-m-side{flex:none}
+  .stories-page .cv3-m-body{overflow:visible}
 }
 
 .stories-page .cv3-m-body{padding:18px 20px}

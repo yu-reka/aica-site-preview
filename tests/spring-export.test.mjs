@@ -108,3 +108,17 @@ test('published project details show confirmed cohort and course with legacy fal
   for(const record of loadContent().stories.projects.filter(r=>['pj-3','pj-6'].includes(r.id)))
     assert.equal(record.cohortClass,record.cohort+'기');
 });
+
+
+test('Spring cohort photo slots remain live and do not include static demo albums', () => {
+  const fragments=springArtifacts().get('templates/public-site/story-fragments.html');
+  const cards=[...fragments.matchAll(/<th:block th:fragment="cohort-[^>]*>([\s\S]*?<\/a>)<\/th:block>/g)];
+  assert.ok(cards.length>0);
+  for(const [,card] of cards){
+    assert.equal((card.match(/data-story-photos/g)||[]).length,1);
+    assert.ok(card.includes('th:each="photo : ${s.photos}"'));
+    assert.ok(card.includes('th:src="${photo.src}"'));
+    assert.ok(card.includes('th:alt="${photo.alt}"'));
+    assert.ok(!card.includes('classroom-laptops-sm.jpg'));
+  }
+});

@@ -91,6 +91,7 @@ function project(source,record,detail) {
   return fields(source,record).replaceAll('th:text="${s.subject}"','th:text="${#strings.isEmpty(s.subject) ? s.type : s.subject}"');
 }
 function cohort(source,record) {
+  source=replaceElement(source,/<div data-story-photos hidden>/,'',true);
   source=media(source,'thumbnail');
   source=source.replace(/href="\{\{href\}\}"/,'th:href="\'#\' + ${s.id}"');
   source=source.replace(/^<a /,'<a th:id="${s.id}" th:attr="data-yt=${s.youtubeUrl}" ');

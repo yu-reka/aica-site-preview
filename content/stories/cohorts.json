@@ -1,57 +1,5 @@
 [
   {
-    "id": "cohort-story-1",
-    "href": "#",
-    "title": "AI카페에서 시작된 팀",
-    "summary": "도시락 데우다 만난 사람들과 그대로 한 팀이 됐습니다. 프로젝트룸 예약 전쟁의 서막.",
-    "cohort": "7기",
-    "date": "2026. 08. 20",
-    "thumbnail": "assets/lobby-laptops-sm.jpg",
-    "thumbnailAlt": "로비 테이블에서 노트북을 펴고 함께 작업하는 교육생들"
-  },
-  {
-    "id": "cohort-story-2",
-    "href": "#",
-    "title": "도메인 선택의 날",
-    "summary": "헬스케어부터 기획까지 여섯 갈래. 반쯤은 흥미로, 반쯤은 취업 시장을 보고 골랐습니다.",
-    "cohort": "7기",
-    "date": "2026. 07. 11"
-  },
-  {
-    "id": "cohort-story-3",
-    "href": "#",
-    "youtubeUrl": "https://www.youtube.com/watch?v=asfChHljIC0",
-    "title": "AI카페·프로젝트룸 둘러보기",
-    "summary": "수업 말고 나머지 시간을 보내는 공간들을 한 바퀴 돌았습니다.",
-    "cohort": "7기",
-    "date": "2026. 06. 10",
-    "duration": "5:40",
-    "thumbnail": "assets/monitor-briefing.jpg",
-    "thumbnailAlt": ""
-  },
-  {
-    "id": "cohort-story-4",
-    "href": "#",
-    "title": "전면 오프라인으로 바뀐 첫 학기",
-    "summary": "준비과정만 VOD로 남고 나머지가 전부 강의장으로 들어왔습니다. 출석과 팀 작업의 리듬이 어떻게 달라졌는지.",
-    "cohort": "7기",
-    "date": "2026. 06. 02",
-    "thumbnail": "assets/classroom-laptops-sm.jpg",
-    "thumbnailAlt": "강의실에서 노트북으로 실습하는 교육생들"
-  },
-  {
-    "id": "cohort-story-5",
-    "href": "#",
-    "youtubeUrl": "https://www.youtube.com/watch?v=47e6pa3Z-Mg",
-    "title": "7기 입교식 하이라이트",
-    "summary": "테이프를 끊고 여덟 달이 시작된 날을 3분으로 담았습니다.",
-    "cohort": "7기",
-    "date": "2026. 05. 29",
-    "duration": "3:12",
-    "thumbnail": "assets/event-hall.jpg",
-    "thumbnailAlt": ""
-  },
-  {
     "id": "cohort-story-6",
     "href": "#",
     "title": "AI커리어 빌드업 & 동문 네트워크",

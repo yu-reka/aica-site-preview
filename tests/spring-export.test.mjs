@@ -40,8 +40,8 @@ test('every story kind exports only live slots, canonical links and build-owned 
   const artifacts = springArtifacts();
   const seed = JSON.parse(artifacts.get('story-seed.json'));
   const source=loadContent();
-  assert.equal(seed.length,86);
-  for (const [kind,key,count] of [['interview','interviews',7],['project','projects',6],['cohort','cohorts',17]]) {
+  assert.equal(seed.length,81);   // 10-20: 7기 더미 기수 기록 5개 뺌
+  for (const [kind,key,count] of [['interview','interviews',7],['project','projects',6],['cohort','cohorts',12]]) {
     const page=artifacts.get('templates/public-site/'+key+'.html');
     assert.equal(seed.filter(s=>s.kind===kind).length,count);
     assert.deepEqual(seed.filter(s=>s.kind===kind).map(s=>s.anchor),source.stories[key].map(s=>s.id));
@@ -66,7 +66,7 @@ test('hub selection retains the approved cohort slots without duplicate image al
   const records=JSON.parse(springArtifacts().get('story-seed.json'));
   assert.deepEqual(records.filter(s=>s.kind==='cohort' && s.story.hubRank != null)
     .sort((a,b)=>a.story.hubRank-b.story.hubRank).map(s=>s.anchor),
-    ['cohort-story-5','cohort-story-7','cohort-story-12','cohort-story-14','cohort-story-16']);
+    ['cohort-story-6','cohort-story-7','cohort-story-12','cohort-story-14','cohort-story-16']);
   const fragments=springArtifacts().get('templates/public-site/story-fragments.html');
   assert.ok(!fragments.includes('${s.art}'));
   assert.ok(fragments.includes('hub-media(s,hero)'));

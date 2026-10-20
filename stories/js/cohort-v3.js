@@ -9,10 +9,12 @@
       title:(a.querySelector('h3')||{}).textContent||'', sum:(a.querySelector('p')||{}).textContent||'',
       illu:a.querySelector('.illu'), yt:a.getAttribute('data-yt')||''};
   });
-  var COHS=[]; D.forEach(function(d){ var k=d.coh>=3&&d.coh<=5?'3-5':String(d.coh); if(COHS.indexOf(k)<0) COHS.push(k); });
-  /* 가장 최근 기수(지금은 7기)만 인스타 스토리 그라데이션 링, 나머지는 회색 링(10-14) */
-  var LIVE=String(Math.max.apply(null,D.map(function(d){return d.coh})));
+  /* 10-20: 기수 칩은 #cv3[data-cohorts]에 고정(게시물이 0개인 기수도 칩 · 프로필 · 교육과정 칸은 보임). 목록에 없는 기수의 게시물이 오면 뒤에 덧붙임 */
+  var COHS=((root.dataset&&root.dataset.cohorts)||'').split(',').map(function(k){return k.trim()}).filter(Boolean);
+  D.forEach(function(d){ var k=d.coh>=3&&d.coh<=5?'3-5':String(d.coh); if(COHS.indexOf(k)<0) COHS.push(k); });
   COHS.sort(function(a,b){return parseInt(b,10)-parseInt(a,10)});   // 10-13: 3~5기는 한 칩(3–5기)으로 묶음
+  /* 가장 최근 기수(지금은 7기)만 인스타 스토리 그라데이션 링, 나머지는 회색 링(10-14) */
+  var LIVE=COHS[0];
   function inC(d,k){ return k==='3-5'?(d.coh>=3&&d.coh<=5):String(d.coh)===k; }
   function lab(k){ return k==='3-5'?'3–5':k; }
   var PER=9, st={coh:COHS[0], mo:0, pg:1, diff:false, v:'all'};   // v: 보기 방식(모바일 '영상만' 탭, js/stories-m.js). 웹은 늘 'all'
@@ -35,7 +37,7 @@
   function profile(){
     var all=D.filter(function(d){return inC(d,st.coh)}).sort(function(a,b){return ym(a)-ym(b)});
     var vids=all.filter(function(d){return d.yt}).length;
-    var range=all.length?yymm(all[0])+' – '+yymm(all[all.length-1]):'';
+    var range=all.length?yymm(all[0])+' – '+yymm(all[all.length-1]):'준비 중';   // 10-20: 게시물이 없으면 기간 대신 '준비 중'
     var hasDiff=!!document.getElementById('cv3-diff'+st.coh), L=lab(st.coh);
     $('.cv3-prof').innerHTML='<span class="cv3-ring'+(st.coh==='3-5'?' is-grp':'')+(st.coh===LIVE?' is-live':'')+'" role="img" aria-label="'+L+'기"><span aria-hidden="true"><b>'+L+'</b></span></span>'
       +'<div class="cv3-info"><div class="cv3-r1"><b class="cv3-acc">'+acc(st.coh)+'</b><span class="cv3-tag">인공지능사관학교</span>'
@@ -51,7 +53,7 @@
     var all=D.filter(function(d){return inC(d,st.coh)});
     var mos=[]; all.forEach(function(d){ if(mos.indexOf(ym(d))<0) mos.push(ym(d)); }); mos.sort(function(a,b){return a-b});
     var multiY=mos.length&&Math.floor(mos[0]/100)!==Math.floor(mos[mos.length-1]/100);
-    var box=$('.cv3-hl'); box.innerHTML='';
+    var box=$('.cv3-hl'); box.innerHTML=''; box.hidden=!all.length; if(!all.length) return;   // 10-20: 게시물이 없으면 달별 동그라미 숨김
     [0].concat(mos).forEach(function(m){
       var items=all.filter(function(d){return !m||ym(d)===m}).sort(function(a,b){return ym(b)-ym(a)});
       var b=document.createElement('button'); b.type='button'; b.setAttribute('aria-pressed',st.mo===m);
@@ -71,11 +73,19 @@
       +'<img class="pn" src="assets/pin-white.png" alt="고정됨" width="96" height="96">';
     d.querySelector('.ft a').href=OFFICIAL;
     return d; }
+  /* 준비 중 판(10-20): 프로젝트 7기 준비 중 화면과 같은 말투. 버튼은 바로 아래 기수로 옮김 */
+  function soonEl(){ var L=lab(st.coh), i=COHS.indexOf(st.coh), nx=COHS[i+1];
+    var d=document.createElement('section'); d.className='cv3-soon'; d.setAttribute('aria-labelledby','cv3-soon-t');
+    d.innerHTML='<span class="cv3-soon-b">준비 중</span><h3 id="cv3-soon-t">'+L+'기 기록을 정리하고 있어요</h3>'
+      +(nx?'<p>그동안 '+lab(nx)+'기 선배들의 기록을 먼저 살펴보세요.</p><button type="button" class="cv3-soon-go">'+lab(nx)+'기 기록 보기 →</button>':'');
+    var go=d.querySelector('.cv3-soon-go'); if(go) go.onclick=function(){ st.coh=nx; st.mo=0; st.pg=1; st.diff=false; draw(); var c=root.querySelector('.cv3-chips [aria-selected="true"]'); if(c) c.focus({preventScroll:true}); };
+    return d; }
   function grid(){
     var L=list(), P=pinOn(), first=P?PER-1:PER, pages=Math.max(1,1+Math.ceil(Math.max(0,L.length-first)/PER)); if(st.pg>pages) st.pg=pages;
     var s0=st.pg===1?0:first+(st.pg-2)*PER, s1=st.pg===1?first:s0+PER;
     $('.cv3-gt').innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>'+lab(st.coh)+'기 · '+(st.mo?(st.mo%100)+'월':'전체')+' 기록 '+L.length+'개';
     var g=$('.cv3-grid'); g.innerHTML=''; if(P&&st.pg===1) g.appendChild(pinEl());
+    if(!L.length) g.appendChild(soonEl());   // 10-20: 이 기수 기록이 아직 없으면 교육과정 칸 옆에 준비 중 판
     L.slice(s0,s1).forEach(function(d){
       var a=document.createElement('a'); a.href='#'; a.className='cv3-it'; a.setAttribute('aria-label',d.title+(d.yt?' (영상)':''));
       a.appendChild(media(d));
@@ -86,7 +96,7 @@
       a.onclick=function(e){ e.preventDefault(); openM(L.indexOf(d)); };
       g.appendChild(a);
     });
-    var nav=root.querySelector('.cv3-pg'); nav.innerHTML='';
+    var nav=root.querySelector('.cv3-pg'); nav.innerHTML=''; nav.hidden=!L.length; if(!L.length) return;
     var row=document.createElement('div'); row.className='cv3-pgr';
     function pb(t,to,o){ var b=document.createElement('button'); b.type='button'; b.textContent=t; if(o.cur) b.setAttribute('aria-current','page'); if(o.dis) b.disabled=true; if(o.aria) b.setAttribute('aria-label',o.aria);
       b.onclick=function(){ st.pg=to; draw(); root.scrollIntoView({behavior:'smooth',block:'start'}); }; row.appendChild(b); }

@@ -155,6 +155,12 @@
   /* 격자: 화면 끝까지, 틈 2px, 세로로 조금 긴 칸(4:5) */
   html[data-nav="side"] .stories-page .cv3-grid{margin:2px calc(-1 * var(--gutter,20px)) 0;gap:2px}
   html[data-nav="side"] .stories-page .cv3-it,html[data-nav="side"] .stories-page .cv3-pin{aspect-ratio:4 / 5}
+  /* 준비 중 판(10-20): 교육과정 칸 아래 한 줄 전체, 게시물이 없으면 달별 동그라미 줄도 숨김 */
+  html[data-nav="side"] .stories-page .cv3-soon{grid-column:1/-1;min-height:0;margin:10px var(--gutter,20px) 0;padding:28px 18px;border-radius:18px}
+  html[data-nav="side"] .stories-page .cv3-soon h3{margin:14px 0 8px;font-size:18px}
+  html[data-nav="side"] .stories-page .cv3-soon p{font-size:14px}
+  html[data-nav="side"] .stories-page .cv3-soon-go{min-height:44px;margin-top:20px;padding:8px 20px;font-size:14px}
+  html[data-nav="side"] .stories-page .sm-rail-box--hl:has(> .cv3-hl[hidden]){display:none}
   /* 교육과정 고정 칸: 시안처럼 한 칸(제목만), 누르면 한 줄 전체로 펼쳐 트랙 · 공식 홈페이지가 보임(내용은 그대로) */
   html[data-nav="side"] .stories-page .cv3-pin{grid-column:auto;padding:10px;cursor:pointer;justify-content:flex-end}
   html[data-nav="side"] .stories-page .cv3-pin .k{font-size:9.5px;letter-spacing:.08em}

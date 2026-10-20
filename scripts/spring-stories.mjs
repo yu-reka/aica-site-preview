@@ -155,7 +155,8 @@ export function addStoryArtifacts(output, generated) {
     hubRank:hubProjects.indexOf(r.id)>=0?hubProjects.indexOf(r.id):undefined
   }});
   for(const [index,r] of content.stories.cohorts.entries()) {
-    const selected=['cohort-story-5','cohort-story-7','cohort-story-12','cohort-story-14','cohort-story-16'];
+    // 10-20: 7기 더미 기록을 빼서 첫 칸(큰 칸)은 6기 기록으로. 다섯 칸 배치는 그대로
+    const selected=['cohort-story-6','cohort-story-7','cohort-story-12','cohort-story-14','cohort-story-16'];
     const rank=selected.includes(r.id)?selected.indexOf(r.id):undefined;
     seed.push({kind:'cohort',anchor:r.id,order:index,title:r.title,story:{anchor:r.id,cohort:parseInt(r.cohort,10),summary:r.summary,date:r.date,
       img:r.thumbnail?{src:r.thumbnail,alt:r.thumbnailAlt||''}:undefined,video:r.youtubeUrl?{url:r.youtubeUrl,dur:r.duration||''}:undefined,hubRank:rank}});

@@ -1118,41 +1118,6 @@
     }
   },
   "stories/cohorts": {
-    "cohort-story-1": {
-      "card": {
-        "className": "st c7 g6",
-        "style": "--c:#10203D",
-        "template": "stories/cohorts/card-7"
-      }
-    },
-    "cohort-story-2": {
-      "card": {
-        "className": "st c7 g2",
-        "style": "--c:#10203D",
-        "template": "stories/cohorts/card-3"
-      }
-    },
-    "cohort-story-3": {
-      "card": {
-        "className": "st c7 g1",
-        "style": "--c:#10203D",
-        "template": "stories/cohorts/card-6"
-      }
-    },
-    "cohort-story-4": {
-      "card": {
-        "className": "st c7 g0 g1",
-        "style": "--c:#10203D",
-        "template": "stories/cohorts/card-8"
-      }
-    },
-    "cohort-story-5": {
-      "card": {
-        "className": "st c7 g0",
-        "style": "--c:#10203D",
-        "template": "stories/cohorts/card-6"
-      }
-    },
     "cohort-story-6": {
       "card": {
         "className": "st c6 g9 g7",

@@ -178,7 +178,7 @@
       });
       /* 기간을 한 줄로 유지하되 값은 발행된 기록 그대로 사용합니다. */
       var rg = $$('.cv3-stat b', root)[2];
-      if (rg) rg.textContent = rg.textContent.replace(/\s+/g, '');
+      if (rg && /\d/.test(rg.textContent)) rg.textContent = rg.textContent.replace(/\s+/g, '');   // '준비 중'은 띄어쓰기 유지
       /* 교육과정 고정 칸: 시안처럼 한 칸, 누르면 펼침 */
       var pin = $('.cv3-pin', root);
       if (pin && !pin.dataset.sm){
@@ -190,6 +190,7 @@
         var tog = function(){ var o = !pin.classList.contains('sm-open'); pin.classList.toggle('sm-open', o); more.setAttribute('aria-expanded', String(o)); more.textContent = o ? '트랙 닫기 −' : '트랙 보기 +'; };
         more.addEventListener('click', function(e){ e.stopPropagation(); tog(); });
         pin.addEventListener('click', function(e){ if (!e.target.closest('a,button')) tog(); });
+        if ($('.cv3-soon', root)) tog();   /* 10-20: 기록이 없는 기수는 교육과정 칸을 펼친 채로 보여 줌(옆 빈칸 없이) */
       }
       /* 달별 고정 스토리: 많아지면 화살표로 넘김 */
       var hl = $('.cv3-hl', root);

@@ -181,3 +181,13 @@
 .stories-page .cv3-ring b{transform:none}
 /* 최근 기수 링 색(10-14): 인스타 그라데이션 → 파랑 → 청록(사이트 '프로그램 소개' 버튼과 같은 결) */
 .stories-page .cv3-ring.is-live{background:linear-gradient(45deg,#335CDF 0%,#1D6FC2 50%,#068A92 100%)}
+/* 준비 중 판(10-20): 아직 기록이 없는 기수(지금 7기). 교육과정 칸 옆 두 칸을 합쳐 쓰고, 모양 · 말투는 프로젝트 7기 준비 중 화면(projects-grid.css .pj-filter-empty)과 같게 */
+.stories-page .cv3-hl[hidden],.stories-page .cv3-pg[hidden]{display:none}
+.stories-page .cv3-soon{grid-column:span 2;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:32px 24px;border:1px dashed var(--line);border-radius:4px;text-align:center;color:var(--ink);font-family:var(--ff-sans)}
+.stories-page .cv3-grid>.cv3-soon:first-child{grid-column:1/-1;min-height:320px}
+.stories-page .cv3-soon-b{display:inline-flex;align-items:center;min-height:36px;padding:0 15px;border-radius:999px;background:#DCE5FA;color:var(--primary);font-size:15px;font-weight:700;line-height:1.4}
+.stories-page .cv3-soon h3{margin:16px 0 10px;font-size:clamp(20px,1.8vw,24px);font-weight:700;line-height:1.45;letter-spacing:-.04em;word-break:keep-all}
+.stories-page .cv3-soon p{margin:0;color:var(--graphite);font-size:16px;line-height:1.6;word-break:keep-all}
+.stories-page .cv3-soon-go{display:inline-flex;align-items:center;justify-content:center;min-height:48px;margin-top:24px;padding:10px 22px;border:0;border-radius:999px;background:var(--ink);color:#fff;font:700 15px/1.5 var(--ff-sans);cursor:pointer;transition:background .2s}
+.stories-page .cv3-soon-go:hover{background:var(--primary)}
+.stories-page .cv3-soon-go:focus-visible{outline:2px solid var(--primary);outline-offset:4px}

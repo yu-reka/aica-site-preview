@@ -7,7 +7,17 @@
     "cohort": "7기",
     "date": "2026. 08. 20",
     "thumbnail": "assets/lobby-laptops-sm.jpg",
-    "thumbnailAlt": "로비 테이블에서 노트북을 펴고 함께 작업하는 교육생들"
+    "thumbnailAlt": "로비 테이블에서 노트북을 펴고 함께 작업하는 교육생들",
+    "photos": [
+      {
+        "src": "assets/classroom-laptops-sm.jpg",
+        "alt": "강의실에서 함께 노트북 실습을 하는 교육생들"
+      },
+      {
+        "src": "assets/monitor-briefing.jpg",
+        "alt": "모니터 앞에서 함께 의견을 나누는 교육생들"
+      }
+    ]
   },
   {
     "id": "cohort-story-2",
@@ -15,7 +25,8 @@
     "title": "도메인 선택의 날",
     "summary": "헬스케어부터 기획까지 여섯 갈래. 반쯤은 흥미로, 반쯤은 취업 시장을 보고 골랐습니다.",
     "cohort": "7기",
-    "date": "2026. 07. 11"
+    "date": "2026. 07. 11",
+    "photos": []
   },
   {
     "id": "cohort-story-3",
@@ -27,7 +38,8 @@
     "date": "2026. 06. 10",
     "duration": "5:40",
     "thumbnail": "assets/monitor-briefing.jpg",
-    "thumbnailAlt": ""
+    "thumbnailAlt": "",
+    "photos": []
   },
   {
     "id": "cohort-story-4",
@@ -37,7 +49,8 @@
     "cohort": "7기",
     "date": "2026. 06. 02",
     "thumbnail": "assets/classroom-laptops-sm.jpg",
-    "thumbnailAlt": "강의실에서 노트북으로 실습하는 교육생들"
+    "thumbnailAlt": "강의실에서 노트북으로 실습하는 교육생들",
+    "photos": []
   },
   {
     "id": "cohort-story-5",
@@ -49,7 +62,8 @@
     "date": "2026. 05. 29",
     "duration": "3:12",
     "thumbnail": "assets/event-hall.jpg",
-    "thumbnailAlt": ""
+    "thumbnailAlt": "",
+    "photos": []
   },
   {
     "id": "cohort-story-6",
@@ -59,7 +73,8 @@
     "cohort": "6기",
     "date": "2025. 11. 26",
     "thumbnail": "assets/table-team-sm.jpg",
-    "thumbnailAlt": "책상에 둘러앉아 이야기를 나누는 교육생들"
+    "thumbnailAlt": "책상에 둘러앉아 이야기를 나누는 교육생들",
+    "photos": []
   },
   {
     "id": "cohort-story-7",
@@ -71,7 +86,8 @@
     "date": "2025. 10. 22",
     "duration": "4:47",
     "thumbnail": "assets/presentation-books.jpg",
-    "thumbnailAlt": ""
+    "thumbnailAlt": "",
+    "photos": []
   },
   {
     "id": "cohort-story-8",
@@ -81,7 +97,8 @@
     "cohort": "6기",
     "date": "2025. 10. 18",
     "thumbnail": "assets/team-pointing.jpg",
-    "thumbnailAlt": "화면을 가리키며 함께 문제를 푸는 팀"
+    "thumbnailAlt": "화면을 가리키며 함께 문제를 푸는 팀",
+    "photos": []
   },
   {
     "id": "cohort-story-9",
@@ -93,7 +110,8 @@
     "date": "2025. 09. 19",
     "duration": "6:22",
     "thumbnail": "assets/exhibition-booth.jpg",
-    "thumbnailAlt": ""
+    "thumbnailAlt": "",
+    "photos": []
   },
   {
     "id": "cohort-story-10",
@@ -103,7 +121,8 @@
     "cohort": "6기",
     "date": "2025. 05. 12",
     "thumbnail": "assets/event-hall.jpg",
-    "thumbnailAlt": "행사장을 가득 채운 교육생들"
+    "thumbnailAlt": "행사장을 가득 채운 교육생들",
+    "photos": []
   },
   {
     "id": "cohort-story-11",
@@ -113,7 +132,8 @@
     "cohort": "5기",
     "date": "2024. 10. 22",
     "thumbnail": "assets/presentation-books.jpg",
-    "thumbnailAlt": "책상 위에 쌓인 발표 자료집"
+    "thumbnailAlt": "책상 위에 쌓인 발표 자료집",
+    "photos": []
   },
   {
     "id": "cohort-story-12",
@@ -123,7 +143,8 @@
     "cohort": "5기",
     "date": "2024. 09. 05",
     "thumbnail": "assets/monitor-briefing.jpg",
-    "thumbnailAlt": "모니터 앞에서 설명을 듣는 교육생들"
+    "thumbnailAlt": "모니터 앞에서 설명을 듣는 교육생들",
+    "photos": []
   },
   {
     "id": "cohort-story-13",
@@ -133,7 +154,8 @@
     "cohort": "4기",
     "date": "2023. 12. 14",
     "thumbnail": "assets/award-team.jpg",
-    "thumbnailAlt": "성과공유회에서 상장을 든 수상 팀"
+    "thumbnailAlt": "성과공유회에서 상장을 든 수상 팀",
+    "photos": []
   },
   {
     "id": "cohort-story-14",
@@ -143,7 +165,8 @@
     "cohort": "4기",
     "date": "2023. 11. 30",
     "thumbnail": "assets/exhibition-booth.jpg",
-    "thumbnailAlt": "전시 부스를 둘러보는 참가자들"
+    "thumbnailAlt": "전시 부스를 둘러보는 참가자들",
+    "photos": []
   },
   {
     "id": "cohort-story-15",
@@ -151,7 +174,8 @@
     "title": "성과공유회 및 수료식",
     "summary": "여덟 달을 함께 보낸 사람들이 마지막으로 모였습니다.",
     "cohort": "3기",
-    "date": "2022. 12. 15"
+    "date": "2022. 12. 15",
+    "photos": []
   },
   {
     "id": "cohort-story-16",
@@ -163,7 +187,8 @@
     "date": "2022. 12. 15",
     "duration": "11:30",
     "thumbnail": "assets/award-team.jpg",
-    "thumbnailAlt": ""
+    "thumbnailAlt": "",
+    "photos": []
   },
   {
     "id": "cohort-story-17",
@@ -173,6 +198,7 @@
     "cohort": "3기",
     "date": "2022. 06. 15",
     "thumbnail": "assets/event-hall.jpg",
-    "thumbnailAlt": "입교식 행사장 모습"
+    "thumbnailAlt": "입교식 행사장 모습",
+    "photos": []
   }
 ]

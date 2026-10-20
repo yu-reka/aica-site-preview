@@ -50,7 +50,7 @@
 .stories-page .cv3-it{position:relative;display:block;aspect-ratio:1;overflow:hidden;background:repeating-linear-gradient(135deg,#E9EEF3 0 10px,#F5F7F6 10px 20px);text-decoration:none}
 .stories-page .cv3-it .illu{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .4s}
 .stories-page .cv3-it:hover .illu{transform:scale(1.03)}
-.stories-page .cv3-reel{position:absolute;top:10px;right:10px;width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))}
+.stories-page .cv3-reel{position:absolute;top:10px;right:10px;width:24px;height:24px;fill:none;stroke:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))}
 .stories-page .cv3-ov{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;padding:clamp(10px,1.6vw,18px);background:linear-gradient(rgba(11,16,32,0) 35%,rgba(11,16,32,.82));color:#fff;text-align:left;opacity:0;transition:opacity .2s}
 .stories-page .cv3-ov b{font:700 clamp(13px,1.3vw,16px)/1.35 var(--ff-text)}
 .stories-page .cv3-ov span{font:400 12px/1.3 var(--ff-sans);color:rgba(255,255,255,.8)}
@@ -67,25 +67,28 @@
 .cv3-m{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:24px}
 .cv3-m[hidden]{display:none}
 .cv3-m-bg{position:absolute;inset:0;background:rgba(11,16,32,.6)}
-.cv3-m-box{position:relative;display:flex;width:min(940px,100%);height:min(470px,calc(100vh - 160px));background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 30px 60px -20px rgba(0,0,0,.5)}
+.cv3-m-box{position:relative;display:flex;width:min(940px,100%);height:min(470px,calc(100vh - 160px));background:#fff;border:1px solid #DDE4EF;border-radius:16px;overflow:hidden;box-shadow:0 16px 40px rgba(16,23,40,.13)}
 .cv3-m-media{position:relative;flex:0 0 50%;background:#0B1020}
 .cv3-m-media .illu,.cv3-m-media iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
 .cv3-play{position:absolute;left:50%;top:50%;width:68px;height:68px;margin:-34px 0 0 -34px;border-radius:50%;border:0;background:rgba(255,255,255,.92);cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.3)}
 .cv3-play i{position:absolute;left:27px;top:21px;border-style:solid;border-width:13px 0 13px 21px;border-color:transparent transparent transparent #14233F}
 .cv3-m-side{flex:1;display:flex;flex-direction:column;min-width:0;font-family:var(--ff-sans);color:#262626}
-.cv3-m-hd{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid #EFEFEF}
+.cv3-m-hd{display:flex;flex:none;align-items:center;color:#14233F;gap:10px;padding:14px 16px;border-bottom:1px solid #EFEFEF}
 .cv3-av{justify-content:center;width:34px;height:34px;padding-top:5px;border-radius:50%;}
 
 .cv3-m-acc{font-size:14.5px;font-weight:600}
-.cv3-m-x{margin-left:auto;width:32px;height:32px;border:0;background:none;font-size:24px;line-height:1;color:#262626;cursor:pointer}
+.stories-page .cv3-m-x{margin-left:auto;display:grid;place-items:center;flex:none;width:36px;height:36px;padding:0;border:0;background:transparent;color:#262626;cursor:pointer}
+.cv3-m-x svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round}
+.cv3-m-x:focus-visible{outline:2px solid #2457FF;outline-offset:-2px}
 .cv3-m-body{flex:1;overflow:auto;padding:16px}
 .cv3-m-body h3{margin:0 0 8px;font:700 15px/1.45 var(--ff-text)}
 .cv3-m-body h3 b{font-family:var(--ff-sans);font-weight:600;margin-right:2px}
-.cv3-m-body p{margin:0;font-size:14.5px;line-height:1.65}
+.cv3-m-body p{margin:0;font-size:14.5px;line-height:1.8}
 .cv3-m-ft{padding:10px 16px 14px;border-top:1px solid #EFEFEF}
 .cv3-m-act{display:flex;justify-content:space-between}
-.cv3-m-act button{width:32px;height:32px;padding:4px;border:0;background:none;cursor:pointer}
-.cv3-m-act svg{width:24px;height:24px;fill:none;stroke:#262626;stroke-width:2;stroke-linejoin:round}
+.stories-page .cv3-m-act button{display:grid;place-items:center;width:36px;height:36px;padding:4px;border:0;background:transparent;color:#262626;cursor:pointer}
+.cv3-m-act button:focus-visible{outline:2px solid #2457FF;outline-offset:-2px}
+.cv3-m-act svg{width:24px;height:24px;fill:none;stroke:#262626;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .cv3-like[aria-pressed="true"] svg{fill:#FF3040;stroke:#FF3040}
 .cv3-save[aria-pressed="true"] svg{fill:#262626}
 .cv3-m-ft time{display:block;margin-top:4px;font-size:12px;letter-spacing:.02em;color:#8E8E8E}
@@ -133,7 +136,7 @@
 
 /* 글 창 사진 크게 보기(10-14) */
 .cv3-m-media.can-zoom .illu{cursor:zoom-in}
-.cv3-zoom{position:absolute;right:12px;top:12px;z-index:2;display:grid;place-items:center;width:36px;height:36px;padding:0;border:0;border-radius:50%;background:rgba(11,16,32,.55);color:#fff;cursor:pointer;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);transition:background .2s,transform .2s}
+.stories-page .cv3-zoom{position:absolute;left:12px;top:12px;z-index:2;display:grid;place-items:center;width:36px;height:36px;padding:0;border:0;border-radius:50%;background:rgba(11,16,32,.55);color:#fff;cursor:pointer;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);transition:background .2s,transform .2s}
 .cv3-zoom:hover{background:rgba(11,16,32,.8);transform:scale(1.06)}
 .cv3-zoom:focus-visible{outline:2px solid #fff;outline-offset:2px}
 .cv3-zoom svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -160,7 +163,7 @@
 /* 기수 원 글자 키움 + 색을 primary 토큰에 연결(10-14) */
 .stories-page .cv3{--cv-b:var(--primary)}
 .cv3-av{color:var(--primary);}
-.cv3-av b{font-size:15px}.cv3-av small{font-size:7.5px}
+.cv3-av b{font:700 18px/1 var(--ff-sans)}.cv3-av small{font-size:7.5px}
 
 /* 기수 원 링(10-14, 인스타 프로필 그대로): 바깥 링 + 흰 틈 + 안쪽 원의 얇은 회색 윤곽선. 최근 기수(.is-live)만 인스타 그라데이션, 나머지는 회색 */
 .stories-page .cv3-ring{background:#DBDBDB}
@@ -181,3 +184,54 @@
 .stories-page .cv3-ring b{transform:none}
 /* 최근 기수 링 색(10-14): 인스타 그라데이션 → 파랑 → 청록(사이트 '프로그램 소개' 버튼과 같은 결) */
 .stories-page .cv3-ring.is-live{background:linear-gradient(45deg,#335CDF 0%,#1D6FC2 50%,#068A92 100%)}
+
+/* 게시물의 사진 묶음: 피드와 상세창에서 같은 순서를 유지 */
+.cv3-open,.cv3-photo-stage{position:absolute;inset:0;display:block}
+.cv3-photo-stage{touch-action:pan-y}
+.cv3-photo-stack{position:absolute;right:10px;top:10px;z-index:3;width:24px;height:24px;color:#fff;filter:drop-shadow(0 1px 3px #0006);pointer-events:none}
+.cv3-photo-stack svg{display:block;width:100%;height:100%}
+.cv3-open:focus-visible{outline:3px solid #2455ff;outline-offset:-3px}
+.cv3-photo-count{position:absolute;right:10px;top:10px;z-index:3;padding:4px 8px;border-radius:20px;background:rgba(11,16,32,.65);color:#fff;font:600 11px/1.4 var(--ff-sans);pointer-events:none}
+.cv3-m-media .cv3-photo-count{right:12px;top:12px}
+.cv3-photo-dots{position:absolute;left:50%;bottom:12px;z-index:3;display:flex;gap:0;padding:0;background:transparent;transform:translateX(-50%)}
+.stories-page .cv3-photo-dots button,.cv3-zv .cv3-photo-dots button{display:grid;place-items:center;flex:none;width:24px;height:32px;padding:0;border:0;border-radius:50%;background:transparent;cursor:pointer}
+.cv3-photo-dots button::before{content:"";display:block;width:6px;height:6px;border-radius:50%;background:#CBD2DF}
+.cv3-photo-dots button.is-active::before{background:#2457FF}
+.cv3-photo-dots button.is-small::before{transform:scale(.7)}
+.cv3-photo-dots button.is-tiny::before{transform:scale(.45)}
+.cv3-photo-dots button:focus-visible{outline:2px solid #2457FF;outline-offset:-2px}
+.cv3-it .cv3-photo-dots{bottom:8px;gap:3px;pointer-events:none}
+.cv3-it .cv3-photo-dots i{display:block;width:4px;height:4px;border-radius:50%;background:#CBD2DF}
+.cv3-it .cv3-photo-dots i.is-active{background:#2457FF}
+.cv3-it .cv3-photo-dots i.is-small{transform:scale(.7)}
+.cv3-it .cv3-photo-dots i.is-tiny{transform:scale(.45)}
+.cv3-photo-stage,.cv3-zv-im{touch-action:pan-y;user-select:none}
+.cv3-photo-gallery .cv3-photo-stage{cursor:grab}
+.cv3-photo-gallery .cv3-photo-stage:active{cursor:grabbing}
+.stories-page .cv3-it:focus-within .cv3-ov{opacity:1}
+.cv3-it .cv3-ov{pointer-events:none}
+.cv3-zv-im{position:relative}
+@media(max-width:600px){
+  .cv3-it .cv3-photo-stack,.stories-page .cv3-reel{right:6px;top:6px;width:20px;height:20px}
+}
+
+/* 상세창의 사진 위치 표시는 사진 아래 흰 영역에 배치 */
+.cv3-m-media:has(.cv3-photo-dots){display:flex;flex-direction:column;background:#fff}
+.cv3-m-media:has(.cv3-photo-dots) .cv3-photo-stage{position:relative;inset:auto;flex:1;min-height:0}
+.cv3-m-media .cv3-photo-dots{position:static;flex:none;justify-content:center;width:100%;height:32px;background:#fff;transform:none}
+@media(max-width:760px){
+  .cv3-m-media:has(.cv3-photo-dots){aspect-ratio:auto}
+  .cv3-m-media:has(.cv3-photo-dots) .cv3-photo-stage{flex:none;aspect-ratio:1}
+}
+
+/* PC는 버튼으로도 사진을 넘길 수 있고, 모바일은 스와이프와 점을 사용 */
+.cv3-photo-arrow{display:none}
+@media(min-width:761px){
+  .stories-page .cv3-photo-arrow,.cv3-zv .cv3-photo-arrow{position:absolute;top:50%;z-index:3;display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:transparent;color:#546176;transform:translateY(-50%);cursor:pointer}
+  .cv3-photo-arrow::before{content:"";position:absolute;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.75)}
+  .cv3-photo-arrow svg{position:relative;z-index:1;width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+  .cv3-photo-prev{left:0}
+  .cv3-photo-next{right:0}
+  .cv3-m-media .cv3-photo-arrow{top:calc((100% - 32px)/2)}
+  .cv3-photo-arrow:focus-visible{outline:2px solid #2457FF;outline-offset:-2px}
+}

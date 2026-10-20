@@ -116,20 +116,79 @@
     });
     box.appendChild(track);
     head.parentNode.insertBefore(box, head.nextSibling);
-    var cards = $$('.sm-ivf-c', track);
-    var on = function(){
-      var mid = track.scrollLeft + track.clientWidth / 2, best = 0, bd = 1e9;
-      cards.forEach(function(c, i){ var d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (d < bd){ bd = d; best = i; } });
-      cards.forEach(function(c, i){ c.classList.toggle('is-on', i === best); });
-    };
-    track.addEventListener('scroll', function(){ requestAnimationFrame(on); }, { passive: true });
-    on();
-    arrows(box, track, '인터뷰', function(){ return cards[0].offsetWidth + 12; });
+    var originals = $$('.sm-ivf-c', track), current = 0, timer, ready = false, keyboardMove = false;
+    // One visual neighbour at each end keeps the featured first card centred.
+    if (originals.length > 1){
+      [originals[originals.length - 1], originals[0]].forEach(function(card, index){
+        var clone = card.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true'); clone.tabIndex = -1;
+        clone.dataset.loopCopy = 'true';
+        if (index === 0) track.insertBefore(clone, originals[0]); else track.appendChild(clone);
+      });
+    }
+    var cards = $$('.sm-ivf-c', track), mobile = matchMedia('(max-width:600px)');
+    function left(card){ return card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2; }
+    function nearest(){
+      var mid = track.scrollLeft + track.clientWidth / 2, best = 0, distance = Infinity;
+      cards.forEach(function(card, index){
+        var delta = Math.abs(card.offsetLeft + card.offsetWidth / 2 - mid);
+        if (delta < distance){ distance = delta; best = index; }
+      });return best;
+    }
+    function paint(index){ cards.forEach(function(card, i){ card.classList.toggle('is-on', i === index); }); }
+    // Loop copies and originals must exchange places with identical visual state.
+    function place(index){
+      track.classList.add('is-repositioning');paint(index);
+      track.scrollTo({left:left(cards[index]),behavior:'instant'});
+      void track.offsetWidth; // Commit the non-animated state before restoring transitions.
+      track.classList.remove('is-repositioning');
+    }
+    function settle(){
+      if (!ready || !mobile.matches) return;
+      var index = nearest();
+      if (originals.length > 1 && (index === 0 || index === cards.length - 1)){
+        current = index === 0 ? originals.length - 1 : 0;
+        index = current + 1;
+        place(index);
+      } else current = originals.length > 1 ? index - 1 : 0;
+      paint(index);
+      if (keyboardMove){ cards[index].focus({preventScroll:true}); keyboardMove = false; }
+    }
+    function align(){
+      if (!mobile.matches || !track.clientWidth) return;
+      var index = originals.length > 1 ? current + 1 : 0;
+      place(index);ready = true;
+    }
+    function move(dir){
+      if (!ready) align();
+      var index = nearest(), target = Math.max(0,Math.min(cards.length - 1,index + dir));
+      track.scrollTo({left:left(cards[target]),behavior:reduce.matches?'instant':'smooth'});
+    }
+    ['prev','next'].forEach(function(dir){
+      var button = document.createElement('button');button.type = 'button';
+      button.className = 'sm-arrow sm-arrow--' + dir;
+      button.setAttribute('aria-label',(dir === 'prev' ? '이전 ' : '다음 ') + '인터뷰');
+      button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + ARROW[dir] + '"/></svg>';
+      button.hidden = originals.length < 2;
+      button.addEventListener('click',function(){move(dir === 'prev' ? -1 : 1);});box.appendChild(button);
+    });
+    track.addEventListener('scroll',function(){
+      if (!ready) return;
+      paint(nearest());clearTimeout(timer);timer = setTimeout(settle,160);
+    },{passive:true});
+    track.addEventListener('keydown',function(event){
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      event.preventDefault();keyboardMove = true;move(event.key === 'ArrowLeft' ? -1 : 1);
+    });
+    mobile.addEventListener('change',align);
+    addEventListener('resize',align);
+    requestAnimationFrame(align);
+
   }
 
   /* 4) 기수 기록(cohort-v3.js가 그린 화면을 600px 이하에서만 시안 배치로) */
   var BADGE = '<svg class="sm-cv-badge" viewBox="0 0 24 24" aria-label="공식 계정" role="img"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>';
-  var ICON = { all: 'M3 3h18v18H3zM3 9h18M3 15h18M9 3v18M15 3v18', video: 'M3 4h18v16H3zM3 9h18M8 4l3 5M14 4l3 5M10 12v5l4-2.5z' };
+  var ICON = { all: 'M3 3h4v5H3zM10 3h4v5h-4zM17 3h4v5h-4zM3 10h4v5H3zM10 10h4v5h-4zM17 10h4v5h-4zM3 17h4v5H3zM10 17h4v5h-4zM17 17h4v5h-4z', video: 'M8 3h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8a5 5 0 0 1 5-5zM10 8l6 4-6 4z' };
   function initCohorts(){
     var root = $('#cv3');
     if (!root || !root.cv3View || root.dataset.sm) return;
@@ -174,7 +233,7 @@
         var k = b.dataset.v;
         b.setAttribute('aria-pressed', String(k === view));
         b.setAttribute('aria-label', (k === 'all' ? '전체 게시물 ' : '영상만 보기 ') + (k === 'all' ? nums[0] : nums[1]) + '개');
-        b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + ICON[k] + '"/></svg><span>' + (k === 'all' ? nums[0] : nums[1]) + '</span>';
+        b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + ICON[k] + '"/></svg>';
       });
       /* 기간을 한 줄로 유지하되 값은 발행된 기록 그대로 사용합니다. */
       var rg = $$('.cv3-stat b', root)[2];

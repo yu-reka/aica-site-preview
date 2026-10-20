@@ -14,13 +14,13 @@
   <link rel="stylesheet" href="css/stories.css">
   <link rel="stylesheet" href="css/stories-sections.css">
 {{> stories/head-presentation}}
-  <link rel="stylesheet" href="css/projects-grid.css">
+  <link rel="stylesheet" href="css/projects-grid.css?v=1020cohortline">
   <link rel="stylesheet" href="css/stories-m.css?v=1016projecttitle">
   <link rel="stylesheet" href="../common/css/navigation-mobile.css?v=1016nav">
 {{> stories/head-scripts}}
-  <script src="js/stories-m.js?v=1016projectimages" defer></script>
+  <script src="js/stories-m.js?v=1020subjectbadges" defer></script>
   <script src="js/stories.js?v=1016integrity" defer></script>
-  <script src="js/projects-filter.js" defer></script>
+  <script src="js/projects-filter.js?v=1020mobiledropdown" defer></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
@@ -50,10 +50,25 @@
          카드 글은 캐러셀 무대에 있던 것 그대로. 기간(TERM, 모두 도약과정 720H)은 카드마다 같아 빼고 상세에만 둠. 누르면 아래 상세(#pj-N)
          번호 알약(01~06)은 격자에선 순서 뜻이 없고 아래 '8개월 뒤의 나' 01~03과 겹쳐 뺌(허브 카드와 같음). 번호는 상세(.pjno)에만
          6번(파수) 그림: 시안에서 1번(손끝)과 같은 노랑 그림이었음 → 격자에 나란히 보여 다른 카드와 같은 평면 도형 · 색으로 다시 그림(문서 + 열람 그래프, 상세 대표 그림도 같게) -->
+    <div class="pj-filter-row">
     <div class="chips pj-cohort-filters sm-filter-tabs sm-cohort-chips" role="group" aria-label="프로젝트 기수">
       <button type="button" data-cohort="" aria-pressed="true">전체</button>
       <button type="button" data-cohort="7" aria-pressed="false">7기</button>
       <button type="button" data-cohort="6" aria-pressed="false">6기</button>
+    </div>
+      <details class="dw pj-subject-filter">
+        <summary aria-label="교과목 선택"><b>교과목</b><svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5L8 10.5L12 6.5"/></svg></summary>
+        <div class="pj-subject-options" role="group" aria-label="프로젝트 교과목">
+          <button type="button" data-subject="" aria-pressed="true">전체</button>
+          <button type="button" data-subject="자연어처리" aria-pressed="false">자연어처리</button>
+          <button type="button" data-subject="컴퓨터비전" aria-pressed="false">컴퓨터비전</button>
+          <button type="button" data-subject="AI클라우드 및 인프라" aria-pressed="false">AI클라우드 및 인프라</button>
+          <button type="button" data-subject="AI서비스 개발" aria-pressed="false">AI서비스 개발</button>
+          <button type="button" data-subject="AI서비스 기획" aria-pressed="false">AI서비스 기획</button>
+          <button type="button" data-subject="AI비즈니스" aria-pressed="false">AI비즈니스</button>
+          <button type="button" data-subject="데이터 분석" aria-pressed="false">데이터 분석</button>
+        </div>
+      </details>
     </div>
     <section class="pj-filter-empty" aria-labelledby="pj-empty-title" hidden>
       <span class="pj-empty-badge">준비 중</span>
@@ -61,6 +76,7 @@
       <p>그동안 6기 선배들이 만든 프로젝트를 먼저 살펴보세요.</p>
       <button class="pj-empty-back" type="button">6기 프로젝트 보기 →</button>
     </section>
+    <p class="pj-subject-empty" role="status" hidden>선택한 조건에 맞는 프로젝트가 없어요. 다른 교과목을 선택해 주세요.</p>
     <div class="pjgrid">
       {{#each stories.projects}}{{> @view.card.template}}
       {{/each}}

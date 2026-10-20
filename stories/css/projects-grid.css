@@ -69,3 +69,40 @@
   .stories-page .pj-filter-empty p{font-size:15px}
   .stories-page .pj-filter-empty .pj-empty-back{min-height:48px;margin-top:28px;padding:10px 22px;font-size:15px}
 }
+
+/* Review-style subject drawer beside the existing cohort pills. */
+.stories-page .pj-filter-row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:clamp(32px,3vw,40px);position:relative;z-index:31}
+.stories-page .pj-filter-row .pj-cohort-filters{margin:0}
+.stories-page .pj-subject-filter{flex:0 1 auto;min-width:0}
+.stories-page .pj-subject-filter summary{border:1px solid var(--l-line);border-radius:999px;background:#fff;max-width:100%;box-sizing:border-box}
+.stories-page .pj-subject-filter summary b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stories-page .pj-subject-filter summary svg{flex:none}
+.stories-page .pj-subject-filter[open] summary{position:relative;z-index:38}
+.stories-page .pj-subject-filter[open] summary::after{display:none}
+.stories-page .pj-subject-options{position:absolute;right:0;top:calc(100% + 8px);z-index:39;display:flex;flex-direction:column;min-width:220px;padding:8px;background:#fff;border:1px solid var(--l-line);border-radius:16px;box-shadow:0 12px 32px rgba(20,35,63,.12)}
+.stories-page .pj-subject-options button{padding:10px 12px;min-height:40px;border:0;border-radius:8px;background:#fff;color:var(--g600);font:400 14px/1.5 var(--ff-sans);text-align:left;cursor:pointer}
+.stories-page .pj-subject-options button:hover{background:var(--g50);color:var(--g900)}
+.stories-page .pj-subject-options button[aria-pressed="true"]{color:var(--primary);font-weight:700;background:#F2F5FF}
+.stories-page .pj-subject-filter :is(summary,button):focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.stories-page .pj-subject-empty{padding:64px 24px;border:1px dashed var(--line);border-radius:24px;text-align:center;color:var(--muted);line-height:1.7}
+.stories-page .pj-subject-empty[hidden]{display:none}
+@media(max-width:600px){
+  .stories-page .pj-filter-row{gap:8px;margin:12px 0 24px}
+  .stories-page .pj-filter-row .pj-cohort-filters{margin:0;flex:none}
+  .stories-page .pj-subject-filter{max-width:calc(100% - 176px)}
+  .stories-page .pj-subject-filter summary{height:38px;padding:0 12px;font-size:12px;line-height:38px}
+  .stories-page .pj-subject-options{max-width:calc(100vw - 40px)}
+}
+
+/* Mobile: cohort underline tabs and the subject drawer share one row. */
+@media(max-width:600px){
+  .stories-page .pj-filter-row{flex-wrap:nowrap;gap:18px;border-bottom:0}
+  .stories-page .pj-filter-row .pj-subject-filter{display:block;flex:0 1 auto;min-width:0;max-width:calc(100% - 150px);margin-left:auto}
+  html[data-nav="side"] .stories-page #p-pr .pj-filter-row .pj-cohort-filters{display:flex;flex:1 0 auto;gap:22px;margin:0;padding:0;border:0;border-bottom:1px solid #D3D9E1;border-radius:0;background:transparent;box-shadow:none}
+  html[data-nav="side"] .stories-page #p-pr .pj-cohort-filters button{flex:none;min-width:0;height:44px;min-height:44px;margin:0 0 -1px;padding:0 2px;border:0;border-bottom:3px solid transparent;border-radius:0;background:transparent;color:#566175;font:600 14px/1.2 var(--ff-sans);box-shadow:none}
+  html[data-nav="side"] .stories-page #p-pr .pj-cohort-filters button:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+  html[data-nav="side"] .stories-page #p-pr .pj-cohort-filters button[aria-pressed="true"]{border-bottom-color:#14233F;background:transparent;color:#14233F;font-weight:800}
+}
+
+.stories-page .pj-filter-row{scroll-margin-top:140px}
+@media(max-width:600px){.stories-page .pj-pager{margin-top:28px}}

@@ -28,6 +28,7 @@ class Element {
 function start({ mobile = true, dbAnchors = false } = {}) {
   const ui = { mobile }, listeners = {}, mediaListeners = {}, scheduled = [];
   const types = ['실증', '기업연계', '기업연계', '실증', '창업', '기업연계', '신규유형', '신규유형'];
+  const subject = new Element('button'); subject.dataset.subject = '';
   const cohort = new Element('button'); cohort.dataset.cohort = '';
   const selected = new Element('button'); selected.textContent = '전체';
   const projection = new Element('section', 'sm-projects');
@@ -38,6 +39,7 @@ function start({ mobile = true, dbAnchors = false } = {}) {
     typeLabel.textContent = ` ${type} `; heading.textContent = `Project ${index + 1}`;
     detail.id = dbAnchors ? `pj-db-${100 + index}` : `pj-${index + 1}`;
     card.dataset.cohort = index < 6 ? '6' : '7';
+    card.dataset.subject = index === 0 || index === 3 ? '컴퓨터비전' : '데이터 분석';
     card.setAttribute('href', '#' + detail.id); card.queries['.pjc-type'] = typeLabel;
     detail.queries.h2 = heading; detail.queries['.ivwrap'] = host;
     return { card, detail, host };
@@ -46,7 +48,7 @@ function start({ mobile = true, dbAnchors = false } = {}) {
   page.querySelectorAll = selector => selector === '#p-pr .pjgrid a.pjc' ? records.map(record => record.card) : [];
   const location = { hash: '' };
   const document = {
-    querySelector: selector => selector === '.pj-cohort-filters [aria-pressed="true"]' ? cohort : selector === '.stories-page' ? page : selector === '#p-pr .sm-projects' ? projection : null,
+    querySelector: selector => selector === '.pj-subject-options [aria-pressed="true"]' ? subject : selector === '.pj-cohort-filters [aria-pressed="true"]' ? cohort : selector === '.stories-page' ? page : selector === '#p-pr .sm-projects' ? projection : null,
     getElementById: id => records.find(record => record.detail.id === id)?.detail,
     createElement: tag => new Element(tag), addEventListener() {},
   };
@@ -65,7 +67,8 @@ function start({ mobile = true, dbAnchors = false } = {}) {
   }
   return {
     choose(type) { selected.textContent = type; },
-    cohort(value) { cohort.dataset.cohort = value; }, links,
+    cohort(value) { cohort.dataset.cohort = value; },
+    subject(value) { subject.dataset.subject = value; }, links,
     resize(mobile) { ui.mobile = mobile; mediaListeners.change(); },
     currentLinks(index) {
       const nav = records[index].host.querySelector('.sd-nav');
@@ -125,4 +128,15 @@ test('desktop retains cohort selection while ignoring the hidden mobile type fil
   assert.deepEqual(ui.currentLinks(5), ['#pj-3', null]);
   ui.resize(false);
   assert.deepEqual(ui.currentLinks(5), ['#pj-5', null]);
+});
+
+
+test('subject selection restricts previous and next projects together with cohort and mobile type', () => {
+  const ui=start(); ui.cohort('6'); ui.subject('데이터 분석');
+  assert.deepEqual(ui.links(1), [null, '#pj-3']);
+  assert.deepEqual(ui.links(2), ['#pj-2', '#pj-5']);
+  ui.choose('기업연계');
+  assert.deepEqual(ui.links(2), ['#pj-2', '#pj-6']);
+  ui.resize(false);
+  assert.deepEqual(ui.currentLinks(2), ['#pj-2', '#pj-5']);
 });

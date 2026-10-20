@@ -75,7 +75,9 @@ function interview(source,record,detail) {
   return fields(source,record);
 }
 function project(source,record,detail) {
-  source=source.replace(' data-cohort="{{cohort}}"','');
+  source=source.replace(' data-cohort="{{cohort}}"','').replace(' data-subject="{{subject}}"','');
+  // Static subject classification is not part of the current Spring API contract.
+  if(!detail)source=source.replaceAll('{{subject}}','{{type}}').replace('data-field="subject"','data-field="type"');
   source=media(source,detail?'heroImage':'thumbnail');
   source=source.replace(/(<div class="(?:tags|pjtags)">)[\s\S]*?<\/div>/g,'$1<span th:each="tag : ${s.tags}" th:text="${tag}"></span></div>');
   if(detail) {
@@ -98,9 +100,10 @@ function cohort(source,record) {
 }
 function slotPage(page,kind,list,card,detail) {
   if(kind==='project') {
-    page=replaceElement(page,/<div class="chips pj-cohort-filters[^">]*"[^>]*>/,'',true);
+    page=replaceElement(page,/<div class="pj-filter-row">/,'',true);
+    page=replaceElement(page,/<p class="pj-subject-empty"[^>]*>/,'',true);
     page=replaceElement(page,/<section class="pj-filter-empty"[^>]*>/,'',true);
-    page=page.replace(/  <script src="js\/projects-filter\.js" defer><\/script>\n/,'');
+    page=page.replace(/  <script src="js\/projects-filter\.js(?:\?[^"\s]*)?" defer><\/script>\n/,'');
   }
   const cardClass=kind==='cohort'?'st':kind==='interview'?'iv':'pjc';
   if(kind==='cohort')page=replaceElement(page,/<template id="cv3-data">/,loop(list,card));

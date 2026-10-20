@@ -68,7 +68,8 @@
     }
     if(group.kind.key==='project'){
       const cohort=document.querySelector('.pj-cohort-filters [aria-pressed="true"]')?.dataset.cohort;
-      const items=group.items.filter(item=>!cohort||item.card.dataset.cohort===cohort);
+      const subject=document.querySelector('.pj-subject-options [aria-pressed="true"]')?.dataset.subject;
+      const items=group.items.filter(item=>(!cohort||item.card.dataset.cohort===cohort)&&(!subject||item.card.dataset.subject===subject));
       const mobile=document.querySelector('#p-pr .sm-projects');
       if(!mobile||getComputedStyle(mobile).display==='none')return items;
       const type=mobile.querySelector('.sm-filter-tabs [aria-pressed="true"]')?.textContent.trim()||'전체';

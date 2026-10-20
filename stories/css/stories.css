@@ -717,3 +717,26 @@ body .stories-page .st h3{font-size:16px}
 /* 끝 줄까지 적어야 함(절대 위치 자식은 auto면 격자 전체가 기준) */
 }
 /* 기수별 이모저모 카드: 같은 줄 카드 높이를 맞추고 기수 · 날짜 줄을 카드 맨 아래로(설명이 3줄인 카드만 줄이 23px 내려가 있던 것). 설명과의 간격 14px은 그대로 */
+
+
+/* Review drawers share the project's soft, rounded subject-menu treatment. */
+.stories-page .rev .dw .dwin{left:auto;right:0;top:calc(100% + 8px);min-width:220px;box-sizing:border-box;padding:8px;gap:0;border:1px solid var(--l-line);border-radius:16px;background:#fff;box-shadow:0 12px 32px rgba(20,35,63,.12);max-height:min(70vh,420px)}
+.stories-page .rev .dw .dwin :is(label,a,button){display:flex;align-items:center;min-height:40px;box-sizing:border-box;padding:10px 12px;border:0;border-radius:8px;background:transparent;color:var(--g600);font:400 14px/1.5 var(--ff-sans);text-align:left;text-decoration:none;cursor:pointer}
+.stories-page .rev .dw .dwin :is(label,a,button):hover{background:var(--g50);color:var(--g900)}
+.stories-page .rev .dw .dwin :is(a,button):focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
+.stories-page .rev:has(#fco_all:checked) .dw-fco .dwin label[for="fco_all"]{background:#F2F5FF;color:var(--primary);font-weight:700}
+.stories-page .rev:has(#fco_0:checked) .dw-fco .dwin label[for="fco_0"]{background:#F2F5FF;color:var(--primary);font-weight:700}
+.stories-page .rev:has(#fco_1:checked) .dw-fco .dwin label[for="fco_1"]{background:#F2F5FF;color:var(--primary);font-weight:700}
+.stories-page .rev:has(#fco_2:checked) .dw-fco .dwin label[for="fco_2"]{background:#F2F5FF;color:var(--primary);font-weight:700}
+.stories-page .rev:has(#fco_3:checked) .dw-fco .dwin label[for="fco_3"]{background:#F2F5FF;color:var(--primary);font-weight:700}
+.stories-page .rev:has(#fco_4:checked) .dw-fco .dwin label[for="fco_4"]{background:#F2F5FF;color:var(--primary);font-weight:700}
+.stories-page .rev:has(#tg-0:target) .dw-ftg .dwin a[href="#tg-0"]{background:#F2F5FF;color:var(--primary);font-weight:700}
+.stories-page .rev:has(#tg-1:target) .dw-ftg .dwin a[href="#tg-1"]{background:#F2F5FF;color:var(--primary);font-weight:700}
+.stories-page .rev:has(#tg-2:target) .dw-ftg .dwin a[href="#tg-2"]{background:#F2F5FF;color:var(--primary);font-weight:700}
+.stories-page .rev:has(#tg-3:target) .dw-ftg .dwin a[href="#tg-3"]{background:#F2F5FF;color:var(--primary);font-weight:700}
+.stories-page .rev:has(#tg-4:target) .dw-ftg .dwin a[href="#tg-4"]{background:#F2F5FF;color:var(--primary);font-weight:700}
+.stories-page .rev:has(#tg-5:target) .dw-ftg .dwin a[href="#tg-5"]{background:#F2F5FF;color:var(--primary);font-weight:700}
+.stories-page .rev:has(#tg-6:target) .dw-ftg .dwin a[href="#tg-6"]{background:#F2F5FF;color:var(--primary);font-weight:700}
+.stories-page .rev:not(:has(.tgt:target)) .dw-ftg .dwin a[href="#p-rev"],
+html[data-review-source="spring"] .stories-page .rev .dw-fco .dwin button[aria-pressed="true"]{background:#F2F5FF;color:var(--primary);font-weight:700}
+@media(max-width:600px){.stories-page .rev .dw .dwin{min-width:min(220px,calc(100vw - 40px));max-width:calc(100vw - 40px)}}

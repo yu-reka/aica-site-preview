@@ -76,7 +76,19 @@ test('hub selection retains the approved cohort slots without duplicate image al
   const artifacts=springArtifacts();
   for(const name of ['reviews','interviews','projects']){
     const html=artifacts.get('templates/public-site/'+name+'.html');
-    assert.ok(html.includes('/stories/js/detail-navigation.js?v=1020projectfilter'));
+    assert.ok(html.includes('/stories/js/detail-navigation.js?v=1020subjectnav'));
     assert.ok(html.includes('/stories/css/detail-navigation.css?v=1016links'));
+  }
+});
+
+
+test('static project subject filters and metadata do not alter Spring public templates', () => {
+  const artifacts=springArtifacts();
+  const html=artifacts.get('templates/public-site/projects.html');
+  assert.ok(!html.includes('pj-filter-row'));
+  assert.ok(!html.includes('pj-subject-empty'));
+  assert.ok(!html.includes('projects-filter.js'));
+  for(const [path,source] of artifacts){
+    if(path.startsWith('templates/public-site/')) assert.ok(!source.includes('data-subject='),path);
   }
 });

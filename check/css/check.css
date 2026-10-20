@@ -96,9 +96,8 @@ body[data-cat="check"]{background:#fff}
 .ben2{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .b2{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px 22px 26px;transition:border-color .2s,transform .3s var(--ease)}
 .b2:hover{border-color:var(--ink);transform:translateY(-3px)}
-.b2-ico{display:grid;place-items:center;width:58px;height:58px;border-radius:12px;border:1px solid var(--line);background:var(--paper);margin-bottom:18px}
-.b2-ico svg{width:38px;height:38px;fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.b2-ico .b{stroke:var(--primary)}
+.b2-ico{display:block;width:64px;height:64px;margin-bottom:14px}
+.b2-ico img{display:block;width:100%;height:100%;object-fit:contain}   /* 10-20: 선 아이콘 → 3D 그림(check/assets/benefit-1~8.webp, 바탕 투명) */
 .b2-no{margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--graphite)}
 .b2 h3{margin:0 0 8px;font-size:18.5px;font-weight:700;letter-spacing:-.025em}
 .b2-desc,.b2-sub{margin:0;font-size:14.5px;line-height:1.7;color:var(--graphite)}

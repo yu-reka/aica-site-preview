@@ -19,16 +19,16 @@
   <link rel="stylesheet" href="../common/css/base.css">
   <link rel="stylesheet" href="../common/css/site.css?v=1016nav">
 
-  <link rel="stylesheet" href="css/detail-navigation.css?v=1016links">
+  <link rel="stylesheet" href="css/detail-navigation.css?v=1020outsidegrid">
 
   <link rel="stylesheet" href="css/stories.css">
-  <link rel="stylesheet" href="css/stories-sections.css">
+  <link rel="stylesheet" href="css/stories-sections.css?v=1020projectinfo">
   <link rel="stylesheet" href="../common/css/presentation.css?v=1016split">
   <link rel="stylesheet" href="css/presentation.css?v=1020filterspacing">
   <link rel="stylesheet" href="../common/css/lnb.css">
   <link rel="stylesheet" href="../common/css/masthead.css?v=1016cleanup">
 
-  <link rel="stylesheet" href="css/projects-grid.css?v=1020cohortline">
+  <link rel="stylesheet" href="css/projects-grid.css?v=1020integratedfilters">
   <link rel="stylesheet" href="css/stories-m.css?v=1020softsubjectbadge">
   <link rel="stylesheet" href="../common/css/navigation-mobile.css?v=1016nav">
   <script src="js/mast-fix.js" defer></script>
@@ -36,11 +36,11 @@
   <script src="../common/js/site-layout.js?v=1016nav" defer></script>
 <script src="../common/js/site.js?v=1016integrity" defer></script>
 
-  <script src="js/detail-navigation.js?v=1020subjectnav" defer></script>
+  <script src="js/detail-navigation.js?v=1020outsidegrid" defer></script>
 
   <script src="js/stories-m.js?v=1020springtypes" defer></script>
   <script src="js/stories.js?v=1016integrity" defer></script>
-  <script src="js/projects-filter.js?v=1020mobiledropdown" defer></script>
+  <script src="js/projects-filter.js?v=1020integratedfilters" defer></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
@@ -84,8 +84,8 @@
       <button type="button" data-cohort="6" aria-pressed="false">6기</button>
     </div>
       <details class="dw pj-subject-filter">
-        <summary aria-label="교과목 선택"><b>교과목</b><svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5L8 10.5L12 6.5"/></svg></summary>
-        <div class="pj-subject-options" role="group" aria-label="프로젝트 교과목">
+        <summary aria-label="과정 선택"><b>과정</b><svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5L8 10.5L12 6.5"/></svg></summary>
+        <div class="pj-subject-options" role="group" aria-label="프로젝트 과정">
           <button type="button" data-subject="" aria-pressed="true">전체</button>
           <button type="button" data-subject="자연어처리" aria-pressed="false">자연어처리</button>
           <button type="button" data-subject="컴퓨터비전" aria-pressed="false">컴퓨터비전</button>
@@ -103,7 +103,7 @@
       <p>그동안 6기 선배들이 만든 프로젝트를 먼저 살펴보세요.</p>
       <button class="pj-empty-back" type="button">6기 프로젝트 보기 →</button>
     </section>
-    <p class="pj-subject-empty" role="status" hidden>선택한 조건에 맞는 프로젝트가 없어요. 다른 교과목을 선택해 주세요.</p>
+    <p class="pj-subject-empty" role="status" hidden>선택한 조건에 맞는 프로젝트가 없어요. 다른 과정을 선택해 주세요.</p>
     <div class="pjgrid">
       <a data-cohort="6" data-subject="컴퓨터비전" class="pjc" href="#pj-1">
         <div class="ph">
@@ -255,7 +255,7 @@
       <a class="ivback" href="#p-pr">← 프로젝트 목록</a>
       <div class="ivwrap">
         <div>
-          <div class="ivhero pjhero"><span class="ivtag">실증</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#FFE600"/>
+          <div class="ivhero pjhero"><span class="ivtag">컴퓨터비전</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#FFE600"/>
    <rect x="86" y="62" width="228" height="134" rx="12" fill="#fff"/>
    <rect x="106" y="82" width="104" height="54" rx="7" fill="#2457F5"/>
    <rect x="226" y="82" width="68" height="18" rx="6" fill="#E4E9F7"/>
@@ -276,7 +276,7 @@
         </div>
         <aside class="sidebox pjside">
           <h3>프로젝트 정보</h3>
-          <dl class="ivmeta"><div><dt>팀</dt><dd>AI 모델링 2반 · 5명</dd></div><div><dt>유형</dt><dd>실증</dd></div><div><dt>기간</dt><dd>도약과정 720H</dd></div></dl>
+          <dl class="ivmeta"><div><dt>팀</dt><dd>AI 모델링 2반 · 5명</dd></div><div><dt>과정</dt><dd>컴퓨터비전</dd></div><div><dt>기수·반</dt><dd>6기 · 2반</dd></div></dl>
           <div class="pjnav"><a href="#pj-6"><small>이전 프로젝트</small>파수 — 사내 문서 유출 탐지</a><a href="#pj-2"><small>다음 프로젝트</small>밥값 — 구내식당 혼잡도 예측</a></div>
         </aside>
       </div>
@@ -285,7 +285,7 @@
       <a class="ivback" href="#p-pr">← 프로젝트 목록</a>
       <div class="ivwrap">
         <div>
-          <div class="ivhero pjhero"><span class="ivtag">기업연계</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#2457F5"/>
+          <div class="ivhero pjhero"><span class="ivtag">데이터 분석</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#2457F5"/>
    <rect x="54" y="44" width="212" height="132" rx="12" fill="#fff"/>
    <rect x="76" y="68" width="120" height="12" rx="6" fill="#2457F5"/>
    <rect x="76" y="94" width="168" height="8" rx="4" fill="#D7DEF4"/>
@@ -308,7 +308,7 @@
         </div>
         <aside class="sidebox pjside">
           <h3>프로젝트 정보</h3>
-          <dl class="ivmeta"><div><dt>팀</dt><dd>데이터 분석 1반 · 4명</dd></div><div><dt>유형</dt><dd>기업연계</dd></div><div><dt>기간</dt><dd>도약과정 720H</dd></div></dl>
+          <dl class="ivmeta"><div><dt>팀</dt><dd>데이터 분석 1반 · 4명</dd></div><div><dt>과정</dt><dd>데이터 분석</dd></div><div><dt>기수·반</dt><dd>6기 · 1반</dd></div></dl>
           <div class="pjnav"><a href="#pj-1"><small>이전 프로젝트</small>손끝 — 시각장애인 보행 보조 앱</a><a href="#pj-3"><small>다음 프로젝트</small>틈 — 중소병원 판독 보조</a></div>
         </aside>
       </div>
@@ -317,7 +317,7 @@
       <a class="ivback" href="#p-pr">← 프로젝트 목록</a>
       <div class="ivwrap">
         <div>
-          <div class="ivhero pjhero"><span class="ivtag">기업연계</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#22D3EE"/>
+          <div class="ivhero pjhero"><span class="ivtag">컴퓨터비전</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#22D3EE"/>
    <rect x="52" y="54" width="128" height="166" rx="10" fill="#fff"/>
    <g fill="#0E8577"><rect x="70" y="74" width="34" height="24" rx="5"/><rect x="126" y="74" width="34" height="24" rx="5"/>
    <rect x="70" y="112" width="34" height="24" rx="5"/><rect x="126" y="112" width="34" height="24" rx="5"/>
@@ -341,7 +341,7 @@
         </div>
         <aside class="sidebox pjside">
           <h3>프로젝트 정보</h3>
-          <dl class="ivmeta"><div><dt>팀</dt><dd>헬스케어 도메인 · 6명</dd></div><div><dt>유형</dt><dd>기업연계</dd></div><div><dt>기간</dt><dd>도약과정 720H</dd></div></dl>
+          <dl class="ivmeta"><div><dt>팀</dt><dd>헬스케어 도메인 · 6명</dd></div><div><dt>과정</dt><dd>컴퓨터비전</dd></div><div><dt>기수·반</dt><dd>6기</dd></div></dl>
           <div class="pjnav"><a href="#pj-2"><small>이전 프로젝트</small>밥값 — 구내식당 혼잡도 예측</a><a href="#pj-4"><small>다음 프로젝트</small>돌아봄 — 공장 설비 이상 탐지</a></div>
         </aside>
       </div>
@@ -350,7 +350,7 @@
       <a class="ivback" href="#p-pr">← 프로젝트 목록</a>
       <div class="ivwrap">
         <div>
-          <div class="ivhero pjhero"><span class="ivtag">실증</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#FFE600"/>
+          <div class="ivhero pjhero"><span class="ivtag">AI클라우드 및 인프라</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#FFE600"/>
    <path d="M150 54h100v56c0 30-22 52-50 52s-50-22-50-52z" fill="#fff"/>
    <path d="M150 66h-28a24 24 0 0 0 28 42zM250 66h28a24 24 0 0 1-28 42z" fill="#fff" opacity=".7"/>
    <rect x="186" y="162" width="28" height="28" fill="#15368F"/>
@@ -370,7 +370,7 @@
         </div>
         <aside class="sidebox pjside">
           <h3>프로젝트 정보</h3>
-          <dl class="ivmeta"><div><dt>팀</dt><dd>인프라 1반 · 5명</dd></div><div><dt>유형</dt><dd>실증</dd></div><div><dt>기간</dt><dd>도약과정 720H</dd></div></dl>
+          <dl class="ivmeta"><div><dt>팀</dt><dd>인프라 1반 · 5명</dd></div><div><dt>과정</dt><dd>AI클라우드 및 인프라</dd></div><div><dt>기수·반</dt><dd>6기 · 1반</dd></div></dl>
           <div class="pjnav"><a href="#pj-3"><small>이전 프로젝트</small>틈 — 중소병원 판독 보조</a><a href="#pj-5"><small>다음 프로젝트</small>말줄임 — 회의록 자동 요약</a></div>
         </aside>
       </div>
@@ -379,7 +379,7 @@
       <a class="ivback" href="#p-pr">← 프로젝트 목록</a>
       <div class="ivwrap">
         <div>
-          <div class="ivhero pjhero"><span class="ivtag">창업</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#E4E9F7"/>
+          <div class="ivhero pjhero"><span class="ivtag">자연어처리</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#E4E9F7"/>
    <rect x="34" y="78" width="150" height="104" rx="10" fill="#fff"/>
    <rect x="54" y="98" width="86" height="10" rx="5" fill="#2457F5"/>
    <rect x="54" y="120" width="110" height="7" rx="3.5" fill="#CBD5F0"/>
@@ -404,7 +404,7 @@
         </div>
         <aside class="sidebox pjside">
           <h3>프로젝트 정보</h3>
-          <dl class="ivmeta"><div><dt>팀</dt><dd>기획 2반 · 4명</dd></div><div><dt>유형</dt><dd>창업</dd></div><div><dt>기간</dt><dd>도약과정 720H</dd></div></dl>
+          <dl class="ivmeta"><div><dt>팀</dt><dd>기획 2반 · 4명</dd></div><div><dt>과정</dt><dd>자연어처리</dd></div><div><dt>기수·반</dt><dd>6기 · 2반</dd></div></dl>
           <div class="pjnav"><a href="#pj-4"><small>이전 프로젝트</small>돌아봄 — 공장 설비 이상 탐지</a><a href="#pj-6"><small>다음 프로젝트</small>파수 — 사내 문서 유출 탐지</a></div>
         </aside>
       </div>
@@ -413,7 +413,7 @@
       <a class="ivback" href="#p-pr">← 프로젝트 목록</a>
       <div class="ivwrap">
         <div>
-          <div class="ivhero pjhero"><span class="ivtag">기업연계</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#15368F"/>
+          <div class="ivhero pjhero"><span class="ivtag">AI서비스 개발</span><svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#15368F"/>
    <rect x="84" y="40" width="150" height="152" rx="10" fill="#fff" opacity=".28"/>
    <rect x="60" y="62" width="150" height="156" rx="10" fill="#fff"/>
    <rect x="80" y="84" width="84" height="10" rx="5" fill="#2457F5"/>
@@ -440,7 +440,7 @@
         </div>
         <aside class="sidebox pjside">
           <h3>프로젝트 정보</h3>
-          <dl class="ivmeta"><div><dt>팀</dt><dd>보안 도메인 · 5명</dd></div><div><dt>유형</dt><dd>기업연계</dd></div><div><dt>기간</dt><dd>도약과정 720H</dd></div></dl>
+          <dl class="ivmeta"><div><dt>팀</dt><dd>보안 도메인 · 5명</dd></div><div><dt>과정</dt><dd>AI서비스 개발</dd></div><div><dt>기수·반</dt><dd>6기</dd></div></dl>
           <div class="pjnav"><a href="#pj-5"><small>이전 프로젝트</small>말줄임 — 회의록 자동 요약</a><a href="#pj-1"><small>다음 프로젝트</small>손끝 — 시각장애인 보행 보조 앱</a></div>
         </aside>
       </div>

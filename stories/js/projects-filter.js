@@ -1,18 +1,35 @@
-/* Static preview filters; Spring templates omit these until its API supports them. */
+/* Both views filter the already-rendered cards. Spring renders published DB rows only. */
 (function(){
   'use strict';
   function init(){
     const section=document.querySelector('#p-pr');
     const filters=section?.querySelector('.pj-cohort-filters');
-    if(!filters)return;
+    if(!filters||filters.dataset.ready)return;
+    filters.dataset.ready='true';
     const dropdown=section.querySelector('.pj-subject-filter');
     const summary=dropdown.querySelector('summary');
     const options=dropdown.querySelector('.pj-subject-options');
     function selectSubject(value){
       options.querySelectorAll('button').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.subject===value)));
-      summary.querySelector('b').textContent=value||'교과목';
+      summary.querySelector('b').textContent=value||'과정';
     }
     const cards=Array.from(section.querySelectorAll('.pjgrid .pjc'));
+    const live=document.documentElement.dataset.storySource==='spring';
+    if(live){
+      // Never derive classification from sample IDs, drafts, tags or project types.
+      const cohorts=Array.from(new Set(cards.map(card=>card.dataset.cohort).filter(value=>/^[1-9]\d?$/.test(value)))).sort((a,b)=>Number(b)-Number(a));
+      const subjects=Array.from(new Set(cards.map(card=>card.dataset.subject).filter(Boolean))).sort((a,b)=>a.localeCompare(b,'ko'));
+      function choices(group,key,values,label){
+        group.replaceChildren();
+        [''].concat(values).forEach(value=>{
+          const button=document.createElement('button');button.type='button';
+          button.dataset[key]=value;button.textContent=value?label(value):'전체';
+          button.setAttribute('aria-pressed',String(!value));group.append(button);
+        });
+      }
+      choices(filters,'cohort',cohorts,value=>value+'기');
+      choices(options,'subject',subjects,value=>value);
+    }
     function close(){dropdown.open=false;}
     const pager=document.createElement('nav');pager.className='cpager pj-pager';
     pager.setAttribute('aria-label','프로젝트 페이지');section.querySelector('.pjgrid').after(pager);
@@ -43,8 +60,10 @@
         if(first&&!items.some(item=>!item.hidden&&item.open))first.open=true;
         mobile.hidden=!eligible.length;
       }
-      section.querySelector('.pj-filter-empty').hidden=cohort!=='7';
-      section.querySelector('.pj-subject-empty').hidden=!!matching.length||cohort==='7';
+      const upcoming=!live&&cohort==='7'&&!cards.some(card=>card.dataset.cohort==='7');
+      const notice=section.querySelector('.pj-filter-empty');
+      if(notice)notice.hidden=!upcoming;
+      section.querySelector('.pj-subject-empty').hidden=!!matching.length||upcoming;
       pager.replaceChildren();pager.hidden=!matching.length;
       if(matching.length){
         pager.append(pageButton('←',page-1,page===1,false));
@@ -53,7 +72,7 @@
         pager.append(pageButton('→',page+1,page===total,false));
       }
     }
-    section.querySelector('.pj-empty-back').addEventListener('click',()=>{
+    section.querySelector('.pj-empty-back')?.addEventListener('click',()=>{
       // The suggested action must always reveal the existing sixth-cohort list.
       selectSubject('');
       const button=filters.querySelector('[data-cohort="6"]');button.click();button.focus({preventScroll:true});

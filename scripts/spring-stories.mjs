@@ -75,9 +75,10 @@ function interview(source,record,detail) {
   return fields(source,record);
 }
 function project(source,record,detail) {
-  source=source.replace(' data-cohort="{{cohort}}"','').replace(' data-subject="{{subject}}"','');
-  // Static subject classification is not part of the current Spring API contract.
-  if(!detail)source=source.replaceAll('{{subject}}','{{type}}').replace('data-field="subject"','data-field="type"');
+  // Class numbers are preview-only. Published details use confirmed cohort data,
+  // with the existing period for older records that have no cohort yet.
+  if(detail)source=source.replace('<dt>기수·반</dt><dd>{{cohortClass}}</dd>',
+    `<dt th:text="\${s.cohort > 0 ? '기수' : '기간'}">기수</dt><dd th:text="\${s.cohort > 0 ? s.cohort + '기' : s.duration}"></dd>`);
   source=media(source,detail?'heroImage':'thumbnail');
   source=source.replace(/(<div class="(?:tags|pjtags)">)[\s\S]*?<\/div>/g,'$1<span th:each="tag : ${s.tags}" th:text="${tag}"></span></div>');
   if(detail) {
@@ -87,7 +88,7 @@ function project(source,record,detail) {
     source=source.replace(/<p class="ivnote">[\s\S]*?<\/p>/,'<p class="ivnote" th:each="link : ${s.links}"><a th:href="${link.url}" th:text="${link.label}" target="_blank" rel="noopener"></a></p>');
   }
   if(detail)source=source.replace(/(<p class="lead"[^>]*>[\s\S]*?<\/p>)/,'$1<div class="story-extra-photos"><img th:each="photo : ${s.extraPhotos}" th:src="${photo.src}" th:alt="${photo.alt}" loading="lazy"></div>');
-  return fields(source,record);
+  return fields(source,record).replaceAll('th:text="${s.subject}"','th:text="${#strings.isEmpty(s.subject) ? s.type : s.subject}"');
 }
 function cohort(source,record) {
   source=media(source,'thumbnail');
@@ -100,10 +101,10 @@ function cohort(source,record) {
 }
 function slotPage(page,kind,list,card,detail) {
   if(kind==='project') {
-    page=replaceElement(page,/<div class="pj-filter-row">/,'',true);
-    page=replaceElement(page,/<p class="pj-subject-empty"[^>]*>/,'',true);
+    // The shared script builds options from published card metadata. No fixed cohorts/courses leak in.
+    page=replaceElement(page,/<div class="chips pj-cohort-filters[^"<>]*"[^>]*>/,'<button type="button" data-cohort="" aria-pressed="true">전체</button>');
+    page=replaceElement(page,/<div class="pj-subject-options"[^>]*>/,'<button type="button" data-subject="" aria-pressed="true">전체</button>');
     page=replaceElement(page,/<section class="pj-filter-empty"[^>]*>/,'',true);
-    page=page.replace(/  <script src="js\/projects-filter\.js(?:\?[^"\s]*)?" defer><\/script>\n/,'');
   }
   const cardClass=kind==='cohort'?'st':kind==='interview'?'iv':'pjc';
   if(kind==='cohort')page=replaceElement(page,/<template id="cv3-data">/,loop(list,card));
@@ -147,6 +148,7 @@ export function addStoryArtifacts(output, generated) {
     qa:(r.questions||[]).map(q=>({q:q.question,a:q.answer,toc:q.navLabel})),hubRank:hubInterviews.indexOf(r.id)>=0?hubInterviews.indexOf(r.id):undefined
   }});
   for(const [index,r] of content.stories.projects.entries()) seed.push({kind:'project',anchor:r.id,order:index,title:r.name,story:{
+    cohort:r.cohort,subject:r.subject,
     anchor:r.id,headline:r.title,detailTitle:r.detailTitle,cardSummary:r.summary,summary:r.detailSummary,
     team:r.team,type:r.type,term:r.duration,tags:r.tags,
     sections:[r.section1,r.section2,r.section3].map((p,i)=>({h:['문제 정의','접근 방법','결과와 다음 단계'][i],p})),

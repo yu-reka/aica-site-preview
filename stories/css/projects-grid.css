@@ -106,3 +106,14 @@
 
 .stories-page .pj-filter-row{scroll-margin-top:140px}
 @media(max-width:600px){.stories-page .pj-pager{margin-top:28px}}
+
+/* Published DB classifications can outgrow the preview's fixed three tabs. */
+html[data-story-source="spring"] .stories-page #p-pr .pj-filter-row .pj-cohort-filters{flex:1 1 auto;min-width:0;flex-wrap:nowrap;overflow-x:auto}
+html[data-story-source="spring"] .pj-subject-options{box-sizing:border-box;max-width:min(380px,calc(100vw - 40px));max-height:min(480px,60vh);overflow-y:auto}
+html[data-story-source="spring"] .pj-subject-options button{white-space:normal;overflow-wrap:anywhere}
+html[data-story-source="spring"] .pjc-type{box-sizing:border-box;max-width:calc(100% - 24px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:600px){
+  html[data-story-source="spring"] .stories-page .pj-filter-row .pj-subject-filter{flex:0 0 auto;max-width:45%}
+  html[data-story-source="spring"] .sm-project-type{box-sizing:border-box;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+}
+@media(max-width:600px){.stories-page .pjd .pjside .pjnav{display:none}}

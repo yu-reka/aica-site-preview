@@ -75,6 +75,10 @@ function interview(source,record,detail) {
   return fields(source,record);
 }
 function project(source,record,detail) {
+  // Class numbers are preview-only. Published details use confirmed cohort data,
+  // with the existing period for older records that have no cohort yet.
+  if(detail)source=source.replace('<dt>기수·반</dt><dd>{{cohortClass}}</dd>',
+    `<dt th:text="\${s.cohort > 0 ? '기수' : '기간'}">기수</dt><dd th:text="\${s.cohort > 0 ? s.cohort + '기' : s.term}"></dd>`);
   source=media(source,detail?'heroImage':'thumbnail');
   source=source.replace(/(<div class="(?:tags|pjtags)">)[\s\S]*?<\/div>/g,'$1<span th:each="tag : ${s.tags}" th:text="${tag}"></span></div>');
   if(detail) {

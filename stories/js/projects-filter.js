@@ -11,7 +11,7 @@
     const options=dropdown.querySelector('.pj-subject-options');
     function selectSubject(value){
       options.querySelectorAll('button').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.subject===value)));
-      summary.querySelector('b').textContent=value||'교과목';
+      summary.querySelector('b').textContent=value||'과정';
     }
     const cards=Array.from(section.querySelectorAll('.pjgrid .pjc'));
     const live=document.documentElement.dataset.storySource==='spring';

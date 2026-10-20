@@ -32,14 +32,25 @@
     });
     if(!items.length)return;
     items.forEach((item,index)=>paint(kind,item,items,index));
-    items.forEach(item=>item.detail.querySelectorAll('.pjnav').forEach(old=>{old.hidden=true;}));
     groups.push({kind,items,returnTo:null});
   });
   function paint(kind,item,items,index){
+    const side=kind.key==='project'&&item.detail.querySelector('.pjnav');
+    if(side){
+      side.hidden=false;side.replaceChildren();
+      [items[index-1],items[index+1]].forEach((target,direction)=>{
+        const label=direction?'다음 프로젝트':'이전 프로젝트';
+        const link=node(target?'a':'span',target?'':'pjnav-boundary');
+        if(target){link.setAttribute('href','#'+target.detail.id);link.dataset.storyDirection=kind.key;link.setAttribute('aria-label',label+': '+target.title);}
+        else link.setAttribute('aria-disabled','true');
+        link.append(node('small','',label),node('span','',target?target.title:'더 이상 글이 없어요'));side.append(link);
+      });
+    }
     const nav=node('nav','sd-nav');nav.setAttribute('aria-label',kind.unit+' 이전 글 다음 글');
     const pair=node('div','sd-pair');pair.append(direction(items[index-1],true,kind),direction(items[index+1],false,kind));
     const back=node('a','sd-list',kind.unit+' 목록');back.href=kind.list;back.dataset.storyList=kind.key;
-    nav.append(pair,back);const old=item.host.querySelector('.sd-nav');if(old)old.replaceWith(nav);else item.host.append(nav);
+    nav.append(pair,back);const old=item.detail.querySelector('.sd-nav');
+    if(old)old.replaceWith(nav);else if(kind.key==='review')item.host.append(nav);else item.host.after(nav);
   }
   let tag='';
   function matching(group){

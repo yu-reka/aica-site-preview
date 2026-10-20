@@ -76,8 +76,8 @@ test('hub selection retains the approved cohort slots without duplicate image al
   const artifacts=springArtifacts();
   for(const name of ['reviews','interviews','projects']){
     const html=artifacts.get('templates/public-site/'+name+'.html');
-    assert.ok(html.includes('/stories/js/detail-navigation.js?v=1020subjectnav'));
-    assert.ok(html.includes('/stories/css/detail-navigation.css?v=1016links'));
+    assert.ok(html.includes('/stories/js/detail-navigation.js?v=1020outsidegrid'));
+    assert.ok(html.includes('/stories/css/detail-navigation.css?v=1020outsidegrid'));
   }
 });
 
@@ -87,7 +87,7 @@ test('Spring projects retain shared filters and read escaped metadata from publi
   const html=artifacts.get('templates/public-site/projects.html');
   assert.ok(html.includes('pj-filter-row'));
   assert.ok(html.includes('pj-subject-empty'));
-  assert.ok(html.includes('/stories/js/projects-filter.js?v=1020publishedfilters'));
+  assert.ok(html.includes('/stories/js/projects-filter.js?v=1020integratedfilters'));
   assert.ok(!html.includes('data-cohort="7"'));
   assert.ok(!html.includes('data-subject="컴퓨터비전"'));
   assert.ok(!html.includes('pj-filter-empty'));
@@ -97,4 +97,14 @@ test('Spring projects retain shared filters and read escaped metadata from publi
   const seed=JSON.parse(artifacts.get('story-seed.json')).filter(r=>r.kind==='project');
   assert.deepEqual(seed.map(r=>[r.story.cohort,r.story.subject]),loadContent().stories.projects.map(r=>[r.cohort,r.subject]));
   assert.ok(html.indexOf('stories-m.js')<html.indexOf('projects-filter.js'));
+});
+
+
+test('published project details show confirmed cohort and course with legacy fallbacks', () => {
+  const fragments=springArtifacts().get('templates/public-site/story-fragments.html');
+  assert.ok(fragments.includes("${s.cohort > 0 ? '기수' : '기간'}"));
+  assert.ok(fragments.includes("${s.cohort > 0 ? s.cohort + '기' : s.term}"));
+  assert.ok(!fragments.includes('s.cohortClass'));
+  for(const record of loadContent().stories.projects.filter(r=>['pj-3','pj-6'].includes(r.id)))
+    assert.equal(record.cohortClass,record.cohort+'기');
 });

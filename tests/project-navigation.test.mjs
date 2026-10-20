@@ -14,6 +14,11 @@ class Element {
   getAttribute(name) { return this.attrs[name] ?? null; }
   matches(selector) { return selector.startsWith('.') && this.className.split(' ').includes(selector.slice(1)); }
   append(...nodes) { nodes.forEach(node => { node.parent = this; this.children.push(node); }); }
+  after(next) {
+    const siblings=this.parent.children;
+    siblings.splice(siblings.indexOf(this)+1,0,next);next.parent=this.parent;
+  }
+  replaceChildren(...nodes) { this.children=[];this.append(...nodes); }
   replaceWith(next) {
     const siblings = this.parent.children;
     siblings[siblings.indexOf(this)] = next; next.parent = this.parent;
@@ -41,8 +46,10 @@ function start({ mobile = true, dbAnchors = false } = {}) {
     card.dataset.cohort = index < 6 ? '6' : '7';
     card.dataset.subject = index === 0 || index === 3 ? '컴퓨터비전' : '데이터 분석';
     card.setAttribute('href', '#' + detail.id); card.queries['.pjc-type'] = typeLabel;
-    detail.queries.h2 = heading; detail.queries['.ivwrap'] = host;
-    return { card, detail, host };
+    const side=new Element('div','pjnav');host.append(side);
+    detail.queries['.pjnav']=side;
+    detail.queries.h2 = heading; detail.queries['.ivwrap'] = host;detail.append(host);
+    return { card, detail, host, side };
   });
   const page = new Element('main', 'stories-page');
   page.querySelectorAll = selector => selector === '#p-pr .pjgrid a.pjc' ? records.map(record => record.card) : [];
@@ -62,16 +69,19 @@ function start({ mobile = true, dbAnchors = false } = {}) {
   scheduled.forEach(handler => handler());
   function links(index) {
     location.hash = '#' + records[index].detail.id; listeners.hashchange();
-    const nav = records[index].host.querySelector('.sd-nav');
+    const nav = records[index].detail.querySelector('.sd-nav');
     return ['.sd-prev', '.sd-next'].map(selector => nav.querySelector(selector).getAttribute('href'));
   }
   return {
+    sidebarLinks(index) { return records[index].side.children.map(n=>n.getAttribute('href')); },
+    sidebarBoundaries(index) { return records[index].side.children.map(n=>n.getAttribute('aria-disabled')); },
+    outsideGrid(index) {const r=records[index];return !r.host.querySelector('.sd-nav')&&r.detail.children[1]?.className==='sd-nav'&&r.detail.children.length===2;},
     choose(type) { selected.textContent = type; },
     cohort(value) { cohort.dataset.cohort = value; },
     subject(value) { subject.dataset.subject = value; }, links,
     resize(mobile) { ui.mobile = mobile; mediaListeners.change(); },
     currentLinks(index) {
-      const nav = records[index].host.querySelector('.sd-nav');
+      const nav = records[index].detail.querySelector('.sd-nav');
       return ['.sd-prev', '.sd-next'].map(selector => nav.querySelector(selector).getAttribute('href'));
     },
   };
@@ -139,4 +149,29 @@ test('subject selection restricts previous and next projects together with cohor
   assert.deepEqual(ui.links(2), ['#pj-2', '#pj-6']);
   ui.resize(false);
   assert.deepEqual(ui.currentLinks(2), ['#pj-2', '#pj-5']);
+});
+
+
+test('project navigation stays after the sticky article grid without duplicate bars on refresh', () => {
+  const ui=start();ui.links(2);
+  assert.equal(ui.outsideGrid(2),true);
+  ui.subject('데이터 분석');ui.links(2);
+  assert.equal(ui.outsideGrid(2),true);
+});
+
+
+test('sidebar and bottom navigation share filtered DB anchors and boundary states', () => {
+  const ui=start({mobile:false,dbAnchors:true});ui.cohort('6');ui.subject('데이터 분석');
+  for(const index of [1,2,4,5]) {
+    const bottom=ui.links(index);
+    assert.deepEqual(ui.sidebarLinks(index),bottom);
+    assert.deepEqual(ui.sidebarBoundaries(index),bottom.map(href=>href?null:'true'));
+  }
+  ui.choose('기업연계');ui.links(2);ui.resize(true);
+  assert.deepEqual(ui.sidebarLinks(2),ui.currentLinks(2));
+  assert.deepEqual(ui.sidebarLinks(2),['#pj-db-101','#pj-db-105']);
+  ui.cohort('7');ui.subject('');ui.choose('전체');
+  assert.deepEqual(ui.links(6),[null,'#pj-db-107']);
+  assert.deepEqual(ui.sidebarLinks(6),[null,'#pj-db-107']);
+  ui.links(6);assert.equal(ui.outsideGrid(6),true);
 });

@@ -116,3 +116,4 @@ html[data-story-source="spring"] .pjc-type{box-sizing:border-box;max-width:calc(
   html[data-story-source="spring"] .stories-page .pj-filter-row .pj-subject-filter{flex:0 0 auto;max-width:45%}
   html[data-story-source="spring"] .sm-project-type{box-sizing:border-box;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 }
+@media(max-width:600px){.stories-page .pjd .pjside .pjnav{display:none}}

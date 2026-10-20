@@ -105,7 +105,7 @@
 .stories-page .pjhero .illu{aspect-ratio:16/9}
 .stories-page .pjhero::after{content:"프로젝트 대표 이미지"!important}
 .stories-page .pjnav{display:grid;gap:8px;margin-top:18px}
-.stories-page .sidebox .pjnav a{padding:12px 14px;border:1px solid #EEF0F3;border-radius:12px;font-size:14px;font-weight:700;color:var(--ink);line-height:1.4}
+.stories-page .sidebox .pjnav :is(a,.pjnav-boundary){padding:12px 14px;border:1px solid #EEF0F3;border-radius:12px;font-size:14px;font-weight:700;color:var(--ink);line-height:1.4}
 .stories-page .sidebox .pjnav a::before{display:none}
 .stories-page .pjnav small{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:2px}
 /* 목록 쪽: 제목 · 사진 · 단추로 상세 이동 */

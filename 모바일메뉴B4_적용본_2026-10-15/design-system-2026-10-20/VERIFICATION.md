@@ -55,3 +55,12 @@ clientWidth는 세로 스크롤바 영역을 제외한 값입니다. 가이드 �
 이 PR은 독립된 디자인 시스템 가이드와 참조 스냅샷만 추가합니다. 공용 CSS·JS·생성 HTML·Spring 내보내기와 DB 계약에는 변경이 없습니다. 기존 테스트의 Spring 내보내기 검사는 통과했지만 Spring 서버 구동, 실제 공개 DB 화면, 전체 페이지의 스크린리더와 모든 터치 제스처에 대한 별도 검증은 하지 않았습니다. 모션 감소 대응은 가이드 CSS와 원본의 관련 선언 보존을 확인했으며 OS 설정을 전환한 실기 검증은 하지 않았습니다.
 
 PR은 기존 이야기 기능 커밋을 섞지 않도록 별도 origin/main 기반 `codex/site-design-system-review` 브랜치에서 문서 디렉터리만 추가합니다. 추출 기준 작업 브랜치 `codex/site-design-system`과 별개이며, main 병합·공개 배포는 수행하지 않습니다.
+
+## 기존 AI-Log 참고 후 추가 검증
+
+- 기존 Claude 링크의 Overview, Components 목록, 색상 목록을 브라우저에서 확인하고 현재 원본과 대조했습니다. 별도 `REFERENCE.md` 및 08 / 기존 시스템 연계 장을 추가했습니다.
+- 가이드 9개 섹션의 앵커·상대 경로·문서 링크와 기존 토큰 수 36개 확인. source 토큰과 실제 사이트 소스는 변경하지 않았습니다.
+- 추가한 장의 실제 CSS viewport 360 / 390 / 430 / 1440px에서 clientWidth와 scrollWidth 각각 345 / 375 / 415 / 1425px로 일치했습니다. 세로 스크롤바 폭에 따른 이전 기록과의 1px 차이는 브라우저 환경 차이입니다.
+- 모바일 신규 목차 이동·목차 닫힘, 현재 코드와의 차이 details 펼침 확인. 콘솔 error/warn 없음.
+- [추가 장 데스크톱](captures/reference-desktop.png), [추가 장 모바일 360](captures/reference-mobile-360.png).
+- 추가 내용을 포함한 검토 폴더에서 build / test / check를 다시 확인했습니다. 원본 사이트와 Claude 아티팩트는 수정하지 않았습니다.

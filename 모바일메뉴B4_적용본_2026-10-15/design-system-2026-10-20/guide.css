@@ -407,3 +407,24 @@ h1{font-size:42px;line-height:1.22}
 @media(max-width:760px){h1{font-size:clamp(32px,9.5vw,42px)}
 }
 
+/* Reference documentation: no production selectors or tokens are changed. */
+.reference-provenance{display:flex;align-items:center;gap:15px;flex-wrap:wrap;padding:19px 22px;background:#f5f8ff;border:1px solid #dce5f7;border-radius:9px;font-size:11px;color:var(--graphite)}
+.reference-provenance>span:last-child{font-size:10px;color:var(--muted)}
+.reference-provenance code{font-size:10px}
+.reference-rule{margin-top:14px;padding-top:12px;border-top:1px solid #dfe5ee}
+.brand-specimens{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:24px}
+.brand-example{display:flex;align-items:center;justify-content:center;gap:11px;flex-wrap:wrap;border-radius:8px;min-height:122px;padding:20px;border:1px solid #dfe5ee;font-size:14px;font-weight:700}
+.brand-example img{display:block;object-fit:contain;flex:none}
+.brand-example small{flex-basis:100%;text-align:center;font-size:10px;font-weight:400}
+.brand-example.dark{background:var(--primary);color:white;border-color:var(--primary)}
+.brand-example.light{background:#fff;color:var(--ink)}
+.brand-example.light small{color:var(--muted)}
+.layer-stack{display:grid;gap:6px;margin:17px 0 20px}
+.layer-stack>span{display:flex;gap:14px;align-items:center;background:#fff;border:1px solid #dce5f2;border-radius:5px;padding:8px 12px;font-size:11px}
+.layer-stack b{min-width:55px;font:11px/1.5 ui-monospace,monospace;color:var(--primary)}
+.motion-list{margin:17px 0 20px}
+.motion-list>div{display:flex;align-items:center;gap:20px;padding:11px 0;border-bottom:1px solid #dfe5ee;font-size:12px}
+.motion-list b{font:600 19px/1.5 var(--ff-text);color:var(--primary);min-width:65px}
+.motion-list span{font-size:11px;color:var(--graphite)}
+#reference .source-note a{text-decoration:underline;text-underline-offset:3px}
+@media(max-width:760px){.brand-specimens{grid-template-columns:1fr;padding:18px}.reference-provenance{padding:18px;gap:10px}.reference-provenance p{line-height:2}.reference-provenance code{font-size:9px}.brand-example{font-size:13px}.layer-stack>span{font-size:10px;padding:8px 10px}.motion-list>div{gap:14px}}

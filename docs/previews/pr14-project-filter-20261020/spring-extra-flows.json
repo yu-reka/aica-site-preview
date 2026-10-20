@@ -1,0 +1,37 @@
+[
+  {
+    "test": "desktop project all types",
+    "w": 1280,
+    "hash": "#pj-3",
+    "next": "#pj-4",
+    "overflow": false
+  },
+  {
+    "test": "desktop project all types",
+    "w": 1440,
+    "hash": "#pj-3",
+    "next": "#pj-4",
+    "overflow": false
+  },
+  {
+    "test": "Spring review next and focus",
+    "focus": "x",
+    "hash": "#r-life-1",
+    "next": "#r-life-2"
+  },
+  {
+    "test": "Spring review Escape and original card",
+    "hash": "#p-rev",
+    "opener": "#r-life-0"
+  },
+  {
+    "test": "Spring interview cohort next",
+    "hash": "#iv-2",
+    "next": "#iv-7"
+  },
+  {
+    "test": "Spring interview list preserves cohort",
+    "cohort": "6기",
+    "hash": "#p-iv"
+  }
+]

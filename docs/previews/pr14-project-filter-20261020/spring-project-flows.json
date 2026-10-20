@@ -1,0 +1,122 @@
+[
+  {
+    "w": 360,
+    "type": "기업연계",
+    "visited": [
+      "#pj-2",
+      "#pj-3",
+      "#pj-6"
+    ],
+    "pass": true
+  },
+  {
+    "w": 360,
+    "type": "실증",
+    "visited": [
+      "#pj-1",
+      "#pj-4"
+    ],
+    "pass": true
+  },
+  {
+    "w": 360,
+    "type": "창업",
+    "visited": [
+      "#pj-5"
+    ],
+    "pass": true
+  },
+  {
+    "w": 360,
+    "type": "전체",
+    "visited": [
+      "#pj-1",
+      "#pj-2",
+      "#pj-3",
+      "#pj-4",
+      "#pj-5",
+      "#pj-6"
+    ],
+    "pass": true
+  },
+  {
+    "w": 390,
+    "type": "기업연계",
+    "visited": [
+      "#pj-2",
+      "#pj-3",
+      "#pj-6"
+    ],
+    "pass": true
+  },
+  {
+    "w": 390,
+    "type": "실증",
+    "visited": [
+      "#pj-1",
+      "#pj-4"
+    ],
+    "pass": true
+  },
+  {
+    "w": 390,
+    "type": "창업",
+    "visited": [
+      "#pj-5"
+    ],
+    "pass": true
+  },
+  {
+    "w": 390,
+    "type": "전체",
+    "visited": [
+      "#pj-1",
+      "#pj-2",
+      "#pj-3",
+      "#pj-4",
+      "#pj-5",
+      "#pj-6"
+    ],
+    "pass": true
+  },
+  {
+    "w": 430,
+    "type": "기업연계",
+    "visited": [
+      "#pj-2",
+      "#pj-3",
+      "#pj-6"
+    ],
+    "pass": true
+  },
+  {
+    "w": 430,
+    "type": "실증",
+    "visited": [
+      "#pj-1",
+      "#pj-4"
+    ],
+    "pass": true
+  },
+  {
+    "w": 430,
+    "type": "창업",
+    "visited": [
+      "#pj-5"
+    ],
+    "pass": true
+  },
+  {
+    "w": 430,
+    "type": "전체",
+    "visited": [
+      "#pj-1",
+      "#pj-2",
+      "#pj-3",
+      "#pj-4",
+      "#pj-5",
+      "#pj-6"
+    ],
+    "pass": true
+  }
+]

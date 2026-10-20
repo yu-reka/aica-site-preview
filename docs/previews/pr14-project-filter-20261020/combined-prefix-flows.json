@@ -1,0 +1,20 @@
+[
+  {
+    "test": "combined drawer Escape focus",
+    "expanded": "false",
+    "focus": "menuBtn"
+  },
+  {
+    "test": "combined prefix FAQ",
+    "faqVisible": true,
+    "hash": "#faq",
+    "overflow": false,
+    "path": "/prefix-integrated/aica-site-preview/check/index.html"
+  },
+  {
+    "test": "combined prefix filtered project next",
+    "hash": "#pj-3",
+    "js": "js/detail-navigation.js?v=1020projectfilter",
+    "next": "#pj-6"
+  }
+]

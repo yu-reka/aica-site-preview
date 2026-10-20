@@ -23,7 +23,7 @@
 
 ## Spring 경계 및 미검증
 
-PR16의 Spring DB 필터와 함께 통합했다. 과정은 공개 subject를 사용하며 비어 있으면 기존 type으로 표시한다. 기수는 공개 cohort가 있을 때 기수만 표시하며, 기존 미분류 글은 duration/기간을 유지한다. 반 번호는 Spring 저장 계약에 추가하지 않는다. 목록의 cohort/subject 메타데이터와 동적 필터를 유지한다. 공통 상세 탐색 배치와 모바일 정보 카드 링크 숨김은 내보내기 자산에도 반영된다. 발행 정책/HTML escape/API 계약은 변경하지 않았다. 실제 Spring 서버·운영 DB·물리 기기·스크린리더·Windows 실행은 미검증이다.
+PR16의 Spring DB 필터와 함께 통합했다. 과정은 공개 subject를 사용하며 비어 있으면 기존 type으로 표시한다. 기수는 공개 cohort가 있을 때 기수만 표시하며, 기존 미분류 글은 duration/기간을 유지한다. 반 번호는 Spring 저장 계약에 추가하지 않는다. 목록의 cohort/subject 메타데이터와 동적 필터를 유지한다. 공통 상세 탐색 배치와 모바일 정보 카드 링크 숨김은 내보내기 자산에도 반영된다. 발행 정책/HTML escape/API 계약은 변경하지 않았다. 최종 실제 Spring 검증은 [PR16–19 통합 검증](../pr16-19-integration-20261020/README.md)을 참고한다. 운영 DB·물리 기기·스크린리더·Windows 실행은 미검증이다.
 
 ## PC·모바일 비교
 

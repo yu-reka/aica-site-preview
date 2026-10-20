@@ -18,7 +18,7 @@
 ## 실행 및 화면 확인
 
 - `npm run build`: 11개 생성 성공
-- `npm test`: 57개 통과
+- `npm test`: 58개 통과
 - `npm run check`: 11개 생성 결과 일치
 - `git diff --check`: 통과
 - 기존 4173 미리보기 서버 재사용. 변경 전 화면은 최신 main의 추적 파일만 임시 폴더에 추출하여 별도 서버에서 확인했습니다.
@@ -36,6 +36,10 @@
 | 모바일 추천 인터뷰 | ![인터뷰 변경 전](interview-mobile-before.png) | ![인터뷰 변경 후](interview-mobile-after.png) |
 | 모바일 게시물 상세 | ![모바일 상세 변경 전](cohort-mobile-before.png) | ![모바일 상세 변경 후](cohort-mobile-after.png) |
 | PC 게시물 상세 | ![PC 상세 변경 전](cohort-desktop-before.png) | ![PC 상세 변경 후](cohort-desktop-after.png) |
+
+상세창에서 다른 사진으로 넘긴 뒤 닫은 피드 확인:
+
+![대표 이미지 복귀](cohort-cover-restored.png)
 
 ## Spring 영향과 확인 범위
 

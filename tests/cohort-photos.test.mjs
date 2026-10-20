@@ -123,3 +123,25 @@ test('photo arrows synchronize galleries, stop card opening, and wrap across bot
   assert.equal(stopped,true);
   assert.ok(!previous.disabled && !next.disabled);
 });
+
+
+test('closing the detail restores visited posts to their covers without changing other feed posts', () => {
+  const ui=start(),feed=ui.mount(ui.record);
+  const other={title:'다른 게시물',illu:ui.photo('a.jpg'),photos:[ui.photo('b.jpg')]};
+  ui.mount(other);ui.changePhoto(ui.record,2);ui.changePhoto(other,1);
+  const source=readFileSync(new URL('../stories/js/cohort-v3.js',import.meta.url),'utf8');
+  const begin=source.indexOf('  function closeM(){');
+  const end=source.indexOf("  M.querySelector('.cv3-m-x').onclick",begin);
+  const state={
+    Z:{hidden:false},M:{hidden:false,querySelector:()=>({innerHTML:''})},
+    modalVisited:[ui.record],changePhoto:ui.changePhoto,isolateDialog(){},last:null,
+    document:{documentElement:{classList:{remove(){}}}}
+  };
+  vm.runInNewContext(source.slice(begin,end)+'\ncloseM();',state);
+  assert.equal(state.M.hidden,true);
+  assert.equal(state.Z.hidden,true);
+  assert.equal(ui.control(feed,'cv3-photo-count').textContent,'1 / 3');
+  assert.equal(ui.record.photoIndex,0);
+  assert.equal(other.photoIndex,1);
+  assert.equal(state.modalVisited.length,0);
+});

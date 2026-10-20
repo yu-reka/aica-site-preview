@@ -202,7 +202,7 @@
   root.cv3Redraw=function(){ draw(); };
 
   /* 글 창 */
-  var M=document.querySelector('.cv3-m'), cur=0, last=null;
+  var M=document.querySelector('.cv3-m'), cur=0, last=null, modalVisited=[];
   // Isolate the active dialog, including nested photo zoom, without changing layout.
   // Restore each sibling's previous inert state when switching or closing scopes.
   var background=[];
@@ -228,6 +228,7 @@
   }
   function fill(){
     var L=list(), d=L[cur]; if(!d) return;
+    if(modalVisited.indexOf(d)<0)modalVisited.push(d);
     var md=M.querySelector('.cv3-m-media'); md.innerHTML=''; md.classList.remove('can-zoom','cv3-photo-gallery');md.cv3Record=null;
     if(d.yt)md.appendChild(media(d));else gallery(md,d);
     if(d.yt){ var id=null;
@@ -273,8 +274,8 @@
   function openZ(){ zfill(); Z.hidden=false; isolateDialog(Z); Z.querySelector('.cv3-zv-x').focus(); }
   function closeZ(){ if(Z.hidden) return; Z.hidden=true; Z.querySelector('.cv3-zv-im').innerHTML=''; isolateDialog(M); (M.querySelector('.cv3-zoom')||M.querySelector('.cv3-m-x')).focus(); }
   Z.onclick=function(e){ if(Date.now()<(Z.querySelector('.cv3-zv-im').cv3SwipeUntil||0))return;if(!e.target.closest('.cv3-zv-im img,.cv3-zv-im svg,.cv3-photo-dots')) closeZ(); };
-  function openM(i){ cur=i; last=document.activeElement; fill(); M.hidden=false; isolateDialog(M); document.documentElement.classList.add('cv3-lock'); M.querySelector('.cv3-m-x').focus(); }
-  function closeM(){ Z.hidden=true; M.hidden=true; M.querySelector('.cv3-m-media').innerHTML=''; isolateDialog(null); document.documentElement.classList.remove('cv3-lock'); if(last&&document.contains(last)) last.focus(); }
+  function openM(i){ modalVisited=[];cur=i; last=document.activeElement; fill(); M.hidden=false; isolateDialog(M); document.documentElement.classList.add('cv3-lock'); M.querySelector('.cv3-m-x').focus(); }
+  function closeM(){ Z.hidden=true; M.hidden=true; modalVisited.forEach(function(d){changePhoto(d,0);});modalVisited=[];M.querySelector('.cv3-m-media').innerHTML=''; isolateDialog(null); document.documentElement.classList.remove('cv3-lock'); if(last&&document.contains(last)) last.focus(); }
   M.querySelector('.cv3-m-x').onclick=closeM; M.querySelector('.cv3-m-bg').onclick=closeM;
   M.querySelector('.pv').onclick=function(){ if(cur>0){cur--;fill();} };
   M.querySelector('.nx').onclick=function(){ if(cur<list().length-1){cur++;fill();} };

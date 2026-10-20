@@ -236,6 +236,9 @@
     var cards = $$('.pjc', grid);
     if (!cards.length) return;
     var box = el('section', 'sm-projects'); box.setAttribute('aria-label', '프로젝트 아카이브');
+    // Spring omits the static cohort/subject row until its public DTO supports it.
+    // Preserve its existing type controls without duplicating the preview filters.
+    var filters = $('#p-pr .pj-filter-row') ? null : tabs('프로젝트 유형');
     var list = el('div', 'sm-project-list');
     var items = cards.map(function(card, i){
       var type = ($('.pjc-type', card) || {}).textContent || '';
@@ -262,6 +265,18 @@
       });
       list.appendChild(item); return item;
     });
+    if (filters){
+      var types = ['전체'].concat(Array.from(new Set(['기업연계', '실증', '창업'].concat(items.map(function(n){ return n.dataset.type; })))));
+      types.forEach(function(type){
+        tabButton(filters, type, type === '전체', function(){
+          $$('button', filters).forEach(function(b){ b.setAttribute('aria-pressed', String(b.textContent === type)); });
+          items.forEach(function(n){ n.hidden = type !== '전체' && n.dataset.type !== type; if (n.hidden) n.open = false; });
+          var visible = items.filter(function(n){ return !n.hidden; });
+          if (!visible.some(function(n){ return n.open; }) && visible[0]) visible[0].open = true;
+        });
+      });
+      box.appendChild(filters);
+    }
     box.appendChild(list); grid.before(box); grid.classList.add('sm-project-source');
   }
 

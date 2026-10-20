@@ -33,7 +33,7 @@ export function loadContent() {
   const presentation = readJson('src/presentation.json');
   const content = {};
   for (const file of files(join(root, 'content'), '.json')) {
-    const domain = relative(join(root, 'content'), file).replace(/\.json$/, '');
+    const domain = relative(join(root, 'content'), file).replaceAll('\\', '/').replace(/\.json$/, '');
     if (domain === 'site') { content.site = prepare(readJson('content/site.json')); continue; }
     const parts = domain.split('/');
     let parent = content;
@@ -101,8 +101,8 @@ export function build() {
   const render = createRenderer(join(root, 'src/components'));
   const outputs = new Map();
   for (const file of files(join(root, 'src/pages'), '.html')) {
-    const target = relative(join(root, 'src/pages'), file);
-    const source = render(readFileSync(file, 'utf8'), context);
+    const target = relative(join(root, 'src/pages'), file).replaceAll('\\', '/');
+    const source = render(readFileSync(file, 'utf8').replaceAll('\r\n', '\n'), context);
     outputs.set(target, source.replace(/(<!doctype html>\n)/i, `$1<!-- Generated from src/pages/${target} and content/. Run npm run build. -->\n`));
   }
   if (context.site) {

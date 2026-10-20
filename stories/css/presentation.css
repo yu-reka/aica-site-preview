@@ -628,3 +628,9 @@ box-shadow:inset 0 0 0 1px rgba(120,86,48,.18),inset 0 2px 12px rgba(90,60,28,.1
 
 /* 짧은 작은 글씨 = Paperlogy(10-14): 한 줄짜리 라벨 · 메타 · 단위 · 짧은 목록. 문장(…요 · …다)과 두 줄 넘는 글은 Pretendard 그대로. 인스타 모양(이모저모 프로필 · 하이라이트 · 사진 위 글)은 그대로 */
 html body .stories-page :is(.iva-c .by,.cv3-pin .k,.cv3-pg>p){font-family:var(--ff-text)!important}
+
+/* Match the interview heading-to-chip gap (36px) on desktop listings. */
+@media(min-width:601px){
+  .stories-page :is(#p-rev > .sh,#p-pr .pjlist > .sh,#p-coh > .sh){margin-bottom:28px}
+  .stories-page #p-coh .cv3-chips{padding-top:0}
+}

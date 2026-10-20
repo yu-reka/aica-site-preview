@@ -28,6 +28,8 @@ class Element {
 function start({ mobile = true, dbAnchors = false } = {}) {
   const ui = { mobile }, listeners = {}, mediaListeners = {}, scheduled = [];
   const types = ['실증', '기업연계', '기업연계', '실증', '창업', '기업연계', '신규유형', '신규유형'];
+  const subject = new Element('button'); subject.dataset.subject = '';
+  const cohort = new Element('button'); cohort.dataset.cohort = '';
   const selected = new Element('button'); selected.textContent = '전체';
   const projection = new Element('section', 'sm-projects');
   projection.queries['.sm-filter-tabs [aria-pressed="true"]'] = selected;
@@ -36,6 +38,8 @@ function start({ mobile = true, dbAnchors = false } = {}) {
     const typeLabel = new Element('span', 'pjc-type'), heading = new Element('h2'), host = new Element('div', 'ivwrap');
     typeLabel.textContent = ` ${type} `; heading.textContent = `Project ${index + 1}`;
     detail.id = dbAnchors ? `pj-db-${100 + index}` : `pj-${index + 1}`;
+    card.dataset.cohort = index < 6 ? '6' : '7';
+    card.dataset.subject = index === 0 || index === 3 ? '컴퓨터비전' : '데이터 분석';
     card.setAttribute('href', '#' + detail.id); card.queries['.pjc-type'] = typeLabel;
     detail.queries.h2 = heading; detail.queries['.ivwrap'] = host;
     return { card, detail, host };
@@ -44,7 +48,7 @@ function start({ mobile = true, dbAnchors = false } = {}) {
   page.querySelectorAll = selector => selector === '#p-pr .pjgrid a.pjc' ? records.map(record => record.card) : [];
   const location = { hash: '' };
   const document = {
-    querySelector: selector => selector === '.stories-page' ? page : selector === '#p-pr .sm-projects' ? projection : null,
+    querySelector: selector => selector === '.pj-subject-options [aria-pressed="true"]' ? subject : selector === '.pj-cohort-filters [aria-pressed="true"]' ? cohort : selector === '.stories-page' ? page : selector === '#p-pr .sm-projects' ? projection : null,
     getElementById: id => records.find(record => record.detail.id === id)?.detail,
     createElement: tag => new Element(tag), addEventListener() {},
   };
@@ -62,7 +66,9 @@ function start({ mobile = true, dbAnchors = false } = {}) {
     return ['.sd-prev', '.sd-next'].map(selector => nav.querySelector(selector).getAttribute('href'));
   }
   return {
-    choose(type) { selected.textContent = type; }, links,
+    choose(type) { selected.textContent = type; },
+    cohort(value) { cohort.dataset.cohort = value; },
+    subject(value) { subject.dataset.subject = value; }, links,
     resize(mobile) { ui.mobile = mobile; mediaListeners.change(); },
     currentLinks(index) {
       const nav = records[index].host.querySelector('.sd-nav');
@@ -101,4 +107,36 @@ test('desktop ignores the hidden mobile filter and breakpoint changes refresh th
   assert.deepEqual(ui.currentLinks(2), ['#pj-2', '#pj-6']);
   ui.resize(false);
   assert.deepEqual(ui.currentLinks(2), ['#pj-2', '#pj-4']);
+});
+
+
+test('project cohort and mobile type filters constrain navigation together', () => {
+  const ui = start(); ui.cohort('6'); ui.choose('기업연계');
+  assert.deepEqual(ui.links(2), ['#pj-2', '#pj-6']);
+  assert.deepEqual(ui.links(5), ['#pj-3', null]);
+  ui.choose('전체');
+  assert.deepEqual(ui.links(5), ['#pj-5', null]);
+  ui.cohort('7');
+  assert.deepEqual(ui.links(6), [null, '#pj-8']);
+  assert.deepEqual(ui.links(7), ['#pj-7', null]);
+});
+
+test('desktop retains cohort selection while ignoring the hidden mobile type filter', () => {
+  const ui = start({ mobile: false }); ui.cohort('6'); ui.choose('기업연계');
+  assert.deepEqual(ui.links(5), ['#pj-5', null]);
+  ui.resize(true);
+  assert.deepEqual(ui.currentLinks(5), ['#pj-3', null]);
+  ui.resize(false);
+  assert.deepEqual(ui.currentLinks(5), ['#pj-5', null]);
+});
+
+
+test('subject selection restricts previous and next projects together with cohort and mobile type', () => {
+  const ui=start(); ui.cohort('6'); ui.subject('데이터 분석');
+  assert.deepEqual(ui.links(1), [null, '#pj-3']);
+  assert.deepEqual(ui.links(2), ['#pj-2', '#pj-5']);
+  ui.choose('기업연계');
+  assert.deepEqual(ui.links(2), ['#pj-2', '#pj-6']);
+  ui.resize(false);
+  assert.deepEqual(ui.currentLinks(2), ['#pj-2', '#pj-5']);
 });

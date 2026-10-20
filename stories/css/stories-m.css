@@ -200,7 +200,7 @@
   .stories-page .sm-project-heading{display:contents}
   .stories-page .sm-project-no{grid-column:1;grid-row:1}
   .stories-page .sm-project-summary::after{grid-column:3;grid-row:1}
-  .stories-page .sm-project-type{grid-column:2;grid-row:1;justify-self:start;align-self:flex-start;padding:3px 8px;border-radius:20px;background:var(--sm-blue);color:#fff;font:700 11px/1.2 var(--ff-sans)}
+  .stories-page .sm-project-type{grid-column:2;grid-row:1;justify-self:start;align-self:flex-start;padding:3px 8px;border-radius:20px;background:#E8EEFF;color:#2457F5;font:700 11px/1.2 var(--ff-sans)}
   .stories-page .sm-project-type[data-type="실증"]{background:#A3ED64;color:var(--sm-ink)}
   .stories-page .sm-project-type[data-type="창업"]{background:#FFE688;color:var(--sm-ink)}
   .stories-page .sm-project-heading strong{grid-column:1/-1;grid-row:2;font:800 15px/1.45 "Paperlogy",sans-serif;word-break:keep-all}
@@ -215,9 +215,9 @@
   .stories-page .sm-reviews .sm-filter-tabs{gap:10px;margin-bottom:8px}
   .stories-page .sm-reviews .sm-filter-tabs button{flex:none;min-width:36px;font-size:13px}
   /* 기수는 카테고리 밑줄 탭과 구분되는 작은 필터 버튼. */
-  .stories-page .sm-reviews .sm-cohort-chips{gap:6px;margin:12px 0 0;padding:2px 0;border-bottom:0}
-  .stories-page .sm-reviews .sm-cohort-chips button{min-width:0;min-height:38px;padding:0 12px;border:1px solid var(--sm-line);border-radius:30px;background:#fff;color:var(--sm-muted);font-size:12px}
-  .stories-page .sm-reviews .sm-cohort-chips button[aria-pressed="true"]{border-color:var(--sm-ink);background:var(--sm-ink);color:#fff;font-weight:800}
+  .stories-page :is(.sm-reviews,.pjlist) .sm-cohort-chips{gap:6px;margin:12px 0 0;padding:2px 0;border-bottom:0}
+  .stories-page :is(.sm-reviews,.pjlist) .sm-cohort-chips button{flex:0 0 auto;height:38px;line-height:1.2;min-width:0;min-height:38px;padding:0 12px;border:1px solid var(--sm-line);border-radius:30px;background:#fff;color:var(--sm-muted);font-size:12px}
+  .stories-page :is(.sm-reviews,.pjlist) .sm-cohort-chips button[aria-pressed="true"]{border-color:var(--sm-ink);background:var(--sm-ink);color:#fff;font-weight:800}
   .stories-page .sm-review-count{margin:16px 0 18px;font:600 12px/1.5 var(--ff-sans)}
   .stories-page .sm-review-board{position:relative;isolation:isolate;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:20px 12px;padding:38px 12px 24px;border-radius:14px;background-color:#F4F5FB;background-image:linear-gradient(rgba(70,80,150,.11) 1px,transparent 1px),linear-gradient(90deg,rgba(70,80,150,.11) 1px,transparent 1px);background-size:18px 18px;box-shadow:inset 0 0 0 1px rgba(20,35,63,.08)}
   .stories-page .sm-review-board::before{content:"☆";position:absolute;left:12px;top:5px;font:32px/1 var(--ff-sans);transform:rotate(-12deg)}
@@ -253,3 +253,5 @@ html[data-nav="side"] .stories-page :is(#iv-all .iva-chips,.cv3-chips,.sm-filter
 html[data-nav="side"] .stories-page :is(#iv-all .iva-chips,.cv3-chips,.sm-filter-tabs:not(.sm-cohort-chips),.sm-cv-views) button:is([aria-pressed="true"],[aria-selected="true"]){border-bottom-color:#14233F;background:transparent;color:#14233F;font-weight:800;box-shadow:none}
 html[data-nav="side"] .stories-page :is(#iv-all .iva-chips,.cv3-chips,.sm-filter-tabs:not(.sm-cohort-chips),.sm-cv-views) button:focus-visible{outline:2px solid #2457F5;outline-offset:-2px}
 }
+
+.stories-page .sm-projects[hidden]{display:none}

@@ -92,8 +92,6 @@
       b.onclick=function(){ st.pg=to; draw(); root.scrollIntoView({behavior:'smooth',block:'start'}); }; row.appendChild(b); }
     pb('←',st.pg-1,{dis:st.pg===1,aria:'이전 페이지'}); for(var i=1;i<=pages;i++) pb(String(i),i,{cur:i===st.pg,aria:i+'페이지'}); pb('→',st.pg+1,{dis:st.pg===pages,aria:'다음 페이지'});
     nav.appendChild(row);
-    var from=L.length?s0+1:0, to=Math.min(s1,L.length);
-    nav.insertAdjacentHTML('beforeend','<p>'+L.length+'개 중 '+from+'–'+to+' · '+st.pg+' / '+pages+' 페이지</p>');
   }
   function draw(){ chips(); profile(); highlights(); grid(); root.dispatchEvent(new CustomEvent('cv3:draw',{detail:{v:st.v}})); }
   /* 모바일 보기 방식 탭(js/stories-m.js)이 부름 */

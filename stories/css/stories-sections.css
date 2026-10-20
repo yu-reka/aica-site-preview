@@ -23,10 +23,11 @@
 .stories-page .iva-hd{display:flex;align-items:center;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;margin-bottom:24px}
 .stories-page .iva-hd h3{margin:0;font:700 clamp(22px,2.2vw,26px)/1.3 var(--disp,"Giants",sans-serif);color:var(--ink);letter-spacing:-.01em}
 .stories-page .iva-tools{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.stories-page .iva-chips{display:flex;gap:6px;flex-wrap:wrap}
-.stories-page .iva-chips button{height:34px;padding:0 14px;border:1px solid #DDE0E5;border-radius:999px;background:#fff;color:var(--muted);font-size:13.5px;font-weight:600;line-height:1;cursor:pointer;transition:border-color .15s,color .15s}
+.stories-page .iva-chips{display:flex;gap:8px;flex-wrap:wrap}
+.stories-page .iva-chips button{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 14px;border:1px solid var(--l-line);border-radius:999px;background:#fff;color:var(--g600);font-family:inherit;font-size:15px;font-weight:600;line-height:40px;cursor:pointer;transition:var(--ease)}
 .stories-page .iva-chips button:hover{color:var(--ink)}
-.stories-page .iva-chips button[aria-pressed="true"]{border-color:var(--ink);color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.stories-page .iva-chips button[aria-pressed="true"]{background:var(--g900);color:#fff;box-shadow:none}
+.stories-page .iva-chips button:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
 /* 보기 방식 단추: 후기 탭 .vtoggle과 같은 모양 */
 .stories-page .iva-seg{display:inline-flex;align-items:center;gap:2px;height:44px;padding:3px;border:1px solid var(--l-line,rgba(16,17,22,.13));border-radius:999px;background:#fff}
 .stories-page .iva-seg button{display:grid;place-items:center;width:44px;height:36px;border:0;border-radius:999px;background:none;padding:0;color:var(--g600,#566175);cursor:pointer;transition:background .2s,color .2s}

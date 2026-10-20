@@ -24,22 +24,23 @@
   <link rel="stylesheet" href="css/stories.css">
   <link rel="stylesheet" href="css/stories-sections.css">
   <link rel="stylesheet" href="../common/css/presentation.css?v=1016split">
-  <link rel="stylesheet" href="css/presentation.css?v=1016split">
+  <link rel="stylesheet" href="css/presentation.css?v=1020filterspacing">
   <link rel="stylesheet" href="../common/css/lnb.css">
   <link rel="stylesheet" href="../common/css/masthead.css?v=1016cleanup">
 
-  <link rel="stylesheet" href="css/projects-grid.css">
-  <link rel="stylesheet" href="css/stories-m.css?v=1016projecttitle">
+  <link rel="stylesheet" href="css/projects-grid.css?v=1020cohortline">
+  <link rel="stylesheet" href="css/stories-m.css?v=1020softsubjectbadge">
   <link rel="stylesheet" href="../common/css/navigation-mobile.css?v=1016nav">
   <script src="js/mast-fix.js" defer></script>
   <script src="../common/js/menu.js" defer></script>
   <script src="../common/js/site-layout.js?v=1016nav" defer></script>
 <script src="../common/js/site.js?v=1016integrity" defer></script>
 
-  <script src="js/detail-navigation.js?v=1020projectfilter" defer></script>
+  <script src="js/detail-navigation.js?v=1020subjectnav" defer></script>
 
-  <script src="js/stories-m.js?v=1016projectimages" defer></script>
+  <script src="js/stories-m.js?v=1020springtypes" defer></script>
   <script src="js/stories.js?v=1016integrity" defer></script>
+  <script src="js/projects-filter.js?v=1020mobiledropdown" defer></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
@@ -76,8 +77,35 @@
          카드 글은 캐러셀 무대에 있던 것 그대로. 기간(TERM, 모두 도약과정 720H)은 카드마다 같아 빼고 상세에만 둠. 누르면 아래 상세(#pj-N)
          번호 알약(01~06)은 격자에선 순서 뜻이 없고 아래 '8개월 뒤의 나' 01~03과 겹쳐 뺌(허브 카드와 같음). 번호는 상세(.pjno)에만
          6번(파수) 그림: 시안에서 1번(손끝)과 같은 노랑 그림이었음 → 격자에 나란히 보여 다른 카드와 같은 평면 도형 · 색으로 다시 그림(문서 + 열람 그래프, 상세 대표 그림도 같게) -->
+    <div class="pj-filter-row">
+    <div class="chips pj-cohort-filters sm-filter-tabs sm-cohort-chips" role="group" aria-label="프로젝트 기수">
+      <button type="button" data-cohort="" aria-pressed="true">전체</button>
+      <button type="button" data-cohort="7" aria-pressed="false">7기</button>
+      <button type="button" data-cohort="6" aria-pressed="false">6기</button>
+    </div>
+      <details class="dw pj-subject-filter">
+        <summary aria-label="교과목 선택"><b>교과목</b><svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5L8 10.5L12 6.5"/></svg></summary>
+        <div class="pj-subject-options" role="group" aria-label="프로젝트 교과목">
+          <button type="button" data-subject="" aria-pressed="true">전체</button>
+          <button type="button" data-subject="자연어처리" aria-pressed="false">자연어처리</button>
+          <button type="button" data-subject="컴퓨터비전" aria-pressed="false">컴퓨터비전</button>
+          <button type="button" data-subject="AI클라우드 및 인프라" aria-pressed="false">AI클라우드 및 인프라</button>
+          <button type="button" data-subject="AI서비스 개발" aria-pressed="false">AI서비스 개발</button>
+          <button type="button" data-subject="AI서비스 기획" aria-pressed="false">AI서비스 기획</button>
+          <button type="button" data-subject="AI비즈니스" aria-pressed="false">AI비즈니스</button>
+          <button type="button" data-subject="데이터 분석" aria-pressed="false">데이터 분석</button>
+        </div>
+      </details>
+    </div>
+    <section class="pj-filter-empty" aria-labelledby="pj-empty-title" hidden>
+      <span class="pj-empty-badge">준비 중</span>
+      <h3 id="pj-empty-title">7기 선배 프로젝트를 정리하고 있어요</h3>
+      <p>그동안 6기 선배들이 만든 프로젝트를 먼저 살펴보세요.</p>
+      <button class="pj-empty-back" type="button">6기 프로젝트 보기 →</button>
+    </section>
+    <p class="pj-subject-empty" role="status" hidden>선택한 조건에 맞는 프로젝트가 없어요. 다른 교과목을 선택해 주세요.</p>
     <div class="pjgrid">
-      <a class="pjc" href="#pj-1">
+      <a data-cohort="6" data-subject="컴퓨터비전" class="pjc" href="#pj-1">
         <div class="ph">
           <svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#FFE600"/>
    <rect x="86" y="62" width="228" height="134" rx="12" fill="#fff"/>
@@ -87,7 +115,7 @@
    <rect x="106" y="152" width="136" height="12" rx="6" fill="#E4E9F7"/>
    <rect x="60" y="204" width="280" height="14" rx="7" fill="#E35B28"/>
    <circle cx="320" cy="150" r="22" fill="#2457F5"/><rect x="310" y="142" width="20" height="4" rx="2" fill="#fff"/></svg>
-          <span class="pjc-type" data-field="type">실증</span>
+          <span class="pjc-type" data-field="subject">컴퓨터비전</span>
         </div>
         <div class="pjc-tx">
           <p class="pjname">손끝 · 시각장애인 보행 보조 앱</p>
@@ -97,7 +125,7 @@
           <p class="team" data-field="team">AI 모델링 2반 · 5명</p>
         </div>
       </a>
-      <a class="pjc" href="#pj-2">
+      <a data-cohort="6" data-subject="데이터 분석" class="pjc" href="#pj-2">
         <div class="ph">
           <svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#2457F5"/>
    <rect x="54" y="44" width="212" height="132" rx="12" fill="#fff"/>
@@ -109,7 +137,7 @@
    <rect x="296" y="112" width="52" height="7" rx="3.5" fill="#fff"/>
    <rect x="296" y="128" width="36" height="7" rx="3.5" fill="#fff" opacity=".66"/>
    <rect x="92" y="204" width="216" height="16" rx="8" fill="#15368F"/></svg>
-          <span class="pjc-type">기업연계</span>
+          <span class="pjc-type">데이터 분석</span>
         </div>
         <div class="pjc-tx">
           <p class="pjname">밥값 · 구내식당 혼잡도 예측</p>
@@ -119,7 +147,7 @@
           <p class="team">데이터 분석 1반 · 4명</p>
         </div>
       </a>
-      <a class="pjc" href="#pj-3">
+      <a data-cohort="6" data-subject="컴퓨터비전" class="pjc" href="#pj-3">
         <div class="ph">
           <svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#22D3EE"/>
    <rect x="52" y="54" width="128" height="166" rx="10" fill="#fff"/>
@@ -132,7 +160,7 @@
    <rect x="292" y="120" width="40" height="22" rx="5"/><rect x="236" y="156" width="40" height="22" rx="5"/>
    <rect x="292" y="156" width="40" height="22" rx="5"/></g>
    <path d="M20 236h360" stroke="#0A4F49" stroke-width="10" stroke-linecap="round"/></svg>
-          <span class="pjc-type">기업연계</span>
+          <span class="pjc-type">컴퓨터비전</span>
         </div>
         <div class="pjc-tx">
           <p class="pjname">틈 · 중소병원 판독 보조</p>
@@ -142,7 +170,7 @@
           <p class="team">헬스케어 도메인 · 6명</p>
         </div>
       </a>
-      <a class="pjc" href="#pj-4">
+      <a data-cohort="6" data-subject="AI클라우드 및 인프라" class="pjc" href="#pj-4">
         <div class="ph">
           <svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#FFE600"/>
    <path d="M150 54h100v56c0 30-22 52-50 52s-50-22-50-52z" fill="#fff"/>
@@ -151,7 +179,7 @@
    <rect x="152" y="190" width="96" height="20" rx="7" fill="#15368F"/>
    <circle cx="200" cy="90" r="20" fill="#FFE600"/>
    <path d="M60 220h280" stroke="#8A6B14" stroke-width="8" stroke-linecap="round" opacity=".35"/></svg>
-          <span class="pjc-type">실증</span>
+          <span class="pjc-type">AI클라우드 및 인프라</span>
         </div>
         <div class="pjc-tx">
           <p class="pjname">돌아봄 · 공장 설비 이상 탐지</p>
@@ -161,7 +189,7 @@
           <p class="team">인프라 1반 · 5명</p>
         </div>
       </a>
-      <a class="pjc" href="#pj-5">
+      <a data-cohort="6" data-subject="자연어처리" class="pjc" href="#pj-5">
         <div class="ph">
           <svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#E4E9F7"/>
    <rect x="34" y="78" width="150" height="104" rx="10" fill="#fff"/>
@@ -175,7 +203,7 @@
    <g fill="#2457F5"><circle cx="112" cy="206" r="16"/><rect x="92" y="226" width="40" height="22" rx="11"/>
    <circle cx="200" cy="212" r="14"/><rect x="182" y="230" width="36" height="20" rx="10"/>
    <circle cx="288" cy="206" r="16"/><rect x="268" y="226" width="40" height="22" rx="11"/></g></svg>
-          <span class="pjc-type">창업</span>
+          <span class="pjc-type">자연어처리</span>
         </div>
         <div class="pjc-tx">
           <p class="pjname">말줄임 · 회의록 자동 요약</p>
@@ -185,7 +213,7 @@
           <p class="team">기획 2반 · 4명</p>
         </div>
       </a>
-      <a class="pjc" href="#pj-6">
+      <a data-cohort="6" data-subject="AI서비스 개발" class="pjc" href="#pj-6">
         <div class="ph">
           <svg class="illu" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#15368F"/>
    <rect x="84" y="40" width="150" height="152" rx="10" fill="#fff" opacity=".28"/>
@@ -201,7 +229,7 @@
    <circle cx="286" cy="150" r="11" fill="#22D3EE"/>
    <circle cx="344" cy="184" r="21" fill="none" stroke="#FFE600" stroke-width="2.5"/>
    <circle cx="344" cy="184" r="12" fill="#FFE600"/></svg>
-          <span class="pjc-type">기업연계</span>
+          <span class="pjc-type">AI서비스 개발</span>
         </div>
         <div class="pjc-tx">
           <p class="pjname">파수 · 사내 문서 유출 탐지</p>

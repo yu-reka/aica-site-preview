@@ -76,8 +76,8 @@ test('hub selection retains the approved cohort slots without duplicate image al
   const artifacts=springArtifacts();
   for(const name of ['reviews','interviews','projects']){
     const html=artifacts.get('templates/public-site/'+name+'.html');
-    assert.ok(html.includes('/stories/js/detail-navigation.js?v=1020subjectnav'));
-    assert.ok(html.includes('/stories/css/detail-navigation.css?v=1016links'));
+    assert.ok(html.includes('/stories/js/detail-navigation.js?v=1020outsidegrid'));
+    assert.ok(html.includes('/stories/css/detail-navigation.css?v=1020outsidegrid'));
   }
 });
 

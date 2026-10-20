@@ -14,6 +14,10 @@ class Element {
   getAttribute(name) { return this.attrs[name] ?? null; }
   matches(selector) { return selector.startsWith('.') && this.className.split(' ').includes(selector.slice(1)); }
   append(...nodes) { nodes.forEach(node => { node.parent = this; this.children.push(node); }); }
+  after(next) {
+    const siblings=this.parent.children;
+    siblings.splice(siblings.indexOf(this)+1,0,next);next.parent=this.parent;
+  }
   replaceWith(next) {
     const siblings = this.parent.children;
     siblings[siblings.indexOf(this)] = next; next.parent = this.parent;
@@ -41,7 +45,7 @@ function start({ mobile = true, dbAnchors = false } = {}) {
     card.dataset.cohort = index < 6 ? '6' : '7';
     card.dataset.subject = index === 0 || index === 3 ? '컴퓨터비전' : '데이터 분석';
     card.setAttribute('href', '#' + detail.id); card.queries['.pjc-type'] = typeLabel;
-    detail.queries.h2 = heading; detail.queries['.ivwrap'] = host;
+    detail.queries.h2 = heading; detail.queries['.ivwrap'] = host;detail.append(host);
     return { card, detail, host };
   });
   const page = new Element('main', 'stories-page');
@@ -62,16 +66,17 @@ function start({ mobile = true, dbAnchors = false } = {}) {
   scheduled.forEach(handler => handler());
   function links(index) {
     location.hash = '#' + records[index].detail.id; listeners.hashchange();
-    const nav = records[index].host.querySelector('.sd-nav');
+    const nav = records[index].detail.querySelector('.sd-nav');
     return ['.sd-prev', '.sd-next'].map(selector => nav.querySelector(selector).getAttribute('href'));
   }
   return {
+    outsideGrid(index) {const r=records[index];return !r.host.querySelector('.sd-nav')&&r.detail.children[1]?.className==='sd-nav'&&r.detail.children.length===2;},
     choose(type) { selected.textContent = type; },
     cohort(value) { cohort.dataset.cohort = value; },
     subject(value) { subject.dataset.subject = value; }, links,
     resize(mobile) { ui.mobile = mobile; mediaListeners.change(); },
     currentLinks(index) {
-      const nav = records[index].host.querySelector('.sd-nav');
+      const nav = records[index].detail.querySelector('.sd-nav');
       return ['.sd-prev', '.sd-next'].map(selector => nav.querySelector(selector).getAttribute('href'));
     },
   };
@@ -139,4 +144,12 @@ test('subject selection restricts previous and next projects together with cohor
   assert.deepEqual(ui.links(2), ['#pj-2', '#pj-6']);
   ui.resize(false);
   assert.deepEqual(ui.currentLinks(2), ['#pj-2', '#pj-5']);
+});
+
+
+test('project navigation stays after the sticky article grid without duplicate bars on refresh', () => {
+  const ui=start();ui.links(2);
+  assert.equal(ui.outsideGrid(2),true);
+  ui.subject('데이터 분석');ui.links(2);
+  assert.equal(ui.outsideGrid(2),true);
 });

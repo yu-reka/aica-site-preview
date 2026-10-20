@@ -20,7 +20,8 @@
       "#실증연계",
       "#Flutter"
     ],
-    "subject": "컴퓨터비전"
+    "subject": "컴퓨터비전",
+    "cohortClass": "6기 · 2반"
   },
   {
     "id": "pj-2",
@@ -42,7 +43,8 @@
       "#사내서비스",
       "#FastAPI"
     ],
-    "subject": "데이터 분석"
+    "subject": "데이터 분석",
+    "cohortClass": "6기 · 1반"
   },
   {
     "id": "pj-3",
@@ -64,7 +66,8 @@
       "#헬스케어",
       "#PyTorch"
     ],
-    "subject": "컴퓨터비전"
+    "subject": "컴퓨터비전",
+    "cohortClass": "6기 · 1반"
   },
   {
     "id": "pj-4",
@@ -86,7 +89,8 @@
       "#피지컬AI",
       "#Kubernetes"
     ],
-    "subject": "AI클라우드 및 인프라"
+    "subject": "AI클라우드 및 인프라",
+    "cohortClass": "6기 · 1반"
   },
   {
     "id": "pj-5",
@@ -108,7 +112,8 @@
       "#생산성",
       "#창업연계"
     ],
-    "subject": "자연어처리"
+    "subject": "자연어처리",
+    "cohortClass": "6기 · 2반"
   },
   {
     "id": "pj-6",
@@ -130,6 +135,7 @@
       "#그래프",
       "#기업연계"
     ],
-    "subject": "AI서비스 개발"
+    "subject": "AI서비스 개발",
+    "cohortClass": "6기 · 1반"
   }
 ]

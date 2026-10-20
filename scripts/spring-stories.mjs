@@ -77,7 +77,8 @@ function interview(source,record,detail) {
 function project(source,record,detail) {
   source=source.replace(' data-cohort="{{cohort}}"','').replace(' data-subject="{{subject}}"','');
   // Static subject classification is not part of the current Spring API contract.
-  if(!detail)source=source.replaceAll('{{subject}}','{{type}}').replace('data-field="subject"','data-field="type"');
+  source=source.replaceAll('{{subject}}','{{type}}').replace('data-field="subject"','data-field="type"');
+  if(detail)source=source.replace('<dt>과정</dt>','<dt>유형</dt>').replace('<dt>기수·반</dt><dd>{{cohortClass}}</dd>','<dt>기간</dt><dd>{{duration}}</dd>');
   source=media(source,detail?'heroImage':'thumbnail');
   source=source.replace(/(<div class="(?:tags|pjtags)">)[\s\S]*?<\/div>/g,'$1<span th:each="tag : ${s.tags}" th:text="${tag}"></span></div>');
   if(detail) {

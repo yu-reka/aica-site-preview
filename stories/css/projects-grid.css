@@ -106,3 +106,5 @@
 
 .stories-page .pj-filter-row{scroll-margin-top:140px}
 @media(max-width:600px){.stories-page .pj-pager{margin-top:28px}}
+
+@media(max-width:600px){.stories-page .pjd .pjside .pjnav{display:none}}

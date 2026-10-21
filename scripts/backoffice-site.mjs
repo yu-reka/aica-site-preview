@@ -10,7 +10,7 @@
 const TRACK = '<script src="../common/js/track.js?v=1020" defer></script>';
 const STORY_SCRIPTS = [
   '<!-- 글은 백오피스 DB에서(게시물 관리): 사본(백오피스가 꺼져 있을 때) → 공개 API(DB의 지금 글, 불러오면 사본을 덮어씀) → 그리기. 디자이너 스크립트보다 먼저 -->',
-  '<script src="js/stories-data.js" defer></script>',
+  '<script src="js/stories-data.js?v=sample-20261021" defer></script>',
   '<script src="../api/public/stories.js" defer></script>',
   '<script src="js/stories-render.js" defer></script>'
 ];
@@ -18,13 +18,12 @@ const STORY_STATE_NOTE = '<!-- 빈 목록 · 필터 결과 없음 안내(aica-si
 const STORY_STYLE = '<link rel="stylesheet" href="css/stories-render.css?v=1021">';
 const FAQ_SCRIPTS = [
   '<!-- 자주 묻는 질문: 백오피스 DB(faqs) → 사본 · 공개 API → 그리기(check.js보다 먼저) -->',
-  '<script src="js/faq-data.js" defer></script>',
+  '<script src="js/faq-data.js?v=sample-20261021" defer></script>',
   '<script src="../api/public/faq.js" defer></script>',
   '<script src="js/faq-render.js?v=1020" defer></script>'
 ];
-// 한눈에 보기 큰 인터뷰 카드의 인용(.hb-ivf-q). 사진 · 제목 · 이름 · 주소는 가장 최근 인터뷰(DB)로 채워지고 인용은 페이지 글이에요.
-// 팀 사이트(카테고리 페이지 관리, 2026-10-21)의 글: 지금 가장 최근 인터뷰(iv-p14)의 한 줄. 큰 카드 인터뷰가 바뀌면 같이 고쳐요.
-const HUB_INTERVIEW_QUOTE = '객체 탐지 기술을 직접 개발해보고 싶어요.';
+// 큰 카드의 기본 안내는 특정 DB 글에서 복사하지 않습니다. 실제 인터뷰 내용은 공개 API/사본으로 그립니다.
+const HUB_INTERVIEW_QUOTE = '인터뷰 내용을 자세히 살펴보세요.';
 
 function fail(path, what) { throw new Error(`backoffice-site: ${path}에서 ${what}을(를) 찾지 못했어요. 디자인이 바뀌었는지 확인해 주세요.`); }
 
@@ -95,7 +94,7 @@ function storyHead(html, path, anchor) {
 }
 
 const PAGES = {
-  'home/index.html': (html, path) => insertAfter(html, '<script src="../common/js/site.js', [TRACK, '<script src="js/ticker-render.js" defer></script>'], path),
+  'home/index.html': (html, path) => insertAfter(html, '<script src="../common/js/site.js', [TRACK, '<script src="js/ticker-render.js?v=sample-20261021" defer></script>'], path),
   'about/index.html': (html, path) => insertAfter(html, '<script src="../common/js/site.js', [TRACK], path),
   'life/index.html': (html, path) => insertAfter(html, '<script src="../common/js/site.js', [TRACK], path),
   'check/index.html': (html, path) => {

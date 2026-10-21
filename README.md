@@ -78,6 +78,21 @@ npm run preview     # Python 3 로컬 서버: http://127.0.0.1:4173
 최신 사용자 전환 지시에 따라 공개 화면은 사본 → 공개 API → 클라이언트 렌더러 순서로 내용을 표시합니다. 이전 Spring 내보내기 안내는 과거 호환성 참고이며, 통합 동기화는 `frontend/` subtree만 반영하고 Spring 생성물을 만들지 않습니다.
 
 - `scripts/backoffice-site.mjs`는 Claude가 준비한 연결 빌드 단계입니다. `npm run build` / `npm run check`가 API 연결 줄을 보존합니다. `src/` 디자인 원본과 데이터 사본의 역할을 구분합니다.
-- `stories/js/stories-data.js`, `check/js/faq-data.js`, 백오피스가 게시하는 `life/index.html` 목록은 손으로 편집하지 않습니다. 실제 작업 폴더에서 빌드 전 파일 변경을 보존합니다.
+- 공개 프리뷰의 `stories/js/stories-data.js`, `check/js/faq-data.js`는 아래 공개 샘플 규칙을 따릅니다. 비공개 통합본의 DB 사본 두 파일과 백오피스가 게시하는 `life/index.html` 목록은 보존하며 손으로 편집하지 않습니다.
 - `common/js/public-content.js`는 API 스크립트보다 먼저 로드되어 실패를 기록하고, 허용된 HTML/SVG와 URL만 렌더링하도록 돕습니다. API 성공 빈 배열·실패 후 사본·실패 후 사본 없음은 서로 다른 상태입니다.
 - 백엔드·관리자·DB·통합본 루트 scripts/·CI는 담당 Claude의 범위입니다. 실제 DB/기존 서버를 연결 테스트에 사용하지 않습니다.
+
+## 공개 프리뷰 데이터 경계
+
+GitHub 저장소와 Pages에 올라가는 이야기·FAQ 사본은 **합성 샘플**입니다. 실명, 실제 글 본문, DB 사본, 업로드 사진을 비공개 통합본에서 복사하지 않습니다. 샘플 작성자·제목에는 `샘플`을 표시하고 실제 경험·모집 조건으로 읽히지 않도록 안내합니다. 기존 승인된 `content/` 디자인 콘텐츠 전체를 합성 데이터라고 간주하는 규칙은 아닙니다.
+
+```sh
+npm run preview:data       # 공개 origin의 checkout에서만 샘플 사본 2개 생성
+npm run check:public       # 공개 PR 병합·Pages 반영 전 필수: 빌드 일치 + 샘플 전체 바이트 일치
+```
+
+기본 `build`와 `check`는 사본을 만들거나 고치지 않습니다. 비공개 통합본의 실제 사본을 보존하기 위해 공개 전용 검사를 따로 실행합니다. 생성기는 DB나 기존 사본을 읽지 않고 고정된 예시만 사용합니다. 실제 API 응답이 있는 통합 환경에서는 기존 순서대로 응답이 사본을 대체합니다.
+
+통합본에 화면 코드를 반영할 때는 `frontend/stories/js/stories-data.js`, `frontend/check/js/faq-data.js` 두 경로의 기존 바이트를 보존합니다. 두 파일은 의도적으로 달라지므로 전체 frontend tree 일치를 성공 조건으로 쓰지 않습니다. 이 두 경로를 제외한 코드 일치와 두 사본의 변경 없음, 통합 검증 결과를 각각 기록합니다. 다른 파일을 임의로 동기화 예외에 추가하지 않습니다. 백엔드·관리자·DB·통합본 루트 scripts/·CI는 변경하지 않습니다.
+
+현재 파일을 교체해도 이미 공개된 Git 커밋 이력과 외부 복사본은 제거되지 않습니다. 이력 정리는 별도 승인과 협업 조율이 필요합니다.

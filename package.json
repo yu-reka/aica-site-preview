@@ -9,7 +9,7 @@
     "build": "node scripts/build.mjs",
     "check": "node scripts/build.mjs --check",
     "test": "node --test",
-    "preview": "python3 -m http.server 4173 --bind 127.0.0.1",
+    "preview": "python3 scripts/preview.py",
     "export:spring": "node scripts/export-spring.mjs"
   }
 }

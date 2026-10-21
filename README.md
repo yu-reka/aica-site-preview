@@ -63,3 +63,11 @@ npm run preview     # Python 3 로컬 서버: http://127.0.0.1:4173
 ## 검수 반영과 공통 UI
 
 디자인 검수 반영 범위, PR #28 기준 보존 사항과 검증 결과는 [검수 통합 기록](docs/inspection-integration-2026-10-21.md)에 정리했습니다. 색상·타이포·선택 상태·클릭 영역·레이어·모션 규칙과 토큰 다운로드는 [디자인 시스템](docs/design-system/index.html)을 참고하세요.
+
+## 404 안내 연결
+
+`src/pages/404.html`을 빌드하면 루트 `404.html`이 생성됩니다. GitHub Pages는 존재하지 않는 주소에 이 문서를 404 응답으로 사용합니다. 깊은 경로에서도 스타일과 복귀 링크는 사이트 루트를 기준으로 해석하며 `/aica-site-preview/` 하위 경로와 루트 배포를 지원합니다.
+
+`npm run preview`는 같은 문서를 사용하는 로컬 서버입니다. 사용 중인 서버를 종료하지 않고 `npm run preview -- --port 4191`처럼 다른 포트로 확인할 수 있습니다. 기존 `python3 -m http.server` 프로세스에는 이 변경이 자동 적용되지 않습니다.
+
+500 오류 원본은 `src/pages/500.html`이며 Spring 내보내기에 `templates/error/500.html`로 포함됩니다. 오프라인 원본은 `src/pages/offline.html`입니다. 정상 페이지에는 연결 끊김 안내와 느린 페이지 이동의 로딩 표시가 연결되어 있습니다. 실제 Spring 500 응답 연결은 통합 환경에서 별도로 확인하며, 첫 방문 오프라인 캐시 지원은 포함하지 않습니다. 자세한 동작은 `docs/spring-integration.md`를 참고하세요.

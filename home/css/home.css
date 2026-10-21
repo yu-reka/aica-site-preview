@@ -347,7 +347,7 @@ body{background:var(--ax-bg)}
   .hand{grid-column:3/7;grid-row:2;margin:0 10px 48px;align-self:end;font-size:clamp(20px,5.5vw,26px)}
   .hand svg{width:38px;height:20px;margin:-2px 0 0 60%}
   .kw-group{display:flex;align-items:center;gap:6px;align-self:end;justify-self:start;z-index:7;min-width:0;max-width:calc(100% - 12px);margin:0 6px 9px;padding:4px 6px;background:rgba(0,0,0,.58);border-radius:2px;white-space:nowrap;pointer-events:none}
-  .kw-story{grid-column:3/7;grid-row:2}
+  .kw-story{grid-column:3/7;grid-row:2;margin-left:clamp(62px,17vw,76px)}
   .kw-life{grid-column:3/5;grid-row:3;gap:4px;padding-inline:5px}
   .ax .kw-group .kw,.ax[data-active] .kw-group .kw{display:block;margin:0;padding:0;border:0;background:transparent;color:#fff;font-size:clamp(9px,2.5vw,11px);font-weight:600;line-height:1.5;transform:none;box-shadow:none;pointer-events:auto}
   .ax .kw-life .kw,.ax[data-active] .kw-life .kw{font-size:clamp(7.5px,2.1vw,9px);letter-spacing:-.03em}

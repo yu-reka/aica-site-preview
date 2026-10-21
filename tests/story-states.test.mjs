@@ -9,10 +9,10 @@ class Element {
   addEventListener(key,callback){this.events[key]=callback;}
   replaceChildren(...children){this.children=children;}
 }
-function start(){
+function start(extra={}){
   let reloads=0;
   const document={readyState:'loading',body:{dataset:{}},createElement:tag=>new Element(tag),addEventListener(){}};
-  const context=vm.createContext({document,Event,location:{reload(){reloads++;}}});
+  const context=vm.createContext({document,Event,location:{reload(){reloads++;}},...extra});
   vm.runInContext(readFileSync(new URL('../stories/js/story-state.js',import.meta.url),'utf8'),context);
   return {state:context.StoryState,document,get reloads(){return reloads;}};
 }
@@ -56,4 +56,18 @@ test('review reset dispatches actual radio changes and synchronizes both view ow
   ui.state.resetReviews(section);
   assert.ok([...radios.values()].every(radio=>radio.checked));
   assert.deepEqual(events,[['rc_all','change',true],['fco_all','change',true],['pgn1','change',true],['section','reviews:reset']]);
+});
+
+
+test('API failure uses a valid snapshot and distinguishes unavailable data from a successful empty response',()=>{
+  for(const scenario of [
+    {failed:true,items:[],unavailable:true},
+    {failed:true,items:[{id:1}],unavailable:false},
+    {failed:false,items:[],unavailable:false}
+  ]){
+    const ui=start({window:{AicaPublicContentStatus:{storiesApiFailed:scenario.failed},STORIES_DATA:{reviews:scenario.items}}});
+    ui.document.documentElement={dataset:{sub:'reviews'}};
+    assert.equal(ui.state.failed(),scenario.unavailable);
+    assert.equal(ui.document.body.dataset.publicContentUnavailable==='true',scenario.unavailable);
+  }
 });

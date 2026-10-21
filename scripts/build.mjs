@@ -2,6 +2,7 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRenderer, richText, safeUrl, youtubeId } from './template.mjs';
+import { connectBackoffice } from './backoffice-site.mjs';
 
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const readJson = file => JSON.parse(readFileSync(join(root, file), 'utf8'));
@@ -123,7 +124,8 @@ export function build() {
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
     // Render everything before writing, so invalid data cannot leave a partial build.
-    const outputs = build();
+    // The written static site connects to the team backoffice public API; build() and the Spring export stay design-only.
+    const outputs = connectBackoffice(build());
     const check = process.argv.includes('--check');
     const stale = [];
     for (const [path, source] of outputs) {

@@ -26,7 +26,15 @@ var StoryState = (function(){
     }else{action=node('a','story-state__action','이야기 전체 보기');action.href='index.html';}
     host.replaceChildren(icon,heading,copy,action);return host;
   }
-  function failed(){return document.body?.dataset.publicContentUnavailable==='true';}
+  function failed(){
+    if(document.body?.dataset.publicContentUnavailable==='true')return true;
+    if(typeof window==='undefined'||window.AicaPublicContentStatus?.storiesApiFailed!==true)return false;
+    var kind=document.documentElement.dataset.sub;
+    var cached=window.STORIES_DATA&&window.STORIES_DATA[kind];
+    var unavailable=window.AicaPublicContentStatus?.storiesApiFailed===true&&(!Array.isArray(cached)||cached.length===0);
+    if(unavailable)document.body.dataset.publicContentUnavailable='true';
+    return unavailable;
+  }
   function resetReviews(section){
     var radios=['rc_all','fco_all','pgn1'].map(function(id){return document.getElementById(id);}).filter(Boolean);
     radios.forEach(function(radio){radio.checked=true;});

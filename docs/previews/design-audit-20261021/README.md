@@ -11,3 +11,5 @@
 - [37개 화면 폭 측정](layout.json) · [하위 경로 9개 화면 측정](prefix-layout.json)
 
 기존 4173 서버는 검수 사본을 계속 제공합니다. 통합된 실제 저장소 브랜치의 미리보기는 http://127.0.0.1:4175/home/index.html 입니다. main 병합·공개 배포 전의 로컬 미리보기입니다.
+
+- 시설 사진 추가: [3/3에서 양쪽 화살표 활성화](facility-photo-loop-390.jpg) · [순환 확인 기록](facility-photo-loop.json)

@@ -1,0 +1,23 @@
+[
+  {
+    "width": 360,
+    "caption": "3 / 3",
+    "prev": true,
+    "next": true,
+    "wrapped": "1 / 3"
+  },
+  {
+    "width": 390,
+    "caption": "3 / 3",
+    "prev": true,
+    "next": true,
+    "wrapped": "1 / 3"
+  },
+  {
+    "width": 430,
+    "caption": "3 / 3",
+    "prev": true,
+    "next": true,
+    "wrapped": "1 / 3"
+  }
+]

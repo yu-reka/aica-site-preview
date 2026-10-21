@@ -114,3 +114,28 @@
 /* 교육과정 고정 카드: 그리드 첫 칸, 누르면 기록 창에 교육과정 상세(교육과정 5안, 2026-10-08) */
 
 /* 기수 기록 창: 영상은 창 안에서 재생(2026-10-08) */
+
+/* Project reading cards: one blue top rule, full text and automatic bullet numbering. */
+.stories-page .pjd :is(.pjsec > section,.ivwrap > div > section:has(> .pjph-t)){
+  min-width:0;padding:24px;border:1px solid #E2E7EF;border-top:3px solid #2854FF;
+  border-radius:3px 3px 12px 12px;background:#fff;
+}
+.stories-page .pjd .pjph-t{
+  margin:16px 0 0;padding:0;border:0;border-radius:0;
+  font-family:var(--ff-sans);font-size:16px;font-weight:400;line-height:1.9;
+  color:#46536A;letter-spacing:0;word-break:keep-all;overflow-wrap:anywhere;
+}
+.stories-page .pjd .pjsec{margin-top:32px;gap:28px}
+.stories-page .pjd .ivwrap > div > section:has(> .pjph-t){margin-top:28px}
+.stories-page .pjd :is(.pjsec h3,.ivwrap > div > section > h3){margin:0;font-size:20px;line-height:1.5}
+.stories-page .pjd .pj-feature-list{margin:0;padding:0;list-style:none;counter-reset:project-feature}
+.stories-page .pjd .pj-feature-list li{position:relative;padding-left:30px;counter-increment:project-feature}
+.stories-page .pjd .pj-feature-list li+li{margin-top:18px}
+.stories-page .pjd .pj-feature-list li::before{
+  content:counter(project-feature,decimal-leading-zero);position:absolute;left:0;top:3px;
+  font-size:12px;font-weight:700;line-height:24px;color:#2854FF;
+}
+@media(max-width:600px){
+  .stories-page .pjd :is(.pjsec > section,.ivwrap > div > section:has(> .pjph-t)){padding:20px}
+  .stories-page .pjd .pjph-t{font-size:15px;line-height:1.9}
+}

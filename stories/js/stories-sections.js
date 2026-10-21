@@ -13,7 +13,6 @@
     return {a:a,c:c,v:!!dur,t:(a.querySelector('h3')||{}).textContent||'',s:(a.querySelector('.tb p')||{}).textContent||'',n:(a.querySelector('.by b')||{}).textContent||'',tr:(a.querySelector('.by em')||{}).textContent||''};
   });
   var STEP=6,pg=1,coh='all',view='grid';   // 10-13: '더 보기' → 기수별 이모저모와 같은 숫자 페이지(6개씩)
-  try{view=localStorage.getItem('iva-view')||'grid'}catch(e){}
   var out=sec.querySelector('.iva-out'),more=sec.querySelector('.iva-more'),empty=sec.querySelector('.iva-empty');
   function chip(box,val,label,curv){var b=document.createElement('button');b.type='button';b.textContent=label;b.setAttribute('aria-pressed',val===curv);b.onclick=function(){coh=val;pg=1;draw()};box.appendChild(b)}
   function chips(){
@@ -56,7 +55,9 @@
   function pbtn(label,to,o){var b=document.createElement('button');b.type='button';b.textContent=label;
     if(o.cur)b.setAttribute('aria-current','page');if(o.dis)b.disabled=true;if(o.aria)b.setAttribute('aria-label',o.aria);
     b.onclick=function(){pg=to;draw();var top=sec.getBoundingClientRect().top+scrollY-140;scrollTo({top:top,behavior:'smooth'})};return b}
-  sec.querySelectorAll('.iva-seg button').forEach(function(b){b.onclick=function(){view=b.dataset.v;try{localStorage.setItem('iva-view',view)}catch(e){}draw()}});
+  sec.querySelectorAll('.iva-seg button').forEach(function(b){b.onclick=function(){view=b.dataset.v;draw()}});
+  // Page re-entry, including the browser back/forward cache, starts in grid view.
+  addEventListener('pageshow',function(){if(view!=='grid'){view='grid';draw()}});
   draw();
 })();
 

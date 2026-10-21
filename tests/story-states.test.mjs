@@ -37,7 +37,7 @@ test('load failure is distinct from empty, gives retry, and uses the explicit Sp
   host.children[3].events.click();assert.equal(ui.reloads,1);
 });
 test('all four exported collection pages share states and failure contract without expanding Spring output paths',()=>{
-  const artifacts=springArtifacts();assert.equal(artifacts.size,9);
+  const artifacts=springArtifacts();assert.equal(artifacts.size,12);
   for(const kind of ['reviews','interviews','projects','cohorts']){
     const html=artifacts.get('templates/public-site/'+kind+'.html');
     assert.equal((html.match(/data-story-list-state/g)||[]).length,1,kind);

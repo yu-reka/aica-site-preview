@@ -62,6 +62,9 @@ export function springArtifacts() {
     hub: ['r-career-5','r-life-6','r-class-12','r-proj-8'].includes(r.id)
   }}));
   output.set('review-seed.json', JSON.stringify(seed, null, 2) + '\n');
+  output.set('templates/error/404.html', generated.get('404.html'));
+  output.set('templates/error/500.html', generated.get('500.html'));
+  output.set('static/offline.html', generated.get('offline.html'));
   addStoryArtifacts(output, generated);
   return output;
 }

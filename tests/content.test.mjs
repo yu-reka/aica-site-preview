@@ -22,12 +22,12 @@ test('one review edit reaches card, list and detail without editing markup', () 
 
 test('all generated pages and site settings render from source', () => {
   const outputs = build();
-  assert.equal(outputs.size, 11);
+  assert.equal(outputs.size, 14);
   for (const [path, html] of outputs) {
     if (!path.endsWith('.html')) continue;
     assert.match(html, /<!doctype html>/i);
     assert.doesNotMatch(html, /\{\{(?:>|#each|\/each)/);
-    if (path !== 'index.html') {
+    if (!['index.html','404.html','500.html','offline.html'].includes(path)) {
       const scripts = [...html.matchAll(/<script src="([^"]+)"/g)].map(match => match[1].split('?')[0]);
       for (const name of ['menu', 'site-layout', 'site']) assert.ok(scripts.includes(`../common/js/${name}.js`));
       assert.ok(scripts.indexOf('../common/js/menu.js') < scripts.indexOf('../common/js/site-layout.js'));

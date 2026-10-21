@@ -22,9 +22,8 @@ const FAQ_SCRIPTS = [
   '<script src="../api/public/faq.js" defer></script>',
   '<script src="js/faq-render.js?v=1020" defer></script>'
 ];
-// 한눈에 보기 큰 인터뷰 카드의 인용(.hb-ivf-q). 사진 · 제목 · 이름 · 주소는 가장 최근 인터뷰(DB)로 채워지고 인용은 페이지 글이에요.
-// 팀 사이트(카테고리 페이지 관리, 2026-10-21)의 글: 지금 가장 최근 인터뷰(iv-p14)의 한 줄. 큰 카드 인터뷰가 바뀌면 같이 고쳐요.
-const HUB_INTERVIEW_QUOTE = '객체 탐지 기술을 직접 개발해보고 싶어요.';
+// 큰 카드의 기본 안내는 특정 DB 글에서 복사하지 않습니다. 실제 인터뷰 내용은 공개 API/사본으로 그립니다.
+const HUB_INTERVIEW_QUOTE = '인터뷰 내용을 자세히 살펴보세요.';
 
 function fail(path, what) { throw new Error(`backoffice-site: ${path}에서 ${what}을(를) 찾지 못했어요. 디자인이 바뀌었는지 확인해 주세요.`); }
 

@@ -349,6 +349,7 @@
         if (h) h.textContent = f.title || '';
         if (by) by.textContent = who(f);
         if (em) em.hidden = !em.textContent.trim();
+        if (q && D.previewSample === true) q.textContent = f.summary || '';
         if (q) q.hidden = !q.textContent.trim();
         ivBox.insertAdjacentHTML('beforeend', list);
       } else if (card) {

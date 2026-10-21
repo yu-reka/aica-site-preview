@@ -128,7 +128,15 @@
 .lm-content .housing-map{position:relative;height:280px;border-radius:18px;overflow:hidden;background:#f3f5f2;margin-bottom:16px;border:1px solid #e3e7ed}
 .lm-content .housing-map .hzmap2{height:100%;width:100%;display:block}
 .lm-content .map-note{position:absolute;right:10px;bottom:8px;background:#ffffffdb;padding:4px 7px;border-radius:8px;font-size:9px;color:var(--muted)}
-.lm-content .housing-selector{gap:12px;white-space:nowrap;margin-bottom:20px}
+.lm-content .housing-selector-wrap{position:relative;margin-bottom:20px}
+.lm-content .housing-selector{gap:12px;white-space:nowrap;margin-bottom:0;scroll-padding-inline:44px}
+.lm-content .housing-tab-arrow{position:absolute;top:0;bottom:1px;width:44px;min-height:44px;padding:0;border:0;border-radius:0;display:grid;place-items:center;color:var(--ink);z-index:1}
+.lm-content .housing-tab-arrow[hidden]{display:none}
+.lm-content .housing-tab-prev{left:0;background:linear-gradient(90deg,#fff 65%,#fff0)}
+.lm-content .housing-tab-next{right:0;background:linear-gradient(270deg,#fff 65%,#fff0)}
+.lm-content .housing-tab-arrow svg{width:16px;height:16px}
+.lm-content .housing-tab-prev svg{transform:rotate(180deg)}
+.lm-content .housing-tab-arrow:focus-visible{outline-offset:-3px}
 .lm-content .housing-selector>button{font-size:12px;padding:0 3px}
 .lm-content .housing-rail .rail{align-items:stretch;padding-top:3px;padding-bottom:12px}
 .lm-content .housing-card{width:calc(100vw - 50px);flex:0 0 calc(100vw - 50px);padding:22px 20px 24px;border:2px solid var(--black);border-radius:20px;background:#fff;box-shadow:3px 4px 0 var(--black);scroll-snap-align:center;min-width:0;max-width:550px}

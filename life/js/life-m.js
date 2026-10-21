@@ -106,11 +106,54 @@
     });
   }
 
+  function wireHousingTabs() {
+    const tabs = $('.housing-selector');
+    const buttons = $$('[data-area]', tabs);
+    const previous = $('.housing-tab-prev');
+    const next = $('.housing-tab-next');
+    const sync = () => {
+      const focused = document.activeElement;
+      previous.hidden = tabs.scrollLeft <= 2;
+      next.hidden = tabs.scrollLeft >= tabs.scrollWidth - tabs.clientWidth - 2;
+      // Keep keyboard focus available when the focused edge disappears.
+      if ((focused === previous && previous.hidden) ||
+          (focused === next && next.hidden)) {
+        const target = !next.hidden ? next : !previous.hidden ? previous : buttons[state.housingIndex];
+        target?.focus({ preventScroll: true });
+      }
+    };
+    const reveal = button => {
+      if (!button || !tabs.clientWidth) return;
+      const viewport = tabs.getBoundingClientRect();
+      const rect = button.getBoundingClientRect();
+      const left = viewport.left + (tabs.scrollLeft > 2 ? previous.offsetWidth : 0);
+      const right = viewport.right - (tabs.scrollLeft < tabs.scrollWidth - tabs.clientWidth - 2 ? next.offsetWidth : 0);
+      const delta = rect.left < left ? rect.left - left : rect.right > right ? rect.right - right : 0;
+      // Card swipes can cross several areas; reveal immediately without competing animations.
+      if (delta) tabs.scrollBy({ left: delta, behavior: 'instant' });
+      sync();
+    };
+    const move = direction => tabs.scrollBy({ left: direction * tabs.clientWidth * .72, behavior: reduce.matches ? 'auto' : 'smooth' });
+    previous.onclick = () => move(-1);
+    next.onclick = () => move(1);
+    tabs.addEventListener('scroll', sync, { passive: true });
+    tabs.addEventListener('focusin', event => reveal(event.target.closest('[data-area]')));
+    const observer = new ResizeObserver(() => { sync(); reveal(buttons[state.housingIndex]); });
+    observer.observe(tabs);
+    railObservers.push(observer);
+    sync();
+    return index => reveal(buttons[index]);
+  }
+
   function wireHousing() {
     const track = $('.housing-rail .rail');
     track.scrollLeft = state.housingIndex * (track.clientWidth - 10);
-    const sync = index => {
+    const revealArea = wireHousingTabs();
+    let revealTimer;
+    railObservers.push({ disconnect: () => clearTimeout(revealTimer) });
+    const sync = (index, reveal = true) => {
       state.housingIndex = index;
+      if (reveal) revealArea(index);
       $$('[data-area]').forEach(button => button.setAttribute('aria-pressed', String(+button.dataset.area === index)));
       $$('.hzmap-d').forEach(pin => {
         pin.classList.toggle('on', +pin.dataset.i === index);
@@ -139,7 +182,9 @@
         const difference = Math.abs(rect.left + rect.width / 2 - midpoint);
         if (difference < distance) { distance = difference; best = index; }
       });
-      sync(best);
+      sync(best, false);
+      clearTimeout(revealTimer);
+      revealTimer = setTimeout(() => revealArea(state.housingIndex), 120);
     }, { passive: true });
     sync(state.housingIndex);
     updateBudget();

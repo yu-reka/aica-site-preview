@@ -84,8 +84,6 @@
 .stories-page .pj-subject-options button:hover{background:var(--g50);color:var(--g900)}
 .stories-page .pj-subject-options button[aria-pressed="true"]{color:var(--primary);font-weight:700;background:#F2F5FF}
 .stories-page .pj-subject-filter :is(summary,button):focus-visible{outline:2px solid var(--primary);outline-offset:3px}
-.stories-page .pj-subject-empty{padding:64px 24px;border:1px dashed var(--line);border-radius:24px;text-align:center;color:var(--muted);line-height:1.7}
-.stories-page .pj-subject-empty[hidden]{display:none}
 @media(max-width:600px){
   .stories-page .pj-filter-row{gap:8px;margin:12px 0 24px}
   .stories-page .pj-filter-row .pj-cohort-filters{margin:0;flex:none}

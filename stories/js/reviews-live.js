@@ -10,7 +10,9 @@
   let page = 1, cohort = '', tag = '';
   const pageSize = 12;
   const cohortOf = card => Array.from(card.classList).find(c => /^coh\d+$/.test(c))?.slice(3) || '';
-  const empty = document.createElement('p');
+  const empty = document.createElement('div');
+  empty.className = 'story-state--desktop';
+  empty.setAttribute('data-review-filter-empty','');
   empty.textContent = '선택한 조건에 맞는 후기가 없습니다.';
   empty.setAttribute('role', 'status'); empty.hidden = true;
   pager.before(empty);
@@ -46,6 +48,9 @@
     const total = Math.max(1, Math.ceil(matching.length / pageSize)); page = Math.min(page,total);
     const visible = new Set(matching.slice((page-1)*pageSize,page*pageSize).map(item => item.index));
     cards.forEach((card,index) => { card.hidden = !visible.has(index); if (rows[index]) rows[index].hidden = card.hidden; });
+    if(cards.length&&!matching.length&&typeof StoryState!=='undefined')StoryState.render(empty,'filter',{subject:'후기',onReset:()=>{
+      StoryState.resetReviews(section);section.querySelector('.dw-fco summary').focus({preventScroll:true});
+    }});
     empty.hidden = !cards.length || matching.length > 0;
     pager.replaceChildren(); pager.hidden = matching.length <= pageSize;
     if (!pager.hidden) {
@@ -56,6 +61,11 @@
       pager.append(pageButton('›', page + 1, page === total));
     }
   }
+  section.addEventListener('reviews:reset',()=>{
+    cohort='';tag='';page=1;
+    cohorts.querySelectorAll('button').forEach(button=>button.setAttribute('aria-pressed',String(button.textContent==='전체')));
+    section.querySelector('.dw-fco summary b').textContent='기수';refresh();
+  });
   section.addEventListener('change', event => { if (event.target.name === 'rc') { page=1; refresh(); } });
   window.addEventListener('hashchange', () => { if (/^#tg-/.test(location.hash) || location.hash === '#p-rev') page=1; refresh(); });
   if (document.body.dataset.previewAnchor) location.hash = document.body.dataset.previewAnchor;

@@ -106,7 +106,7 @@ test('DB cohort/subject intersections paginate six at a time and synchronize mob
 test('empty DB has only all controls while static preview retains its upcoming-cohort behavior', () => {
   const empty = start([]);
   assert.equal(empty.filters.children.length, 1); assert.equal(empty.options.children.length, 1);
-  assert.equal(empty.empty.hidden, false); assert.equal(empty.pager.hidden, true);
+  assert.equal(empty.empty.hidden, true); assert.equal(empty.pager.hidden, true); // Shared published-empty state is separate from filter results.
   const ui = start([['6', '컴퓨터비전']], { live: false });
   ui.cohort('7'); assert.equal(ui.notice.hidden, false);
   ui.back.click(); assert.equal(ui.shown(), 1); assert.equal(ui.notice.hidden, true);

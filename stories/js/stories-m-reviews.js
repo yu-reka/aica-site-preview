@@ -41,7 +41,7 @@ const StoriesMobileReviews = (() => {
     cohorts.classList.add('sm-cohort-chips');
     var count = el('p', 'sm-review-count'); count.setAttribute('role', 'status');
     var board = el('div', 'sm-review-board');
-    var empty = el('p', 'sm-review-empty', '선택한 조건에 맞는 후기가 없습니다.');
+    var empty = el('div', 'sm-review-empty', '선택한 조건에 맞는 후기가 없습니다.');
     var pager = el('nav', 'sm-review-pager cpager'); pager.setAttribute('aria-label', '후기 페이지');
     var category = 'all', cohort = '', page = 1, tag = '', pageSize = 10;
     var entries = cards.map(function(card){
@@ -95,6 +95,9 @@ const StoriesMobileReviews = (() => {
       count.textContent = matching.length + '개의 후기';
       board.replaceChildren();
       matching.slice((page - 1) * pageSize, page * pageSize).forEach(function(e){ board.appendChild(e.node); });
+      if(!matching.length&&typeof StoryState!=='undefined')StoryState.render(empty,'filter',{subject:'후기',onReset:function(){
+        StoryState.resetReviews(section);categories.querySelector('button').focus({preventScroll:true});
+      }});
       empty.hidden = matching.length > 0; board.hidden = !matching.length;
       pager.replaceChildren(); pager.hidden = !matching.length;
       if (matching.length){
@@ -118,6 +121,7 @@ const StoriesMobileReviews = (() => {
       var wrapper = el('div', 'sm-review-source'); original.before(wrapper); wrapper.appendChild(original);
     });
     section.classList.add('sm-review-ready');
+    section.addEventListener('reviews:reset',function(){category='all';cohort='';tag='';page=1;refresh();});
     section.addEventListener('change', function(e){
       if (e.target.name === 'rc'){ category = e.target.id.slice(3); page = 1; refresh(); }
     });

@@ -42,7 +42,8 @@
     out.dataset.view=view;out.innerHTML='';
     var pages=Math.max(1,Math.ceil(list.length/STEP));if(pg>pages)pg=pages;
     list.slice((pg-1)*STEP,pg*STEP).forEach(function(d){out.appendChild(card(d))});
-    empty.hidden=list.length>0;
+    if(!list.length&&D.length&&typeof StoryState!=='undefined')StoryState.render(empty,'filter',{subject:'인터뷰',onReset:function(){coh='all';pg=1;draw();sec.querySelector('[data-f=coh] button').focus({preventScroll:true});}});
+    empty.hidden=!D.length||list.length>0;
     more.hidden=true;
     nav.innerHTML='';nav.hidden=pages<2;
     if(pages>1){

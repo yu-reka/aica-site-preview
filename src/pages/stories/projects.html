@@ -20,7 +20,7 @@
 {{> stories/head-scripts}}
   <script src="js/stories-m.js?v=1020springtypes" defer></script>
   <script src="js/stories.js?v=1016integrity" defer></script>
-  <script src="js/projects-filter.js?v=1020integratedfilters" defer></script>
+  <script src="js/projects-filter.js?v=1020states" defer></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
@@ -46,6 +46,7 @@
     <div class="sh sh-row">
       <div><p class="sh-k">프로젝트 아카이브</p><h2>선배들은 여기서 이런 걸 만들었어요</h2></div>
     </div>
+    <div data-story-list-state hidden></div>
     <!-- 10-13 사본: 한 번에 하나만 보이던 캐러셀(라디오 pr0~pr5 · 화살표 · 썸네일) → 여섯 개를 한눈에 훑는 카드 격자(사용자 '캐러셀 배치가 별로').
          카드 글은 캐러셀 무대에 있던 것 그대로. 기간(TERM, 모두 도약과정 720H)은 카드마다 같아 빼고 상세에만 둠. 누르면 아래 상세(#pj-N)
          번호 알약(01~06)은 격자에선 순서 뜻이 없고 아래 '8개월 뒤의 나' 01~03과 겹쳐 뺌(허브 카드와 같음). 번호는 상세(.pjno)에만
@@ -76,7 +77,7 @@
       <p>그동안 6기 선배들이 만든 프로젝트를 먼저 살펴보세요.</p>
       <button class="pj-empty-back" type="button">6기 프로젝트 보기 →</button>
     </section>
-    <p class="pj-subject-empty" role="status" hidden>선택한 조건에 맞는 프로젝트가 없어요. 다른 과정을 선택해 주세요.</p>
+    <div class="pj-subject-empty" hidden></div>
     <div class="pjgrid">
       {{#each stories.projects}}{{> @view.card.template}}
       {{/each}}

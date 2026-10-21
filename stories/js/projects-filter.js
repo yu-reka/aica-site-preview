@@ -63,7 +63,11 @@
       const upcoming=!live&&cohort==='7'&&!cards.some(card=>card.dataset.cohort==='7');
       const notice=section.querySelector('.pj-filter-empty');
       if(notice)notice.hidden=!upcoming;
-      section.querySelector('.pj-subject-empty').hidden=!!matching.length||upcoming;
+      const noResults=section.querySelector('.pj-subject-empty');
+      if(!matching.length&&!upcoming&&cards.length&&typeof StoryState!=='undefined')StoryState.render(noResults,'filter',{subject:'프로젝트',onReset:()=>{
+        selectSubject('');filters.querySelectorAll('button').forEach(button=>button.setAttribute('aria-pressed',String(!button.dataset.cohort)));refresh(true);filters.querySelector('button').focus({preventScroll:true});
+      }});
+      noResults.hidden=!cards.length||!!matching.length||upcoming;
       pager.replaceChildren();pager.hidden=!matching.length;
       if(matching.length){
         pager.append(pageButton('←',page-1,page===1,false));

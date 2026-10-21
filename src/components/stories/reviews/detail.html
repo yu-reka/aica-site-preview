@@ -9,7 +9,7 @@
       <div class="mbody">
         <p class="lead" data-field="summary">{{summary}}</p>
         {{{bodyHtml}}}
-        <div class="mtags"><a class="t" href="{{tags.0.href}}" data-field="tag">{{tags.0.label}}</a><span class="hint">태그를 누르면 창이 닫히고 그 태그의 후기만 모여요</span></div>
+        <div class="mtags">{{#each tags}}{{> stories/reviews/tag}}{{/each}}<span class="hint">태그를 누르면 창이 닫히고 그 태그의 후기만 모여요</span></div>
       </div>
     </div>
   </div>

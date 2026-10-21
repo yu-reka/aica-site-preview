@@ -1,8 +1,8 @@
-/* =========================================================
-   사이트 토큰: 메인 색 · 글꼴 · 크기 (모든 페이지 공통)
-   색 · 글꼴을 바꿀 때는 이 파일만 고칩니다.
-   2026-10-06 결정: 메인 색 #2457F5, 지원하기 버튼 노랑 #FEE500, 랜딩 바탕 · 헤더 막대 기본색 차콜 #2B2D31(10-07 변경, 전에는 파랑 #0B2854), 기본 글꼴 Pretendard(알아보기 글꼴), 작은 제목 Paperlogy, 큰 제목 Giants
-   ========================================================= */
+/* Site tokens: shared brand, typography and interaction contracts.
+   The inspection copy keeps approved page-specific variants in their owning CSS.
+   Brand/header #2457F5; inquiry CTA white; yellow is decorative/Kakao.
+   Small text on tinted surfaces uses --text-secondary or --text-on-soft.
+*/
 
 /* 글꼴 파일은 common/assets/fonts. Pretendard는 400 · 700 · 900 파일만 있어 500 이하는 Regular, 600~800은 Bold로 씁니다 */
 @font-face{font-family:"Pretendard";src:url("../assets/fonts/Pretendard-Regular.woff2") format("woff2");font-weight:100 500;font-style:normal;font-display:swap}
@@ -35,8 +35,7 @@
   --on-cta:#2457F5;      /* 흰 알약 위 글자: 메인 파랑. 다크 모드에서도 이 값 고정(흰 면 위 5.6 : 1) */
   --yellow:#FEE500;      /* 강조 노랑(10-14: 전 --cta 값). 선배들의 이야기 장식(번호 · 키커 · 배지 · 분류 점) · 카카오톡 버튼. 지원하기에는 쓰지 않음 */
 
-  /* 상단 헤더 막대. 기본은 랜딩 바탕색(home.css --ax-bg가 이 값을 씀): 차콜
-     페이지마다 자기 CSS에서 :root{--header-bg:…}로 그 페이지에 맞는 색을 씀(알아보기 #1C2A4A) */
+  /* 공통 상단 헤더 막대: 승인된 파랑. 본문 지역색과 분리하여 관리합니다. */
   --header-bg:#2457F5;   /* 10-13: 새 랜딩(aica-home-v2) 헤더와 같은 파랑. 흰 글자 5.6 : 1. 전에는 남색 #102D80 */
   --on-header:#fff;
   --header-muted:#fff;   /* 파랑 위 흐린 흰색은 대비 미달이라 쓰지 않음(랜딩과 같음) */
@@ -71,3 +70,6 @@
 
 /* 밝은 화면 고정(10-14): 기기 · 브라우저가 다크 모드여도 색이 바뀌지 않게(Chrome 자동 어둡게도 막음) */
 :root{color-scheme:only light}
+
+/* Inspection copy: role contracts, independent of page-local --muted aliases. */
+:root{--text-secondary:#566175;--text-support:#566175;--text-on-soft:#102D80;--control-target:44px;--control-radius:10px;--control-font:14px;--layer-header:50;--layer-dock:45;--layer-drawer-dim:59;--layer-drawer:60;--layer-toast:90;--layer-dialog:200;--layer-zoom:260;--layer-check-dock:35;--type-caption:12px;--type-label:14px;--type-body:16px;--type-section:clamp(28px,2.8vw,38px)}

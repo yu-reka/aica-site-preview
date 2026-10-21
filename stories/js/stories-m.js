@@ -80,10 +80,10 @@
     };
     var p = mk('prev'), n = mk('next');
     var upd = function(){
-      p.hidden = scroller.scrollLeft <= 4;
-      n.hidden = scroller.scrollLeft + scroller.clientWidth >= scroller.scrollWidth - 4;
+      SiteUI.syncRail(scroller, p, n);
     };
     scroller.addEventListener('scroll', upd, { passive: true });
+    scroller.addEventListener('keydown', function(event){ if(event.target===scroller) SiteUI.railKeys(event, function(dir){scroller.scrollBy({left:dir*scroller.clientWidth*.8,behavior:reduce.matches?'auto':'smooth'});}); });
     addEventListener('resize', upd); upd(); setTimeout(upd, 600);
   }
   /* 3) 인터뷰 페이지: 추천 인터뷰 카드 넘김(글귀 있는 인터뷰) + 전체 인터뷰 개수 */

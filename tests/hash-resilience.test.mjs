@@ -24,6 +24,7 @@ function runtime(selectors = {}, hash = malformed) {
     addEventListener(name, handler) { (events[name] ||= []).push(handler); },
     setTimeout() {}, requestAnimationFrame(handler) { handler(); },
   });
+  vm.runInContext(source('../common/js/ui.js'), context);
   vm.runInContext(source('../common/js/site.js'), context);
   return { context, document, events, documentEvents };
 }

@@ -65,10 +65,10 @@
       const previous = $('.previous', wrapper);
       const next = $('.next', wrapper);
       const sync = () => {
-        previous.hidden = track.scrollLeft < 4;
-        next.hidden = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+        SiteUI.syncRail(track, previous, next);
       };
       const move = direction => track.scrollBy({ left: direction * track.clientWidth * .86, behavior: reduce.matches ? 'auto' : 'smooth' });
+      track.addEventListener('keydown', event => { if(event.target===track) SiteUI.railKeys(event, move); });
       previous.onclick = () => move(-1);
       next.onclick = () => move(1);
       track.addEventListener('scroll', sync, { passive: true });

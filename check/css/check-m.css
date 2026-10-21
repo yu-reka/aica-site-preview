@@ -42,11 +42,8 @@
 
   /* A bottom chapter control leaves the reading area under the shared header. */
   #main .cm-tabs{display:block;margin-top:24px;padding:12px 20px;border-bottom:1px solid var(--cm-line);background:var(--cm-white)}
-  #main .cm-dock{position:fixed;inset:auto 0 0;z-index:35;margin:0;padding:10px 20px max(14px,env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid var(--cm-line);box-shadow:0 -6px 18px rgba(20,35,63,.08)}
+  #main .cm-dock{position:fixed;inset:auto 0 0;z-index:var(--layer-check-dock,35);margin:0;padding:10px 20px max(14px,env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid var(--cm-line);box-shadow:0 -6px 18px rgba(20,35,63,.08)}
   #main .cm-dock.is-visible{display:block}
-  #main .cm-seg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:4px;border-radius:14px;background:var(--cm-surface)}
-  #main .cm-seg a{display:flex;align-items:center;justify-content:center;min-height:44px;border:2px solid transparent;border-radius:10px;font:600 14px/1.2 var(--cm-body);letter-spacing:-.02em;color:var(--cm-muted);text-decoration:none;white-space:nowrap}
-  #main .cm-seg [aria-current="true"]{border-color:var(--cm-black);background:var(--cm-white);color:var(--cm-ink);font-weight:800;box-shadow:2px 2px 0 var(--cm-black)}
 
   #main .v3-sec{padding:56px 0 0;scroll-margin-top:calc(var(--hdr) + 16px)}
   #main #eligibility{padding-top:24px}

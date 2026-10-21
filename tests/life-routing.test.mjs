@@ -37,6 +37,7 @@ function start(hash, withNav = true) {
     setTimeout(fn) { timers.push(fn); }, dispatchEvent() {}, Event: class {},
     window: { scrollTo() {} }, history: { replaceState() {} },
   });
+  vm.runInContext(source('../common/js/ui.js'), context);
   vm.runInContext(source('../common/js/site.js'), context);
   vm.runInContext(source('../life/js/life.js'), context);
   const initializedTopic = tips.dataset.topic;

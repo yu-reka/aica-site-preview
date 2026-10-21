@@ -1,0 +1,58 @@
+# PR 28 기준 디자인 검수 반영
+
+2026년 10월 21일. 검수 사본의 화면·공통 컴포넌트·접근성 개선을 실제 저장소의 새 작업 브랜치에 통합했습니다. 메뉴는 작은 X, 홈 전광판은 작은 Ⅱ/▶ 아이콘만 표시합니다. 이 기록은 통합 브랜치의 검증 결과이며 main 병합이나 공개 배포 기록이 아닙니다.
+
+## 기준과 보존 범위
+
+- 기준: PR #28 `codex/mobile-story-tag-position`, `169e4983e4ac1a31feedfa80a4c25377cd05ef03`.
+- 기준 main: PR #27이 병합된 `528653f1299dc378b3eb6d418612bea8de908b6e`.
+- 새 브랜치: `codex/design-audit-pr28`.
+- PR #28의 모바일 이야기 태그 왼쪽 여백 `clamp(62px,17vw,76px)`와 기존 데스크톱 배치는 보존했습니다.
+- PR #27의 공통 빈 목록·필터 결과 없음·조회 실패 화면과 실제 조건 초기화, Spring 장애 플래그 및 관련 테스트를 보존했습니다.
+- 기존 체크아웃의 브랜치와 추적 파일은 바꾸지 않고 별도 Git worktree에서 통합했습니다. 미추적 개인 작업 폴더도 보존했습니다.
+- 새 PR은 main을 대상으로 하며 PR #28의 동일 커밋을 포함합니다. PR #28을 먼저 병합한 뒤 이 PR을 병합하는 순서를 권장합니다. PR #28 브랜치에는 추가 커밋을 푸시하지 않습니다.
+
+검수 사본과 기준 브랜치가 함께 수정한 HTML head 다섯 곳의 충돌은 필요한 새 UI/CSS 로딩과 PR #27의 상태 처리 스크립트 버전을 모두 유지하도록 해결했습니다. 생성 HTML을 덮어쓰지 않고 원본 템플릿에서 반영한 뒤 빌드했습니다.
+
+## 화면 변경
+
+| 검수 항목 | 통합 내용과 위치 |
+| --- | --- |
+| A01 글씨 대비 | `common/css/tokens.css`, `about/css/about.css`, `check/css/check.css`, `stories/css/cohort-v3.css`: 보조 글씨 #566175, 옅은 파랑 위 글씨 #102D80, FAQ 선택 숫자 배경 #102D80. 점검한 10개 색 조합의 색 역할을 유지했습니다. |
+| A02 홈 전광판 | `src/pages/home/index.html`, `home/css/home.css`, `home/js/home.js`: 자동 흐름 유지, 오른쪽에 14px Ⅱ만 고정. 정지 후 ▶로 전환하며 글자·별도 배경·구분선 없음. 44×44px 조작 영역이 잘리지 않도록 띠 높이 47px(테두리 3px 포함). 접근성 이름과 키보드, 동작 줄이기 기본 정지 유지. |
+| A03 모바일 메뉴 | `common/js/site-layout.js`, `common/css/site.css`, `common/js/site.js`: 18px X만 표시, ‘닫기’ 문구와 둥근 배경 제거. 44×44px 터치 영역, ‘전체 메뉴 닫기’ 접근성 이름, 바깥 딤·Escape·초점 복귀 유지. |
+| A04 기수 선택 | `src/pages/stories/cohorts.html`, `stories/js/cohort-v3.js`, `stories/css/cohort-v3.css`: 실제 필터 동작에 맞게 group/aria-pressed 사용. 선택 후 해당 기수에 초점 유지. PR #27의 초기화 후 초점 대상도 같은 의미로 수정. |
+| A05 가로 넘침 | `about/css/about.css`: 1200~1380px에서 장식 음수 여백과 색종이 위치 조정. 1280px에서 문서 폭 1265px로 일치. 전역 overflow 숨김은 추가하지 않음. |
+| A06 인터뷰 목차 | `content/stories/interviews.json`: 첫 인터뷰 6번 목차를 실제 질문의 조언 내용에 맞춤. 질문·답변·ID·해시 유지. |
+| F01 사진 캡션 | `life/css/life-m.css`: 모바일 사진 캡션의 어두운 배경과 11px 글씨. 라이프의 중복 장식 번호를 aria-hidden으로 분리. |
+
+## 공통 컴포넌트와 디자인 시스템
+
+- C01/C02: `common/css/components.css`에서 모바일 세그먼트와 밑줄 필터의 선택·포커스·클릭 영역을 공유합니다. 항목 수·페이지 여백·링크/버튼의 의미·승인된 시각 변형은 페이지별로 유지합니다.
+- C03: 후기 상세의 두 변형이 기본 detail 부분 템플릿을 호출하며, `tag.html`로 태그를 반복합니다. 정적 escape와 Spring `th:each`/`th:text`를 유지합니다.
+- C04: `common/js/ui.js`의 `SiteUI.syncRail`과 `railKeys`로 유한 레일 끝 상태와 키보드 보조 처리를 공유합니다. 인터뷰의 무한 순환은 유지합니다.
+- C05: 메뉴·후기·기수 사진·사진 확대의 초점 가두기와 기존 inert 상태 복원을 `SiteUI`로 공유합니다. 이전/다음 상세 탐색과 URL은 유지합니다.
+- D01~D07: 색 역할, 기존 서체의 역할과 크기, 상태 표시, 44px 클릭 영역, 기존 반응형 경계, 레이어·모션 규칙을 공통 토큰과 [디자인 시스템 가이드](design-system/index.html)에 정리했습니다. 다운로드 토큰과 SHA-256 source manifest도 갱신했습니다.
+- `README.md`, `docs/css-ownership.md`, `docs/frontend-structure.md`에 로딩 순서와 소유 파일을 기록했습니다.
+
+## 검증 결과
+
+- `npm run build`: 11개 생성.
+- `npm test`: 71개 통과, 실패 0개. PR #27 상태 처리와 기존 Spring 테스트 포함.
+- `npm run check`: 11개 소스/생성물 일치.
+- `npm run preview`: 4173이 기존 검수 사본 서버에서 사용 중이므로 종료하지 않았습니다. 통합 브랜치는 별도 4175 서버로 확인했습니다.
+- 9개 페이지 × 360/390/430/1440px = 36개 기본 화면. 1280px 알아보기를 추가해 총 37개 상태에서 가로 넘침 없음.
+- `/aica-site-preview/` 하위 경로에서 모바일 390px의 9개 페이지, 공통 UI 로딩·이미지·가로 폭 확인. 콘솔 오류 없음.
+- 모바일 메뉴: X 표시 18×18px / 조작 영역 44×44px. Escape 후 menuBtn으로 초점 복귀.
+- 전광판: Ⅱ 표시 14px / 조작 영역 44×44px / 띠 47px. 클릭 정지 후 ▶, Space·Enter 재생 및 실제 animation-play-state 확인. 동작 줄이기는 실제 홈 스크립트의 런타임 테스트로 확인했습니다.
+- 기수 선택 후 초점 유지, 6기 5월+영상 필터의 빈 상태와 초기화, 사진 모달·확대·Tab 순환·Escape·원래 카드로 초점 복귀를 확인했습니다.
+- 후기 생활 필터·통합 상세·Escape 복귀 확인.
+- `npm run export:spring -- --output /private/tmp/aica-pr28-spring-20261021`: 임시 경로 내보내기 성공. 기존 escape·발행 데이터 경계·공통 UI 로딩 순서 테스트 통과.
+
+측정 원자료와 비교 캡처: [검증 자료](previews/design-audit-20261021/README.md).
+
+## Spring 영향과 미검증 항목
+
+새 `ui.js`, `components.css`가 추가되므로 운영 Spring에 반영할 때 템플릿과 정적 자산을 함께 갱신해야 합니다. 후기 태그 부분 템플릿의 내부 구조는 통합했지만 공개 데이터·임시저장·발행 정책·API 계약과 관리자 권한은 변경하지 않았습니다. 별도 백오피스 저장소와 운영 DB에는 쓰지 않았습니다.
+
+실제 Spring 서버 및 운영 DB의 모든 레코드 조합, 스크린리더 낭독, iOS/Android 물리 기기와 OS 모션 설정 전환은 미검증입니다. 화면·런타임 테스트 결과를 전체 WCAG 인증으로 해석하지 않습니다.

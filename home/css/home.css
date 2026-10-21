@@ -232,7 +232,8 @@ body{background:var(--ax-bg)}
 /* 한 줄 로그 띠: 검정 터미널 줄이 흐름 */
 .tk{position:relative;z-index:2;flex:none;margin:0 calc(clamp(14px,2.2vw,34px) * -1);background:var(--ax-line);border-top:3px solid var(--hm-primary);overflow:hidden;height:44px;display:flex;align-items:center}
 .tk-track{display:flex;width:max-content;animation:tk 60s linear infinite}
-.tk:hover .tk-track{animation-play-state:paused}
+.tk-window:hover .tk-track{animation-play-state:paused}
+.tk.is-paused .tk-track{animation-play-state:paused}
 .tk-list{display:flex;margin:0;padding:0;list-style:none}
 .tk-list li{white-space:nowrap;padding:0 34px 0 0;font-size:14px;font-weight:600;color:#E9E9EA}
 .tk-list li::after{content:"//";margin-left:34px;font-family:var(--ff-mono);color:rgba(255,255,255,.28)}
@@ -252,7 +253,7 @@ body{background:var(--ax-bg)}
 @media (max-width:560px){
   
   
-  .tk{height:42px}
+  .tk{height:47px}
   .tk-list li{font-size:13px}
   
   
@@ -264,8 +265,8 @@ body{background:var(--ax-bg)}
   
 }
 @media (prefers-reduced-motion:reduce){
-  .tk-track{animation:none}
-  .tk{overflow-x:auto}
+  .tk-track{animation-play-state:paused}
+  .tk-window{overflow-x:auto}
   .ax-facts-go a{transition:none}
   .ax-facts-go a:hover{transform:rotate(var(--rot,0))}
 }
@@ -366,3 +367,14 @@ body{background:var(--ax-bg)}
   .checkbox{margin-block:0}
   .checkbox .cb-head{padding-block:5px}
 }
+
+/* Fixed, keyboard-operable control; animation and user pause are independent. */
+.ax .tk{height:47px;align-items:stretch}
+.tk-window{flex:1;min-width:0;overflow:hidden;display:flex;align-items:center}
+.tk-toggle{flex:none;display:flex;align-items:center;justify-content:center;gap:0;width:44px;min-width:44px;min-height:44px;padding:0;border:0;background:transparent;color:#fff;font:700 13px/1 var(--ff-sans);cursor:pointer}
+.tk-toggle-icon{font-size:14px;line-height:1;width:14px;text-align:center}
+.tk-toggle:hover{opacity:.7}
+.tk-toggle:focus-visible{outline:2px solid #fff;outline-offset:-4px}
+.tk.is-running .tk-track{animation-play-state:running}
+
+.tk.is-running .tk-window:hover .tk-track{animation-play-state:paused}

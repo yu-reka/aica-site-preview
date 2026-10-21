@@ -1,0 +1,28 @@
+/* Shared control geometry. Page-specific content and navigation remain local. */
+@media (max-width:600px){
+  :is(.am-seg,#main .cm-seg,html[data-nav="side"] #siteLnb .lnb-list,.sm-dock .lnb-list,.lm-dock .lnb-list).ui-segment{
+    display:grid;grid-auto-columns:minmax(0,1fr);grid-auto-flow:column;gap:4px;padding:4px;border:0;border-radius:14px;background:var(--control-surface,#F5F7F6);list-style:none;overflow:visible;mask-image:none;
+  }
+  :is(.am-seg,#main .cm-seg,html[data-nav="side"] #siteLnb .lnb-list,.sm-dock .lnb-list,.lm-dock .lnb-list).ui-segment :is(a,button){
+    position:static;display:flex;align-items:center;justify-content:center;min-width:0;min-height:var(--control-target);height:auto;margin:0;padding:0 2px;border:2px solid transparent;border-radius:var(--control-radius);background:transparent;color:var(--text-support);font:600 var(--control-font)/1.2 var(--ff-sans);letter-spacing:-.03em;white-space:nowrap;text-decoration:none;cursor:pointer;
+  }
+  :is(.am-seg,#main .cm-seg,html[data-nav="side"] #siteLnb .lnb-list,.sm-dock .lnb-list,.lm-dock .lnb-list).ui-segment :is([aria-pressed="true"],[aria-current="true"],[aria-current="page"]){border-color:var(--ink-strong);background:var(--surface);color:var(--ink);font-weight:800;box-shadow:2px 2px 0 var(--ink-strong)}
+  :is(.am-seg,#main .cm-seg,html[data-nav="side"] #siteLnb .lnb-list,.sm-dock .lnb-list,.lm-dock .lnb-list).ui-segment :is(a,button):focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+  html.school-about #main .am-seg--cohort.ui-segment button[data-k="7"][aria-pressed="true"]{background:var(--primary);color:#fff}
+  :is(html[data-nav="side"] .stories-page,.lm-content) .ui-filter{
+    display:flex;grid-template-columns:none;justify-content:flex-start;align-items:stretch;flex-wrap:nowrap;gap:var(--filter-gap,22px);margin-inline:0;padding:0;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;box-shadow:none;overflow-x:auto;scrollbar-width:none;
+  }
+  :is(html[data-nav="side"] .stories-page,.lm-content) .ui-filter :is(a,button){
+    display:flex;align-items:center;justify-content:center;flex:0 0 auto;min-width:max-content;height:auto;min-height:var(--control-target);margin:0 0 -1px;padding:0 2px;border:0;border-bottom:3px solid transparent;border-radius:0;background:transparent;color:var(--text-support);font:600 var(--control-font)/1.2 var(--ff-sans);letter-spacing:-.02em;white-space:nowrap;box-shadow:none;cursor:pointer;text-decoration:none;
+  }
+  :is(html[data-nav="side"] .stories-page,.lm-content) .ui-filter :is([aria-pressed="true"],[aria-current]){border-bottom-color:var(--ink);color:var(--ink);font-weight:800}
+  :is(html[data-nav="side"] .stories-page,.lm-content) .ui-filter :is(a,button):focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
+  .lm-content :is(.food-filters,.budget-options) button,.stories-page .sm-cohort-chips button{min-height:var(--control-target)}
+  .lm-content .budget-options button,.lm-content .food-filters button{border-color:var(--line-ui)}
+  .stories-page .cv3-pin .sm-pin-more{min-height:var(--control-target);padding:8px 0;font-size:12px}
+  .ui-rail-arrow{width:44px;height:44px;min-width:44px;min-height:44px}
+}
+@media (max-width:430px){.stories-page #siteLnb .ui-segment,.sm-dock .ui-segment{--control-font:13px}}
+/* Focus and controls also cover dynamically inserted detail navigation. */
+.ov .x,.cv3-m-x,.cv3-zv-x{min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center}
+.ui-rail-arrow:focus-visible{outline:2px solid var(--primary);outline-offset:2px}

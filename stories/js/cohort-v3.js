@@ -126,9 +126,9 @@
   function chips(){
     var box=$('.cv3-chips'); box.innerHTML='';
     COHS.forEach(function(c,i){
-      var b=document.createElement('button'); b.type='button'; b.setAttribute('role','tab'); b.setAttribute('aria-selected',c===st.coh);
+      var b=document.createElement('button'); b.type='button'; b.setAttribute('aria-pressed',c===st.coh);
       b.innerHTML=lab(c)+'기'+(i===0?'<i aria-hidden="true"></i>':'');
-      b.onclick=function(){ st.coh=c; st.mo=0; st.pg=1; st.diff=false; draw(); };
+      b.onclick=function(){ st.coh=c; st.mo=0; st.pg=1; st.diff=false; draw(); var chosen=$('.cv3-chips button[aria-pressed=\"true\"]'); if(chosen)chosen.focus({preventScroll:true}); };
       box.appendChild(b);
     });
   }
@@ -183,7 +183,7 @@
       $('.cv3-pg').replaceChildren();
       if(typeof StoryState!=='undefined')StoryState.render(empty,'filter',{subject:'기수 이야기',onReset:function(){
         st.mo=0;st.v='all';st.pg=1;draw();
-        var button=root.querySelector('.sm-cv-views [data-v="all"]')||root.querySelector('[role="tab"][aria-selected="true"]');if(button)button.focus({preventScroll:true});
+        var button=root.querySelector('.sm-cv-views [data-v="all"]')||root.querySelector('.cv3-chips [aria-pressed="true"]');if(button)button.focus({preventScroll:true});
       }});
       return;
     }
@@ -217,27 +217,9 @@
   var M=document.querySelector('.cv3-m'), cur=0, last=null, modalVisited=[];
   // Isolate the active dialog, including nested photo zoom, without changing layout.
   // Restore each sibling's previous inert state when switching or closing scopes.
-  var background=[];
-  function isolateDialog(dialog){
-    background.forEach(function(item){item.node.inert=item.inert});background=[];
-    for(var node=dialog;node&&node!==document.body;node=node.parentElement){
-      var parent=node.parentElement;if(!parent)break;
-      [].forEach.call(parent.children,function(sibling){
-        if(sibling===node||/^(SCRIPT|STYLE)$/.test(sibling.tagName))return;
-        background.push({node:sibling,inert:sibling.inert});sibling.inert=true;
-      });
-    }
-  }
-  function trapDialogFocus(event,dialog){
-    var focusable=[].filter.call(dialog.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),iframe,[tabindex]'),function(el){
-      return el.tabIndex>=0&&!el.closest('[inert]')&&el.getClientRects().length&&getComputedStyle(el).visibility!=='hidden';
-    });
-    if(!focusable.length)return;
-    var first=focusable[0],last=focusable[focusable.length-1],at=document.activeElement;
-    if(focusable.indexOf(at)<0||(event.shiftKey?at===first:at===last)){
-      event.preventDefault();(event.shiftKey?last:first).focus({preventScroll:true});
-    }
-  }
+  var dialogScope=SiteUI.createDialogScope();
+  function isolateDialog(dialog){ if(dialog)dialogScope.activate(dialog);else dialogScope.release(); }
+  function trapDialogFocus(event,dialog){SiteUI.trapFocus(event,dialog);}
   function fill(){
     var L=list(), d=L[cur]; if(!d) return;
     if(modalVisited.indexOf(d)<0)modalVisited.push(d);

@@ -1,0 +1,81 @@
+/* Keep the paper square; only the excerpt yields space to the complete title. */
+.stories-page #p-rev .idc{aspect-ratio:1;contain:size;min-height:0;align-self:start;box-sizing:border-box}
+.stories-page #p-rev .idc .cbar{height:auto;padding:18px 18px 0;flex:none}
+.stories-page #p-rev .idc .in{flex:1;min-height:0;padding:8px 18px 16px;display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:0}
+.stories-page #p-rev .idc h3{min-height:50px;flex:none}
+.stories-page #p-rev .idc>.in>p{margin:8px 0 0;min-height:0;align-self:stretch}
+.stories-page #p-rev .idc .who{margin-top:0;padding-top:12px;min-height:34px;box-sizing:border-box}
+.hb .hb-pi{aspect-ratio:1;contain:size;min-height:0;box-sizing:border-box;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;gap:0;padding:16px 16px 14px}
+.hb .hb-pi h3{margin:10px 0 0}
+.hb .hb-pi p{margin:8px 0 16px;min-height:0}
+.hb .hb-pi-by{margin:0;padding-top:12px}
+.stories-page #p-rev .idc>.in>p,.hb .hb-pi p,.stories-page .sm-review-preview{display:block;overflow:hidden}
+.note-excerpt{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:var(--note-lines,1);overflow:hidden}
+@media(max-width:600px){
+  .stories-page .sm-review-board{padding-inline:4px;column-gap:8px}
+  .stories-page .sm-review-note{aspect-ratio:1;contain:size;box-sizing:border-box;display:grid;grid-template-rows:minmax(0,1fr) auto;align-self:start}
+  .stories-page .sm-review-summary{min-height:0;padding:4px 6px 0;display:grid;grid-template-rows:auto auto minmax(0,1fr);gap:2px}
+  .stories-page .sm-review-summary h3{margin:0}
+  .stories-page .sm-review-preview{min-height:0}
+  .stories-page .sm-review-by{box-sizing:border-box;margin:0 6px;padding:2px 0;height:23px;min-height:0;flex-wrap:nowrap;gap:3px}
+  .stories-page .sm-review-by b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .stories-page .sm-review-tag{flex:none;padding:1px 4px;line-height:14px}
+}
+
+/* Review dialog: colored identity header, white reading paper and native slim scrolling. */
+.stories-page .ov .sheet .mscroll{
+  background:#fff;scrollbar-width:thin;scrollbar-color:#14233f45 transparent;
+}
+.stories-page .ov .mscroll::-webkit-scrollbar{width:5px}
+.stories-page .ov .mscroll::-webkit-scrollbar-track{background:transparent}
+.stories-page .ov .mscroll::-webkit-scrollbar-thumb{background:#14233f45;border-radius:8px}
+.stories-page .ov .mscroll::-webkit-scrollbar-thumb:hover{background:#14233f75}
+.stories-page .ov .sheet::before{background:#fff}
+.stories-page .ov .sheet::after{background:linear-gradient(315deg,#d7dbe1 38%,#eef0f3 62%,#fff 100%)}
+.stories-page .ov .mtop{background:var(--pi,#FFF1A6);padding:32px 42px}
+.stories-page .ov .mtop h3{padding-right:12px;line-height:1.45;word-break:keep-all;overflow-wrap:anywhere}
+.stories-page .ov .mbody{
+  background:#fff;padding:32px 42px 24px;font-family:var(--ff-sans);
+}
+.stories-page .ov .mbody p{
+  font-family:var(--ff-sans);font-size:16px;font-weight:400;line-height:1.95;
+  color:#394359;letter-spacing:0;word-break:keep-all;overflow-wrap:anywhere;
+}
+.stories-page .ov .mbody p+p{margin-top:28px}
+.stories-page .ov .mbody .lead{font-size:17px;font-weight:650;line-height:1.8;color:#14233F}
+.stories-page .ov .mbody .lead+p{margin-top:32px}
+.stories-page .ov .sd-nav{background:#fff;padding-inline:42px}
+@media(max-width:600px){
+  .stories-page .ov .mtop{padding:28px 24px}
+  .stories-page .ov .mbody{padding:26px 24px 20px}
+  .stories-page .ov .mbody p{font-size:15px}
+  .stories-page .ov .mbody .lead{font-size:16px}
+  .stories-page .ov .sd-nav{padding-inline:24px}
+}
+
+/* Content length never resizes the dialog; only the inner paper scrolls. */
+.stories-page .ov .sheet{
+  height:min(86vh,calc(100vh - 64px));
+  height:min(86dvh,calc(100dvh - 64px));
+  flex:none;min-height:0;
+}
+
+/* Native scrolling stays inside the paper; its control sits outside the curled edge. */
+.stories-page .ov .review-external-scroll .mscroll{scrollbar-width:none}
+.stories-page .ov .review-external-scroll .mscroll::-webkit-scrollbar{display:none}
+.stories-page .ov .review-scrollbar{
+  position:absolute;z-index:5;right:-24px;top:12px;bottom:44px;width:20px;
+  border:0;padding:0;background:transparent;touch-action:none;cursor:grab;
+}
+.stories-page .ov .review-scrollbar:active{cursor:grabbing}
+.stories-page .ov .review-scrollbar:focus-visible{outline:2px solid #2457F5;outline-offset:2px;border-radius:8px}
+.stories-page .ov .review-scrollbar[hidden]{display:none}
+.stories-page .ov .review-scroll-track{position:absolute;top:0;bottom:0;left:8px;width:3px;border-radius:6px;background:#d8dfe94d}
+.stories-page .ov .review-scroll-thumb{position:absolute;top:0;left:-1px;width:5px;min-height:36px;border-radius:8px;background:#b5c0d2}
+@media(max-width:600px){
+  .stories-page .ov .review-scrollbar{right:-20px}
+}
+@media(pointer:coarse){
+  .stories-page .ov .review-scrollbar{width:32px;right:-22px}
+  .stories-page .ov .review-scroll-track{left:18px}
+}

@@ -208,7 +208,7 @@
     var grid2 = $('.ivgrid', ivPane), dots = $('.ivdots', ivPane);
     if (grid2) grid2.innerHTML = IV.map(function (v) {
       var vid = v.video && v.video.yt;
-      return '<a class="iv" href="#' + esc(v.anchor) + '"' + (vid ? ' data-yt="' + esc(v.video.yt) + '"' : '') + '>'
+      return '<a class="iv" href="#' + esc(v.anchor) + '" data-interview-summary="' + esc(v.summary || '') + '"' + (vid ? ' data-yt="' + esc(v.video.yt) + '"' : '') + '>'
         + '<div class="ph">' + visual(v, { alt: false, fit: true, field: 'thumbnail' }) + (vid ? '<span class="play"><i></i></span><span class="dur" data-field="duration">' + esc(v.video.dur || '') + '</span>' : '') + '</div>'
         + '<div class="tb"><h3 data-field="title">' + esc(v.title) + '</h3>'
         + '<p data-field="summary">' + esc(v.summary) + '</p>'

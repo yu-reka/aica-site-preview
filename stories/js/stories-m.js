@@ -92,9 +92,10 @@
     var quote = a.getAttribute('data-interview-quote');
     return (quote !== null ? quote : (($('.ivq', a) || {}).textContent || '')).trim();
   }
+  function interviewSummary(a){ return (a.getAttribute('data-interview-summary') || '').trim(); }
   function initInterviews(){
     var head = $('#p-iv .ivlist > .sh-row');
-    var src = $$('#p-iv .ivgrid a.iv').filter(function(a){ return interviewQuote(a); });
+    var src = $$('#p-iv .ivgrid a.iv').filter(function(a){ return interviewQuote(a) || interviewSummary(a); });
     if (!head || !src.length || $('.sm-ivf')) return;
     var box = document.createElement('section');
     box.className = 'sm-ivf'; box.setAttribute('aria-label', '추천 인터뷰');
@@ -108,7 +109,9 @@
       c.appendChild(ph);
       var tx = document.createElement('span'); tx.className = 'sm-ivf-tx';
       var b = document.createElement('b'); b.textContent = ($('h3', a) || {}).textContent || '';
-      var q = document.createElement('q'); q.textContent = interviewQuote(a);
+      var quote = interviewQuote(a), q = document.createElement(quote ? 'q' : 'p');
+      if (!quote) q.className = 'sm-ivf-summary';
+      q.textContent = quote || interviewSummary(a);
       var by = $('.by', a), m = document.createElement('span');
       m.textContent = [($('.av', by) || {}).textContent, ($('b', by) || {}).textContent, ($('em', by) || {}).textContent].filter(Boolean).join(' · ');
       tx.appendChild(b); tx.appendChild(q); tx.appendChild(m); c.appendChild(tx);

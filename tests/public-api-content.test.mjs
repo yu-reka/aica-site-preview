@@ -28,7 +28,7 @@ test('owner-defined legacy IDs resolve only to existing migrated records, preser
   const {window,document}=start(),targets=new Set(['iv-p1','iv-p14','pj-p1','pj-p42','q-1-1']);
   document.getElementById=id=>targets.has(id) ? {} : null;
   const alias=window.AicaPublicContent.legacyHash;
-  for(const [old,next] of [['iv-p63','iv-p1'],['iv-p76','iv-p14'],['pj-p77','pj-p1'],['pj-p118','pj-p42'],['q-63-1','q-1-1']])assert.equal(alias('#'+old),'#'+next);
-  for(const id of ['iv-1','pj-1','iv-p62','pj-p119','r-p1','iv-p64'])assert.equal(alias('#'+id),'#'+id);
+  for(const [old,next] of [['iv-p63','iv-p1'],['iv-p76','iv-p14'],['pj-p77','pj-p1'],['pj-p118','pj-p42']])assert.equal(alias('#'+old),'#'+next);
+  for(const id of ['iv-1','pj-1','q-1-1','q-63-1','iv-p62','pj-p119','r-p1','iv-p64'])assert.equal(alias('#'+id),'#'+id);
   targets.add('iv-p63');assert.equal(alias('#iv-p63'),'#iv-p63');
 });

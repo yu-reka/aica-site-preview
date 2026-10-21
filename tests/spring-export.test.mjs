@@ -94,6 +94,9 @@ test('Spring projects retain shared filters and read escaped metadata from publi
   const fragments=artifacts.get('templates/public-site/story-fragments.html');
   assert.ok(fragments.includes('data-cohort=${s.cohort},data-subject=${s.subject}'));
   assert.ok(fragments.includes('${#strings.isEmpty(s.subject) ? s.type : s.subject}'));
+  const hub=artifacts.get('templates/public-site/stories.html');
+  assert.ok(hub.includes('class="hb-pjc-type" th:text="${#strings.isEmpty(s.subject) ? s.type : s.subject}"'),
+    'Hub project badges must retain the type for legacy records without a subject');
   const seed=JSON.parse(artifacts.get('story-seed.json')).filter(r=>r.kind==='project');
   assert.deepEqual(seed.map(r=>[r.story.cohort,r.story.subject]),loadContent().stories.projects.map(r=>[r.cohort,r.subject]));
   assert.ok(html.indexOf('stories-m.js')<html.indexOf('projects-filter.js'));

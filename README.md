@@ -71,3 +71,13 @@ npm run preview     # Python 3 로컬 서버: http://127.0.0.1:4173
 `npm run preview`는 같은 문서를 사용하는 로컬 서버입니다. 사용 중인 서버를 종료하지 않고 `npm run preview -- --port 4191`처럼 다른 포트로 확인할 수 있습니다. 기존 `python3 -m http.server` 프로세스에는 이 변경이 자동 적용되지 않습니다.
 
 500 오류 원본은 `src/pages/500.html`이며 Spring 내보내기에 `templates/error/500.html`로 포함됩니다. 오프라인 원본은 `src/pages/offline.html`입니다. 정상 페이지에는 연결 끊김 안내와 느린 페이지 이동의 로딩 표시가 연결되어 있습니다. 실제 Spring 500 응답 연결은 통합 환경에서 별도로 확인하며, 첫 방문 오프라인 캐시 지원은 포함하지 않습니다. 자세한 동작은 `docs/spring-integration.md`를 참고하세요.
+
+
+## 2026-10-21 V30 공개 API 연결
+
+최신 사용자 전환 지시에 따라 공개 화면은 사본 → 공개 API → 클라이언트 렌더러 순서로 내용을 표시합니다. 이전 Spring 내보내기 안내는 과거 호환성 참고이며, 통합 동기화는 `frontend/` subtree만 반영하고 Spring 생성물을 만들지 않습니다.
+
+- `scripts/backoffice-site.mjs`는 Claude가 준비한 연결 빌드 단계입니다. `npm run build` / `npm run check`가 API 연결 줄을 보존합니다. `src/` 디자인 원본과 데이터 사본의 역할을 구분합니다.
+- `stories/js/stories-data.js`, `check/js/faq-data.js`, 백오피스가 게시하는 `life/index.html` 목록은 손으로 편집하지 않습니다. 실제 작업 폴더에서 빌드 전 파일 변경을 보존합니다.
+- `common/js/public-content.js`는 API 스크립트보다 먼저 로드되어 실패를 기록하고, 허용된 HTML/SVG와 URL만 렌더링하도록 돕습니다. API 성공 빈 배열·실패 후 사본·실패 후 사본 없음은 서로 다른 상태입니다.
+- 백엔드·관리자·DB·통합본 루트 scripts/·CI는 담당 Claude의 범위입니다. 실제 DB/기존 서버를 연결 테스트에 사용하지 않습니다.

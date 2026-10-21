@@ -183,7 +183,7 @@
     for (var k = CSS_PAGES + 1; k <= pages; k++) {
       var on = '.stories-page .rev:has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn' + k + ':checked)';
       css += on + ' .idc:not(.pg' + k + '),' + on + ' .rvr:not(.pg' + k + '){display:none}'
-        + '.stories-page .rev:has(#pgn' + k + ':checked) .pager label[for=pgn' + k + ']{background:var(--l-blue);color:#fff}';
+        + '.stories-page .rev:has(#pgn' + k + ':checked) .pager.cpager label[for=pgn' + k + ']{background:#2B2D31;border-color:#2B2D31;color:#fff}';   // 1~5쪽과 같은 지금 쪽 표시(presentation.css)
     }
     // 기수 거르기: 시안에 있는 7기~3기 말고 새 기수 후기가 오면 버튼과 규칙을 더해요
     var KNOWN = [7, 6, 5, 4, 3], fcoBox = $('.dw-fco .dwin', rev), fcoLast = $('#fco_' + (KNOWN.length - 1));
@@ -424,13 +424,16 @@
   if (css) { var st = document.createElement('style'); st.setAttribute('data-stories', 'generated'); st.textContent = css; document.head.appendChild(st); }
 
   /* ── 주소(#…)가 방금 그린 글을 가리키면 다시 짚어 창이 열리게 해요(공유 링크 · 미리보기) ── */
-  var hash = location.hash;
+  var originalHash = location.hash;
+  var hash = safe ? safe.legacyHash(originalHash) : originalHash;
   if (hash && hash.length > 1) {
     var target = null;
     try { target = document.getElementById(decodeURIComponent(hash.slice(1))); } catch (e) {}
     if (target && (target.classList.contains('ov') || target.classList.contains('ivd') || target.classList.contains('pjd'))) {
       history.replaceState(null, '', location.pathname + location.search);
       location.replace(hash); // 방문 기록은 늘리지 않고 다시 짚기
+    } else if (hash !== originalHash) {
+      location.replace(hash);
     }
   }
 })();

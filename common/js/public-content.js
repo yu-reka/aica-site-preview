@@ -32,7 +32,7 @@
       Array.from(parent.childNodes).forEach(function (node) {
         if (node.nodeType === 8) { node.remove(); return; }
         if (node.nodeType !== 1) return;
-        var tag = node.localName.toLowerCase();
+        var tag = node.localName.toLowerCase(), blank = node.getAttribute('target') === '_blank';
         var allowed = svg ? svgTags.has(tag) && node.namespaceURI === 'http://www.w3.org/2000/svg' : htmlTags.has(tag) && node.namespaceURI === 'http://www.w3.org/1999/xhtml';
         if (!allowed) {
           if (!svg && node.namespaceURI === 'http://www.w3.org/1999/xhtml' && !/^(script|style|iframe|object|embed|template|noscript)$/.test(tag)) { visit(node); node.replaceWith.apply(node, Array.from(node.childNodes)); }
@@ -48,7 +48,7 @@
             var href = safeUrl(value, false); if (href) node.setAttribute('href', href); else node.removeAttribute(attr.name);
           } else if (name !== 'class' && name !== 'title') node.removeAttribute(attr.name);
         });
-        if (!svg && tag === 'a') { node.setAttribute('target', '_blank'); node.setAttribute('rel', 'noopener noreferrer'); }
+        if (!svg && tag === 'a' && blank) { node.setAttribute('target', '_blank'); node.setAttribute('rel', 'noopener noreferrer'); }
         visit(node);
       });
     }
@@ -56,5 +56,15 @@
     if (svg && (template.content.children.length !== 1 || template.content.firstElementChild.localName !== 'svg')) return '';
     return template.innerHTML;
   }
-  window.AicaPublicContent = { url: safeUrl, html: function (value) { return clean(value, false); }, svg: function (value) { return clean(value, true); } };
+  // Owner-specified V30 migration: interview 63..76 -> 1..14, project 77..118 -> 1..42.
+  // Keep any existing exact target, and never infer aliases for static design slots (iv-1/pj-1).
+  function legacyHash(hash) {
+    var id = String(hash || '').slice(1), match, next = '';
+    if (!id || document.getElementById(id)) return hash;
+    if ((match = /^iv-p(\d+)$/.exec(id)) && +match[1] >= 63 && +match[1] <= 76) next = 'iv-p' + (+match[1] - 62);
+    else if ((match = /^pj-p(\d+)$/.exec(id)) && +match[1] >= 77 && +match[1] <= 118) next = 'pj-p' + (+match[1] - 76);
+    else if ((match = /^q-(\d+)-(\d+)$/.exec(id)) && +match[1] >= 63 && +match[1] <= 76) next = 'q-' + (+match[1] - 62) + '-' + match[2];
+    return next && document.getElementById(next) ? '#' + next : hash;
+  }
+  window.AicaPublicContent = { url: safeUrl, html: function (value) { return clean(value, false); }, svg: function (value) { return clean(value, true); }, legacyHash: legacyHash };
 })();

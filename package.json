@@ -10,6 +10,9 @@
     "check": "node scripts/build.mjs --check",
     "test": "node --test",
     "preview": "python3 scripts/preview.py",
-    "export:spring": "node scripts/export-spring.mjs"
+    "export:spring": "node scripts/export-spring.mjs",
+    "preview:data": "node scripts/preview-data.mjs --write",
+    "check:preview-data": "node scripts/preview-data.mjs --check",
+    "check:public": "npm run check && npm run check:preview-data"
   }
 }

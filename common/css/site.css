@@ -16,7 +16,7 @@
 /* =========================================================
    상단 헤더 / GNB — 모든 페이지 같은 어두운 막대
    ========================================================= */
-.site-header{position:fixed;inset:0 0 auto 0;z-index:50;padding-top:env(safe-area-inset-top,0px);color:var(--ink);
+.site-header{position:fixed;inset:0 0 auto 0;z-index:var(--layer-header,50);padding-top:env(safe-area-inset-top,0px);color:var(--ink);
   --logo-w:187px;                                      /* 로고(심볼 + 이름 + 광주) 칸 폭: 글꼴이 늦게 와도 GNB가 안 움직이게 고정(Pretendard에서 실제 186.9px) */
   --gnb-x:calc(var(--logo-w) + 40px + 12px + 22px)}    /* GNB 첫 메뉴(인사교 알아보기) 글자 시작 = 정렬선 + 로고 + 칸 사이(.hdr-inner gap) + .gnb 왼쪽 여백 + 링크 안쪽 여백. 하위 메뉴 바 첫 항목도 여기 */
 .site-header:empty{height:calc(env(safe-area-inset-top,0px) + var(--hdr));background:var(--header-bg)}
@@ -110,25 +110,25 @@
 .floating .fab-top.is-visible{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition:opacity .3s,transform .3s var(--ease)}   /* 숨은 동안은 Tab으로도 안 잡힘 */
 .floating .fab-top svg{width:18px;height:18px;stroke:var(--ink);fill:none;stroke-width:1.8}
 
-.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translate(-50%,12px);background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:8px;font-size:14.5px;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s var(--ease);z-index:90;max-width:calc(100vw - 40px)}
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translate(-50%,12px);background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:8px;font-size:14.5px;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s var(--ease);z-index:var(--layer-toast,90);max-width:calc(100vw - 40px)}
 .toast.is-on{opacity:1;transform:translate(-50%,0)}
 
 /* =========================================================
    모바일 메뉴(1080px 이하)
    ========================================================= */
 /* 10-15 B4 아코디언형: 오른쪽에서 화면 폭 80%(최대 360px)로 들어오고 뒤는 딤. 흰 면, 01~04 번호 + 이름 한 줄, 네 메뉴 모두 하위를 접고 펼침(site.js DRAWER_ACC) */
-.drawer-dim{position:fixed;inset:0;z-index:59;background:rgba(11,11,12,.45);opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility 0s .35s}   /* --ink-strong 45% */
+.drawer-dim{position:fixed;inset:0;z-index:var(--layer-drawer-dim,59);background:rgba(11,11,12,.45);opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility 0s .35s}   /* --ink-strong 45% */
 .drawer-dim.is-open{opacity:1;visibility:visible;transition:opacity .35s var(--ease)}
-.drawer{position:fixed;top:0;right:0;bottom:0;z-index:60;width:80%;max-width:360px;display:flex;flex-direction:column;background:var(--surface);color:var(--ink);padding:env(safe-area-inset-top,0px) 0 0;overflow-y:auto;transform:translateX(100%);transition:transform .4s var(--ease),visibility 0s .4s;visibility:hidden}
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:var(--layer-drawer,60);width:80%;max-width:360px;display:flex;flex-direction:column;background:var(--surface);color:var(--ink);padding:env(safe-area-inset-top,0px) 0 0;overflow-y:auto;transform:translateX(100%);transition:transform .4s var(--ease),visibility 0s .4s;visibility:hidden}
 .drawer.is-open{transform:none;visibility:visible;transition:transform .4s var(--ease)}   /* 닫을 때도 밀려 나간 뒤 숨김 */
 .drawer .drawer-top{flex:none;display:flex;justify-content:space-between;align-items:center;height:calc(var(--hdr) + 1px);margin:0 var(--gutter);border-bottom:1px solid var(--line)}   /* 10-15: 구분선을 로고 줄 바로 아래로 → 로고 · 닫기가 선과 위 끝 사이 가운데 */
-.drawer .drawer-top .drawer-close{margin-right:-12px}   /* 닫기 글자 끝을 구분선 · 목록 오른쪽 끝에 맞춤(버튼 오른쪽 안쪽 여백만큼) */
+.drawer .drawer-top .drawer-close{margin-right:-12px}   /* 작은 X의 터치 영역을 메뉴 오른쪽 여백 안에 정렬 */
 .drawer .drawer-top .logo{gap:9px;font-size:16px}
 .drawer .drawer-top .logo-mark{width:28px;height:24px}
 .drawer .drawer-top .logo-text{font-size:16px}
-.drawer .drawer-close{display:flex;align-items:center;gap:6px;height:44px;min-width:44px;padding:0 12px 0 10px;border:0;border-radius:22px;background:none;color:var(--ink);font:inherit;font-size:15px;font-weight:700;cursor:pointer}
-.drawer .drawer-close:hover{background:var(--paper)}
-.drawer .drawer-close svg{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round}
+.drawer .drawer-close{display:flex;align-items:center;gap:0;height:44px;width:44px;min-width:44px;padding:0;justify-content:center;border:0;border-radius:0;background:none;color:var(--ink);font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.drawer .drawer-close:hover{opacity:.7}
+.drawer .drawer-close svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round}
 .drawer .drawer-nav{padding:0 var(--gutter)}
 .drawer .drawer-acc{border-bottom:1px solid var(--line)}
 .drawer .acc-btn{width:100%;display:flex;align-items:center;gap:12px;min-height:60px;padding:0;background:none;border:0;font-size:18px;font-weight:700;letter-spacing:-.03em;line-height:1.3;cursor:pointer;text-align:left;color:inherit;text-decoration:none}
@@ -262,10 +262,10 @@
 .site-header .btn-ask .ic-kakao{width:18px;height:18px;flex:none;fill:#191919}
 .drawer .drawer-cta .ic-kakao{width:20px;height:20px;flex:none;fill:#191919}
 
-/* 10-15 모바일 메뉴 정리: ☰ 세 줄 같은 길이 · '메뉴' 글자 없음 → 버튼은 44px 정사각형. 열린 메뉴의 X · 닫기는 화면에서 숨김(딤을 누르거나 Esc로 닫힘, 키보드 초점이 오면 보임) */
+/* 10-15 모바일 메뉴 정리: ☰ 세 줄 같은 길이 · '메뉴' 글자 없음 → 버튼은 44px 정사각형. 열린 메뉴의 작은 X는 항상 표시(딤 · Esc 닫기도 유지) */
 .site-header .hdr-util .icon-btn.menu-toggle{width:44px;padding:0;gap:0;justify-content:center}
 .site-header .hdr-util .icon-btn.menu-toggle svg{width:24px;height:24px;stroke-width:2.6;stroke-linecap:butt}
-.drawer .drawer-top .drawer-close:not(:focus-visible){position:absolute;width:1px;height:1px;min-width:0;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
 /* 10-15 모바일 메뉴: 큰 메뉴 이름은 그 페이지 첫 화면 링크, 오른쪽 화살표 버튼만 하위 목록을 펼침(한 번에 하나) */
 .drawer .acc-head{display:flex;align-items:center}
 .drawer .acc-head .acc-btn{flex:1;min-width:0}

@@ -150,7 +150,7 @@ body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:i
 .stories-page .dw[open] summary svg{transform:rotate(180deg)}
 /* 열린 서랍은 화면 전체를 덮는 투명 막을 깐다 — 바깥을 누르면 그대로 접힌다 */
 .stories-page .dw[open] summary{position:static;z-index:auto}
-.stories-page .dw[open] summary::after{content:"";position:fixed;inset:0;z-index:35;cursor:default}
+.stories-page .dw[open] summary::after{content:"";position:fixed;inset:0;z-index:var(--layer-check-dock,35);cursor:default}
 .stories-page .dw summary b{font-weight:600}
 .stories-page .dw summary u{text-decoration:none}
 .stories-page .dwin label{padding:8px 10px;border-radius:8px;cursor:pointer;font-size:14px;
@@ -305,7 +305,7 @@ body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:i
 .stories-page .rvr .mt{display:none}
 }
 /* 후기 상세 — :target 이라 주소로 바로 열리고, 격자는 한 픽셀도 안 움직인다 */
-.stories-page .ov{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;
+.stories-page .ov{position:fixed;inset:0;z-index:var(--layer-dialog,200);display:none;align-items:center;justify-content:center;
   padding:32px 20px;background:rgba(12,22,38,.5);backdrop-filter:blur(8px)}
 .stories-page .ov:target{display:flex}
 .stories-page .ov .back{position:absolute;inset:0;z-index:0}
@@ -471,7 +471,7 @@ body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:i
 .stories-page .rvr .tg,
 .stories-page .ov .mtags .t{border-radius:0}
 /* 인터뷰 목록으로 돌아가는 버튼도 같은 규격 */
-.stories-page .dwin{position:absolute;left:0;top:46px;z-index:45;min-width:176px;padding:8px;
+.stories-page .dwin{position:absolute;left:0;top:46px;z-index:var(--layer-dock,45);min-width:176px;padding:8px;
   max-height:min(50vh,340px);overflow-y:auto;overscroll-behavior:contain;
   display:flex;flex-direction:column;gap:2px;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
 .stories-page .ph,

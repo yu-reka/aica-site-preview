@@ -65,10 +65,10 @@
       const previous = $('.previous', wrapper);
       const next = $('.next', wrapper);
       const sync = () => {
-        previous.hidden = track.scrollLeft < 4;
-        next.hidden = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+        SiteUI.syncRail(track, previous, next);
       };
       const move = direction => track.scrollBy({ left: direction * track.clientWidth * .86, behavior: reduce.matches ? 'auto' : 'smooth' });
+      track.addEventListener('keydown', event => { if(event.target===track) SiteUI.railKeys(event, move); });
       previous.onclick = () => move(-1);
       next.onclick = () => move(1);
       track.addEventListener('scroll', sync, { passive: true });
@@ -87,15 +87,19 @@
     }));
     $$('.photo-gallery').forEach(gallery => {
       const track = $('.photo-track', gallery);
-      const move = direction => track.scrollBy({ left: direction * track.clientWidth, behavior: reduce.matches ? 'auto' : 'smooth' });
+      const move = direction => {
+        const count = track.children.length;
+        if (!count) return;
+        const index = Math.round(track.scrollLeft / track.clientWidth) || 0;
+        const next = (index + direction + count) % count;
+        track.scrollTo({ left: next * track.clientWidth, behavior: reduce.matches ? 'auto' : 'smooth' });
+      };
       $('.photo-prev', gallery).onclick = () => move(-1);
       $('.photo-next', gallery).onclick = () => move(1);
       const sync = () => {
         const index = Math.round(track.scrollLeft / track.clientWidth) || 0;
         $('.photo-caption', gallery).firstChild.textContent = track.children[index].getAttribute('aria-label') + ' ';
         $('.photo-caption b', gallery).textContent = (index + 1) + ' / ' + track.children.length;
-        $('.photo-prev', gallery).disabled = index === 0;
-        $('.photo-next', gallery).disabled = index === track.children.length - 1;
       };
       track.addEventListener('scroll', sync, { passive: true });
       sync();

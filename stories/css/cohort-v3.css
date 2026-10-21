@@ -4,9 +4,9 @@
 .stories-page .cv3-chips{position:sticky;top:calc(var(--hdr,72px) + 8px);z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:14px 0;margin-bottom:32px;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line,#D3D9E1)}
 .stories-page .cv3-chips button{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line,#D3D9E1);background:#fff;color:var(--graphite,#566175);font:600 15px/1 var(--ff-sans);cursor:pointer;transition:border-color .2s,color .2s}
 .stories-page .cv3-chips button:hover{border-color:var(--ink,#14233F);color:var(--ink,#14233F)}
-.stories-page .cv3-chips button[aria-selected="true"]{border-color:var(--ink,#14233F);background:var(--ink,#14233F);color:#fff}
+.stories-page .cv3-chips button[aria-pressed="true"]{border-color:var(--ink,#14233F);background:var(--ink,#14233F);color:#fff}
 .stories-page .cv3-chips button i{width:8px;height:8px;border-radius:50%;background:var(--cv-b)}
-.stories-page .cv3-chips button[aria-selected="true"] i{background:#fff}
+.stories-page .cv3-chips button[aria-pressed="true"] i{background:#fff}
 /* 프로필 */
 .stories-page .cv3-ig{max-width:935px;margin:0 auto;font-family:var(--ff-sans);color:var(--cv-ink)}
 .stories-page .cv3-prof{display:flex;align-items:center;gap:clamp(24px,6vw,88px);padding:8px clamp(0px,4vw,56px) 32px}
@@ -42,7 +42,7 @@
 .stories-page .cv3-hl button[aria-pressed="true"]:hover .cv3-hr{background:linear-gradient(45deg,var(--cv-b),var(--cv-b2))}
 .stories-page .cv3-hl b{font-size:12.5px;font-weight:500;line-height:1.2}
 .stories-page .cv3-hl button[aria-pressed="true"] b{font-weight:700}
-.stories-page .cv3-hl small{margin-top:-6px;font-size:11.5px;color:#8E8E8E}
+.stories-page .cv3-hl small{margin-top:-6px;font-size:11.5px;color:var(--text-secondary)}
 /* 격자 */
 .stories-page .cv3-gt{display:flex;justify-content:center;align-items:center;gap:6px;width:fit-content;margin:-1px auto 0;padding:14px 0;border-top:1px solid var(--cv-ink);font-size:12.5px;font-weight:700;letter-spacing:.08em;color:var(--cv-ink)}
 .stories-page .cv3-gt svg{width:13px;height:13px;fill:none;stroke:var(--cv-ink);stroke-width:2}
@@ -64,7 +64,7 @@
 .stories-page .cv3-pg p{margin:0;font:400 13px/1.4 var(--ff-sans);color:var(--muted)}
 /* 글 창 */
 .cv3-lock,.cv3-lock body{overflow:hidden}
-.cv3-m{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:24px}
+.cv3-m{position:fixed;inset:0;z-index:var(--layer-dialog,200);display:flex;align-items:center;justify-content:center;padding:24px}
 .cv3-m[hidden]{display:none}
 .cv3-m-bg{position:absolute;inset:0;background:rgba(11,16,32,.6)}
 .cv3-m-box{position:relative;display:flex;width:min(940px,100%);height:min(470px,calc(100vh - 160px));background:#fff;border:1px solid #DDE4EF;border-radius:16px;overflow:hidden;box-shadow:0 16px 40px rgba(16,23,40,.13)}
@@ -91,7 +91,7 @@
 .cv3-m-act svg{width:24px;height:24px;fill:none;stroke:#262626;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .cv3-like[aria-pressed="true"] svg{fill:#FF3040;stroke:#FF3040}
 .cv3-save[aria-pressed="true"] svg{fill:#262626}
-.cv3-m-ft time{display:block;margin-top:4px;font-size:12px;letter-spacing:.02em;color:#8E8E8E}
+.cv3-m-ft time{display:block;margin-top:4px;font-size:12px;letter-spacing:.02em;color:var(--text-secondary)}
 .cv3-m-nav{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;padding:8px;border-radius:999px;background:#14233F;box-shadow:0 10px 24px -10px rgba(0,0,0,.5)}
 .cv3-m-nav button{height:40px;padding:0 16px;border:0;border-radius:999px;background:none;color:#fff;font:700 14px/1 var(--ff-sans);cursor:pointer}
 .cv3-m-nav button:disabled{opacity:.4;cursor:default}
@@ -140,7 +140,7 @@
 .cv3-zoom:hover{background:rgba(11,16,32,.8);transform:scale(1.06)}
 .cv3-zoom:focus-visible{outline:2px solid #fff;outline-offset:2px}
 .cv3-zoom svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.cv3-zv{position:fixed;inset:0;z-index:260;display:flex;align-items:center;justify-content:center;padding:56px 24px 96px;background:rgba(6,9,18,.95);cursor:zoom-out}
+.cv3-zv{position:fixed;inset:0;z-index:var(--layer-zoom,260);display:flex;align-items:center;justify-content:center;padding:56px 24px 96px;background:rgba(6,9,18,.95);cursor:zoom-out}
 .cv3-zv[hidden]{display:none}
 .cv3-zv figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:14px;max-width:100%;max-height:100%}
 .cv3-zv-im{display:flex;justify-content:center;max-width:min(1280px,100%)}

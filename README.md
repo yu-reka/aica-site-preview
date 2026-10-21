@@ -59,3 +59,7 @@ npm run preview     # Python 3 로컬 서버: http://127.0.0.1:4173
 후기용 Spring 연결은 별도 `AICA-BACKOFFICE/main-project` 저장소에 구현되어 있습니다. 임시저장과 공개본을 분리하고 발행할 때만 공개합니다. `npm run export:spring -- --output /absolute/server/src/main/resources`로 디자인을 내보내며, 실행과 경계는 [연동 안내](docs/spring-integration.md)를 참고하세요. 프론트 단독 `4173` 서버는 정적 미리보기이고, 연결된 후기는 Spring 서버의 `/stories/reviews.html`에서 확인합니다.
 
 인터뷰·프로젝트·기수별 기록도 후기와 같은 Spring 공용 DB와 작업본·발행 정책으로 연결했습니다. `scripts/spring-stories.mjs`가 승인된 디자인 변형과 일러스트를 함께 내보냅니다. 공개 프론트와 관리자 계정들은 같은 DB를 사용하고 역할별 권한을 구분합니다. 최초 전체 시안 데이터 가져오기는 `BACKOFFICE_IMPORT_STORIES=true`로 명시합니다. 자세한 내용은 [연동 안내](docs/spring-integration.md)를 참고하세요.
+
+## 검수 반영과 공통 UI
+
+디자인 검수 반영 범위, PR #28 기준 보존 사항과 검증 결과는 [검수 통합 기록](docs/inspection-integration-2026-10-21.md)에 정리했습니다. 색상·타이포·선택 상태·클릭 영역·레이어·모션 규칙과 토큰 다운로드는 [디자인 시스템](docs/design-system/index.html)을 참고하세요.

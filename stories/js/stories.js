@@ -98,32 +98,32 @@
      창이 열린 동안 Tab은 창 안에서만 돎. 처음부터 창 주소로 열 때는 포커스를 옮기지 않음 */
   (function(){
     var opener = null, link = null;
+    var dialogScope = SiteUI.createDialogScope();
     function open(){ return page.querySelector('.ov:target'); }
     // 연 링크: 주소 이동 때 브라우저가 포커스를 비우기도 해서 누른 순간에 기억해 둠
     document.addEventListener('click', function(e){ link = e.target.closest && e.target.closest('a[href^="#"]'); }, true);
     addEventListener('hashchange', function(){
       var d = open(), a = link || document.activeElement; link = null;
       if (d) {
+        dialogScope.activate(d);
         if (a && a !== document.body && !d.contains(a) && !a.closest('.ov')) opener = a;
         var x = d.querySelector('.x'); if (x) x.focus({ preventScroll: true });
-      } else if (opener) {
+      } else {
+        dialogScope.release();
+        if (!opener) return;
         // 창 안 태그 링크(#tg-…)로 나가면 화면이 태그 목록 자리로 가므로 연 카드로 돌려주지 않음(다음 Tab은 브라우저가 그 자리부터)
         var to = document.getElementById(Site.decodeHash(location.hash.slice(1)));
         if (!(to && to.classList.contains('tgt')) && document.contains(opener) && opener.getClientRects().length) opener.focus({ preventScroll: true });
         opener = null;
       }
     });
+    if (open()) dialogScope.activate(open());
     document.addEventListener('keydown', function(e){
       var d = open();
       if (!d) return;
       if (e.key === 'Escape') { var x = d.querySelector('.x'); if (x) x.click(); return; }
       if (e.key !== 'Tab') return;
-      var f = [].filter.call(d.querySelectorAll('a[href], button:not([disabled]), input:not([type=radio]), input[type=radio]:checked, textarea, select'), function(el){ return el.getClientRects().length && el.tabIndex >= 0; });
-      if (!f.length) return;
-      var first = f[0], last = f[f.length - 1], cur = document.activeElement;
-      if (!d.contains(cur)) { e.preventDefault(); first.focus(); }
-      else if (e.shiftKey && cur === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && cur === last) { e.preventDefault(); first.focus(); }
+      SiteUI.trapFocus(e, d);
     });
   })();
 

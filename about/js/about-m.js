@@ -122,10 +122,10 @@
         var frame = media.getBoundingClientRect(), bounds = box.getBoundingClientRect();
         box.style.setProperty('--am-arrow-y', (frame.top - bounds.top + frame.height / 2) + 'px');
       } else box.style.removeProperty('--am-arrow-y');
-      p.hidden = scroller.scrollLeft <= 4;
-      n.hidden = scroller.scrollLeft + scroller.clientWidth >= scroller.scrollWidth - 4;
+      SiteUI.syncRail(scroller, p, n);
     };
     scroller.addEventListener('scroll', upd, { passive: true });
+    scroller.addEventListener('keydown', function(event){ if(event.target===scroller) SiteUI.railKeys(event, function(dir){scroller.scrollBy({left:dir*scroller.clientWidth*.8,behavior:reduce.matches?'auto':'smooth'});}); });
     addEventListener('resize', upd);
     if (media && typeof ResizeObserver !== 'undefined'){
       var observer = new ResizeObserver(upd); observer.observe(box); observer.observe(media);

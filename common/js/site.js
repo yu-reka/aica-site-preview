@@ -169,7 +169,9 @@ const Site = (() => {
   }
 
   /* ---------- 동작 ---------- */
+  const drawerScope = SiteUI.createDialogScope();
   function openDrawer(){
+    drawerScope.activate($('#drawer'), [$('#drawerDim')]);
     $('#drawer').classList.add('is-open');
     $('#drawerDim')?.classList.add('is-open');
     $('#menuBtn').setAttribute('aria-expanded', 'true');
@@ -188,6 +190,7 @@ const Site = (() => {
   function closeDrawer(refocus){
     const d = $('#drawer');
     if (!d || !d.classList.contains('is-open')) return;
+    drawerScope.release();
     d.classList.remove('is-open');
     $('#drawerDim')?.classList.remove('is-open');
     $('#menuBtn').setAttribute('aria-expanded', 'false');
@@ -198,12 +201,7 @@ const Site = (() => {
   function trapDrawer(e){
     const d = $('#drawer');
     if (!d || !d.classList.contains('is-open')) return;
-    const f = $$('a[href], button', d).filter(el => el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden');
-    if (!f.length) return;
-    const first = f[0], last = f[f.length - 1], at = document.activeElement;
-    if (!d.contains(at)) { e.preventDefault(); first.focus(); }
-    else if (e.shiftKey && at === first) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && at === last) { e.preventDefault(); first.focus(); }
+    SiteUI.trapFocus(e, d);
   }
 
   /* 2depth 드롭다운(1080px 넘는 화면): 메뉴에 올리면 4개 메뉴의 하위가 한 번에 펼쳐짐. 바탕 높이는 가장 긴 하위 목록에 맞춤 */

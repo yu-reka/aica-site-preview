@@ -25,6 +25,7 @@ export function springArtifacts() {
   const read = name => readFileSync(join(root, 'src/components/stories/reviews', name + '.html'), 'utf8');
   function fragment(name) {
     let html = read(name);
+    if(name === 'detail') html = html.replace('{{#each tags}}{{> stories/reviews/tag}}{{/each}}', '<a class=\"t\" href=\"{{tags.0.href}}\" data-field=\"tag\">{{tags.0.label}}</a>');
     html = html.replace(/<([a-z0-9]+)([^>]*?)>(\{\{(?:category|title|summary|author|track|tags\.0\.label)\}\})/g, (all, tag, attrs, value) => {
       const key = value.slice(2, -2); const expr = key === 'tags.0.label' ? 'r.firstTag' : 'r.' + key;
       return `<${tag}${attrs} th:text="\${${expr}}">`;

@@ -57,7 +57,7 @@ const SiteLayout = ({ $, ROOT, href, current, subnavOn, sideNav, html }) => {
     <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="전체 메뉴">
       <div class="drawer-top">
         <a class="logo" href="${text(ROOT + SITE_HOME)}">${logo()}</a>
-        <button class="drawer-close" id="drawerClose" aria-label="전체 메뉴 닫기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span aria-hidden="true">닫기</span></button>
+        <button class="drawer-close" id="drawerClose" aria-label="전체 메뉴 닫기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
       </div>
       <nav class="drawer-nav" aria-label="주 메뉴">${SITE_MENU.map((m, i) => DRAWER_ACC.includes(m.id) ? `
         <div class="drawer-acc">

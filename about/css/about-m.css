@@ -17,14 +17,10 @@
   html.school-about main#main .scene-scroll{left:auto;right:7%}
 
   /* ── 공통 세그먼트(탭 · 6기/7기 · 후속 프로그램) ── */
-  .am-seg{display:grid;grid-auto-columns:minmax(0,1fr);grid-auto-flow:column;gap:4px;padding:4px;border-radius:14px;background:var(--am-soft)}
-  .am-seg button{min-height:44px;margin:0;padding:0 4px;border:2px solid transparent;border-radius:10px;background:transparent;color:var(--am-muted);font:600 14px/1.2 var(--ff-sans,"Pretendard",sans-serif);letter-spacing:-.02em;white-space:nowrap;cursor:pointer}
-  .am-seg button[aria-pressed="true"],.am-seg button[aria-current="true"]{border-color:var(--am-black);background:#fff;color:var(--am-ink);font-weight:800;box-shadow:2px 2px 0 var(--am-black)}
-  .am-seg button:focus-visible{outline:2px solid var(--am-blue);outline-offset:2px}
 
   /* ── 바로가기 탭: 처음엔 히어로 바로 아래, 지나가면 화면 아래 고정 ── */
   html.school-about main#main .am-tabs{display:block;position:relative;z-index:5;padding:12px 20px;background:#fff;border-bottom:1px solid var(--am-line)}
-  .am-dock{display:block;position:fixed;left:0;right:0;bottom:0;z-index:45;padding:10px 20px calc(14px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.97);border-top:1px solid var(--am-line);box-shadow:0 -6px 18px rgba(20,35,63,.08);transform:translateY(110%);visibility:hidden;transition:transform .3s cubic-bezier(.3,.7,.2,1),visibility 0s .3s}
+  .am-dock{display:block;position:fixed;left:0;right:0;bottom:0;z-index:var(--layer-dock,45);padding:10px 20px calc(14px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.97);border-top:1px solid var(--am-line);box-shadow:0 -6px 18px rgba(20,35,63,.08);transform:translateY(110%);visibility:hidden;transition:transform .3s cubic-bezier(.3,.7,.2,1),visibility 0s .3s}
   html.am-docked .am-dock{transform:none;visibility:visible;transition:transform .3s cubic-bezier(.3,.7,.2,1)}
   html.am-docked .floating{transform:translateY(-78px);transition:transform .3s}
   html.school-about #siteFooter::after{content:"";display:block;height:78px}   /* 아래 고정 탭에 푸터 끝이 가리지 않게(높이가 바뀌지 않도록 늘 둠) */

@@ -14,15 +14,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../common/css/tokens.css?v=1014L">
+<link rel="stylesheet" href="../common/css/tokens.css?v=1021audit-colors">
 <link rel="stylesheet" href="../common/css/base.css">
-<link rel="stylesheet" href="../common/css/site.css?v=1016nav">
-<link rel="stylesheet" href="css/home.css?v=1021-story-tag-position-3">
+<link rel="stylesheet" href="../common/css/site.css?v=1021audit-pr28">
+<link rel="stylesheet" href="css/home.css?v=1021audit-pr28">
+<link rel="stylesheet" href="../common/css/components.css?v=1021audit-pr28">
 <link rel="stylesheet" href="../common/css/navigation-mobile.css?v=1016nav">
 <script src="../common/js/menu.js" defer></script>
-<script src="../common/js/site-layout.js?v=1016nav" defer></script>
-<script src="../common/js/site.js?v=1016integrity" defer></script>
-<script src="js/home.js" defer></script>
+<script src="../common/js/site-layout.js?v=1021audit-pr28" defer></script>
+<script src="../common/js/ui.js?v=1021audit-pr28" defer></script>
+<script src="../common/js/site.js?v=1021audit-pr28" defer></script>
+<script src="js/home.js?v=1021audit-pr28" defer></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
@@ -109,10 +111,11 @@
 
   <!-- 전광판: 선배들이 남긴 한 줄이 첫 화면 맨 아래(모바일은 제목 위)로 흐름 -->
   <div class="tk" aria-label="선배들이 남긴 한 줄">
-    <div class="tk-track">
+    <div class="tk-window" id="homeTicker"><div class="tk-track">
       <ul class="tk-list">{{#each home.quotes}}{{> home/quote}}{{/each}}</ul>
       <ul class="tk-list" aria-hidden="true">{{#each home.quotes}}{{> home/quote}}{{/each}}</ul>
-    </div>
+    </div></div>
+    <button class="tk-toggle" type="button" aria-controls="homeTicker" aria-label="흐르는 전광판 정지"><span class="tk-toggle-icon" aria-hidden="true">Ⅱ</span></button>
   </div>
 </section>
 </main>

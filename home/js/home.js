@@ -44,3 +44,18 @@ function setupHome(main){
   if (oldMenu && Site.menu(oldMenu)) location.replace(Site.href(oldMenu, oldChild));
   else setupHome($('#main'));
 }
+
+/* Persistent user control: resume from the current animation position. */
+(function setupTicker(){
+  const ticker=document.querySelector('.tk'), button=ticker?.querySelector('.tk-toggle');
+  if(!button)return;
+  const preference=matchMedia('(prefers-reduced-motion: reduce)');
+  let paused=preference.matches;
+  const paint=()=>{
+    ticker.classList.toggle('is-paused',paused);ticker.classList.toggle('is-running',!paused);
+    button.querySelector('.tk-toggle-icon').textContent=paused?'▶':'Ⅱ';
+    button.setAttribute('aria-label',paused?'전광판 다시 재생':'흐르는 전광판 정지');
+  };
+  button.addEventListener('click',()=>{paused=!paused;paint();});
+  preference.addEventListener('change',event=>{paused=event.matches;paint();});paint();
+})();

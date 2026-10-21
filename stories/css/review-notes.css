@@ -10,7 +10,8 @@
 .hb .hb-pi p{margin:8px 0 16px;min-height:0}
 .hb .hb-pi-by{margin:0;padding-top:12px}
 .stories-page #p-rev .idc>.in>p,.hb .hb-pi p,.stories-page .sm-review-preview{display:block;overflow:hidden}
-.note-excerpt{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:var(--note-lines,1);overflow:hidden}
+.note-excerpt{display:block}
+.note-excerpt[hidden]{display:none}
 @media(max-width:600px){
   .stories-page .sm-review-board{padding-inline:4px;column-gap:8px}
   .stories-page .sm-review-note{aspect-ratio:1;contain:size;box-sizing:border-box;display:grid;grid-template-rows:minmax(0,1fr) auto;align-self:start}

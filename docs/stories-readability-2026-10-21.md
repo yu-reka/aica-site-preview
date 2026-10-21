@@ -23,3 +23,12 @@
 | 프로젝트 상세 | [캡처](screenshots/stories-readability-2026-10-21/project-detail-desktop.png) | [캡처](screenshots/stories-readability-2026-10-21/project-detail-mobile.png) |
 
 [All 프로젝트 반 이름 배지](screenshots/stories-readability-2026-10-21/all-project-badges-desktop.png)
+
+## PR 33 추가 반영
+
+- 후기 미리보기의 말줄임표를 가운데점 세 개 `⋯`로 변경했다. 제목과 작성자 영역, 카드 비율과 여백은 유지하고 본문만 가용 높이에 맞춘다. 모달 원문은 줄이지 않는다.
+- 인터뷰는 다른 페이지를 방문한 뒤 돌아오거나 새로고침하면 그리드뷰로 시작한다. 같은 페이지에서 리스트뷰로 전환하는 동작은 유지한다.
+- 후기 리스트의 메타데이터는 기존 `기수 · 과정명(track)` 연결을 유지한다. 실제 데이터 스냅샷에는 track이 비어 있어 기수 뒤 과정명이 표시되지 않는다. CSS 잘림이 아니며 백엔드 데이터 확인이 필요하다.
+- 추가 검증: build, 153개 테스트, check 통과. 말줄임표는 PC와 360·390·430px, 인터뷰는 리스트 전환 후 다른 페이지 방문·뒤로가기·새로고침에서 확인했다. Spring 실행 환경의 재배포 검증은 별도다.
+
+[가운데점 말줄임표](screenshots/stories-readability-2026-10-21/review-centered-ellipsis.png) · [인터뷰 복귀 기본 그리드뷰](screenshots/stories-readability-2026-10-21/interviews-default-grid.png)

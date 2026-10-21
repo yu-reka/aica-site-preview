@@ -1,23 +1,47 @@
-/* Adapt the excerpt's visible line count to the space left by the full title.
-   CSS generates the single … glyph; original text and detail content are kept. */
+/* Fit card excerpts to the available full lines and use a centered ellipsis (⋯).
+   Keep the full source in memory; modal content and data are never shortened. */
 (() => {
   'use strict';
   const selector = '.idc > .in > p, .hb-pi p, .sm-review-preview';
-  const seen = new WeakSet();
+  const seen = new WeakMap();
+  const segmenter = typeof Intl.Segmenter === 'function' ? new Intl.Segmenter('ko', {granularity:'grapheme'}) : null;
+  let measurements = new WeakMap();
   let frame;
   function fit(element) {
-    if (!element.clientWidth || !element.clientHeight) return;
-    const line = parseFloat(getComputedStyle(element).lineHeight);
-    if (line > 0) element.style.setProperty('--note-lines', Math.max(1, Math.floor(element.clientHeight / line)));
+    const state = seen.get(element);
+    if (!state || !element.clientWidth || !element.clientHeight) return;
+    const style = getComputedStyle(element);
+    const line = parseFloat(style.lineHeight);
+    if (!(line > 0)) return;
+    const key = [element.clientWidth, element.clientHeight, style.font, style.letterSpacing].join('|');
+    if (measurements.get(element) === key) return;
+    measurements.set(element, key);
+    const lines = Math.floor(element.clientHeight / line);
+    state.excerpt.hidden = lines < 1;
+    if (lines < 1) return;
+    const allowed = lines * line;
+    const write = text => { if (state.excerpt.textContent !== text) state.excerpt.textContent = text; };
+    write(state.source);
+    if (state.excerpt.offsetHeight <= allowed + .5) return;
+    const characters = segmenter ? Array.from(segmenter.segment(state.source), part => part.segment) : Array.from(state.source);
+    let low = 0, high = characters.length;
+    while (low < high) {
+      const middle = Math.ceil((low + high) / 2);
+      write(characters.slice(0, middle).join('').trimEnd() + '⋯');
+      if (state.excerpt.offsetHeight <= allowed + .5) low = middle;
+      else high = middle - 1;
+    }
+    write(characters.slice(0, low).join('').trimEnd() + '⋯');
   }
   const resize = new ResizeObserver(entries => entries.forEach(entry => fit(entry.target)));
   function scan() {
     document.querySelectorAll(selector).forEach(element => {
       if (!seen.has(element)) {
-        seen.add(element);
+        const source = element.textContent;
         const excerpt = document.createElement('span');
         excerpt.className = 'note-excerpt';
-        excerpt.textContent = element.textContent;
+        excerpt.textContent = source;
+        seen.set(element, {source, excerpt});
         element.replaceChildren(excerpt);
         resize.observe(element);
       }
@@ -26,9 +50,9 @@
   }
   function schedule() { cancelAnimationFrame(frame); frame = requestAnimationFrame(scan); }
   new MutationObserver(records => {
-    if (records.some(record => record.addedNodes.length)) schedule();
+    if (records.some(record => [...record.addedNodes].some(node => node.nodeType === 1))) schedule();
   }).observe(document.querySelector('main'), {childList:true, subtree:true});
-  document.fonts.ready.then(schedule);
+  document.fonts.ready.then(() => { measurements = new WeakMap(); schedule(); });
   addEventListener('resize', schedule);
   scan();
 })();

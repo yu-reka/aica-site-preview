@@ -63,7 +63,6 @@
     if (!id || document.getElementById(id)) return hash;
     if ((match = /^iv-p(\d+)$/.exec(id)) && +match[1] >= 63 && +match[1] <= 76) next = 'iv-p' + (+match[1] - 62);
     else if ((match = /^pj-p(\d+)$/.exec(id)) && +match[1] >= 77 && +match[1] <= 118) next = 'pj-p' + (+match[1] - 76);
-    else if ((match = /^q-(\d+)-(\d+)$/.exec(id)) && +match[1] >= 63 && +match[1] <= 76) next = 'q-' + (+match[1] - 62) + '-' + match[2];
     return next && document.getElementById(next) ? '#' + next : hash;
   }
   window.AicaPublicContent = { url: safeUrl, html: function (value) { return clean(value, false); }, svg: function (value) { return clean(value, true); }, legacyHash: legacyHash };

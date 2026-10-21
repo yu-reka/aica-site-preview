@@ -2,6 +2,7 @@
 <!-- Generated from src/pages/check/index.html and content/. Run npm run build. -->
 <html lang="ko" data-menu="check" data-subnav="off" data-theme="light">
 <head>
+  <script src="../common/js/public-content.js"></script>
 <meta charset="utf-8">
   <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -21,10 +22,15 @@
 <link rel="stylesheet" href="css/check-m.css?v=1021audit-pr28">
 <link rel="stylesheet" href="../common/css/components.css?v=1021audit-pr28">
 <link rel="stylesheet" href="../common/css/navigation-mobile.css?v=1016nav">
+<!-- 자주 묻는 질문: 백오피스 DB(faqs) → 사본 · 공개 API → 그리기(check.js보다 먼저) -->
+<script src="js/faq-data.js" defer></script>
+<script src="../api/public/faq.js" defer></script>
+<script src="js/faq-render.js?v=1020" defer></script>
 <script src="../common/js/menu.js" defer></script>
 <script src="../common/js/site-layout.js?v=1021audit-pr28" defer></script>
 <script src="../common/js/ui.js?v=1021audit-pr28" defer></script>
 <script src="../common/js/site.js?v=1021audit-pr28" defer></script>
+<script src="../common/js/track.js?v=1020" defer></script>
 <link rel="stylesheet" href="../common/css/availability.css?v=1021">
 <script src="../common/js/availability.js?v=1021" defer></script>
 <script src="js/check.js?v=1016integrity" defer></script>

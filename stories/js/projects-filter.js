@@ -49,9 +49,8 @@
       const subject=options.querySelector('[aria-pressed="true"]').dataset.subject;
       const mobile=section.querySelector('.sm-projects');
       const eligible=cards.filter(card=>(!cohort||card.dataset.cohort===cohort)&&(!subject||card.dataset.subject===subject));
-      const matching=eligible;
-      const total=Math.max(1,Math.ceil(matching.length/pageSize));page=Math.min(page,total);
-      const visible=new Set(matching.slice((page-1)*pageSize,page*pageSize));
+      const total=Math.max(1,Math.ceil(eligible.length/pageSize));page=Math.min(page,total);
+      const visible=new Set(eligible.slice((page-1)*pageSize,page*pageSize));
       cards.forEach(card=>{card.hidden=!visible.has(card);});
       if(mobile){
         const items=Array.from(mobile.querySelectorAll('.sm-project'));
@@ -64,12 +63,12 @@
       const notice=section.querySelector('.pj-filter-empty');
       if(notice)notice.hidden=!upcoming;
       const noResults=section.querySelector('.pj-subject-empty');
-      if(!matching.length&&!upcoming&&cards.length&&typeof StoryState!=='undefined')StoryState.render(noResults,'filter',{subject:'프로젝트',onReset:()=>{
+      if(!eligible.length&&!upcoming&&cards.length&&typeof StoryState!=='undefined')StoryState.render(noResults,'filter',{subject:'프로젝트',onReset:()=>{
         selectSubject('');filters.querySelectorAll('button').forEach(button=>button.setAttribute('aria-pressed',String(!button.dataset.cohort)));refresh(true);filters.querySelector('button').focus({preventScroll:true});
       }});
-      noResults.hidden=!cards.length||!!matching.length||upcoming;
-      pager.replaceChildren();pager.hidden=!matching.length;
-      if(matching.length){
+      noResults.hidden=!cards.length||!!eligible.length||upcoming;
+      pager.replaceChildren();pager.hidden=!eligible.length;
+      if(eligible.length){
         pager.append(pageButton('←',page-1,page===1,false));
         const start=Math.max(1,Math.min(page-2,total-4));
         for(let n=start;n<=Math.min(total,start+4);n++)pager.append(pageButton(String(n),n,false,n===page));

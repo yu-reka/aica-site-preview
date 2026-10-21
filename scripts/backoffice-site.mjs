@@ -10,7 +10,7 @@
 const TRACK = '<script src="../common/js/track.js?v=1020" defer></script>';
 const STORY_SCRIPTS = [
   '<!-- 글은 백오피스 DB에서(게시물 관리): 사본(백오피스가 꺼져 있을 때) → 공개 API(DB의 지금 글, 불러오면 사본을 덮어씀) → 그리기. 디자이너 스크립트보다 먼저 -->',
-  '<script src="js/stories-data.js" defer></script>',
+  '<script src="js/stories-data.js?v=sample-20261021" defer></script>',
   '<script src="../api/public/stories.js" defer></script>',
   '<script src="js/stories-render.js" defer></script>'
 ];
@@ -18,7 +18,7 @@ const STORY_STATE_NOTE = '<!-- 빈 목록 · 필터 결과 없음 안내(aica-si
 const STORY_STYLE = '<link rel="stylesheet" href="css/stories-render.css?v=1021">';
 const FAQ_SCRIPTS = [
   '<!-- 자주 묻는 질문: 백오피스 DB(faqs) → 사본 · 공개 API → 그리기(check.js보다 먼저) -->',
-  '<script src="js/faq-data.js" defer></script>',
+  '<script src="js/faq-data.js?v=sample-20261021" defer></script>',
   '<script src="../api/public/faq.js" defer></script>',
   '<script src="js/faq-render.js?v=1020" defer></script>'
 ];
@@ -94,7 +94,7 @@ function storyHead(html, path, anchor) {
 }
 
 const PAGES = {
-  'home/index.html': (html, path) => insertAfter(html, '<script src="../common/js/site.js', [TRACK, '<script src="js/ticker-render.js" defer></script>'], path),
+  'home/index.html': (html, path) => insertAfter(html, '<script src="../common/js/site.js', [TRACK, '<script src="js/ticker-render.js?v=sample-20261021" defer></script>'], path),
   'about/index.html': (html, path) => insertAfter(html, '<script src="../common/js/site.js', [TRACK], path),
   'life/index.html': (html, path) => insertAfter(html, '<script src="../common/js/site.js', [TRACK], path),
   'check/index.html': (html, path) => {

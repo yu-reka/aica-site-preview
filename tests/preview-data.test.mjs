@@ -45,3 +45,14 @@ test('public release guard rejects substituted DB text without logging it or mod
     }
   } finally {rmSync(root, {recursive:true, force:true});}
 });
+
+// The first clean deployment must not reuse the old snapshot URL from a browser cache.
+test('public HTML and home fallback request a new snapshot cache version', () => {
+  const root = new URL('../', import.meta.url);
+  for (const file of ['index.html','reviews.html','interviews.html','projects.html','cohorts.html']) {
+    assert.match(readFileSync(new URL('stories/' + file, root), 'utf8'), /src="js\/stories-data\.js\?v=sample-20261021"/);
+  }
+  assert.match(readFileSync(new URL('check/index.html', root), 'utf8'), /src="js\/faq-data\.js\?v=sample-20261021"/);
+  assert.match(readFileSync(new URL('home/index.html', root), 'utf8'), /src="js\/ticker-render\.js\?v=sample-20261021"/);
+  assert.match(readFileSync(new URL('home/js/ticker-render.js', root), 'utf8'), /stories-data\.js\?v=sample-20261021/);
+});

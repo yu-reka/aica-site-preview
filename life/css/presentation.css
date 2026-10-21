@@ -565,9 +565,6 @@ body .life-page .tp-flc b{font-size:16px}
 /* 지원 전 CHECK 배너(10-13): 제목 · 설명 글자 크기를 선배들의 이야기 배너와 같게, 배너 높이 줄임 */
 body .life-page .tp-flc .w{position:relative;z-index:1;align-self:flex-start;padding-right:12px;background:var(--tp-bg,#fff)}
 
-/* 인사교 라이프 배너 바탕(10-13, 사용자 제공 그림): 미색 종이 + 왼쪽 위 · 오른쪽 아래 옅은 원 · 건물 그림. 글자 쪽(왼쪽 가운데)은 비어 있음 */
-html[data-menu="life"] .st-mh .mhb{background:#F8F7F2 url("../../life/assets/banner-life-bg.webp") center/cover no-repeat}
-
 /* 인사교 라이프 배너: 글자 · 배너 크기를 선배들의 이야기 배너와 같게(10-13) */
 html[data-menu="life"] .st-mh .mhb{padding-top:clamp(28px,3.2vw,44px);padding-bottom:clamp(28px,3.2vw,44px)}
 

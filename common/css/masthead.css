@@ -53,7 +53,7 @@ html[data-nav="side"] .st-mh{border-bottom:0!important}
 @media (min-width:1200px){html[data-nav="side"] .st-mh{padding-bottom:0}}
 .st-mh .mhb{display:flex;align-items:center;justify-content:space-between;gap:32px;border-radius:28px;background:#fff;border:2px solid var(--ink-strong);}
 .st-mh .mhb-tx{min-width:0}
-.st-mh .mhb-st{flex:none;grid-template-columns:repeat(2,auto);}
+.st-mh .mhb-st{flex:none;}
 .st-mh .mhb-st a{place-items:center;}
 .st-mh .mhb-st a:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
 @media (max-width:860px){.st-mh .mhb{border-radius:20px;}}
@@ -78,8 +78,7 @@ html[data-nav="side"] .st-mh{border-bottom:0!important}
    오른쪽 찢은 모눈 메모(Real Stories 손글씨 · 테이프 · 핀) · 뒤 노란 물감 · 파란 손그림 선 · 제목 옆 반짝 표시
    꾸밈은 .mhb-deco(aria-hidden) 한 겹에만, 배너 밖으로 안 나가게 잘라 냄
    ========================================================= */
-html[data-menu="stories"] .st-mh .mhb{isolation:isolate;background-color:#F7F5F0;
-  background-image:linear-gradient(rgba(20,35,63,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(20,35,63,.045) 1px,transparent 1px);background-size:26px 26px;
+html[data-menu="stories"] .st-mh .mhb{isolation:isolate;
   padding-top:clamp(28px,3.2vw,44px);padding-bottom:clamp(28px,3.2vw,44px)}
 html[data-menu="stories"] .st-mh .mhb .st-mh-t{font-size:clamp(32px,3.9vw,54px)}
 html[data-menu="stories"] .st-mh .mhb .st-mh-lead{color:#4A5466}

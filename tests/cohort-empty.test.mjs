@@ -1,0 +1,22 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import vm from 'node:vm';
+import {readFileSync} from 'node:fs';
+const source=readFileSync(new URL('../stories/js/cohort-v3.js',import.meta.url),'utf8');
+test('a cohort without posts skips photo highlights and can switch to the preceding populated cohort',()=>{
+  const pieces={};
+  const element=()=>({hidden:false,innerHTML:'',textContent:'',replaceChildren(){},querySelector(s){return pieces[s]},focus(){this.focused=true}});
+  const hl=element(),grid=element(),pager=element(),host=element(),chosen=element();
+  for(const s of ['.story-state__title','.story-state__copy','.story-state__action'])pieces[s]=element();
+  pieces['.story-state__action'].replaceWith=e=>{pieces.action=e};
+  const selectors={'.cv3-hl':hl,'.cv3-grid':grid,'.cv3-pg':pager,'.cv3-gt':element(),'[data-cohort-filter-empty]':host,'.cv3-chips button[aria-pressed="true"]':chosen};
+  const st={coh:'8',pg:1,mo:0,v:'all'};let draws=0,rendered;
+  const context={D:[{coh:7}],COHS:['8','7'],PER:9,st,$:s=>selectors[s],inC:(d,c)=>String(d.coh)===c,lab:c=>c,list:()=>[],pinOn:()=>false,draw:()=>draws++,document:{createElement:element},StoryState:{render:(host,kind)=>{rendered=kind}}};
+  vm.runInNewContext(source.slice(source.indexOf('  function highlights()'),source.indexOf('  /* 교육과정 고정 게시물'))+'\nhighlights();',context);
+  assert.equal(hl.hidden,true);
+  vm.runInNewContext(source.slice(source.indexOf('  function grid()'),source.indexOf('  function draw()'))+'\ngrid();',context);
+  assert.equal(rendered,'empty');assert.equal(grid.hidden,true);assert.equal(pager.hidden,true);
+  assert.equal(pieces['.story-state__title'].textContent,'아직 등록된 게시물이 없어요');
+  assert.equal(pieces.action.textContent,'7기 이야기 먼저 보기 →');
+  pieces.action.onclick();assert.equal(st.coh,'7');assert.equal(st.v,'all');assert.equal(draws,1);assert.equal(chosen.focused,true);
+});

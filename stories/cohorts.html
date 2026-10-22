@@ -35,13 +35,13 @@
   <script src="../api/public/stories.js" defer></script>
   <script src="js/stories-render.js" defer></script>
   <!-- 빈 목록 · 필터 결과 없음 안내(aica-site PR #27): 글을 다 그린 뒤 판단하도록 글 그리기 다음에 -->
-  <script src="js/story-state.js?v=1020states" defer></script>
+  <script src="js/story-state.js?v=1022cohortchips" defer></script>
 
-  <link rel="stylesheet" href="css/cohort-v3.css?v=1022emptystate">
-  <link rel="stylesheet" href="css/stories-m.css?v=1021audit-pr28">
+  <link rel="stylesheet" href="css/cohort-v3.css?v=1022cohortinfo-empty">
+  <link rel="stylesheet" href="css/stories-m.css?v=1022cohortinfo">
   <link rel="stylesheet" href="../common/css/components.css?v=1021audit-pr28">
 <link rel="stylesheet" href="../common/css/navigation-mobile.css?v=1016nav">
-  <script src="js/cohort-v3.js?v=1022emptystate" defer></script>
+  <script src="js/cohort-v3.js?v=1022cohortchips-dialog" defer></script>
   <script src="js/cohort-modal-scroll.js?v=1022swipereading" defer></script>
   <script src="js/mast-fix.js" defer></script>
   <script src="../common/js/menu.js" defer></script>
@@ -55,7 +55,7 @@
 <script src="../common/js/availability.js?v=1021" defer></script>
 
   <script src="js/stories-m.js?v=1021audit-pr28" defer></script>
-  <script src="js/stories.js?v=1021audit-pr28" defer></script>
+  <script src="js/stories.js?v=1022dialog-transfer" defer></script>
 <link rel="stylesheet" href="css/stories-render.css?v=1021">
 </head>
 <body>
@@ -92,22 +92,46 @@
       <div class="cv3-chips" role="group" aria-label="기수 고르기"></div>
       <div class="cv3-ig">
         <div class="cv3-prof"></div>
-        <div class="cv3-diff" hidden><div class="cv3-dt"></div></div>
+        <div class="cv3-diff" hidden></div>
         <div class="cv3-hl" role="group" aria-label="달별로 보기"></div>
         <p class="cv3-gt"></p>
         <div class="cv3-grid"></div>
         <div data-cohort-filter-empty hidden></div>
       </div>
       <nav class="cv3-pg" aria-label="기수 기록 페이지"></nav>
-      <template id="cv3-diff7"><table>
-              <tr><th scope="row">수업 방식</th><td class="old">준비·성장 일부 온라인 병행</td><td class="new">AI 준비과정(VOD) 외 전 과정 오프라인</td></tr>
-              <tr><th scope="row">프로젝트</th><td class="old">520시간</td><td class="new">720시간 — 기업연계·실증·창업 중 택 1</td></tr>
-              <tr><th scope="row">해커톤</th><td class="old">전 직군 통합 2박 3일</td><td class="new">폐지</td></tr>
-              <tr><th scope="row">트랙 구성</th><td class="old">7개 트랙</td><td class="new">직군별 심화 + 산업 도메인 2층 구조</td></tr>
-              <tr><th scope="row">전형</th><td class="old">서류 → 인터뷰 → Pre-Training → 퀴즈</td><td class="new">서류 → 코딩테스트 → 면접·인적성</td></tr>
-              <tr><th scope="row">지원금</th><td class="old">생활지원금</td><td class="new">생활지원금 + 프로젝트 지원금 200만원 신설</td></tr>
-              <tr><th scope="row">지원 대상</th><td class="old">4학년·졸업예정·졸업유예자 중심</td><td class="new">졸업생·스타트업 재직자까지 확대</td></tr>
-            </table></template>
+      <!-- 기수 정보(2026-10-22): 기수마다 교육과정 카드(.cv3-pin) · 계정 이름 · 꼬리표 · '이전 기수와 달라진 점' 버튼 이름 · 소개 · 달라진 점 표(.cv3-dr 한 줄씩).
+           카테고리 페이지 관리에서 글자를 고치고 트랙 · 표 줄을 늘리거나 줄여요. js/cohort-v3.js가 고른 기수의 블록을 화면 자리로 옮겨 보여 줘요.
+           블록이 있는 기수는 게시물이 모두 지워져도 기수 칩이 남고 '아직 등록된 게시물이 없어요' 화면을 보여 줘요(칩을 없애려면 블록을 삭제).
+           새 기수 글을 게시하면 백오피스가 같은 모양의 블록을 이 목록 맨 앞에 더해요(backend page/CohortPageSync — 선택자를 바꾸면 함께 고칠 것) -->
+      <div class="cv3-infos" data-cohort-infos hidden>
+        <div class="cv3-cinfo" data-cohort="7">
+          <div class="cv3-pin" role="group" aria-label="7기 교육과정"><span class="k">CURRICULUM</span><b>7기<br>교육과정</b><div class="cc"><span>AI 금융</span><span>AI 피지컬</span><span>AI 보안</span><span>AI 헬스케어</span><span>AI 융합</span></div><div class="ft"><p>자세한 내용은 공식 홈페이지에서 확인하세요.</p><a href="https://support.gj-aischool.or.kr/fo/main" target="_blank" rel="noopener">공식 홈페이지 <span aria-hidden="true">↗</span></a></div><img class="pn" src="assets/pin-white.png" alt="고정됨" width="96" height="96"></div>
+          <b class="cv3-acc">aica_7th</b>
+          <span class="cv3-tag">인공지능사관학교</span>
+          <span class="cv3-dlabel" data-field="label">6기와 달라진 점</span>
+          <p class="cv3-bio"><b>인공지능사관학교 7기</b><br>입교식부터 수료식까지, 7기가 남긴 순간들을 모았어요.</p>
+          <div class="cv3-dt">
+            <p class="cv3-dr"><b>수업 방식</b><s>준비·성장 일부 온라인 병행</s><span>AI 준비과정(VOD) 외 전 과정 오프라인</span></p>
+            <p class="cv3-dr"><b>프로젝트</b><s>520시간</s><span>720시간 — 기업연계·실증·창업 중 택 1</span></p>
+            <p class="cv3-dr"><b>해커톤</b><s>전 직군 통합 2박 3일</s><span>폐지</span></p>
+            <p class="cv3-dr"><b>트랙 구성</b><s>7개 트랙</s><span>직군별 심화 + 산업 도메인 2층 구조</span></p>
+            <p class="cv3-dr"><b>전형</b><s>서류 → 인터뷰 → Pre-Training → 퀴즈</s><span>서류 → 코딩테스트 → 면접·인적성</span></p>
+            <p class="cv3-dr"><b>지원금</b><s>생활지원금</s><span>생활지원금 + 프로젝트 지원금 200만원 신설</span></p>
+            <p class="cv3-dr"><b>지원 대상</b><s>4학년·졸업예정·졸업유예자 중심</s><span>졸업생·스타트업 재직자까지 확대</span></p>
+          </div>
+        </div>
+        <div class="cv3-cinfo" data-cohort="6">
+          <div class="cv3-pin" role="group" aria-label="6기 교육과정"><span class="k">CURRICULUM</span><b>6기<br>교육과정</b><div class="cc"><span>데이터 기술</span><span>AI 모델링</span><span>AI 기반 서비스</span><span>AI 플랫폼&amp;인프라</span><span>AI 비즈니스</span></div><div class="ft"><p>자세한 내용은 공식 홈페이지에서 확인하세요.</p><a href="https://support.gj-aischool.or.kr/fo/main" target="_blank" rel="noopener">공식 홈페이지 <span aria-hidden="true">↗</span></a></div><img class="pn" src="assets/pin-white.png" alt="고정됨" width="96" height="96"></div>
+          <b class="cv3-acc">aica_6th</b>
+          <span class="cv3-tag">인공지능사관학교</span>
+          <p class="cv3-bio"><b>인공지능사관학교 6기</b><br>입교식부터 수료식까지, 6기가 남긴 순간들을 모았어요.</p>
+        </div>
+        <div class="cv3-cinfo" data-cohort="3-5">
+          <b class="cv3-acc">aica_3to5th</b>
+          <span class="cv3-tag">인공지능사관학교</span>
+          <p class="cv3-bio"><b>인공지능사관학교 3–5기</b><br>입교식부터 수료식까지, 3–5기가 남긴 순간들을 모았어요.</p>
+        </div>
+      </div>
       <template id="cv3-data">
 <a class="st c7 g6" href="#" style="--c:#10203D">
             <div class="ph"><img class="illu" src="assets/lobby-laptops-sm.jpg" alt="로비 테이블에서 노트북을 펴고 함께 작업하는 교육생들" loading="lazy" decoding="async" width="880" height="550" data-field="thumbnail"></div>
@@ -259,6 +283,7 @@
     <div class="cv3-m-nav"><button type="button" class="pv" aria-label="이전 게시물"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg><span>← 이전</span></button><b class="no"></b><button type="button" class="nx" aria-label="다음 게시물"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg><span>다음 →</span></button></div>
   </div>
 </div>
+
 </div>
 </main>
 <footer class="site-footer" id="siteFooter" data-note="본 사이트는 카테고리·콘텐츠 구성안을 확인하기 위한 시안이며, 표시된 수치·일정·혜택은 모두 더미 데이터입니다."></footer>

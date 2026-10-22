@@ -157,8 +157,8 @@
       rows += '<a class="rvr ' + cls + ' pg' + pg + '" href="#' + esc(r.anchor) + '">'
         + '<span class="cg" style="background:' + c.c + '" data-field="category">' + c.name + '</span>'
         + '<span class="tt" data-field="title">' + esc(r.title) + '</span>'
-        + (tag ? '<span class="tg" style="background:' + c.bg + ';color:' + c.dk + '" data-field="tag">' + esc(tag) + '</span>' : '')
-        + '<span class="mt">' + esc([r.cohort ? r.cohort + '기' : '', r.track].filter(Boolean).join(' · ')) + '</span></a>';
+        + (tag ? '<span class="tg" style="background:' + c.bg + ';color:' + c.dk + '" data-field="tag">' + esc(tag) + '</span>' : '<span class="tg tg-general">태그 없음</span>')
+        + '<span class="mt">' + esc([r.cohort ? r.cohort + '기' : '', r.author].filter(Boolean).join(' · ')) + '</span></a>';
     });
     var grid = $('.idgrid', rev), list = $('.rvlist', rev);
     if (grid) grid.innerHTML = cards;

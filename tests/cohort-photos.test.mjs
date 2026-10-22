@@ -21,26 +21,26 @@ function start() {
   const api = vm.runInNewContext(source.slice(source.indexOf('  function galleryPhotos('), source.indexOf('  function ym(')) + '\n({galleryPhotos,changePhoto,gallery})', { document, Date });
   const photo = src => { const img = new Element('img'); img.setAttribute('src', src); return img; };
   const record = { title: '사진 게시물', illu: photo('cover.jpg'), photos: [photo('cover.jpg'), photo('second.jpg'), photo('third.jpg')] };
-  const mount = data => { const host = new Element(); hosts.push(host); api.gallery(host, data); return host; };
+  const mount = (data, tag = 'div') => { const host = new Element(tag); hosts.push(host); api.gallery(host, data); return host; };
   const control = (host, name) => host.children.find(el => el.className === name);
   return { ...api, hosts, record, mount, control, photo };
 }
 
 test('photo albums deduplicate the cover and synchronize feed and detail at both boundaries', () => {
-  const ui = start(), feed = ui.mount(ui.record), detail = ui.mount(ui.record);
+  const ui = start(), feed = ui.mount(ui.record, 'article'), detail = ui.mount(ui.record);
   assert.equal(ui.galleryPhotos(ui.record).length, 3);
   const counter = host => ui.control(host, 'cv3-photo-count').textContent;
   const dots = ui.control(detail, 'cv3-photo-dots');
   let stopped = false;
   dots.children[1].onclick({ preventDefault() {}, stopPropagation() { stopped = true; } });
   assert.equal(stopped, true);
-  assert.equal(counter(feed), '2 / 3');
-  assert.equal(counter(detail), '2 / 3');
+  assert.equal(ui.control(feed, 'cv3-photo-stack').getAttribute('aria-label'), '사진 3장 · 2번째 사진');
+  assert.equal(counter(detail), '2/3');
   ui.changePhoto(ui.record, 99);
-  assert.equal(counter(feed), '3 / 3');
+  assert.equal(ui.control(feed, 'cv3-photo-stack').getAttribute('aria-label'), '사진 3장 · 3번째 사진');
   assert.equal(dots.children[2].getAttribute('aria-pressed'), 'true');
   ui.changePhoto(ui.record, -1);
-  assert.equal(counter(detail), '1 / 3');
+  assert.equal(counter(detail), '1/3');
   assert.equal(dots.children[0].getAttribute('aria-pressed'), 'true');
 });
 
@@ -66,14 +66,18 @@ test('single-photo posts have no album arrows or counter', () => {
 test('albums stop at ten unique photos including the cover in feed and detail', () => {
   const ui = start();
   ui.record.photos = [ui.photo('cover.jpg'), ...Array.from({length: 11}, (_, i) => ui.photo(`photo-${i}.jpg`))];
-  const feed = ui.mount(ui.record), detail = ui.mount(ui.record);
+  const feed = ui.mount(ui.record, 'article'), detail = ui.mount(ui.record);
   ui.changePhoto(ui.record, 11);
   for (const host of [feed, detail]) {
-    assert.equal(ui.control(host, 'cv3-photo-count').textContent, '10 / 10');
-    assert.equal(ui.control(host, 'cv3-photo-dots').children.length, 5);
-    assert.equal(ui.control(host, 'cv3-photo-dots').children[4].getAttribute('aria-pressed'), 'true');
     assert.equal(ui.control(host, 'cv3-photo-stage').children[0].getAttribute('src'), 'photo-8.jpg');
   }
+  assert.equal(ui.control(feed, 'cv3-photo-stack').getAttribute('aria-label'), '사진 10장 · 10번째 사진');
+  assert.equal(ui.control(feed, 'cv3-photo-dots').children.length, 5);
+  assert.equal(ui.control(feed, 'cv3-photo-dots').getAttribute('aria-hidden'), 'true');
+  assert.equal(ui.control(feed, 'cv3-photo-dots').children[4].cv3PhotoIndex, 9);
+  assert.equal(ui.control(detail, 'cv3-photo-count').textContent, '10/10');
+  assert.equal(ui.control(detail, 'cv3-photo-dots').children.length, 10);
+  assert.equal(ui.control(detail, 'cv3-photo-dots').children[9].getAttribute('aria-pressed'), 'true');
 });
 
 test('static content accepts ten photos but rejects an eleventh including the cover', () => {
@@ -87,13 +91,13 @@ test('static content accepts ten photos but rejects an eleventh including the co
 });
 
 
-test('ten-photo albums show five moving dots with accurate selection labels at every position', () => {
+test('detail albums show one selectable dot per photo with stable labels', () => {
   const ui = start();
   ui.record.photos = Array.from({length: 9}, (_, i) => ui.photo(`photo-${i}.jpg`));
   const host = ui.mount(ui.record), dots = ui.control(host, 'cv3-photo-dots');
   for(let index=0;index<10;index++){
     ui.changePhoto(ui.record,index);
-    assert.equal(dots.children.length,5);
+    assert.equal(dots.children.length,10);
     const selected=dots.children.filter(dot=>dot.getAttribute('aria-pressed')==='true');
     assert.equal(selected.length,1);
     assert.equal(selected[0].getAttribute('aria-label'),`${index+1}번째 사진`);
@@ -101,32 +105,32 @@ test('ten-photo albums show five moving dots with accurate selection labels at e
   ui.changePhoto(ui.record,0);
   dots.children[4].onclick({preventDefault(){},stopPropagation(){}});
   assert.equal(ui.record.photoIndex,4);
-  assert.equal(dots.children[4].getAttribute('aria-label'),'7번째 사진');
-  dots.children[4].onclick({preventDefault(){},stopPropagation(){}});
-  assert.equal(ui.record.photoIndex,6);
+  assert.equal(dots.children[4].getAttribute('aria-label'),'5번째 사진');
+  dots.children[9].onclick({preventDefault(){},stopPropagation(){}});
+  assert.equal(ui.record.photoIndex,9);
 });
 
 
 test('photo arrows synchronize galleries, stop card opening, and wrap across both ends', () => {
-  const ui=start(),feed=ui.mount(ui.record),detail=ui.mount(ui.record);
+  const ui=start(),feed=ui.mount(ui.record,'article'),detail=ui.mount(ui.record);
   const previous=ui.control(detail,'cv3-photo-arrow cv3-photo-prev');
   const next=ui.control(detail,'cv3-photo-arrow cv3-photo-next');
   assert.ok(!previous.disabled && !next.disabled);
   let stopped=false;
   const event={preventDefault(){},stopPropagation(){stopped=true;}};
   previous.onclick(event);
-  assert.equal(ui.control(feed,'cv3-photo-count').textContent,'3 / 3');
+  assert.equal(ui.control(feed,'cv3-photo-stack').getAttribute('aria-label'),'사진 3장 · 3번째 사진');
   next.onclick(event);
-  assert.equal(ui.control(feed,'cv3-photo-count').textContent,'1 / 3');
+  assert.equal(ui.control(feed,'cv3-photo-stack').getAttribute('aria-label'),'사진 3장 · 1번째 사진');
   next.onclick(event);
-  assert.equal(ui.control(detail,'cv3-photo-count').textContent,'2 / 3');
+  assert.equal(ui.control(detail,'cv3-photo-count').textContent,'2/3');
   assert.equal(stopped,true);
   assert.ok(!previous.disabled && !next.disabled);
 });
 
 
 test('closing the detail restores visited posts to their covers without changing other feed posts', () => {
-  const ui=start(),feed=ui.mount(ui.record);
+  const ui=start(),feed=ui.mount(ui.record,'article');
   const other={title:'다른 게시물',illu:ui.photo('a.jpg'),photos:[ui.photo('b.jpg')]};
   ui.mount(other);ui.changePhoto(ui.record,2);ui.changePhoto(other,1);
   const source=readFileSync(new URL('../stories/js/cohort-v3.js',import.meta.url),'utf8');
@@ -140,7 +144,7 @@ test('closing the detail restores visited posts to their covers without changing
   vm.runInNewContext(source.slice(begin,end)+'\ncloseM();',state);
   assert.equal(state.M.hidden,true);
   assert.equal(state.Z.hidden,true);
-  assert.equal(ui.control(feed,'cv3-photo-count').textContent,'1 / 3');
+  assert.equal(ui.control(feed,'cv3-photo-stack').getAttribute('aria-label'),'사진 3장 · 1번째 사진');
   assert.equal(ui.record.photoIndex,0);
   assert.equal(other.photoIndex,1);
   assert.equal(state.modalVisited.length,0);

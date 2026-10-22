@@ -47,7 +47,7 @@
     if(isFeed)dots.setAttribute('aria-hidden','true');
     else {dots.setAttribute('role','group');dots.setAttribute('aria-label','사진 선택');}
     dots.cv3Total=galleryPhotos(d).length;
-    galleryPhotos(d).slice(0,5).forEach(function(photo,index){
+    galleryPhotos(d).slice(0,isFeed?5:10).forEach(function(photo,index){
       var dot=document.createElement(isFeed?'i':'button');
       if(!isFeed){
         dot.type='button';dot.setAttribute('aria-label',(index+1)+'번째 사진');
@@ -114,7 +114,7 @@
       img.classList.add('illu');img.removeAttribute('id');img.removeAttribute('loading');
       if(img.tagName==='IMG')img.setAttribute('alt',img.getAttribute('alt')||d.title+' 사진 '+(index+1));
       stage.replaceChildren(img);
-      if(count){if(isFeed)count.setAttribute('aria-label','사진 '+photos.length+'장 · '+(index+1)+'번째 사진');else count.textContent=(index+1)+' / '+photos.length;}
+      if(count){if(isFeed)count.setAttribute('aria-label','사진 '+photos.length+'장 · '+(index+1)+'번째 사진');else count.textContent=(index+1)+'/'+photos.length;}
       if(dots)paintDots(dots,index);
     };
     bindPhotoSwipe(host);host.cv3Render();return stage;

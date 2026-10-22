@@ -604,15 +604,6 @@ box-shadow:inset 0 0 0 1px rgba(120,86,48,.18),inset 0 2px 12px rgba(90,60,28,.1
 
 .stories-page .cv3-ring b{display:block;transform:translateY(.13em)}
 
-/* PC 게시물도 모바일과 같은 세로 카드 구성으로 표시 */
-@media (min-width:761px){
-  .stories-page .cv3-m-box{flex-direction:column;width:min(520px,max(340px,calc((100dvh - 380px)*4/3)),100%);height:auto;max-height:calc(100dvh - 140px);overflow-y:auto}
-  .stories-page .cv3-m-media{flex:none;aspect-ratio:4/3}
-  .stories-page .cv3-m-media:has(.cv3-photo-dots){aspect-ratio:auto}
-  .stories-page .cv3-m-media:has(.cv3-photo-dots) .cv3-photo-stage{flex:none;aspect-ratio:4/3}
-  .stories-page .cv3-m-side{flex:none}
-  .stories-page .cv3-m-body{overflow:visible}
-}
 
 .stories-page .cv3-m-body{padding:18px 20px}
 

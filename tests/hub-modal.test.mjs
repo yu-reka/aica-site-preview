@@ -11,3 +11,12 @@ test('hub review detail keeps escaped content with a more-reviews footer and loc
   assert.ok(hub.includes('href="reviews.html#tg-0"'));assert.ok(hub.includes('&lt;unsafe&gt;'));assert.ok(hub.includes('본문'));
   assert.ok(!hub.includes('sd-pair'));assert.ok(listing.includes('href="#p-rev"'));assert.ok(!listing.includes('후기 더 보기'));
 });
+
+test('hub card footer uses the real first tag, an accessible hidden arrow and escaped metadata',()=>{
+  const context={firstTag:r=>r.tags[0]||'',esc:x=>String(x??'').replaceAll('<','&lt;').replaceAll('>','&gt;')};
+  const footer=vm.runInNewContext(source.slice(source.indexOf('  function hubReviewByline('),source.indexOf('  function reviewDialogs('))+'\nhubReviewByline',context);
+  const tagged=footer({author:'<이름>',track:'<과정>',tags:['#팀활동','#태그2']});
+  assert.ok(tagged.includes('&lt;이름&gt;'));assert.ok(tagged.includes('&lt;과정&gt;'));assert.ok(tagged.includes('#팀활동'));
+  assert.ok(!tagged.includes('#태그2'));assert.ok(tagged.includes('aria-hidden="true">→'));
+  const untagged=footer({author:'선배',tags:[]});assert.ok(!untagged.includes('class="tg"'));assert.ok(untagged.includes('hb-pi-arrow'));
+});

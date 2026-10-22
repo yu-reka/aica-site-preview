@@ -4,7 +4,7 @@
 
 ## 에이전트·팀원 협업
 
-작업 전에 [AGENTS.md](AGENTS.md)를 읽어 주세요. 모바일은 현재 시안 검토 단계이며, 최신 `origin/main`에서 별도 브랜치를 만들어 작업하고 PR로 검토합니다. `main`은 외부 공유 페이지와 연결되어 있으므로 소유자의 승인 없이 직접 푸시하거나 병합하지 않습니다. HTML 원본 위치, Spring 연동 경계와 검증 방법도 해당 문서에 정리했습니다.
+작업 전에 [AGENTS.md](AGENTS.md)를 읽어 주세요. 모바일은 현재 시안 검토 단계이며, 최신 `origin/main`에서 별도 브랜치를 만들어 작업하고 PR로 검토합니다. `main`은 외부 공유 페이지와 연결되어 있으므로 소유자의 승인 없이 직접 푸시하거나 병합하지 않습니다. HTML 원본 위치, V30 공개 API 연결 경계와 검증 방법도 해당 문서에 정리했습니다.
 
 ## 실행
 
@@ -14,21 +14,35 @@ Node.js 20 이상을 사용합니다. 외부 npm 패키지를 설치할 필요�
 npm run build       # 콘텐츠와 템플릿 → 기존 경로의 HTML 및 메뉴 설정
 npm test            # 데이터 공유, 렌더링, 출력 안전성 검사
 npm run check       # 생성 결과가 소스와 일치하는지 확인
+npm run check:public # 공개 배포 전: 생성물 + 합성 샘플 사본 검사
 npm run preview     # Python 3 로컬 서버: http://127.0.0.1:4173
 ```
 
 페이지 주소는 `home/index.html`, `about/index.html`, `stories/*.html`, `life/index.html`, `check/index.html` 그대로입니다. 생성한 결과물은 기존처럼 정적 서버에 올릴 수 있습니다.
+
+## 현재 데이터 흐름
+
+V30 공개 화면은 정적 HTML 틀에 JavaScript가 공개 API 응답을 그립니다. 이야기·FAQ는 사본을 먼저 읽고, API가 성공하면 그 응답으로 대체합니다. GitHub Pages는 합성 샘플로 디자인을 확인하며 실제 DB에 연결하지 않습니다.
+
+- 이야기: `stories-data.js` → `../api/public/stories.js` → `stories-render.js` → 화면 동작·`story-state.js`
+- FAQ: `faq-data.js` → `../api/public/faq.js` → `faq-render.js` → `check.js`
+- `common/js/public-content.js`는 API보다 먼저 로드되어 URL·HTML·SVG 출력과 이야기 API 실패 신호를 관리합니다. 홈 전광판은 `home/js/ticker-render.js`가 관리합니다.
+- `scripts/backoffice-site.mjs`가 빌드 결과에 연결 줄을 넣습니다. 생성 HTML에서 스크립트 순서를 직접 고치지 않습니다.
+
+실제 글·FAQ·라이프 내용은 백오피스 담당이 관리합니다. 프론트는 구조·스타일·상호작용을 맡고, API·마크업 계약 변경은 백엔드와 먼저 조율합니다. 현재 동기화 범위는 `frontend/`뿐이며 Spring 생성물을 만들지 않습니다. 백엔드·관리자·실제 DB·통합본 루트 scripts/·CI는 이 저장소 작업 범위가 아닙니다.
 
 ## 수정할 위치
 
 | 목적 | 원본 위치 |
 | --- | --- |
 | 메뉴·외부 연결·기관 연락처 | `content/site.json` |
-| 후기·인터뷰·프로젝트·기수별 기록 | `content/stories/` |
-| 시설·주거·먹거리·여가 | `content/life/` |
-| 모집 기준·체크리스트·프로세스·혜택·FAQ | `content/check/` |
+| 이야기 디자인 원본(실제 DB 글 편집용 아님) | `content/stories/` |
+| 시설·주거·먹거리·여가 기본 시안 | `content/life/` |
+| 모집 기준·체크리스트·프로세스·혜택·FAQ 기본 시안 | `content/check/` |
 | 활동 사진·분류 | `content/about/` |
-| 홈 전광판 문구 | `content/home/quotes.json` |
+| 홈 전광판 기본 시안 | `content/home/quotes.json` |
+| 공개 이야기·FAQ 샘플 생성 규칙 | `scripts/preview-data.mjs` |
+| 공개 API 데이터 표시 | `stories/js/stories-render.js`, `check/js/faq-render.js`, `home/js/ticker-render.js` |
 | 페이지 구성·고정 소개 문구 | `src/pages/` |
 | 반복 카드·상세·공통 제목 줄 | `src/components/` |
 | 기존 배치·색상·필터 클래스·템플릿 변형 | `src/presentation.json` |
@@ -46,19 +60,15 @@ npm run preview     # Python 3 로컬 서버: http://127.0.0.1:4173
 
 루트의 HTML과 `common/js/menu.js`는 **생성 결과물**입니다. 직접 수정하면 다음 빌드에서 덮어씁니다. 원본을 수정하고 `npm run build`를 실행하세요. CSS 분리는 기존 선언과 페이지 내 적용 순서를 보존하며, 이미지·폰트 파일은 변경하지 않았습니다.
 
-## 데이터와 화면의 관계
+## 디자인 원본과 실행 데이터
 
-후기는 한 레코드가 카드·목록·상세창을 생성합니다. 이야기 허브에서 재사용하는 후기·인터뷰·프로젝트 문구도 같은 레코드를 참조합니다. 허브용으로 문구가 달랐던 곳은 `hub*` 필드로 보존했습니다. 홈 전광판은 기존 실명 표기와 문구를 유지한 별도 편집 컬렉션입니다.
+`content/`와 `src/`는 기존 디자인을 생성하는 원본입니다. 이야기의 `view` 배치 정보는 `src/presentation.json`에 있고 시설 탭·주거 지도는 고정 슬롯을 사용합니다. 디자인 레코드를 추가할 때는 연결된 표시 템플릿·배치도 확인합니다.
 
-기수별 기록의 사진은 대표 이미지와 추가 `photos`를 합해 게시물당 최대 10장입니다. 같은 이미지 주소는 중복 계산하지 않습니다. 정적 콘텐츠가 제한을 넘으면 빌드가 중단되고, 공개 피드·상세·확대 보기에서는 최대 10장만 표시합니다. 실제 업로드 저장 제한은 백오피스에서도 별도로 적용해야 합니다.
+빌드한 이야기 목록과 상세는 런타임 렌더러가 사본 또는 API 데이터로 채웁니다. 따라서 `content/stories/`를 수정하는 것은 실제 DB 글을 수정하는 방법이 아닙니다. FAQ와 라이프의 백오피스 관리 내용도 같은 경계를 따릅니다. 백오피스는 저장소가 아닌 별도 실행 사이트 사본을 갱신하므로, 실행 폴더의 목록을 프론트 원본으로 역복사하지 않습니다.
 
-`id`는 기존 상세 주소와 연결됩니다. `view`에 해당하는 배치 정보는 콘텐츠와 별도로 `src/presentation.json`에 있습니다. 기존 디자인의 개별 일러스트와 일부 위치별 변형을 보존하므로, **새 레코드를 추가할 때는 해당 레코드의 표시 템플릿·배치도 지정**해야 합니다. 텍스트 수정에는 화면 코드를 수정할 필요가 없습니다.
+기수별 기록의 사진은 대표 이미지와 추가 `photos`를 합해 게시물당 최대 10장입니다. 같은 이미지 주소는 중복 계산하지 않습니다. 정적 콘텐츠가 제한을 넘으면 빌드가 중단되며, 실제 업로드·저장 제한은 백오피스 담당 범위입니다.
 
-시설 공간 탭과 주거 지도는 현재 디자인의 고정 슬롯입니다. 정적 미리보기의 후기 페이지도 고정 슬롯을 유지하지만, Spring 연결 화면은 DB의 기수와 글 수에 따라 필터·페이지를 생성합니다. 운영 중인 후기는 백오피스에서 관리하며 `content/stories/reviews.json`은 최초 가져오기와 디자인 미리보기의 기준 데이터입니다.
-
-후기용 Spring 연결은 별도 `AICA-BACKOFFICE/main-project` 저장소에 구현되어 있습니다. 임시저장과 공개본을 분리하고 발행할 때만 공개합니다. `npm run export:spring -- --output /absolute/server/src/main/resources`로 디자인을 내보내며, 실행과 경계는 [연동 안내](docs/spring-integration.md)를 참고하세요. 프론트 단독 `4173` 서버는 정적 미리보기이고, 연결된 후기는 Spring 서버의 `/stories/reviews.html`에서 확인합니다.
-
-인터뷰·프로젝트·기수별 기록도 후기와 같은 Spring 공용 DB와 작업본·발행 정책으로 연결했습니다. `scripts/spring-stories.mjs`가 승인된 디자인 변형과 일러스트를 함께 내보냅니다. 공개 프론트와 관리자 계정들은 같은 DB를 사용하고 역할별 권한을 구분합니다. 최초 전체 시안 데이터 가져오기는 `BACKOFFICE_IMPORT_STORIES=true`로 명시합니다. 자세한 내용은 [연동 안내](docs/spring-integration.md)를 참고하세요.
+`id`·해시·선택자·`data-*`는 화면과 백엔드가 공유하는 계약입니다. 로딩 순서, 상태 안내, 주소 호환과 담당 파일은 [프론트 유지보수 구조](docs/frontend-structure.md)를 참고하세요. 이전 서버 렌더링과 `export:spring`은 [과거 연동 안내](docs/spring-integration.md)에 보존하며 현재 V30 배포 절차로 사용하지 않습니다.
 
 ## 검수 반영과 공통 UI
 
@@ -70,17 +80,8 @@ npm run preview     # Python 3 로컬 서버: http://127.0.0.1:4173
 
 `npm run preview`는 같은 문서를 사용하는 로컬 서버입니다. 사용 중인 서버를 종료하지 않고 `npm run preview -- --port 4191`처럼 다른 포트로 확인할 수 있습니다. 기존 `python3 -m http.server` 프로세스에는 이 변경이 자동 적용되지 않습니다.
 
-500 오류 원본은 `src/pages/500.html`이며 Spring 내보내기에 `templates/error/500.html`로 포함됩니다. 오프라인 원본은 `src/pages/offline.html`입니다. 정상 페이지에는 연결 끊김 안내와 느린 페이지 이동의 로딩 표시가 연결되어 있습니다. 실제 Spring 500 응답 연결은 통합 환경에서 별도로 확인하며, 첫 방문 오프라인 캐시 지원은 포함하지 않습니다. 자세한 동작은 `docs/spring-integration.md`를 참고하세요.
+500·오프라인 원본은 `src/pages/500.html`, `src/pages/offline.html`이며 루트의 정적 문서로 빌드합니다. 정상 페이지에는 연결 끊김 안내와 느린 페이지 이동의 로딩 표시가 연결되어 있습니다. 실제 서버의 HTTP 500 응답 연결은 백엔드 담당 범위입니다. 첫 방문 오프라인 캐시 지원은 포함하지 않습니다.
 
-
-## 2026-10-21 V30 공개 API 연결
-
-최신 사용자 전환 지시에 따라 공개 화면은 사본 → 공개 API → 클라이언트 렌더러 순서로 내용을 표시합니다. 이전 Spring 내보내기 안내는 과거 호환성 참고이며, 통합 동기화는 `frontend/` subtree만 반영하고 Spring 생성물을 만들지 않습니다.
-
-- `scripts/backoffice-site.mjs`는 Claude가 준비한 연결 빌드 단계입니다. `npm run build` / `npm run check`가 API 연결 줄을 보존합니다. `src/` 디자인 원본과 데이터 사본의 역할을 구분합니다.
-- 공개 프리뷰의 `stories/js/stories-data.js`, `check/js/faq-data.js`는 아래 공개 샘플 규칙을 따릅니다. 비공개 통합본의 DB 사본 두 파일과 백오피스가 게시하는 `life/index.html` 목록은 보존하며 손으로 편집하지 않습니다.
-- `common/js/public-content.js`는 API 스크립트보다 먼저 로드되어 실패를 기록하고, 허용된 HTML/SVG와 URL만 렌더링하도록 돕습니다. API 성공 빈 배열·실패 후 사본·실패 후 사본 없음은 서로 다른 상태입니다.
-- 백엔드·관리자·DB·통합본 루트 scripts/·CI는 담당 Claude의 범위입니다. 실제 DB/기존 서버를 연결 테스트에 사용하지 않습니다.
 
 ## 공개 프리뷰 데이터 경계
 

@@ -13,7 +13,7 @@
     return {a:a,c:c,v:!!dur,t:(a.querySelector('h3')||{}).textContent||'',s:(a.querySelector('.tb p')||{}).textContent||'',n:(a.querySelector('.by b')||{}).textContent||'',tr:(a.querySelector('.by em')||{}).textContent||''};
   });
   var STEP=6,pg=1,coh='all',view='grid';   // 10-13: '더 보기' → 기수별 이모저모와 같은 숫자 페이지(6개씩)
-  var out=sec.querySelector('.iva-out'),more=sec.querySelector('.iva-more'),empty=sec.querySelector('.iva-empty');
+  var out=sec.querySelector('.iva-out'),empty=sec.querySelector('.iva-empty');
   function chip(box,val,label,curv){var b=document.createElement('button');b.type='button';b.textContent=label;b.setAttribute('aria-pressed',val===curv);b.onclick=function(){coh=val;pg=1;draw()};box.appendChild(b)}
   function chips(){
     var cb=sec.querySelector('[data-f=coh]');cb.innerHTML='';
@@ -43,7 +43,6 @@
     list.slice((pg-1)*STEP,pg*STEP).forEach(function(d){out.appendChild(card(d))});
     if(!list.length&&D.length&&typeof StoryState!=='undefined')StoryState.render(empty,'filter',{subject:'인터뷰',onReset:function(){coh='all';pg=1;draw();sec.querySelector('[data-f=coh] button').focus({preventScroll:true});}});
     empty.hidden=!D.length||list.length>0;
-    more.hidden=true;
     nav.innerHTML='';nav.hidden=pages<2;
     if(pages>1){
       nav.appendChild(pbtn('←',pg-1,{dis:pg===1,aria:'이전 페이지'}));
@@ -51,7 +50,7 @@
       nav.appendChild(pbtn('→',pg+1,{dis:pg===pages,aria:'다음 페이지'}));
     }
   }
-  var nav=document.createElement('nav');nav.className='cpager';nav.setAttribute('aria-label','인터뷰 페이지');more.parentNode.insertBefore(nav,more);
+  var nav=document.createElement('nav');nav.className='cpager';nav.setAttribute('aria-label','인터뷰 페이지');empty.after(nav);
   function pbtn(label,to,o){var b=document.createElement('button');b.type='button';b.textContent=label;
     if(o.cur)b.setAttribute('aria-current','page');if(o.dis)b.disabled=true;if(o.aria)b.setAttribute('aria-label',o.aria);
     b.onclick=function(){pg=to;draw();var top=sec.getBoundingClientRect().top+scrollY-140;scrollTo({top:top,behavior:'smooth'})};return b}

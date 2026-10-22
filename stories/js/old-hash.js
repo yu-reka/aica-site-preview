@@ -5,6 +5,7 @@
   // This early head script runs before the deferred Site helper is available.
   var h; try { h = decodeURIComponent(location.hash.slice(1)); } catch (_) { return; }
   if (!h) return;
+  if(document.documentElement.getAttribute('data-inline-story-modals')==='true'&&/^(r-p[0-9]+|st-[a-zA-Z0-9_-]+)$/.test(h))return;
   var to = { reviews:'reviews.html', interviews:'interviews.html', projects:'projects.html', cohorts:'cohorts.html',
     'go-iv':'interviews.html', 'go-pr':'projects.html', 'go-coh':'cohorts.html',
     'p-rev':'reviews.html', 'p-iv':'interviews.html', 'p-pr':'projects.html', 'p-coh':'cohorts.html', 'iv-all':'interviews.html',

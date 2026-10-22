@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko" data-menu="stories" data-sub="overview" data-nav="side" data-theme="light">
+<html data-inline-story-modals="true" lang="ko" data-menu="stories" data-sub="overview" data-nav="side" data-theme="light">
 <head>
   <script src="../common/js/public-content.js"></script>
   <meta charset="UTF-8">
@@ -13,10 +13,13 @@
   <meta property="og:description" content="먼저 다녀온 선배들의 후기 · 인터뷰 · 프로젝트 · 기수별 기록을 모아 봅니다.">
   <link rel="icon" type="image/png" href="../common/assets/brand/symbol-blue.png">
   <!-- 옛 주소(#reviews · #iv-3 · #r-life-0 …)는 그려지기 전에 나뉜 페이지로 보냄: defer 없이 가장 먼저 -->
-  <script src="js/old-hash.js?v=1016integrity"></script>
+  <script src="js/old-hash.js?v=1022hubmodals"></script>
   <link rel="stylesheet" href="../common/css/tokens.css?v=1021audit-colors">
   <link rel="stylesheet" href="../common/css/base.css">
   <link rel="stylesheet" href="../common/css/site.css?v=1021audit-pr28">
+  <link rel="stylesheet" href="css/stories.css?v=1021audit-pr28">
+  <link rel="stylesheet" href="css/detail-navigation.css?v=1020outsidegrid">
+  <link rel="stylesheet" href="css/cohort-v3.css?v=1022emptystate">
   <link rel="stylesheet" href="css/hub.css">
   <link rel="stylesheet" href="../common/css/presentation.css?v=1016split">
   <link rel="stylesheet" href="css/presentation.css?v=1016split">
@@ -34,7 +37,10 @@
 <script src="../common/js/availability.js?v=1021" defer></script>
   <script src="js/stories-m.js?v=1021audit-pr28" defer></script>
   <script src="js/hub.js" defer></script>
-<link rel="stylesheet" href="css/review-notes.css?v=1021centerellipsis">
+  <script src="js/stories.js?v=1022dialog-transfer" defer></script>
+  <script src="js/cohort-v3.js?v=1022dialog-transfer" defer></script>
+  <script src="js/cohort-modal-scroll.js?v=1022swipereading" defer></script>
+<link rel="stylesheet" href="css/review-notes.css?v=1022footerspacing">
 <script src="js/review-notes.js?v=1021centerellipsis" defer></script>
 </head>
 <body>
@@ -255,6 +261,10 @@
     </div>
   </section>
 </div>
+<div id="hub-review-dialogs"></div>
+<div id="cv3" data-hub-modal="true" hidden></div>
+<template id="cv3-data"></template>
+{{> stories/cohort-dialog}}
 </main>
 <footer class="site-footer" id="siteFooter" data-note="본 사이트는 카테고리·콘텐츠 구성안을 확인하기 위한 시안이며, 표시된 수치·일정·혜택은 모두 더미 데이터입니다."></footer>
 </body>

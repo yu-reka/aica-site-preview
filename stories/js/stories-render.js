@@ -129,6 +129,24 @@
   function subjectOf(x) { return x.subject || x.type || ''; }
   var css = '';
 
+  function reviewDialogs(hub) {
+    return REV.map(function (r) {
+      var c = cat(r), id = esc(r.anchor);
+      var tags = (r.tags || []).map(function (t) { return '<a class="t" href="' + (hub ? 'reviews.html' : '') + '#tg-' + t + '" data-field="tag">' + esc(TAGS[t]) + '</a>'; }).join('');
+      return '<div class="ov ' + c.cls + ' coh' + esc(r.cohort) + fld(r) + tagClasses(r.tags, 'tg') + '" id="' + id + '" style="--c:' + c.c + ';--bg:' + c.bg + ';--dk:' + c.dk + '" role="dialog" aria-modal="true" aria-labelledby="' + id + '-t">'
+        + '<a class="back" href="' + (hub ? '#hub-reviews' : '#p-rev') + '" aria-label="닫기"></a><div class="sheet"><a class="x" href="' + (hub ? '#hub-reviews' : '#p-rev') + '" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></a><div class="mscroll">'
+        + '<div class="mtop"><div class="mcat" data-field="category">' + c.name + '</div><h3 id="' + id + '-t" data-field="title">' + esc(r.title) + '</h3>'
+        + '<div class="mby"><span class="mav" data-field="cohort">' + coh(r.cohort) + '</span><div><b data-field="author">' + esc(r.author) + '</b>' + (r.track ? '<em data-field="track">' + esc(r.track) + '</em>' : '') + '</div></div></div>'
+        + '<div class="mbody"><p class="lead" data-field="summary">' + esc(r.summary) + '</p>'
+        + photos(r, r.title)
+        + (r.body || []).map(function (b) { return '<p data-field="body">' + esc(b) + '</p>'; }).join('')
+        + (tags ? '<div class="mtags">' + tags + '<span class="hint">태그를 누르면 창이 닫히고 그 태그의 후기만 모여요</span></div>' : '')
+        + '</div>' + (hub ? '<nav class="sd-nav" aria-label="후기 더 보기"><a class="sd-list" href="reviews.html">후기 더 보기 →</a></nav>' : '') + '</div></div></div>';
+    }).join('');
+  }
+  var hubDialogs=document.getElementById('hub-review-dialogs');
+  if(hubDialogs)hubDialogs.innerHTML=reviewDialogs(true);
+
   /* ── 후기(reviews.html) ── */
   var rev = $('#p-rev');
   if (rev) {
@@ -165,19 +183,7 @@
     if (list) list.innerHTML = rows;
     // 후기 글 창(.ov)은 .st-main 바로 뒤에
     $$('.ov').forEach(function (o) { o.remove(); });
-    var ovs = REV.map(function (r) {
-      var c = cat(r), id = esc(r.anchor);
-      var tags = (r.tags || []).map(function (t) { return '<a class="t" href="#tg-' + t + '" data-field="tag">' + esc(TAGS[t]) + '</a>'; }).join('');
-      return '<div class="ov ' + c.cls + ' coh' + esc(r.cohort) + fld(r) + tagClasses(r.tags, 'tg') + '" id="' + id + '" style="--c:' + c.c + ';--bg:' + c.bg + ';--dk:' + c.dk + '" role="dialog" aria-modal="true" aria-labelledby="' + id + '-t">'
-        + '<a class="back" href="#p-rev" aria-label="닫기"></a><div class="sheet"><a class="x" href="#p-rev" aria-label="닫기">&times;</a><div class="mscroll">'
-        + '<div class="mtop"><div class="mcat" data-field="category">' + c.name + '</div><h3 id="' + id + '-t" data-field="title">' + esc(r.title) + '</h3>'
-        + '<div class="mby"><span class="mav" data-field="cohort">' + coh(r.cohort) + '</span><div><b data-field="author">' + esc(r.author) + '</b>' + (r.track ? '<em data-field="track">' + esc(r.track) + '</em>' : '') + '</div></div></div>'
-        + '<div class="mbody"><p class="lead" data-field="summary">' + esc(r.summary) + '</p>'
-        + photos(r, r.title)
-        + (r.body || []).map(function (b) { return '<p data-field="body">' + esc(b) + '</p>'; }).join('')
-        + (tags ? '<div class="mtags">' + tags + '<span class="hint">태그를 누르면 창이 닫히고 그 태그의 후기만 모여요</span></div>' : '')
-        + '</div></div></div></div>';
-    }).join('');
+    var ovs = reviewDialogs(false);
     insertAfter($('.st-main'), ovs);
     // 쪽 번호 넘김 규칙이 모자라면 더 만들어요(CSS에는 7쪽까지)
     for (var k = CSS_PAGES + 1; k <= pages; k++) {
@@ -364,7 +370,7 @@
     var tick = REV.slice(0, 12), lq = $('.hb-lq-t');
     if (lq) {
       var one = tick.map(function (r) {
-        return '<a href="reviews.html#' + esc(r.anchor) + '"%HIDE%><span class="t">' + esc(r.ticker || firstSentence(r.summary)) + '</span><span class="a">' + esc(r.author) + ' · ' + esc(r.cohort) + '기</span></a>';
+        return '<a href="#' + esc(r.anchor) + '"%HIDE%><span class="t">' + esc(r.ticker || firstSentence(r.summary)) + '</span><span class="a">' + esc(r.author) + ' · ' + esc(r.cohort) + '기</span></a>';
       }).join('');
       lq.innerHTML = one.replace(/%HIDE%/g, '') + one.replace(/%HIDE%/g, ' aria-hidden="true" tabindex="-1"');
     }
@@ -382,7 +388,7 @@
       picked = picked.slice(0, 4).map(function (r, i) { return { r: r, i: i }; })
         .sort(function (a, b) { return CAT_ORDER.indexOf(catKey(a.r)) - CAT_ORDER.indexOf(catKey(b.r)) || a.i - b.i; }).map(function (x) { return x.r; });
       pis.innerHTML = picked.map(function (r) {
-        return '<a class="hb-pi" href="reviews.html#' + esc(r.anchor) + '"><span class="hb-pi-c"><b>' + cat(r).name + '</b><span>' + esc(r.cohort) + '기</span></span>'
+        return '<a class="hb-pi" href="#' + esc(r.anchor) + '"><span class="hb-pi-c"><b>' + cat(r).name + '</b><span>' + esc(r.cohort) + '기</span></span>'
           + '<h3>' + esc(r.title) + '</h3><p>' + esc(r.summary) + '</p><span class="hb-pi-by"><b>' + esc(r.author) + '</b>' + (r.track ? '<span>' + esc(r.track) + '</span>' : '') + '</span></a>';
       }).join('');
     }
@@ -413,10 +419,10 @@
       mos.innerHTML = five.map(function (c, i) {
         var vid = c.video && c.video.url;
         var title = esc(c.title).replace(/ — (.+)$/, ' — <span class="hb-nw">$1</span>');
-        return '<li' + (i === 0 ? ' class="is-big"' : '') + '><a href="' + (vid ? esc(c.video.url) + '" target="_blank" rel="noopener' : 'cohorts.html' + (c.id != null ? '#st-' + esc(c.id) : '')) + '">'
+        return '<li' + (i === 0 ? ' class="is-big"' : '') + '><a href="' + ('#' + esc(c.anchor || ('st-' + c.id))) + '">'
           + hubVisual(c)
           + '<div class="hb-mos-tx"><span class="hb-mos-m">' + esc(c.cohort) + '기<span class="hb-mos-d"> · ' + esc(c.date || '') + '</span>'
-          + (vid && c.video.dur ? '<span class="hb-vd"><span class="hb-sr">유튜브 영상(새 창), 길이 </span>' + esc(c.video.dur) + '</span>' : '') + '</span>'
+          + (vid && c.video.dur ? '<span class="hb-vd"><span class="hb-sr">영상, 길이 </span>' + esc(c.video.dur) + '</span>' : '') + '</span>'
           + '<h3>' + title + '</h3>' + (i === 0 ? '<p>' + esc(c.summary || (Array.isArray(c.body) ? c.body[0] : c.body) || '') + '</p>' : '') + '</div></a></li>';
       }).join('');
     }

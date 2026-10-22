@@ -129,6 +129,14 @@
   function subjectOf(x) { return x.subject || x.type || ''; }
   var css = '';
 
+  function hubReviewByline(r) {
+    var tag=firstTag(r);
+    return '<span class="hb-pi-by"><span class="hb-pi-meta"><b>' + esc(r.author) + '</b>'
+      + (r.track ? '<span>' + esc(r.track) + '</span>' : '') + '</span>'
+      + (tag ? '<span class="tg" data-field="tag">' + esc(tag) + '</span>' : '')
+      + '<span class="hb-pi-arrow" aria-hidden="true">→</span></span>';
+  }
+
   function reviewDialogs(hub) {
     return REV.map(function (r) {
       var c = cat(r), id = esc(r.anchor);
@@ -389,7 +397,7 @@
         .sort(function (a, b) { return CAT_ORDER.indexOf(catKey(a.r)) - CAT_ORDER.indexOf(catKey(b.r)) || a.i - b.i; }).map(function (x) { return x.r; });
       pis.innerHTML = picked.map(function (r) {
         return '<a class="hb-pi" href="#' + esc(r.anchor) + '"><span class="hb-pi-c"><b>' + cat(r).name + '</b><span>' + esc(r.cohort) + '기</span></span>'
-          + '<h3>' + esc(r.title) + '</h3><p>' + esc(r.summary) + '</p><span class="hb-pi-by"><b>' + esc(r.author) + '</b>' + (r.track ? '<span>' + esc(r.track) + '</span>' : '') + '</span></a>';
+          + '<h3>' + esc(r.title) + '</h3><p>' + esc(r.summary) + '</p>' + hubReviewByline(r) + '</a>';
       }).join('');
     }
     // 프로젝트: 유형이 겹치지 않게 3개(목록 순서대로 유형마다 첫 글), 모자라면 다음 글로

@@ -124,10 +124,10 @@
   /* 달라진 점: 항목 → 이전(흐리게) → 지금 세로로 */
   html[data-nav="side"] .stories-page .cv3-diff{margin:12px 0 0;padding:4px 16px}
   html[data-nav="side"] .stories-page .cv3-dt{grid-template-columns:minmax(0,1fr);min-width:0;font-size:13px}
-  html[data-nav="side"] .stories-page .cv3-dt>*{padding:0 0 2px;border:0}
-  html[data-nav="side"] .stories-page .cv3-dt>b{padding-top:10px;border-top:1px solid #E3E7EE;font-size:12px;color:#2457F5}
-  html[data-nav="side"] .stories-page .cv3-dt>b:first-child{border-top:0}
-  html[data-nav="side"] .stories-page .cv3-dt>span{padding-bottom:10px}
+  html[data-nav="side"] .stories-page .cv3-dr>*{padding:0 0 2px;border:0}
+  html[data-nav="side"] .stories-page .cv3-dr>b{padding-top:10px;border-top:1px solid #E3E7EE;font-size:12px;color:#2457F5}
+  html[data-nav="side"] .stories-page .cv3-dr:first-child>b{border-top:0}
+  html[data-nav="side"] .stories-page .cv3-dr>span{padding-bottom:10px}
 
   /* 달별 고정 스토리(화살표는 js) */
   html[data-nav="side"] .stories-page .sm-rail-box--hl{margin:16px calc(-1 * var(--gutter,20px)) 0}

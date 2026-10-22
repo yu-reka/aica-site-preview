@@ -1,7 +1,9 @@
 /* 기수별 이모저모 — 선배들의 이야기 v3 시안(인스타 프로필형): 기수 칩 → 프로필(기수 동그라미 · 계정 · 게시물/영상/기록) → 달별 하이라이트 → 3열 정사각 격자 → 페이지 · 글 창
-   자료는 cohorts.html 안 <template id="cv3-data">의 카드(a.st)에서 읽음: 기수(.cg) · 날짜(.dt) · 제목(h3) · 요약(p) · 그림(.illu) · 영상(data-yt) */
+   자료는 cohorts.html 안 <template id="cv3-data">의 카드(a.st)에서 읽음: 기수(.cg) · 날짜(.dt) · 제목(h3) · 요약(p) · 그림(.illu) · 영상(data-yt)
+   기수마다 교육과정 카드 · 계정 · 소개 · 달라진 점은 [data-cohort-infos] 블록(카테고리 페이지 관리에서 고침, 새 기수는 백오피스가 더함) */
 (function(){
   var root=document.getElementById('cv3'); if(!root) return;
+  var hubModal=root.getAttribute('data-hub-modal')==='true';
   var tpl=document.getElementById('cv3-data').content;
   var D=[].slice.call(tpl.querySelectorAll('a.st')).map(function(a){
     var dt=(a.querySelector('.dt')||{}).textContent||'', m=dt.match(/(\d{4})\.\s*(\d{2})\.\s*(\d{2})/);
@@ -9,13 +11,34 @@
       title:(a.querySelector('h3')||{}).textContent||'', sum:(a.querySelector('p')||{}).textContent||'',
       illu:a.querySelector('.illu'), yt:a.getAttribute('data-yt')||''};
   });
-  var COHS=[]; D.forEach(function(d){ var k=d.coh>=3&&d.coh<=5?'3-5':String(d.coh); if(COHS.indexOf(k)<0) COHS.push(k); });
+  /* 기수 정보(2026-10-22): cohorts.html의 [data-cohort-infos] 안 기수별 블록(교육과정 카드 · 계정 · 꼬리표 · 달라진 점 버튼 이름 · 소개 · 달라진 점 표).
+     카테고리 페이지 관리에서 고치는 원본 요소라 새로 만들지 않고 고른 기수의 요소를 화면 자리로 옮겨요(블록이 없는 기수는 예전처럼 기본 글로) */
+  var INFO=null;
+  function infos(){
+    if(!INFO){ INFO={};
+      [].slice.call(root.querySelectorAll('[data-cohort-infos] > .cv3-cinfo')).forEach(function(box){
+        var key=keyOf(box.getAttribute('data-cohort')||''); if(!COH_KEY.test(key)||INFO[key]) return;
+        var part=function(cls){ return [].filter.call(box.children,function(el){return el.classList.contains(cls)})[0]||null; };
+        INFO[key]={pin:part('cv3-pin'), acc:part('cv3-acc'), tag:part('cv3-tag'), label:part('cv3-dlabel'), bio:part('cv3-bio'), dt:part('cv3-dt')};
+      }); }
+    return INFO;
+  }
+  function info(k){ return infos()[k]||{}; }
+  var COH_KEY=/^([1-9][0-9]*|3-5)$/;
+  function keyOf(c){ return c>=3&&c<=5?'3-5':String(c); }   // 10-13: 3~5기는 한 칩(3–5기)으로 묶음
+  function accName(c){ var a=info(keyOf(c)).acc; return a?a.textContent:acc(c); }
+  function el(tag,cls,html){ var e=document.createElement(tag); e.className=cls; e.innerHTML=html; return e; }
+  /* 기수 칩 = 게시물이 있는 기수 + 기수 정보 블록이 있는 기수 + 시작 전 기수(data-upcoming-cohorts).
+     블록이 있는 기수는 게시물이 모두 지워져도 칩이 남고 빈 화면(grid)을 보여 줘요. 새 기수 블록은 첫 글을 게시할 때 백오피스가 더함 */
+  var COHS=[]; function addCoh(k){ if(COH_KEY.test(k)&&COHS.indexOf(k)<0) COHS.push(k); }
+  D.forEach(function(d){ addCoh(keyOf(d.coh)); });
+  Object.keys(infos()).forEach(addCoh);
   // 게시물과 별도로 시작 전 기수를 노출합니다. 실제 게시물은 추가하지 않습니다.
-  var upcoming=(root.getAttribute('data-upcoming-cohorts')||'').split(',').filter(function(c){return /^[1-9][0-9]*$/.test(c)});
-  upcoming.forEach(function(c){if(COHS.indexOf(c)<0)COHS.push(c)});
+  var upcoming=(root.getAttribute('data-upcoming-cohorts')||'').split(',').filter(function(c){return /^[1-9][0-9]*$/.test(c)}).map(keyOf);
+  upcoming.forEach(addCoh);
   /* 가장 최근 기수(지금은 7기)만 인스타 스토리 그라데이션 링, 나머지는 회색 링(10-14) */
-  var LIVE=String(Math.max.apply(null,D.map(function(d){return d.coh})));
-  COHS.sort(function(a,b){return parseInt(b,10)-parseInt(a,10)});   // 10-13: 3~5기는 한 칩(3–5기)으로 묶음
+  var LIVE=D.length?keyOf(Math.max.apply(null,D.map(function(d){return d.coh}))):'';
+  COHS.sort(function(a,b){return parseInt(b,10)-parseInt(a,10)});
   function inC(d,k){ return k==='3-5'?(d.coh>=3&&d.coh<=5):String(d.coh)===k; }
   function lab(k){ return k==='3-5'?'3–5':k; }
   var PER=9, st={coh:COHS[0], mo:0, pg:1, diff:false, v:'all'};   // v: 보기 방식(모바일 '영상만' 탭, js/stories-m.js). 웹은 늘 'all'
@@ -138,18 +161,26 @@
   function profile(){
     var all=D.filter(function(d){return inC(d,st.coh)}).sort(function(a,b){return ym(a)-ym(b)});
     var vids=all.filter(function(d){return d.yt}).length;
-    var range=all.length?yymm(all[0])+' – '+yymm(all[all.length-1]):(upcoming.indexOf(st.coh)>=0?'시작 전':'기록 없음');
-    var hasDiff=!!document.getElementById('cv3-diff'+st.coh), L=lab(st.coh);
-    $('.cv3-prof').innerHTML='<span class="cv3-ring'+(st.coh==='3-5'?' is-grp':'')+(st.coh===LIVE?' is-live':'')+'" role="img" aria-label="'+L+'기"><span aria-hidden="true"><b>'+L+'</b></span></span>'
-      +'<div class="cv3-info"><div class="cv3-r1"><b class="cv3-acc">'+acc(st.coh)+'</b><span class="cv3-tag">인공지능사관학교</span>'
-      +(hasDiff?'<button type="button" class="cv3-dbtn" aria-expanded="'+st.diff+'">'+(parseInt(st.coh,10)-1)+'기와 달라진 점 '+(st.diff?'접기 ▴':'펼치기 ▾')+'</button>':'')+'</div>'
-      +'<div class="cv3-stat"><span>게시물 <b>'+all.length+'</b></span><span>영상 <b>'+vids+'</b></span><span>기록 <b>'+range+'</b></span></div>'
-      +'<p class="cv3-bio"><b>인공지능사관학교 '+L+'기</b><br>입교식부터 수료식까지, '+L+'기가 남긴 순간들을 모았어요.</p></div>';
-    if(!all.length){var bio=$('.cv3-bio');bio.lastChild.textContent='새로운 기수의 이야기를 기다리고 있어요.';}
-    var db=$('.cv3-dbtn'); if(db) db.onclick=function(){ st.diff=!st.diff; draw(); };
+    var range=all.length?yymm(all[0])+' – '+yymm(all[all.length-1]):(upcoming.indexOf(st.coh)>=0?'시작 전':'없음');
+    var I=info(st.coh), hasDiff=!!(I.dt&&I.dt.querySelector('.cv3-dr')), L=lab(st.coh), prof=$('.cv3-prof');
+    // 다시 그릴 때 innerHTML 로 비우면 옮겨 둔 기수 정보 요소는 화면에서만 빠지고(I 에 남음) 아래에서 다시 붙여요
+    prof.innerHTML='<span class="cv3-ring'+(st.coh==='3-5'?' is-grp':'')+(st.coh===LIVE?' is-live':'')+'" role="img" aria-label="'+L+'기"><span aria-hidden="true"><b>'+L+'</b></span></span>'
+      +'<div class="cv3-info"><div class="cv3-r1"></div>'
+      +'<div class="cv3-stat"><span>게시물 <b>'+all.length+'</b></span><span>영상 <b>'+vids+'</b></span><span>기록 <b>'+range+'</b></span></div></div>';
+    var r1=prof.querySelector('.cv3-r1');
+    r1.appendChild(I.acc||el('b','cv3-acc',acc(st.coh)));
+    r1.appendChild(I.tag||el('span','cv3-tag','인공지능사관학교'));
+    if(hasDiff){
+      var db=document.createElement('button'); db.type='button'; db.className='cv3-dbtn'; db.setAttribute('aria-expanded',st.diff);
+      db.appendChild(I.label||el('span','cv3-dlabel',(parseInt(st.coh,10)-1)+'기와 달라진 점'));
+      db.appendChild(document.createTextNode(' '+(st.diff?'접기 ▴':'펼치기 ▾')));
+      db.onclick=function(){ st.diff=!st.diff; draw(); };
+      r1.appendChild(db);
+    }
+    // 게시물이 없는 기수: 블록의 소개는 페이지 관리 원본이라 그대로 두고, 블록이 없는 기수만 기다림 문구로
+    prof.querySelector('.cv3-info').appendChild(I.bio||el('p','cv3-bio','<b>인공지능사관학교 '+L+'기</b><br>'+(all.length?'입교식부터 수료식까지, '+L+'기가 남긴 순간들을 모았어요.':'새로운 기수의 이야기를 기다리고 있어요.')));
     var box=$('.cv3-diff'); box.hidden=!(hasDiff&&st.diff);
-    if(hasDiff&&st.diff){ var t=document.getElementById('cv3-diff'+st.coh).content.querySelector('table'); var g=$('.cv3-dt'); g.innerHTML='';
-      [].slice.call(t.querySelectorAll('tr')).forEach(function(tr){ var c=tr.children; ['b','s','span'].forEach(function(tag,i){var el=document.createElement(tag);el.textContent=c[i].textContent;g.appendChild(el)}); }); }
+    if(hasDiff&&st.diff) box.replaceChildren(I.dt); else box.replaceChildren();
   }
   function highlights(){
     var all=D.filter(function(d){return inC(d,st.coh)});
@@ -165,16 +196,11 @@
       box.appendChild(b);
     });
   }
-  /* 교육과정 고정 게시물(10-13, 디자인통일v1과 같은 내용): 기수마다 격자 첫 칸에 고정. 3–5기는 자료가 없어 안 보임. 새 기수는 여기에 한 줄 */
-  var CURR={'7':['AI 금융','AI 피지컬','AI 보안','AI 헬스케어','AI 융합'],'6':['데이터 기술','AI 모델링','AI 기반 서비스','AI 플랫폼&인프라','AI 비즈니스']};
+  /* 교육과정 고정 게시물(10-13, 디자인통일v1과 같은 내용): 기수마다 격자 첫 칸에 고정. 카드는 기수 정보 블록의 .cv3-pin(카테고리 페이지 관리에서 고침, 2026-10-22).
+     카드가 없는 기수(3–5기)는 안 보임 */
   var OFFICIAL=(typeof SITE_LINKS!=='undefined'&&SITE_LINKS.official&&SITE_LINKS.official.url)||'https://support.gj-aischool.or.kr/fo/main';
-  function pinOn(){ return !!CURR[st.coh] && !st.mo && st.v!=='video'; }
-  function pinEl(){ var d=document.createElement('div'); d.className='cv3-pin'; d.setAttribute('role','group'); d.setAttribute('aria-label',st.coh+'기 교육과정');
-    d.innerHTML='<span class="k">CURRICULUM</span><b>'+st.coh+'기<br>교육과정</b><div class="cc">'+CURR[st.coh].map(function(t){return '<span>'+t+'</span>'}).join('')+'</div>'
-      +'<div class="ft"><p>자세한 내용은 공식 홈페이지에서 확인하세요.</p><a target="_blank" rel="noopener">공식 홈페이지 <span aria-hidden="true">↗</span></a></div>'
-      +'<img class="pn" src="assets/pin-white.png" alt="고정됨" width="96" height="96">';
-    d.querySelector('.ft a').href=OFFICIAL;
-    return d; }
+  function pinOn(){ return !!info(st.coh).pin && !st.mo && st.v!=='video'; }
+  function pinEl(){ var d=info(st.coh).pin, a=d.querySelector('.ft a'); if(a) a.href=OFFICIAL; return d; }
   function grid(){
     var L=list(), P=pinOn(), first=P?PER-1:PER, pages=Math.max(1,1+Math.ceil(Math.max(0,L.length-first)/PER)); if(st.pg>pages) st.pg=pages;
     var s0=st.pg===1?0:first+(st.pg-2)*PER, s1=st.pg===1?first:s0+PER;
@@ -190,7 +216,9 @@
           StoryState.render(empty,'empty',{subject:'게시물'});
           empty.querySelector('.story-state__title').textContent='아직 등록된 게시물이 없어요';
           empty.querySelector('.story-state__copy').textContent=lab(st.coh)+'기의 이야기는 새로운 게시물이 등록되면 이곳에 표시돼요.';
-          var previous=COHS.find(function(c){return parseInt(c,10)<parseInt(st.coh,10)&&D.some(function(d){return inC(d,c)})});
+          // 가까운 이전 기수, 없으면(맨 아래 3–5기가 비었을 때) 가까운 다음 기수로
+          var n=parseInt(st.coh,10), has=function(c){return D.some(function(d){return inC(d,c)})};
+          var previous=COHS.find(function(c){return parseInt(c,10)<n&&has(c)})||COHS.slice().reverse().find(function(c){return parseInt(c,10)>n&&has(c)});
           if(previous){
             var action=document.createElement('button');action.type='button';action.className='story-state__action';
             action.textContent=lab(previous)+'기 이야기 먼저 보기 →';
@@ -227,9 +255,9 @@
     pb('←',st.pg-1,{dis:st.pg===1,aria:'이전 페이지'}); for(var i=1;i<=pages;i++) pb(String(i),i,{cur:i===st.pg,aria:i+'페이지'}); pb('→',st.pg+1,{dis:st.pg===pages,aria:'다음 페이지'});
     nav.appendChild(row);
   }
-  function draw(){ chips(); profile(); highlights(); grid(); root.dispatchEvent(new CustomEvent('cv3:draw',{detail:{v:st.v}})); }
+  function draw(){ if(hubModal)return; chips(); profile(); highlights(); grid(); root.dispatchEvent(new CustomEvent('cv3:draw',{detail:{v:st.v}})); }
   /* 모바일 보기 방식 탭(js/stories-m.js)이 부름 */
-  if(D.length)root.cv3View=function(v){ st.v=v; st.pg=1; draw(); };
+  if(COHS.length)root.cv3View=function(v){ st.v=v; st.pg=1; draw(); };
   root.cv3Redraw=function(){ draw(); };
 
   /* 글 창 */
@@ -260,8 +288,8 @@
       z.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg>';
       z.onclick=openZ; md.querySelector('.cv3-photo-stage').addEventListener('click',openZ); md.classList.add('can-zoom'); md.appendChild(z); }
     M.querySelector('.cv3-av').innerHTML='<b>'+d.coh+'</b>';
-    M.querySelector('.cv3-m-acc').textContent=acc(d.coh);
-    var heading=M.querySelector('h3'), account=document.createElement('b'); account.textContent=acc(d.coh);
+    M.querySelector('.cv3-m-acc').textContent=accName(d.coh);
+    var heading=M.querySelector('h3'), account=document.createElement('b'); account.textContent=accName(d.coh);
     heading.replaceChildren(account, document.createTextNode(' '+d.title));
     M.querySelector('.cv3-m-body p').textContent=d.sum;
     M.querySelectorAll('[data-extra-story]').forEach(function(e){e.remove()});
@@ -297,8 +325,11 @@
   function closeZ(){ if(Z.hidden) return; Z.hidden=true; Z.querySelector('.cv3-zv-im').innerHTML=''; isolateDialog(M); (M.querySelector('.cv3-zoom')||M.querySelector('.cv3-m-x')).focus(); }
   Z.onclick=function(e){ if(Date.now()<(Z.querySelector('.cv3-zv-im').cv3SwipeUntil||0))return;if(!e.target.closest('.cv3-zv-im img,.cv3-zv-im svg,.cv3-photo-dots')) closeZ(); };
   function openM(i){ modalVisited=[];cur=i; last=document.activeElement; fill(); M.hidden=false; isolateDialog(M); document.documentElement.classList.add('cv3-lock'); M.querySelector('.cv3-m-x').focus(); }
-  function closeM(){ Z.hidden=true; M.hidden=true; modalVisited.forEach(function(d){changePhoto(d,0);});modalVisited=[];M.querySelector('.cv3-m-media').innerHTML=''; isolateDialog(null); document.documentElement.classList.remove('cv3-lock'); if(last&&document.contains(last)) last.focus(); }
+  function closeM(restoreFocus){ Z.hidden=true; M.hidden=true; modalVisited.forEach(function(d){changePhoto(d,0);});modalVisited=[];M.querySelector('.cv3-m-media').innerHTML=''; isolateDialog(null); document.documentElement.classList.remove('cv3-lock'); if(hubModal&&/^#st-/.test(location.hash))history.replaceState(null,'',location.pathname+location.search); if(restoreFocus!==false&&last&&document.contains(last)) last.focus({preventScroll:true}); }
   M.querySelector('.cv3-m-x').onclick=closeM; M.querySelector('.cv3-m-bg').onclick=closeM;
+  if(hubModal)root.closest('.stories-page').addEventListener('stories:before-review-open',function(){
+    if(!M.hidden)closeM(false);
+  });
   M.querySelector('.pv').onclick=function(){ if(cur>0){cur--;fill();} };
   M.querySelector('.nx').onclick=function(){ if(cur<list().length-1){cur++;fill();} };
   M.querySelectorAll('.cv3-like,.cv3-save').forEach(function(b){ b.onclick=function(){ b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true'); }; });
@@ -308,6 +339,9 @@
     var id=location.hash.slice(1), d=D.find(function(item){return item.id&&item.id===id});if(!d)return;
     st.coh=d.coh>=3&&d.coh<=5?'3-5':String(d.coh);st.mo=0;st.pg=1;draw();openM(list().indexOf(d));
   }
-  if(!D.length)return; // Shared list state; no mobile projection or profile for empty data.
-  draw();hashOpen();addEventListener('hashchange',hashOpen);
+  if(!COHS.length)return; // Shared list state (story-state.js); no mobile projection or profile when there is no cohort at all.
+  draw();hashOpen();addEventListener('hashchange',function(){
+    if(hubModal&&!/^#st-/.test(location.hash)&&!M.hidden)closeM();
+    hashOpen();
+  });
 })();

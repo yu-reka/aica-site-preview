@@ -20,7 +20,7 @@ function start() {
     querySelectorAll: selector => selector === '.cv3-like,.cv3-save' ? [] : [close, previous, next].filter(node => !node.disabled),
   };
   const zoom = { hidden: true, setAttribute() {}, querySelectorAll: () => [zoomClose] };
-  const root = { getAttribute: () => null, querySelector: () => ({ replaceChildren() {} }) };
+  const root = { getAttribute: () => null, querySelector: () => ({ replaceChildren() {} }), querySelectorAll: () => [] };
   Object.assign(document, {
     getElementById: id => id === 'cv3' ? root : id === 'cv3-data' ? { content: { querySelectorAll: () => [] } } : null,
     querySelector: () => modal,

@@ -134,10 +134,10 @@ test('closing the detail restores visited posts to their covers without changing
   const other={title:'다른 게시물',illu:ui.photo('a.jpg'),photos:[ui.photo('b.jpg')]};
   ui.mount(other);ui.changePhoto(ui.record,2);ui.changePhoto(other,1);
   const source=readFileSync(new URL('../stories/js/cohort-v3.js',import.meta.url),'utf8');
-  const begin=source.indexOf('  function closeM(){');
+  const begin=source.indexOf('  function closeM(');
   const end=source.indexOf("  M.querySelector('.cv3-m-x').onclick",begin);
   const state={
-    Z:{hidden:false},M:{hidden:false,querySelector:()=>({innerHTML:''})},
+    hubModal:false,Z:{hidden:false},M:{hidden:false,querySelector:()=>({innerHTML:''})},
     modalVisited:[ui.record],changePhoto:ui.changePhoto,isolateDialog(){},last:null,
     document:{documentElement:{classList:{remove(){}}}}
   };

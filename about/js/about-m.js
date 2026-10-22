@@ -24,11 +24,31 @@
       btns.forEach(function(b){ b.setAttribute('aria-current', String(+b.dataset.jump === k)); });
     };
     var hdr = function(){ var h = $('#siteHeader'); return h ? h.getBoundingClientRect().bottom : 60; };
-    btns.forEach(function(b){ b.addEventListener('click', function(){
-      var m = document.getElementById('am-ch' + b.dataset.jump); if (!m) return;
-      setCur(+b.dataset.jump);
+    function jumpToChapter(k){
+      var m = document.getElementById('am-ch' + k); if (!m) return;
+      setCur(k);
       scrollTo({ top: Math.max(0, m.getBoundingClientRect().top + scrollY - hdr()), behavior: reduce.matches ? 'auto' : 'smooth' });
-    }); });
+    }
+    btns.forEach(function(b){ b.addEventListener('click', function(){ jumpToChapter(+b.dataset.jump); }); });
+    // The shared drawer closes and updates the public hash first. On mobile,
+    // align that section to the same chapter divider used by the bottom tabs.
+    var chapterIds={intro:1,learning:2,activities:3,career:4}, chapterFrame;
+    function alignChapterHash(){
+      if(!mq.matches)return;
+      var id=typeof Site!=='undefined'?Site.decodeHash(location.hash.slice(1)):location.hash.slice(1);
+      var k=chapterIds[id];if(!k)return;
+      cancelAnimationFrame(chapterFrame);
+      chapterFrame=requestAnimationFrame(function(){jumpToChapter(k);});
+    }
+    document.addEventListener('click',function(event){
+      if(!mq.matches||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+      var link=event.target.closest('#drawer a[href]');if(!link)return;
+      var url=new URL(link.href,location.href);
+      var pagePath=function(u){return u.pathname.replace(/index\.html$/, '').replace(/\/$/, '');};
+      if(url.origin===location.origin&&pagePath(url)===pagePath(location)&&chapterIds[url.hash.slice(1)])alignChapterHash();
+    });
+    addEventListener('hashchange',alignChapterHash);
+    if(document.readyState==='complete')alignChapterHash();else addEventListener('load',alignChapterHash,{once:true});
     var raf;
     var onScroll = function(){
       cancelAnimationFrame(raf);

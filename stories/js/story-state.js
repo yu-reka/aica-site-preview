@@ -47,7 +47,9 @@ var StoryState = (function(){
     var section=document.querySelector({reviews:'#p-rev',interviews:'#p-iv',projects:'#p-pr',cohorts:'#p-coh'}[kind]);
     var host=section?.querySelector('[data-story-list-state]');if(!host)return;
     var cards=kind==='cohorts'?document.getElementById('cv3-data').content.querySelectorAll('a.st'):section.querySelectorAll({reviews:'.idgrid .idc',interviews:'.ivgrid .iv',projects:'.pjgrid .pjc'}[kind]);
-    if(failed()||!cards.length){
+    // Cohorts with an info block or an upcoming flag keep their chips; cohort-v3.js shows a per-cohort empty view.
+    var cohortChips=kind==='cohorts'&&!!section.querySelector('[data-cohort-infos] > .cv3-cinfo[data-cohort],.cv3[data-upcoming-cohorts]:not([data-upcoming-cohorts=""])');
+    if(failed()||(!cards.length&&!cohortChips)){
       render(host,failed()?'error':'empty',{subject:subject});host.hidden=false;
       var selectors={reviews:'.filters,.idgrid,.rvlist,.pager,.sm-reviews,.footnote,[data-review-filter-empty]',interviews:'.ivband,.ivgrid,#iv-all,.sm-ivf,.footnote',projects:'.pj-filter-row,.pjgrid,.sm-projects,.pj-filter-empty,.pj-subject-empty,.pj-pager',cohorts:'.cv3'};
       section.querySelectorAll(selectors[kind]).forEach(function(element){element.hidden=true;element.setAttribute('data-story-state-hidden','');});

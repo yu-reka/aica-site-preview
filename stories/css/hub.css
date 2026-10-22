@@ -299,3 +299,11 @@ html[data-nav="side"] .stories-hub{background:var(--surface)}
 @container hub (max-width:640px){.hb-ivg::after{top:-30px}}
 /* 섹션 제목 크기를 다른 페이지(후기 · 라이프 · 체크) 섹션 제목과 같게(10-14): 28 → clamp(28px,2.8vw,38px) */
 .stories-hub .hb-hd.sh h2{font-size:clamp(28px,2.8vw,38px);line-height:1.22;letter-spacing:-.025em}
+
+/* Loading shared dialogs must not change the approved hub typography or section gaps. */
+.stories-hub{font:inherit;font-synthesis-weight:inherit}
+.stories-hub button{font:inherit;color:inherit}
+.stories-hub .hb-hd.sh,.stories-hub .hb-hd.sh h2{margin:0}
+.stories-hub .hb ::before,.stories-hub .hb ::after{box-sizing:border-box}
+/* Retain the shared dialog base without inheriting the hub's body leading. */
+.stories-hub .ov{font-family:var(--f);font-size:16px;line-height:16px;font-synthesis-weight:auto}

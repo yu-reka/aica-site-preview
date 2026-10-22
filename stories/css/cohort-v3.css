@@ -25,11 +25,13 @@
 /* 달라진 점 표 */
 .stories-page .cv3-diff{margin:0 clamp(0px,4vw,56px) 28px;padding:4px 20px;border-radius:12px;background:#F5F7F6;overflow-x:auto}
 .stories-page .cv3-dt{display:grid;grid-template-columns:minmax(80px,110px) minmax(0,1fr) minmax(0,1.3fr);min-width:520px;font-size:14px;line-height:1.55}
-.stories-page .cv3-dt>*{padding:11px 12px;border-bottom:1px solid #E9EEF3}
-.stories-page .cv3-dt>b{padding-left:0;font-weight:700}
-.stories-page .cv3-dt>s{color:var(--muted);text-decoration-color:rgba(138,144,155,.5)}
-.stories-page .cv3-dt>span{font-weight:600}
-.stories-page .cv3-dt>:nth-last-child(-n+3){border-bottom:0}
+/* 줄마다 .cv3-dr(카테고리 페이지 관리에서 줄을 늘리거나 줄임, 2026-10-22). subgrid 로 세 칸 폭은 표 전체가 함께 맞춤 */
+.stories-page .cv3-dr{display:grid;grid-column:1/-1;grid-template-columns:subgrid;margin:0}
+.stories-page .cv3-dr>*{padding:11px 12px;border-bottom:1px solid #E9EEF3}
+.stories-page .cv3-dr>b{padding-left:0;font-weight:700}
+.stories-page .cv3-dr>s{color:var(--muted);text-decoration-color:rgba(138,144,155,.5)}
+.stories-page .cv3-dr>span{font-weight:600}
+.stories-page .cv3-dr:last-child>*{border-bottom:0}
 /* 달별 하이라이트 */
 .stories-page .cv3-hl{display:flex;gap:clamp(14px,3vw,36px);padding:0 clamp(0px,4vw,56px) 28px;overflow-x:auto;scrollbar-width:none;}
 .stories-page .cv3-hl::-webkit-scrollbar{display:none}

@@ -43,7 +43,7 @@
 
 현재 연결 순서와 공개 샘플·비공개 DB 사본의 경계는 [README](../README.md#현재-데이터-흐름)를 기준으로 합니다. `scripts/backoffice-site.mjs`가 디자인 빌드에 API 연결을 적용하고, `stories-render.js`·`faq-render.js`가 화면 동작 스크립트보다 먼저 목록과 상세를 만듭니다. `track.js`는 콘텐츠 페이지에, `ticker-render.js`는 홈에 연결됩니다.
 
-동기화는 `frontend/`만 반영합니다. 비공개 `stories/js/stories-data.js`와 `check/js/faq-data.js` 두 사본은 기존 바이트를 보존하며, 공개 샘플로 덮어쓰지 않습니다. 두 사본을 제외한 프론트 코드 일치와 사본 보존을 각각 확인합니다. 실제 API·DB·관리자·통합본 루트 scripts/·CI는 백엔드 담당 범위입니다.
+프론트 개발 원본은 비공개 통합본 `frontend/`입니다. 통합 main의 검증된 공개 가능 공통 변경을 이 공유본 PR로 반영합니다. 실제 사본·실행 사이트의 DB 목록은 가져오지 않고 공개 전용 더미·생성기·검사·안내를 유지합니다. 공통 변경 경로와 의도적 차이를 구분하며 절차는 [README](../README.md#개발-원본과-공개-반영)를 따릅니다.
 
 `export:spring`, `*-live.js/css`와 호환 진입점은 과거 템플릿 지원용으로 보존합니다. 현재 V30 동기화에서 Spring 템플릿·seed를 생성하지 않습니다. [과거 연동 안내](spring-integration.md)의 DB·실행 절차를 현재 환경에 적용하지 않습니다.
 

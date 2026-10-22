@@ -1,0 +1,146 @@
+[
+  {
+    "page": "index",
+    "size": 360,
+    "client": 346,
+    "h1": 1,
+    "images": [],
+    "scroll": 346,
+    "viewport": 360
+  },
+  {
+    "page": "courses",
+    "size": 360,
+    "client": 346,
+    "h1": 1,
+    "images": [],
+    "scroll": 346,
+    "viewport": 360
+  },
+  {
+    "page": "stories",
+    "size": 360,
+    "client": 346,
+    "h1": 1,
+    "images": [],
+    "scroll": 346,
+    "viewport": 360
+  },
+  {
+    "page": "check",
+    "size": 360,
+    "client": 346,
+    "h1": 1,
+    "images": [],
+    "scroll": 346,
+    "viewport": 360
+  },
+  {
+    "page": "index",
+    "size": 390,
+    "client": 376,
+    "h1": 1,
+    "images": [],
+    "scroll": 376,
+    "viewport": 390
+  },
+  {
+    "page": "courses",
+    "size": 390,
+    "client": 376,
+    "h1": 1,
+    "images": [],
+    "scroll": 376,
+    "viewport": 390
+  },
+  {
+    "page": "stories",
+    "size": 390,
+    "client": 376,
+    "h1": 1,
+    "images": [],
+    "scroll": 376,
+    "viewport": 390
+  },
+  {
+    "page": "check",
+    "size": 390,
+    "client": 376,
+    "h1": 1,
+    "images": [],
+    "scroll": 376,
+    "viewport": 390
+  },
+  {
+    "page": "index",
+    "size": 430,
+    "client": 416,
+    "h1": 1,
+    "images": [],
+    "scroll": 416,
+    "viewport": 430
+  },
+  {
+    "page": "courses",
+    "size": 430,
+    "client": 416,
+    "h1": 1,
+    "images": [],
+    "scroll": 416,
+    "viewport": 430
+  },
+  {
+    "page": "stories",
+    "size": 430,
+    "client": 416,
+    "h1": 1,
+    "images": [],
+    "scroll": 416,
+    "viewport": 430
+  },
+  {
+    "page": "check",
+    "size": 430,
+    "client": 416,
+    "h1": 1,
+    "images": [],
+    "scroll": 416,
+    "viewport": 430
+  },
+  {
+    "page": "index",
+    "size": 1440,
+    "client": 1426,
+    "h1": 1,
+    "images": [],
+    "scroll": 1426,
+    "viewport": 1440
+  },
+  {
+    "page": "courses",
+    "size": 1440,
+    "client": 1426,
+    "h1": 1,
+    "images": [],
+    "scroll": 1426,
+    "viewport": 1440
+  },
+  {
+    "page": "stories",
+    "size": 1440,
+    "client": 1426,
+    "h1": 1,
+    "images": [],
+    "scroll": 1426,
+    "viewport": 1440
+  },
+  {
+    "page": "check",
+    "size": 1440,
+    "client": 1426,
+    "h1": 1,
+    "images": [],
+    "scroll": 1426,
+    "viewport": 1440
+  }
+]

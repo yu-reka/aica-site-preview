@@ -330,3 +330,6 @@
   .stories-page .cv3-m-body{touch-action:pan-y;scrollbar-width:none}
   .stories-page .cv3-m-body::-webkit-scrollbar{display:none}
 }
+
+/* 게시물이 없는 기수에는 월별 목록·격자·페이지를 표시하지 않습니다. */
+.cv3 :is(.cv3-hl,.cv3-grid,.cv3-pg)[hidden]{display:none}

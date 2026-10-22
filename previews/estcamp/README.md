@@ -1,6 +1,6 @@
 # ESTcamp × 인사교 UI — 4페이지 디자인 시안
 
-2026-10-22 확인한 ESTcamp 콘텐츠·브랜드를 인사교 레이아웃에 적용한 **독립 4페이지 시안**입니다. 브랜치 `codex/estcamp-aica-concept`, 검토 PR #42에서 이어서 관리합니다. 인사교 원본·ESTcamp 운영 사이트·main·공개 배포·API·DB·Spring 파일은 변경하지 않습니다.
+2026-10-22 확인한 ESTcamp 콘텐츠·브랜드를 인사교 레이아웃에 적용한 **독립 4페이지 시안**입니다. 브랜치 `codex/estcamp-aica-concept`에서 관리합니다. 기존 PR #42가 닫혀 있는 것을 확인해 재개하거나 새 PR을 만들지 않았습니다. 인사교 원본·ESTcamp 운영 사이트·main·공개 배포·API·DB·Spring 파일은 변경하지 않습니다.
 
 ## 확인
 

@@ -105,9 +105,15 @@
     addEventListener('hashchange', function(){
       var d = open(), a = link || document.activeElement; link = null;
       if (d) {
+        // Release the cohort/zoom scope before this dialog captures background state.
+        if (page.classList.contains('stories-hub')) page.dispatchEvent(new CustomEvent('stories:before-review-open'));
         dialogScope.activate(d);
         if (a && a !== document.body && !d.contains(a) && !a.closest('.ov')) opener = a;
-        var x = d.querySelector('.x'); if (x) x.focus({ preventScroll: true });
+        var initial = d.querySelector(page.classList.contains('stories-hub') ? '.mtop h3' : '.x');
+        if (initial) {
+          if (page.classList.contains('stories-hub')) initial.setAttribute('tabindex', '-1');
+          initial.focus({ preventScroll: true });
+        }
       } else {
         dialogScope.release();
         if (!opener) return;

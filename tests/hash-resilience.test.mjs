@@ -56,6 +56,7 @@ test('malformed direct Check URL still initializes checklist change handlers', (
 test('malformed Stories URL still registers modal Escape and focus handling', () => {
   let target = null, closed = false;
   const page = {
+    classList:{contains:()=>false},
     querySelector: selector => selector === '.ov:target' ? target : null,
     querySelectorAll: () => [], addEventListener() {}, contains: () => true,
   };
@@ -88,11 +89,23 @@ test('early legacy router ignores malformed hashes but keeps encoded canonical l
   for (const hash of [malformed, '#%', '#q%2D1%2D2']) {
     const redirects = [], events = {};
     const context = vm.createContext({
+      document:{documentElement:{getAttribute:()=>null}},
       location: { hash, replace(url) { redirects.push(url); } },
       addEventListener(name, handler) { events[name] = handler; },
     });
     vm.runInContext(source('../stories/js/old-hash.js'), context);
     events.hashchange();
     assert.deepEqual(redirects, hash === '#q%2D1%2D2' ? ['interviews.html#q-1-2', 'interviews.html#q-1-2'] : []);
+  }
+});
+
+test('hub modal anchors stay on All while legacy routes keep redirecting',()=>{
+  for(const [hash,expected] of [['#r-p26',[]],['#st-1',[]],['#r-life-0',['reviews.html#r-life-0']],['#iv-p14',['interviews.html#iv-p14']]]){
+    const redirects=[];
+    vm.runInNewContext(source('../stories/js/old-hash.js'),{
+      document:{documentElement:{getAttribute:()=> 'true'}},
+      location:{hash,replace:url=>redirects.push(url)},addEventListener(){}
+    });
+    assert.deepEqual(redirects,expected);
   }
 });

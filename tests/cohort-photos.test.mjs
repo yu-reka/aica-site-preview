@@ -34,13 +34,13 @@ test('photo albums deduplicate the cover and synchronize feed and detail at both
   let stopped = false;
   dots.children[1].onclick({ preventDefault() {}, stopPropagation() { stopped = true; } });
   assert.equal(stopped, true);
-  assert.equal(counter(feed), '2 / 3');
-  assert.equal(counter(detail), '2 / 3');
+  assert.equal(counter(feed), '2/3');
+  assert.equal(counter(detail), '2/3');
   ui.changePhoto(ui.record, 99);
-  assert.equal(counter(feed), '3 / 3');
+  assert.equal(counter(feed), '3/3');
   assert.equal(dots.children[2].getAttribute('aria-pressed'), 'true');
   ui.changePhoto(ui.record, -1);
-  assert.equal(counter(detail), '1 / 3');
+  assert.equal(counter(detail), '1/3');
   assert.equal(dots.children[0].getAttribute('aria-pressed'), 'true');
 });
 
@@ -69,9 +69,9 @@ test('albums stop at ten unique photos including the cover in feed and detail', 
   const feed = ui.mount(ui.record), detail = ui.mount(ui.record);
   ui.changePhoto(ui.record, 11);
   for (const host of [feed, detail]) {
-    assert.equal(ui.control(host, 'cv3-photo-count').textContent, '10 / 10');
-    assert.equal(ui.control(host, 'cv3-photo-dots').children.length, 5);
-    assert.equal(ui.control(host, 'cv3-photo-dots').children[4].getAttribute('aria-pressed'), 'true');
+    assert.equal(ui.control(host, 'cv3-photo-count').textContent, '10/10');
+    assert.equal(ui.control(host, 'cv3-photo-dots').children.length, 10);
+    assert.equal(ui.control(host, 'cv3-photo-dots').children[9].getAttribute('aria-pressed'), 'true');
     assert.equal(ui.control(host, 'cv3-photo-stage').children[0].getAttribute('src'), 'photo-8.jpg');
   }
 });
@@ -87,13 +87,13 @@ test('static content accepts ten photos but rejects an eleventh including the co
 });
 
 
-test('ten-photo albums show five moving dots with accurate selection labels at every position', () => {
+test('detail albums show one selectable dot per photo with stable labels', () => {
   const ui = start();
   ui.record.photos = Array.from({length: 9}, (_, i) => ui.photo(`photo-${i}.jpg`));
   const host = ui.mount(ui.record), dots = ui.control(host, 'cv3-photo-dots');
   for(let index=0;index<10;index++){
     ui.changePhoto(ui.record,index);
-    assert.equal(dots.children.length,5);
+    assert.equal(dots.children.length,10);
     const selected=dots.children.filter(dot=>dot.getAttribute('aria-pressed')==='true');
     assert.equal(selected.length,1);
     assert.equal(selected[0].getAttribute('aria-label'),`${index+1}번째 사진`);
@@ -101,9 +101,9 @@ test('ten-photo albums show five moving dots with accurate selection labels at e
   ui.changePhoto(ui.record,0);
   dots.children[4].onclick({preventDefault(){},stopPropagation(){}});
   assert.equal(ui.record.photoIndex,4);
-  assert.equal(dots.children[4].getAttribute('aria-label'),'7번째 사진');
-  dots.children[4].onclick({preventDefault(){},stopPropagation(){}});
-  assert.equal(ui.record.photoIndex,6);
+  assert.equal(dots.children[4].getAttribute('aria-label'),'5번째 사진');
+  dots.children[9].onclick({preventDefault(){},stopPropagation(){}});
+  assert.equal(ui.record.photoIndex,9);
 });
 
 
@@ -115,11 +115,11 @@ test('photo arrows synchronize galleries, stop card opening, and wrap across bot
   let stopped=false;
   const event={preventDefault(){},stopPropagation(){stopped=true;}};
   previous.onclick(event);
-  assert.equal(ui.control(feed,'cv3-photo-count').textContent,'3 / 3');
+  assert.equal(ui.control(feed,'cv3-photo-count').textContent,'3/3');
   next.onclick(event);
-  assert.equal(ui.control(feed,'cv3-photo-count').textContent,'1 / 3');
+  assert.equal(ui.control(feed,'cv3-photo-count').textContent,'1/3');
   next.onclick(event);
-  assert.equal(ui.control(detail,'cv3-photo-count').textContent,'2 / 3');
+  assert.equal(ui.control(detail,'cv3-photo-count').textContent,'2/3');
   assert.equal(stopped,true);
   assert.ok(!previous.disabled && !next.disabled);
 });
@@ -140,7 +140,7 @@ test('closing the detail restores visited posts to their covers without changing
   vm.runInNewContext(source.slice(begin,end)+'\ncloseM();',state);
   assert.equal(state.M.hidden,true);
   assert.equal(state.Z.hidden,true);
-  assert.equal(ui.control(feed,'cv3-photo-count').textContent,'1 / 3');
+  assert.equal(ui.control(feed,'cv3-photo-count').textContent,'1/3');
   assert.equal(ui.record.photoIndex,0);
   assert.equal(other.photoIndex,1);
   assert.equal(state.modalVisited.length,0);

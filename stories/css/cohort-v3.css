@@ -91,7 +91,9 @@
 .cv3-m-act svg{width:24px;height:24px;fill:none;stroke:#262626;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .cv3-like[aria-pressed="true"] svg{fill:#FF3040;stroke:#FF3040}
 .cv3-save[aria-pressed="true"] svg{fill:#262626}
-.cv3-m-ft time{display:block;margin-top:4px;font-size:12px;letter-spacing:.02em;color:var(--text-secondary)}
+.cv3-m-meta{display:flex;align-items:center;flex-wrap:wrap;min-width:0;gap:2px 8px}
+.cv3-m-meta time{font:400 12px/1.5 var(--ff-sans);white-space:nowrap;color:var(--text-secondary)}
+.cv3-m-meta time::before{content:"·";margin-right:8px}
 .cv3-m-nav{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;padding:8px;border-radius:999px;background:#14233F;box-shadow:0 10px 24px -10px rgba(0,0,0,.5)}
 .cv3-m-nav button{height:40px;padding:0 16px;border:0;border-radius:999px;background:none;color:#fff;font:700 14px/1 var(--ff-sans);cursor:pointer}
 .cv3-m-nav button:disabled{opacity:.4;cursor:default}
@@ -215,14 +217,16 @@
   .cv3-it .cv3-photo-stack,.stories-page .cv3-reel{right:6px;top:6px;width:20px;height:20px}
 }
 
-/* 상세창의 사진 위치 표시는 사진 아래 흰 영역에 배치 */
-.cv3-m-media:has(.cv3-photo-dots){display:flex;flex-direction:column;background:#fff}
-.cv3-m-media:has(.cv3-photo-dots) .cv3-photo-stage{position:relative;inset:auto;flex:1;min-height:0}
-.cv3-m-media .cv3-photo-dots{position:static;flex:none;justify-content:center;width:100%;height:32px;background:#fff;transform:none}
-@media(max-width:760px){
-  .cv3-m-media:has(.cv3-photo-dots){aspect-ratio:auto}
-  .cv3-m-media:has(.cv3-photo-dots) .cv3-photo-stage{flex:none;aspect-ratio:1}
-}
+/* Photo indicators overlay the image, as part of the album rather than the caption. */
+.stories-page .cv3-m-media:has(.cv3-photo-dots){display:block;background:#000}
+.stories-page .cv3-m-media:has(.cv3-photo-dots) .cv3-photo-stage{position:absolute;inset:0;aspect-ratio:auto}
+.stories-page .cv3-m-media .cv3-photo-dots{position:absolute;left:50%;bottom:2px;width:auto;height:32px;padding:0;border-radius:0;background:transparent;transform:translateX(-50%)}
+/* Instagram web carousel: 6px white dots, 4px spacing, inactive opacity .4. */
+.stories-page .cv3-m-media .cv3-photo-dots button{width:10px;height:32px}
+.stories-page .cv3-m-media .cv3-photo-dots button:last-child{width:6px}
+.stories-page .cv3-m-media .cv3-photo-dots button::before{justify-self:start;width:6px;height:6px;background:#fff;opacity:.4;box-shadow:none;transition:opacity .2s ease-in-out}
+.stories-page .cv3-m-media .cv3-photo-dots button.is-active::before{opacity:1}
+@media(prefers-reduced-motion:reduce){.stories-page .cv3-m-media .cv3-photo-dots button::before{transition:none}}
 
 /* PC는 버튼으로도 사진을 넘길 수 있고, 모바일은 스와이프와 점을 사용 */
 .cv3-photo-arrow{display:none}
@@ -232,6 +236,96 @@
   .cv3-photo-arrow svg{position:relative;z-index:1;width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
   .cv3-photo-prev{left:0}
   .cv3-photo-next{right:0}
-  .cv3-m-media .cv3-photo-arrow{top:calc((100% - 32px)/2)}
+  .cv3-m-media .cv3-photo-arrow{top:50%}
   .cv3-photo-arrow:focus-visible{outline:2px solid #2457FF;outline-offset:-2px}
+}
+
+/* Bounded desktop photo dialog: media stays still while the caption scrolls. */
+.stories-page .cv3-m-box{overflow:visible}
+.stories-page .cv3-m-side{min-height:0;overflow:hidden;border-radius:0 0 16px 0;background:#fff}
+.stories-page .cv3-m-body{min-height:0;overscroll-behavior:contain;word-break:keep-all;overflow-wrap:anywhere}
+.stories-page .cv3-m-body h3{margin-bottom:24px}
+.stories-page .cv3-m-body p+p{margin-top:20px}
+.stories-page .cv3-m-ft{flex:none;background:#fff}
+.stories-page .cv3-m-media{overflow:hidden}
+.stories-page .cv3-m-media .illu{object-fit:contain}
+.stories-page .cv3-m-media{background:#000}
+.stories-page .cv3-m-media .cv3-photo-stage{background:#000}
+.stories-page .cv3-m-hd{background:#fff;min-width:0}
+.stories-page .cv3-m-acc{min-width:0;overflow-wrap:anywhere}
+@media(min-width:761px){
+  .stories-page .cv3-m-box{display:grid;grid-template-columns:var(--cohort-photo-width,620px) var(--cohort-caption-width,400px);grid-template-rows:auto minmax(0,1fr);width:calc(var(--cohort-photo-width,620px) + var(--cohort-caption-width,400px));height:var(--cohort-dialog-height,500px);max-height:calc(100dvh - 128px)}
+  .stories-page .cv3-m-media{grid-column:1;grid-row:1/3;border-radius:15px 0 0 15px;aspect-ratio:auto}
+  .stories-page .cv3-m-hd{grid-column:2;grid-row:1;border-radius:0 15px 0 0;padding:16px 20px}
+  .stories-page .cv3-m-side{grid-column:2;grid-row:2;flex:1}
+  .stories-page .cv3-m-body{padding:24px;overflow-y:auto}
+  .stories-page .cv3-m-body h3{line-height:1.6;margin-bottom:28px}
+  .stories-page .cv3-m-body p{line-height:1.9}
+  .stories-page .cv3-m-ft{padding:12px 20px 16px}
+}
+@media(max-width:760px){
+  .stories-page .cv3-m{padding:24px 32px 96px}
+  .stories-page .cv3-m-box{display:grid;grid-template-rows:auto minmax(140px,1fr) minmax(150px,1fr);width:min(520px,100%);height:calc(100dvh - 140px);max-height:720px}
+  .stories-page .cv3-m-hd{border-radius:15px 15px 0 0;padding:10px 14px}
+  .stories-page .cv3-m-media,.stories-page .cv3-m-media:has(.cv3-photo-dots){aspect-ratio:auto;min-height:0}
+  .stories-page .cv3-m-media:has(.cv3-photo-dots) .cv3-photo-stage{flex:1;aspect-ratio:auto}
+  .stories-page .cv3-m-side{border-radius:0 0 15px 15px}
+  .stories-page .cv3-m-body{overflow-y:auto}
+}
+/* Same outer rail treatment as the review paper, without obscuring the caption. */
+.cv3-caption-external .cv3-m-body{scrollbar-width:none}
+.cv3-caption-external .cv3-m-body::-webkit-scrollbar{display:none}
+.stories-page .cv3-caption-scrollbar{position:absolute;z-index:5;right:-24px;width:20px;border:0;padding:0;background:transparent;touch-action:none;cursor:grab}
+.stories-page .cv3-caption-scrollbar:active{cursor:grabbing}
+.stories-page .cv3-caption-scrollbar:focus-visible{outline:2px solid #2457F5;outline-offset:2px;border-radius:8px}
+.stories-page .cv3-caption-scrollbar[hidden]{display:none}
+.cv3-caption-track{position:absolute;inset:0 auto 0 8px;width:3px;border-radius:6px;background:#d8dfe94d}
+.cv3-caption-thumb{position:absolute;top:0;left:-1px;width:5px;min-height:36px;border-radius:8px;background:#b5c0d2}
+@media(pointer:coarse){
+  .stories-page .cv3-caption-scrollbar{width:32px;right:-28px}
+  .cv3-caption-track{left:14px}
+}
+
+/* Post navigation: viewport edges on PC, photo edges inside the mobile card. */
+.stories-page .cv3-m-nav{position:fixed;inset:50% 12px auto;transform:none;display:flex;align-items:flex-start;justify-content:space-between;height:0;padding:0;border-radius:0;background:none;box-shadow:none;pointer-events:none;z-index:4}
+.stories-page .cv3-m-nav button{display:grid;place-items:center;width:44px;height:44px;padding:0;border-radius:50%;background:#fff;color:#14233F;box-shadow:0 2px 10px #0002;transform:translateY(-50%);pointer-events:auto}
+.stories-page .cv3-m-nav button:disabled{opacity:.3}
+.stories-page .cv3-m-nav button:focus-visible{outline:3px solid #8AA9FF;outline-offset:4px}
+.stories-page .cv3-m-nav button:hover:not(:disabled){background:#edf2ff}
+.stories-page .cv3-m-nav button span,.stories-page .cv3-m-nav .no{display:none}
+.cv3-m-nav svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:760px){
+  .stories-page .cv3-m{padding:24px 44px}
+  .stories-page .cv3-m-nav{position:absolute;inset:var(--cohort-nav-top,50%) -44px auto}
+  .stories-page .cv3-m-nav button{position:relative;background:transparent;box-shadow:none;color:#fff}
+  .stories-page .cv3-m-nav button::before{content:"";position:absolute;inset:9px;border:0;border-radius:50%;background:rgba(11,16,32,.48);box-shadow:none}
+  .stories-page .cv3-m-nav button svg{position:relative;width:14px;height:14px;stroke-width:1.8}
+  .stories-page .cv3-m-nav button:hover:not(:disabled){background:transparent}
+  .stories-page .cv3-m-nav button:hover:not(:disabled)::before{background:rgba(11,16,32,.64)}
+}
+
+/* Mobile Instagram treatment: dots on white paper below the photo; count on the image. */
+@media(max-width:760px){
+  .stories-page .cv3-m-media:has(.cv3-photo-dots){display:grid;grid-template-rows:minmax(0,1fr) 32px;background:#fff}
+  .stories-page .cv3-m-media:has(.cv3-photo-dots) .cv3-photo-stage{position:relative;inset:auto;min-height:0}
+  .stories-page .cv3-m-media .cv3-photo-dots{position:static;justify-content:center;align-items:center;left:auto;bottom:auto;width:100%;height:32px;background:#fff;transform:none}
+  .stories-page .cv3-m-media .cv3-photo-dots button::before{background:#D3D8DE;opacity:1}
+  .stories-page .cv3-m-media .cv3-photo-dots button.is-active::before{background:#3897F0;opacity:1}
+  .stories-page .cv3-m-media .cv3-photo-count{top:8px;right:12px;padding:5px 9px;border-radius:999px;background:rgba(38,38,38,.7);font:400 13px/1.5 var(--ff-sans)}
+}
+
+/* Smaller visual mark, with a full mobile touch target. */
+@media(max-width:760px){
+  .stories-page .cv3-zoom{left:8px;top:4px;width:44px;height:44px;background:transparent;color:rgba(255,255,255,.88);backdrop-filter:none;-webkit-backdrop-filter:none;transform:none}
+  .stories-page .cv3-zoom::before{content:"";position:absolute;inset:8px;border-radius:50%;background:rgba(11,16,32,.28);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+  .stories-page .cv3-zoom svg{position:relative;width:14px;height:14px;stroke-width:1.6}
+  .stories-page .cv3-zoom:hover{background:transparent;transform:none}
+  .stories-page .cv3-zoom:hover::before{background:rgba(11,16,32,.42)}
+}
+
+/* Mobile reading uses native vertical gestures, without the external desktop rail. */
+@media(max-width:760px){
+  .stories-page .cv3-caption-scrollbar{display:none}
+  .stories-page .cv3-m-body{touch-action:pan-y;scrollbar-width:none}
+  .stories-page .cv3-m-body::-webkit-scrollbar{display:none}
 }

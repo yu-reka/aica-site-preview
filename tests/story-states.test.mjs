@@ -42,7 +42,7 @@ test('all four exported collection pages share states and failure contract witho
     const html=artifacts.get('templates/public-site/'+kind+'.html');
     assert.equal((html.match(/data-story-list-state/g)||[]).length,1,kind);
     assert.ok(html.includes('data-public-content-unavailable=${publicContentUnavailable == true}'),kind);
-    assert.ok(html.includes('/stories/js/story-state.js?v=1020states'),kind);
+    assert.ok(html.includes('/stories/js/story-state.js?v=1022cohortchips'),kind);
     assert.ok(html.includes('/stories/css/story-state.css?v=1020states'),kind);
     assert.ok(html.indexOf('story-state.js')<html.indexOf(kind==='cohorts'?'cohort-v3.js':kind==='projects'?'projects-filter.js':kind==='interviews'?'stories-sections.js':'stories-m-reviews.js'));
   }
@@ -69,5 +69,17 @@ test('API failure uses a valid snapshot and distinguishes unavailable data from 
     ui.document.documentElement={dataset:{sub:'reviews'}};
     assert.equal(ui.state.failed(),scenario.unavailable);
     assert.equal(ui.document.body.dataset.publicContentUnavailable==='true',scenario.unavailable);
+  }
+});
+
+test('cohort page keeps its chips when cohorts exist without posts, and falls back to the page state when there are none',()=>{
+  for(const withInfo of [true,false]){
+    const host=new Element('div'),cv3={hidden:false,setAttribute(){}};host.hidden=true;
+    const section={querySelector:s=>s==='[data-story-list-state]'?host:s.includes('data-cohort-infos')&&withInfo?{}:null,querySelectorAll:s=>s==='.cv3'?[cv3]:[]};
+    const document={readyState:'complete',body:{dataset:{}},documentElement:{dataset:{sub:'cohorts'}},createElement:tag=>new Element(tag),
+      querySelector:s=>s==='#p-coh'?section:null,getElementById:id=>id==='cv3-data'?{content:{querySelectorAll:()=>[]}}:null};
+    vm.runInContext(readFileSync(new URL('../stories/js/story-state.js',import.meta.url),'utf8'),vm.createContext({document,Event,location:{}}));
+    assert.equal(cv3.hidden,!withInfo);assert.equal(host.hidden,withInfo);
+    if(!withInfo)assert.equal(host.dataset.storyState,'empty');
   }
 });

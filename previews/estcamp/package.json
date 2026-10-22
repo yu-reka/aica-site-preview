@@ -1,0 +1,1 @@
+{"name":"estcamp-aica-concept","private":true,"type":"module","scripts":{"build":"node scripts/build.mjs","check":"node scripts/build.mjs --check","preview":"python3 -m http.server 4197 --bind 127.0.0.1"}}

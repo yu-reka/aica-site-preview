@@ -1,0 +1,16 @@
+{
+  "courses": [
+    {"name":"AI 휴먼","en":"AI HUMAN","mode":"hybrid","image":"human.png","state":"모집 중","action":"10기 신청하기","period":"~11.30 (화)","href":"https://estbootcamp.co.kr/aihuman-10","color":"#BB96ED"},
+    {"name":"AI 퀀트","en":"AI QUANT","mode":"hybrid","image":"quant.png","state":"사전 알림","action":"사전 알림 신청","period":"추후 안내","href":"https://estbootcamp.co.kr/ai-quant-t","color":"#E5D5B9"},
+    {"name":"프론트엔드 개발","en":"FRONT-END","mode":"online","image":"frontend.png","state":"사전 알림","action":"사전 알림 신청","period":"추후 안내","href":"https://estbootcamp.co.kr/fe","color":"#BEF264"},
+    {"name":"iOS 앱 개발","en":"iOS APP","mode":"online","image":"ios.png","state":"모집 중","action":"8기 신청하기","period":"~10.26 (월)","href":"https://estcamp1.careerlink.kr/ios-8","color":"#75D5CC"},
+    {"name":"가디언즈 인프라보안","en":"GUARDIANS","mode":"online","image":"security.png","state":"모집 중","action":"15기 신청하기","period":"~10.26 (월)","href":"http://estaicamp.com/2025/landing/guardians.asp","color":"#BAE6FD"}
+  ],
+  "stories":[
+    {"title":"부트캠프만으로 진짜 취업할 수 있을까?","desc":"청년 고용률의 내리막.. 현실은 잔혹하지만, 돌파구는 있습니다.","type":"커리어 이야기"},
+    {"title":"우리는 조금 느렸지만, 분명 다릅니다","desc":"부트캠프 시장의 후발주자 '이스트캠프'의 반란","type":"이스트캠프 이야기"},
+    {"title":"“결정적 차이? AI 시대 맞춤 교육이라는 점”","desc":"이스트캠프 PM 김인서님의 릴레이 인터뷰","type":"릴레이 인터뷰"},
+    {"title":"“저희를 믿고 한 걸음 내딛어 주세요”","desc":"이스트캠프 교육 운영 담당자 홍유라님의 릴레이 인터뷰","type":"릴레이 인터뷰"},
+    {"title":"“백엔드는 취업 자리가 비교적 많아요”","desc":"이스트캠프 백엔드 개발 정동형 강사님의 릴레이 인터뷰","type":"릴레이 인터뷰"}
+  ]
+}

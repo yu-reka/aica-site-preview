@@ -1,0 +1,15 @@
+{
+  "reviewed": "2026-10-22",
+  "original": "https://estbootcamp.co.kr/",
+  "design": "https://estsoft-kdt-design.netlify.app/",
+  "assets": {
+    "logo.png": "https://img.inhr.co.kr/static/careerlink/LOGO/2512161154012510FN.png",
+    "hero.png": "https://img.inhr.co.kr/static/careerlink/DSGN/260610135106416HP0.png",
+    "human.png": "https://img.inhr.co.kr/static/careerlink/DSGN/260610162839988QJs.png",
+    "quant.png": "https://img.inhr.co.kr/static/careerlink/DSGN/260610162116083YwF.png",
+    "frontend.png": "https://img.inhr.co.kr/static/careerlink/DSGN/260610163504650wZp.png",
+    "ios.png": "https://img.inhr.co.kr/static/careerlink/DSGN/260622105527091bb6.png",
+    "security.png": "https://img.inhr.co.kr/static/careerlink/DSGN/260610163333236Zti.png",
+    "challengers.png": "https://img.inhr.co.kr/static/careerlink/DSGN/260709102958360aBq.png"
+  }
+}

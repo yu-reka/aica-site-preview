@@ -58,8 +58,6 @@
 .stories-page .iva-out[data-view="list"] .ph .dur{display:none}
 .stories-page .iva-badge{display:inline-block;margin-left:8px;padding:1px 7px;border-radius:6px;background:var(--yellow);font-size:11px;font-weight:800;vertical-align:3px;color:var(--ink)}
 .stories-page .iva-out[data-view="grid"] .iva-badge{display:none}
-.stories-page .iva-more{display:block;margin:36px auto 0;height:48px;padding:0 28px;border:1px solid var(--ink);border-radius:999px;background:#fff;color:var(--ink);font-size:15px;font-weight:700;line-height:1;cursor:pointer}
-.stories-page .iva-more:hover{background:var(--ink);color:#fff}
 .stories-page .iva-empty{margin:24px 0;color:var(--muted)}
 @media (max-width:1000px){.stories-page .iva-out[data-view="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){

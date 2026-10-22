@@ -39,11 +39,13 @@
 
 이전 Spring 템플릿은 공통 진입점만 참조할 수 있습니다. 이때 공통 진입점이 후기 페이지인지 확인하고 자기 스크립트 URL을 기준으로 후기 팩토리를 한 번 로드합니다. 다른 이야기 페이지에는 후기 전용 파일을 추가로 요청하지 않습니다.
 
-## Spring 반영
+## V30 공개 API와 통합 반영
 
-`npm run export:spring -- --output /absolute/temporary/resources`로 템플릿·초기 데이터만 내보냅니다. 정적 자산은 프론트 루트에서도 함께 서빙하거나 기존 배포 절차로 동기화해야 합니다. 신규 `common/css/masthead.css`, `life/js/life-m-view.js`, `stories/js/stories-m-reviews.js`를 빠뜨리지 않습니다.
+현재 연결 순서와 공개 샘플·비공개 DB 사본의 경계는 [README](../README.md#현재-데이터-흐름)를 기준으로 합니다. `scripts/backoffice-site.mjs`가 디자인 빌드에 API 연결을 적용하고, `stories-render.js`·`faq-render.js`가 화면 동작 스크립트보다 먼저 목록과 상세를 만듭니다. `track.js`는 콘텐츠 페이지에, `ticker-render.js`는 홈에 연결됩니다.
 
-공개 화면은 Spring이 읽는 발행본을 사용합니다. 이 정리는 작업본·발행본 정책, 권한, DB 구조, `*-live.js/css` 또는 내보내기 계약을 변경하지 않습니다. 정적 `content/stories/`를 운영 DB로 취급하지 않습니다. [Spring 연동 안내](spring-integration.md)를 함께 확인합니다.
+동기화는 `frontend/`만 반영합니다. 비공개 `stories/js/stories-data.js`와 `check/js/faq-data.js` 두 사본은 기존 바이트를 보존하며, 공개 샘플로 덮어쓰지 않습니다. 두 사본을 제외한 프론트 코드 일치와 사본 보존을 각각 확인합니다. 실제 API·DB·관리자·통합본 루트 scripts/·CI는 백엔드 담당 범위입니다.
+
+`export:spring`, `*-live.js/css`와 호환 진입점은 과거 템플릿 지원용으로 보존합니다. 현재 V30 동기화에서 Spring 템플릿·seed를 생성하지 않습니다. [과거 연동 안내](spring-integration.md)의 DB·실행 절차를 현재 환경에 적용하지 않습니다.
 
 ## 주소와 대화상자
 
@@ -53,7 +55,7 @@
 
 ## 변경 후 검증
 
-`npm run build`, `npm test`, `npm run check`를 실행합니다. 테스트는 필터·페이지·정규 앵커, 뷰의 escape·지도 복제, 호환 로더, CSS·Spring 링크와 생성물 일치를 검사합니다.
+`npm run build`, `npm test`, `npm run check`를 실행하고 공개 PR·Pages 반영 전에는 `npm run check:public`도 실행합니다. 테스트는 필터·페이지·정규 앵커, 뷰의 escape·지도 복제, 호환 로더, API 연결 순서, CSS·과거 Spring 링크와 생성물 일치를 검사합니다.
 
 브라우저에서는 360·390·430px와 1280·1440px에서 변경 화면을 비교하고 관련 메뉴·탭·필터·상세·사진·지도 조작을 확인합니다. `/aica-site-preview/` 하위 경로도 확인합니다. 전환 중인 메뉴 색상·스크롤 위치는 동일한 상태에서 비교하며, 로컬 화면 확인을 실제 운영 DB 검증으로 보고하지 않습니다.
 
@@ -64,12 +66,13 @@
 
 - 게시물 전체가 없을 때는 목록 제목 아래에 공통 빈 상태와 이야기 전체 보기 링크를 표시합니다. 빈 목록에서 필터와 페이지 조작은 숨기며 후기의 숨은 라디오도 비활성화합니다.
 - 필터 결과가 없을 때는 필터 초기화 버튼으로 실제 조건과 첫 페이지를 복원합니다. 후기의 정적 CSS 라디오·모바일 상태·Spring 필터는 `StoryState.resetReviews()`의 실제 `change` 및 `reviews:reset` 이벤트로 함께 초기화합니다.
-- 서버가 `publicContentUnavailable=true`를 제공하면 빈 게시물 안내 대신 조회 실패와 다시 시도 버튼을 표시합니다. 다시 시도는 현재 URL을 새로 요청하며, 정상 응답으로 복구되면 기존 목록을 표시합니다.
+- API가 성공한 빈 배열은 정상 빈 목록입니다. 이야기 API 스크립트가 실패해도 해당 종류의 사본에 글이 있으면 그 사본을 표시합니다. 실패하고 사용할 글도 없으면 조회 실패와 다시 시도 버튼을 표시합니다.
+- 기존 `data-public-content-unavailable="true"` 표시는 조회 실패를 우선합니다. 다시 시도는 현재 URL을 새로 요청합니다. 이 화면 상태 판단은 실제 DB·발행 정책을 변경하지 않습니다.
 
-공유용 정적 시안은 DB를 조회하지 않으므로 서버 장애를 스스로 판별하지 않습니다. 운영 Spring 컨트롤러가 실패 모델과 HTTP 503을 제공해야 하며, 오류를 빈 배열의 정상 응답으로 바꾸거나 정적 시안 데이터로 대체하지 않습니다. 실제 DB 데이터·임시저장·발행 규칙에는 영향을 주지 않습니다.
+FAQ는 `faq-render.js`가 목록과 분류 수를 만들고 `check.js`가 검색·필터·펼치기를 맡습니다. 공개 프리뷰의 사본은 합성 샘플이며 실제 서버 상태나 실제 글을 검증한 근거로 사용하지 않습니다.
 
 ## 공유 상호작용 계약
 
 `common/js/ui.js`의 `SiteUI`가 모달 초점 순환과 기존 inert 상태 복원, 유한 레일의 시작·끝 상태 및 키보드 보조 동작을 공유합니다. ui.js는 site.js·cohort-v3.js·stories.js·stories-m.js·life-m.js·about-m.js보다 먼저 로드해야 합니다. 기수 필터는 group/aria-pressed를 사용하고, 빈 결과 초기화에서도 같은 선택자를 사용합니다.
 
-후기 detail-2/detail-3은 공통 detail 템플릿을 호출하며 태그는 반복 부분 템플릿으로 생성합니다. Spring 내보내기는 공개 태그 반복과 HTML escape를 유지합니다. 새로운 공유 파일이 필요하므로 Spring 반영 시 모든 템플릿과 정적 UI 자산을 함께 배포해야 합니다.
+디자인 원본의 후기 detail-2/detail-3은 공통 detail 템플릿을 호출하며 태그는 반복 부분 템플릿으로 생성합니다. 런타임 API 렌더러의 마크업도 같은 공개 선택자와 공통 UI 계약을 유지합니다. 공유 JS·CSS를 추가할 때는 원본 로딩 순서와 생성 HTML을 함께 확인합니다.

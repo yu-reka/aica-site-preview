@@ -60,6 +60,14 @@
 
 .school-about #career{scroll-margin-top:-16px}
 
+/* PC 메뉴의 네 섹션: 기존 제목 보정 64px에서 24px을 줄여 헤더 아래 40px로 통일합니다.
+   about.css의 :target scroll-padding:0 보정보다 우선하며 모바일 이동은 유지합니다. */
+@media(min-width:601px){
+  html.school-about:has(:is(#intro,#learning,#activities,#career):target){
+    scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--hdr) + var(--sub) - 24px);
+  }
+}
+
 /* =========================================================
    인사교 알아보기 오른쪽 목차(10-13): 지원 전 체크의 플로팅 목차(.sec-float)와 같은 모양으로 교체
    기존 레일(.section-navigation)은 숨김. 움직임은 about/js/about.js 맨 끝

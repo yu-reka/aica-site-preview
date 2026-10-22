@@ -35,13 +35,13 @@
   <script src="../api/public/stories.js" defer></script>
   <script src="js/stories-render.js" defer></script>
   <!-- 빈 목록 · 필터 결과 없음 안내(aica-site PR #27): 글을 다 그린 뒤 판단하도록 글 그리기 다음에 -->
-  <script src="js/story-state.js?v=1020states" defer></script>
+  <script src="js/story-state.js?v=1022cohortchips" defer></script>
 
   <link rel="stylesheet" href="css/cohort-v3.css?v=1022cohortinfo-empty">
   <link rel="stylesheet" href="css/stories-m.css?v=1022cohortinfo">
   <link rel="stylesheet" href="../common/css/components.css?v=1021audit-pr28">
 <link rel="stylesheet" href="../common/css/navigation-mobile.css?v=1016nav">
-  <script src="js/cohort-v3.js?v=1022dialog-transfer" defer></script>
+  <script src="js/cohort-v3.js?v=1022cohortchips-dialog" defer></script>
   <script src="js/cohort-modal-scroll.js?v=1022swipereading" defer></script>
   <script src="js/mast-fix.js" defer></script>
   <script src="../common/js/menu.js" defer></script>
@@ -101,6 +101,7 @@
       <nav class="cv3-pg" aria-label="기수 기록 페이지"></nav>
       <!-- 기수 정보(2026-10-22): 기수마다 교육과정 카드(.cv3-pin) · 계정 이름 · 꼬리표 · '이전 기수와 달라진 점' 버튼 이름 · 소개 · 달라진 점 표(.cv3-dr 한 줄씩).
            카테고리 페이지 관리에서 글자를 고치고 트랙 · 표 줄을 늘리거나 줄여요. js/cohort-v3.js가 고른 기수의 블록을 화면 자리로 옮겨 보여 줘요.
+           블록이 있는 기수는 게시물이 모두 지워져도 기수 칩이 남고 '아직 등록된 게시물이 없어요' 화면을 보여 줘요(칩을 없애려면 블록을 삭제).
            새 기수 글을 게시하면 백오피스가 같은 모양의 블록을 이 목록 맨 앞에 더해요(backend page/CohortPageSync — 선택자를 바꾸면 함께 고칠 것) -->
       <div class="cv3-infos" data-cohort-infos hidden>
         <div class="cv3-cinfo" data-cohort="7">

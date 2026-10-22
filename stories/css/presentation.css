@@ -507,7 +507,11 @@ box-shadow:inset 0 0 0 1px rgba(120,86,48,.18),inset 0 2px 12px rgba(90,60,28,.1
 /* 후기 리스트 보기 태그(10-13, 리스트태그 시안 2): 알약 폭 고정 84px + 글자 가운데, 옅은 파랑 바탕 + 파랑 글자 */
 .stories-page .rvr{grid-template-columns:9px 84px minmax(0,1fr) 158px}
 
-.stories-page .rvr .tg{justify-self:stretch;justify-content:center;width:84px;padding:0!important;background:#E8EEFC!important;color:var(--primary)!important}
+.stories-page .rvr .tg{justify-self:stretch;justify-content:center;width:84px;padding:0!important;background:var(--review-tag-bg,#E8EEFC)!important;color:var(--review-tag-color,var(--primary))!important}
+
+/* 태그가 없는 후기의 표시용 배지: 실제 태그/필터에는 추가하지 않음. */
+.stories-page .rvr .tg:is(.tg-general,:empty){--review-tag-bg:#F0F2F5;--review-tag-color:#667085}
+.stories-page .rvr .tg:empty::before{content:"태그 없음"}
 
 @media (max-width:860px){.stories-page .rvr{grid-template-columns:9px 84px minmax(0,1fr)}
 }

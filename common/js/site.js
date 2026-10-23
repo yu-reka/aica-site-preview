@@ -296,10 +296,35 @@ const Site = (() => {
       m.focus();
     });
 
-    // 맨 위로: 한 화면 가까이 내려가면 보임(10-14: 페이지 끝 '다음으로' 띠가 없어져 띠와 겹칠 때 감추던 코드 삭제)
-    const onScroll = () => {
+    // 모바일에서는 스크롤 중 표시하고, 멈춘 뒤 1.2초가 지나면 숨깁니다.
+    const mobileTop = matchMedia('(max-width:860px)');
+    let topActive = false, topIdleTimer;
+    const syncTopVisibility = () => {
+      fabTop.classList.toggle('is-visible', scrollY > innerHeight * .8 &&
+        (!mobileTop.matches || topActive || fabTop.contains(document.activeElement)));
+    };
+    const wakeTop = () => {
+      clearTimeout(topIdleTimer);
+      topActive = true;
+      syncTopVisibility();
+      if (mobileTop.matches) topIdleTimer = setTimeout(() => {
+        topActive = false;
+        syncTopVisibility();
+      }, 1200);
+    };
+    fabTop.addEventListener('focus', wakeTop);
+    fabTop.addEventListener('blur', wakeTop);
+    // 키보드로 이동할 때도 탑 버튼에 접근할 수 있도록 다시 표시합니다.
+    document.addEventListener('keydown', e => { if (e.key === 'Tab') wakeTop(); });
+    mobileTop.addEventListener('change', () => {
+      clearTimeout(topIdleTimer);
+      topActive = false;
+      syncTopVisibility();
+    });
+    const onScroll = e => {
       header.classList.toggle('is-scrolled', scrollY > 8);
-      fabTop.classList.toggle('is-visible', scrollY > innerHeight * .8);
+      if (e?.type === 'scroll') wakeTop();
+      else syncTopVisibility();
     };
     fabTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }));
     addEventListener('scroll', onScroll, { passive: true });

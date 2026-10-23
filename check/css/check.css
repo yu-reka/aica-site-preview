@@ -62,9 +62,9 @@ body[data-cat="check"]{background:#fff}
 .ben-foot .text-link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
 .faq-tools{display:flex;flex-wrap:wrap;gap:16px 24px;align-items:center;justify-content:space-between}
 .faq-tabs{display:flex;flex-wrap:wrap;gap:6px;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:60px}
-.faq-tab{padding:12px 26px;border:0;border-radius:40px;background:transparent;color:var(--primary);font-weight:700;font-size:16px;cursor:pointer;transition:background .2s,color .2s}
-.faq-tab:hover{background:var(--primary-soft)}
-.faq-tab[aria-pressed="true"]{background:var(--primary);color:#fff}
+.faq-tab{padding:12px 26px;border:0;border-radius:40px;background:#fff;color:#657087;font-weight:700;font-size:16px;cursor:pointer;box-shadow:inset 0 0 0 1px transparent;transition:background .2s,color .2s,box-shadow .2s}
+.faq-tab:hover{box-shadow:inset 0 0 0 1px #244cd2}
+.faq-tab[aria-pressed="true"]{background:#244cd2;color:#fff;box-shadow:inset 0 0 0 1px #244cd2}
 .faq-count{margin:22px 0 0;min-height:22px;font-size:14.5px;color:var(--graphite)}
 .faq-list{list-style:none;margin:6px 0 0;padding:0;border-top:2px solid var(--ink)}
 .faq-item{border-bottom:1px solid var(--line)}
@@ -120,8 +120,8 @@ body[data-cat="check"]{background:#fff}
 .chk-notice p{font-size:clamp(16.5px,1.3vw,18px);line-height:1.75;color:var(--ink)}
 .chk-notice-ico{width:34px;height:34px;font-size:18px}
 .faq-tab{display:inline-flex;align-items:center;gap:7px}
-.faq-cnt{font-style:normal;min-width:22px;padding:1px 7px;border-radius:20px;background:var(--primary-soft);color:var(--text-on-soft);font-size:12.5px;font-weight:700;text-align:center;line-height:1.5}
-.faq-tab[aria-pressed="true"] .faq-cnt{background:var(--primary-deep);color:#fff}
+.faq-cnt{font-style:normal;min-width:22px;padding:1px 7px;border-radius:20px;background:#edf2fb;color:#526a9d;font-size:12.5px;font-weight:700;text-align:center;line-height:1.5}
+.faq-tab[aria-pressed="true"] .faq-cnt{background:#ffffff29;color:#fff}
 .chk-progress,body[data-cat="check"] .chk-progress{position:static!important;top:auto}
 .pf{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:18px;}
 .pf-col{position:relative;display:flex;flex-direction:column;align-items:stretch;cursor:pointer}

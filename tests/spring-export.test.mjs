@@ -87,7 +87,7 @@ test('Spring projects retain shared filters and read escaped metadata from publi
   const html=artifacts.get('templates/public-site/projects.html');
   assert.ok(html.includes('pj-filter-row'));
   assert.ok(html.includes('pj-subject-empty'));
-  assert.ok(html.includes('/stories/js/projects-filter.js?v=1020states'));
+  assert.ok(html.includes('/stories/js/projects-filter.js?v=1023course'));
   assert.ok(!html.includes('data-cohort="7"'));
   assert.ok(!html.includes('data-subject="컴퓨터비전"'));
   assert.ok(!html.includes('pj-filter-empty'));

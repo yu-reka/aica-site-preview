@@ -3,6 +3,7 @@ import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRenderer, richText, safeUrl, youtubeId } from './template.mjs';
 import { connectBackoffice } from './backoffice-site.mjs';
+import { assetVersions } from './asset-versions.mjs';
 
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const readJson = file => JSON.parse(readFileSync(join(root, file), 'utf8'));
@@ -39,7 +40,7 @@ export function validateCohortPhotos(record) {
 }
 export function loadContent() {
   const presentation = readJson('src/presentation.json');
-  const content = {};
+  const content = { v: assetVersions };
   for (const file of files(join(root, 'content'), '.json')) {
     const domain = relative(join(root, 'content'), file).replaceAll('\\', '/').replace(/\.json$/, '');
     if (domain === 'site') { content.site = prepare(readJson('content/site.json')); continue; }

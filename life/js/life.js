@@ -135,15 +135,14 @@ if (cA) cA.addEventListener('click', function(){
   center(); addEventListener('hashchange', function(){ setTimeout(center, 60); }); addEventListener('resize', center);
 })();
 
-/* ---------- 근처 먹거리(단독 시안 2026-10-12): 식당 · 카페 탭 + 거르기(전체 · 혼밥/혼자 · 여럿이 + 도보 10분 안)
-   카드(사진 자리 · 이름 · 메뉴 · 선배 후기)를 그리드로. 처음 6곳 + '나머지 n곳 더 보기', 탭 · 거르기를 바꾸면 다시 6곳부터 ---------- */
+/* ---------- 근처 먹거리: 식당 · 카페 탭 + 거르기(전체 · 혼밥/혼자 · 여럿이 + 도보 10분 안)
+   카드 8개씩 숫자 페이지로 표시하고, 탭 · 거르기를 바꾸면 첫 페이지로 돌아감 ---------- */
 (function(){
   var bs = $$('[data-fg2]', MAIN), nb = $('#fdNear'); if (!bs.length) return;
   var ks = $$('[data-fk]', MAIN), solo = $('[data-fg2="solo"]', MAIN), list = $('.fdg', MAIN);
   var cards = $$('.fdg .fdc', MAIN), empty = $('.fdempty', MAIN), rs = $('[data-fdreset]', MAIN);
-  var mw = $('.fdmore2', MAIN), mb = mw && mw.querySelector('button'), N = 8;
+  var mw = $('.fdmore2', MAIN), mb = mw && mw.querySelector('button'), pageSize = 8;
   var MID = matchMedia('(max-width: 1100px)');
-  function cnt(){ return 8; }   // 10-13: 대표 8곳씩, 아래 숫자 페이지(선배들의 이야기 후기와 같은 모양)
   var k = 'food', g = 'all', near = false, all = false, pg = 1, sig = '';
   var nav = document.createElement('nav'); nav.className = 'cpager fdpager'; nav.setAttribute('aria-label', '먹거리 페이지');
   var dsc = list.nextElementSibling; list.parentNode.insertBefore(nav, dsc && dsc.classList.contains('fdisc') ? dsc.nextSibling : list.nextSibling);   // 10-14: 안내 문구는 카드 바로 아래 오른쪽
@@ -152,12 +151,12 @@ if (cA) cA.addEventListener('click', function(){
     b.onclick = function(){ pg = to; ap(); var top = list.getBoundingClientRect().top + scrollY - 200; scrollTo({ top: top, behavior: RM ? 'auto' : 'smooth' }); };
     return b; }
   function ap(){
-    N = cnt();
+    list.dispatchEvent(new Event('foodchange'));
     var s2 = k + '|' + g + '|' + near; if (s2 !== sig) { sig = s2; pg = 1; }
     var hits = cards.filter(function(c){ return c.dataset.t === k && (g === 'all' || c.dataset.g === g) && (!near || +c.dataset.w <= 10); });
-    var pages = Math.max(1, Math.ceil(hits.length / N)); if (pg > pages) pg = pages;
+    var pages = Math.max(1, Math.ceil(hits.length / pageSize)); if (pg > pages) pg = pages;
     cards.forEach(function(c){ c.hidden = true; });
-    hits.forEach(function(c, i){ c.hidden = !(i >= (pg - 1) * N && i < pg * N); });
+    hits.forEach(function(c, i){ c.hidden = !(i >= (pg - 1) * pageSize && i < pg * pageSize); });
     if (empty) empty.hidden = hits.length > 0;
     list.hidden = !hits.length;
     if (mw) mw.hidden = true;
@@ -330,20 +329,37 @@ topic();
   var b=document.createElement('button');b.type='button';b.className='lunch-go';
   b.innerHTML='<img class="dc" src="assets/dice.webp" alt="" width="160" height="167">'+'<span class="cue" aria-hidden="true"><em>고민된다면?</em><svg viewBox="0 0 64 60" width="64" height="60" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10C18 4 34 6 36 18c1.5 9-9 12-12 6-3-7 8-12 16-6 8 6 12 18 17 34"/><path d="M49.9 45.9L57 52l2.4-9.1"/></svg></span>';b.setAttribute('aria-label','오늘 점심 뭐 먹지? 주사위 굴려서 한 곳 골라 주기');
   bar.insertBefore(b,bar.firstChild);
+  var rollTimer;
+  function reset(){
+    clearTimeout(rollTimer);rollTimer=null;
+    list.classList.remove('picked','rolling');
+    [].forEach.call(list.querySelectorAll('.fdc'),function(c){
+      c.classList.remove('pick','lit');
+      var close=c.querySelector('.fd-unpick');if(close)close.remove();
+    });
+  }
   b.addEventListener('click',function(){
+    reset();
     var cards=[].slice.call(list.querySelectorAll('.fdc')).filter(function(c){return c.offsetParent});
     if(!cards.length) return;
-    cards.forEach(function(c){c.classList.remove('pick','lit')});
-    list.classList.remove('picked');list.classList.add('rolling');
+    list.classList.add('rolling');
     var i=Math.floor(Math.random()*cards.length),n=i+12+Math.floor(Math.random()*cards.length),prev;
     (function step(){
       if(prev) prev.classList.remove('lit');
       prev=cards[i%cards.length];prev.classList.add('lit');i++;
-      if(i<n) setTimeout(step,70+(n-i<5?(5-(n-i))*60:0));
-      else{prev.classList.remove('lit');prev.classList.add('pick');list.classList.remove('rolling');list.classList.add('picked');prev.scrollIntoView({behavior:'smooth',block:'center'});}
+      if(i<n) rollTimer=setTimeout(step,70+(n-i<5?(5-(n-i))*60:0));
+      else{rollTimer=null;prev.classList.remove('lit');prev.classList.add('pick');list.classList.remove('rolling');list.classList.add('picked');prev.scrollIntoView({behavior:'smooth',block:'center'});}
     })();
   });
   b.addEventListener('click',function(){b.classList.remove('go');void b.offsetWidth;b.classList.add('go')});
+  new MutationObserver(function(){
+    var c=list.querySelector('.fdc.pick'); if(!c||c.querySelector('.fd-unpick')) return;
+    var b=document.createElement('button'); b.type='button'; b.className='fd-unpick'; b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 7l10 10M17 7 7 17"/></svg>';   /* 10-20: 글자 × 대신 선 그림 — 글꼴 높이에 따라 원 가운데서 어긋나지 않게 */ b.setAttribute('aria-label','주사위 결과 지우고 전체 다시 보기');
+    b.addEventListener('click',function(e){ e.preventDefault(); e.stopPropagation(); reset(); });
+    c.appendChild(b); b.focus({preventScroll:true});
+  }).observe(list,{subtree:true,attributes:true,attributeFilter:['class']});
+  list.addEventListener('foodchange',reset);
+  addEventListener('hashchange',reset);
 })();
 
 /* 선배 손글씨 포스트잇 */
@@ -374,19 +390,4 @@ topic();
     var h=[].filter.call(pg.querySelectorAll('.tp-back, .sh, h2:not(.lh-sr)'),function(e){return e.offsetParent!==null})[0]; if(!h) return;   // 10-13: 숨은 화면(생활 꿀팁 허브 · 다른 주제)의 머리는 건너뜀 if(h&&h.closest('.lo-hd')) h=h.closest('.lo-hd'); if(!h) return;
     var t=h.getBoundingClientRect().top-r.getBoundingClientRect().top-3; if(t>0) m.style.setProperty('--lnb-top',t+'px'); }
   addEventListener('load',f); addEventListener('hashchange',function(){ setTimeout(f,80); }); addEventListener('resize',f); if(document.fonts) document.fonts.ready.then(f);
-})();
-
-/* 점심 주사위 되돌리기(10-13): 고른 카드 오른쪽 위 × 버튼 · 식당/카페 · 거르기 칩을 누르면 굴리기 전으로 */
-(function(){
-  var list=document.getElementById('fdList'); if(!list) return;
-  function reset(){ if(!list.classList.contains('picked')) return;
-    list.classList.remove('picked','rolling');
-    [].forEach.call(list.querySelectorAll('.fdc'),function(c){ c.classList.remove('pick','lit'); var x=c.querySelector('.fd-unpick'); if(x) x.remove(); }); }
-  new MutationObserver(function(){
-    var c=list.querySelector('.fdc.pick'); if(!c||c.querySelector('.fd-unpick')) return;
-    var b=document.createElement('button'); b.type='button'; b.className='fd-unpick'; b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 7l10 10M17 7 7 17"/></svg>';   /* 10-20: 글자 × 대신 선 그림 — 글꼴 높이에 따라 원 가운데서 어긋나지 않게 */ b.setAttribute('aria-label','주사위 결과 지우고 전체 다시 보기');
-    b.addEventListener('click',function(e){ e.preventDefault(); e.stopPropagation(); reset(); });
-    c.appendChild(b); b.focus({preventScroll:true});
-  }).observe(list,{subtree:true,attributes:true,attributeFilter:['class']});
-  document.addEventListener('click',function(e){ if(e.target.closest('#tp-food .fdk-b, #tp-food .chips button')) reset(); },true);
 })();

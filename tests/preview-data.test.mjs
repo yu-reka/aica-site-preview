@@ -60,11 +60,11 @@ test('public release guard rejects substituted DB text without logging it or mod
 test('public HTML and home fallback request a new snapshot cache version', () => {
   const root = new URL('../', import.meta.url);
   for (const file of ['index.html','reviews.html','interviews.html','projects.html','cohorts.html']) {
-    assert.match(readFileSync(new URL('stories/' + file, root), 'utf8'), /src="js\/stories-data\.js\?v=design-20261022"/);
+    assert.match(readFileSync(new URL('stories/' + file, root), 'utf8'), /src="js\/stories-data\.js\?v=1022cohortinfo-db"/);
   }
   assert.match(readFileSync(new URL('check/index.html', root), 'utf8'), /src="js\/faq-data\.js\?v=design-20261022"/);
-  assert.match(readFileSync(new URL('home/index.html', root), 'utf8'), /src="js\/ticker-render\.js\?v=design-20261022"/);
-  assert.match(readFileSync(new URL('home/js/ticker-render.js', root), 'utf8'), /stories-data\.js\?v=design-20261022/);
+  assert.match(readFileSync(new URL('home/index.html', root), 'utf8'), /src="js\/ticker-render\.js\?v=1022cohortinfo-db"/);
+  assert.match(readFileSync(new URL('home/js/ticker-render.js', root), 'utf8'), /stories-data\.js\?v=1022cohortinfo-db/);
 });
 
 
@@ -100,4 +100,13 @@ test('dummy generation rejects an unmasked author without exposing the supplied 
   for (const author of ['홍길동', 'PRIVATE_RECORD_SENTINEL', '', undefined]) {
     assert.throws(() => circleDesignName({author, body: []}), error => error.message.includes('가림 기호') && (!author || !error.message.includes(author)));
   }
+});
+
+
+test('public cohort metadata comes from the approved design fixture and project course filters have values', () => {
+  const {stories} = previewData();
+  const source = JSON.parse(readFileSync(new URL('../content/preview/cohorts.json', import.meta.url), 'utf8'));
+  assert.deepEqual(stories.cohortInfos, source.map(({cohort, account, tag, tracks, label, bio, rows}) => ({cohort, account, tag, tracks, label, bio, rows})));
+  assert.deepEqual(stories.cohortInfos.map(info => info.cohort), ['7', '6', '3-5']);
+  assert.ok(stories.projects.every(item => item.course && item.course === (item.subject || item.type)));
 });

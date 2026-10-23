@@ -153,8 +153,9 @@
   #main #faqClear{flex:none;width:44px;height:44px;border:0;background:transparent;color:var(--cm-muted);font-size:24px;border-radius:10px}
   #main .faq-tools{position:sticky;top:calc(var(--hdr) + env(safe-area-inset-top,0px));z-index:4;display:block;padding:12px 0;margin-top:8px;background:var(--cm-white);box-shadow:0 1px 0 var(--cm-line)}
   #main .faq-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;width:100%;padding:4px;border:0;border-radius:14px;background:var(--cm-surface)}
-  #main .faq-tab{justify-content:center;min-width:0;min-height:44px;padding:8px 4px;border:2px solid transparent;border-radius:10px;font:700 14px/1.4 var(--cm-heading);letter-spacing:-.02em;color:var(--cm-blue)}
-  #main .faq-tab[aria-pressed="true"]{background:var(--cm-blue);color:var(--cm-white);border-color:var(--cm-black);box-shadow:2px 2px 0 var(--cm-black)}
+  #main .faq-tab{justify-content:center;min-width:0;min-height:44px;padding:8px 4px;border:2px solid transparent;border-radius:10px;font:700 14px/1.4 var(--cm-heading);letter-spacing:-.02em;color:#657087}
+  #main .faq-tab:hover{border-color:#244cd2;box-shadow:none}
+  #main .faq-tab[aria-pressed="true"]{background:#244cd2;color:var(--cm-white);border-color:#244cd2;box-shadow:none}
   #main .faq-cnt{display:none}
   #main .faq-count{min-height:18px;margin:12px 0;font:400 12px/1.5 var(--cm-body);color:var(--cm-muted)}
   #main .faq-list{display:grid;gap:12px;min-height:0;margin:0;padding:0;border:0;overflow-anchor:none;scroll-margin-top:calc(var(--hdr) + 130px)}

@@ -12,18 +12,18 @@
   <meta property="og:title" content="기수별 이모저모 — 선배들의 이야기 — 인공지능사관학교">
   <meta property="og:description" content="입교식부터 수료식까지, 기수마다 있었던 일을 모아 봅니다.">
 {{> stories/head-base}}
-  <link rel="stylesheet" href="css/stories.css?v=1021audit-pr28">
+  <link rel="stylesheet" href="css/stories.css?v={{v.stories.css.stories}}">
   <link rel="stylesheet" href="css/stories-sections.css">
 {{> stories/head-presentation}}
-  <link rel="stylesheet" href="css/cohort-v3.css?v=1022cohortinfo-empty">
-  <link rel="stylesheet" href="css/stories-m.css?v=1022cohortinfo">
-  <link rel="stylesheet" href="../common/css/components.css?v=1021audit-pr28">
-<link rel="stylesheet" href="../common/css/navigation-mobile.css?v=1016nav">
-  <script src="js/cohort-v3.js?v=1022cohortchips-dialog" defer></script>
-  <script src="js/cohort-modal-scroll.js?v=1022swipereading" defer></script>
+  <link rel="stylesheet" href="css/cohort-v3.css?v={{v.stories.css.cohort-v3.cohorts}}">
+  <link rel="stylesheet" href="css/stories-m.css?v={{v.stories.css.stories-m.cohorts}}">
+  <link rel="stylesheet" href="../common/css/components.css?v={{v.common.css.components}}">
+<link rel="stylesheet" href="../common/css/navigation-mobile.css?v={{v.common.css.navigation-mobile}}">
+  <script src="js/cohort-v3.js?v={{v.stories.js.cohort-v3}}" defer></script>
+  <script src="js/cohort-modal-scroll.js?v={{v.stories.js.cohort-modal-scroll}}" defer></script>
 {{> stories/head-scripts}}
-  <script src="js/stories-m.js?v=1021audit-pr28" defer></script>
-  <script src="js/stories.js?v=1022dialog-transfer" defer></script>
+  <script src="js/stories-m.js?v={{v.stories.js.stories-m}}" defer></script>
+  <script src="js/stories.js?v={{v.stories.js.stories}}" defer></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
@@ -48,7 +48,7 @@
       <div><p class="sh-k">기수별 이모저모</p><h2>입교식부터 수료식까지, 기수마다 이런 일이 있었어요</h2></div>
     </div>
     <div data-story-list-state hidden></div>
-    <div class="cv3" id="cv3" data-upcoming-cohorts="8">
+    <div class="cv3" id="cv3">
       <div class="cv3-chips" role="group" aria-label="기수 고르기"></div>
       <div class="cv3-ig">
         <div class="cv3-prof"></div>
@@ -59,39 +59,10 @@
         <div data-cohort-filter-empty hidden></div>
       </div>
       <nav class="cv3-pg" aria-label="기수 기록 페이지"></nav>
-      <!-- 기수 정보(2026-10-22): 기수마다 교육과정 카드(.cv3-pin) · 계정 이름 · 꼬리표 · '이전 기수와 달라진 점' 버튼 이름 · 소개 · 달라진 점 표(.cv3-dr 한 줄씩).
-           카테고리 페이지 관리에서 글자를 고치고 트랙 · 표 줄을 늘리거나 줄여요. js/cohort-v3.js가 고른 기수의 블록을 화면 자리로 옮겨 보여 줘요.
-           블록이 있는 기수는 게시물이 모두 지워져도 기수 칩이 남고 '아직 등록된 게시물이 없어요' 화면을 보여 줘요(칩을 없애려면 블록을 삭제).
-           새 기수 글을 게시하면 백오피스가 같은 모양의 블록을 이 목록 맨 앞에 더해요(backend page/CohortPageSync — 선택자를 바꾸면 함께 고칠 것) -->
-      <div class="cv3-infos" data-cohort-infos hidden>
-        <div class="cv3-cinfo" data-cohort="7">
-          <div class="cv3-pin" role="group" aria-label="7기 교육과정"><span class="k">CURRICULUM</span><b>7기<br>교육과정</b><div class="cc"><span>AI 금융</span><span>AI 피지컬</span><span>AI 보안</span><span>AI 헬스케어</span><span>AI 융합</span></div><div class="ft"><p>자세한 내용은 공식 홈페이지에서 확인하세요.</p><a href="https://support.gj-aischool.or.kr/fo/main" target="_blank" rel="noopener">공식 홈페이지 <span aria-hidden="true">↗</span></a></div><img class="pn" src="assets/pin-white.png" alt="고정됨" width="96" height="96"></div>
-          <b class="cv3-acc">aica_7th</b>
-          <span class="cv3-tag">인공지능사관학교</span>
-          <span class="cv3-dlabel" data-field="label">6기와 달라진 점</span>
-          <p class="cv3-bio"><b>인공지능사관학교 7기</b><br>입교식부터 수료식까지, 7기가 남긴 순간들을 모았어요.</p>
-          <div class="cv3-dt">
-            <p class="cv3-dr"><b>수업 방식</b><s>준비·성장 일부 온라인 병행</s><span>AI 준비과정(VOD) 외 전 과정 오프라인</span></p>
-            <p class="cv3-dr"><b>프로젝트</b><s>520시간</s><span>720시간 — 기업연계·실증·창업 중 택 1</span></p>
-            <p class="cv3-dr"><b>해커톤</b><s>전 직군 통합 2박 3일</s><span>폐지</span></p>
-            <p class="cv3-dr"><b>트랙 구성</b><s>7개 트랙</s><span>직군별 심화 + 산업 도메인 2층 구조</span></p>
-            <p class="cv3-dr"><b>전형</b><s>서류 → 인터뷰 → Pre-Training → 퀴즈</s><span>서류 → 코딩테스트 → 면접·인적성</span></p>
-            <p class="cv3-dr"><b>지원금</b><s>생활지원금</s><span>생활지원금 + 프로젝트 지원금 200만원 신설</span></p>
-            <p class="cv3-dr"><b>지원 대상</b><s>4학년·졸업예정·졸업유예자 중심</s><span>졸업생·스타트업 재직자까지 확대</span></p>
-          </div>
-        </div>
-        <div class="cv3-cinfo" data-cohort="6">
-          <div class="cv3-pin" role="group" aria-label="6기 교육과정"><span class="k">CURRICULUM</span><b>6기<br>교육과정</b><div class="cc"><span>데이터 기술</span><span>AI 모델링</span><span>AI 기반 서비스</span><span>AI 플랫폼&amp;인프라</span><span>AI 비즈니스</span></div><div class="ft"><p>자세한 내용은 공식 홈페이지에서 확인하세요.</p><a href="https://support.gj-aischool.or.kr/fo/main" target="_blank" rel="noopener">공식 홈페이지 <span aria-hidden="true">↗</span></a></div><img class="pn" src="assets/pin-white.png" alt="고정됨" width="96" height="96"></div>
-          <b class="cv3-acc">aica_6th</b>
-          <span class="cv3-tag">인공지능사관학교</span>
-          <p class="cv3-bio"><b>인공지능사관학교 6기</b><br>입교식부터 수료식까지, 6기가 남긴 순간들을 모았어요.</p>
-        </div>
-        <div class="cv3-cinfo" data-cohort="3-5">
-          <b class="cv3-acc">aica_3to5th</b>
-          <span class="cv3-tag">인공지능사관학교</span>
-          <p class="cv3-bio"><b>인공지능사관학교 3–5기</b><br>입교식부터 수료식까지, 3–5기가 남긴 순간들을 모았어요.</p>
-        </div>
-      </div>
+      <!-- 기수 정보(2026-10-22): 기수마다 교육과정 카드 · 계정 이름 · 꼬리표 · '이전 기수와 달라진 점' 버튼 이름 · 소개 · 달라진 점 표는
+           백오피스 관리자 '기수 정보' 화면(DB cohort_infos)에서 관리해요. js/cohort-v3.js가 STORIES_DATA.cohortInfos(공개 API · stories-data.js)로 받아 고른 기수에 보여 줘요.
+           기수 칩은 게시중인 글이 있는 기수만 보여요(기수 정보만 있는 기수는 칩 없음). 글을 못 불러오면 이 화면 대신 페이지 오류 화면만 보여 줘요.
+           새 기수 글을 처음 게시하면 백오피스가 앞 기수 모양으로 그 기수 정보를 만들어요(내용은 '기수 정보' 화면에서 채움) -->
       <template id="cv3-data">
 {{#each stories.cohorts}}{{> @view.card.template}}
 {{/each}}

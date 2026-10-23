@@ -46,6 +46,7 @@ export function designPreviewData() {
   const cats = {'생활': 'life', '수업': 'class', '프로젝트': 'proj', '취업 성공': 'job', '진로 고민': 'path'};
   const stories = {
     previewSample: true, previewDesign: true, notice: DESIGN_NOTE,
+    cohortInfos: content.preview.cohorts.map(({cohort, account, tag, tracks, label, bio, rows}) => ({cohort, account, tag, tracks, label, bio, rows})),
     reviews: content.stories.reviews.map((source, index) => {
       const record = circleDesignName(source);
       return {...meta(record, 900000, 'r-p', index), cat: cats[record.category], cohort: record.cohort,
@@ -63,7 +64,7 @@ export function designPreviewData() {
         qa: (record.questions || []).map(question => ({q: question.question, a: question.answer, toc: question.navLabel}))};
     }),
     projects: content.stories.projects.map((record, index) => ({...meta(record, 920000, 'pj-p', index),
-      cohort: record.cohort, term: record.cohortClass || record.duration, subject: record.subject, type: record.type,
+      cohort: record.cohort, term: record.cohortClass || record.duration, subject: record.subject, course: record.subject || record.type, type: record.type,
       title: title(record.name), headline: title(record.title), summary: record.detailSummary, cardSummary: record.summary,
       team: record.team, tags: record.tags, art: art(record),
       sections: [record.section1, record.section2, record.section3].map((p, i) => ({h: ['문제 정의', '접근 방법', '결과와 다음 단계'][i], p}))})),

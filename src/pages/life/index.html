@@ -15,27 +15,27 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Nanum+Pen+Script&display=swap">
-<link rel="stylesheet" href="../common/css/tokens.css?v=1021audit-colors">
+<link rel="stylesheet" href="../common/css/tokens.css?v={{v.common.css.tokens}}">
 <link rel="stylesheet" href="../common/css/base.css">
-<link rel="stylesheet" href="../common/css/site.css?v=1021audit-pr28">
-<link rel="stylesheet" href="css/life.css?v=1020leisure">
-  <link rel="stylesheet" href="../common/css/presentation.css?v=1016split">
-  <link rel="stylesheet" href="css/presentation.css?v=1020unpick">
+<link rel="stylesheet" href="../common/css/site.css?v={{v.common.css.site}}">
+<link rel="stylesheet" href="css/life.css?v={{v.life.css.life}}">
+  <link rel="stylesheet" href="../common/css/presentation.css?v={{v.common.css.presentation}}">
+  <link rel="stylesheet" href="css/presentation.css?v={{v.life.css.presentation}}">
   <link rel="stylesheet" href="../common/css/lnb.css">
-  <link rel="stylesheet" href="../common/css/masthead.css?v=1016cleanup">
-  <link rel="stylesheet" href="css/life-m.css?v=1021area-arrows">
-  <link rel="stylesheet" href="../common/css/components.css?v=1021audit-pr28">
-<link rel="stylesheet" href="../common/css/navigation-mobile.css?v=1016nav">
+  <link rel="stylesheet" href="../common/css/masthead.css?v={{v.common.css.masthead}}">
+  <link rel="stylesheet" href="css/life-m.css?v={{v.life.css.life-m}}">
+  <link rel="stylesheet" href="../common/css/components.css?v={{v.common.css.components}}">
+<link rel="stylesheet" href="../common/css/navigation-mobile.css?v={{v.common.css.navigation-mobile}}">
 <script src="../common/js/menu.js" defer></script>
-<script src="../common/js/site-layout.js?v=1021audit-pr28" defer></script>
-<script src="../common/js/ui.js?v=1021audit-pr28" defer></script>
-<script src="../common/js/site.js?v=1021audit-pr28" defer></script>
-<link rel="stylesheet" href="../common/css/availability.css?v=1021">
-<script src="../common/js/availability.js?v=1021" defer></script>
+<script src="../common/js/site-layout.js?v={{v.common.js.site-layout}}" defer></script>
+<script src="../common/js/ui.js?v={{v.common.js.ui}}" defer></script>
+<script src="../common/js/site.js?v={{v.common.js.site}}" defer></script>
+<link rel="stylesheet" href="../common/css/availability.css?v={{v.common.css.availability}}">
+<script src="../common/js/availability.js?v={{v.common.js.availability}}" defer></script>
 <script src="../stories/js/mast-fix.js" defer></script>
-<script src="js/life.js?v=1020unpick" defer></script>
-<script src="js/life-m-view.js?v=1021area-arrows" defer></script>
-<script src="js/life-m.js?v=1021area-arrows" defer></script>
+<script src="js/life.js?v={{v.life.js.life}}" defer></script>
+<script src="js/life-m-view.js?v={{v.life.js.life-m-view}}" defer></script>
+<script src="js/life-m.js?v={{v.life.js.life-m}}" defer></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
@@ -47,37 +47,7 @@
 
 <!-- ===== 인사교 라이프 히어로 페이지(시안10-B v3, 주소 #overview 또는 주소 없음): 히어로만 있는 따로 된 화면. 하위 화면(시설 · 꿀팁 · 오시는 길)에는 히어로 없음 ===== -->
 <h1 class="lh-sr">인사교 라이프</h1>
-<div class="wrap st-mh">
-  <div class="mhb mhb5">
-  <span class="lf-banner-deco" aria-hidden="true">
-    <span class="lf-banner-note"><i class="lf-banner-tape"></i>
-      <svg viewBox="0 0 92 100" fill="none">
-        <defs><linearGradient id="life-map-pin" x1="43" y1="17" x2="62" y2="48" gradientUnits="userSpaceOnUse"><stop stop-color="#C5F6F5"/><stop offset="1" stop-color="#76CBDD"/></linearGradient></defs>
-        <g stroke="#C7D6E8" stroke-width=".8">
-          <rect x="9" y="23" width="15" height="22" rx="3" fill="#E4EDF8"/>
-          <rect x="72" y="24" width="17" height="20" rx="3" fill="#E5EDF7"/>
-          <rect x="9" y="70" width="15" height="14" rx="3" fill="#E5EDF7"/>
-          <rect x="44" y="70" width="16" height="13" rx="3" fill="#DBE8F6"/>
-          <rect x="72" y="70" width="16" height="25" rx="3" fill="#E6EAF7"/>
-        </g>
-        <g stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round"><path d="M13 28h7M13 32h7M76 29h9M48 74h8M76 75h8M76 79h8"/></g>
-        <rect x="44" y="88" width="18" height="14" rx="4" fill="#E0EFE4" stroke="#C5DDCC" stroke-width=".8"/>
-        <path d="M50 98v-3M57 97v-3" stroke="#A2C1AD" stroke-width="1"/>
-        <circle cx="50" cy="93" r="2.7" fill="#B3D6BE"/><circle cx="57" cy="92" r="2.7" fill="#C1DFCA"/>
-        <path d="M-2 57h96M33 12v90" stroke="#C3D3E7" stroke-width="8" stroke-linejoin="round"/>
-        <path d="M-2 57h96M33 12v90" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round"/>
-        <ellipse cx="54" cy="49" rx="6.5" ry="2.2" fill="#A4C5DA" opacity=".3"/>
-        <path d="M65 29c0 8-11 19-11 19S43 37 43 29a11 11 0 1 1 22 0Z" fill="url(#life-map-pin)" stroke="#5487AB" stroke-width="1.3" stroke-linejoin="round"/>
-        <path d="M47 26a7 7 0 0 1 5-5" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" opacity=".8"/>
-        <circle cx="54" cy="29" r="3.8" fill="#FFFFFF" stroke="#6697B7" stroke-width="1.2"/>
-      </svg>
-    </span>
-  </span>
-  <div class="mhb-tx"><p class="st-mh-t">인사교 <b class="lf">LIFE</b></p>
-  <p class="st-mh-lead">매일 지낼 건물, 수업 끝나고 보낼 동네, 오가는 길을 한곳에 모았어요.</p></div>
-  <nav class="mhb-st" aria-label="인사교 라이프 바로가기"><a href="#facilities" style="--c:#8CC3FF;--r:-6deg">시설 둘러보기</a><a href="#tips" style="--c:#FFE36E;--r:4deg">생활 꿀팁</a><a href="#directions" style="--c:#7FDDA8;--r:-3deg">오시는 길</a></nav>
-  </div>
-</div>
+{{> life/masthead}}
 <div class="page lo" id="pg-home" data-page="home">
   <section class="sec lo-sec" aria-labelledby="lo-fac-t"><div class="wrap">
     <div class="lo-hd"><div class="sh"><div><p class="sh-k">시설 둘러보기</p><h2 id="lo-fac-t">매일 지낼 건물, 층마다 미리 둘러봐요</h2></div></div><a class="lo-more" href="#facilities">전체 보기<span aria-hidden="true">→</span></a></div>

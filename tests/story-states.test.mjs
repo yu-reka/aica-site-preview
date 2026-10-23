@@ -42,7 +42,7 @@ test('all four exported collection pages share states and failure contract witho
     const html=artifacts.get('templates/public-site/'+kind+'.html');
     assert.equal((html.match(/data-story-list-state/g)||[]).length,1,kind);
     assert.ok(html.includes('data-public-content-unavailable=${publicContentUnavailable == true}'),kind);
-    assert.ok(html.includes('/stories/js/story-state.js?v=1022cohortchips'),kind);
+    assert.ok(html.includes('/stories/js/story-state.js?v=1022chips-posts-only'),kind);
     assert.ok(html.includes('/stories/css/story-state.css?v=1020states'),kind);
     assert.ok(html.indexOf('story-state.js')<html.indexOf(kind==='cohorts'?'cohort-v3.js':kind==='projects'?'projects-filter.js':kind==='interviews'?'stories-sections.js':'stories-m-reviews.js'));
   }
@@ -72,14 +72,16 @@ test('API failure uses a valid snapshot and distinguishes unavailable data from 
   }
 });
 
-test('cohort page keeps its chips when cohorts exist without posts, and falls back to the page state when there are none',()=>{
-  for(const withInfo of [true,false]){
+test('cohort page without posts or with a failed load shows only the page state, even when cohort info blocks exist',()=>{
+  // A published post without a valid cohort makes no chip, so it counts as no post.
+  const noCohort={querySelector:s=>s==='.cg'?{textContent:'기'}:null};
+  for(const [withInfo,unavailable,cards] of [[true,false,[]],[false,false,[]],[true,true,[]],[true,false,[noCohort]]]){
     const host=new Element('div'),cv3={hidden:false,setAttribute(){}};host.hidden=true;
     const section={querySelector:s=>s==='[data-story-list-state]'?host:s.includes('data-cohort-infos')&&withInfo?{}:null,querySelectorAll:s=>s==='.cv3'?[cv3]:[]};
-    const document={readyState:'complete',body:{dataset:{}},documentElement:{dataset:{sub:'cohorts'}},createElement:tag=>new Element(tag),
-      querySelector:s=>s==='#p-coh'?section:null,getElementById:id=>id==='cv3-data'?{content:{querySelectorAll:()=>[]}}:null};
+    const document={readyState:'complete',body:{dataset:unavailable?{publicContentUnavailable:'true'}:{}},documentElement:{dataset:{sub:'cohorts'}},createElement:tag=>new Element(tag),
+      querySelector:s=>s==='#p-coh'?section:null,getElementById:id=>id==='cv3-data'?{content:{querySelectorAll:()=>cards}}:null};
     vm.runInContext(readFileSync(new URL('../stories/js/story-state.js',import.meta.url),'utf8'),vm.createContext({document,Event,location:{}}));
-    assert.equal(cv3.hidden,!withInfo);assert.equal(host.hidden,withInfo);
-    if(!withInfo)assert.equal(host.dataset.storyState,'empty');
+    assert.equal(cv3.hidden,true);assert.equal(host.hidden,false);
+    assert.equal(host.dataset.storyState,unavailable?'error':'empty');
   }
 });

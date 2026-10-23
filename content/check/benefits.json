@@ -53,7 +53,7 @@
     "number": "BENEFIT 03",
     "title": "개별 노트북 지원",
     "descriptionRichText": [
-      "교육 기간 동안 사용할 수 있는",
+      "교육 기간 동안 사용할 수 있는 ",
       {
         "tag": "br",
         "attrs": {},
@@ -74,7 +74,7 @@
     "number": "BENEFIT 04",
     "title": "교재 및 실습 자료 제공",
     "descriptionRichText": [
-      "수업을 위한 교재와 실습 자료를",
+      "수업을 위한 교재와 실습 자료를 ",
       {
         "tag": "br",
         "attrs": {},
@@ -95,7 +95,7 @@
     "number": "BENEFIT 05",
     "title": "프로젝트 전문 지원",
     "descriptionRichText": [
-      "완성도 높은 결과물을 낼 수 있도록",
+      "완성도 높은 결과물을 낼 수 있도록 ",
       {
         "tag": "br",
         "attrs": {},
@@ -116,7 +116,7 @@
     "number": "BENEFIT 06",
     "title": "인턴십 기회 제공",
     "descriptionRichText": [
-      "우수 교육생으로 수료하면",
+      "우수 교육생으로 수료하면 ",
       {
         "tag": "br",
         "attrs": {},

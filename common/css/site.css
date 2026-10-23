@@ -170,6 +170,9 @@
   .site-header .subnav-list{margin:0 calc(var(--gutter) * -1);padding:0 calc(var(--gutter) - 12px)}   /* 첫 탭 글자가 로고 · 히어로 제목과 같은 선(링크 좌우 여백 12px만큼 뺌) */
   .site-header .subnav-list a{padding:0 12px;font-size:14.5px}
   .floating{right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+  .floating .fab-top{position:relative;width:40px;height:40px;background:color-mix(in srgb,var(--surface) 78%,transparent);border-color:color-mix(in srgb,var(--line) 75%,transparent);backdrop-filter:blur(4px)}
+  .floating .fab-top::after{content:"";position:absolute;inset:-4px;border-radius:50%} /* 작은 원 주위의 터치 영역은 48px 유지 */
+  .floating .fab-top svg{width:16px;height:16px}
 }
 
 /* =========================================================
@@ -276,4 +279,4 @@
 .drawer .acc-tog:focus-visible{outline:2px solid var(--primary);outline-offset:-4px;border-radius:8px}
 .drawer .drawer-acc.is-open .acc-panel{grid-template-rows:1fr}
 .drawer .drawer-acc.is-open .acc-panel>div{visibility:inherit;transition:none}
-@media (prefers-reduced-motion:reduce){.drawer .acc-tog svg{transition:none}}
+@media (prefers-reduced-motion:reduce){.drawer .acc-tog svg,.floating .fab-top{transition:none}}

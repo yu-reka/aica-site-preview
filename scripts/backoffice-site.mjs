@@ -1,3 +1,5 @@
+import { assetVersion } from './asset-versions.mjs';
+
 // 팀 백오피스(공개 API)와 연결되는 정적 사이트판.
 // build()가 만든 디자인 그대로의 페이지에 백오피스 연결 줄을 넣고, 백오피스 글이 그려질 자리의 시안 글을 비워요.
 // - npm run build / npm run check만 이 결과를 씁니다(scripts/build.mjs). build() 자체와 Spring 내보내기(export-spring.mjs)는
@@ -7,20 +9,20 @@
 // - 공개 API 주소는 상대 경로(../api/public/…)로 둬요. 팀 사이트 서버 · 관리자 미리보기가 이 경로를 백오피스 API로 넘겨요.
 // - 디자인이 바뀌어 기대한 자리를 못 찾으면 조용히 넘어가지 않고 빌드를 멈춰요.
 
-const TRACK = '<script src="../common/js/track.js?v=1020" defer></script>';
+const TRACK = `<script src="../common/js/track.js?v=${assetVersion('common.js.track')}" defer></script>`;
 const STORY_SCRIPTS = [
   '<!-- 글은 백오피스 DB에서(게시물 관리): 사본(백오피스가 꺼져 있을 때) → 공개 API(DB의 지금 글, 불러오면 사본을 덮어씀) → 그리기. 디자이너 스크립트보다 먼저 -->',
-  '<script src="js/stories-data.js?v=design-20261022" defer></script>',
+  `<script src="js/stories-data.js?v=${assetVersion('stories.js.stories-data')}" defer></script>`,
   '<script src="../api/public/stories.js" defer></script>',
-  '<script src="js/stories-render.js?v=1022hubcardtags" defer></script>'
+  `<script src="js/stories-render.js?v=${assetVersion('stories.js.stories-render')}" defer></script>`
 ];
 const STORY_STATE_NOTE = '<!-- 빈 목록 · 필터 결과 없음 안내(aica-site PR #27): 글을 다 그린 뒤 판단하도록 글 그리기 다음에 -->';
-const STORY_STYLE = '<link rel="stylesheet" href="css/stories-render.css?v=1021">';
+const STORY_STYLE = `<link rel="stylesheet" href="css/stories-render.css?v=${assetVersion('stories.css.stories-render')}">`;
 const FAQ_SCRIPTS = [
   '<!-- 자주 묻는 질문: 백오피스 DB(faqs) → 사본 · 공개 API → 그리기(check.js보다 먼저) -->',
-  '<script src="js/faq-data.js?v=design-20261022" defer></script>',
+  `<script src="js/faq-data.js?v=${assetVersion('check.js.faq-data')}" defer></script>`,
   '<script src="../api/public/faq.js" defer></script>',
-  '<script src="js/faq-render.js?v=1020" defer></script>'
+  `<script src="js/faq-render.js?v=${assetVersion('check.js.faq-render')}" defer></script>`
 ];
 // 큰 카드의 기본 안내는 특정 DB 글에서 복사하지 않습니다. 실제 인터뷰 내용은 공개 API/사본으로 그립니다.
 const HUB_INTERVIEW_QUOTE = '인터뷰 내용을 자세히 살펴보세요.';
@@ -94,7 +96,7 @@ function storyHead(html, path, anchor) {
 }
 
 const PAGES = {
-  'home/index.html': (html, path) => insertAfter(html, '<script src="../common/js/site.js', [TRACK, '<script src="js/ticker-render.js?v=design-20261022" defer></script>'], path),
+  'home/index.html': (html, path) => insertAfter(html, '<script src="../common/js/site.js', [TRACK, `<script src="js/ticker-render.js?v=${assetVersion('home.js.ticker-render')}" defer></script>`], path),
   'about/index.html': (html, path) => insertAfter(html, '<script src="../common/js/site.js', [TRACK], path),
   'life/index.html': (html, path) => insertAfter(html, '<script src="../common/js/site.js', [TRACK], path),
   'check/index.html': (html, path) => {

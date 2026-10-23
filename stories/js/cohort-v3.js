@@ -1,6 +1,6 @@
 /* 기수별 이모저모 — 선배들의 이야기 v3 시안(인스타 프로필형): 기수 칩 → 프로필(기수 동그라미 · 계정 · 게시물/영상/기록) → 달별 하이라이트 → 3열 정사각 격자 → 페이지 · 글 창
    자료는 cohorts.html 안 <template id="cv3-data">의 카드(a.st)에서 읽음: 기수(.cg) · 날짜(.dt) · 제목(h3) · 요약(p) · 그림(.illu) · 영상(data-yt)
-   기수마다 교육과정 카드 · 계정 · 소개 · 달라진 점은 [data-cohort-infos] 블록(카테고리 페이지 관리에서 고침, 새 기수는 백오피스가 더함) */
+   기수마다 교육과정 카드 · 계정 · 소개 · 달라진 점은 선배들의 이야기 데이터의 cohortInfos(관리자 '기수 정보' 화면, 새 기수는 백오피스가 앞 기수 모양으로 만듦) */
 (function(){
   var root=document.getElementById('cv3'); if(!root) return;
   var hubModal=root.getAttribute('data-hub-modal')==='true';
@@ -11,31 +11,47 @@
       title:(a.querySelector('h3')||{}).textContent||'', sum:(a.querySelector('p')||{}).textContent||'',
       illu:a.querySelector('.illu'), yt:a.getAttribute('data-yt')||''};
   });
-  /* 기수 정보(2026-10-22): cohorts.html의 [data-cohort-infos] 안 기수별 블록(교육과정 카드 · 계정 · 꼬리표 · 달라진 점 버튼 이름 · 소개 · 달라진 점 표).
-     카테고리 페이지 관리에서 고치는 원본 요소라 새로 만들지 않고 고른 기수의 요소를 화면 자리로 옮겨요(블록이 없는 기수는 예전처럼 기본 글로) */
-  var INFO=null;
-  function infos(){
-    if(!INFO){ INFO={};
-      [].slice.call(root.querySelectorAll('[data-cohort-infos] > .cv3-cinfo')).forEach(function(box){
-        var key=keyOf(box.getAttribute('data-cohort')||''); if(!COH_KEY.test(key)||INFO[key]) return;
-        var part=function(cls){ return [].filter.call(box.children,function(el){return el.classList.contains(cls)})[0]||null; };
-        INFO[key]={pin:part('cv3-pin'), acc:part('cv3-acc'), tag:part('cv3-tag'), label:part('cv3-dlabel'), bio:part('cv3-bio'), dt:part('cv3-dt')};
-      }); }
-    return INFO;
-  }
-  function info(k){ return infos()[k]||{}; }
+  /* 기수 정보(2026-10-22): 관리자 '기수 정보' 화면(DB cohort_infos)의 내용을 STORIES_DATA.cohortInfos(공개 API · stories-data.js)로 받아
+     기수마다 교육과정 카드 · 계정 · 꼬리표 · 달라진 점 버튼 이름 · 소개 · 달라진 점 표 요소를 한 번 만들어 두고 화면 자리로 옮겨요(글자는 textContent로만).
+     기수 칩은 만들지 않아요(아래 규칙). 정보가 없는 기수는 예전처럼 기본 글로 */
   var COH_KEY=/^([1-9][0-9]*|3-5)$/;
   function keyOf(c){ return c>=3&&c<=5?'3-5':String(c); }   // 10-13: 3~5기는 한 칩(3–5기)으로 묶음
+  var RAW={}, INFO={};
+  (typeof STORIES_DATA!=='undefined'&&STORIES_DATA&&Array.isArray(STORIES_DATA.cohortInfos)?STORIES_DATA.cohortInfos:[]).forEach(function(c){
+    var key=keyOf(String(c&&c.cohort||'')); if(COH_KEY.test(key)&&!RAW[key]) RAW[key]=c;
+  });
+  function node(tag,cls,text){ var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
+  function build(key){
+    var c=RAW[key], I={has:!!c}; if(!c) return I;
+    var L=lab(key), tracks=(c.tracks||[]).filter(Boolean), rows=(c.rows||[]).filter(function(r){return r&&r.item}), bio=c.bio||{};
+    if(tracks.length){
+      var pin=node('div','cv3-pin'), b=node('b'), cc=node('div','cc'), ft=node('div','ft'), a=node('a','','공식 홈페이지 '), arrow=node('span','','↗'), pn=node('img','pn');
+      pin.setAttribute('role','group'); pin.setAttribute('aria-label',L+'기 교육과정');
+      b.append(L+'기',document.createElement('br'),'교육과정');
+      tracks.forEach(function(t){ cc.appendChild(node('span','',t)); });
+      arrow.setAttribute('aria-hidden','true'); a.target='_blank'; a.rel='noopener'; a.appendChild(arrow);
+      ft.append(node('p','','자세한 내용은 공식 홈페이지에서 확인하세요.'),a);
+      pn.src='assets/pin-white.png'; pn.alt='고정됨'; pn.width=96; pn.height=96;
+      pin.append(node('span','k','CURRICULUM'),b,cc,ft,pn);
+      I.pin=pin;
+    }
+    I.acc=node('b','cv3-acc',c.account||acc(key));
+    if(c.tag) I.tag=node('span','cv3-tag',c.tag);
+    I.label=node('span','cv3-dlabel',c.label||((parseInt(key,10)-1)+'기와 달라진 점'));
+    if(bio.title||bio.text){ I.bio=node('p','cv3-bio'); I.bio.append(node('b','',bio.title||''),document.createElement('br'),bio.text||''); }
+    if(rows.length){
+      I.dt=node('div','cv3-dt');
+      rows.forEach(function(r){ var p=node('p','cv3-dr'); p.append(node('b','',r.item),node('s','',r.before||''),node('span','',r.after||'')); I.dt.appendChild(p); });
+    }
+    return I;
+  }
+  function info(k){ if(!INFO[k]) INFO[k]=build(k); return INFO[k]; }
   function accName(c){ var a=info(keyOf(c)).acc; return a?a.textContent:acc(c); }
   function el(tag,cls,html){ var e=document.createElement(tag); e.className=cls; e.innerHTML=html; return e; }
-  /* 기수 칩 = 게시물이 있는 기수 + 기수 정보 블록이 있는 기수 + 시작 전 기수(data-upcoming-cohorts).
-     블록이 있는 기수는 게시물이 모두 지워져도 칩이 남고 빈 화면(grid)을 보여 줘요. 새 기수 블록은 첫 글을 게시할 때 백오피스가 더함 */
+  /* 기수 칩 = 게시중인 글이 있는 기수(2026-10-22). 기수 정보만 있는 기수 · 시작 전 기수는 칩이 없어요.
+     글을 못 불러왔으면(API 실패 + 사본 없음) story-state.js 가 이 화면을 숨기고 페이지 오류 화면만 보여 줘요 */
   var COHS=[]; function addCoh(k){ if(COH_KEY.test(k)&&COHS.indexOf(k)<0) COHS.push(k); }
   D.forEach(function(d){ addCoh(keyOf(d.coh)); });
-  Object.keys(infos()).forEach(addCoh);
-  // 게시물과 별도로 시작 전 기수를 노출합니다. 실제 게시물은 추가하지 않습니다.
-  var upcoming=(root.getAttribute('data-upcoming-cohorts')||'').split(',').filter(function(c){return /^[1-9][0-9]*$/.test(c)}).map(keyOf);
-  upcoming.forEach(addCoh);
   /* 가장 최근 기수(지금은 7기)만 인스타 스토리 그라데이션 링, 나머지는 회색 링(10-14) */
   var LIVE=D.length?keyOf(Math.max.apply(null,D.map(function(d){return d.coh}))):'';
   COHS.sort(function(a,b){return parseInt(b,10)-parseInt(a,10)});
@@ -161,7 +177,7 @@
   function profile(){
     var all=D.filter(function(d){return inC(d,st.coh)}).sort(function(a,b){return ym(a)-ym(b)});
     var vids=all.filter(function(d){return d.yt}).length;
-    var range=all.length?yymm(all[0])+' – '+yymm(all[all.length-1]):(upcoming.indexOf(st.coh)>=0?'시작 전':'없음');
+    var range=all.length?yymm(all[0])+' – '+yymm(all[all.length-1]):'없음';
     var I=info(st.coh), hasDiff=!!(I.dt&&I.dt.querySelector('.cv3-dr')), L=lab(st.coh), prof=$('.cv3-prof');
     // 다시 그릴 때 innerHTML 로 비우면 옮겨 둔 기수 정보 요소는 화면에서만 빠지고(I 에 남음) 아래에서 다시 붙여요
     prof.innerHTML='<span class="cv3-ring'+(st.coh==='3-5'?' is-grp':'')+(st.coh===LIVE?' is-live':'')+'" role="img" aria-label="'+L+'기"><span aria-hidden="true"><b>'+L+'</b></span></span>'
@@ -169,7 +185,8 @@
       +'<div class="cv3-stat"><span>게시물 <b>'+all.length+'</b></span><span>영상 <b>'+vids+'</b></span><span>기록 <b>'+range+'</b></span></div></div>';
     var r1=prof.querySelector('.cv3-r1');
     r1.appendChild(I.acc||el('b','cv3-acc',acc(st.coh)));
-    r1.appendChild(I.tag||el('span','cv3-tag','인공지능사관학교'));
+    // 기수 정보에서 꼬리표를 비웠으면 꼬리표 없이(정보가 없는 기수만 기본 꼬리표)
+    if(I.tag||!I.has) r1.appendChild(I.tag||el('span','cv3-tag','인공지능사관학교'));
     if(hasDiff){
       var db=document.createElement('button'); db.type='button'; db.className='cv3-dbtn'; db.setAttribute('aria-expanded',st.diff);
       db.appendChild(I.label||el('span','cv3-dlabel',(parseInt(st.coh,10)-1)+'기와 달라진 점'));
@@ -177,7 +194,7 @@
       db.onclick=function(){ st.diff=!st.diff; draw(); };
       r1.appendChild(db);
     }
-    // 게시물이 없는 기수: 블록의 소개는 페이지 관리 원본이라 그대로 두고, 블록이 없는 기수만 기다림 문구로
+    // 소개: 블록이 있으면 페이지 관리 원본 그대로, 없으면 기본 문구(칩은 게시물이 있는 기수만이라 기다림 문구는 대비용)
     prof.querySelector('.cv3-info').appendChild(I.bio||el('p','cv3-bio','<b>인공지능사관학교 '+L+'기</b><br>'+(all.length?'입교식부터 수료식까지, '+L+'기가 남긴 순간들을 모았어요.':'새로운 기수의 이야기를 기다리고 있어요.')));
     var box=$('.cv3-diff'); box.hidden=!(hasDiff&&st.diff);
     if(hasDiff&&st.diff) box.replaceChildren(I.dt); else box.replaceChildren();
@@ -211,23 +228,6 @@
     g.innerHTML='';
     if(!L.length){
       $('.cv3-pg').replaceChildren();
-      if(!D.some(function(d){return inC(d,st.coh)})){
-        if(typeof StoryState!=='undefined'){
-          StoryState.render(empty,'empty',{subject:'게시물'});
-          empty.querySelector('.story-state__title').textContent='아직 등록된 게시물이 없어요';
-          empty.querySelector('.story-state__copy').textContent=lab(st.coh)+'기의 이야기는 새로운 게시물이 등록되면 이곳에 표시돼요.';
-          // 가까운 이전 기수, 없으면(맨 아래 3–5기가 비었을 때) 가까운 다음 기수로
-          var n=parseInt(st.coh,10), has=function(c){return D.some(function(d){return inC(d,c)})};
-          var previous=COHS.find(function(c){return parseInt(c,10)<n&&has(c)})||COHS.slice().reverse().find(function(c){return parseInt(c,10)>n&&has(c)});
-          if(previous){
-            var action=document.createElement('button');action.type='button';action.className='story-state__action';
-            action.textContent=lab(previous)+'기 이야기 먼저 보기 →';
-            action.onclick=function(){st.coh=previous;st.mo=0;st.v='all';st.pg=1;draw();var chosen=$('.cv3-chips button[aria-pressed="true"]');if(chosen)chosen.focus({preventScroll:true});};
-            empty.querySelector('.story-state__action').replaceWith(action);
-          }
-        }
-        return;
-      }
       if(typeof StoryState!=='undefined')StoryState.render(empty,'filter',{subject:'기수 이야기',onReset:function(){
         st.mo=0;st.v='all';st.pg=1;draw();
         var button=root.querySelector('.sm-cv-views [data-v="all"]')||root.querySelector('.cv3-chips [aria-pressed="true"]');if(button)button.focus({preventScroll:true});

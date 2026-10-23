@@ -33,5 +33,5 @@
 .stories-page .cv3-m-media .phs{position:absolute;inset:0;margin:0;border-radius:0;background:#0B1020}
 .stories-page .cv3-m-media .phs-track,.stories-page .cv3-m-media .phs-slide{height:100%}
 .stories-page .cv3-m-media .phs-img{height:100%;aspect-ratio:auto}
-.stories-page .cv3-m-body .cv3-m-more{margin-top:10px}
+
 @media (max-width:640px){.stories-page .phs-btn{width:36px;height:36px;margin-top:-18px}.stories-page .phs-btn.prev{left:8px}.stories-page .phs-btn.next{right:8px}}

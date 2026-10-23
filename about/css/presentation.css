@@ -122,50 +122,6 @@
 
 .school-about .sec-float.on-dark .sf-btn::after{background:#fff}
 
-:where(html:not([data-menu="stories"])) .rentslide{margin:0 0 14px;padding:12px 14px;border-radius:14px;background:#fff;border:1px solid rgba(16,17,22,.1)}
-
-:where(html:not([data-menu="stories"])) .rentslide label{display:flex;justify-content:space-between;align-items:baseline;font:700 13.5px/1 var(--ff-text);color:var(--ink)}
-
-:where(html:not([data-menu="stories"])) .rentslide label output{font:400 20px/1 var(--ff-title);color:var(--primary)}
-
-:where(html:not([data-menu="stories"])) .rentslide input{width:100%;margin:10px 0 2px;accent-color:var(--primary)}
-
-:where(html:not([data-menu="stories"])) .rentslide small{font:500 12px/1.4 var(--ff-sans);color:var(--graphite)}
-
-:where(html:not([data-menu="stories"])) .lunch-go{display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 22px;border:0;border-radius:999px;background:var(--cat,#FFB685);color:#fff!important;font:700 16px/1 var(--ff-text);cursor:pointer;box-shadow:0 8px 18px -10px rgba(36,87,245,.7);transition:transform .2s}
-
-:where(html:not([data-menu="stories"])) .lunch-go:hover{transform:translateY(-2px) rotate(-1deg)}
-
-:where(html:not([data-menu="stories"])) .lunch-go svg{width:20px;height:20px}
-
-:where(html:not([data-menu="stories"])) .fdg.rolling .fdc{opacity:.45}
-
-:where(html:not([data-menu="stories"])) .fdg .fdc.lit{opacity:1!important;transform:translateY(-4px);box-shadow:0 0 0 3px var(--cat),var(--st-card-sh)!important}
-
-:where(html:not([data-menu="stories"])) .fdg .fdc.pick{opacity:1!important;transform:translateY(-6px) rotate(-1deg);box-shadow:0 0 0 3px var(--cat-d),0 24px 40px -18px rgba(20,35,63,.45)!important;z-index:2}
-
-:where(html:not([data-menu="stories"])) .fdg .fdc.pick .fdc-ph::after{content:"오늘은 여기!";position:absolute;background:var(--cat-d);color:#fff;font:400 26px/1 "Nanum Pen Script",cursive;border-radius:4px;box-shadow:0 8px 16px -6px rgba(0,0,0,.45)}
-
-:where(html:not([data-menu="stories"])) .fdg .fdc .fdc-ph{position:relative}
-
-:where(html:not([data-menu="stories"])) .fdg.picked .fdc:not(.pick){opacity:.55}
-
-/* 선배 손글씨 포스트잇 */
-:where(html:not([data-menu="stories"])) .snote-a{position:relative;height:0;z-index:6}
-
-:where(html:not([data-menu="stories"])) .snote{position:absolute;width:max-content;max-width:260px;padding:12px 16px 14px;background:#FFF1A6;border-radius:2px;
-  box-shadow:0 1px 2px rgba(20,35,63,.12),0 12px 18px -10px rgba(20,35,63,.38);transform:rotate(var(--r,-3deg));pointer-events:none}
-
-:where(html:not([data-menu="stories"])) .snote small{display:block;margin-bottom:4px;font:700 11px/1 var(--ff-text);letter-spacing:.04em;color:#8A6A00}
-
-:where(html:not([data-menu="stories"])) .snote p{margin:0;font:400 23px/1.2 "Nanum Pen Script",cursive;color:#2A2E38;white-space:nowrap}
-
-:where(html:not([data-menu="stories"])) .snote::before{content:"";position:absolute;left:50%;top:-9px;width:54px;height:18px;margin-left:-27px;background:rgba(255,255,255,.6);border:1px solid rgba(0,0,0,.05);transform:rotate(-4deg)}
-
-@media (max-width:860px){:where(html:not([data-menu="stories"])) .snote{position:relative;margin:8px 0 14px;right:auto!important;left:auto!important;top:auto!important}
-:where(html:not([data-menu="stories"])) .snote-a{height:auto}
-}
-
 /* =========================================================
    글꼴 위계(2026-10-13 결정, 선배들의 이야기 기준)
    - 큰 제목(배너 · 히어로 · 큰 숫자): Giants
@@ -182,8 +138,6 @@
 
 /* 두 줄 이상 본문은 Pretendard */
 .school-about .intro-purpose p{font-family:var(--ff-sans)}
-
-:where(html:not([data-menu="stories"])) .fdg .fdc.pick .fdc-ph::after{left:12px;top:auto;bottom:10px;padding:7px 12px;font-size:21px;transform:rotate(-9deg);transform-origin:left bottom}
 
 /* =========================================================
    인사교 알아보기 글자 위계(10-14, 전달본 교체 후): 디자인시스템(AI-Log) 글꼴 표에 맞춤

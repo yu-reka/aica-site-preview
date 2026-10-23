@@ -47,8 +47,8 @@
 .stories-page .iva-c .by .av i{font-style:normal;font-size:9px}
 .stories-page .iva-c .by b{font-weight:700;color:var(--ink)}.stories-page .iva-c .by em{font-style:normal;color:var(--muted)}
 .stories-page .iva-out[data-view="list"]{border-top:2px solid var(--ink)}
-.stories-page .iva-out[data-view="list"] .iva-c{display:grid;grid-template-columns:180px minmax(0,1fr) 200px;gap:24px;align-items:center;padding:18px 0;border-bottom:1px solid #E6E8EC}
-.stories-page .iva-out[data-view="list"] .iva-c .ph{border-radius:12px}
+.stories-page .iva-out[data-view="list"] .iva-c{display:grid;grid-template-columns:80px minmax(0,1fr) 200px;gap:24px;align-items:center;padding:18px 0;border-bottom:1px solid #E6E8EC}
+.stories-page .iva-out[data-view="list"] .iva-c .ph{width:80px;height:80px;aspect-ratio:1;border-radius:50%}
 .stories-page .iva-out[data-view="list"] .iva-c h4{margin:0 0 4px}
 .stories-page .iva-out[data-view="list"] .iva-c .by{margin:0;gap:12px;min-width:0}
 /* 리스트 작성자 칸: 폭 200px 고정 · 왼쪽 정렬, 이름 아래 직군(인터뷰 리스트 1안, 2026-10-08) */
@@ -62,7 +62,8 @@
 @media (max-width:1000px){.stories-page .iva-out[data-view="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){
   .stories-page .iva-out[data-view="grid"]{grid-template-columns:1fr}
-  .stories-page .iva-out[data-view="list"] .iva-c{grid-template-columns:112px minmax(0,1fr);gap:14px}
+  .stories-page .iva-out[data-view="list"] .iva-c{grid-template-columns:64px minmax(0,1fr);gap:14px}
+  .stories-page .iva-out[data-view="list"] .iva-c .ph{width:64px;height:64px}
   .stories-page .iva-out[data-view="list"] .iva-c .by,.stories-page .iva-out[data-view="list"] .iva-c p{display:none}
   .stories-page .iva-out[data-view="list"] .iva-c h4{font-size:15px}
 }
@@ -78,6 +79,42 @@
 .stories-page .ivvid .ivplay:focus-visible{outline:3px solid var(--primary);outline-offset:-3px}
 .stories-page .ivvid .dur{position:absolute;right:14px;bottom:56px;z-index:2}
 .stories-page .ivvid iframe{display:block;width:100%;aspect-ratio:16/9;border:0;background:#000}
+.stories-page .ivd .ivhero-avatar:not(.ivvid)::after{content:"인터뷰 아바타"}
+/* 긴 인터뷰의 질문 목록만 스크롤하고 카드 제목은 목록 밖에 유지합니다. */
+.stories-page .ivd .sidebox:has(> ol){padding:24px 18px;scroll-margin-top:calc(var(--hdr,72px) + 20px)}
+.stories-page .ivd .sidebox ol{margin:14px 0 0;padding:0 8px 0 0;font-family:var(--ff-sans);max-height:min(480px,calc(100svh - 260px));overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#a9b6c9 #f1f4f7;scroll-padding:8px}
+.stories-page .ivd .sidebox ol li + li{border-top:1px solid #e8edf3}
+.stories-page .ivd .sidebox ol a{font-family:var(--ff-sans);font-size:14px;line-height:1.7;padding:12px 8px 12px 34px;color:#536175;overflow-wrap:anywhere}
+.stories-page .ivd .sidebox ol a::before{top:14px;left:6px;width:20px;height:20px;line-height:20px;font-size:11px}
+.stories-page .ivd .sidebox ol a[aria-current="location"]{background:#edf3ff;color:#204cdb;font-weight:700}
+.stories-page .ivd .sidebox ol a[aria-current="location"]::before{background:var(--primary);color:#fff}
+.stories-page .ivd .sidebox ol a:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
+@media(max-width:600px){
+  .stories-page .ivd .sidebox:has(> ol){margin-top:4px;padding:18px 16px}
+  .stories-page .ivd .sidebox ol{max-height:min(236px,calc(35svh + 16px))}
+  .stories-page .ivd .sidebox ol a{font-size:15px}
+}
+/* 인터뷰 상세: 번호를 잇는 선과 여백으로 질문·답변의 흐름을 정리합니다. */
+.stories-page .ivd .qa .a{font-family:var(--ff-sans);font-size:17px;line-height:1.85;color:#46546b;word-break:keep-all;overflow-wrap:break-word}
+.stories-page .ivd .qa .q{font-size:20px;line-height:1.6;font-weight:700;color:#14233f;word-break:keep-all;overflow-wrap:break-word}
+.stories-page .ivd .qa>div{scroll-margin-top:160px;box-shadow:none}
+.stories-page .ivd .qa .q i{font-family:var(--ff-sans);font-style:normal}
+.stories-page .ivd .qa{position:relative}
+.stories-page .ivd .qa::before{content:"";position:absolute;left:15px;top:30px;bottom:30px;width:1px;background:#dce4ef}
+.stories-page .ivd .qa>div{position:relative;margin:0;padding:28px 0 30px;border:0;border-radius:0;background:transparent}
+.stories-page .ivd .qa .q{display:block;position:relative;padding-left:54px}
+.stories-page .ivd .qa .q i{position:absolute;left:0;top:0;margin:0;display:grid;place-items:center;width:32px;height:32px;border:2px solid #2457f5;background:#fff;color:#2457f5;line-height:1;font-size:14px;box-sizing:border-box}
+.stories-page .ivd .qa .a{padding-left:54px;margin-top:14px}
+.stories-page .ivd .sidebox h3{padding-bottom:16px;border-bottom:1px solid #e4e9f0}
+.stories-page .ivd .sidebox ol a::before{background:#fff;border:1px solid #cfd9e8;box-sizing:border-box;color:#536175}
+.stories-page .ivd .sidebox ol a[aria-current]::before{background:#2457f5;border-color:#2457f5;color:#fff}
+@media(min-width:1001px){.stories-page .ivd .ivwrap{gap:40px}}
+@media(max-width:600px){
+.stories-page .ivd .qa>div:last-child{padding-bottom:10px}
+.stories-page .ivd .qa .q{font-size:18px;line-height:1.65;padding-left:44px}
+.stories-page .ivd .qa .a{font-size:15px;line-height:1.85;padding-left:44px}
+.stories-page .ivd .qa .q i{width:30px;height:30px}
+}
 .stories-page .ivmeta{margin:10px 8px 0;font-size:14.5px}
 .stories-page .ivmeta div{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #EEF0F3}
 .stories-page .ivmeta dt{color:var(--muted)}.stories-page .ivmeta dd{margin:0;font-weight:700;color:var(--ink);text-align:right}
@@ -137,3 +174,41 @@
   .stories-page .pjd :is(.pjsec > section,.ivwrap > div > section:has(> .pjph-t)){padding:20px}
   .stories-page .pjd .pjph-t{font-size:15px;line-height:1.9}
 }
+
+/* 상세 소개도 All 대표 카드처럼 이미지와 텍스트를 분리합니다. */
+.stories-page .ivd .ivintro .ivhero-avatar:not(.ivvid){border:0;border-radius:var(--r-card,16px);box-shadow:none;overflow:hidden}
+.stories-page .ivd .ivintro .ivhero-avatar:not(.ivvid) .illu{aspect-ratio:16/10}
+.stories-page .ivd .ivintro .ivhero-avatar:not(.ivvid)::after{content:none}
+.stories-page .ivd .ivintro h2{margin-top:20px;font-size:clamp(21px,1.7vw,24px);line-height:1.35;letter-spacing:-.025em}
+.stories-page .ivd .ivintro .lead{margin-top:10px;font-family:var(--ff-sans);font-size:15px;line-height:1.65;color:var(--graphite)}
+.stories-page .ivintro-meta{margin-top:16px;font-size:13px;line-height:1.6;color:var(--graphite)}
+.stories-page .ivintro-meta i{font:inherit}
+
+/* 원본 아바타 안의 원 중심을 목록의 원형 프레임 중심에 맞춥니다. */
+.stories-page .iva-c img[src*="/avatar-card-01-"]{--avatar-center-y:1.26%}
+.stories-page .iva-c img[src*="/avatar-card-02-"]{--avatar-center-y:1.34%}
+.stories-page .iva-c img[src*="/avatar-card-03-"]{--avatar-center-y:0.79%}
+.stories-page .iva-c img[src*="/avatar-card-04-"]{--avatar-center-y:0.74%}
+.stories-page .iva-c img[src*="/avatar-card-05-"]{--avatar-center-y:0.66%}
+.stories-page .iva-c img[src*="/avatar-card-06-"]{--avatar-center-y:0.45%}
+.stories-page .iva-c img[src*="/avatar-card-07-"]{--avatar-center-y:0.56%}
+.stories-page .iva-c img[src*="/avatar-card-08-"]{--avatar-center-y:0.65%}
+.stories-page .iva-c img[src*="/avatar-card-09-"]{--avatar-center-y:1.04%}
+.stories-page .iva-c img[src*="/avatar-card-10-"]{--avatar-center-y:1.34%}
+.stories-page .iva-c img[src*="/avatar-card-11-"]{--avatar-center-y:1.16%}
+.stories-page .iva-c img[src*="/avatar-card-12-"]{--avatar-center-y:2.06%}
+.stories-page .iva-out[data-view="list"] .iva-c .ph img{translate:0 var(--avatar-center-y,0)}
+
+/* 카드뷰는 제목·요약의 두 줄 자리를 확보해 작성자 줄까지 정렬합니다. */
+@media(min-width:601px){
+ .stories-page .iva-out[data-view="grid"] .iva-c h4{height:2.8em;overflow:hidden}
+ .stories-page .iva-out[data-view="grid"] .iva-c p{display:block;height:3.2em;overflow:hidden}
+ .stories-page .iva-out[data-view="grid"] .iva-c .by{display:block;height:22px;line-height:22px;overflow:hidden}
+}
+.stories-page .iva-excerpt{display:block}
+
+.stories-page .iva-out[data-view="list"] h4 .iva-excerpt{display:inline}
+
+/* Interview conversation ornament; decorative and outside pointer/keyboard interaction. */
+.stories-page .ivintro .ivhero-bubble{position:absolute;top:15%;right:6%;width:clamp(54px,7vw,100px);height:auto;pointer-events:none;filter:drop-shadow(0 5px 7px #5982bd18);transform:rotate(8deg)}
+@media(max-width:600px){.stories-page .ivintro .ivhero-bubble{right:4%;top:17%;width:54px}}

@@ -43,7 +43,7 @@
 
 현재 연결 순서와 공개 샘플·비공개 DB 사본의 경계는 [README](../README.md#현재-데이터-흐름)를 기준으로 합니다. `scripts/backoffice-site.mjs`가 디자인 빌드에 API 연결을 적용하고, `stories-render.js`·`faq-render.js`가 화면 동작 스크립트보다 먼저 목록과 상세를 만듭니다. `track.js`는 콘텐츠 페이지에, `ticker-render.js`는 홈에 연결됩니다.
 
-프론트 개발 원본은 비공개 통합본 `frontend/`입니다. 통합 main의 검증된 공개 가능 공통 변경을 이 공유본 PR로 반영합니다. 실제 사본·실행 사이트의 DB 목록은 가져오지 않고 공개 전용 더미·생성기·검사·안내를 유지합니다. 공통 변경 경로와 의도적 차이를 구분하며 절차는 [README](../README.md#개발-원본과-공개-반영)를 따릅니다.
+개발 원본은 통합 저장소 `frontend/`입니다. 통합 main에서 검증한 공개 가능 공통 코드만 외부 공유본에 반영합니다. 비공개 실제 사본 두 파일과 실행 사이트의 DB 목록은 공개로 복사하지 않고, 공개 전용 더미·생성기·검사는 유지합니다. 전체 tree 일치를 요구하지 않으며 공통 변경 경로·의도적 차이·검증 근거를 기록합니다. 절차는 [README](../README.md#개발-원본과-공개-반영)를 따릅니다.
 
 `export:spring`, `*-live.js/css`와 호환 진입점은 과거 템플릿 지원용으로 보존합니다. 현재 V30 동기화에서 Spring 템플릿·seed를 생성하지 않습니다. [과거 연동 안내](spring-integration.md)의 DB·실행 절차를 현재 환경에 적용하지 않습니다.
 
@@ -62,7 +62,7 @@
 
 ## 이야기 목록 상태
 
-`stories/js/story-state.js`와 `stories/css/story-state.css`가 후기·인터뷰·프로젝트·기수 기록의 상태 안내를 함께 관리합니다. 기존 정상 목록과 특정 기수의 준비 중 시안은 유지합니다.
+`stories/js/story-state.js`와 `stories/css/story-state.css`가 후기·인터뷰·프로젝트·기수 기록의 상태 안내를 함께 관리합니다. 기존 정상 목록은 유지합니다. 기수 기록은 게시중인 글이 있는 기수만 칩으로 보이고, 글이 없거나 못 불러오면 기수 화면 대신 페이지 상태 화면만 보여 줍니다.
 
 - 게시물 전체가 없을 때는 목록 제목 아래에 공통 빈 상태와 이야기 전체 보기 링크를 표시합니다. 빈 목록에서 필터와 페이지 조작은 숨기며 후기의 숨은 라디오도 비활성화합니다.
 - 필터 결과가 없을 때는 필터 초기화 버튼으로 실제 조건과 첫 페이지를 복원합니다. 후기의 정적 CSS 라디오·모바일 상태·Spring 필터는 `StoryState.resetReviews()`의 실제 `change` 및 `reviews:reset` 이벤트로 함께 초기화합니다.
@@ -76,3 +76,13 @@ FAQ는 `faq-render.js`가 목록과 분류 수를 만들고 `check.js`가 검색
 `common/js/ui.js`의 `SiteUI`가 모달 초점 순환과 기존 inert 상태 복원, 유한 레일의 시작·끝 상태 및 키보드 보조 동작을 공유합니다. ui.js는 site.js·cohort-v3.js·stories.js·stories-m.js·life-m.js·about-m.js보다 먼저 로드해야 합니다. 기수 필터는 group/aria-pressed를 사용하고, 빈 결과 초기화에서도 같은 선택자를 사용합니다.
 
 디자인 원본의 후기 detail-2/detail-3은 공통 detail 템플릿을 호출하며 태그는 반복 부분 템플릿으로 생성합니다. 런타임 API 렌더러의 마크업도 같은 공개 선택자와 공통 UI 계약을 유지합니다. 공유 JS·CSS를 추가할 때는 원본 로딩 순서와 생성 HTML을 함께 확인합니다.
+
+## 캐시 버전과 배너 원본
+
+빌드가 넣는 CSS/JS의 `?v` 값은 `src/asset-versions.json`에서 관리합니다. 경로는 페이지 종류 → css/js → 파일 이름 순서입니다. HTML 원본은 `{{v.common.css.tokens}}`처럼 참조하고, `scripts/backoffice-site.mjs`의 연결 줄은 같은 파일을 읽는 `assetVersion()`을 씁니다. 오타나 variant 누락은 빌드 오류로 드러납니다.
+
+기존 URL을 보존하려고 페이지별 값과 과거 주석의 값은 `default`, `hub`, `cohorts`, `legacyComment` 등의 명시적 variant로 남깁니다. 이 정리에서 기존 버전을 일괄 변경하지 않습니다. HTML 생성 결과는 그대로입니다.
+
+브라우저 단독 호환 로더(`ticker-render.js`, `stories-m.js`)와 과거 CSS `@import`에는 실행 시 JSON을 추가로 불러오지 않습니다. 기존 리터럴을 유지하고 `tests/asset-versions.test.mjs`가 버전 표와의 일치를 검사합니다. 해당 버전을 갱신할 때는 테스트가 지목한 호환 줄도 함께 확인합니다.
+
+이야기 배너의 장식과 바로가기 링크는 `src/components/stories/masthead-decoration.html`, `masthead-navigation.html`에서 공유합니다. 두 배너 wrapper의 기존 h1/p 의미는 유지합니다. 라이프 배너는 선택자와 SVG를 그대로 옮긴 `src/components/life/masthead.html`을 사용합니다.

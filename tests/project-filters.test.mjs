@@ -31,7 +31,8 @@ class Element {
   scrollIntoView() { this.scrolled = true; }
 }
 
-function start(rows, { live = true } = {}) {
+// infos: STORIES_DATA.cohortInfos(관리자 '기수 정보'). 과정 단추는 고른 기수의 교육과정 트랙(2026-10-23)
+function start(rows, { live = true, infos } = {}) {
   const section = new Element(), filters = new Element(), options = new Element();
   const dropdown = new Element('details'), summary = new Element('summary'), label = new Element('b');
   const grid = new Element(), mobile = new Element(), empty = new Element(), notice = new Element(), back = new Element('button');
@@ -61,7 +62,8 @@ function start(rows, { live = true } = {}) {
     querySelector: selector => selector === '#p-pr' ? section : null,
     createElement: tag => new Element(tag), addEventListener() {},
   };
-  const context = vm.createContext({ document, matchMedia: () => ({ matches: false, addEventListener() {} }) });
+  const context = vm.createContext({ document, matchMedia: () => ({ matches: false, addEventListener() {} }),
+    ...(infos ? { STORIES_DATA: { cohortInfos: infos } } : {}) });
   const source = readFileSync(new URL('../stories/js/projects-filter.js', import.meta.url), 'utf8');
   vm.runInContext(source, context);
   const choose = (group, key, value) => {
@@ -80,11 +82,14 @@ function start(rows, { live = true } = {}) {
 }
 
 test('Spring options come only from valid published metadata, with no fixed sample cohorts or inferred labels', () => {
-  const ui = start([['12', '새 교과목'], ['8', '컴퓨터비전'], ['12', '새 교과목'], ['0', ''], ['100', '']]);
+  const ui = start([['12', '새 교과목'], ['8', '컴퓨터비전'], ['12', '새 교과목'], ['0', ''], ['100', '']],
+    { infos: [{ cohort: '12', tracks: ['새 교과목', '아직 글 없는 과정'] }] });
   assert.deepEqual(ui.filters.children.map(node => node.dataset.cohort), ['', '12', '8']);
-  assert.deepEqual(new Set(ui.options.children.map(node => node.dataset.subject)), new Set(['', '새 교과목', '컴퓨터비전']));
+  assert.deepEqual(new Set(ui.options.children.map(node => node.dataset.subject)), new Set(['', '새 교과목', '아직 글 없는 과정', '컴퓨터비전']));
   assert.equal(ui.shown(), 5); // Unclassified legacy records remain in the all list.
-  ui.cohort('12'); ui.subject('컴퓨터비전');
+  ui.cohort('12');
+  assert.deepEqual(ui.options.children.map(node => node.dataset.subject), ['', '새 교과목', '아직 글 없는 과정']);
+  ui.subject('아직 글 없는 과정');
   assert.equal(ui.shown(), 0); assert.equal(ui.empty.hidden, false); assert.equal(ui.pager.hidden, true);
   ui.subject(''); assert.equal(ui.shown(), 2);
   ui.rerun();
@@ -97,10 +102,30 @@ test('DB cohort/subject intersections paginate six at a time and synchronize mob
   ui.page(2);
   assert.equal(ui.shown(), 1); assert.equal(ui.items[6].open, true);
   assert.equal(ui.pager.querySelector('[aria-current="page"]').focused, true);
+  // 다른 기수로 바꾸면 그 기수에 없는 과정(컴퓨터비전)은 풀리고 그 기수의 과정만 남아요
   ui.cohort('9');
-  assert.equal(ui.shown(), 0); assert.equal(ui.mobile.hidden, true);
+  assert.deepEqual(ui.options.children.map(node => node.dataset.subject), ['', '데이터 분석']);
+  assert.equal(ui.shown(), 1); assert.equal(ui.mobile.hidden, false);
   ui.subject('데이터 분석');
   assert.equal(ui.shown(), 1); assert.equal(ui.pager.querySelector('[aria-current="page"]').textContent, '1');
+});
+
+test('course options follow the chosen cohort\'s cohort-info tracks, so a 7th-cohort course never shows under the 6th', () => {
+  const six = ['데이터 기술', 'AI 모델링', 'AI 기반 서비스', 'AI 플랫폼&인프라', 'AI 비즈니스'];
+  const seven = ['AI 금융', 'AI 피지컬', 'AI 보안', 'AI 헬스케어', 'AI 융합'];
+  const ui = start([['6', 'AI 모델링'], ['6', '데이터 기술'], ['7', 'AI 피지컬']],
+    { infos: [{ cohort: '7', tracks: seven }, { cohort: '6', tracks: six }, { cohort: '3-5', tracks: null }] });
+  // 전체: 칩에 있는 기수(큰 기수부터)의 트랙
+  assert.deepEqual(ui.options.children.map(node => node.dataset.subject), [''].concat(seven, six));
+  ui.cohort('6');
+  assert.deepEqual(ui.options.children.map(node => node.dataset.subject), [''].concat(six));
+  ui.subject('AI 모델링'); assert.equal(ui.shown(), 1);
+  // 7기로 바꾸면 6기 과정은 풀리고 7기 트랙만
+  ui.cohort('7');
+  assert.deepEqual(ui.options.children.map(node => node.dataset.subject), [''].concat(seven));
+  assert.equal(ui.options.querySelector('[aria-pressed="true"]').dataset.subject, '');
+  assert.equal(ui.shown(), 1);
+  ui.subject('AI 금융'); assert.equal(ui.shown(), 0); assert.equal(ui.empty.hidden, false);
 });
 
 test('empty DB has only all controls while static preview retains its upcoming-cohort behavior', () => {

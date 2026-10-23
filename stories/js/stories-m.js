@@ -111,7 +111,10 @@
       var b = document.createElement('b'); b.textContent = ($('h3', a) || {}).textContent || '';
       var quote = interviewQuote(a), q = document.createElement(quote ? 'q' : 'p');
       if (!quote) q.className = 'sm-ivf-summary';
-      q.textContent = quote || interviewSummary(a);
+      q.dataset.fullText = quote || interviewSummary(a);
+      q.setAttribute('aria-label', q.dataset.fullText);
+      var excerpt = document.createElement('span'); excerpt.className = 'sm-ivf-excerpt';
+      excerpt.textContent = q.dataset.fullText; q.appendChild(excerpt);
       var by = $('.by', a), m = document.createElement('span');
       m.textContent = [($('.av', by) || {}).textContent, ($('b', by) || {}).textContent, ($('em', by) || {}).textContent].filter(Boolean).join(' · ');
       tx.appendChild(b); tx.appendChild(q); tx.appendChild(m); c.appendChild(tx);
@@ -157,8 +160,28 @@
       paint(index);
       if (keyboardMove){ cards[index].focus({preventScroll:true}); keyboardMove = false; }
     }
+    function fitSummaries(){
+      $$('.sm-ivf-tx q, .sm-ivf-summary', track).forEach(function(el){
+        var span = $('.sm-ivf-excerpt', el), text = el.dataset.fullText || '';
+        if (!span) return;
+        span.textContent = text;
+        var max = parseFloat(getComputedStyle(el).lineHeight) * 2;
+        if (span.getBoundingClientRect().height <= max + 1) return;
+        var chars = typeof Intl.Segmenter === 'function'
+          ? Array.from(new Intl.Segmenter('ko', {granularity:'grapheme'}).segment(text), function(part){ return part.segment; })
+          : Array.from(text);
+        var low = 0, high = chars.length;
+        while (low < high){
+          var mid = Math.ceil((low + high) / 2);
+          span.textContent = chars.slice(0, mid).join('').trimEnd() + '⋯';
+          if (span.getBoundingClientRect().height <= max + 1) low = mid; else high = mid - 1;
+        }
+        span.textContent = chars.slice(0, low).join('').trimEnd() + '⋯';
+      });
+    }
     function align(){
       if (!mobile.matches || !track.clientWidth) return;
+      fitSummaries();
       var index = originals.length > 1 ? current + 1 : 0;
       place(index);ready = true;
     }
@@ -186,6 +209,7 @@
     mobile.addEventListener('change',align);
     addEventListener('resize',align);
     requestAnimationFrame(align);
+    if (document.fonts) document.fonts.ready.then(align);
 
   }
 

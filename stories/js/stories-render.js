@@ -61,6 +61,15 @@
   }
   REV = REV.map(function (item) { return publicItem(item,'r-p'); });
   IV = IV.map(function (item) { return publicItem(item,'iv-p'); });
+  // 대표 사진(관리자가 고른 아바타 포함)은 유지하고, 없는 옛 글만 표시 전용 아바타로 채웁니다.
+  // ID 순서로 순환 배정하므로 정렬·기수 필터·페이지 이동에도 같은 글의 아바타가 유지됩니다.
+  var avatarOrder = IV.map(function (item) { return item.anchor; }).sort(function (a, b) { return a.localeCompare(b, 'en', { numeric: true }); });
+  IV = IV.map(function (item) {
+    if (item.img) return item;
+    var no = avatarOrder.indexOf(item.anchor) % 12 + 1;
+    var avatar = { src: 'assets/interview-avatars/avatar-card-' + ('0' + no).slice(-2) + '-320.webp', alt: '인터뷰 아바타', w: 320, h: 200, fit: { x: 50, y: 50, z: 1 } };
+    return Object.assign({}, item, { img: avatar, imgLarge: Object.assign({}, avatar, { src: avatar.src.replace('-320.webp', '-1080.webp'), w: 1080, h: 675 }) });
+  });
   PJ = PJ.map(function (item) { return publicItem(item,'pj-p'); });
   CO = CO.map(function (item) { return publicItem(item,'st-'); });
 
@@ -78,17 +87,19 @@
   function num(v, d) { v = Number(v); return isFinite(v) ? v : d; }
   function hasPhoto(item) { return !!(item.img && item.img.src); }
   // 사진(img). fit: 썸네일 자리에서는 관리자가 '썸네일 맞추기'로 정한 보일 위치(--fx · --fy)와 확대(--z)를 따라요
-  function imgTag(m, cls, lazy, fit, field) {
+  function imgTag(m, cls, lazy, fit, field, sizes) {
     if (!m || !m.src) return '';
     var f = fit && m.fit, style = f ? ' data-fit style="--fx:' + num(f.x, 50) + '%;--fy:' + num(f.y, 50) + '%;--z:' + num(f.z, 1) + '"' : '';
-    return '<img class="' + cls + '" src="' + esc(m.src) + '" alt="' + esc(m.alt || '') + '"' + (lazy ? ' loading="lazy" decoding="async"' : '')
-      + (m.w ? ' width="' + m.w + '"' : '') + (m.h ? ' height="' + m.h + '"' : '') + style + (field ? ' data-field="' + field + '"' : '') + '>';
+    var avatarBase = /^(assets\/interview-avatars\/avatar-card-\d{2})-(160|320|608|1080)\.webp$/.exec(m.src);
+    var responsive = avatarBase ? ' srcset="' + [160, 320, 608, 1080].map(function (w) { return avatarBase[1] + '-' + w + '.webp?v=1023avatars12 ' + w + 'w'; }).join(', ') + '" sizes="' + esc(sizes || '(max-width: 640px) 64px, 304px') + '"' : '';
+    return '<img class="' + cls + '" src="' + esc(m.src + (avatarBase ? '?v=1023avatars12' : '')) + '" alt="' + esc(m.alt || '') + '"' + (lazy ? ' loading="lazy" decoding="async"' : '')
+      + responsive + (m.w ? ' width="' + m.w + '"' : '') + (m.h ? ' height="' + m.h + '"' : '') + style + (field ? ' data-field="' + field + '"' : '') + '>';
   }
   // 사진 또는 그림(svg, 관리자가 가져온 시안 그림)
   function visual(item, opts) {
     opts = opts || {};
     var m = opts.large && item.imgLarge ? item.imgLarge : item.img;
-    if (m && m.src) return imgTag(opts.alt === false ? { src: m.src, alt: '', w: m.w, h: m.h, fit: m.fit } : m, 'illu', true, opts.fit && m === item.img, opts.field);
+    if (m && m.src) return imgTag(opts.alt === false ? { src: m.src, alt: '', w: m.w, h: m.h, fit: m.fit } : m, 'illu', true, opts.fit && m === item.img, opts.field, opts.sizes || (opts.large ? '(max-width: 1000px) calc(100vw - 40px), 720px' : null));
     if (item.art) return opts.hidden && !/^<svg\b[^>]*\saria-hidden=/.test(item.art) ? item.art.replace(/^<svg\b/, '<svg aria-hidden="true"') : item.art;
     return '<svg class="illu" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"' + (opts.hidden ? ' aria-hidden="true"' : '') + '><rect width="100%" height="100%" fill="#E4E9F7"/></svg>';
   }
@@ -96,7 +107,7 @@
   function hubVisual(item, opts) {
     opts = opts || {};
     var m = opts.large && item.imgLarge ? item.imgLarge : item.img;
-    if (m && m.src) return imgTag({ src: m.src, alt: '', w: m.w, h: m.h, fit: m.fit }, 'hb-ph', true, m === item.img);
+    if (m && m.src) return imgTag({ src: m.src, alt: '', w: m.w, h: m.h, fit: m.fit }, 'hb-ph', true, m === item.img, null, opts.large ? '(max-width: 800px) calc(100vw - 40px), 538px' : '(max-width: 640px) 104px, 140px');
     var svg = item.art || '<svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#E4E9F7"/></svg>';
     return svg.replace(/^<svg\b([^>]*)>/, function (all, attrs) { return '<svg aria-hidden="true"' + attrs.replace(/\s(class|aria-hidden)="[^"]*"/g, '') + '>'; });
   }
@@ -125,8 +136,10 @@
   function anchorNo(anchor, fallback) { var m = /-(\d+)$/.exec(anchor || ''); return m ? m[1] : fallback; }
   function who(r) { return [r.cohort ? r.cohort + '기' : '', r.author, r.track].filter(Boolean).join(' · '); }
   function projectName(x) { return String(x.title || '').replace(/\s+—\s+/, ' · '); }
-  // 프로젝트 과정(반 이름): subject, 없으면 우리 글의 type(예: 자연어처리A). 목록 · 거르기 · 한눈에 보기 배지가 같은 값을 써요
+  // 프로젝트 반 이름: subject, 없으면 우리 글의 type(예: 자연어처리A). 카드 썸네일 위 · 상세 꼬리표 · 한눈에 보기 배지가 같은 값을 써요
   function subjectOf(x) { return x.subject || x.type || ''; }
+  // 프로젝트 과정(2026-10-23, course): 그 기수 '기수 정보'의 교육과정 트랙(6기 데이터 기술 · AI 모델링 …). 과정 거르기 · 상세 '과정'
+  function courseOf(x) { return x.course || ''; }
   var css = '';
 
   function hubReviewByline(r) {
@@ -234,14 +247,15 @@
       var id = esc(v.anchor), no = anchorNo(v.anchor, id), vid = v.video && v.video.yt;
       var tag = '<span class="ivtag">' + esc(v.cohort) + '기 · ' + esc(v.track) + '</span>';
       var hero = vid
-        ? '<div class="ivhero ivvid" data-yt="' + esc(v.video.yt) + '">' + tag + visual(v, { large: true, alt: false, hidden: true })
+        ? '<div class="ivhero ivvid ivhero-avatar" data-yt="' + esc(v.video.yt) + '">' + tag + visual(v, { large: true, alt: false, hidden: true })
           + '<button class="ivplay" type="button" aria-label="인터뷰 영상 재생"><i></i></button><span class="dur">' + esc(v.video.dur || '') + '</span></div>'
-        : '<div class="ivhero">' + tag + (slides(v, v.title) || visual(v, { large: true, alt: false, field: 'thumbnail' })) + '</div>';
+        : '<div class="ivhero ivhero-avatar">' + tag + visual(v, { large: true, alt: false, field: 'thumbnail' })
+          + '<svg class="ivhero-bubble" viewBox="0 0 100 80" aria-hidden="true" focusable="false"><path d="M20 8h60q13 0 13 13v29q0 13-13 13H48L30 76l3-13H20Q7 63 7 50V21Q7 8 20 8Z" fill="white"/><g fill="#6c95dd"><circle cx="33" cy="36" r="4"/><circle cx="50" cy="36" r="4"/><circle cx="67" cy="36" r="4"/></g></svg></div>';
       var qa = (v.qa || []).map(function (q, k) {
         return '<div id="q-' + no + '-' + (k + 1) + '"><div class="q"><i>' + (k + 1) + '</i><span data-field="question">' + esc(q.q) + '</span></div><p class="a" data-field="answer">' + esc(q.a) + '</p></div>';
       }).join('');
-      var mainHtml = hero + '<h2 data-field="title">' + esc(v.title) + '</h2><p class="lead" data-field="summary">' + esc(v.summary) + '</p>'
-        + '<div class="who2"><span class="av" data-field="cohort">' + coh(v.cohort) + '</span><div><b data-field="author">' + esc(v.author) + '</b><em data-field="track">' + esc(v.track) + '</em></div></div>'
+      var mainHtml = '<header class="ivintro">' + hero + '<h2 data-field="title">' + esc(v.title) + '</h2><p class="lead" data-field="summary">' + esc(v.summary) + '</p>'
+        + '<div class="ivintro-meta"><span data-field="cohort">' + coh(v.cohort) + '</span><span aria-hidden="true"> · </span><span data-field="author">' + esc(v.author) + '</span><span aria-hidden="true"> · </span><span data-field="track">' + esc(v.track) + '</span></div></header>'
         + (vid ? slides(v, v.title) : '')
         + (qa ? '<div class="qa">' + qa + '</div>' : '')
         + (vid && !qa ? '<p class="ivnote">영상 인터뷰예요. 위 화면에서 바로 재생됩니다. 영상 내용을 글로 옮긴 요약이 준비되면 이 아래에 함께 실어요.</p>' : '');
@@ -263,12 +277,12 @@
   if (prPane) {
     var n = PJ.length, pjgrid = $('.pjgrid', prPane);
     // 기수 · 과정 거르기(aica-site 디자인, projects-filter.js): 카드의 data-cohort · data-subject 로 거른다.
-    // 과정은 우리 글의 type(예: 자연어처리A), 기수는 기수 · 반(term, 예: 6기 · 01반)의 숫자
+    // 과정(data-subject)은 글의 과정(course, 기수 정보 교육과정 트랙), 기수는 기수 · 반(term, 예: 6기 · 01반)의 숫자. 썸네일 위 글자는 반 이름(type) 그대로
     var pjCohort = function (x) { var m = /(\d{1,2})\s*기/.exec(x.term || ''); return x.cohort ? String(x.cohort) : m ? m[1] : ''; };
     var pjSubject = subjectOf;
     if (pjgrid) pjgrid.innerHTML = PJ.map(function (x) {
       var head = x.headline || x.title;
-      return '<a data-cohort="' + esc(pjCohort(x)) + '" data-subject="' + esc(pjSubject(x)) + '" class="pjc" href="#' + esc(x.anchor) + '"><div class="ph">' + visual(x, { fit: true }) + '<span class="pjc-type" data-field="subject">' + esc(pjSubject(x)) + '</span></div>'
+      return '<a data-cohort="' + esc(pjCohort(x)) + '" data-subject="' + esc(courseOf(x)) + '" class="pjc" href="#' + esc(x.anchor) + '"><div class="ph">' + visual(x, { fit: true }) + '<span class="pjc-type" data-field="subject">' + esc(pjSubject(x)) + '</span></div>'
         + '<div class="pjc-tx">' + (x.headline ? '<p class="pjname">' + esc(projectName(x)) + '</p>' : '')
         + '<h3 data-field="title">' + esc(head) + '</h3>'
         + '<p class="sum" data-field="summary">' + esc(x.cardSummary || firstSentence(x.summary)) + '</p>'
@@ -284,7 +298,7 @@
     };
     var pjUnique = function (list) { return list.filter(function (v, k) { return v && list.indexOf(v) === k; }); };
     pjChoices($('.pj-cohort-filters', prPane), 'cohort', pjUnique(PJ.map(pjCohort)).sort(function (a, b) { return b - a; }), function (v) { return v + '기'; });
-    pjChoices($('.pj-subject-options', prPane), 'subject', pjUnique(PJ.map(pjSubject)).sort(function (a, b) { return a.localeCompare(b, 'ko'); }), function (v) { return v; });
+    pjChoices($('.pj-subject-options', prPane), 'subject', pjUnique(PJ.map(courseOf)).sort(function (a, b) { return a.localeCompare(b, 'ko'); }), function (v) { return v; });
     $$('.pjd', prPane).forEach(function (d) { d.remove(); });
     var SECS = [['문제 정의', '어떤 문제를, 누구를 위해 풀었는지 들어갈 자리예요.'], ['주요 기능', '서비스가 무엇을 해 주는지 들어갈 자리예요.'], ['기술 설명', '어떤 데이터 · 모델 · 기술로 만들었는지 들어갈 자리예요.']];
     // 칸의 글은 최신 디자인(PR #33)처럼 p.pjph-t 한 문단 그대로. • 로 시작하는 목록은 project-reading.js가 번호 목록(ol.pj-feature-list)으로 바꿔요
@@ -307,7 +321,7 @@
         + '<div class="pjsec">' + secs + '</div>'
         + (links ? '<div class="pjlinks">' + links + '</div>' : '')
         + (filled ? '' : '<p class="ivnote">시안이라 본문은 자리만 잡아 두었어요. 관리자가 프로젝트를 올리면 이 자리에 내용과 시연 영상 · 발표 자료 링크가 들어갑니다.</p>')
-        + '</div><aside class="sidebox pjside"><h3>프로젝트 정보</h3><dl class="ivmeta">' + meta([['팀', x.team], ['과정', pjSubject(x)], ['기수·반', x.term]]) + '</dl>'
+        + '</div><aside class="sidebox pjside"><h3>프로젝트 정보</h3><dl class="ivmeta">' + meta([['팀', x.team], ['과정', courseOf(x) || pjSubject(x)], ['전공', courseOf(x) ? pjSubject(x) : ''], ['기수·반', x.term]]) + '</dl>'
         + (n > 1 ? '<div class="pjnav"><a href="#' + esc(prev.anchor) + '"><small>이전 프로젝트</small>' + esc(prev.title) + '</a><a href="#' + esc(next.anchor) + '"><small>다음 프로젝트</small>' + esc(next.title) + '</a></div>' : '')
         + '</aside></div></div>';
     }).join('');
@@ -315,7 +329,7 @@
   }
 
   /* ── 기수 기록(cohorts.html): 인스타형 화면(cohort-v3.js)이 읽는 카드 ──
-     관리자 › 기수별 이모저모(cohort_stories 표)에 게시중인 글이 하나라도 있으면 그 글로 다시 그려요. 없으면 페이지 HTML의 카드 그대로.
+     관리자 › 기수별 이모저모(cohort_stories 표)에 게시중인 글로 늘 다시 그려요. 글이 없으면 비워서 story-state.js 가 페이지 상태 화면을 보여 줘요.
      카드 모양은 cohort-v3.js 가 읽는 그대로: 기수(.cg → 기수 칩 · aica_7th) · 날짜(.dt 2026. 08. 20 → 달별 동그라미) · 제목(h3) ·
      글 창 첫 문단(p) · 그림(.illu) · 유튜브(data-yt) · 나머지 문단([data-story-body] p) · 사진 여러 장([data-story-photos] img) · 주소(id st-3) */
   var cvData = document.getElementById('cv3-data');
@@ -339,7 +353,7 @@
 
   /* ── 한눈에 보기(index.html) ── */
   if (page.classList.contains('stories-hub')) {
-    // 인터뷰: 사진이 있는 글 인터뷰만(그림 · 영상 카드는 전체 목록에서). 첫째는 크게(사진 위 글), 나머지 3개는 목록
+    // 인터뷰: 사진이 있는 글 인터뷰만(그림 · 영상 카드는 전체 목록에서). 첫째는 크게(사진 아래 글), 나머지 3개는 목록
     var ivs = IV.filter(function (v) { return hasPhoto(v) && !(v.video && v.video.yt); });
     // 사진이 있는 인터뷰가 하나도 없으면 사진 없는 글 인터뷰로(그림 자리에 기본 바탕)
     if (!ivs.length) ivs = IV.filter(function (v) { return !(v.video && v.video.yt); });
@@ -350,27 +364,26 @@
         return '<li><a href="interviews.html#' + esc(v.anchor) + '"><span class="hb-ivl-ph">' + hubVisual(v) + '</span>'
           + '<div><h3>' + esc(v.title) + '</h3><span class="hb-by">' + esc(who(v)) + '</span></div></a></li>';
       }).join('') + '</ul>';
-      // 큰 카드는 페이지 HTML에 있어요(2026-10-20): 꼬리표(em) · 인용(.hb-ivf-q)은 페이지 글 그대로 두고(카테고리 페이지 관리에서 고침),
-      // 사진 · 제목 · 이름 · 주소만 가장 최근 인터뷰로 채워요
+      // 큰 카드의 꼬리표는 페이지 문구를 유지하고, 이미지·제목·요약·작성자는 같은 최신 인터뷰에서 채웁니다.
       var card = $('.hb-ivf', ivBox);
       // 페이지에 시안 사진 · 목록이 남아 있으면(빌드가 비우지 않은 페이지) 겹치지 않게 먼저 지워요
-      if (card) $$(':scope > .hb-ph, :scope > svg', card).forEach(function (el) { el.remove(); });
+      if (card) $$(':scope > .hb-ivf-ph, :scope > .hb-ph, :scope > svg', card).forEach(function (el) { el.remove(); });
       $$('.hb-ivl', ivBox).forEach(function (el) { el.remove(); });
       if (card && f) {
         card.setAttribute('href', 'interviews.html#' + f.anchor);
-        card.insertAdjacentHTML('afterbegin', hubVisual(f, { large: true }));
+        card.insertAdjacentHTML('afterbegin', '<span class="hb-ivf-ph">' + hubVisual(f, { large: true }) + '</span>');
         var h = $('h3', card), by = $('.hb-by', card), em = $('em', card), q = $('.hb-ivf-q', card);
         if (h) h.textContent = f.title || '';
         if (by) by.textContent = who(f);
         if (em) em.hidden = !em.textContent.trim();
-        if (q && D.previewSample === true) q.textContent = f.summary || '';
+        if (q) q.textContent = f.summary || '';
         if (q) q.hidden = !q.textContent.trim();
         ivBox.insertAdjacentHTML('beforeend', list);
       } else if (card) {
         card.hidden = true;   // 보여 줄 인터뷰가 없으면 빈 카드 대신 숨김
       } else {
         // 예전 페이지(큰 카드가 HTML에 없음): 꼬리표 · 인용 없이 통째로
-        ivBox.innerHTML = f ? '<a class="hb-ivf" href="interviews.html#' + esc(f.anchor) + '">' + hubVisual(f, { large: true })
+        ivBox.innerHTML = f ? '<a class="hb-ivf" href="interviews.html#' + esc(f.anchor) + '">' + '<span class="hb-ivf-ph">' + hubVisual(f, { large: true }) + '</span>'
           + '<div class="hb-ivf-tx"><h3>' + esc(f.title) + '</h3><span class="hb-by">' + esc(who(f)) + '</span></div></a>' + list : '';
       }
     }

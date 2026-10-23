@@ -3,6 +3,92 @@ window.STORIES_DATA = {
   "previewSample": true,
   "previewDesign": true,
   "notice": "디자인 검토용 가상 콘텐츠입니다. 실제 선배의 경험이나 운영 DB 글이 아닙니다.",
+  "cohortInfos": [
+    {
+      "cohort": "7",
+      "account": "aica_7th",
+      "tag": "인공지능사관학교",
+      "tracks": [
+        "AI 금융",
+        "AI 피지컬",
+        "AI 보안",
+        "AI 헬스케어",
+        "AI 융합"
+      ],
+      "label": "6기와 달라진 점",
+      "bio": {
+        "title": "인공지능사관학교 7기",
+        "text": "입교식부터 수료식까지, 7기가 남긴 순간들을 모았어요."
+      },
+      "rows": [
+        {
+          "item": "수업 방식",
+          "before": "준비·성장 일부 온라인 병행",
+          "after": "AI 준비과정(VOD) 외 전 과정 오프라인"
+        },
+        {
+          "item": "프로젝트",
+          "before": "520시간",
+          "after": "720시간 — 기업연계·실증·창업 중 택 1"
+        },
+        {
+          "item": "해커톤",
+          "before": "전 직군 통합 2박 3일",
+          "after": "폐지"
+        },
+        {
+          "item": "트랙 구성",
+          "before": "7개 트랙",
+          "after": "직군별 심화 + 산업 도메인 2층 구조"
+        },
+        {
+          "item": "전형",
+          "before": "서류 → 인터뷰 → Pre-Training → 퀴즈",
+          "after": "서류 → 코딩테스트 → 면접·인적성"
+        },
+        {
+          "item": "지원금",
+          "before": "생활지원금",
+          "after": "생활지원금 + 프로젝트 지원금 200만원 신설"
+        },
+        {
+          "item": "지원 대상",
+          "before": "4학년·졸업예정·졸업유예자 중심",
+          "after": "졸업생·스타트업 재직자까지 확대"
+        }
+      ]
+    },
+    {
+      "cohort": "6",
+      "account": "aica_6th",
+      "tag": "인공지능사관학교",
+      "tracks": [
+        "데이터 기술",
+        "AI 모델링",
+        "AI 기반 서비스",
+        "AI 플랫폼&인프라",
+        "AI 비즈니스"
+      ],
+      "label": "",
+      "bio": {
+        "title": "인공지능사관학교 6기",
+        "text": "입교식부터 수료식까지, 6기가 남긴 순간들을 모았어요."
+      },
+      "rows": []
+    },
+    {
+      "cohort": "3-5",
+      "account": "aica_3to5th",
+      "tag": "인공지능사관학교",
+      "tracks": [],
+      "label": "",
+      "bio": {
+        "title": "인공지능사관학교 3–5기",
+        "text": "입교식부터 수료식까지, 3–5기가 남긴 순간들을 모았어요."
+      },
+      "rows": []
+    }
+  ],
   "reviews": [
     {
       "id": 900001,
@@ -1353,6 +1439,7 @@ window.STORIES_DATA = {
       "cohort": 6,
       "term": "6기 · 2반",
       "subject": "컴퓨터비전",
+      "course": "컴퓨터비전",
       "type": "실증",
       "title": "[시안] 손끝 · 시각장애인 보행 보조 앱",
       "headline": "[시안] 휴대폰 카메라가 신호등과 점자블록을 읽고, 소리로 길을 알려줘요",
@@ -1389,6 +1476,7 @@ window.STORIES_DATA = {
       "cohort": 6,
       "term": "6기 · 1반",
       "subject": "데이터 분석",
+      "course": "데이터 분석",
       "type": "기업연계",
       "title": "[시안] 밥값 · 구내식당 혼잡도 예측",
       "headline": "[시안] 구내식당이 언제 붐비는지 30분 단위로 미리 알려줘요",
@@ -1424,6 +1512,7 @@ window.STORIES_DATA = {
       "cohort": 6,
       "term": "6기",
       "subject": "컴퓨터비전",
+      "course": "컴퓨터비전",
       "type": "기업연계",
       "title": "[시안] 틈 · 중소병원 판독 보조",
       "headline": "[시안] 엑스레이에서 이상해 보이는 곳을 먼저 짚어, 의사의 판독을 도와요",
@@ -1459,6 +1548,7 @@ window.STORIES_DATA = {
       "cohort": 6,
       "term": "6기 · 1반",
       "subject": "AI클라우드 및 인프라",
+      "course": "AI클라우드 및 인프라",
       "type": "실증",
       "title": "[시안] 돌아봄 · 공장 설비 이상 탐지",
       "headline": "[시안] 공장 기계가 고장 나기 전에, 진동만으로 이상을 알아채요",
@@ -1494,6 +1584,7 @@ window.STORIES_DATA = {
       "cohort": 6,
       "term": "6기 · 2반",
       "subject": "자연어처리",
+      "course": "자연어처리",
       "type": "창업",
       "title": "[시안] 말줄임 · 회의록 자동 요약",
       "headline": "[시안] 회의 녹음을 넣으면 결정된 것과 할 일만 정리해 줘요",
@@ -1529,6 +1620,7 @@ window.STORIES_DATA = {
       "cohort": 6,
       "term": "6기",
       "subject": "AI서비스 개발",
+      "course": "AI서비스 개발",
       "type": "기업연계",
       "title": "[시안] 파수 · 사내 문서 유출 탐지",
       "headline": "[시안] 회사 문서를 평소와 다르게 여는 움직임을 찾아 유출을 막아요",

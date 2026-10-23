@@ -105,3 +105,9 @@ npm run check:public       # 공개 PR 병합·Pages 반영 전 필수: 빌드 �
 공개 원본을 만들기 위해 비공개 저장소 전체/전체 `frontend/`를 복사하거나 private branch·subtree 이력을 공개로 push하지 않습니다. 공개 main 위에 공개 가능한 파일만 새 커밋으로 반영하고, `npm run check:public`·기존 PR/CI·Pages와 실제 링크/자산 확인을 거칩니다. 이 README 변경이 상시 자동 감시나 동기화 서비스를 설정하는 것은 아닙니다.
 
 현재 파일을 교체해도 이미 공개된 Git 커밋 이력과 외부 복사본은 제거되지 않습니다. 이력 정리는 별도 승인과 협업 조율이 필요합니다.
+
+## Shared frontend mirror: 2026-10-23
+
+Source: integrated frontend at `70f6266c06716341ec15222f02d4ba7b2f110b07`. Public-safe common changes cover interview layouts and twelve responsive fallback avatars, representative-image priority, posted-cohort chips and course filters, mobile spacing and back-to-top positioning, shared asset versions and masthead partials, and cancellation of repeated food-dice rolls (#72). Private snapshots, screenshots, uploads, backend files and Git history are excluded.
+
+The public fixture generator and privacy checks remain preview-only. `content/preview/cohorts.json` preserves the design metadata already present in the previous public cohort HTML, adapted to the current data contract. Project fixture courses reuse the existing public design classification. These fixtures must never replace the integrated repository snapshots or DB. After fixture schema changes, run `npm run preview:data` and `npm run check:public` in this public checkout.

@@ -1,4 +1,6 @@
-/* Both views filter the already-rendered cards. Spring renders published DB rows only. */
+/* Both views filter the already-rendered cards. Spring renders published DB rows only.
+   과정 단추(2026-10-23): 고른 기수의 '기수 정보' 교육과정 트랙(공개 API · stories-data.js 의 STORIES_DATA.cohortInfos)으로 바꿔 보여 준다.
+   전체는 칩에 있는 기수들의 트랙을 큰 기수부터. 기수 정보가 없으면 그 기수 카드의 과정(data-subject)으로. 기수를 바꿔 고른 과정이 없어지면 전체로 */
 (function(){
   'use strict';
   function init(){
@@ -30,6 +32,43 @@
       choices(filters,'cohort',cohorts,value=>value+'기');
       choices(options,'subject',subjects,value=>value);
     }
+    const PENDING='교육 분야 준비 중';   // 새 기수 기수 정보의 자리 표시(백오피스 CohortInfoService.PENDING_TRACK)
+    const infos=typeof STORIES_DATA!=='undefined'&&STORIES_DATA&&Array.isArray(STORIES_DATA.cohortInfos)?STORIES_DATA.cohortInfos:[];
+    function infoTracks(cohort){
+      const n=Number(cohort);
+      for(const info of infos){
+        const m=/^(\d{1,2})(?:-(\d{1,2}))?$/.exec(String(info&&info.cohort||''));
+        if(m&&n>=Number(m[1])&&n<=Number(m[2]||m[1]))return (Array.isArray(info.tracks)?info.tracks:[]).filter(track=>track&&track!==PENDING);
+      }
+      return [];
+    }
+    function cardCourses(match){
+      return Array.from(new Set(cards.filter(match).map(card=>card.dataset.subject).filter(Boolean))).sort((a,b)=>a.localeCompare(b,'ko'));
+    }
+    function coursesFor(cohort){
+      const tracks=infoTracks(cohort);
+      return tracks.concat(cardCourses(card=>card.dataset.cohort===cohort).filter(value=>!tracks.includes(value)));
+    }
+    function courseList(cohort){
+      if(cohort)return coursesFor(cohort);
+      const all=[];const add=value=>{if(!all.includes(value))all.push(value);};
+      filters.querySelectorAll('button').forEach(button=>{if(button.dataset.cohort)coursesFor(button.dataset.cohort).forEach(add);});
+      cardCourses(()=>true).forEach(add);
+      return all;
+    }
+    function fillCourses(cohort){
+      const pressed=options.querySelector('[aria-pressed="true"]');
+      const current=pressed?pressed.dataset.subject:'';
+      const list=courseList(cohort),keep=list.includes(current)?current:'';
+      options.replaceChildren();
+      [''].concat(list).forEach(value=>{
+        const button=document.createElement('button');button.type='button';
+        button.dataset.subject=value;button.textContent=value||'전체';
+        button.setAttribute('aria-pressed',String(value===keep));options.append(button);
+      });
+      summary.querySelector('b').textContent=keep||'과정';
+    }
+    fillCourses((filters.querySelector('[aria-pressed="true"]')||{dataset:{}}).dataset.cohort||'');
     function close(){dropdown.open=false;}
     const pager=document.createElement('nav');pager.className='cpager pj-pager';
     pager.setAttribute('aria-label','프로젝트 페이지');section.querySelector('.pjgrid').after(pager);
@@ -64,7 +103,7 @@
       if(notice)notice.hidden=!upcoming;
       const noResults=section.querySelector('.pj-subject-empty');
       if(!eligible.length&&!upcoming&&cards.length&&typeof StoryState!=='undefined')StoryState.render(noResults,'filter',{subject:'프로젝트',onReset:()=>{
-        selectSubject('');filters.querySelectorAll('button').forEach(button=>button.setAttribute('aria-pressed',String(!button.dataset.cohort)));refresh(true);filters.querySelector('button').focus({preventScroll:true});
+        selectSubject('');filters.querySelectorAll('button').forEach(button=>button.setAttribute('aria-pressed',String(!button.dataset.cohort)));fillCourses('');refresh(true);filters.querySelector('button').focus({preventScroll:true});
       }});
       noResults.hidden=!cards.length||!!eligible.length||upcoming;
       pager.replaceChildren();pager.hidden=!eligible.length;
@@ -82,7 +121,7 @@
     });
     filters.addEventListener('click',event=>{
       const button=event.target.closest('button[data-cohort]');if(!button)return;
-      filters.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));refresh(true);
+      filters.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));fillCourses(button.dataset.cohort);refresh(true);
     });
     options.addEventListener('click',event=>{
       const button=event.target.closest('button[data-subject]');if(!button)return;

@@ -47,6 +47,11 @@ function insertAfter(html, anchor, lines, path) {
   return html.slice(0, l.end) + lines.map(line => '\n' + l.indent + line).join('') + html.slice(l.end);
 }
 
+// 내용 페이지의 공통 연결 순서: site.js → track.js → 페이지별 추가 스크립트.
+function withTracking(html, path, extraScripts = []) {
+  return insertAfter(html, '<script src="../common/js/site.js', [TRACK, ...extraScripts], path);
+}
+
 // 시작 태그(pattern)에서 짝이 맞는 닫는 태그까지. 같은 이름 태그가 안에 겹쳐 있어도 맞춰요
 function element(html, pattern, from, path) {
   pattern.lastIndex = 0;
@@ -96,16 +101,16 @@ function storyHead(html, path, anchor) {
 }
 
 const PAGES = {
-  'home/index.html': (html, path) => insertAfter(html, '<script src="../common/js/site.js', [TRACK, `<script src="js/ticker-render.js?v=${assetVersion('home.js.ticker-render')}" defer></script>`], path),
-  'about/index.html': (html, path) => insertAfter(html, '<script src="../common/js/site.js', [TRACK], path),
-  'life/index.html': (html, path) => insertAfter(html, '<script src="../common/js/site.js', [TRACK], path),
+  'home/index.html': (html, path) => withTracking(html, path, [`<script src="js/ticker-render.js?v=${assetVersion('home.js.ticker-render')}" defer></script>`]),
+  'about/index.html': withTracking,
+  'life/index.html': withTracking,
   'check/index.html': (html, path) => {
     html = insertBefore(html, '<script src="../common/js/menu.js"', FAQ_SCRIPTS, path);
-    return insertAfter(html, '<script src="../common/js/site.js', [TRACK], path);
+    return withTracking(html, path);
   },
   'stories/index.html': (html, path) => {
     html = storyHead(html, path, '<script src="js/old-hash.js');
-    html = insertAfter(html, '<script src="../common/js/site.js', [TRACK], path);
+    html = withTracking(html, path);
     // 큰 인터뷰 카드: 사진 · 제목 · 이름 · 주소는 stories-render.js가 가장 최근 인터뷰로 채워요. 꼬리표(em)는 디자인 글 그대로
     html = removeElements(html, /<ul class="hb-ivl"[^>]*>/, path);
     html = editElement(html, /<a class="hb-ivf"[^>]*>/, card => {
@@ -123,7 +128,7 @@ const PAGES = {
   },
   'stories/reviews.html': (html, path) => {
     html = storyHead(html, path, '<script src="js/story-state.js');
-    html = insertAfter(html, '<script src="../common/js/site.js', [TRACK], path);
+    html = withTracking(html, path);
     if (!/<input[^>]+name="pgn"/.test(html)) fail(path, 'name="pgn"');
     html = html.replace(/\n[ \t]*<input[^>]+name="pgn"[^>]*>/g, '');   // 쪽 번호는 글 수에 맞춰 stories-render.js가 만들어요
     html = emptyElement(html, /<div class="idgrid">/, path);
@@ -133,21 +138,21 @@ const PAGES = {
   },
   'stories/interviews.html': (html, path) => {
     html = storyHead(html, path, '<script src="js/story-state.js');
-    html = insertAfter(html, '<script src="../common/js/site.js', [TRACK], path);
+    html = withTracking(html, path);
     html = emptyElement(html, /<div class="ivgrid">/, path);
     html = emptyElement(html, /<div class="ivdots"[^>]*>/, path);
     return removeElements(html, /<div class="ivd(?: [^"<>]*)?"[^>]*>/, path);
   },
   'stories/projects.html': (html, path) => {
     html = storyHead(html, path, '<script src="js/story-state.js');
-    html = insertAfter(html, '<script src="../common/js/site.js', [TRACK], path);
+    html = withTracking(html, path);
     html = emptyElement(html, /<div class="pjgrid">/, path);
     return removeElements(html, /<div class="pjd"[^>]*>/, path);
   },
   // 기수 기록은 게시중인 글이 없으면 페이지 카드 그대로 보여요(팀 사이트와 같음)
   'stories/cohorts.html': (html, path) => {
     html = storyHead(html, path, '<script src="js/story-state.js');
-    return insertAfter(html, '<script src="../common/js/site.js', [TRACK], path);
+    return withTracking(html, path);
   }
 };
 

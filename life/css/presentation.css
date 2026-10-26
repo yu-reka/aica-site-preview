@@ -290,15 +290,16 @@ body .life-page .snote small{position:absolute;top:16px;right:18px;margin:0}
 
 .life-page .bx9-bld{position:static;display:flex;flex-direction:column}
 
-.life-page .bx9-tw{flex:1;display:flex;flex-direction:column;margin-bottom:0}
+.life-page .bx9-tw{flex:1;display:flex;flex-direction:column;margin-bottom:0;padding:0 8px}
 
-.life-page .bx9-fl{flex:1}
+.life-page .bx9-gnd{margin-top:0}
 
-.life-page .bx9-fl>li{flex:1 1 auto;display:flex}
+.life-page .bx9-fl{flex:1;display:grid;grid-template-rows:repeat(4,minmax(0,1fr))}
 
-.life-page .bx9-fl>li>.bx9-f{flex:1;height:auto}
+.life-page .bx9-fl>li{min-height:0;display:flex}
 
-.life-page .bx9-fl>li:has(.tall){flex-grow:2.2}
+.life-page .bx9-fl>li>.bx9-f{flex:1;height:auto;min-height:62px}
+
 }
 
 /* 건물 윗모서리를 오른쪽 사진 윗모서리와 같은 높이로(데스크톱) */

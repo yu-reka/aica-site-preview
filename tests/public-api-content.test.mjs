@@ -31,4 +31,6 @@ test('owner-defined legacy IDs resolve only to existing migrated records, preser
   for(const [old,next] of [['iv-p63','iv-p1'],['iv-p76','iv-p14'],['pj-p77','pj-p1'],['pj-p118','pj-p42']])assert.equal(alias('#'+old),'#'+next);
   for(const id of ['iv-1','pj-1','q-1-1','q-63-1','iv-p62','pj-p119','r-p1','iv-p64'])assert.equal(alias('#'+id),'#'+id);
   targets.add('iv-p63');assert.equal(alias('#iv-p63'),'#iv-p63');
+  // 삭제된 인터뷰(새 6번, 옛 68번): 대상 글이 없으면 옛 주소를 바꾸지 않고 그대로 둔다
+  assert.equal(alias('#iv-p68'),'#iv-p68');assert.equal(alias('#iv-p6'),'#iv-p6');
 });

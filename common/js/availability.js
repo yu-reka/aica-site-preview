@@ -5,8 +5,8 @@
   loading.className = 'site-loading';
   loading.hidden = true;
   loading.setAttribute('role', 'status');
-  loading.innerHTML = '<div class="site-loading__content"><h2>페이지를 불러오고 있어요.</h2><div class="site-loading__grid" aria-hidden="true">' +
-    '<div class="site-loading__card"><i></i><b></b><span></span></div>'.repeat(3) + '</div><button type="button" hidden>화면으로 돌아가기</button></div>';
+  loading.innerHTML = '<div class="site-loading__content"><p class="site-loading__brand">광주인공지능사관학교</p><h2>페이지를 불러오고 있어요.</h2>' +
+    '<p class="site-loading__copy">잠시만 기다려 주세요.</p><div class="site-loading__line" aria-hidden="true"><span></span></div></div>';
   const offline = document.createElement('dialog');
   offline.className = 'site-offline';
   offline.setAttribute('aria-labelledby', 'site-offline-title');
@@ -18,10 +18,9 @@
   }
   function begin() {
     end(); busy = true;
-    loading.querySelector('button').hidden = true;
     delay = setTimeout(() => { loading.hidden = false; }, 350);
-    // A cancelled or stalled navigation must never trap the visitor.
-    timeout = setTimeout(() => { loading.querySelector('button').hidden = false; }, 12000);
+    // Release a stalled overlay without adding actions to the loading screen.
+    timeout = setTimeout(end, 12000);
   }
   function showOffline() {
     end();
@@ -42,7 +41,6 @@
   });
   offline.querySelector('.site-offline__close').addEventListener('click', () => offline.close());
   offline.addEventListener('close', () => { if (previousFocus?.isConnected) previousFocus.focus({preventScroll:true}); });
-  loading.querySelector('button').addEventListener('click', end);
   addEventListener('offline', showOffline);
   addEventListener('online', syncConnection);
   addEventListener('pageshow', end);

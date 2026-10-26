@@ -31,7 +31,7 @@
   },
   "common": {
     "css": {
-      "availability": "1021",
+      "availability": "1026loading-soft-backdrop",
       "components": "1021audit-pr28",
       "masthead": "1016cleanup",
       "navigation-mobile": "1016nav",
@@ -40,7 +40,7 @@
       "tokens": "1021audit-colors"
     },
     "js": {
-      "availability": "1021",
+      "availability": "1026loading-soft-backdrop",
       "site-layout": "1023newtab",
       "site": "1021audit-pr28",
       "track": "1020",

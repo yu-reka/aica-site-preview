@@ -170,14 +170,18 @@ const Site = (() => {
 
   /* ---------- 동작 ---------- */
   const drawerScope = SiteUI.createDialogScope();
+  let drawerFocusTimer;
   function openDrawer(){
+    clearTimeout(drawerFocusTimer);
     drawerScope.activate($('#drawer'), [$('#drawerDim')]);
     $('#drawer').classList.add('is-open');
     $('#drawerDim')?.classList.add('is-open');
     $('#menuBtn').setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
     setAcc(html.dataset.menu || '');
-    setTimeout(() => $('#drawerClose').focus(), 50);
+    drawerFocusTimer = setTimeout(() => {
+      if ($('#drawer').classList.contains('is-open')) $('#drawerClose').focus();
+    }, 50);
   }
   /* 모바일 메뉴 하위 목록: 한 번에 하나만 펼침(10-15). 이름을 누르면 그 페이지 첫 화면, 오른쪽 화살표는 펼침 · 접힘 */
   function setAcc(id){
@@ -188,6 +192,7 @@ const Site = (() => {
     });
   }
   function closeDrawer(refocus){
+    clearTimeout(drawerFocusTimer);
     const d = $('#drawer');
     if (!d || !d.classList.contains('is-open')) return;
     drawerScope.release();
@@ -268,6 +273,32 @@ const Site = (() => {
       }
     });
     gnb.addEventListener('focusout', e => { if (!gnb.contains(e.relatedTarget)) setMega(false); });
+
+    // Match the header CSS boundary: release modal state before its controls disappear.
+    const desktopNav = matchMedia('(min-width:1081px)');
+    let navigationFocus = null;
+    const isNavigationControl = node => gnb.contains(node) || $('#drawer').contains(node) || node === $('#menuBtn');
+    document.addEventListener('focusin', e => { navigationFocus = isNavigationControl(e.target) ? e.target : null; });
+    document.addEventListener('pointerdown', e => { if (!isNavigationControl(e.target)) navigationFocus = null; });
+    desktopNav.addEventListener('change', () => {
+      // CSS can hide the focused link before the media event and move focus to body.
+      const active = document.activeElement === document.body ? navigationFocus : document.activeElement;
+      const moveFocus = desktopNav.matches
+        ? $('#drawer').contains(active) || active === $('#menuBtn')
+        : gnb.contains(active);
+      closeDrawer();
+      megaHold = false;
+      focusHold = false;
+      setMega(false);
+      if (moveFocus) {
+        const next = desktopNav.matches
+          ? $('.gnb-link[aria-current="page"]', header) || $('.gnb-link', header)
+          : $('#menuBtn');
+        if (desktopNav.matches) focusHold = true;
+        next?.focus({ preventScroll: true });
+        focusHold = false;
+      }
+    });
 
     // 연결처가 정해지지 않은 링크(data-toast)는 안내만 띄움 — 페이지 본문에 나중에 그려진 링크도 포함
     document.addEventListener('click', e => {

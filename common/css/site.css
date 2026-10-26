@@ -161,6 +161,9 @@
   .site-header .hdr-nav,.site-header .drop-bg,.site-header .btn-apply{display:none}   /* 메뉴 칸째 숨김: 빈 칸이 남으면 간격이 두 번 들어가 375px 이하에서 ☰가 화면 밖으로 밀림 */
   .site-header .menu-toggle{display:grid}
   .site-header .hdr-inner{justify-content:space-between;gap:12px}
+  /* Give mobile footer links a full touch target without overlapping neighbours. */
+  .site-footer .footer-links li{display:flex;align-items:center;flex-wrap:wrap;column-gap:4px}
+  .site-footer :is(.footer-links,address) a{display:inline-flex;align-items:center;min-height:44px;min-width:44px}
   .site-footer address ul{display:block}
   .site-footer address li+li::before{display:none}
 }

@@ -564,6 +564,13 @@ if (activityGallery) {
 // 이전 기수 프로젝트 영상(10-14): 미리보기 그림 + 재생 버튼 → 누르면 그 자리에서 바로 재생(autoplay iframe).
 // 파일(file://)로 열 때도 같은 동작. 유튜브가 파일 페이지 삽입을 막으면 영상 안에 오류가 보일 수 있어, 아래에 '유튜브에서 보기' 링크를 함께 둠.
 (() => {
+  // Removing the previous iframe stops playback without depending on the
+  // cross-origin player's API. Keep its original poster so it can be replayed.
+  let restoreActiveVideo;
+  function stopActiveVideo() {
+    if (restoreActiveVideo) restoreActiveVideo();
+    restoreActiveVideo = null;
+  }
   document.querySelectorAll('.activity-project-player').forEach(container => {
     const frame = container.querySelector('iframe');
     if (!frame) return;
@@ -590,10 +597,36 @@ if (activityGallery) {
       f.allowFullscreen = true;
       f.referrerPolicy = 'strict-origin-when-cross-origin';
       f.className = 'activity-project-inline-frame';
+      stopActiveVideo();
       container.replaceChildren(f);
+      restoreActiveVideo = () => container.replaceChildren(btn);
       f.focus();
     });
     container.replaceChildren(btn);
+  });
+
+  // The daily-routine documentary shares the same single-player policy.
+  const box = document.querySelector('.drv-video--yt[data-yt]');
+  if (!box) return;
+  const id = box.dataset.yt;
+  if (!/^[a-zA-Z0-9_-]{11}$/.test(id)) return;
+  const poster = box.querySelector('.drv-poster');
+  if (poster) poster.addEventListener('error', () => { poster.src = 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg'; }, { once: true });
+  box.addEventListener('click', () => {
+    const org = /^https?:/.test(location.protocol) ? '&origin=' + encodeURIComponent(location.origin) : '';
+    const f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1&hl=ko' + org;
+    f.title = box.getAttribute('aria-label').replace(/ 재생$/, '');
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    f.allowFullscreen = true;
+    f.referrerPolicy = 'strict-origin-when-cross-origin';
+    const wrap = document.createElement('div');
+    wrap.className = 'drv-video is-playing';
+    wrap.append(f);
+    stopActiveVideo();
+    box.replaceWith(wrap);
+    restoreActiveVideo = () => wrap.replaceWith(box);
+    f.focus();
   });
 })();
 
@@ -622,28 +655,4 @@ if (activityGallery) {
   }); });
   calc();
 })();
-})();
-
-// 하루 일과 영상(10-14): 누르면 미리보기 자리에 유튜브(nocookie)를 넣어 바로 재생
-(() => {
-  const box = document.querySelector('.drv-video--yt[data-yt]');
-  if (!box) return;
-  const id = box.dataset.yt;
-  if (!/^[a-zA-Z0-9_-]{11}$/.test(id)) return;
-  const poster = box.querySelector('.drv-poster');
-  if (poster) poster.addEventListener('error', () => { poster.src = 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg'; }, { once: true });
-  box.addEventListener('click', () => {
-    const org = /^https?:/.test(location.protocol) ? '&origin=' + encodeURIComponent(location.origin) : '';
-    const f = document.createElement('iframe');
-    f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1&hl=ko' + org;
-    f.title = box.getAttribute('aria-label').replace(/ 재생$/, '');
-    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-    f.allowFullscreen = true;
-    f.referrerPolicy = 'strict-origin-when-cross-origin';
-    const wrap = document.createElement('div');
-    wrap.className = 'drv-video is-playing';
-    wrap.append(f);
-    box.replaceWith(wrap);
-    f.focus();
-  }, { once: true });
 })();

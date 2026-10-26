@@ -11,9 +11,9 @@
     "js": {
       "about-m": {
         "legacyComment": "1016spacing",
-        "default": "1022chapteraliases"
+        "default": "1026dockrepeat"
       },
-      "about": "1014s"
+      "about": "1026singlevideo"
     }
   },
   "check": {

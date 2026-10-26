@@ -111,3 +111,7 @@ npm run check:public       # 공개 PR 병합·Pages 반영 전 필수: 빌드 �
 Source: integrated frontend at `70f6266c06716341ec15222f02d4ba7b2f110b07`. Public-safe common changes cover interview layouts and twelve responsive fallback avatars, representative-image priority, posted-cohort chips and course filters, mobile spacing and back-to-top positioning, shared asset versions and masthead partials, and cancellation of repeated food-dice rolls (#72). Private snapshots, screenshots, uploads, backend files and Git history are excluded.
 
 The public fixture generator and privacy checks remain preview-only. `content/preview/cohorts.json` preserves the design metadata already present in the previous public cohort HTML, adapted to the current data contract. Project fixture courses reuse the existing public design classification. These fixtures must never replace the integrated repository snapshots or DB. After fixture schema changes, run `npm run preview:data` and `npm run check:public` in this public checkout.
+
+## 기수 기록 상세의 해시태그
+
+선택 필드 `STORIES_DATA.cohorts[].tags`의 문자열은 상세 모달에서 작은 파란 태그 줄로 표시합니다(앞의 `#`은 생략 가능, 저장된 태그의 내부 공백은 유지). 기존 숫자 행사 분류는 해시태그로 표시하지 않습니다. 유효한 문자열 태그가 없을 때만 본문 마지막 문단 전체가 `#태그` 토큰인 경우 분리하고, `# 제목`·`#메모 오늘 배운 내용입니다` 같은 일반 문장과 중간 문단은 그대로 둡니다. 목록과 원본 데이터는 바꾸지 않으며 실제 사본을 공개로 가져오지 않습니다.

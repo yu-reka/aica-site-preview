@@ -7,7 +7,7 @@
   var tpl=document.getElementById('cv3-data').content;
   var D=[].slice.call(tpl.querySelectorAll('a.st')).map(function(a){
     var dt=(a.querySelector('.dt')||{}).textContent||'', m=dt.match(/(\d{4})\.\s*(\d{2})\.\s*(\d{2})/);
-    return {id:a.id||'', body:[].slice.call(a.querySelectorAll('[data-story-body] p')).map(function(p){return p.textContent}), photos:[].slice.call(a.querySelectorAll('[data-story-photos] img')), coh:parseInt((a.querySelector('.cg')||{}).textContent,10)||0, date:dt.trim(), y:m?+m[1]:0, mo:m?+m[2]:0,
+    return {id:a.id||'', tags:[].slice.call(a.querySelectorAll('[data-story-tags] span')).map(function(t){return t.textContent}), body:[].slice.call(a.querySelectorAll('[data-story-body] p')).map(function(p){return p.textContent}), photos:[].slice.call(a.querySelectorAll('[data-story-photos] img')), coh:parseInt((a.querySelector('.cg')||{}).textContent,10)||0, date:dt.trim(), y:m?+m[1]:0, mo:m?+m[2]:0,
       title:(a.querySelector('h3')||{}).textContent||'', sum:(a.querySelector('p')||{}).textContent||'',
       illu:a.querySelector('.illu'), yt:a.getAttribute('data-yt')||''};
   });
@@ -267,6 +267,32 @@
   var dialogScope=SiteUI.createDialogScope();
   function isolateDialog(dialog){ if(dialog)dialogScope.activate(dialog);else dialogScope.release(); }
   function trapDialogFocus(event,dialog){SiteUI.trapFocus(event,dialog);}
+  // Only a whole hashtag-only final paragraph is a legacy caption tag line.
+  // A heading ("# 제목") or a sentence containing # stays ordinary body text.
+  function captionParts(d){
+    var paragraphs=[d.sum || ''].concat(d.body || []);
+    var tagName=/^[\p{L}\p{M}\p{N}_]+$/u;
+    // Saved tags may hold single spaces ("멘토 매칭데이"), as the backoffice keeps them (V40).
+    var savedTag=/^[\p{L}\p{M}\p{N}_]+(?: [\p{L}\p{M}\p{N}_]+)*$/u;
+    var tags=(Array.isArray(d.tags)?d.tags:[]).filter(function(t){return typeof t==='string'}).map(function(t){return t.trim().replace(/^#/, '').replace(/\s+/g,' ')}).filter(function(t){return savedTag.test(t)});
+    if(!tags.length){
+      var last=paragraphs[paragraphs.length-1], tokens=typeof last==='string'?last.trim().split(/\s+/):[];
+      if(tokens.length && tokens.every(function(t){return t[0]==='#' && tagName.test(t.slice(1))})){
+        tags=tokens.map(function(t){return t.slice(1)}); paragraphs.pop();
+      }
+    }
+    return {paragraphs:paragraphs,tags:Array.from(new Set(tags))};
+  }
+  function renderCaption(box,d){
+    box.querySelectorAll('[data-extra-story]').forEach(function(e){e.remove()});
+    var caption=captionParts(d), first=box.querySelector('p');
+    first.textContent=caption.paragraphs[0] || ''; first.hidden=!caption.paragraphs.length;
+    caption.paragraphs.slice(1).forEach(function(text){var p=node('p','',text);p.dataset.extraStory='';box.appendChild(p)});
+    if(caption.tags.length){
+      var line=node('p','cv3-hashtags');line.dataset.extraStory='';
+      caption.tags.forEach(function(tag){line.appendChild(node('span','', '#'+tag))});box.appendChild(line);
+    }
+  }
   function fill(){
     var L=list(), d=L[cur]; if(!d) return;
     if(modalVisited.indexOf(d)<0)modalVisited.push(d);
@@ -291,10 +317,7 @@
     M.querySelector('.cv3-m-acc').textContent=accName(d.coh);
     var heading=M.querySelector('h3'), account=document.createElement('b'); account.textContent=accName(d.coh);
     heading.replaceChildren(account, document.createTextNode(' '+d.title));
-    M.querySelector('.cv3-m-body p').textContent=d.sum;
-    M.querySelectorAll('[data-extra-story]').forEach(function(e){e.remove()});
-    var bodyBox=M.querySelector('.cv3-m-body');
-    (d.body||[]).forEach(function(text){var p=document.createElement('p');p.dataset.extraStory='';p.textContent=text;bodyBox.appendChild(p)});
+    renderCaption(M.querySelector('.cv3-m-body'),d);
 
     M.querySelector('time').textContent=d.date;
     M.querySelectorAll('.cv3-like,.cv3-save').forEach(function(b){b.setAttribute('aria-pressed','false')});

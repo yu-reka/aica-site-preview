@@ -338,6 +338,9 @@ const Site = (() => {
       goTo(u.hash);
       applyCat(u.searchParams);   // 같은 페이지의 분류 조건(?cat=)
     });
+    // Same-document Back/Forward does not trigger pageshow. Release the modal
+    // before the history destination is shown, without adding history entries.
+    addEventListener('popstate', () => closeDrawer(true));
     addEventListener('hashchange', syncSubnav);
     // 본문으로 바로가기: 주소는 그대로 두고 초점만 본문으로(탭 화면 페이지의 주소 #interviews 등이 #main으로 바뀌지 않게).
     // <main tabindex="-1">이 아닌 페이지(알아보기)는 브라우저 기본 이동

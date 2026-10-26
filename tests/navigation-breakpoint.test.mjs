@@ -145,3 +145,25 @@ for (const menu of ['about','check']) {
     assert.equal(h.sublinks[1].getAttribute('aria-current'),undefined);
   });
 }
+
+test('history traversal closes the drawer and releases modal state, including a pending focus timer',()=>{
+  const h=runtime();h.menu.focus();h.menu.fire('click');
+  assert.equal(h.modalActive,true);
+  h.events.popstate.forEach(fn=>fn());h.flush();
+  assert.equal(h.drawer.classList.contains('is-open'),false);
+  assert.equal(h.dim.classList.contains('is-open'),false);
+  assert.equal(h.document.body.style.overflow,'');
+  assert.equal(h.menu.getAttribute('aria-expanded'),'false');
+  assert.equal(h.modalActive,false,'background is usable after history traversal');
+  assert.equal(h.document.activeElement,h.menu,'pending timer cannot focus a closed drawer');
+  h.menu.fire('click');h.flush();
+  assert.equal(h.drawer.classList.contains('is-open'),true,'menu remains reusable');
+});
+
+test('history traversal while the drawer is closed leaves content focus alone',()=>{
+  const h=runtime();h.document.activeElement=h.document.body;
+  h.events.popstate.forEach(fn=>fn());h.flush();
+  assert.equal(h.document.activeElement,h.document.body);
+  assert.equal(h.drawer.classList.contains('is-open'),false);
+  assert.equal(h.modalActive,false);
+});

@@ -24,12 +24,23 @@
       btns.forEach(function(b){ b.setAttribute('aria-current', String(+b.dataset.jump === k)); });
     };
     var hdr = function(){ var h = $('#siteHeader'); return h ? h.getBoundingClientRect().bottom : 60; };
-    function jumpToChapter(k){
+    function jumpToChapter(k, instant){
       var m = document.getElementById('am-ch' + k); if (!m) return;
       setCur(k);
-      scrollTo({ top: Math.max(0, m.getBoundingClientRect().top + scrollY - hdr()), behavior: reduce.matches ? 'auto' : 'smooth' });
+      scrollTo({ top: Math.max(0, m.getBoundingClientRect().top + scrollY - hdr()), behavior: instant ? 'instant' : (reduce.matches ? 'auto' : 'smooth') });
     }
-    btns.forEach(function(b){ b.addEventListener('click', function(){ jumpToChapter(+b.dataset.jump); }); });
+    // A second tap during a quick sequence cancels the long smooth scroll.
+    // Use instant rather than auto so CSS scroll-behavior cannot restart it.
+    var lastChapterClick = -Infinity, rapidChapterFrame;
+    btns.forEach(function(b){ b.addEventListener('click', function(){
+      var k = +b.dataset.jump, now = Date.now(), rapid = now - lastChapterClick < 600;
+      lastChapterClick = now;
+      cancelAnimationFrame(rapidChapterFrame);
+      jumpToChapter(k, rapid);
+      // Cancelling an in-flight browser animation can leave one final scroll
+      // step. Re-align on the next frame; a newer tap replaces this correction.
+      if (rapid) rapidChapterFrame = requestAnimationFrame(function(){ jumpToChapter(k, true); });
+    }); });
     // The shared drawer closes and updates the public hash first. On mobile,
     // align that section to the same chapter divider used by the bottom tabs.
     var chapterIds={intro:1,learning:2,activities:3,career:4}, chapterFrame;

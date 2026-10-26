@@ -71,8 +71,8 @@
   "stories": {
     "css": {
       "cohort-v3": {
-        "cohorts": "1026caption-tags",
-        "hub": "1026caption-tags"
+        "cohorts": "1026month-navigation3",
+        "hub": "1026month-navigation3"
       },
       "detail-navigation": "1020outsidegrid",
       "hub": "1026honors-separate",
@@ -97,7 +97,7 @@
     },
     "js": {
       "cohort-modal-scroll": "1022swipereading",
-      "cohort-v3": "1026caption-tags",
+      "cohort-v3": "1026month-navigation-tags",
       "detail-navigation": "1020outsidegrid",
       "old-hash": "1022hubmodals",
       "project-reading": "1021topline",
@@ -113,7 +113,8 @@
       "stories-sections": "1023cardrows",
       "stories": "1022dialog-transfer",
       "story-state": "1022chips-posts-only",
-      "interview-honors": "1026honors-no-hint"
+      "interview-honors": "1026honors-no-hint",
+      "cohort-month-navigation": "1026month-navigation"
     }
   }
 }

@@ -203,7 +203,7 @@
     var all=D.filter(function(d){return inC(d,st.coh)});
     var mos=[]; all.forEach(function(d){ if(mos.indexOf(ym(d))<0) mos.push(ym(d)); }); mos.sort(function(a,b){return a-b});
     var multiY=mos.length&&Math.floor(mos[0]/100)!==Math.floor(mos[mos.length-1]/100);
-    var box=$('.cv3-hl'); box.innerHTML='';box.hidden=!all.length;if(!all.length)return;
+    var box=$('.cv3-hl'), scroll=box.dataset.coh===String(st.coh)?box.scrollLeft:0; box.dataset.coh=st.coh; box.innerHTML='';box.hidden=!all.length;if(!all.length)return;
     [0].concat(mos).forEach(function(m){
       var items=all.filter(function(d){return !m||ym(d)===m}).sort(function(a,b){return ym(b)-ym(a)});
       var b=document.createElement('button'); b.type='button'; b.setAttribute('aria-pressed',st.mo===m);
@@ -212,6 +212,7 @@
       b.onclick=function(){ st.mo=m; st.pg=1; draw(); };
       box.appendChild(b);
     });
+    box.scrollLeft=scroll;
   }
   /* 교육과정 고정 게시물(10-13, 디자인통일v1과 같은 내용): 기수마다 격자 첫 칸에 고정. 카드는 기수 정보 블록의 .cv3-pin(카테고리 페이지 관리에서 고침, 2026-10-22).
      카드가 없는 기수(3–5기)는 안 보임 */

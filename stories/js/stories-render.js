@@ -54,7 +54,7 @@
     out.photos = (Array.isArray(item.photos) ? item.photos : []).map(image).filter(Boolean);
     out.art = safe ? safe.svg(item.art) : '';
     out.links = (Array.isArray(item.links) ? item.links : []).map(function (link) { return link && Object.assign({}, link,{url:safe ? safe.url(link.url,false) : ''}); }).filter(function (link) { return link && link.url; });
-    out.tags = (Array.isArray(item.tags) ? item.tags : []).filter(function (tag) { return Number.isInteger(tag) && tag >= 0 && tag < TAGS.length; });
+    out.tags = (Array.isArray(item.tags) ? item.tags : []).filter(function (tag) { return (prefix === 'st-' && typeof tag === 'string') || (Number.isInteger(tag) && tag >= 0 && tag < TAGS.length); });
     if (item.video) out.video = Object.assign({}, item.video,{url:safe ? safe.url(item.video.url,false) : '',yt:/^[A-Za-z0-9_-]{6,20}$/.test(item.video.yt || '') ? item.video.yt : ''});
     if (!new RegExp('^'+prefix+'[0-9]{1,18}$').test(out.anchor || '')) out.anchor = prefix + String(item.id || '').replace(/[^0-9]/g,'').slice(0,18);
     return out;
@@ -356,6 +356,7 @@
         + '<h3 data-field="title">' + esc(c.title) + '</h3><p data-field="body">' + esc(body[0] || '') + '</p>'
         + '<div class="mt"><span class="cg" data-field="cohort">' + esc(c.cohort) + '기</span><span class="dt" data-field="date">' + esc(c.date || '') + '</span></div>'
         + (body.length > 1 ? '<div data-story-body hidden>' + body.slice(1).map(function (b) { return '<p>' + esc(b) + '</p>'; }).join('') + '</div>' : '')
+        + '<div data-story-tags hidden>' + (Array.isArray(c.tags) ? c.tags : []).filter(function (t) { return typeof t === 'string'; }).map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div>'
         + '<div data-story-photos hidden>' + photoList(c).map(function (p) { return imgTag(p, 'st-ph', true); }).join('') + '</div>'
         + '</a>';
     }).join('');

@@ -335,3 +335,7 @@
 
 /* 게시물이 없는 기수에는 월별 목록·격자·페이지를 표시하지 않습니다. */
 .cv3 :is(.cv3-hl,.cv3-grid,.cv3-pg)[hidden]{display:none}
+
+/* Caption tags are text only, separate from the grid's event/category filters. */
+.stories-page .cv3-m-body .cv3-hashtags{display:flex;flex-wrap:wrap;gap:4px 8px;margin-top:20px;color:#00376B;font-size:13px;line-height:1.6}
+.stories-page .cv3-hashtags span{max-width:100%;overflow-wrap:anywhere;word-break:normal}

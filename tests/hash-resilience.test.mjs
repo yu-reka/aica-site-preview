@@ -29,28 +29,18 @@ function runtime(selectors = {}, hash = malformed) {
   return { context, document, events, documentEvents };
 }
 
-test('malformed direct Check URL still initializes checklist change handlers', () => {
-  const changes = [];
-  const boxes = Array.from({ length: 5 }, () => ({
-    checked: false, addEventListener(name, handler) { if (name === 'change') changes.push(handler); },
-  }));
-  const nodes = Object.fromEntries(['#chkNow', '#chkBar', '#chkGo', '#cmCheckNow', '#cmCheckProgress', '#chkGoLabel', '.chk-self'].map(key => [key, {
-    style: {}, classList: { toggle() {} },
-  }]));
+// 스스로 체크는 2026-10-26에 없앴다. 목차 이동 단추는 주소(#…) 처리 뒤에 연결되므로, 연결되면 깨진 주소에서도 스크립트가 끝까지 돈 것
+test('malformed direct Check URL still initializes the chapter jump buttons', () => {
+  const clicks = [];
+  const jump = { dataset: { jump: 'schedule' }, addEventListener(name, handler) { if (name === 'click') clicks.push(handler); } };
   const main = {
-    querySelector: selector => nodes[selector] || null,
-    querySelectorAll: selector => selector === '.chk-box' ? boxes : [],
+    querySelector: () => null,
+    querySelectorAll: selector => selector === '[data-jump]' ? [jump] : [],
     addEventListener() {},
   };
   const { context } = runtime({ '.check-page': main });
   vm.runInContext(source('../check/js/check.js'), context);
-  assert.equal(changes.length, 5);
-  assert.equal(nodes['#chkNow'].textContent, 0);
-  boxes[0].checked = true;
-  changes[0]();
-  assert.equal(nodes['#chkNow'].textContent, 1);
-  assert.equal(nodes['#cmCheckProgress'].value, 1);
-  assert.equal(nodes['#chkBar'].style.width, '20%');
+  assert.equal(clicks.length, 1);
 });
 
 test('malformed Stories URL still registers modal Escape and focus handling', () => {

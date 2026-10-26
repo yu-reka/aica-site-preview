@@ -67,6 +67,9 @@ export function designPreviewData() {
       cohort: record.cohort, term: record.cohortClass || record.duration, subject: record.subject, course: record.subject || record.type, type: record.type,
       title: title(record.name), headline: title(record.title), summary: record.detailSummary, cardSummary: record.summary,
       team: record.team, tags: record.tags, art: art(record),
+      // Public illustrations and existing design words only; never import the DB-selected thumbnail.
+      thumb: {src: `assets/project-thumbs/project-thumb-${String(index % 5 + 1).padStart(2, '0')}.webp`,
+        em: String(record.title).split(/\s+/).slice(-2).join(' ')},
       sections: [record.section1, record.section2, record.section3].map((p, i) => ({h: ['문제 정의', '접근 방법', '결과와 다음 단계'][i], p}))})),
     cohorts: content.stories.cohorts.map((record, index) => ({...meta(record, 930000, 'st-', index),
       cohort: parseInt(record.cohort, 10), title: title(record.title), date: record.date, body: [record.summary],

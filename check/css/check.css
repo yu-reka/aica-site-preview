@@ -24,29 +24,6 @@ body[data-cat="check"]{background:#fff}
 .chk-notice-ico{flex:none;border-radius:50%;background:var(--n-yellow);color:var(--ink);display:grid;place-items:center;font-weight:800;border:2px solid var(--ink)}
 .chk-notice h4{margin:0 0 6px;letter-spacing:-.02em}
 .chk-notice p{margin:0;}
-.chk-self{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(28px,5vw,72px);align-items:start}
-.chk-list{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
-.chk-list li{border-bottom:1px solid var(--line)}
-.chk-list label{display:flex;gap:16px;align-items:flex-start;padding:18px 4px;cursor:pointer}
-.chk-box{position:absolute;opacity:0;pointer-events:none}
-.chk-mark{flex:none;width:26px;height:26px;border:2px solid var(--ink);border-radius:6px;background:var(--surface);position:relative;margin-top:1px;transition:background .2s,transform .3s cubic-bezier(.34,1.56,.64,1)}
-.chk-mark::after{content:"";position:absolute;left:7px;top:1px;width:7px;height:14px;border:solid var(--ink);border-width:0 3px 3px 0;transform:rotate(40deg) scale(0);transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
-.chk-box:checked + .chk-mark{transform:scale(1.06)}
-.chk-box:checked + .chk-mark::after{transform:rotate(40deg) scale(1)}
-.chk-box:focus-visible + .chk-mark{outline:3px solid var(--primary);outline-offset:3px}
-.chk-text{font-size:16.5px;line-height:1.6}
-.chk-box:checked ~ .chk-text{color:var(--graphite)}
-.chk-progress{padding:26px;border:1.5px solid var(--ink);border-radius:14px;background:var(--surface)}
-.chk-progress p{margin:0 0 14px;font-size:17px}
-.chk-progress b{font-family:var(--ff-title);font-weight:400;font-size:38px;margin-right:2px}
-.chk-bar{height:12px;border:2px solid var(--ink);border-radius:12px;background:var(--paper);overflow:hidden}
-.chk-bar i{display:block;height:100%;width:0;transition:width .45s var(--ease)}
-.chk-go{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:12px 18px;border-radius:40px;background:var(--ink);color:var(--paper);font-weight:700;font-size:14.5px;text-decoration:none;transition:background .2s,color .2s}
-.chk-go[hidden]{display:none}
-.chk-go svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
-.chk-go:hover{background:var(--primary);color:#fff}
-@media (max-width:860px){.chk-self{grid-template-columns:1fr}}
-@media (prefers-reduced-motion:reduce){.chk-bar i,.chk-mark,.chk-mark::after{transition:none}}
 .chk-crit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink)}
 .chk-crit>div{padding:30px 28px 34px 0}
 .chk-crit>div+div{padding-left:clamp(20px,3vw,40px);border-left:1px solid var(--line)}
@@ -108,9 +85,6 @@ body[data-cat="check"]{background:#fff}
 .s-head{display:block;padding-bottom:0;border-bottom:0;margin-bottom:clamp(28px,3.4vw,44px)}
 .s-head h2{font-size:clamp(28px,2.8vw,38px)}
 .s-head p{margin-top:10px;max-width:60ch;line-height:1.7}
-.chk-box:checked + .chk-mark{background:var(--primary);border-color:var(--primary)}
-.chk-mark::after{border-color:#fff}
-.chk-bar i{background:var(--primary)}
 .chk-crit-main mark{background:linear-gradient(transparent 60%,var(--primary-soft) 60%)}
 .b2 b{background:linear-gradient(transparent 62%,var(--primary-soft) 62%)}
 .chk-crit-main{font-size:clamp(24px,2.4vw,34px)!important}
@@ -122,7 +96,6 @@ body[data-cat="check"]{background:#fff}
 .faq-tab{display:inline-flex;align-items:center;gap:7px}
 .faq-cnt{font-style:normal;min-width:22px;padding:1px 7px;border-radius:20px;background:#edf2fb;color:#526a9d;font-size:12.5px;font-weight:700;text-align:center;line-height:1.5}
 .faq-tab[aria-pressed="true"] .faq-cnt{background:#ffffff29;color:#fff}
-.chk-progress,body[data-cat="check"] .chk-progress{position:static!important;top:auto}
 .pf{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:18px;}
 .pf-col{position:relative;display:flex;flex-direction:column;align-items:stretch;cursor:pointer}
 .pf-illus{height:clamp(170px,16vw,230px);display:flex;align-items:flex-end;justify-content:center;padding-bottom:18px}
@@ -201,8 +174,6 @@ body[data-cat="check"] .b2 h3,
 body[data-cat="check"] .faq-qt{font-size:var(--t-h3)}
 body[data-cat="check"] .chk-crit-sub,
 body[data-cat="check"] .chk-notice p,
-body[data-cat="check"] .chk-text,
-body[data-cat="check"] .chk-progress p,
 body[data-cat="check"] .faq-at{font-size:var(--t-body)}
 body[data-cat="check"] .pf-body p,
 body[data-cat="check"] .pf-body dd,

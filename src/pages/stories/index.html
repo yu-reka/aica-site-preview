@@ -56,19 +56,14 @@
 {{> stories/masthead}}
 <div class="hb">
   <!-- 01 후기: 모눈 종이 띠 위에 흐르는 한마디(손글씨) + 포스트잇 4장(분류 · 기수가 겹치지 않게 고름, 흐르는 한마디와 다른 글) -->
-  <section class="hb-sec hb-iv" id="hub-interviews" aria-labelledby="hub-interviews-t">
+  <section class="hb-sec hb-iv" id="hub-interviews" data-honors-feature aria-labelledby="hub-interviews-t">
     <div class="wrap hb-in">
       <div class="sh hb-hd"><p class="sh-k">인터뷰</p><h2 id="hub-interviews-t">여덟 달을 먼저 지나온 선배들에게 물어봤어요</h2></div>
       <a class="hb-more" href="interviews.html"><span class="hb-sr">인터뷰 </span>전체 보기<span aria-hidden="true">→</span></a>
       <div class="hb-body hb-ivg">
-        <a class="hb-ivf" href="interviews.html#iv-1">
-          <span class="hb-ivf-ph"><img class="hb-ph" src="assets/team-pointing.jpg" alt="" width="1000" height="562" loading="lazy" decoding="async"></span>
-          <div class="hb-ivf-tx">
-            <em>선배들의 경험담</em>
-            <h3>{{stories.interviewsById.iv-1.title}}</h3>
-            <p class="hb-ivf-q">{{stories.interviewsById.iv-1.quote}}</p>
-            <span class="hb-by">{{stories.interviewsById.iv-1.cohort}}기 · {{stories.interviewsById.iv-1.author}} · {{stories.interviewsById.iv-1.track}}</span>
-          </div>
+        <a class="hb-ivf" href="interviews.html#iv-honors-1">
+          <span class="hb-ivf-ph honors-placeholder" aria-hidden="true">“</span>
+          <div class="hb-ivf-tx"><em>우수 수료생 인터뷰</em><h3>우수 수료생 인터뷰를 준비하고 있어요</h3><p class="hb-ivf-q">배움 이후의 도전과 성장을 곧 전해드릴게요.</p></div>
         </a>
         <ul class="hb-ivl" role="list">
           <li><a href="interviews.html#iv-2">
@@ -160,7 +155,7 @@
   <!-- 03 프로젝트: 결과물 카드 3장. 유형이 겹치지 않게(실증 · 기업연계 · 창업) 고름. 번호는 프로젝트 페이지 순서라 여기선 뺌 -->
   <section class="hb-sec hb-pj" id="hub-projects" aria-labelledby="hub-projects-t">
     <div class="wrap hb-in">
-      <div class="sh hb-hd"><p class="sh-k">프로젝트 아카이브</p><h2 id="hub-projects-t">선배들은 여기서 이런 걸 만들었어요</h2></div>
+      <div class="sh hb-hd"><p class="sh-k">프로젝트</p><h2 id="hub-projects-t">선배들은 여기서 이런 걸 만들었어요</h2></div>
       <a class="hb-more" href="projects.html"><span class="hb-sr">프로젝트 </span>전체 보기<span aria-hidden="true">→</span></a>
       <div class="hb-body hb-pjs hb-x">
         <a class="hb-pjc" href="projects.html#pj-1">

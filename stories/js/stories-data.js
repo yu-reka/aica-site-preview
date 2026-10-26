@@ -1454,6 +1454,10 @@ window.STORIES_DATA = {
         "#Flutter"
       ],
       "art": "<svg class=\"illu\" aria-hidden=\"true\" viewBox=\"0 0 400 260\" preserveAspectRatio=\"xMidYMid slice\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"100%\" height=\"100%\" fill=\"#FFE600\"/>\n   <rect x=\"86\" y=\"62\" width=\"228\" height=\"134\" rx=\"12\" fill=\"#fff\"/>\n   <rect x=\"106\" y=\"82\" width=\"104\" height=\"54\" rx=\"7\" fill=\"#2457F5\"/>\n   <rect x=\"226\" y=\"82\" width=\"68\" height=\"18\" rx=\"6\" fill=\"#E4E9F7\"/>\n   <rect x=\"226\" y=\"112\" width=\"48\" height=\"12\" rx=\"6\" fill=\"#FFE600\"/>\n   <rect x=\"106\" y=\"152\" width=\"136\" height=\"12\" rx=\"6\" fill=\"#E4E9F7\"/>\n   <rect x=\"60\" y=\"204\" width=\"280\" height=\"14\" rx=\"7\" fill=\"#E35B28\"/>\n   <circle cx=\"320\" cy=\"150\" r=\"22\" fill=\"#2457F5\"/><rect x=\"310\" y=\"142\" width=\"20\" height=\"4\" rx=\"2\" fill=\"#fff\"/></svg>",
+      "thumb": {
+        "src": "assets/project-thumbs/project-thumb-01.webp",
+        "em": "길을 알려줘요"
+      },
       "sections": [
         {
           "h": "문제 정의",
@@ -1490,6 +1494,10 @@ window.STORIES_DATA = {
         "#FastAPI"
       ],
       "art": "<svg class=\"illu\" aria-hidden=\"true\" viewBox=\"0 0 400 260\" preserveAspectRatio=\"xMidYMid slice\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"100%\" height=\"100%\" fill=\"#2457F5\"/>\n   <rect x=\"54\" y=\"44\" width=\"212\" height=\"132\" rx=\"12\" fill=\"#fff\"/>\n   <rect x=\"76\" y=\"68\" width=\"120\" height=\"12\" rx=\"6\" fill=\"#2457F5\"/>\n   <rect x=\"76\" y=\"94\" width=\"168\" height=\"8\" rx=\"4\" fill=\"#D7DEF4\"/>\n   <rect x=\"76\" y=\"112\" width=\"140\" height=\"8\" rx=\"4\" fill=\"#D7DEF4\"/>\n   <rect x=\"76\" y=\"136\" width=\"76\" height=\"20\" rx=\"10\" fill=\"#FFE600\"/>\n   <path d=\"M286 92h76a14 14 0 0 1 14 14v46a14 14 0 0 1-14 14h-30l-14 18v-18h-32a14 14 0 0 1-14-14v-46a14 14 0 0 1 14-14z\" fill=\"#22D3EE\"/>\n   <rect x=\"296\" y=\"112\" width=\"52\" height=\"7\" rx=\"3.5\" fill=\"#fff\"/>\n   <rect x=\"296\" y=\"128\" width=\"36\" height=\"7\" rx=\"3.5\" fill=\"#fff\" opacity=\".66\"/>\n   <rect x=\"92\" y=\"204\" width=\"216\" height=\"16\" rx=\"8\" fill=\"#15368F\"/></svg>",
+      "thumb": {
+        "src": "assets/project-thumbs/project-thumb-02.webp",
+        "em": "미리 알려줘요"
+      },
       "sections": [
         {
           "h": "문제 정의",
@@ -1526,6 +1534,10 @@ window.STORIES_DATA = {
         "#PyTorch"
       ],
       "art": "<svg class=\"illu\" aria-hidden=\"true\" viewBox=\"0 0 400 260\" preserveAspectRatio=\"xMidYMid slice\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"100%\" height=\"100%\" fill=\"#22D3EE\"/>\n   <rect x=\"52\" y=\"54\" width=\"128\" height=\"166\" rx=\"10\" fill=\"#fff\"/>\n   <g fill=\"#0E8577\"><rect x=\"70\" y=\"74\" width=\"34\" height=\"24\" rx=\"5\"/><rect x=\"126\" y=\"74\" width=\"34\" height=\"24\" rx=\"5\"/>\n   <rect x=\"70\" y=\"112\" width=\"34\" height=\"24\" rx=\"5\"/><rect x=\"126\" y=\"112\" width=\"34\" height=\"24\" rx=\"5\"/>\n   <rect x=\"70\" y=\"150\" width=\"34\" height=\"24\" rx=\"5\"/><rect x=\"126\" y=\"150\" width=\"34\" height=\"24\" rx=\"5\"/></g>\n   <rect x=\"96\" y=\"188\" width=\"42\" height=\"32\" rx=\"5\" fill=\"#FFE600\"/>\n   <rect x=\"218\" y=\"100\" width=\"130\" height=\"120\" rx=\"10\" fill=\"#fff\" opacity=\".82\"/>\n   <g fill=\"#0A4F49\" opacity=\".8\"><rect x=\"236\" y=\"120\" width=\"40\" height=\"22\" rx=\"5\"/>\n   <rect x=\"292\" y=\"120\" width=\"40\" height=\"22\" rx=\"5\"/><rect x=\"236\" y=\"156\" width=\"40\" height=\"22\" rx=\"5\"/>\n   <rect x=\"292\" y=\"156\" width=\"40\" height=\"22\" rx=\"5\"/></g>\n   <path d=\"M20 236h360\" stroke=\"#0A4F49\" stroke-width=\"10\" stroke-linecap=\"round\"/></svg>",
+      "thumb": {
+        "src": "assets/project-thumbs/project-thumb-03.webp",
+        "em": "판독을 도와요"
+      },
       "sections": [
         {
           "h": "문제 정의",
@@ -1562,6 +1574,10 @@ window.STORIES_DATA = {
         "#Kubernetes"
       ],
       "art": "<svg class=\"illu\" aria-hidden=\"true\" viewBox=\"0 0 400 260\" preserveAspectRatio=\"xMidYMid slice\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"100%\" height=\"100%\" fill=\"#FFE600\"/>\n   <path d=\"M150 54h100v56c0 30-22 52-50 52s-50-22-50-52z\" fill=\"#fff\"/>\n   <path d=\"M150 66h-28a24 24 0 0 0 28 42zM250 66h28a24 24 0 0 1-28 42z\" fill=\"#fff\" opacity=\".7\"/>\n   <rect x=\"186\" y=\"162\" width=\"28\" height=\"28\" fill=\"#15368F\"/>\n   <rect x=\"152\" y=\"190\" width=\"96\" height=\"20\" rx=\"7\" fill=\"#15368F\"/>\n   <circle cx=\"200\" cy=\"90\" r=\"20\" fill=\"#FFE600\"/>\n   <path d=\"M60 220h280\" stroke=\"#8A6B14\" stroke-width=\"8\" stroke-linecap=\"round\" opacity=\".35\"/></svg>",
+      "thumb": {
+        "src": "assets/project-thumbs/project-thumb-04.webp",
+        "em": "이상을 알아채요"
+      },
       "sections": [
         {
           "h": "문제 정의",
@@ -1598,6 +1614,10 @@ window.STORIES_DATA = {
         "#창업연계"
       ],
       "art": "<svg class=\"illu\" aria-hidden=\"true\" viewBox=\"0 0 400 260\" preserveAspectRatio=\"xMidYMid slice\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"100%\" height=\"100%\" fill=\"#E4E9F7\"/>\n   <rect x=\"34\" y=\"78\" width=\"150\" height=\"104\" rx=\"10\" fill=\"#fff\"/>\n   <rect x=\"54\" y=\"98\" width=\"86\" height=\"10\" rx=\"5\" fill=\"#2457F5\"/>\n   <rect x=\"54\" y=\"120\" width=\"110\" height=\"7\" rx=\"3.5\" fill=\"#CBD5F0\"/>\n   <rect x=\"54\" y=\"138\" width=\"64\" height=\"18\" rx=\"9\" fill=\"#FFE600\"/>\n   <rect x=\"216\" y=\"62\" width=\"150\" height=\"120\" rx=\"10\" fill=\"#fff\"/>\n   <rect x=\"236\" y=\"82\" width=\"70\" height=\"10\" rx=\"5\" fill=\"#22D3EE\"/>\n   <rect x=\"236\" y=\"104\" width=\"110\" height=\"7\" rx=\"3.5\" fill=\"#CBD5F0\"/>\n   <rect x=\"236\" y=\"122\" width=\"92\" height=\"7\" rx=\"3.5\" fill=\"#CBD5F0\"/>\n   <g fill=\"#2457F5\"><circle cx=\"112\" cy=\"206\" r=\"16\"/><rect x=\"92\" y=\"226\" width=\"40\" height=\"22\" rx=\"11\"/>\n   <circle cx=\"200\" cy=\"212\" r=\"14\"/><rect x=\"182\" y=\"230\" width=\"36\" height=\"20\" rx=\"10\"/>\n   <circle cx=\"288\" cy=\"206\" r=\"16\"/><rect x=\"268\" y=\"226\" width=\"40\" height=\"22\" rx=\"11\"/></g></svg>",
+      "thumb": {
+        "src": "assets/project-thumbs/project-thumb-05.webp",
+        "em": "정리해 줘요"
+      },
       "sections": [
         {
           "h": "문제 정의",
@@ -1634,6 +1654,10 @@ window.STORIES_DATA = {
         "#기업연계"
       ],
       "art": "<svg class=\"illu\" aria-hidden=\"true\" viewBox=\"0 0 400 260\" preserveAspectRatio=\"xMidYMid slice\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"100%\" height=\"100%\" fill=\"#15368F\"/>\n   <rect x=\"84\" y=\"40\" width=\"150\" height=\"152\" rx=\"10\" fill=\"#fff\" opacity=\".28\"/>\n   <rect x=\"60\" y=\"62\" width=\"150\" height=\"156\" rx=\"10\" fill=\"#fff\"/>\n   <rect x=\"80\" y=\"84\" width=\"84\" height=\"10\" rx=\"5\" fill=\"#2457F5\"/>\n   <rect x=\"80\" y=\"108\" width=\"110\" height=\"7\" rx=\"3.5\" fill=\"#CBD5F0\"/>\n   <rect x=\"80\" y=\"124\" width=\"92\" height=\"7\" rx=\"3.5\" fill=\"#CBD5F0\"/>\n   <rect x=\"80\" y=\"140\" width=\"104\" height=\"7\" rx=\"3.5\" fill=\"#CBD5F0\"/>\n   <rect x=\"80\" y=\"160\" width=\"72\" height=\"16\" rx=\"8\" fill=\"#22D3EE\"/>\n   <path d=\"M262 84L330 104L286 150L262 84M330 104L344 184M286 150L344 184M286 150L254 204\" stroke=\"#fff\" stroke-width=\"3\" stroke-linecap=\"round\" fill=\"none\" opacity=\".35\"/>\n   <path d=\"M160 168H272\" stroke=\"#22D3EE\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-dasharray=\"1 10\"/>\n   <g fill=\"#fff\"><circle cx=\"262\" cy=\"84\" r=\"9\"/><circle cx=\"330\" cy=\"104\" r=\"9\"/><circle cx=\"254\" cy=\"204\" r=\"9\"/></g>\n   <circle cx=\"286\" cy=\"150\" r=\"11\" fill=\"#22D3EE\"/>\n   <circle cx=\"344\" cy=\"184\" r=\"21\" fill=\"none\" stroke=\"#FFE600\" stroke-width=\"2.5\"/>\n   <circle cx=\"344\" cy=\"184\" r=\"12\" fill=\"#FFE600\"/></svg>",
+      "thumb": {
+        "src": "assets/project-thumbs/project-thumb-01.webp",
+        "em": "유출을 막아요"
+      },
       "sections": [
         {
           "h": "문제 정의",

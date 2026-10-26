@@ -4,14 +4,15 @@ import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
 
 // Exercise the shipped controller against DOM/media-query event boundaries.
-function runtime() {
+function runtime(options = {}) {
   const events = {}, timers = new Map(), media = new Map();
   let timerId = 0, modalActive = false;
-  const document = {documentElement:{dataset:{}}, body:{style:{}},
+  const document = {documentElement:{dataset:{menu:options.menu},scrollHeight:5000}, body:{style:{}},
+    getElementById: id => sections[id] || null,
     currentScript:{src:'https://aica.test/common/js/site.js'},
     addEventListener(name, fn) {(events[name] ||= []).push(fn);},
     querySelector: selector => nodes[selector] || null,
-    querySelectorAll: () => [], activeElement:null};
+    querySelectorAll: selector => selector.includes('#drawer a[data-sub]') ? sublinks : [], activeElement:null};
   function node() {
     const classes = new Set(), handlers = {};
     return {attributes:{}, style:{setProperty(){}},
@@ -20,19 +21,24 @@ function runtime() {
       addEventListener(name,fn){handlers[name]=fn;}, fire(name,event={}){handlers[name]?.(event);},
       setAttribute(name,value){this.attributes[name]=value;},
       getAttribute(name){return this.attributes[name];},
+      removeAttribute(name){delete this.attributes[name];},
       contains(other){return other===this || this.children?.includes(other);},
       querySelector(){return null;}, querySelectorAll(){return [];},
       focus(){const changed=document.activeElement!==this; document.activeElement=this;
         if(changed){if(this===topLink)gnb.fire('focusin');(events.focusin || []).forEach(fn=>fn({target:this}));}}};
   }
   const header=node(), drawer=node(), dim=node(), menu=node(), close=node(), topLink=node(), gnb=node(), fab=node();
-  drawer.children=[close]; gnb.children=[topLink];
+  const sublinks=(options.links || []).map(({id,hash})=>Object.assign(node(),{dataset:{sub:id},href:'https://aica.test/about/index.html'+hash}));
+  const sections=Object.fromEntries(Object.entries(options.positions || {}).map(([id,top])=>[id,{top,getClientRects:()=>[{}],getBoundingClientRect(){return {top:this.top};}}]));
+  header.getBoundingClientRect=()=>({bottom:60});
+  drawer.children=[close,...sublinks]; gnb.children=[topLink];
+  if (options.sub) document.documentElement.dataset.sub=options.sub;
   header.querySelector=s=>s==='.gnb'?gnb:s.startsWith('.gnb-link')?topLink:null;
   header.querySelectorAll=s=>s==='.drop'?[{offsetHeight:150}]:[];
   const nodes={'#siteHeader':header,'#drawer':drawer,'#drawerDim':dim,'#menuBtn':menu,
-    '#drawerClose':close,'#fabTop':fab};
+    '#drawerClose':close,'#fabTop':fab,'#drawer a[data-sub]':sublinks[0]};
   const context={document,URL,location:{href:'https://aica.test/about/index.html',origin:'https://aica.test',
-      pathname:'/about/index.html',search:'',hash:''},window:{},scrollY:0,innerHeight:900,
+      pathname:'/about/index.html',search:'',hash:options.hash || ''},window:{},scrollY:0,innerHeight:900,
     addEventListener(name,fn){(events[name] ||= []).push(fn);},
     matchMedia(query){
       if(!media.has(query))media.set(query,{matches:query.includes('max-width'),listeners:[],
@@ -40,11 +46,13 @@ function runtime() {
         change(matches){if(this.matches===matches)return;this.matches=matches;this.listeners.forEach(fn=>fn());}});
       return media.get(query);
     },
+    requestAnimationFrame(fn){fn();},
     setTimeout(fn){timers.set(++timerId,fn);return timerId;}, clearTimeout(id){timers.delete(id);},
     SiteUI:{createDialogScope:()=>({activate(){modalActive=true;},release(){modalActive=false;}}),trapFocus(){}},
     SiteLayout:()=>Object.fromEntries(['renderHeader','renderLnb','renderFooter','renderFloating'].map(k=>[k,()=>{}]))};
   vm.runInNewContext(readFileSync(new URL('../common/js/site.js',import.meta.url),'utf8'),context);
-  return {document,header,drawer,dim,menu,close,topLink,gnb,events,
+  return {document,header,drawer,dim,menu,close,topLink,gnb,events,sublinks,sections,
+    navigate(hash){context.location.hash=hash;(events.hashchange || []).forEach(fn=>fn());},
     boundary:media.get('(min-width:1081px)'),
     get modalActive(){return modalActive;},
     flush(){for(const [id,fn] of timers){timers.delete(id);fn();}}};
@@ -101,3 +109,39 @@ test('rapid boundary change cancels delayed drawer focus; ordinary mobile resize
   assert.equal(h.document.activeElement,h.menu,'normal close still returns focus to the hamburger');
   assert.equal(h.document.body.style.overflow,'');
 });
+
+
+test('drawer-only pages mark the current submenu on load and hash navigation',()=>{
+  const links=[{id:'intro',hash:'#intro'},{id:'learn',hash:'#learning'},{id:'activity',hash:'#activities'}];
+  const h=runtime({links,hash:'#activities'});
+  assert.equal(h.sublinks[2].getAttribute('aria-current'),'true','anchor is marked even without a subnav or LNB');
+  assert.equal(h.sublinks[0].getAttribute('aria-current'),undefined);
+  h.navigate('#learning');
+  assert.equal(h.sublinks[1].getAttribute('aria-current'),'true');
+  assert.equal(h.sublinks[2].getAttribute('aria-current'),undefined,'old selection is cleared');
+  h.navigate('');
+  assert.equal(h.sublinks[0].getAttribute('aria-current'),'true','first section is the no-hash default');
+});
+
+test('drawer-only details keep their declared submenu when reopened',()=>{
+  const h=runtime({links:[{id:'intro',hash:'#intro'},{id:'learn',hash:'#learning'}],sub:'learn',hash:'#question-3'});
+  h.sublinks[1].removeAttribute('aria-current');
+  h.menu.fire('click');
+  assert.equal(h.sublinks[1].getAttribute('aria-current'),'true');
+  assert.equal(h.sublinks[0].getAttribute('aria-current'),undefined);
+});
+
+
+for (const menu of ['about','check']) {
+  test(`${menu} drawer follows the visible section after scrolling without hash changes`,()=>{
+    const links=[{id:'first',hash:'#first'},{id:'second',hash:'#second'},{id:'third',hash:'#third'}];
+    const h=runtime({menu,links,hash:'#first',positions:{first:-2000,second:-100,third:1200}});
+    h.menu.fire('click');
+    assert.equal(h.sublinks[1].getAttribute('aria-current'),'true','visible second section overrides stale first hash');
+    h.close.fire('click');
+    h.sections.second.top=-1700;h.sections.third.top=70;
+    h.menu.fire('click');
+    assert.equal(h.sublinks[2].getAttribute('aria-current'),'true','reopening rechecks the new scroll position');
+    assert.equal(h.sublinks[1].getAttribute('aria-current'),undefined);
+  });
+}

@@ -76,7 +76,6 @@ export function deriveContent(content) {
     if (!category) throw new Error(`Unknown gallery category: ${slide.category}`);
     category.count++;
   }
-  content.check.checklistCount = content.check.checklist.length;
   content.check.faqCounts = Object.fromEntries(content.check.categories.map(category => [category.id, 0]));
   content.check.faqCounts.all = content.check.faq.length;
   for (const item of content.check.faq) {

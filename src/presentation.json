@@ -1765,33 +1765,6 @@
       }
     }
   },
-  "check/checklist": {
-    "checklist-1": {
-      "item": {
-        "template": "check/checklist/item"
-      }
-    },
-    "checklist-2": {
-      "item": {
-        "template": "check/checklist/item"
-      }
-    },
-    "checklist-3": {
-      "item": {
-        "template": "check/checklist/item"
-      }
-    },
-    "checklist-4": {
-      "item": {
-        "template": "check/checklist/item"
-      }
-    },
-    "checklist-5": {
-      "item": {
-        "template": "check/checklist/item"
-      }
-    }
-  },
   "check/process": {
     "process-1": {
       "item": {

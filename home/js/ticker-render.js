@@ -38,5 +38,5 @@
     s.onerror = function () { if (onError) onError(); else render(); };
     document.head.appendChild(s);
   }
-  load('../api/public/stories.js', function () { load('../stories/js/stories-data.js?v=1022cohortinfo-db'); });
+  load('../api/public/stories.js', function () { load('../stories/js/stories-data.js?v=1026remove-iv6'); });
 })();

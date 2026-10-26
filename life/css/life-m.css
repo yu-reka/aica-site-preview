@@ -356,7 +356,8 @@ html[data-nav=side][data-menu=life] #siteLnb .lnb-tp,.lm-dock .lnb-tp{display:no
 .lm-dock .lnb-list{margin:0}
 .lm-docked .lm-dock{transform:none;visibility:visible}
 html[data-menu=life] body::after{content:"";display:block;flex:none;height:88px}
-html[data-menu=life] .to-top{bottom:100px}
+/* Keep the shared top button above the fixed mobile life navigation. */
+html[data-menu=life] body.lm-docked .floating{bottom:calc(100px + env(safe-area-inset-bottom,0px))}
 @media(prefers-reduced-motion:reduce){.lm-dock{transition:none}}
 }
 

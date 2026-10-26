@@ -8,10 +8,10 @@ const SiteLayout = ({ $, ROOT, href, current, subnavOn, sideNav, html }) => {
   /* 모바일 메뉴에서 하위 목록을 접고 펼치는 메뉴(10-15): 네 메뉴 모두. 여기서 뺀 메뉴는 누르면 그 페이지로 바로 가는 링크가 됨 */
   const DRAWER_ACC = ['about', 'stories', 'life', 'check'];
   const num = i => String(i + 1).padStart(2, '0');
-  /* 바깥 연결처(menu.js SITE_LINKS) 링크 속성. 주소가 아직 없으면 누를 때 안내만 */
+  /* 바깥 연결처(menu.js SITE_LINKS) 링크 속성. 주소가 아직 없으면 누를 때 안내만. 바깥 사이트(공식 홈페이지 등)는 새 창(탭)에서 열림(10-23) */
   function ext(key){
     const l = SITE_LINKS[key];
-    return l.url ? `href="${text(l.url)}"` : `href="#${key}" data-toast="${text(l.note)}"`;
+    return l.url ? `href="${text(l.url)}" target="_blank" rel="noopener noreferrer"` : `href="#${key}" data-toast="${text(l.note)}"`;
   }
 
   /* ---------- 그리기 ---------- */

@@ -3,9 +3,9 @@
     "css": {
       "about-m": {
         "legacyComment": "1016channel",
-        "default": "1021audit-pr28"
+        "default": "1023partners"
       },
-      "about": "1021audit-pr28",
+      "about": "1023partners",
       "presentation": "1022anchor40"
     },
     "js": {
@@ -41,7 +41,7 @@
     },
     "js": {
       "availability": "1021",
-      "site-layout": "1021audit-pr28",
+      "site-layout": "1023newtab",
       "site": "1021audit-pr28",
       "track": "1020",
       "ui": "1021audit-pr28"
@@ -86,7 +86,7 @@
         "default": "1023mobileellipsis",
         "cohorts": "1022cohortinfo"
       },
-      "stories-render": "1021",
+      "stories-render": "1023linebreak",
       "stories-sections": {
         "interviews": "1023avatars12",
         "projects": "1021projecttopline"

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "fac_1f_office_01",
+    "alias": "fac_1f_office_01.webp",
+    "original": "building.webp"
+  },
+  {
+    "id": "fac_1f_cafe_01",
+    "alias": "fac_1f_cafe_01.webp",
+    "original": "cafe_k.webp"
+  },
+  {
+    "id": "fac_1f_cafe_02",
+    "alias": "fac_1f_cafe_02.webp",
+    "original": "b_cafe.webp"
+  },
+  {
+    "id": "fac_1f_cafe_03",
+    "alias": "fac_1f_cafe_03.webp",
+    "original": "x3_table.webp"
+  },
+  {
+    "id": "fac_1f_meeting_01",
+    "alias": "fac_1f_meeting_01.webp",
+    "original": "x2_room.webp"
+  },
+  {
+    "id": "fac_1f_meeting_02",
+    "alias": "fac_1f_meeting_02.webp",
+    "original": "x3_table.webp"
+  },
+  {
+    "id": "fac_23f_class_02",
+    "alias": "fac_23f_class_02.webp",
+    "original": "b_class.webp"
+  },
+  {
+    "id": "fac_23f_class_03",
+    "alias": "fac_23f_class_03.webp",
+    "original": "classroom.webp"
+  },
+  {
+    "id": "fac_23f_lounge_01",
+    "alias": "fac_23f_lounge_01.webp",
+    "original": "rest_tmp.webp"
+  },
+  {
+    "id": "fac_23f_lounge_02",
+    "alias": "fac_23f_lounge_02.webp",
+    "original": "rest_tmp.webp"
+  },
+  {
+    "id": "fac_23f_lounge_03",
+    "alias": "fac_23f_lounge_03.webp",
+    "original": "rest_tmp.webp"
+  },
+  {
+    "id": "fac_23f_lab_01",
+    "alias": "fac_23f_lab_01.webp",
+    "original": "project.webp"
+  },
+  {
+    "id": "fac_23f_lab_02",
+    "alias": "fac_23f_lab_02.webp",
+    "original": "x3_table.webp"
+  },
+  {
+    "id": "fac_23f_lab_03",
+    "alias": "fac_23f_lab_03.webp",
+    "original": "b_project.webp"
+  }
+]

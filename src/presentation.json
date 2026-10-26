@@ -1504,10 +1504,8 @@
             "thumbnailClass": "bx9-tb im-entrance"
           },
           {
-            "className": "bx9-sl im-building",
-            "style": "--bs:220%;--bp:30% 78%;",
-            "thumbnailClass": "bx9-tb im-building",
-            "thumbnailStyle": "--bs:220%;--bp:30% 78%;"
+            "className": "bx9-sl im-fac_1f_office_01",
+            "thumbnailClass": "bx9-tb im-fac_1f_office_01"
           }
         ]
       }
@@ -1517,18 +1515,16 @@
         "template": "life/facilities/panel-2",
         "photos": [
           {
-            "className": "bx9-sl im-cafe_k",
-            "thumbnailClass": "bx9-tb im-cafe_k"
+            "className": "bx9-sl im-fac_1f_cafe_01",
+            "thumbnailClass": "bx9-tb im-fac_1f_cafe_01"
           },
           {
-            "className": "bx9-sl im-b_cafe",
-            "style": "--bs:230%;--bp:70% 40%;",
-            "thumbnailClass": "bx9-tb im-b_cafe",
-            "thumbnailStyle": "--bs:230%;--bp:70% 40%;"
+            "className": "bx9-sl im-fac_1f_cafe_02",
+            "thumbnailClass": "bx9-tb im-fac_1f_cafe_02"
           },
           {
-            "className": "bx9-sl im-x3_table",
-            "thumbnailClass": "bx9-tb im-x3_table"
+            "className": "bx9-sl im-fac_1f_cafe_03",
+            "thumbnailClass": "bx9-tb im-fac_1f_cafe_03"
           }
         ]
       }
@@ -1538,20 +1534,12 @@
         "template": "life/facilities/panel-3",
         "photos": [
           {
-            "className": "bx9-sl im-x2_room",
-            "thumbnailClass": "bx9-tb im-x2_room"
+            "className": "bx9-sl im-fac_1f_meeting_01",
+            "thumbnailClass": "bx9-tb im-fac_1f_meeting_01"
           },
           {
-            "className": "bx9-sl im-x3_table",
-            "style": "--bs:220%;--bp:70% 60%;",
-            "thumbnailClass": "bx9-tb im-x3_table",
-            "thumbnailStyle": "--bs:220%;--bp:70% 60%;"
-          },
-          {
-            "className": "bx9-sl im-x2_room",
-            "style": "--bs:230%;--bp:78% 30%;",
-            "thumbnailClass": "bx9-tb im-x2_room",
-            "thumbnailStyle": "--bs:230%;--bp:78% 30%;"
+            "className": "bx9-sl im-fac_1f_meeting_02",
+            "thumbnailClass": "bx9-tb im-fac_1f_meeting_02"
           }
         ]
       }
@@ -1565,16 +1553,12 @@
             "thumbnailClass": "bx9-tb im-classroom"
           },
           {
-            "className": "bx9-sl im-b_class",
-            "style": "--bs:240%;--bp:28% 72%;",
-            "thumbnailClass": "bx9-tb im-b_class",
-            "thumbnailStyle": "--bs:240%;--bp:28% 72%;"
+            "className": "bx9-sl im-fac_23f_class_02",
+            "thumbnailClass": "bx9-tb im-fac_23f_class_02"
           },
           {
-            "className": "bx9-sl im-classroom",
-            "style": "--bs:230%;--bp:14% 18%;",
-            "thumbnailClass": "bx9-tb im-classroom",
-            "thumbnailStyle": "--bs:230%;--bp:14% 18%;"
+            "className": "bx9-sl im-fac_23f_class_03",
+            "thumbnailClass": "bx9-tb im-fac_23f_class_03"
           }
         ]
       }
@@ -1584,22 +1568,16 @@
         "template": "life/facilities/panel-7",
         "photos": [
           {
-            "className": "bx9-sl im-rest_tmp",
-            "style": "--bp:left bottom;",
-            "thumbnailClass": "bx9-tb im-rest_tmp",
-            "thumbnailStyle": "--bp:left bottom;"
+            "className": "bx9-sl im-fac_23f_lounge_01",
+            "thumbnailClass": "bx9-tb im-fac_23f_lounge_01"
           },
           {
-            "className": "bx9-sl im-rest_tmp",
-            "style": "--bs:210%;--bp:78% 72%;",
-            "thumbnailClass": "bx9-tb im-rest_tmp",
-            "thumbnailStyle": "--bs:210%;--bp:78% 72%;"
+            "className": "bx9-sl im-fac_23f_lounge_02",
+            "thumbnailClass": "bx9-tb im-fac_23f_lounge_02"
           },
           {
-            "className": "bx9-sl im-rest_tmp",
-            "style": "--bs:230%;--bp:4% 72%;",
-            "thumbnailClass": "bx9-tb im-rest_tmp",
-            "thumbnailStyle": "--bs:230%;--bp:4% 72%;"
+            "className": "bx9-sl im-fac_23f_lounge_03",
+            "thumbnailClass": "bx9-tb im-fac_23f_lounge_03"
           }
         ]
       }
@@ -1609,18 +1587,16 @@
         "template": "life/facilities/panel-6",
         "photos": [
           {
-            "className": "bx9-sl im-project",
-            "thumbnailClass": "bx9-tb im-project"
+            "className": "bx9-sl im-fac_23f_lab_01",
+            "thumbnailClass": "bx9-tb im-fac_23f_lab_01"
           },
           {
-            "className": "bx9-sl im-x3_table",
-            "thumbnailClass": "bx9-tb im-x3_table"
+            "className": "bx9-sl im-fac_23f_lab_02",
+            "thumbnailClass": "bx9-tb im-fac_23f_lab_02"
           },
           {
-            "className": "bx9-sl im-b_project",
-            "style": "--bs:230%;--bp:62% 88%;",
-            "thumbnailClass": "bx9-tb im-b_project",
-            "thumbnailStyle": "--bs:230%;--bp:62% 88%;"
+            "className": "bx9-sl im-fac_23f_lab_03",
+            "thumbnailClass": "bx9-tb im-fac_23f_lab_03"
           }
         ]
       }

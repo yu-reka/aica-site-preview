@@ -53,7 +53,7 @@
     },
     "js": {
       "home": "1021audit-pr28",
-      "ticker-render": "1022cohortinfo-db"
+      "ticker-render": "1026remove-iv6"
     }
   },
   "life": {
@@ -102,7 +102,7 @@
       "project-reading": "1021topline",
       "projects-filter": "1023course",
       "review-notes": "1021centerellipsis",
-      "stories-data": "1022cohortinfo-db",
+      "stories-data": "1026remove-iv6",
       "stories-m-reviews": {
         "default": "1020states",
         "legacyLoader": "1016cleanup"

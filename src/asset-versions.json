@@ -42,7 +42,7 @@
     "js": {
       "availability": "1026loading-soft-backdrop",
       "site-layout": "1023newtab",
-      "site": "1026submenu-visible",
+      "site": "1026submenu-history",
       "track": "1020",
       "ui": "1021audit-pr28"
     }

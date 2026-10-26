@@ -86,132 +86,7 @@
     scroller.addEventListener('keydown', function(event){ if(event.target===scroller) SiteUI.railKeys(event, function(dir){scroller.scrollBy({left:dir*scroller.clientWidth*.8,behavior:reduce.matches?'auto':'smooth'});}); });
     addEventListener('resize', upd); upd(); setTimeout(upd, 600);
   }
-  /* 3) 인터뷰 페이지: 추천 인터뷰 카드 넘김(글귀 있는 인터뷰) + 전체 인터뷰 개수 */
-  function interviewQuote(a){
-    // Spring은 모든 카드 변형에 공개 quote를 전달합니다. 정적 시안은 기존 인용문을 읽습니다.
-    var quote = a.getAttribute('data-interview-quote');
-    return (quote !== null ? quote : (($('.ivq', a) || {}).textContent || '')).trim();
-  }
-  function interviewSummary(a){ return (a.getAttribute('data-interview-summary') || '').trim(); }
-  function initInterviews(){
-    var head = $('#p-iv .ivlist > .sh-row');
-    var src = $$('#p-iv .ivgrid a.iv').filter(function(a){ return interviewQuote(a) || interviewSummary(a); });
-    if (!head || !src.length || $('.sm-ivf')) return;
-    var box = document.createElement('section');
-    box.className = 'sm-ivf'; box.setAttribute('aria-label', '추천 인터뷰');
-    var track = document.createElement('div'); track.className = 'sm-ivf-track';
-    src.forEach(function(a){
-      var c = document.createElement('a'); c.className = 'sm-ivf-c'; c.href = a.getAttribute('href');
-      var ph = $('.ph', a).cloneNode(true);
-      $$('[id]', ph).forEach(function(x){ x.removeAttribute('id'); });
-      var dur = $('.dur', ph);
-      if (dur){ var t = document.createElement('span'); t.className = 'sm-ivf-tag'; t.textContent = '▶ 영상 ' + dur.textContent; dur.remove(); ph.appendChild(t); }
-      c.appendChild(ph);
-      var tx = document.createElement('span'); tx.className = 'sm-ivf-tx';
-      var b = document.createElement('b'); b.textContent = ($('h3', a) || {}).textContent || '';
-      var quote = interviewQuote(a), q = document.createElement(quote ? 'q' : 'p');
-      if (!quote) q.className = 'sm-ivf-summary';
-      q.dataset.fullText = quote || interviewSummary(a);
-      q.setAttribute('aria-label', q.dataset.fullText);
-      var excerpt = document.createElement('span'); excerpt.className = 'sm-ivf-excerpt';
-      excerpt.textContent = q.dataset.fullText; q.appendChild(excerpt);
-      var by = $('.by', a), m = document.createElement('span');
-      m.textContent = [($('.av', by) || {}).textContent, ($('b', by) || {}).textContent, ($('em', by) || {}).textContent].filter(Boolean).join(' · ');
-      tx.appendChild(b); tx.appendChild(q); tx.appendChild(m); c.appendChild(tx);
-      track.appendChild(c);
-    });
-    box.appendChild(track);
-    head.parentNode.insertBefore(box, head.nextSibling);
-    var originals = $$('.sm-ivf-c', track), current = 0, timer, ready = false, keyboardMove = false;
-    // One visual neighbour at each end keeps the featured first card centred.
-    if (originals.length > 1){
-      [originals[originals.length - 1], originals[0]].forEach(function(card, index){
-        var clone = card.cloneNode(true);
-        clone.setAttribute('aria-hidden', 'true'); clone.tabIndex = -1;
-        clone.dataset.loopCopy = 'true';
-        if (index === 0) track.insertBefore(clone, originals[0]); else track.appendChild(clone);
-      });
-    }
-    var cards = $$('.sm-ivf-c', track), mobile = matchMedia('(max-width:600px)');
-    function left(card){ return card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2; }
-    function nearest(){
-      var mid = track.scrollLeft + track.clientWidth / 2, best = 0, distance = Infinity;
-      cards.forEach(function(card, index){
-        var delta = Math.abs(card.offsetLeft + card.offsetWidth / 2 - mid);
-        if (delta < distance){ distance = delta; best = index; }
-      });return best;
-    }
-    function paint(index){ cards.forEach(function(card, i){ card.classList.toggle('is-on', i === index); }); }
-    // Loop copies and originals must exchange places with identical visual state.
-    function place(index){
-      track.classList.add('is-repositioning');paint(index);
-      track.scrollTo({left:left(cards[index]),behavior:'instant'});
-      void track.offsetWidth; // Commit the non-animated state before restoring transitions.
-      track.classList.remove('is-repositioning');
-    }
-    function settle(){
-      if (!ready || !mobile.matches) return;
-      var index = nearest();
-      if (originals.length > 1 && (index === 0 || index === cards.length - 1)){
-        current = index === 0 ? originals.length - 1 : 0;
-        index = current + 1;
-        place(index);
-      } else current = originals.length > 1 ? index - 1 : 0;
-      paint(index);
-      if (keyboardMove){ cards[index].focus({preventScroll:true}); keyboardMove = false; }
-    }
-    function fitSummaries(){
-      $$('.sm-ivf-tx q, .sm-ivf-summary', track).forEach(function(el){
-        var span = $('.sm-ivf-excerpt', el), text = el.dataset.fullText || '';
-        if (!span) return;
-        span.textContent = text;
-        var max = parseFloat(getComputedStyle(el).lineHeight) * 2;
-        if (span.getBoundingClientRect().height <= max + 1) return;
-        var chars = typeof Intl.Segmenter === 'function'
-          ? Array.from(new Intl.Segmenter('ko', {granularity:'grapheme'}).segment(text), function(part){ return part.segment; })
-          : Array.from(text);
-        var low = 0, high = chars.length;
-        while (low < high){
-          var mid = Math.ceil((low + high) / 2);
-          span.textContent = chars.slice(0, mid).join('').trimEnd() + '⋯';
-          if (span.getBoundingClientRect().height <= max + 1) low = mid; else high = mid - 1;
-        }
-        span.textContent = chars.slice(0, low).join('').trimEnd() + '⋯';
-      });
-    }
-    function align(){
-      if (!mobile.matches || !track.clientWidth) return;
-      fitSummaries();
-      var index = originals.length > 1 ? current + 1 : 0;
-      place(index);ready = true;
-    }
-    function move(dir){
-      if (!ready) align();
-      var index = nearest(), target = Math.max(0,Math.min(cards.length - 1,index + dir));
-      track.scrollTo({left:left(cards[target]),behavior:reduce.matches?'instant':'smooth'});
-    }
-    ['prev','next'].forEach(function(dir){
-      var button = document.createElement('button');button.type = 'button';
-      button.className = 'sm-arrow sm-arrow--' + dir;
-      button.setAttribute('aria-label',(dir === 'prev' ? '이전 ' : '다음 ') + '인터뷰');
-      button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + ARROW[dir] + '"/></svg>';
-      button.hidden = originals.length < 2;
-      button.addEventListener('click',function(){move(dir === 'prev' ? -1 : 1);});box.appendChild(button);
-    });
-    track.addEventListener('scroll',function(){
-      if (!ready) return;
-      paint(nearest());clearTimeout(timer);timer = setTimeout(settle,160);
-    },{passive:true});
-    track.addEventListener('keydown',function(event){
-      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
-      event.preventDefault();keyboardMove = true;move(event.key === 'ArrowLeft' ? -1 : 1);
-    });
-    mobile.addEventListener('change',align);
-    addEventListener('resize',align);
-    requestAnimationFrame(align);
-    if (document.fonts) document.fonts.ready.then(align);
-
-  }
+  // 일반 인터뷰는 모바일 리스트만 표시합니다. 우수 수료생 카드는 별도 섹션에서 관리합니다.
 
   /* 4) 기수 기록(cohort-v3.js가 그린 화면을 600px 이하에서만 시안 배치로) */
   var BADGE = '<svg class="sm-cv-badge" viewBox="0 0 24 24" aria-label="공식 계정" role="img"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>';
@@ -321,7 +196,7 @@
     if (!grid || $('.sm-projects')) return;
     var cards = $$('.pjc', grid);
     if (!cards.length) return;
-    var box = el('section', 'sm-projects'); box.setAttribute('aria-label', '프로젝트 아카이브');
+    var box = el('section', 'sm-projects'); box.setAttribute('aria-label', '프로젝트');
     // Spring omits the static cohort/subject row until its public DTO supports it.
     // Preserve its existing type controls without duplicating the preview filters.
     var filters = $('#p-pr .pj-filter-row') ? null : tabs('프로젝트 유형');
@@ -386,7 +261,6 @@
 
   function init(){
     initTabs();
-    initInterviews();
     initCohorts();
     initProjects();
     initReviews();

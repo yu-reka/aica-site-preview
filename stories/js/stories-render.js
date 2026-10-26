@@ -50,7 +50,7 @@
       var src = safe.url(value.src, true); if (!src) return null;
       return Object.assign({}, value, {src:src,w:Math.max(0,num(value.w,0)),h:Math.max(0,num(value.h,0))});
     }
-    out.img = image(item.img); out.imgLarge = image(item.imgLarge);
+    out.img = image(item.img); out.imgLarge = image(item.imgLarge); out.thumb = image(item.thumb);   // thumb: 프로젝트 썸네일(파란 글자 em 은 그대로)
     out.photos = (Array.isArray(item.photos) ? item.photos : []).map(image).filter(Boolean);
     out.art = safe ? safe.svg(item.art) : '';
     out.links = (Array.isArray(item.links) ? item.links : []).map(function (link) { return link && Object.assign({}, link,{url:safe ? safe.url(link.url,false) : ''}); }).filter(function (link) { return link && link.url; });
@@ -110,6 +110,16 @@
     if (m && m.src) return imgTag({ src: m.src, alt: '', w: m.w, h: m.h, fit: m.fit }, 'hb-ph', true, m === item.img, null, opts.large ? '(max-width: 800px) calc(100vw - 40px), 538px' : '(max-width: 640px) 104px, 140px');
     var svg = item.art || '<svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#E4E9F7"/></svg>';
     return svg.replace(/^<svg\b([^>]*)>/, function (all, attrs) { return '<svg aria-hidden="true"' + attrs.replace(/\s(class|aria-hidden)="[^"]*"/g, '') + '>'; });
+  }
+  // 프로젝트 썸네일(2026-10-26): 흰 바탕 왼쪽에 프로젝트 주제, 오른쪽에 관리자가 고른 그림(thumb, 투명 배경).
+  // thumb.em 글자가 주제 안에 있으면 그 부분만 파란 한 줄로 따로 보여요. 글자 수에 따라 크기를 세 단계로(긴 주제도 칸 안에)
+  function hasThumb(item) { return !!(item.thumb && item.thumb.src); }
+  function pjThumb(item, cls) {
+    var t = item.thumb, text = String(item.headline || item.title || '').trim(), em = String(t.em || '').trim(), at = em ? text.indexOf(em) : -1;
+    var words = at < 0 ? esc(text) : esc(text.slice(0, at).trim()) + '<em>' + esc(em) + '</em>' + esc(text.slice(at + em.length).trim());
+    var size = text.length > 40 ? ' pjthumb-s' : text.length > 24 ? ' pjthumb-m' : '';
+    return '<div class="pjthumb' + size + (cls ? ' ' + cls : '') + '" aria-hidden="true"><p class="pjthumb-t">' + words + '</p>'
+      + '<img class="pjthumb-i" src="' + esc(t.src) + '" alt="" loading="lazy" decoding="async"' + (t.w && t.h ? ' width="' + t.w + '" height="' + t.h + '"' : '') + '></div>';
   }
   // 글 안 사진 여러 장: 옆으로 넘겨 봐요(손가락으로 밀기 · 화살표 · 키보드 ←→, 움직임은 stories.js)
   function photoList(item) { return (item.photos || []).filter(function (p) { return p && p.src; }); }
@@ -282,7 +292,7 @@
     var pjSubject = subjectOf;
     if (pjgrid) pjgrid.innerHTML = PJ.map(function (x) {
       var head = x.headline || x.title;
-      return '<a data-cohort="' + esc(pjCohort(x)) + '" data-subject="' + esc(courseOf(x)) + '" class="pjc" href="#' + esc(x.anchor) + '"><div class="ph">' + visual(x, { fit: true }) + '<span class="pjc-type" data-field="subject">' + esc(pjSubject(x)) + '</span></div>'
+      return '<a data-cohort="' + esc(pjCohort(x)) + '" data-subject="' + esc(courseOf(x)) + '" class="pjc" href="#' + esc(x.anchor) + '"><div class="ph">' + (hasThumb(x) ? pjThumb(x, 'illu') : visual(x, { fit: true })) + '<span class="pjc-type" data-field="subject">' + esc(pjSubject(x)) + '</span></div>'
         + '<div class="pjc-tx">' + (x.headline ? '<p class="pjname">' + esc(projectName(x)) + '</p>' : '')
         + '<h3 data-field="title">' + esc(head) + '</h3>'
         + '<p class="sum" data-field="summary">' + esc(x.cardSummary || firstSentence(x.summary)) + '</p>'
@@ -315,7 +325,7 @@
       }).join('');
       var links = (x.links || []).filter(function (l) { return l && l.url; }).map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label || '자료 보기') + ' ↗</a>'; }).join('');
       return '<div class="pjd" id="' + id + '"><a class="ivback" href="#p-pr">← 프로젝트 목록</a><div class="ivwrap"><div>'
-        + '<div class="ivhero pjhero"><span class="ivtag">' + esc(pjSubject(x)) + '</span>' + (slides(x, x.title) || visual(x, { hidden: true })) + '</div>'
+        + '<div class="ivhero pjhero"><span class="ivtag">' + esc(pjSubject(x)) + '</span>' + (slides(x, x.title) || (hasThumb(x) && !hasPhoto(x) ? pjThumb(x, 'illu') : visual(x, { hidden: true }))) + '</div>'
         + '<span class="pjno">' + pad2(i + 1) + '</span><h2>' + esc(x.title) + '</h2><p class="lead">' + esc(x.summary) + '</p>'
         + '<div class="pjtags">' + (x.tags || []).map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div>'
         + '<div class="pjsec">' + secs + '</div>'
@@ -359,17 +369,29 @@
     if (!ivs.length) ivs = IV.filter(function (v) { return !(v.video && v.video.yt); });
     var ivBox = $('.hb-ivg');
     if (ivBox) {
-      var f = ivs[0];
-      var list = '<ul class="hb-ivl" role="list">' + ivs.slice(1, 4).map(function (v) {
+      var honorsFeature = !!$('#hub-interviews[data-honors-feature]');
+      var f = honorsFeature ? null : ivs[0];
+      var list = '<ul class="hb-ivl" role="list">' + ivs.slice(honorsFeature ? 0 : 1, honorsFeature ? 3 : 4).map(function (v) {
         return '<li><a href="interviews.html#' + esc(v.anchor) + '"><span class="hb-ivl-ph">' + hubVisual(v) + '</span>'
           + '<div><h3>' + esc(v.title) + '</h3><span class="hb-by">' + esc(who(v)) + '</span></div></a></li>';
       }).join('') + '</ul>';
       // 큰 카드의 꼬리표는 페이지 문구를 유지하고, 이미지·제목·요약·작성자는 같은 최신 인터뷰에서 채웁니다.
       var card = $('.hb-ivf', ivBox);
       // 페이지에 시안 사진 · 목록이 남아 있으면(빌드가 비우지 않은 페이지) 겹치지 않게 먼저 지워요
-      if (card) $$(':scope > .hb-ivf-ph, :scope > .hb-ph, :scope > svg', card).forEach(function (el) { el.remove(); });
+      if (card && !honorsFeature) $$(':scope > .hb-ivf-ph, :scope > .hb-ph, :scope > svg', card).forEach(function (el) { el.remove(); });
       $$('.hb-ivl', ivBox).forEach(function (el) { el.remove(); });
-      if (card && f) {
+      if (card && honorsFeature) {
+        card.setAttribute('href', 'interviews.html#iv-honors-1');
+        var honorsPhoto = $('.hb-ivf-ph', card);
+        if (honorsPhoto) {
+          honorsPhoto.classList.remove('honors-placeholder');
+          honorsPhoto.innerHTML = '<img class="hb-ph" src="assets/interview-avatars/avatar-card-10-1080.webp" alt="" width="1080" height="675" loading="lazy" decoding="async">';
+        }
+        var honorsTitle = $('h3', card), honorsQuote = $('.hb-ivf-q', card);
+        if (honorsTitle) honorsTitle.textContent = '우수 수료생 인터뷰를 준비하고 있어요';
+        if (honorsQuote) honorsQuote.textContent = '배움 이후의 도전과 성장을 곧 전해드릴게요.';
+        ivBox.insertAdjacentHTML('beforeend', list);
+      } else if (card && f) {
         card.setAttribute('href', 'interviews.html#' + f.anchor);
         card.insertAdjacentHTML('afterbegin', '<span class="hb-ivf-ph">' + hubVisual(f, { large: true }) + '</span>');
         var h = $('h3', card), by = $('.hb-by', card), em = $('em', card), q = $('.hb-ivf-q', card);
@@ -420,7 +442,7 @@
       PJ.forEach(function (x) { if (three.length < 3 && !types[x.type]) { types[x.type] = 1; three.push(x); } });
       PJ.forEach(function (x) { if (three.length < 3 && three.indexOf(x) < 0) three.push(x); });
       pjBox.innerHTML = three.map(function (x) {
-        return '<a class="hb-pjc" href="projects.html#' + esc(x.anchor) + '"><span class="hb-pjc-ph">' + hubVisual(x) + '<span class="hb-pjc-type">' + esc(subjectOf(x)) + '</span></span>'
+        return '<a class="hb-pjc" href="projects.html#' + esc(x.anchor) + '"><span class="hb-pjc-ph">' + (hasThumb(x) ? pjThumb(x) : hubVisual(x)) + '<span class="hb-pjc-type">' + esc(subjectOf(x)) + '</span></span>'
           + '<div class="hb-pjc-tx">' + (x.headline ? '<p class="hb-pjc-nm">' + esc(projectName(x)) + '</p>' : '') + '<h3>' + esc(x.headline || x.title) + '</h3>'
           + '<p class="hb-pjc-s">' + esc(x.cardSummary || firstSentence(x.summary)) + '</p><span class="hb-pjc-tm">' + esc(x.team) + '</span></div></a>';
       }).join('');

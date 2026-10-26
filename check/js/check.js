@@ -1,7 +1,7 @@
 /* 지원 전 체크: existing content/IDs are shared by both layouts.
    Desktop: floating chapters, animated process, eight FAQs per page.
    Mobile <=600px: chapter dock, all process stages, search/five FAQ items,
-   single-answer expansion, and the approved checklist progress states. */
+   single-answer expansion. */
 (() => {
   const main = document.querySelector('.check-page');
   if (!main) return;
@@ -236,19 +236,5 @@
     new IntersectionObserver(es => es.forEach(e => { inView = e.isIntersecting; start(); }), { threshold: .3 }).observe(pf);
     mobile.addEventListener('change', start);
     set(0);
-  }
-
-  /* ---------- 스스로 체크 ---------- */
-  const boxes = $$('.chk-box', main), now = $('#chkNow', main), bar = $('#chkBar', main), go = $('#chkGo', main);
-  if (boxes.length) {
-    const upd = () => {
-      const n = boxes.filter(b => b.checked).length;
-      now.textContent = n; bar.style.width = (n / boxes.length * 100) + '%';
-      $('#cmCheckNow', main).textContent = n; $('#cmCheckProgress', main).value = n;
-      $('.chk-self', main).classList.toggle('is-complete', n === boxes.length);
-      $('#chkGoLabel', main).textContent = mobile.matches ? (n === boxes.length ? '체크 완료 · 선발 과정 확인하기' : '선발 과정 확인하기') : '모집 프로세스 보러 가기';
-      go.hidden = !mobile.matches && n < 1;
-    };
-    boxes.forEach(b => b.addEventListener('change', upd)); mobile.addEventListener('change', upd); upd();
   }
 })();

@@ -60,7 +60,7 @@
     "css": {
       "life-m": "1026life-top",
       "life": "1020leisure",
-      "presentation": "1020unpick"
+      "presentation": "1026floor-equal"
     },
     "js": {
       "life-m-view": "1021area-arrows",
@@ -71,8 +71,8 @@
   "stories": {
     "css": {
       "cohort-v3": {
-        "cohorts": "1026month-navigation3",
-        "hub": "1026month-navigation3"
+        "cohorts": "1026month-modal-wrap",
+        "hub": "1026month-modal-wrap"
       },
       "detail-navigation": "1020outsidegrid",
       "hub": "1026honors-separate",
@@ -93,7 +93,8 @@
       },
       "stories": "1021audit-pr28",
       "story-state": "1020states",
-      "interview-honors": "1026honors-no-hint"
+      "interview-honors": "1026honors-no-hint",
+      "project-video": "1026demo-preserve-media"
     },
     "js": {
       "cohort-modal-scroll": "1022swipereading",
@@ -114,7 +115,8 @@
       "stories": "1022dialog-transfer",
       "story-state": "1022chips-posts-only",
       "interview-honors": "1026honors-no-hint",
-      "cohort-month-navigation": "1026month-navigation"
+      "cohort-month-navigation": "1026month-navigation",
+      "project-video": "1026demo-preserve-media"
     }
   }
 }

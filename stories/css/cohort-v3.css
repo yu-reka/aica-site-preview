@@ -245,7 +245,7 @@
 /* Bounded desktop photo dialog: media stays still while the caption scrolls. */
 .stories-page .cv3-m-box{overflow:visible}
 .stories-page .cv3-m-side{min-height:0;overflow:hidden;border-radius:0 0 16px 0;background:#fff}
-.stories-page .cv3-m-body{min-height:0;overscroll-behavior:contain;word-break:keep-all;overflow-wrap:anywhere}
+.stories-page .cv3-m-body{min-height:0;overscroll-behavior:contain;word-break:normal;overflow-wrap:anywhere}
 .stories-page .cv3-m-body:focus-visible{outline:2px solid #2457F5;outline-offset:-4px}
 .stories-page .cv3-m-body h3{margin-bottom:24px}
 .stories-page .cv3-m-body p+p{margin-top:20px}

@@ -51,7 +51,7 @@
 <div class="page lo" id="pg-home" data-page="home">
   <section class="sec lo-sec" aria-labelledby="lo-fac-t"><div class="wrap">
     <div class="lo-hd"><div class="sh"><div><p class="sh-k">시설 둘러보기</p><h2 id="lo-fac-t">매일 지낼 건물, 층마다 미리 둘러봐요</h2></div></div><a class="lo-more" href="#facilities">전체 보기<span aria-hidden="true">→</span></a></div>
-    <div class="lo-g3 lo-pjs"><a class="lo-c lo-pj" href="#facilities" data-fac="1-0"><span class="lo-ph"><img src="assets/entrance.webp" alt="" loading="lazy"><span class="lo-pj-type">1F</span></span><span class="lo-tx"><em>정문 · 공용</em><b>들어서면 {{life.facilitiesById.bx9s-1-1.name}}부터</b><small>정문 · {{life.facilitiesById.bx9s-1-1.name}} · 상담실</small></span></a>
+    <div class="lo-g3 lo-pjs"><a class="lo-c lo-pj" href="#facilities" data-fac="1-0"><span class="lo-ph"><img src="assets/entrance.webp" alt="" loading="lazy"><span class="lo-pj-type">1F</span></span><span class="lo-tx"><em>정문 · 공용</em><b>들어서면 {{life.facilitiesById.bx9s-1-1.name}}부터</b><small>정문 · {{life.facilitiesById.bx9s-1-1.name}} · {{life.facilitiesById.bx9s-1-2.name}}</small></span></a>
 <a class="lo-c lo-pj" href="#facilities" data-fac="23-0"><span class="lo-ph"><img src="assets/classroom.webp" alt="" loading="lazy"><span class="lo-pj-type">2·3F</span></span><span class="lo-tx"><em>교육장</em><b>매일 수업 듣는 곳</b><small>{{life.facilitiesById.bx9s-23-0.name}} · {{life.facilitiesById.bx9s-23-1.name}} · {{life.facilitiesById.bx9s-23-2.name}}</small></span></a>
 <a class="lo-c lo-pj" href="#facilities" data-fac="8-0"><span class="lo-ph"><img src="assets/cafe8_tmp.webp" alt="" loading="lazy"><span class="lo-pj-type">8F</span></span><span class="lo-tx"><em>{{life.facilitiesById.bx9s-8-0.name}}</em><b>점심은 건물 안에서</b><small>{{life.facilitiesById.bx9s-8-0.name}} 1곳</small></span></a>
 </div>
@@ -95,8 +95,8 @@
             <div class="bx9-head"><span class="bx9-fb">1F</span><h3>정문 · 공용</h3>
               <div class="bx9-tabs" role="tablist" aria-label="1F 공간">
                 <button type="button" role="tab" class="bx9-t" id="bx9t-1-0" aria-controls="bx9s-1-0" aria-selected="true"><span class="bx9-tt im-building" aria-hidden="true"></span><b>{{life.facilitiesById.bx9s-1-0.name}}</b></button>
-                <button type="button" role="tab" class="bx9-t" id="bx9t-1-1" aria-controls="bx9s-1-1" aria-selected="false" tabindex="-1"><span class="bx9-tt im-cafe_k" aria-hidden="true"></span><b>{{life.facilitiesById.bx9s-1-1.name}}</b></button>
-                <button type="button" role="tab" class="bx9-t" id="bx9t-1-2" aria-controls="bx9s-1-2" aria-selected="false" tabindex="-1"><span class="bx9-tt im-x2_room" aria-hidden="true"></span><b>{{life.facilitiesById.bx9s-1-2.name}}</b></button>
+                <button type="button" role="tab" class="bx9-t" id="bx9t-1-1" aria-controls="bx9s-1-1" aria-selected="false" tabindex="-1"><span class="bx9-tt im-fac_1f_cafe_01" aria-hidden="true"></span><b>{{life.facilitiesById.bx9s-1-1.name}}</b></button>
+                <button type="button" role="tab" class="bx9-t" id="bx9t-1-2" aria-controls="bx9s-1-2" aria-selected="false" tabindex="-1"><span class="bx9-tt im-fac_1f_meeting_01" aria-hidden="true"></span><b>{{life.facilitiesById.bx9s-1-2.name}}</b></button>
               </div>
             </div>
             {{#each life.facilityGroups.floor1}}{{> @view.panel.template}}
@@ -106,8 +106,8 @@
             <div class="bx9-head"><span class="bx9-fb">2·3F</span><h3>교육장</h3>
               <div class="bx9-tabs" role="tablist" aria-label="2·3F 공간">
                 <button type="button" role="tab" class="bx9-t" id="bx9t-23-0" aria-controls="bx9s-23-0" aria-selected="true"><span class="bx9-tt im-classroom" aria-hidden="true"></span><b>{{life.facilitiesById.bx9s-23-0.name}}</b></button>
-                <button type="button" role="tab" class="bx9-t" id="bx9t-23-1" aria-controls="bx9s-23-1" aria-selected="false" tabindex="-1"><span class="bx9-tt im-rest_tmp" aria-hidden="true" style="--bp:left bottom;"></span><b>{{life.facilitiesById.bx9s-23-1.name}}</b></button>
-                <button type="button" role="tab" class="bx9-t" id="bx9t-23-2" aria-controls="bx9s-23-2" aria-selected="false" tabindex="-1"><span class="bx9-tt im-project" aria-hidden="true"></span><b>{{life.facilitiesById.bx9s-23-2.name}}</b></button>
+                <button type="button" role="tab" class="bx9-t" id="bx9t-23-1" aria-controls="bx9s-23-1" aria-selected="false" tabindex="-1"><span class="bx9-tt im-fac_23f_lounge_01" aria-hidden="true"></span><b>{{life.facilitiesById.bx9s-23-1.name}}</b></button>
+                <button type="button" role="tab" class="bx9-t" id="bx9t-23-2" aria-controls="bx9s-23-2" aria-selected="false" tabindex="-1"><span class="bx9-tt im-fac_23f_lab_01" aria-hidden="true"></span><b>{{life.facilitiesById.bx9s-23-2.name}}</b></button>
               </div>
             </div>
             {{#each life.facilityGroups.floor23}}{{> @view.panel.template}}

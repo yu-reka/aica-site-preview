@@ -110,16 +110,24 @@
 @media (max-width:860px){
 .life-page .lnb{position:static}}
 /* 링크 버튼 */
-.life-page .im-b_cafe{background-image:url(../assets/b_cafe.webp)}
-.life-page .im-b_class{background-image:url(../assets/b_class.webp)}
-.life-page .im-b_project{background-image:url(../assets/b_project.webp)}
 .life-page .im-building{background-image:url(../assets/building.webp)}
-.life-page .im-cafe_k{background-image:url(../assets/cafe_k.webp)}
-.life-page .im-classroom{background-image:url(../assets/classroom.webp)}
 .life-page .im-entrance{background-image:url(../assets/entrance.webp)}
-.life-page .im-project{background-image:url(../assets/project.webp)}
-.life-page .im-x2_room{background-image:url(../assets/x2_room.webp)}
-.life-page .im-x3_table{background-image:url(../assets/x3_table.webp)}
+.life-page .im-classroom{background-image:url(../assets/classroom.webp)}
+/* Public preview: facility filenames contain approved design-image copies only. */
+.life-page .im-fac_1f_office_01{background-image:url(../assets/fac_1f_office_01.webp)}
+.life-page .im-fac_1f_cafe_01{background-image:url(../assets/fac_1f_cafe_01.webp)}
+.life-page .im-fac_1f_cafe_02{background-image:url(../assets/fac_1f_cafe_02.webp)}
+.life-page .im-fac_1f_cafe_03{background-image:url(../assets/fac_1f_cafe_03.webp)}
+.life-page .im-fac_1f_meeting_01{background-image:url(../assets/fac_1f_meeting_01.webp)}
+.life-page .im-fac_1f_meeting_02{background-image:url(../assets/fac_1f_meeting_02.webp)}
+.life-page .im-fac_23f_class_02{background-image:url(../assets/fac_23f_class_02.webp)}
+.life-page .im-fac_23f_class_03{background-image:url(../assets/fac_23f_class_03.webp)}
+.life-page .im-fac_23f_lounge_01{background-image:url(../assets/fac_23f_lounge_01.webp)}
+.life-page .im-fac_23f_lounge_02{background-image:url(../assets/fac_23f_lounge_02.webp)}
+.life-page .im-fac_23f_lounge_03{background-image:url(../assets/fac_23f_lounge_03.webp)}
+.life-page .im-fac_23f_lab_01{background-image:url(../assets/fac_23f_lab_01.webp)}
+.life-page .im-fac_23f_lab_02{background-image:url(../assets/fac_23f_lab_02.webp)}
+.life-page .im-fac_23f_lab_03{background-image:url(../assets/fac_23f_lab_03.webp)}
 /* ===== 화면 끝 블록: 오시는 길 주차 안내(.rlx) · 시설 둘러보기 관련 페이지 링크(.fsx) ===== */
 .life-page .rlx{margin-top:clamp(calc(5.6*var(--lr)),7vw,calc(8*var(--lr)));}
 .life-page .fsx{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(1.4*var(--lr));margin-top:calc(2*var(--lr))}
@@ -188,8 +196,6 @@
 .life-page #pg-facility .sh h2,.life-page #pg-tips .sh h2,.life-page #pg-way .sh h2{font-family:var(--jua);font-weight:700}
 /* 고정 지도: 커진 카드가 헤더 아래로 숨지 않게 */
 /* 위쪽 핀: 설명을 카드 아래로 */
-/* 휴게 공간 임시 사진 */
-.life-page .im-rest_tmp{background-image:url("../assets/rest_tmp.webp");background-position:left bottom!important}
 .life-page .bx-ex.tmp{background:var(--ny)!important;color:var(--ink)}
 /* 구내식당 임시 사진 */
 .life-page .im-cafe8_tmp{background-image:url("../assets/cafe8_tmp.webp")}

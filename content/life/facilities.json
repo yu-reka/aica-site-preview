@@ -55,7 +55,7 @@
     "id": "bx9s-1-2",
     "caption": "회의실 전경",
     "name": "회의실",
-    "galleryLabel": "회의실 사진 3장",
+    "galleryLabel": "회의실 사진 2장",
     "floorKey": "1",
     "spaceKey": "2",
     "photos": [
@@ -66,10 +66,6 @@
       {
         "alt": "회의 테이블",
         "thumbnailLabel": "회의 테이블 보기"
-      },
-      {
-        "alt": "발표 스크린",
-        "thumbnailLabel": "발표 스크린 보기"
       }
     ],
     "notes": [

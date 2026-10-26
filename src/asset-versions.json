@@ -71,8 +71,8 @@
   "stories": {
     "css": {
       "cohort-v3": {
-        "cohorts": "1022cohortinfo-empty",
-        "hub": "1022emptystate"
+        "cohorts": "1026caption-tags",
+        "hub": "1026caption-tags"
       },
       "detail-navigation": "1020outsidegrid",
       "hub": "1026honors-separate",
@@ -97,7 +97,7 @@
     },
     "js": {
       "cohort-modal-scroll": "1022swipereading",
-      "cohort-v3": "1022cohortinfo-db",
+      "cohort-v3": "1026caption-tags",
       "detail-navigation": "1020outsidegrid",
       "old-hash": "1022hubmodals",
       "project-reading": "1021topline",
@@ -109,7 +109,7 @@
         "legacyLoader": "1016cleanup"
       },
       "stories-m": "1026honors-projectlabel",
-      "stories-render": "1026honors-thumbs",
+      "stories-render": "1026cohort-tags",
       "stories-sections": "1023cardrows",
       "stories": "1022dialog-transfer",
       "story-state": "1022chips-posts-only",

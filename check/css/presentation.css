@@ -135,6 +135,3 @@
 .check-page section.v3-sec#eligibility{padding-top:clamp(56px,5.6vw,80px)}
 
 html body .check-page :is(span.tx>small,.pf-step,.b2-no){font-family:var(--ff-text)!important}
-
-/* 지원 전 체크 모집 대상: '다른 정부지원사업' 안내 카드 ↔ 스스로 체크 사이 여백 넓힘(10-14, 48 → 72px 안팎) */
-.check-page .chk-notice + .v3-h3{margin-top:clamp(60px,5.5vw,76px)}

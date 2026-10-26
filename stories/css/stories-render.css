@@ -39,3 +39,14 @@
 /* 관리자 글쓰기에서 엔터 한 번 = 줄바꿈(2026-10-23): 문단은 빈 줄(엔터 두 번)로 나뉘고, 문단 안의 줄바꿈은 그대로 보여요.
    후기 창 본문 · 인터뷰 요약과 답변 · 프로젝트 요약과 칸 글 · 기수별 이모저모 글 창 */
 .ov .mbody p,.ivd .lead,.ivd .qa .a,.pjd .lead,.pjd .pjph-t,.cv3-m-body p{white-space:pre-line}
+
+/* 프로젝트 썸네일(2026-10-26, 백오피스 프로젝트 글의 '썸네일 그림' — stories-render.js pjThumb): 흰 바탕 왼쪽에 프로젝트 주제, 오른쪽에 고른 그림(투명 배경).
+   글자 크기는 칸 너비 기준(cqw)이라 카드 · 한눈에 보기 · 상세 맨 위 · 모바일 목록 어디서나 같은 비율. em(관리자가 고른 글자)은 파란 한 줄로 따로.
+   주제가 길면 글자를 줄여요(pjthumb-m 25~40자 · pjthumb-s 41자부터). 카드에 마우스를 올리면 칸 전체가 커지고 그림만 따로 커지지는 않아요.
+   그림은 비율이 달라도(세로로 긴 퍼즐 그림 등) 늘 같은 틀(칸 너비의 50% · 가로:세로 3:2) 안에 맞춰 크기가 같아 보여요 */
+.stories-page .pjthumb{position:relative;display:block;width:100%;height:100%;overflow:hidden;background:#fff;container-type:inline-size}
+.stories-page .pjthumb-t{position:absolute;left:4%;top:50%;z-index:1;width:47%;transform:translateY(-50%);font-family:var(--f);font-size:6.6cqw;font-weight:800;line-height:1.28;letter-spacing:-.03em;color:#111;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance}
+.stories-page .pjthumb-m .pjthumb-t{font-size:5.6cqw}
+.stories-page .pjthumb-s .pjthumb-t{font-size:4.7cqw}
+.stories-page .pjthumb-t em{display:block;font-style:normal;color:var(--l-eb,#2b75ff)}
+.stories-page .pjthumb .pjthumb-i,.stories-page a:hover .ph .pjthumb .pjthumb-i{position:absolute;right:1%;top:50%;width:50%;height:auto;aspect-ratio:3/2;transform:translateY(-50%);object-fit:contain;scale:none}

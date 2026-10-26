@@ -74,28 +74,7 @@
   #main .chk-notice p{margin:6px 0 0;font:400 14px/1.75 var(--cm-body);color:var(--cm-muted)}
   #main .chk-notice mark{font-weight:700;color:var(--cm-ink);box-decoration-break:clone;-webkit-box-decoration-break:clone}
   #main .chk-notice br{display:none}
-
-  #main .chk-self{display:block;margin-top:24px;border:3px solid var(--cm-black);border-radius:22px;overflow:clip;box-shadow:5px 5px 0 var(--cm-black)}
-  #main .cm-self-head{position:sticky;top:calc(var(--hdr) + env(safe-area-inset-top,0px));z-index:4;padding:18px;border-bottom:1px solid var(--cm-line);background:var(--cm-surface)}
-  #main .cm-self-head>div{display:flex;align-items:center;justify-content:space-between;gap:12px}
-  #main .cm-self-head h3{margin:0;font:700 18px/1.4 var(--cm-heading)}
-  #main .cm-self-count{display:inline-flex;align-items:center;gap:4px;white-space:nowrap;padding:2px 8px;border:1px solid transparent;border-radius:40px;font:700 13px/1.7 var(--cm-body);font-variant-numeric:tabular-nums;color:var(--cm-blue)}
-  #main .cm-self-head progress{appearance:none;display:block;width:100%;height:5px;margin-top:12px;border:0;border-radius:999px;overflow:hidden;background:var(--cm-chip);accent-color:var(--cm-lime)}
-  #main .cm-self-head progress::-webkit-progress-bar{background:var(--cm-chip)}
-  #main .cm-self-head progress::-webkit-progress-value{background:var(--cm-lime);border-radius:999px;box-shadow:inset 0 0 0 1px var(--cm-ink);transition:width .2s}
-  #main .cm-self-head progress::-moz-progress-bar{background:var(--cm-lime);border:1px solid var(--cm-ink);border-radius:999px}
-  #main .chk-self.is-complete .cm-self-count{border-color:var(--cm-ink);background:var(--cm-lime);color:var(--cm-ink)}
-  #main .chk-list{border:0}
-  #main .chk-list li{border-bottom:1px solid #e6e8ec}
-  #main .chk-list label{display:flex;align-items:flex-start;gap:12px;min-height:64px;padding:17px 16px;line-height:1.65}
-  #main .chk-list label:has(:checked){background:#f0f5ff}
-  #main .chk-box{position:static;opacity:1;pointer-events:auto;appearance:auto;accent-color:var(--cm-blue);width:22px;height:22px;margin:1px 0 0;flex:none}
-  #main .chk-mark{display:none}
-  #main .chk-text{font:400 14px/1.65 var(--cm-body);color:var(--cm-ink)}
-  #main .chk-progress{padding:16px;border:0;border-radius:0;background:var(--cm-white)}
-  #main .chk-progress>p:not(.cm-check-note),#main .chk-bar{display:none}
-  #main .chk-progress .cm-check-note{margin:0;font:400 12px/1.7 var(--cm-body);color:var(--cm-muted)}
-  #main .chk-progress .chk-go,#main .cm-apply{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:54px;margin-top:14px;padding:12px 24px;border:2px solid var(--cm-black);border-radius:40px;box-shadow:3px 3px 0 var(--cm-black);background:var(--cm-blue);color:#fff;font:700 16px/1.5 var(--cm-body);text-decoration:none}
+  #main .cm-apply{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:54px;margin-top:14px;padding:12px 24px;border:2px solid var(--cm-black);border-radius:40px;box-shadow:3px 3px 0 var(--cm-black);background:var(--cm-blue);color:#fff;font:700 16px/1.5 var(--cm-body);text-decoration:none}
 
   /* All four stages remain readable together; no equal-height empty slides. */
   #main .pf{display:block;counter-reset:process;margin:24px 0 0;padding:12px;border:1px solid var(--cm-line);border-radius:18px;background:var(--cm-white)}
@@ -199,5 +178,4 @@
 @keyframes cm-answer-reveal{from{opacity:.5;transform:translateY(-2px)}to{opacity:1;transform:translateY(0)}}
 @media (max-width:600px) and (prefers-reduced-motion:reduce){
   #main .faq-item.is-open .faq-a{animation:none}
-  #main .cm-self-head progress::-webkit-progress-value{transition:none}
 }

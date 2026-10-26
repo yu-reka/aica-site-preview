@@ -36,7 +36,7 @@
       "masthead": "1016cleanup",
       "navigation-mobile": "1016nav",
       "presentation": "1016split",
-      "site": "1021audit-pr28",
+      "site": "1026footer-touch44",
       "tokens": "1021audit-colors"
     },
     "js": {
@@ -58,7 +58,7 @@
   },
   "life": {
     "css": {
-      "life-m": "1021area-arrows",
+      "life-m": "1026life-top",
       "life": "1020leisure",
       "presentation": "1020unpick"
     },

@@ -4,6 +4,14 @@
   'use strict';
   const players = new Map();
   let active = null;
+  const messages = {
+    empty: '시연 영상을 준비하고 있어요.',
+    loading: '시연 영상을 불러오고 있어요.',
+    error: '영상을 불러오지 못했어요. 잠시 후 다시 확인해 주세요.'
+  };
+  function sourceNodes(video) {
+    return video ? [video, ...video.querySelectorAll('source')] : [];
+  }
   function isCurrent(hero) {
     return hero.closest('.pjd')?.id === location.hash.slice(1) && !document.hidden;
   }
@@ -17,7 +25,7 @@
   function enhance(hero) {
     if (players.has(hero)) return;
     const existing = hero.querySelector('video');
-    const hasSource = existing && [existing, ...existing.querySelectorAll('source')].some(node => (node.getAttribute('src') || '').trim());
+    const hasSource = sourceNodes(existing).some(node => (node.getAttribute('src') || '').trim());
     // Unconnected demos leave the existing media and its caption untouched.
     if (!hasSource && hasVisual(hero)) return;
     const video = existing || document.createElement('video');
@@ -38,12 +46,12 @@
     stage.append(video, message, start);
     hero.insertBefore(stage, hero.firstChild);
     hero.classList.add('pj-video');
-    const player = {hero, video, stage, message, start, source: null, state: ''};
+    const player = {video, stage, source: null, state: ''};
     players.set(hero, player);
     function state(value) {
       player.state = value;
       stage.dataset.state = value;
-      message.textContent = ({empty:'시연 영상을 준비하고 있어요.', loading:'시연 영상을 불러오고 있어요.', error:'영상을 불러오지 못했어요. 잠시 후 다시 확인해 주세요.'})[value] || '';
+      message.textContent = messages[value] || '';
       message.hidden = !message.textContent;
       video.hidden = value === 'empty' || value === 'error';
       start.hidden = true;
@@ -75,7 +83,7 @@
       if (!hero.isConnected) { video.pause(); players.delete(hero); return; }
       // Keep the existing shared URL validation at the display boundary.
       let invalid = false;
-      [video, ...video.querySelectorAll('source')].forEach(node => {
+      sourceNodes(video).forEach(node => {
         const raw = node.getAttribute('src');
         if (raw && !window.AicaPublicContent?.url(raw, true)) {
           node.removeAttribute('src'); invalid = true;

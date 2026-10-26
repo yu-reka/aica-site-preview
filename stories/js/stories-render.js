@@ -66,7 +66,7 @@
   var avatarOrder = IV.map(function (item) { return item.anchor; }).sort(function (a, b) { return a.localeCompare(b, 'en', { numeric: true }); });
   IV = IV.map(function (item) {
     if (item.img) return item;
-    var no = avatarOrder.indexOf(item.anchor) % 12 + 1;
+    var no = avatarOrder.indexOf(item.anchor) % 10 + 1;
     var avatar = { src: 'assets/interview-avatars/avatar-card-' + ('0' + no).slice(-2) + '-320.webp', alt: '인터뷰 아바타', w: 320, h: 200, fit: { x: 50, y: 50, z: 1 } };
     return Object.assign({}, item, { img: avatar, imgLarge: Object.assign({}, avatar, { src: avatar.src.replace('-320.webp', '-1080.webp'), w: 1080, h: 675 }) });
   });
@@ -91,8 +91,8 @@
     if (!m || !m.src) return '';
     var f = fit && m.fit, style = f ? ' data-fit style="--fx:' + num(f.x, 50) + '%;--fy:' + num(f.y, 50) + '%;--z:' + num(f.z, 1) + '"' : '';
     var avatarBase = /^(assets\/interview-avatars\/avatar-card-\d{2})-(160|320|608|1080)\.webp$/.exec(m.src);
-    var responsive = avatarBase ? ' srcset="' + [160, 320, 608, 1080].map(function (w) { return avatarBase[1] + '-' + w + '.webp?v=1023avatars12 ' + w + 'w'; }).join(', ') + '" sizes="' + esc(sizes || '(max-width: 640px) 64px, 304px') + '"' : '';
-    return '<img class="' + cls + '" src="' + esc(m.src + (avatarBase ? '?v=1023avatars12' : '')) + '" alt="' + esc(m.alt || '') + '"' + (lazy ? ' loading="lazy" decoding="async"' : '')
+    var responsive = avatarBase ? ' srcset="' + [160, 320, 608, 1080].map(function (w) { return avatarBase[1] + '-' + w + '.webp?v=1026avatars10 ' + w + 'w'; }).join(', ') + '" sizes="' + esc(sizes || '(max-width: 640px) 64px, 304px') + '"' : '';
+    return '<img class="' + cls + '" src="' + esc(m.src + (avatarBase ? '?v=1026avatars10' : '')) + '" alt="' + esc(m.alt || '') + '"' + (lazy ? ' loading="lazy" decoding="async"' : '')
       + responsive + (m.w ? ' width="' + m.w + '"' : '') + (m.h ? ' height="' + m.h + '"' : '') + style + (field ? ' data-field="' + field + '"' : '') + '>';
   }
   // 사진 또는 그림(svg, 관리자가 가져온 시안 그림)

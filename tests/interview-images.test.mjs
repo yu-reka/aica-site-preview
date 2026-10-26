@@ -47,10 +47,10 @@ test('interviews preserve sanitized representative images and use responsive ava
 });
 
 
-test('missing interview images cycle through all twelve fallback avatars before repeating',()=>{
+test('missing interview images cycle through the ten approved avatars before repeating',()=>{
   const out=render(Array.from({length:13},(_,i)=>({id:i+1,anchor:'iv-p'+(i+1),title:'기본 아바타 '+(i+1)})));
-  for(const [id,avatar] of [[11,'11'],[12,'12'],[13,'01']]){
-    assert.match(card(out.cards,id),new RegExp('avatar-card-'+avatar+'-320.webp\\?v=1023avatars12'));
-    assert.match(card(out.cards,id),new RegExp('avatar-card-'+avatar+'-1080.webp\\?v=1023avatars12 1080w'));
+  for(const [id,avatar] of [[10,'10'],[11,'01'],[12,'02'],[13,'03']]){
+    assert.match(card(out.cards,id),new RegExp('avatar-card-'+avatar+'-320.webp\\?v=1026avatars10'));
+    assert.match(card(out.cards,id),new RegExp('avatar-card-'+avatar+'-1080.webp\\?v=1026avatars10 1080w'));
   }
 });

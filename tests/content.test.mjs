@@ -89,6 +89,8 @@ test('footer reads editable channel and copyright settings', () => {
   layout.renderFooter();
   assert.ok(footer.innerHTML.includes('@changed-channel'));
   assert.ok(footer.innerHTML.includes('변경한 저작권 문구'));
+  // 공식 홈페이지 같은 바깥 사이트는 새 창에서(2026-10-23)
+  assert.ok(footer.innerHTML.includes(`href="${context.site.links.official.url}" target="_blank" rel="noopener noreferrer"`));
 });
 
 test('rich text rejects executable markup, handlers and unsafe link schemes', () => {

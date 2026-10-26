@@ -60,11 +60,11 @@ test('public release guard rejects substituted DB text without logging it or mod
 test('public HTML and home fallback request a new snapshot cache version', () => {
   const root = new URL('../', import.meta.url);
   for (const file of ['index.html','reviews.html','interviews.html','projects.html','cohorts.html']) {
-    assert.match(readFileSync(new URL('stories/' + file, root), 'utf8'), /src="js\/stories-data\.js\?v=1026remove-iv6"/);
+    assert.match(readFileSync(new URL('stories/' + file, root), 'utf8'), /src="js\/stories-data\.js\?v=design-20261026-projectthumbs"/);
   }
   assert.match(readFileSync(new URL('check/index.html', root), 'utf8'), /src="js\/faq-data\.js\?v=design-20261022"/);
-  assert.match(readFileSync(new URL('home/index.html', root), 'utf8'), /src="js\/ticker-render\.js\?v=1026remove-iv6"/);
-  assert.match(readFileSync(new URL('home/js/ticker-render.js', root), 'utf8'), /stories-data\.js\?v=1026remove-iv6/);
+  assert.match(readFileSync(new URL('home/index.html', root), 'utf8'), /src="js\/ticker-render\.js\?v=design-20261026-projectthumbs"/);
+  assert.match(readFileSync(new URL('home/js/ticker-render.js', root), 'utf8'), /stories-data\.js\?v=design-20261026-projectthumbs/);
 });
 
 
@@ -109,4 +109,17 @@ test('public cohort metadata comes from the approved design fixture and project 
   assert.deepEqual(stories.cohortInfos, source.map(({cohort, account, tag, tracks, label, bio, rows}) => ({cohort, account, tag, tracks, label, bio, rows})));
   assert.deepEqual(stories.cohortInfos.map(info => info.cohort), ['7', '6', '3-5']);
   assert.ok(stories.projects.every(item => item.course && item.course === (item.subject || item.type)));
+});
+
+
+test('project preview thumbnails use approved public illustrations and existing design words only', () => {
+  const {stories} = previewData();
+  const source = JSON.parse(readFileSync(new URL('../content/stories/projects.json', import.meta.url), 'utf8'));
+  assert.equal(new Set(stories.projects.map(item => item.thumb.src)).size, 5);
+  for (let i = 0; i < stories.projects.length; i++) {
+    const thumb = stories.projects[i].thumb;
+    assert.match(thumb.src, /^assets\/project-thumbs\/project-thumb-0[1-5]\.webp$/);
+    assert.ok(readFileSync(new URL('../stories/' + thumb.src, import.meta.url)).length > 0);
+    assert.ok(thumb.em && source[i].title.includes(thumb.em));
+  }
 });

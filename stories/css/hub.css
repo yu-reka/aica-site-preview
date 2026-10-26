@@ -313,3 +313,6 @@ html[data-nav="side"] .stories-hub{background:var(--surface)}
 .stories-hub .hb ::before,.stories-hub .hb ::after{box-sizing:border-box}
 /* Retain the shared dialog base without inheriting the hub's body leading. */
 .stories-hub .ov{font-family:var(--f);font-size:16px;line-height:16px;font-synthesis-weight:auto}
+
+/* Separate honors feature: never substitute a regular interview when empty. */
+[data-honors-feature] .hb-ivg .honors-placeholder{display:grid;place-items:center;background:#E4E9FC;color:#8BA8F5;font:200px/1 Georgia,serif}

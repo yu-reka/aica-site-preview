@@ -16,10 +16,10 @@
 <link rel="stylesheet" href="../common/css/tokens.css?v=1021audit-colors">
 <link rel="stylesheet" href="../common/css/base.css">
 <link rel="stylesheet" href="../common/css/site.css?v=1021audit-pr28">
-<link rel="stylesheet" href="css/check.css?v=1023faqcolors">
+<link rel="stylesheet" href="css/check.css?v=1026noselfcheck">
   <link rel="stylesheet" href="../common/css/presentation.css?v=1016split">
-  <link rel="stylesheet" href="css/presentation.css?v=1016torntape">
-<link rel="stylesheet" href="css/check-m.css?v=1023faqcolors">
+  <link rel="stylesheet" href="css/presentation.css?v=1026noselfcheck">
+<link rel="stylesheet" href="css/check-m.css?v=1026noselfcheck">
 <link rel="stylesheet" href="../common/css/components.css?v=1021audit-pr28">
 <link rel="stylesheet" href="../common/css/navigation-mobile.css?v=1016nav">
 <!-- 자주 묻는 질문: 백오피스 DB(faqs) → 사본 · 공개 API → 그리기(check.js보다 먼저) -->
@@ -29,21 +29,21 @@
 <script src="../common/js/menu.js" defer></script>
 <script src="../common/js/site-layout.js?v=1023newtab" defer></script>
 <script src="../common/js/ui.js?v=1021audit-pr28" defer></script>
-<script src="../common/js/site.js?v=1026nav-boundary3" defer></script>
+<script src="../common/js/site.js?v=1026submenu-history" defer></script>
 <script src="../common/js/track.js?v=1020" defer></script>
 <link rel="stylesheet" href="../common/css/availability.css?v=1026loading-soft-backdrop">
 <script src="../common/js/availability.js?v=1026loading-soft-backdrop" defer></script>
-<script src="js/check.js?v=1016integrity" defer></script>
+<script src="js/check.js?v=1026noselfcheck" defer></script>
 <script src="js/check-m.js?v=1016integrated" defer></script>
 </head>
 <body data-cat="check">
 <header class="site-header" id="siteHeader"></header>
 <!-- 본문(10-13 교체): 사용자 제공 아티팩트 '인사교 A to Z'의 #/check 화면을 정적 HTML로 옮김.
      구조: 인트로(#overview) → 오른쪽 플로팅 목차(.sec-float) → 모집 대상(#eligibility) · 모집 프로세스(#schedule) · 지원 혜택(#benefits) · 자주 묻는 질문(#faq)
-     움직임(스크롤 등장 · 목차 · 단계 자동 넘김 · 스스로 체크 · FAQ 분류 · 페이지 · 펼치기)은 js/check.js -->
+     움직임(스크롤 등장 · 목차 · 단계 자동 넘김 · FAQ 분류 · 페이지 · 펼치기)은 js/check.js -->
 <main id="main" class="check-page" tabindex="-1">
 
-<header class="ckx cb cb1" id="overview"><div class="wrap"><div class="cbx"><div class="cbt"><h1>지원 전 <b>CHECK</b></h1><p class="q">지원할까 말까 <mark>고민 중</mark>이죠?<br>일단 여기부터 같이 봐요!</p><p class="d">키워드 체크와 셀프 점검을 통해 내가 지원 가능할지 미리 확인해요.<br>궁금했던 전형과 수업, 준비 과정까지 한눈에 정리했어요.</p></div><div class="cbw"><nav class="cbl" aria-label="지원 전 체크 목차"><p>MY CHECKLIST</p><a href="#eligibility"><span class="bx"></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span class="tx"><b>나는 지원 자격에 해당할까?</b><small>나이, 학력, 전공 확인하기</small></span></a><a href="#schedule"><span class="bx"></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span class="tx"><b>어떤 과정을 준비해야 할까?</b><small>전형 일정과 준비 서류 미리 보기</small></span></a><a href="#benefits"><span class="bx"></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c2 2 4 3 6 3s4-1 6-3v-5"/><path d="M22 9v6"/></svg><span class="tx"><b>어떤 지원을 받을 수 있을까?</b><small>지원금 · 노트북 · 취업 지원 확인하기</small></span></a><a href="#faq"><span class="bx"></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M9 10.5h.01M12 10.5h.01M15 10.5h.01" stroke-width="2.6"/></svg><span class="tx"><b>궁금한 점을 미리 해결하자!</b><small>자주 묻는 질문 모아보기</small></span></a></nav><span class="ok" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div></div></div></header>
+<header class="ckx cb cb1" id="overview"><div class="wrap"><div class="cbx"><div class="cbt"><h1>지원 전 <b>CHECK</b></h1><p class="q">지원할까 말까 <mark>고민 중</mark>이죠?<br>일단 여기부터 같이 봐요!</p><p class="d">키워드 체크를 통해 내가 지원 가능할지 미리 확인해요.<br>궁금했던 전형과 수업, 준비 과정까지 한눈에 정리했어요.</p></div><div class="cbw"><nav class="cbl" aria-label="지원 전 체크 목차"><p>MY CHECKLIST</p><a href="#eligibility"><span class="bx"></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span class="tx"><b>나는 지원 자격에 해당할까?</b><small>나이, 학력, 전공 확인하기</small></span></a><a href="#schedule"><span class="bx"></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span class="tx"><b>어떤 과정을 준비해야 할까?</b><small>전형 일정과 준비 서류 미리 보기</small></span></a><a href="#benefits"><span class="bx"></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c2 2 4 3 6 3s4-1 6-3v-5"/><path d="M22 9v6"/></svg><span class="tx"><b>어떤 지원을 받을 수 있을까?</b><small>지원금 · 노트북 · 취업 지원 확인하기</small></span></a><a href="#faq"><span class="bx"></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M9 10.5h.01M12 10.5h.01M15 10.5h.01" stroke-width="2.6"/></svg><span class="tx"><b>궁금한 점을 미리 해결하자!</b><small>자주 묻는 질문 모아보기</small></span></a></nav><span class="ok" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div></div></div></header>
 <nav class="cm-tabs" id="cmTopTabs" aria-label="지원 전 체크 바로가기"><div class="cm-seg"><a href="#eligibility" aria-current="true">모집 대상</a><a href="#schedule">전형</a><a href="#benefits">혜택</a><a href="#faq">FAQ</a></div></nav>
 <nav class="sec-float" aria-label="지원 전 체크 목차"><ul>
   <li><button type="button" class="sf-btn is-active" data-jump="eligibility" aria-current="true"><i class="sf-slash" aria-hidden="true"></i><span class="sf-label">모집 대상</span></button></li><li><button type="button" class="sf-btn" data-jump="schedule"><i class="sf-slash" aria-hidden="true"></i><span class="sf-label">모집 프로세스</span></button></li><li><button type="button" class="sf-btn" data-jump="benefits"><i class="sf-slash" aria-hidden="true"></i><span class="sf-label">지원 혜택</span></button></li><li><button type="button" class="sf-btn" data-jump="faq"><i class="sf-slash" aria-hidden="true"></i><span class="sf-label">자주 묻는 질문</span></button></li>
@@ -51,7 +51,7 @@
 <section id="eligibility" class="v3-sec" aria-labelledby="h-eligibility"><div class="cm-chapter cm-only" aria-hidden="true"><span>01</span><div><small>ELIGIBILITY</small><b>모집 대상</b></div></div><div class="wrap">
   <div class="s-head k-head rv"><p class="k-label">모집 대상</p><h2 id="h-eligibility">나도 지원할 수 있을까요?</h2></div>
   <h3 class="v3-h3 rv">기본 대상</h3>
-  <p class="cm-caption cm-only">기본 자격을 보고, 아래에서 직접 체크해 보세요.</p>
+  <p class="cm-caption cm-only">기본 자격을 확인해 보세요.</p>
   <div class="chk-crit rv">
     <div><p class="chk-crit-label">나이</p><p class="chk-crit-main"><mark>만 18~39세</mark> 이하</p><p class="chk-crit-sub">전국 청년 미취업자</p></div>
     <div><p class="chk-crit-label">학력</p><p class="chk-crit-main"><mark>학력</mark> 무관</p><p class="chk-crit-sub">학력과 상관없이 지원할 수 있어요</p></div>
@@ -64,19 +64,6 @@
     <div><h4>다른 정부지원사업에 참여 중이라면</h4>
     <p>내일배움카드, 실업급여, 국민취업지원제도 등에 참여 중이라면, <mark class="hl">해당 기관에 교육 참여와 중복해도 되는지 먼저 문의</mark>해 주세요. <br>참여 기간별로 기준이 달라서 개별 확인이 꼭 필요해요.</p></div>
   </aside>
-  <h3 class="v3-h3 rv">스스로 체크</h3>
-  <div class="chk-self rv">
-    <div class="cm-self-head cm-only"><div><h3>지원 전 셀프 체크</h3><span class="cm-self-count" aria-live="polite" aria-atomic="true"><b id="cmCheckNow">0</b> / 5</span></div><progress id="cmCheckProgress" value="0" max="5" aria-label="확인한 항목 수"></progress></div>
-    <ul class="chk-list">
-      <li><label><input type="checkbox" class="chk-box"><span class="chk-mark" aria-hidden="true"></span><span class="chk-text">만 18~39세 이하예요</span></label></li><li><label><input type="checkbox" class="chk-box"><span class="chk-mark" aria-hidden="true"></span><span class="chk-text">지금 미취업 상태예요</span></label></li><li><label><input type="checkbox" class="chk-box"><span class="chk-mark" aria-hidden="true"></span><span class="chk-text">4학년이거나, 졸업 예정자 또는 졸업 유예자예요</span></label></li><li><label><input type="checkbox" class="chk-box"><span class="chk-mark" aria-hidden="true"></span><span class="chk-text">6개월 동안 평일 매일 광주 교육장으로 출석할 수 있어요</span></label></li><li><label><input type="checkbox" class="chk-box"><span class="chk-mark" aria-hidden="true"></span><span class="chk-text">다른 정부지원사업에 참여 중이라면, 해당 기관에 미리 확인했어요</span></label></li>
-    </ul>
-    <div class="chk-progress" aria-live="polite">
-      <p><b id="chkNow">0</b> / 5 확인했어요</p>
-      <div class="chk-bar"><i id="chkBar"></i></div>
-      <p class="cm-check-note cm-only">체크 항목은 지원 준비를 돕는 안내예요.<br>세부 자격은 공식 모집 공고를 확인해 주세요.</p>
-      <a class="chk-go" id="chkGo" href="#schedule" hidden=""><span id="chkGoLabel">모집 프로세스 보러 가기</span> <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
-    </div>
-  </div>
 </div></section>
 
 <section id="schedule" class="v3-sec" aria-labelledby="h-schedule"><div class="cm-chapter cm-only" aria-hidden="true"><span>02</span><div><small>PROCESS</small><b>모집 프로세스</b></div></div><div class="wrap">
@@ -127,7 +114,7 @@
       <span class="b2-ico" aria-hidden="true"><img src="assets/benefit-1.webp" alt="" width="64" height="64" loading="lazy" decoding="async"></span>
       <p class="b2-no">BENEFIT 01</p>
       <h3>교육지원금</h3>
-      <p class="b2-desc">교육지원금 <b>최대 50만원</b> 지원</p><p class="b2-sub"><small>광주 시외 거주자가 광주 시내로 거주지를 이동한 경우 주거지원비 <b>최대 35만원</b> 추가 지원</small></p>
+      <p class="b2-desc">교육지원금 <b>월 최대 50만원</b> 지원</p><p class="b2-sub"><small>광주 시외 거주자가 광주 시내로 거주지를 이동한 경우 주거지원비 <b>최대 35만원</b> 추가 지원</small></p>
     </article><article class="b2">
       <span class="b2-ico" aria-hidden="true"><img src="assets/benefit-2.webp" alt="" width="64" height="64" loading="lazy" decoding="async"></span>
       <p class="b2-no">BENEFIT 02</p>

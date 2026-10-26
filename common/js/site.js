@@ -70,10 +70,29 @@ const Site = (() => {
   function currentSub(){
     if (html.dataset.sub) return html.dataset.sub;
     const hash = decodeHash(location.hash);
-    const links = $$('#subnav a[data-sub], #siteLnb a[data-sub]').map(a => ({ id: a.dataset.sub, u: new URL(a.href) }));
+    const links = $$('#subnav a[data-sub], #siteLnb a[data-sub], #drawer a[data-sub]').map(a => ({ id: a.dataset.sub, u: new URL(a.href) }));
     const here = links.filter(x => samePage(x.u));
     const hit = here.find(x => hash && decodeHash(x.u.hash) === hash) || here.find(x => !x.u.hash) || here[0];
     return (hit || links[0])?.id;
+  }
+
+  // Anchor pages have their own chapter navigation. Resolve the chapter being
+  // read when opening the drawer, even if manual scrolling left the hash behind.
+  function visibleDrawerSub(){
+    if (!['about', 'check'].includes(html.dataset.menu) || !matchMedia('(max-width:1080px)').matches) return null;
+    const pairs = $$('#drawer a[data-sub]').map(a => {
+      const u = new URL(a.href);
+      let el = samePage(u) && u.hash ? document.getElementById(decodeHash(u.hash.slice(1))) : null;
+      const divider = el?.previousElementSibling;
+      if (divider?.classList.contains('am-ch') && divider.getClientRects().length) el = divider;
+      return { id:a.dataset.sub, el };
+    }).filter(pair => pair.el?.getClientRects().length);
+    if (!pairs.length) return null;
+    const edge = ($('#siteHeader')?.getBoundingClientRect().bottom || 60) + 24;
+    let active = pairs[0];
+    pairs.forEach(pair => { if (pair.el.getBoundingClientRect().top <= edge) active = pair; });
+    if (scrollY > 0 && innerHeight + scrollY >= html.scrollHeight - 4) active = pairs[pairs.length - 1];
+    return active.id;
   }
 
   // 정적 미리보기에서만 빈 공통 영역을 그립니다. Spring이 같은 마크업을 보내면 기존 DOM에 동작만 연결합니다.
@@ -114,7 +133,7 @@ const Site = (() => {
   }
   /* 주소의 #위치가 바뀌면 하위 메뉴 바의 현재 항목을 맞춤 */
   function syncSubnav(){
-    if ($('#subnav') || $('#siteLnb')) setActiveSub(currentSub());
+    if ($('#subnav') || $('#siteLnb') || $('#drawer a[data-sub]')) setActiveSub(currentSub());
   }
   /* 한 페이지 + 위치(anchor) 메뉴(#subnav data-type="anchor"): 화면에 들어온 섹션을 하위 메뉴에 표시 */
   function setupScrollSpy(){
@@ -172,12 +191,14 @@ const Site = (() => {
   const drawerScope = SiteUI.createDialogScope();
   let drawerFocusTimer;
   function openDrawer(){
+    const visibleSub = visibleDrawerSub();
     clearTimeout(drawerFocusTimer);
     drawerScope.activate($('#drawer'), [$('#drawerDim')]);
     $('#drawer').classList.add('is-open');
     $('#drawerDim')?.classList.add('is-open');
     $('#menuBtn').setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
+    setActiveSub(visibleSub || currentSub());
     setAcc(html.dataset.menu || '');
     drawerFocusTimer = setTimeout(() => {
       if ($('#drawer').classList.contains('is-open')) $('#drawerClose').focus();
@@ -317,6 +338,9 @@ const Site = (() => {
       goTo(u.hash);
       applyCat(u.searchParams);   // 같은 페이지의 분류 조건(?cat=)
     });
+    // Same-document Back/Forward does not trigger pageshow. Release the modal
+    // before the history destination is shown, without adding history entries.
+    addEventListener('popstate', () => closeDrawer(true));
     addEventListener('hashchange', syncSubnav);
     // 본문으로 바로가기: 주소는 그대로 두고 초점만 본문으로(탭 화면 페이지의 주소 #interviews 등이 #main으로 바뀌지 않게).
     // <main tabindex="-1">이 아닌 페이지(알아보기)는 브라우저 기본 이동
@@ -375,7 +399,7 @@ const Site = (() => {
     setupScrollSpy();
     setupScrollFade();
     if ($('#siteLnb')) { syncSubnav(); document.fonts?.ready.then(syncSubnav); }   // 왼쪽 메뉴는 바로(첫 화면에 지금 항목이 비어 보이지 않게). 좁은 화면 가로 줄 위치는 글꼴이 자리 잡은 뒤 다시
-    if ($('#subnav')) requestAnimationFrame(syncSubnav);
+    if ($('#subnav') || $('#drawer a[data-sub]')) requestAnimationFrame(syncSubnav);
   }
   linkSiteLinks();
   // 페이지 스크립트(defer, 이 파일 뒤)가 분류 버튼에 동작을 붙인 뒤에 누름

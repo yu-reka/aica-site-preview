@@ -18,13 +18,13 @@
   },
   "check": {
     "css": {
-      "check-m": "1023faqcolors",
-      "check": "1023faqcolors",
-      "presentation": "1016torntape"
+      "check-m": "1026noselfcheck",
+      "check": "1026noselfcheck",
+      "presentation": "1026noselfcheck"
     },
     "js": {
       "check-m": "1016integrated",
-      "check": "1016integrity",
+      "check": "1026noselfcheck",
       "faq-data": "design-20261022",
       "faq-render": "1020"
     }
@@ -42,7 +42,7 @@
     "js": {
       "availability": "1026loading-soft-backdrop",
       "site-layout": "1023newtab",
-      "site": "1026nav-boundary3",
+      "site": "1026submenu-history",
       "track": "1020",
       "ui": "1021audit-pr28"
     }
@@ -53,7 +53,7 @@
     },
     "js": {
       "home": "1021audit-pr28",
-      "ticker-render": "1026remove-iv6"
+      "ticker-render": "design-20261026-projectthumbs"
     }
   },
   "life": {
@@ -75,7 +75,7 @@
         "hub": "1022emptystate"
       },
       "detail-navigation": "1020outsidegrid",
-      "hub": "1023mobileshift2",
+      "hub": "1026honors-separate",
       "presentation": {
         "hub": "1016split",
         "default": "1022notaglabel"
@@ -86,13 +86,14 @@
         "default": "1023mobileellipsis",
         "cohorts": "1022cohortinfo"
       },
-      "stories-render": "1023linebreak",
+      "stories-render": "1026thumbfixed",
       "stories-sections": {
         "interviews": "1023avatars12",
         "projects": "1021projecttopline"
       },
       "stories": "1021audit-pr28",
-      "story-state": "1020states"
+      "story-state": "1020states",
+      "interview-honors": "1026honors-no-hint"
     },
     "js": {
       "cohort-modal-scroll": "1022swipereading",
@@ -102,16 +103,17 @@
       "project-reading": "1021topline",
       "projects-filter": "1023course",
       "review-notes": "1021centerellipsis",
-      "stories-data": "1026remove-iv6",
+      "stories-data": "design-20261026-projectthumbs",
       "stories-m-reviews": {
         "default": "1020states",
         "legacyLoader": "1016cleanup"
       },
-      "stories-m": "1023mobileellipsis",
-      "stories-render": "1026avatars10-admin",
+      "stories-m": "1026honors-projectlabel",
+      "stories-render": "1026honors-thumbs",
       "stories-sections": "1023cardrows",
       "stories": "1022dialog-transfer",
-      "story-state": "1022chips-posts-only"
+      "story-state": "1022chips-posts-only",
+      "interview-honors": "1026honors-no-hint"
     }
   }
 }

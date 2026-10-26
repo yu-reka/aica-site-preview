@@ -106,7 +106,7 @@
   html.school-about main#main .partner-node{margin:0;padding:14px 10px;border:1px solid var(--am-line);border-radius:16px;background:#fff;box-shadow:none;text-align:center}
   html.school-about main#main .partner-node-school{width:auto;padding:16px;border:0;background:var(--am-soft)}
   html.school-about main#main .partner-node-school > span{display:none}
-  html.school-about main#main .partner-network-children{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0;padding:0}
+  html.school-about main#main .partner-network-children{display:grid;grid-auto-flow:row;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0;padding:0}
   html.school-about main#main .partner-logo{height:28px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center}
   html.school-about main#main .partner-node-school .partner-logo{height:34px;margin-bottom:6px}
   html.school-about main#main .partner-logo img{max-height:100%;max-width:100%;width:auto;object-fit:contain}

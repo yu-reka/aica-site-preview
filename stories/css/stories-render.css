@@ -35,3 +35,7 @@
 .stories-page .cv3-m-media .phs-img{height:100%;aspect-ratio:auto}
 
 @media (max-width:640px){.stories-page .phs-btn{width:36px;height:36px;margin-top:-18px}.stories-page .phs-btn.prev{left:8px}.stories-page .phs-btn.next{right:8px}}
+
+/* 관리자 글쓰기에서 엔터 한 번 = 줄바꿈(2026-10-23): 문단은 빈 줄(엔터 두 번)로 나뉘고, 문단 안의 줄바꿈은 그대로 보여요.
+   후기 창 본문 · 인터뷰 요약과 답변 · 프로젝트 요약과 칸 글 · 기수별 이모저모 글 창 */
+.ov .mbody p,.ivd .lead,.ivd .qa .a,.pjd .lead,.pjd .pjph-t,.cv3-m-body p{white-space:pre-line}

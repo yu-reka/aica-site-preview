@@ -59,8 +59,10 @@ test('navigation loading is delayed, cancellable and cleared on back/forward res
   h.tick(350); assert.equal(loading.hidden,false);
   h.handlers.pageshow(); assert.equal(loading.hidden,true); assert.equal(h.api.busy,false);
   h.api.begin(); h.tick(12000);
-  assert.equal(loading.querySelector('button').hidden,false);
-  loading.querySelector('button').fire('click'); assert.equal(loading.hidden,true);
+  assert.equal(loading.hidden,true); assert.equal(h.api.busy,false);
+  // A completed request must cancel the pending indicator, including quick requests.
+  h.api.begin(); h.api.end(); h.tick(12000);
+  assert.equal(loading.hidden,true); assert.equal(h.api.busy,false);
   h.api.begin(); h.handlers.offline(); assert.equal(h.api.busy,false);
 });
 test('all regular pages include availability assets and Spring exports error documents', () => {

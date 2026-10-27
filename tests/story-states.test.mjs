@@ -42,7 +42,7 @@ test('all four exported collection pages share states and failure contract witho
     const html=artifacts.get('templates/public-site/'+kind+'.html');
     assert.equal((html.match(/data-story-list-state/g)||[]).length,1,kind);
     assert.ok(html.includes('data-public-content-unavailable=${publicContentUnavailable == true}'),kind);
-    assert.ok(html.includes('/stories/js/story-state.js?v=1022chips-posts-only'),kind);
+    assert.ok(html.includes('/stories/js/story-state.js?v=1026honors-checked'),kind);
     assert.ok(html.includes('/stories/css/story-state.css?v=1020states'),kind);
     assert.ok(html.indexOf('story-state.js')<html.indexOf(kind==='cohorts'?'cohort-v3.js':kind==='projects'?'projects-filter.js':kind==='interviews'?'stories-sections.js':'stories-m-reviews.js'));
   }

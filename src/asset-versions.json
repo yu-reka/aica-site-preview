@@ -42,7 +42,7 @@
     "js": {
       "availability": "1026loading-soft-backdrop",
       "site-layout": "1023newtab",
-      "site": "1026submenu-history",
+      "site": "1027lnb-page-start2",
       "track": "1020",
       "ui": "1021audit-pr28"
     }
@@ -86,15 +86,15 @@
         "default": "1023mobileellipsis",
         "cohorts": "1022cohortinfo"
       },
-      "stories-render": "1026thumbfixed",
+      "stories-render": "1027demo-video",
       "stories-sections": {
-        "interviews": "1023avatars12",
-        "projects": "1021projecttopline"
+        "interviews": "1027detail-word-wrap",
+        "projects": "1027detail-word-wrap"
       },
       "stories": "1021audit-pr28",
       "story-state": "1020states",
       "interview-honors": "1026honors-no-hint",
-      "project-video": "1026demo-preserve-media"
+      "project-video": "1027prep-always"
     },
     "js": {
       "cohort-modal-scroll": "1022swipereading",
@@ -109,14 +109,14 @@
         "default": "1020states",
         "legacyLoader": "1016cleanup"
       },
-      "stories-m": "1026honors-projectlabel",
-      "stories-render": "1026cohort-tags",
+      "stories-m": "1026thumb-image",
+      "stories-render": "1027no-headline",
       "stories-sections": "1023cardrows",
       "stories": "1022dialog-transfer",
-      "story-state": "1022chips-posts-only",
-      "interview-honors": "1026honors-no-hint",
+      "story-state": "1026honors-checked",
+      "interview-honors": "1026honors-checked",
       "cohort-month-navigation": "1026month-navigation",
-      "project-video": "1026demo-controller-cleanup",
+      "project-video": "1027prep-merged",
       "story-detail-title": "1027all-details"
     }
   }

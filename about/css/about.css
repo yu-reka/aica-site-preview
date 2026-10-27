@@ -508,3 +508,8 @@ html.school-about main#main #why-school .why-school-card > p:not(.why-school-car
   .activity-project-confetti--left{left:-40px}
   .activity-project-confetti--right{right:-40px}
 }
+
+/* Original article cards remain whole-card links, including keyboard focus. */
+a.intro-news-card{display:block;color:inherit;text-decoration:none}
+a.intro-news-card:focus-visible{outline:3px solid #3458ff;outline-offset:4px;z-index:3}
+.intro-news-outbound{font-style:normal;white-space:nowrap}

@@ -5,7 +5,7 @@
         "legacyComment": "1016channel",
         "default": "1023partners"
       },
-      "about": "1026cardpadding",
+      "about": "1027news-links",
       "presentation": "1022anchor40"
     },
     "js": {
@@ -59,11 +59,11 @@
   "life": {
     "css": {
       "life-m": "1026life-top",
-      "life": "1026facility-preview",
+      "life": "1027cafeteria-preview",
       "presentation": "1026floor-equal"
     },
     "js": {
-      "life-m-view": "1021area-arrows",
+      "life-m-view": "1027cafeteria-preview",
       "life-m": "1021area-arrows",
       "life": "1023dicecancel"
     }

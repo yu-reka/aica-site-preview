@@ -1,14 +1,30 @@
-/* Display existing bullet-separated descriptions as a numbered list without editing data. */
+/* Display explicitly marked descriptions as a numbered list without editing data. */
 (() => {
   'use strict';
   const seen = new WeakSet();
+  function listItems(text) {
+    // Preserve published • lists, including multiple bullets on the same line.
+    if (/^\s*•\s*/.test(text) && !/^\s*(?:·|-\s+|\d+[.)]\s+)/m.test(text)) {
+      return text.split(/\s*•\s*/).map(item => item.trim()).filter(Boolean);
+    }
+    // New markers start a line; punctuation inside a sentence is not a separator.
+    const marker = /^\s*(?:[•·]\s*|-\s+|\d+[.)]\s+)/;
+    const lines = text.trim().split(/\r?\n/);
+    if (!marker.test(lines[0])) return [];
+    const items = [];
+    lines.forEach(line => {
+      if (marker.test(line)) items.push(line.replace(marker, '').trim());
+      else if (line.trim()) items[items.length - 1] += '\n' + line.trim();
+    });
+    return items.filter(Boolean);
+  }
   function enhance() {
     document.querySelectorAll('.pjd p.pjph-t').forEach(paragraph => {
       if (seen.has(paragraph)) return;
       seen.add(paragraph);
-      // Only plain text with an explicit leading bullet is a list. Rich text stays intact.
-      if (paragraph.children.length || !/^\s*•\s*/.test(paragraph.textContent)) return;
-      const items = paragraph.textContent.split(/\s*•\s*/).map(text => text.trim()).filter(Boolean);
+      // Rich text stays intact; list text is always inserted through textContent.
+      if (paragraph.children.length) return;
+      const items = listItems(paragraph.textContent);
       if (items.length < 2) return;
       const block = document.createElement('div');
       [...paragraph.attributes].forEach(attribute => block.setAttribute(attribute.name, attribute.value));

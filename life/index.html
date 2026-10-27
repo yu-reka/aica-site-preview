@@ -24,12 +24,12 @@
 <link rel="stylesheet" href="../common/css/tokens.css?v=1021audit-colors">
 <link rel="stylesheet" href="../common/css/base.css">
 <link rel="stylesheet" href="../common/css/site.css?v=1026footer-touch44">
-<link rel="stylesheet" href="css/life.css?v=1027cafeteria-preview">
+<link rel="stylesheet" href="css/life.css?v=1027floor-arrows-preview">
   <link rel="stylesheet" href="../common/css/presentation.css?v=1016split">
-  <link rel="stylesheet" href="css/presentation.css?v=1026floor-equal">
+  <link rel="stylesheet" href="css/presentation.css?v=1027tab-spacing">
   <link rel="stylesheet" href="../common/css/lnb.css">
   <link rel="stylesheet" href="../common/css/masthead.css?v=1016cleanup">
-  <link rel="stylesheet" href="css/life-m.css?v=1026life-top">
+  <link rel="stylesheet" href="css/life-m.css?v=1027facility-note-icons">
   <link rel="stylesheet" href="../common/css/components.css?v=1021audit-pr28">
 <link rel="stylesheet" href="../common/css/navigation-mobile.css?v=1016nav">
 <script src="../common/js/menu.js" defer></script>
@@ -40,9 +40,9 @@
 <link rel="stylesheet" href="../common/css/availability.css?v=1026loading-soft-backdrop">
 <script src="../common/js/availability.js?v=1026loading-soft-backdrop" defer></script>
 <script src="../stories/js/mast-fix.js" defer></script>
-<script src="js/life.js?v=1023dicecancel" defer></script>
-<script src="js/life-m-view.js?v=1027cafeteria-preview" defer></script>
-<script src="js/life-m.js?v=1021area-arrows" defer></script>
+<script src="js/life.js?v=1027facility-note-up" defer></script>
+<script src="js/life-m-view.js?v=1027facility-note-icons" defer></script>
+<script src="js/life-m.js?v=1027facility-note-icons" defer></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
@@ -88,7 +88,7 @@
 <div class="page lo" id="pg-home" data-page="home">
   <section class="sec lo-sec" aria-labelledby="lo-fac-t"><div class="wrap">
     <div class="lo-hd"><div class="sh"><div><p class="sh-k">시설 둘러보기</p><h2 id="lo-fac-t">매일 지낼 건물, 층마다 미리 둘러봐요</h2></div></div><a class="lo-more" href="#facilities">전체 보기<span aria-hidden="true">→</span></a></div>
-    <div class="lo-g3 lo-pjs"><a class="lo-c lo-pj" href="#facilities" data-fac="1-0"><span class="lo-ph"><img src="assets/entrance.webp" alt="" loading="lazy"><span class="lo-pj-type">1F</span></span><span class="lo-tx"><em>정문 · 공용</em><b>들어서면 AI 카페부터</b><small>정문 · AI 카페 · 회의실</small></span></a>
+    <div class="lo-g3 lo-pjs"><a class="lo-c lo-pj" href="#facilities" data-fac="1-0"><span class="lo-ph"><img src="assets/entrance.webp" alt="" loading="lazy"><span class="lo-pj-type">1F</span></span><span class="lo-tx"><em>정문</em><b>들어서면 AI 카페부터</b><small>정문 · AI 카페 · 회의실</small></span></a>
 <a class="lo-c lo-pj" href="#facilities" data-fac="23-0"><span class="lo-ph"><img src="assets/classroom.webp" alt="" loading="lazy"><span class="lo-pj-type">2·3F</span></span><span class="lo-tx"><em>교육장</em><b>매일 수업 듣는 곳</b><small>강의실 · 휴게 공간 · 프로젝트 공간</small></span></a>
 <a class="lo-c lo-pj" href="#facilities" data-fac="8-0"><span class="lo-ph"><img src="assets/fac_8f_cafeteria_01.webp" alt="" loading="lazy"><span class="lo-pj-type">8F</span></span><span class="lo-tx"><em>구내식당</em><b>점심은 건물 안에서</b><small>구내식당 1곳</small></span></a>
 </div>
@@ -119,17 +119,17 @@
           <div class="bx9-tw">
             <span class="bx9-roof" aria-hidden="true"></span>
             <ol class="bx9-fl">
-              <li><button type="button" class="bx9-f" data-g="8" aria-pressed="false"><b>8F</b><span>구내식당</span><i>1곳</i></button></li>
+              <li><button type="button" class="bx9-f" data-g="8" aria-pressed="false"><b>8F</b><span>구내식당</span><i aria-hidden="true"></i></button></li>
               <li><div class="bx9-f off"><b>4~7F</b><span>다른 기관 · 교육장 아님</span></div></li>
-              <li><button type="button" class="bx9-f tall" data-g="23" aria-pressed="true"><b>2·3F</b><span>교육장</span><i>3곳</i></button></li>
-              <li><button type="button" class="bx9-f" data-g="1" aria-pressed="false"><b>1F</b><span>정문 · 공용</span><i>3곳</i></button></li>
+              <li><button type="button" class="bx9-f tall" data-g="23" aria-pressed="true"><b>2·3F</b><span>교육장</span><i aria-hidden="true"></i></button></li>
+              <li><button type="button" class="bx9-f" data-g="1" aria-pressed="false"><b>1F</b><span>정문</span><i aria-hidden="true"></i></button></li>
             </ol>
             <span class="bx9-gnd" aria-hidden="true"><em>입구</em></span>
           </div>
         </nav>
         <div class="bx9-main" aria-live="polite">
-          <section class="bx9-g" data-g="1" hidden aria-label="1F 정문 · 공용">
-            <div class="bx9-head"><span class="bx9-fb">1F</span><h3>정문 · 공용</h3>
+          <section class="bx9-g" data-g="1" hidden aria-label="1F 정문">
+            <div class="bx9-head"><span class="bx9-fb">1F</span><h3>정문</h3>
               <div class="bx9-tabs" role="tablist" aria-label="1F 공간">
                 <button type="button" role="tab" class="bx9-t" id="bx9t-1-0" aria-controls="bx9s-1-0" aria-selected="true"><span class="bx9-tt im-building" aria-hidden="true"></span><b>정문(입구)</b></button>
                 <button type="button" role="tab" class="bx9-t" id="bx9t-1-1" aria-controls="bx9s-1-1" aria-selected="false" tabindex="-1"><span class="bx9-tt im-fac_1f_cafe_01" aria-hidden="true"></span><b>AI 카페</b></button>
@@ -146,7 +146,7 @@
                 <span class="bx-ex">사진 예시</span>
                 <button type="button" class="bx9-a prev" aria-label="이전 사진">‹</button>
                 <button type="button" class="bx9-a next" aria-label="다음 사진">›</button>
-                <p class="bx9-cap"><span>교육장 건물 외관</span><span class="bx9-n"><b>1</b> / 3</span></p>
+                <p class="bx9-cap"><span hidden>교육장 건물 외관</span><span class="bx9-n"><b>1</b> / 3</span></p>
               </div>
               <div class="bx9-foot">
                 <div class="bx9-info"><h4>정문(입구)</h4><ul><li>출입 방법 ○○</li><li>2 · 3층 교육장은 엘리베이터로</li></ul></div>
@@ -167,7 +167,7 @@
                 <span class="bx-ex">사진 예시</span>
                 <button type="button" class="bx9-a prev" aria-label="이전 사진">‹</button>
                 <button type="button" class="bx9-a next" aria-label="다음 사진">›</button>
-                <p class="bx9-cap"><span>1층 AI 카페</span><span class="bx9-n"><b>1</b> / 3</span></p>
+                <p class="bx9-cap"><span hidden>1층 AI 카페</span><span class="bx9-n"><b>1</b> / 3</span></p>
               </div>
               <div class="bx9-foot">
                 <div class="bx9-info"><h4>AI 카페</h4><ul><li>이용 시간 ○○</li><li>전자레인지 · 냉장고 · 도시락 가능</li></ul></div>
@@ -187,7 +187,7 @@
                 <span class="bx-ex">사진 예시</span>
                 <button type="button" class="bx9-a prev" aria-label="이전 사진">‹</button>
                 <button type="button" class="bx9-a next" aria-label="다음 사진">›</button>
-                <p class="bx9-cap"><span>회의실 전경</span><span class="bx9-n"><b>1</b> / 2</span></p>
+                <p class="bx9-cap"><span hidden>회의실 전경</span><span class="bx9-n"><b>1</b> / 2</span></p>
               </div>
               <div class="bx9-foot">
                 <div class="bx9-info"><h4>회의실</h4><ul><li>예약 방법 · 이용 시간 ○○</li><li>수용 인원 ○○명</li></ul></div>
@@ -217,7 +217,7 @@
                 <span class="bx-ex">사진 예시</span>
                 <button type="button" class="bx9-a prev" aria-label="이전 사진">‹</button>
                 <button type="button" class="bx9-a next" aria-label="다음 사진">›</button>
-                <p class="bx9-cap"><span>강의실 전경</span><span class="bx9-n"><b>1</b> / 3</span></p>
+                <p class="bx9-cap"><span hidden>강의실 전경</span><span class="bx9-n"><b>1</b> / 3</span></p>
               </div>
               <div class="bx9-foot">
                 <div class="bx9-info"><h4>강의실</h4><ul><li>평일 9시 ~ 18시 오프라인 수업</li><li>교육 기간 동안 개인 노트북 · 모니터 대여</li></ul></div>
@@ -238,7 +238,7 @@
                 <span class="bx-ex">사진 예시</span>
                 <button type="button" class="bx9-a prev" aria-label="이전 사진">‹</button>
                 <button type="button" class="bx9-a next" aria-label="다음 사진">›</button>
-                <p class="bx9-cap"><span>휴게 공간 전경</span><span class="bx9-n"><b>1</b> / 3</span></p>
+                <p class="bx9-cap"><span hidden>휴게 공간 전경</span><span class="bx9-n"><b>1</b> / 3</span></p>
               </div>
               <div class="bx9-foot">
                 <div class="bx9-info"><h4>휴게 공간</h4><ul><li>2 · 3층 모두 있음</li></ul></div>
@@ -259,7 +259,7 @@
                 <span class="bx-ex">사진 예시</span>
                 <button type="button" class="bx9-a prev" aria-label="이전 사진">‹</button>
                 <button type="button" class="bx9-a next" aria-label="다음 사진">›</button>
-                <p class="bx9-cap"><span>팀 프로젝트 모습</span><span class="bx9-n"><b>1</b> / 3</span></p>
+                <p class="bx9-cap"><span hidden>팀 프로젝트 모습</span><span class="bx9-n"><b>1</b> / 3</span></p>
               </div>
               <div class="bx9-foot">
                 <div class="bx9-info"><h4>프로젝트 공간</h4><ul><li>도약과정 팀 프로젝트용</li><li>이용 시간 · 예약 방법 ○○</li></ul></div>
@@ -284,7 +284,7 @@
                 <span class="bx-ex">사진 예시</span>
                 <button type="button" class="bx9-a prev" aria-label="이전 사진">‹</button>
                 <button type="button" class="bx9-a next" aria-label="다음 사진">›</button>
-                <p class="bx9-cap"><span>구내식당 전경</span><span class="bx9-n"><b>1</b> / 2</span></p>
+                <p class="bx9-cap"><span hidden>구내식당 전경</span><span class="bx9-n"><b>1</b> / 2</span></p>
               </div>
               <div class="bx9-foot">
                 <div class="bx9-info"><h4>구내식당</h4><ul><li>이용 방법 · 가격 ○○</li><li><a href="../check/index.html#benefits">식비 지원은 지원 혜택에서 →</a></li></ul></div>

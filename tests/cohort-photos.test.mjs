@@ -162,7 +162,9 @@ test('responsive cohort clones retain dimensions and switch feed versus modal im
     assert.equal(active(host).getAttribute('width'),'1280');assert.equal(active(host).getAttribute('height'),'720');
     assert.equal(active(host).getAttribute('decoding'),'async');
   }
-  assert.match(active(feed).getAttribute('sizes'),/600px$/);
+  assert.match(active(feed).getAttribute('sizes'),/max-width: 600px\) calc\(\(100vw - 4px\) \/ 3\)/);
+  assert.match(active(feed).getAttribute('sizes'),/min\(309px, calc\(\(100vw - clamp\(40px, 8vw, 96px\) - 8px\) \/ 3\)\)$/);
+  assert.doesNotMatch(active(feed).getAttribute('sizes'),/calc\(100vw - 40px\)/,'a three-column feed must not advertise the whole viewport');
   assert.match(active(detail).getAttribute('sizes'),/960px$/);
   assert.equal(active(feed).getAttribute('loading'),'lazy');
   assert.equal(active(detail).getAttribute('loading'),null);

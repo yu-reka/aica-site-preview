@@ -88,8 +88,8 @@
       },
       "stories-render": "1026thumbfixed",
       "stories-sections": {
-        "interviews": "1023avatars12",
-        "projects": "1021projecttopline"
+        "interviews": "1027detail-word-wrap",
+        "projects": "1027detail-word-wrap"
       },
       "stories": "1021audit-pr28",
       "story-state": "1020states",

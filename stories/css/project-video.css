@@ -9,7 +9,7 @@
 .stories-page .pj-video .ivtag{z-index:2;pointer-events:none}
 @media(max-width:600px){.stories-page .pj-video-message{padding:48px 16px;font-size:14px}.stories-page .pj-video-stage[data-state="loading"] .pj-video-message{padding:6px 10px;font-size:12px}}
 
-/* One hero medium: retain photo nodes for fallback, hide them while video is selected. */
+/* One hero medium: retain photo nodes, hide them while the stage (video or preparation message) is shown. */
 .stories-page .pj-video-stage[hidden]{display:none}
 .stories-page .pj-video::after{content:"프로젝트 시연 영상"!important}
 

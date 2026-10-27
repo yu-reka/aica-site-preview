@@ -79,6 +79,17 @@ test('desktop boundary closes the mobile modal, unlocks body and restores visibl
   assert.equal(h.drawer.classList.contains('is-open'),true,'menu remains reusable after crossing twice');
 });
 
+test('hashless LNB page links retain native navigation to clear CSS detail targets',()=>{
+  const h=runtime();
+  const sidebar={href:'https://aica.test/about/index.html',hasAttribute:()=>false,
+    closest:selector=>selector==='#siteLnb'?{}:null};
+  let prevented=false;
+  const event={target:{closest:selector=>selector.includes('#siteLnb')?sidebar:null},
+    preventDefault(){prevented=true;}};
+  h.events.click.forEach(fn=>fn(event));
+  assert.equal(prevented,false,'page navigation must not be replaced by pushState plus a synthetic hashchange');
+});
+
 test('desktop dropdown is cleared when its focused controls become mobile-only',()=>{
   const h=runtime(); h.boundary.change(true);
   h.topLink.focus();

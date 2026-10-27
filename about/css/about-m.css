@@ -334,7 +334,10 @@
   html.school-about main#main :is(.intro-platform-features article,.partner-node,.eligibility-condition,.career-stage-card) :is(h3,h4){font-family:var(--ff-sans,sans-serif);font-weight:800}
   html.school-about main#main .guest-lecture-wrap{width:100%}
   html.school-about main#main .activity-project-card{filter:none}
-  html.school-about main#main .activity-project-link{display:none}
+  html.school-about main#main .activity-project-link{display:flex;align-self:stretch;width:auto;max-width:none;min-height:44px;padding:10px 12px;border:1px solid #BBDDEB;border-radius:10px;background:#F0FAFE;color:#25344C;font-size:13px;line-height:1.4;gap:8px}
+  html.school-about main#main .activity-project-link::before,html.school-about main#main .activity-project-link::after{display:none}
+  html.school-about main#main .activity-project-link > svg:first-child{width:22px;height:22px}
+  html.school-about main#main .activity-project-link:hover{background:#E2F5FC;color:#123951}
   html.school-about main#main .activity-project-player{margin-top:0;min-height:0;aspect-ratio:auto;border:0;border-radius:16px}
   html.school-about main#main .activity-project-body{flex:none;padding:8px 0 0;border:0;border-radius:0;background:none;box-shadow:none}
   html.school-about main#main .activity-project-body h4{margin:0;font-family:var(--ff-sans,sans-serif);font-size:15px;font-weight:800;line-height:1.4;letter-spacing:-.02em;color:var(--am-ink)}

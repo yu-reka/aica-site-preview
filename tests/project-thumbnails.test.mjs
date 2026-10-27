@@ -25,7 +25,7 @@ function detail(html,id){return html.match(new RegExp('id="pj-p'+id+'"([\\s\\S]*
 test('a picked thumbnail is the picture alone, and the card text is service name, project subject (summary) and team',()=>{
   const projects=[
     {id:1,anchor:'pj-p1',title:'리뷰 인사이트',headline:'리뷰 분석 플랫폼',summary:'AI 고객 리뷰 분석 및\n제품 개선 인사이트 도출 시스템',team:'리뷰랩 · 4명',
-      thumb:{src:'assets/uploads/post-thumb.webp',w:1080,h:737,em:'제품 개선 인사이트'},img:{src:'assets/uploads/post-demo.webp',w:800,h:600}},
+      thumb:{src:'assets/uploads/post-thumb.webp',w:1080,h:737,em:'제품 개선 인사이트'},img:{src:'assets/uploads/post-demo.webp',w:800,h:600},photos:[{src:'assets/uploads/post-photo-a.webp'},{src:'assets/uploads/post-photo-b.webp'}]},
     {id:2,anchor:'pj-p2',title:'사진만',img:{src:'assets/uploads/post-photo.webp',w:800,h:600}},
     {id:3,anchor:'pj-p3',title:'주제 없는 썸네일',thumb:{src:'assets/uploads/post-thumb2.webp'}},
     {id:4,anchor:'pj-p4',title:'위험한 주소',headline:'<b>굵게</b>',thumb:{src:'javascript:alert(1)'}},
@@ -40,9 +40,9 @@ test('a picked thumbnail is the picture alone, and the card text is service name
   // 카드 글: 서비스 이름(작은 파란 글씨) · 프로젝트 주제(큰 글씨, 줄바꿈은 한 줄로) · 팀
   assert.match(one,/<div class="pjc-tx"><p class="pjname">리뷰 인사이트<\/p><h3 data-field="summary">AI 고객 리뷰 분석 및 제품 개선 인사이트 도출 시스템<\/h3>.*<p class="team" data-field="team">리뷰랩 · 4명<\/p><\/div>$/s);
   assert.doesNotMatch(one,/class="sum"|리뷰 분석 플랫폼/);
-  // 상세 맨 위는 올린 사진(썸네일 그림이 아님)
-  assert.match(detail(out.details,1),/post-demo.webp/);
-  assert.doesNotMatch(detail(out.details,1),/pjthumb/);
+  // 영상이 없으면 사진 넘김이 썸네일보다 먼저
+  assert.match(detail(out.details,1),/class="phs".*post-photo-a.webp.*post-photo-b.webp/);
+  assert.doesNotMatch(detail(out.details,1),/pjthumb|post-thumb.webp|post-demo.webp/);
 
   // 썸네일을 고르지 않은 글은 예전처럼 대표 사진, 주제가 없으면 서비스 이름이 큰 글씨
   assert.match(card(out.cards,2),/src="assets\/uploads\/post-photo.webp"/);
@@ -58,7 +58,8 @@ test('a picked thumbnail is the picture alone, and the card text is service name
   assert.doesNotMatch(card(out.cards,5),/카메라가 신호등을 읽어요/);
 
   // 위험한 주소는 버리고(썸네일 없이), 글자는 이스케이프
-  assert.doesNotMatch(out.cards+out.details+out.hub,/javascript:|alert\(1\)|<b>/);
+  assert.doesNotMatch(out.cards+out.details+out.hub,/javascript:|alert\(1\)/);
+  assert.doesNotMatch(card(out.cards,4)+detail(out.details,4),/<b>/);   // 사진 개수 표시의 정상 <b>와 악성 입력을 구분
   assert.doesNotMatch(card(out.cards,4),/pjthumb/);
 
   // 한눈에 보기 프로젝트 칸도 같은 썸네일 · 같은 글
@@ -67,6 +68,21 @@ test('a picked thumbnail is the picture alone, and the card text is service name
   assert.match(out.hub,/<div class="hb-pjc-tx"><h3>주제 없는 썸네일<\/h3>/);
   assert.doesNotMatch(out.hub,/hb-pjc-s"|리뷰 분석 플랫폼|pjthumb-t/);
   assert.equal(JSON.stringify(projects),before,'rendering must not mutate API/snapshot data');
+});
+
+test('one photo also wins over a thumbnail; otherwise the thumbnail remains the fallback',()=>{
+  const out=render([
+    {id:1,anchor:'pj-p1',title:'사진 한 장',thumb:{src:'assets/uploads/thumb.webp'},photos:[{src:'assets/uploads/one.webp'}]},
+    {id:2,anchor:'pj-p2',title:'대표 사진',thumb:{src:'assets/uploads/thumb.webp'},img:{src:'assets/uploads/representative.webp'}},
+    {id:3,anchor:'pj-p3',title:'썸네일만',thumb:{src:'assets/uploads/thumb.webp'}},
+    {id:4,anchor:'pj-p4',title:'안전한 대체',thumb:{src:'assets/uploads/thumb.webp'},photos:[{src:'javascript:alert(1)'}]}
+  ]);
+  assert.match(detail(out.details,1),/class="phs one".*one.webp/);
+  assert.doesNotMatch(detail(out.details,1),/pjthumb|thumb.webp/);
+  assert.match(detail(out.details,2),/representative.webp/);
+  assert.doesNotMatch(detail(out.details,2),/pjthumb|thumb.webp/);
+  for(const id of [3,4])assert.match(detail(out.details,id),/class="pjthumb illu".*thumb.webp/);
+  assert.doesNotMatch(out.details,/javascript:|alert\(1\)/);
 });
 
 test('the thumbnail CSS fits the picture large on white and long subjects stop at three lines',()=>{

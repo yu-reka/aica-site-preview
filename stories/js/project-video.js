@@ -1,7 +1,7 @@
 /* Project demo view. No API/data mapping: a future integration supplies video[src]
    or source[src] in .pjhero. Empty previews never request an empty URL.
-   2026-10-27 (user request): without a video address the preparation stage is the hero even when the
-   project has photos or a thumbnail (they stay in the DOM, hidden). Heroes with a YouTube demo
+   2026-10-27 (user request): without a video address, photos or a picked thumbnail stay visible;
+   only a hero without either medium gets the preparation stage. Heroes with a YouTube demo
    (data-pj-yt, stories-render.js pjVideo) are left alone. */
 (() => {
   'use strict';
@@ -22,6 +22,7 @@
     if (players.has(hero)) return;
     if (hero.getAttribute('data-pj-yt')) return;   // YouTube demo (stories-render.js pjVideo) owns this hero
     const existing = hero.querySelector('video');
+    if (!existing && hero.querySelector('img,.phs,.pjthumb')) return;   // No demo: keep photos or the picked thumbnail visible
     const video = existing || document.createElement('video');
     const stage = document.createElement('div');
     stage.className = 'pj-video-stage';

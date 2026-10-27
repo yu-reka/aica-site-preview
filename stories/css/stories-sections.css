@@ -203,8 +203,6 @@
 .stories-page .iva-c img[src*="/avatar-card-08-"]{--avatar-center-y:0.65%}
 .stories-page .iva-c img[src*="/avatar-card-09-"]{--avatar-center-y:1.04%}
 .stories-page .iva-c img[src*="/avatar-card-10-"]{--avatar-center-y:1.34%}
-.stories-page .iva-c img[src*="/avatar-card-11-"]{--avatar-center-y:1.16%}
-.stories-page .iva-c img[src*="/avatar-card-12-"]{--avatar-center-y:2.06%}
 .stories-page .iva-out[data-view="list"] .iva-c .ph img{translate:0 var(--avatar-center-y,0)}
 
 /* 카드뷰는 제목·요약의 두 줄 자리를 확보해 작성자 줄까지 정렬합니다. */

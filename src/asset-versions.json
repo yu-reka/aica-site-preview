@@ -52,14 +52,14 @@
   },
   "life": {
     "css": {
-      "life-m": "1026life-top",
-      "life": "1027cafeteria-preview",
-      "presentation": "1026floor-equal"
+      "life-m": "1027facility-note-icons",
+      "life": "1027floor-arrows-preview",
+      "presentation": "1027tab-spacing"
     },
     "js": {
-      "life-m-view": "1027cafeteria-preview",
-      "life-m": "1021area-arrows",
-      "life": "1023dicecancel"
+      "life-m-view": "1027facility-note-icons",
+      "life-m": "1027facility-note-icons",
+      "life": "1027facility-note-up"
     }
   },
   "stories": {
@@ -92,7 +92,7 @@
     },
     "js": {
       "cohort-modal-scroll": "1022swipereading",
-      "cohort-v3": "1027responsive-photos",
+      "cohort-v3": "1027feed-photo-sizes",
       "detail-navigation": "1027story-list-return",
       "old-hash": "1022hubmodals",
       "project-reading": "1027list-markers",

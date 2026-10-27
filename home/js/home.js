@@ -50,12 +50,15 @@ function setupHome(main){
   const ticker=document.querySelector('.tk'), button=ticker?.querySelector('.tk-toggle');
   if(!button)return;
   const preference=matchMedia('(prefers-reduced-motion: reduce)');
+  const touchArea=matchMedia('(max-width:860px), (hover:none)');
   let paused=preference.matches;
   const paint=()=>{
     ticker.classList.toggle('is-paused',paused);ticker.classList.toggle('is-running',!paused);
     button.querySelector('.tk-toggle-icon').textContent=paused?'▶':'Ⅱ';
     button.setAttribute('aria-label',paused?'전광판 다시 재생':'흐르는 전광판 정지');
   };
-  button.addEventListener('click',()=>{paused=!paused;paint();});
+  const toggle=()=>{paused=!paused;paint();};
+  button.addEventListener('click',toggle);
+  ticker.querySelector('.tk-window')?.addEventListener('click',()=>{if(touchArea.matches)toggle();});
   preference.addEventListener('change',event=>{paused=event.matches;paint();});paint();
 })();

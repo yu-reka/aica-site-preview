@@ -49,10 +49,10 @@
   },
   "home": {
     "css": {
-      "home": "1027map-sticker-gap"
+      "home": "1027ticker-tap-state"
     },
     "js": {
-      "home": "1021audit-pr28",
+      "home": "1027ticker-tap-state",
       "ticker-render": "design-20261026-projectthumbs"
     }
   },

@@ -349,6 +349,8 @@
       return '<div class="pjd" id="' + id + '"><a class="ivback" href="#p-pr">← 프로젝트 목록</a><div class="ivwrap"><div>'
         + (pjVideo(x) || '<div class="ivhero pjhero"><span class="ivtag">' + esc(pjSubject(x)) + '</span>' + (photos(x, x.title) || (hasThumb(x) ? pjThumb(x, 'illu') : visual(x, { hidden: true }))) + '</div>')
         + '<span class="pjno">' + pad2(i + 1) + '</span><h2>' + esc(x.title) + '</h2><p class="lead">' + esc(x.summary) + '</p>'
+        // 서비스 소개(2026-10-27, 글쓰기 화면 '서비스 소개'): 프로젝트 주제 바로 아래, 다른 칸과 같은 카드(파란 윗선)
+        + (x.serviceIntro ? '<section class="pjintro"><h3>서비스 소개</h3><p class="pjph-t" data-field="serviceIntro">' + esc(x.serviceIntro) + '</p></section>' : '')
         + '<div class="pjtags">' + (x.tags || []).map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div>'
         + '<div class="pjsec">' + secs + '</div>'
         + (links ? '<div class="pjlinks">' + links + '</div>' : '')

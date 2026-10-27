@@ -99,7 +99,7 @@
   function visual(item, opts) {
     opts = opts || {};
     var m = opts.large && item.imgLarge ? item.imgLarge : item.img;
-    if (m && m.src) return imgTag(opts.alt === false ? { src: m.src, alt: '', w: m.w, h: m.h, fit: m.fit } : m, 'illu', true, opts.fit && m === item.img, opts.field, opts.sizes || (opts.large ? '(max-width: 1000px) calc(100vw - 40px), 720px' : null));
+    if (m && m.src) return imgTag(opts.alt === false ? { src: m.src, alt: '', w: m.w, h: m.h, fit: m.fit } : m, 'illu', true, opts.fit && m === item.img, opts.field, opts.large ? '(max-width: 1000px) calc(100vw - 40px), 720px' : null);
     if (item.art) return opts.hidden && !/^<svg\b[^>]*\saria-hidden=/.test(item.art) ? item.art.replace(/^<svg\b/, '<svg aria-hidden="true"') : item.art;
     return '<svg class="illu" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"' + (opts.hidden ? ' aria-hidden="true"' : '') + '><rect width="100%" height="100%" fill="#E4E9F7"/></svg>';
   }
@@ -349,6 +349,8 @@
       return '<div class="pjd" id="' + id + '"><a class="ivback" href="#p-pr">← 프로젝트 목록</a><div class="ivwrap"><div>'
         + (pjVideo(x) || '<div class="ivhero pjhero"><span class="ivtag">' + esc(pjSubject(x)) + '</span>' + (photos(x, x.title) || (hasThumb(x) ? pjThumb(x, 'illu') : visual(x, { hidden: true }))) + '</div>')
         + '<span class="pjno">' + pad2(i + 1) + '</span><h2>' + esc(x.title) + '</h2><p class="lead">' + esc(x.summary) + '</p>'
+        // 서비스 소개(2026-10-27, 글쓰기 화면 '서비스 소개'): 프로젝트 주제 바로 아래, 다른 칸과 같은 카드(파란 윗선)
+        + (x.serviceIntro ? '<section class="pjintro"><h3>서비스 소개</h3><p class="pjph-t" data-field="serviceIntro">' + esc(x.serviceIntro) + '</p></section>' : '')
         + '<div class="pjtags">' + (x.tags || []).map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div>'
         + '<div class="pjsec">' + secs + '</div>'
         + (links ? '<div class="pjlinks">' + links + '</div>' : '')

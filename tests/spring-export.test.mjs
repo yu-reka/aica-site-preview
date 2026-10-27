@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { springArtifacts } from '../scripts/export-spring.mjs';
 import { loadContent } from '../scripts/build.mjs';
+import { assetVersion } from '../scripts/asset-versions.mjs';
 
 test('Spring review export has no static records and uses escaped live fragments', () => {
   const artifacts = springArtifacts();
@@ -76,8 +77,8 @@ test('hub selection retains the approved cohort slots without duplicate image al
   const artifacts=springArtifacts();
   for(const name of ['reviews','interviews','projects']){
     const html=artifacts.get('templates/public-site/'+name+'.html');
-    assert.ok(html.includes('/stories/js/detail-navigation.js?v=1020outsidegrid'));
-    assert.ok(html.includes('/stories/css/detail-navigation.css?v=1020outsidegrid'));
+    assert.ok(html.includes('/stories/js/detail-navigation.js?v='+assetVersion('stories.js.detail-navigation')));
+    assert.ok(html.includes('/stories/css/detail-navigation.css?v='+assetVersion('stories.css.detail-navigation')));
   }
 });
 

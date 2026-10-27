@@ -273,21 +273,18 @@ body{background:var(--ax-bg)}
 }
 
 /* ---------- v2.1 GNB를 Primary 파랑으로 ----------
-   막대 · 드롭다운 · 검색 패널이 --header-bg를 따라 모두 파랑. 막대는 한 단계 진한 #2457F5(흰 글자 5.6 : 1), 흐린 흰색은 기준 미달이라 쓰지 않음)
+   막대 · 드롭다운이 --header-bg를 따라 모두 파랑. 막대는 한 단계 진한 #2457F5(흰 글자 5.6 : 1), 흐린 흰색은 기준 미달이라 쓰지 않음)
    아래쪽은 포스터 프레임과 같은 검정 굵은 선으로 마감 */
 :root{--header-bg:var(--hm-primary-strong);--on-header:#fff;--header-muted:#fff;--header-accent:#fff}
-.site-header .hdr-bar,.site-header .drop-bg,.site-header .search-panel{background:var(--hm-primary-strong);-webkit-backdrop-filter:none;backdrop-filter:none}
+.site-header .hdr-bar,.site-header .drop-bg{background:var(--hm-primary-strong);-webkit-backdrop-filter:none;backdrop-filter:none}
 .site-header .hdr-bar,.site-header.is-scrolled .hdr-bar,.site-header.menu-open .hdr-bar{border-bottom:3px solid var(--ax-line)}
 .site-header.menu-open .drop-bg{border-bottom:3px solid var(--ax-line)}
-.site-header .search-panel{border-bottom:3px solid var(--ax-line);box-shadow:none}
 .site-header .gnb-link{font-weight:700}
 .site-header .gnb-link::after{height:3px;bottom:-3px;background:#fff}
 .site-header .drop a{font-weight:500;color:#fff}
 .site-header .drop a:hover,.site-header .drop a:focus-visible{color:#fff;text-decoration:underline;text-underline-offset:4px}
-.site-header .logo-sub,.site-header .official-link{color:#fff;opacity:1}
-.hdr-bar .icon-btn:hover,.search-panel .icon-btn:hover{background:rgba(11,11,12,.18)}
-.site-header .search-tags a{border-color:rgba(255,255,255,.55)}
-.site-header .search-tags a:hover{background:#fff;color:var(--hm-primary-strong)}
+.site-header .official-link{color:#fff;opacity:1}
+.hdr-bar .icon-btn:hover{background:rgba(11,11,12,.18)}
 /* 파랑 막대 위 지원하기: 흰 버튼 + 파랑 글자 + 포스터식 검정 그림자 */
 .site-header .btn-apply{background:#fff;color:var(--hm-primary-strong);border:2px solid var(--ax-line);box-shadow:3px 3px 0 var(--ax-line);transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
 .site-header .btn-apply:hover{background:#fff;transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ax-line)}

@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- Generated from src/pages/stories/projects.html and content/. Run npm run build. -->
-<html lang="ko" data-menu="stories" data-sub="projects" data-nav="side" data-theme="light">
+<html lang="ko" data-menu="stories" data-sub="projects" data-nav="side" data-subnav="off" data-theme="light">
 <head>
   <script src="../common/js/public-content.js"></script>
   <meta charset="UTF-8">
@@ -17,7 +17,30 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="인공지능사관학교 인사교 AI-Log — 선배들의 배움과 프로젝트, 일상을 담은 랜딩페이지">
+<!-- Reserve the accepted navigation shell before deferred scripts/public data. -->
+<style>
+@media(max-width:600px){
+  html[data-menu="stories"] #main{padding-top:60px}
+  html[data-menu="stories"] #main > .st-mh{box-sizing:border-box;height:172px;min-height:172px}
+  html[data-menu="stories"] #main > #siteLnb{box-sizing:border-box;height:52px;min-height:52px}
+}
+@media(min-width:1200px){
+  html[data-menu="stories"]{
+    --stories-mast-height:calc(clamp(40px,4.4vw,60px) + 36px + 2 * clamp(28px,3.2vw,44px) + clamp(32px,3.9vw,54px) * 1.12 + 10px + clamp(16px,1.2vw,17.5px) * 1.7 + 4px);
+  }
+  html[data-menu="stories"] #main > .st-mh{box-sizing:border-box;height:var(--stories-mast-height);min-height:var(--stories-mast-height)}
+  html[data-menu="stories"][data-nav="side"] main#main:has(> .st-mh){--lnb-top:calc(var(--stories-mast-height) + 56px + 4px)}
+}
+</style>
+<link rel="preload" href="../common/assets/fonts/Giants-Bold.woff2" as="font" type="font/woff2" crossorigin>
+
 <script src="../common/js/ui.js?v=1021audit-pr28" defer></script>
+  <script src="../common/js/menu.js" defer></script>
+  <script src="../common/js/site-layout.js?v=1023newtab" defer></script>
+<script src="../common/js/site.js?v=1027lnb-page-start2" defer></script>
+<script src="../common/js/track.js?v=1020" defer></script>
+
+
   <link rel="icon" type="image/png" href="../common/assets/brand/symbol-blue.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,21 +67,16 @@
 
   <link rel="stylesheet" href="css/project-video.css?v=1027prep-always">
   <link rel="stylesheet" href="css/projects-grid.css?v=1021listbadges">
-  <link rel="stylesheet" href="css/stories-m.css?v=1023mobileellipsis">
+  <link rel="stylesheet" href="css/stories-m.css?v=1027nav-stable2">
   <link rel="stylesheet" href="../common/css/components.css?v=1021audit-pr28">
 <link rel="stylesheet" href="../common/css/navigation-mobile.css?v=1016nav">
   <script src="js/mast-fix.js" defer></script>
-  <script src="../common/js/menu.js" defer></script>
-  <script src="../common/js/site-layout.js?v=1023newtab" defer></script>
-<script src="../common/js/site.js?v=1027lnb-page-start2" defer></script>
-<script src="../common/js/track.js?v=1020" defer></script>
-
   <script src="js/detail-navigation.js?v=1020outsidegrid" defer></script>
 
 <link rel="stylesheet" href="../common/css/availability.css?v=1026loading-soft-backdrop">
 <script src="../common/js/availability.js?v=1026loading-soft-backdrop" defer></script>
 
-  <script src="js/stories-m.js?v=1026thumb-image" defer></script>
+  <script src="js/stories-m.js?v=1027nav-stable2" defer></script>
   <script src="js/stories.js?v=1022dialog-transfer" defer></script>
   <script src="js/story-detail-title.js?v=1027all-details" defer></script>
   <script src="js/projects-filter.js?v=1023course" defer></script>
@@ -84,6 +102,25 @@
   <nav class="mhb-st" aria-label="선배들의 이야기 바로가기"><a href="interviews.html" style="--c:#8CC3FF;--r:-6deg">인터뷰</a><a href="reviews.html" style="--c:#FFE36E;--r:4deg">후기</a><a href="projects.html" style="--c:#7FDDA8;--r:-3deg">프로젝트</a><a href="cohorts.html" style="--c:#FF9CC8;--r:6deg">기수별 이모저모</a></nav>
   </div>
 </div>
+<nav class="lnb" id="siteLnb" aria-label="선배들의 이야기 메뉴">
+  <div class="lnb-in">
+    <p class="lnb-head"><strong class="lnb-title">선배들의 이야기</strong></p>
+    <ul class="lnb-list ui-segment" role="list" data-scroll-fade data-static-labels>
+
+      <li><a href="../stories/index.html" data-sub="overview"><span class="lnb-label-full">All</span><span class="lnb-label-mobile">전체</span></a></li>
+
+      <li><a href="../stories/interviews.html" data-sub="interviews"><span class="lnb-label-full">인터뷰</span><span class="lnb-label-mobile">인터뷰</span></a></li>
+
+      <li><a href="../stories/reviews.html" data-sub="reviews"><span class="lnb-label-full">후기</span><span class="lnb-label-mobile">후기</span></a></li>
+
+      <li><a href="../stories/projects.html" data-sub="projects" aria-current="page"><span class="lnb-label-full">프로젝트</span><span class="lnb-label-mobile">프로젝트</span></a></li>
+
+      <li><a href="../stories/cohorts.html" data-sub="cohorts"><span class="lnb-label-full">기수별 이모저모</span><span class="lnb-label-mobile">기수 기록</span></a></li>
+
+    </ul>
+  </div>
+</nav>
+
 <input class="tr tb" autocomplete="off" type="radio" name="tab" id="t1" tabindex="-1" aria-hidden="true">
 <input class="tr tb" autocomplete="off" type="radio" name="tab" id="t2" tabindex="-1" aria-hidden="true">
 <input class="tr tb" autocomplete="off" type="radio" name="tab" id="t3" checked tabindex="-1" aria-hidden="true">

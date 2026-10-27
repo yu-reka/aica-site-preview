@@ -7,9 +7,16 @@
    ========================================================= */
 .sm-dock,.sm-arrow{display:none}
 .sm-rail-box{display:contents}
+/* Page-to-page listing navigation has no entrance delay; detail effects stay local. */
+.stories-page .pane{animation:none}
+#siteLnb .lnb-label-mobile,.sm-dock .lnb-label-mobile{display:none}
 
 @media (max-width:600px){
   html[data-nav="side"]{--sm-ink:#14233F;--sm-muted:#566175;--sm-line:#D3D9E1;--sm-soft:#F5F7F6;--sm-blue:#2457F5;--sm-black:#0B0B0C}
+
+  /* Initial HTML and the dock use the same responsive labels. */
+  #siteLnb .lnb-label-full,.sm-dock .lnb-label-full{display:none}
+  #siteLnb .lnb-label-mobile,.sm-dock .lnb-label-mobile{display:inline}
 
   /* ── 세그먼트 탭 ── */
   html[data-nav="side"] #siteLnb{padding:0 20px}

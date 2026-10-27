@@ -11,7 +11,7 @@
                                        하위 메뉴가 페이지마다 따로인 페이지는 data-nav="side"면 위쪽 바 대신 본문 왼쪽 메뉴(common/css/lnb.css, 10-13 사본: 이야기 하위 4페이지)
      <header class="site-header" id="siteHeader"></header>
      <main id="main" tabindex="-1">…</main>
-     <footer class="site-footer" id="siteFooter"></footer>   페이지 메모 data-note="…"는 10-14부터 화면에 안 보임(메모로만)
+     <footer class="site-footer" id="siteFooter"></footer>
      <script src="../common/js/menu.js" defer></script>
      <script src="../common/js/site-layout.js" defer></script>
      <script src="../common/js/site.js" defer></script>

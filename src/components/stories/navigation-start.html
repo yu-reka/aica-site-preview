@@ -1,0 +1,16 @@
+<!-- Reserve the accepted navigation shell before deferred scripts/public data. -->
+<style>
+@media(max-width:600px){
+  html[data-menu="stories"] #main{padding-top:60px}
+  html[data-menu="stories"] #main > .st-mh{box-sizing:border-box;height:172px;min-height:172px}
+  html[data-menu="stories"] #main > #siteLnb{box-sizing:border-box;height:52px;min-height:52px}
+}
+@media(min-width:1200px){
+  html[data-menu="stories"]{
+    --stories-mast-height:calc(clamp(40px,4.4vw,60px) + 36px + 2 * clamp(28px,3.2vw,44px) + clamp(32px,3.9vw,54px) * 1.12 + 10px + clamp(16px,1.2vw,17.5px) * 1.7 + 4px);
+  }
+  html[data-menu="stories"] #main > .st-mh{box-sizing:border-box;height:var(--stories-mast-height);min-height:var(--stories-mast-height)}
+  html[data-menu="stories"][data-nav="side"] main#main:has(> .st-mh){--lnb-top:calc(var(--stories-mast-height) + 56px + 4px)}
+}
+</style>
+<link rel="preload" href="../common/assets/fonts/Giants-Bold.woff2" as="font" type="font/woff2" crossorigin>

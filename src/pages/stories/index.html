@@ -1,5 +1,5 @@
 <!doctype html>
-<html data-inline-story-modals="true" lang="ko" data-menu="stories" data-sub="overview" data-nav="side" data-theme="light">
+<html data-inline-story-modals="true" lang="ko" data-menu="stories" data-sub="overview" data-nav="side" data-subnav="off" data-theme="light">
 <head>
   <script src="../common/js/public-content.js"></script>
   <meta charset="UTF-8">
@@ -16,6 +16,8 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="인공지능사관학교 인사교 AI-Log — 선배들의 배움과 프로젝트, 일상을 담은 랜딩페이지">
+{{> stories/navigation-start}}
+{{> stories/navigation-shell}}
   <link rel="icon" type="image/png" href="../common/assets/brand/symbol-blue.png">
   <!-- 옛 주소(#reviews · #iv-3 · #r-life-0 …)는 그려지기 전에 나뉜 페이지로 보냄: defer 없이 가장 먼저 -->
   <script src="js/old-hash.js?v={{v.stories.js.old-hash}}"></script>
@@ -34,10 +36,6 @@
   <link rel="stylesheet" href="../common/css/components.css?v={{v.common.css.components}}">
 <link rel="stylesheet" href="../common/css/navigation-mobile.css?v={{v.common.css.navigation-mobile}}">
   <script src="js/mast-fix.js" defer></script>
-  <script src="../common/js/menu.js" defer></script>
-  <script src="../common/js/site-layout.js?v={{v.common.js.site-layout}}" defer></script>
-<script src="../common/js/ui.js?v={{v.common.js.ui}}" defer></script>
-<script src="../common/js/site.js?v={{v.common.js.site}}" defer></script>
 <link rel="stylesheet" href="../common/css/availability.css?v={{v.common.css.availability}}">
 <script src="../common/js/availability.js?v={{v.common.js.availability}}" defer></script>
   <script src="js/stories-m.js?v={{v.stories.js.stories-m}}" defer></script>
@@ -60,6 +58,7 @@
 <!-- 제목 줄(10-13 사본, 사용자 결정 '1번'): 이야기 5페이지에 같은 큰 제목 줄(css/mast.css). 1200 이상은 왼쪽 메뉴 위로 화면 폭 전체, 메뉴는 그 아래서 따라옴.
      .hb 밖(main 바로 아래)에 둬서 site.js가 메뉴를 이 뒤에 그림 — 좁은 화면에서 제목 → 알약 줄 순서 -->
 {{> stories/masthead}}
+{{> stories/navigation storyNavigation.overview}}
 <div class="hb">
   <!-- 01 후기: 모눈 종이 띠 위에 흐르는 한마디(손글씨) + 포스트잇 4장(분류 · 기수가 겹치지 않게 고름, 흐르는 한마디와 다른 글) -->
   <section class="hb-sec hb-iv" id="hub-interviews" data-honors-feature aria-labelledby="hub-interviews-t">

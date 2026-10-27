@@ -35,6 +35,9 @@
     groups.push({kind,items,returnTo:null});
   });
   function paint(kind,item,items,index){
+    // Full-page details share the saved listing hash and scroll position.
+    const topBack=(kind.key==='interview'||kind.key==='project')&&item.detail.querySelector('.ivback');
+    if(topBack&&topBack.getAttribute('href')===kind.list)topBack.dataset.storyList=kind.key;
     const side=kind.key==='project'&&item.detail.querySelector('.pjnav');
     if(side){
       side.hidden=false;side.replaceChildren();
@@ -114,7 +117,7 @@
     if(a.closest('.ov,.ivd,.pjd'))return;
     groups.forEach(g=>{
       if(g.items.some(item=>'#'+item.detail.id===a.getAttribute('href')))
-        g.returnTo={hash:location.hash||g.kind.list,y:window.scrollY};
+        g.returnTo={hash:(g.kind.key==='interview'||g.kind.key==='project')?g.kind.list:location.hash||g.kind.list,y:window.scrollY};
     });
   },true);
   addEventListener('hashchange',()=>{

@@ -83,8 +83,8 @@
       "projects-grid": "1021listbadges",
       "review-notes": "1022footerspacing",
       "stories-m": {
-        "default": "1023mobileellipsis",
-        "cohorts": "1022cohortinfo"
+        "default": "1027nav-stable2",
+        "cohorts": "1027nav-stable2"
       },
       "stories-render": "1027demo-video",
       "stories-sections": {
@@ -109,7 +109,7 @@
         "default": "1020states",
         "legacyLoader": "1016cleanup"
       },
-      "stories-m": "1026thumb-image",
+      "stories-m": "1027nav-stable2",
       "stories-render": "1027photo-first-hero",
       "stories-sections": "1023cardrows",
       "stories": "1022dialog-transfer",

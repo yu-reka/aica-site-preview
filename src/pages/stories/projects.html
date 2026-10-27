@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko" data-menu="stories" data-sub="projects" data-nav="side" data-theme="light">
+<html lang="ko" data-menu="stories" data-sub="projects" data-nav="side" data-subnav="off" data-theme="light">
 <head>
   <script src="../common/js/public-content.js"></script>
   <meta charset="UTF-8">
@@ -16,6 +16,8 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="인공지능사관학교 인사교 AI-Log — 선배들의 배움과 프로젝트, 일상을 담은 랜딩페이지">
+{{> stories/navigation-start}}
+{{> stories/navigation-shell}}
 {{> stories/head-base}}
   <link rel="stylesheet" href="css/stories.css?v={{v.stories.css.stories}}">
   <link rel="stylesheet" href="css/stories-sections.css?v={{v.stories.css.stories-sections.projects}}">
@@ -44,6 +46,7 @@
 <!-- 10-13 사본: 분할 전 한 페이지의 숨김 제목(h1.sr '선배들의 이야기')이 나뉘며 빠졌음 → 이 페이지 이름으로 되살림. 목록(.pjlist) 밖이라 상세를 열어도 남음 -->
 <h1 class="sr">프로젝트 — 선배들의 이야기</h1>
 {{> stories/masthead-2}}
+{{> stories/navigation storyNavigation.projects}}
 <input class="tr tb" autocomplete="off" type="radio" name="tab" id="t1" tabindex="-1" aria-hidden="true">
 <input class="tr tb" autocomplete="off" type="radio" name="tab" id="t2" tabindex="-1" aria-hidden="true">
 <input class="tr tb" autocomplete="off" type="radio" name="tab" id="t3" checked tabindex="-1" aria-hidden="true">

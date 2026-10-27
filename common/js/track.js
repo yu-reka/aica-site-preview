@@ -32,7 +32,7 @@
     try {
       fetch(api + path, {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
-        keepalive: true, credentials: 'omit', cache: 'no-store'
+        keepalive: true, credentials: 'same-origin', cache: 'no-store'
       }).catch(function () {});
     } catch (e) { /* 기록 실패는 화면에 영향 없음 */ }
   }

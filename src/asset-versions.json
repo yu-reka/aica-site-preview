@@ -116,7 +116,8 @@
       "story-state": "1022chips-posts-only",
       "interview-honors": "1026honors-no-hint",
       "cohort-month-navigation": "1026month-navigation",
-      "project-video": "1026demo-controller-cleanup"
+      "project-video": "1026demo-controller-cleanup",
+      "story-detail-title": "1027all-details"
     }
   }
 }

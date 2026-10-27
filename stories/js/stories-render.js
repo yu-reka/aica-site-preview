@@ -48,7 +48,20 @@
     function image(value) {
       if (!value || !safe) return null;
       var src = safe.url(value.src, true); if (!src) return null;
-      return Object.assign({}, value, {src:src,w:Math.max(0,num(value.w,0)),h:Math.max(0,num(value.h,0))});
+      var out = Object.assign({}, value, {src:src,w:Math.max(0,num(value.w,0)),h:Math.max(0,num(value.h,0))});
+      // Srcset is a list of URLs, not an arbitrary HTML attribute or descriptor string.
+      var widths = Object.create(null), sources = Object.create(null);
+      out.srcset = (Array.isArray(value.srcset) ? value.srcset.slice(0,16) : []).filter(function (candidate) {
+        return candidate && typeof candidate.src === 'string' && Number.isSafeInteger(candidate.w) && candidate.w > 0 && candidate.w <= 16384 && (!out.w || candidate.w <= out.w);
+      }).map(function (candidate) { return {src:safe.url(candidate.src,true),w:candidate.w}; }).filter(function (candidate) {
+        if (!candidate.src || /[\s,]/.test(candidate.src) || widths[candidate.w] || sources[candidate.src]) return false;
+        widths[candidate.w] = true; sources[candidate.src] = true; return true;
+      }).sort(function (a,b) { return a.w-b.w; });
+      // The API lists derivatives only; retain the original for large/high-density slots.
+      if (out.srcset.length && Number.isSafeInteger(out.w) && out.w <= 16384 && out.w > out.srcset[out.srcset.length-1].w && !sources[out.src] && !/[\s,]/.test(out.src)) {
+        out.srcset.push({src:out.src,w:out.w});
+      }
+      return out;
     }
     out.img = image(item.img); out.imgLarge = image(item.imgLarge); out.thumb = image(item.thumb);   // thumb: 프로젝트 썸네일(그림만)
     out.photos = (Array.isArray(item.photos) ? item.photos : []).map(image).filter(Boolean);
@@ -87,19 +100,27 @@
   function num(v, d) { v = Number(v); return isFinite(v) ? v : d; }
   function hasPhoto(item) { return !!(item.img && item.img.src); }
   // 사진(img). fit: 썸네일 자리에서는 관리자가 '썸네일 맞추기'로 정한 보일 위치(--fx · --fy)와 확대(--z)를 따라요
+  var PHOTO_CARD_SIZES = '(max-width: 640px) calc(100vw - 40px), (max-width: 1199px) calc((100vw - 72px) / 2), 360px';
+  var PHOTO_DETAIL_SIZES = '(max-width: 1000px) calc(100vw - 40px), 960px';
+  function sourceSet(m, sizes) {
+    if (!m.srcset || !m.srcset.length) return '';
+    return ' srcset="' + m.srcset.map(function (candidate) { return esc(candidate.src) + ' ' + candidate.w + 'w'; }).join(', ') + '" sizes="' + esc(sizes || PHOTO_DETAIL_SIZES) + '"';
+  }
   function imgTag(m, cls, lazy, fit, field, sizes) {
     if (!m || !m.src) return '';
     var f = fit && m.fit, style = f ? ' data-fit style="--fx:' + num(f.x, 50) + '%;--fy:' + num(f.y, 50) + '%;--z:' + num(f.z, 1) + '"' : '';
     var avatarBase = /^(assets\/interview-avatars\/avatar-card-\d{2})-(160|320|608|1080)\.webp$/.exec(m.src);
-    var responsive = avatarBase ? ' srcset="' + [160, 320, 608, 1080].map(function (w) { return avatarBase[1] + '-' + w + '.webp?v=1026avatars10 ' + w + 'w'; }).join(', ') + '" sizes="' + esc(sizes || '(max-width: 640px) 64px, 304px') + '"' : '';
-    return '<img class="' + cls + '" src="' + esc(m.src + (avatarBase ? '?v=1026avatars10' : '')) + '" alt="' + esc(m.alt || '') + '"' + (lazy ? ' loading="lazy" decoding="async"' : '')
+    var responsive = sourceSet(m,sizes) || (avatarBase ? ' srcset="' + [160, 320, 608, 1080].map(function (w) { return avatarBase[1] + '-' + w + '.webp?v=1026avatars10 ' + w + 'w'; }).join(', ') + '" sizes="' + esc(sizes || '(max-width: 640px) 64px, 304px') + '"' : '');
+    return '<img class="' + cls + '" src="' + esc(m.src + (avatarBase ? '?v=1026avatars10' : '')) + '" alt="' + esc(m.alt || '') + '"' + (lazy ? ' loading="lazy"' : '') + ' decoding="async"'
       + responsive + (m.w ? ' width="' + m.w + '"' : '') + (m.h ? ' height="' + m.h + '"' : '') + style + (field ? ' data-field="' + field + '"' : '') + '>';
   }
   // 사진 또는 그림(svg, 관리자가 가져온 시안 그림)
   function visual(item, opts) {
     opts = opts || {};
     var m = opts.large && item.imgLarge ? item.imgLarge : item.img;
-    if (m && m.src) return imgTag(opts.alt === false ? { src: m.src, alt: '', w: m.w, h: m.h, fit: m.fit } : m, 'illu', true, opts.fit && m === item.img, opts.field, opts.large ? '(max-width: 1000px) calc(100vw - 40px), 720px' : null);
+    var sizes = opts.large ? '(max-width: 1000px) calc(100vw - 40px), 720px' : null;
+    if (m && m.srcset && m.srcset.length) sizes = opts.sizes || (opts.large ? sizes : PHOTO_CARD_SIZES);
+    if (m && m.src) return imgTag(opts.alt === false ? Object.assign({},m,{alt:''}) : m, 'illu', true, opts.fit && m === item.img, opts.field, sizes);
     if (item.art) return opts.hidden && !/^<svg\b[^>]*\saria-hidden=/.test(item.art) ? item.art.replace(/^<svg\b/, '<svg aria-hidden="true"') : item.art;
     return '<svg class="illu" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"' + (opts.hidden ? ' aria-hidden="true"' : '') + '><rect width="100%" height="100%" fill="#E4E9F7"/></svg>';
   }
@@ -107,17 +128,17 @@
   function hubVisual(item, opts) {
     opts = opts || {};
     var m = opts.large && item.imgLarge ? item.imgLarge : item.img;
-    if (m && m.src) return imgTag({ src: m.src, alt: '', w: m.w, h: m.h, fit: m.fit }, 'hb-ph', true, m === item.img, null, opts.large ? '(max-width: 800px) calc(100vw - 40px), 538px' : '(max-width: 640px) 104px, 140px');
+    if (m && m.src) return imgTag(Object.assign({},m,{alt:''}), 'hb-ph', true, m === item.img, null, opts.sizes || (opts.large ? '(max-width: 800px) calc(100vw - 40px), 538px' : '(max-width: 640px) 104px, 140px'));
     var svg = item.art || '<svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#E4E9F7"/></svg>';
     return svg.replace(/^<svg\b([^>]*)>/, function (all, attrs) { return '<svg aria-hidden="true"' + attrs.replace(/\s(class|aria-hidden)="[^"]*"/g, '') + '>'; });
   }
   // 프로젝트 썸네일(2026-10-26): 흰 바탕에 관리자가 고른 그림(thumb, 투명 배경)만 크게. 글자는 넣지 않아요(사용자 요청 — 주제는 카드 글로)
   // 사진처럼 꽉 찬 그림은 그림이 오면 칸 크기에 맞춰 채워요(이 파일 끝 '썸네일 그림 맞추기')
   function hasThumb(item) { return !!(item.thumb && item.thumb.src); }
-  function pjThumb(item, cls) {
+  function pjThumb(item, cls, sizes) {
     var t = item.thumb;
     return '<div class="pjthumb' + (cls ? ' ' + cls : '') + '" aria-hidden="true">'
-      + '<img class="pjthumb-i" src="' + esc(t.src) + '" alt="" loading="lazy" decoding="async"' + (t.w && t.h ? ' width="' + t.w + '" height="' + t.h + '"' : '') + '></div>';
+      + '<img class="pjthumb-i" src="' + esc(t.src) + '" alt="" loading="lazy" decoding="async"' + sourceSet(t,sizes || PHOTO_CARD_SIZES) + (t.w && t.h ? ' width="' + t.w + '" height="' + t.h + '"' : '') + '></div>';
   }
   // 프로젝트 시연 영상(2026-10-27): 유튜브 번호가 있으면 상세 맨 위(대표 이미지 자리)에 대표 그림(썸네일 · 대표 사진) + 재생 단추.
   // 누르면 그 자리에서 재생해요(이 파일 끝 '프로젝트 시연 영상'). data-yt 가 아니라 data-pj-yt — 인터뷰용 재생(stories-sections.js)과 겹치지 않게
@@ -125,7 +146,7 @@
     var yt = x.video && x.video.yt;
     if (!yt) return '';
     return '<div class="ivhero pjhero ivvid pjvid" data-pj-yt="' + esc(yt) + '"><span class="ivtag">' + esc(pjSubject(x)) + '</span>'
-      + (hasThumb(x) ? pjThumb(x, 'illu') : visual(x, { hidden: true }))
+      + (hasThumb(x) ? pjThumb(x, 'illu', PHOTO_DETAIL_SIZES) : visual(x, { hidden: true, sizes: PHOTO_DETAIL_SIZES }))
       + '<button class="ivplay" type="button" aria-label="' + esc(x.title) + ' 시연 영상 재생"><i></i></button></div>';
   }
   // 카드 큰 글씨: 프로젝트 주제(글쓰기 화면 '프로젝트 주제' = summary). 줄바꿈은 카드에서 한 줄로 이어요
@@ -260,7 +281,7 @@
       honorsTrack.innerHTML = honors.map(function (v, i) {
         var vid = v.video && v.video.yt;
         return '<a class="sm-ivf-c' + (i ? '' : ' is-on') + '" href="#' + esc(v.anchor) + '" aria-label="' + esc(v.title) + ' 상세보기">'
-          + '<div class="ph">' + visual(v, { alt: false, fit: true }) + (vid ? '<span class="play"><i></i></span>' : '') + '</div>'
+          + '<div class="ph">' + visual(v, { alt: false, fit: true, sizes: '(max-width: 640px) 64px, 304px' }) + (vid ? '<span class="play"><i></i></span>' : '') + '</div>'
           + '<div class="sm-ivf-tx"><b>' + esc(v.title) + '</b><p class="sm-ivf-summary">' + esc(v.summary) + '</p><span>' + esc(who(v)) + '</span></div></a>';
       }).join('');
       honorsTrack.parentNode.setAttribute('aria-label', '우수 수료생 인터뷰');
@@ -268,7 +289,7 @@
     if (grid2) grid2.innerHTML = listed.map(function (v) {
       var vid = v.video && v.video.yt;
       return '<a class="iv" href="#' + esc(v.anchor) + '" data-interview-summary="' + esc(v.summary || '') + '"' + (vid ? ' data-yt="' + esc(v.video.yt) + '"' : '') + '>'
-        + '<div class="ph">' + visual(v, { alt: false, fit: true, field: 'thumbnail' }) + (vid ? '<span class="play"><i></i></span><span class="dur" data-field="duration">' + esc(v.video.dur || '') + '</span>' : '') + '</div>'
+        + '<div class="ph">' + visual(v, { alt: false, fit: true, field: 'thumbnail', sizes: '(max-width: 640px) 64px, 304px' }) + (vid ? '<span class="play"><i></i></span><span class="dur" data-field="duration">' + esc(v.video.dur || '') + '</span>' : '') + '</div>'
         + '<div class="tb"><h3 data-field="title">' + esc(v.title) + '</h3>'
         + '<p data-field="summary">' + esc(v.summary) + '</p>'
         + '<div class="by"><span class="av" data-field="cohort">' + coh(v.cohort) + '</span><b data-field="author">' + esc(v.author) + '</b><em data-field="track">' + esc(v.track) + '</em></div></div></a>';
@@ -347,7 +368,7 @@
       }).join('');
       var links = (x.links || []).filter(function (l) { return l && l.url; }).map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label || '자료 보기') + ' ↗</a>'; }).join('');
       return '<div class="pjd" id="' + id + '"><a class="ivback" href="#p-pr">← 프로젝트 목록</a><div class="ivwrap"><div>'
-        + (pjVideo(x) || '<div class="ivhero pjhero"><span class="ivtag">' + esc(pjSubject(x)) + '</span>' + (photos(x, x.title) || (hasThumb(x) ? pjThumb(x, 'illu') : visual(x, { hidden: true }))) + '</div>')
+        + (pjVideo(x) || '<div class="ivhero pjhero"><span class="ivtag">' + esc(pjSubject(x)) + '</span>' + (photos(x, x.title) || (hasThumb(x) ? pjThumb(x, 'illu', PHOTO_DETAIL_SIZES) : visual(x, { hidden: true, sizes: PHOTO_DETAIL_SIZES }))) + '</div>')
         + '<span class="pjno">' + pad2(i + 1) + '</span><h2>' + esc(x.title) + '</h2><p class="lead">' + esc(x.summary) + '</p>'
         // 서비스 소개(2026-10-27, 글쓰기 화면 '서비스 소개'): 프로젝트 주제 바로 아래, 다른 칸과 같은 카드(파란 윗선)
         + (x.serviceIntro ? '<section class="pjintro"><h3>서비스 소개</h3><p class="pjph-t" data-field="serviceIntro">' + esc(x.serviceIntro) + '</p></section>' : '')
@@ -467,7 +488,7 @@
       PJ.forEach(function (x) { if (three.length < 3 && !types[x.type]) { types[x.type] = 1; three.push(x); } });
       PJ.forEach(function (x) { if (three.length < 3 && three.indexOf(x) < 0) three.push(x); });
       pjBox.innerHTML = three.map(function (x) {
-        return '<a class="hb-pjc" href="projects.html#' + esc(x.anchor) + '"><span class="hb-pjc-ph">' + (hasThumb(x) ? pjThumb(x) : hubVisual(x)) + '<span class="hb-pjc-type">' + esc(subjectOf(x)) + '</span></span>'
+        return '<a class="hb-pjc" href="projects.html#' + esc(x.anchor) + '"><span class="hb-pjc-ph">' + (hasThumb(x) ? pjThumb(x) : hubVisual(x, {sizes:PHOTO_CARD_SIZES})) + '<span class="hb-pjc-type">' + esc(subjectOf(x)) + '</span></span>'
           + '<div class="hb-pjc-tx">' + (pjTopic(x) ? '<p class="hb-pjc-nm">' + esc(projectName(x)) + '</p><h3>' + esc(pjTopic(x)) + '</h3>' : '<h3>' + esc(projectName(x)) + '</h3>')
           + '<span class="hb-pjc-tm">' + esc(x.team) + '</span></div></a>';   // 프로젝트 카드와 같게: 서비스 이름 · 프로젝트 주제 · 팀
       }).join('');
@@ -488,7 +509,7 @@
         var vid = c.video && c.video.url;
         var title = esc(c.title).replace(/ — (.+)$/, ' — <span class="hb-nw">$1</span>');
         return '<li' + (i === 0 ? ' class="is-big"' : '') + '><a href="' + ('#' + esc(c.anchor || ('st-' + c.id))) + '">'
-          + hubVisual(c)
+          + hubVisual(c, {sizes:i === 0 ? '(max-width: 1199px) calc(100vw - 40px), 616px' : '(max-width: 1199px) calc((100vw - 52px) / 2), 308px'})
           + '<div class="hb-mos-tx"><span class="hb-mos-m">' + esc(c.cohort) + '기<span class="hb-mos-d"> · ' + esc(c.date || '') + '</span>'
           + (vid && c.video.dur ? '<span class="hb-vd"><span class="hb-sr">영상, 길이 </span>' + esc(c.video.dur) + '</span>' : '') + '</span>'
           + '<h3>' + title + '</h3>' + (i === 0 ? '<p>' + esc(c.summary || (Array.isArray(c.body) ? c.body[0] : c.body) || '') + '</p>' : '') + '</div></a></li>';

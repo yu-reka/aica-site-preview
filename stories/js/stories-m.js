@@ -209,7 +209,8 @@
       var tx = el('span', 'sm-project-heading');
       var badge = el('span', 'sm-project-type', type);
       badge.dataset.type = type.trim(); tx.appendChild(badge);
-      tx.appendChild(el('strong', '', ($('.pjname', card) || {}).textContent || ''));
+      // 서비스 이름: 카드의 작은 파란 글씨(.pjname), 주제가 없는 글은 카드 제목(h3)
+      tx.appendChild(el('strong', '', ($('.pjname', card) || $('.pjc-tx h3', card) || {}).textContent || ''));
       summary.appendChild(tx); item.appendChild(summary);
       var body = el('div', 'sm-project-body');
       var artwork = cleanClone($('.ph .illu', card) || $('.ph img, .ph svg', card));

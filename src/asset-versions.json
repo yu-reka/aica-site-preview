@@ -92,7 +92,7 @@
     },
     "js": {
       "cohort-modal-scroll": "1022swipereading",
-      "cohort-v3": "1026month-navigation-tags",
+      "cohort-v3": "1027responsive-photos",
       "detail-navigation": "1027story-list-return",
       "old-hash": "1022hubmodals",
       "project-reading": "1027list-markers",
@@ -104,7 +104,7 @@
         "legacyLoader": "1016cleanup"
       },
       "stories-m": "1027nav-stable2",
-      "stories-render": "1027intro-photo-hero",
+      "stories-render": "1027responsive-photos",
       "stories-sections": "1023cardrows",
       "stories": "1022dialog-transfer",
       "story-state": "1026honors-checked",

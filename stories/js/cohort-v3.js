@@ -60,7 +60,14 @@
   var PER=9, st={coh:COHS[0], mo:0, pg:1, diff:false, v:'all'};   // v: 보기 방식(모바일 '영상만' 탭, js/stories-m.js). 웹은 늘 'all'
   var $=function(s){return root.querySelector(s)};
   function acc(c){return 'aica_'+String(c).replace('-','to')+'th'}
-  function media(d){ var n=d.illu.cloneNode(true); n.removeAttribute('loading'); n.setAttribute('alt',''); return n; }
+  function media(d,large){
+    var n=d.illu.cloneNode(true); n.removeAttribute('loading'); n.setAttribute('alt','');
+    if(n.tagName==='IMG'){
+      n.setAttribute('decoding','async'); if(!large)n.setAttribute('loading','lazy');
+      if(n.getAttribute('srcset'))n.setAttribute('sizes',large?'(max-width: 1000px) calc(100vw - 40px), 960px':'(max-width: 640px) calc(100vw - 40px), 600px');
+    }
+    return n;
+  }
   function galleryPhotos(d){
     var seen=[], result=[];
     [d.illu].concat(d.photos||[]).forEach(function(photo){
@@ -154,7 +161,11 @@
     host.cv3Render=function(){
       var index=Math.min(d.photoIndex||0,photos.length-1),img=photos[index].cloneNode(true);
       img.classList.add('illu');img.removeAttribute('id');img.removeAttribute('loading');
-      if(img.tagName==='IMG')img.setAttribute('alt',img.getAttribute('alt')||d.title+' 사진 '+(index+1));
+      if(img.tagName==='IMG'){
+        img.setAttribute('alt',img.getAttribute('alt')||d.title+' 사진 '+(index+1));
+        img.setAttribute('decoding','async'); if(isFeed)img.setAttribute('loading','lazy');
+        if(img.getAttribute('srcset'))img.setAttribute('sizes',isFeed?'(max-width: 640px) calc(100vw - 40px), 600px':'(max-width: 1000px) calc(100vw - 40px), 960px');
+      }
       stage.replaceChildren(img);
       if(count){if(isFeed)count.setAttribute('aria-label','사진 '+photos.length+'장 · '+(index+1)+'번째 사진');else count.textContent=(index+1)+'/'+photos.length;}
       if(dots)paintDots(dots,index);
@@ -298,7 +309,7 @@
     var L=list(), d=L[cur]; if(!d) return;
     if(modalVisited.indexOf(d)<0)modalVisited.push(d);
     var md=M.querySelector('.cv3-m-media'); md.innerHTML=''; md.classList.remove('can-zoom','cv3-photo-gallery');md.cv3Record=null;
-    if(d.yt)md.appendChild(media(d));else gallery(md,d);
+    if(d.yt)md.appendChild(media(d,true));else gallery(md,d);
     if(d.yt){ var id=null;
       try { var url=new URL(d.yt), host=url.hostname.toLowerCase();
         id=host==='youtu.be'?url.pathname.slice(1):['youtube.com','www.youtube.com','m.youtube.com'].indexOf(host)>-1?url.searchParams.get('v'):null;
@@ -330,7 +341,7 @@
   Z.innerHTML='<button type="button" class="cv3-zv-x" aria-label="크게 보기 닫기">&times;</button><figure><div class="cv3-zv-im"></div><figcaption></figcaption></figure>';
   document.body.appendChild(Z);
   function zfill(){ var d=list()[cur]; if(!d||d.yt){ closeZ(); return; } var n=galleryPhotos(d)[d.photoIndex||0].cloneNode(true);
-    if(n.tagName==='IMG'){ var sm=n.getAttribute('src'); if(/-sm\.(jpe?g|png|webp)$/i.test(sm)){ n.src=sm.replace(/-sm(\.[a-z]+)$/i,'$1'); n.onerror=function(){ n.onerror=null; n.src=sm; }; } n.removeAttribute('width'); n.removeAttribute('height'); }
+    if(n.tagName==='IMG'){ n.removeAttribute('loading'); n.setAttribute('decoding','async'); if(n.getAttribute('srcset'))n.setAttribute('sizes','(max-width: 1328px) calc(100vw - 48px), 1280px'); var sm=n.getAttribute('src'); if(/-sm\.(jpe?g|png|webp)$/i.test(sm)){ n.src=sm.replace(/-sm(\.[a-z]+)$/i,'$1'); n.onerror=function(){ n.onerror=null; n.src=sm; }; } n.removeAttribute('width'); n.removeAttribute('height'); }
     n.setAttribute('alt',n.getAttribute('alt')||d.title); var b=Z.querySelector('.cv3-zv-im');
     // Rebuilding the album must preserve the keyboard control that changed it.
     var active=document.activeElement,restore=null;

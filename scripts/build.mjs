@@ -103,6 +103,15 @@ export function deriveContent(content) {
     if (!group) throw new Error(`Unknown leisure group: ${item.group}`);
     group.push(item);
   }
+  // Render the shared menu from the same route data as the runtime fallback.
+  const storyMenu = content.site.menu.find(menu => menu.id === 'stories');
+  content.storyNavigation = Object.fromEntries(storyMenu.children.map(current => [current.id, {
+    label: storyMenu.label,
+    items: storyMenu.children.map(item => ({ ...item,
+      mobileLabel: ({ overview: '전체', cohorts: '기수 기록' })[item.id] || item.label,
+      states: item.id === current.id ? [{ value: 'page' }] : []
+    }))
+  }]));
   return content;
 }
 export function build() {

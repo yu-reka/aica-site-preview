@@ -26,16 +26,27 @@ function start(specs){
   return {heroes,before,document,context,El,fire:t=>(events[t]||[]).forEach(fn=>fn())};
 }
 
-test('without a video address every hero shows the preparation stage, keeping its photo, gallery, thumbnail or illustration hidden',()=>{
-  // 2026-10-27 사용자 요청: 시연 영상이 없으면 썸네일 · 사진이 있어도 '시연 영상을 준비하고 있어요'
-  const ui=start([{visual:'img'},{visual:'phs'},{visual:'pjthumb'},{visual:'svg'},{visual:'img',video:true,src:''}]);
-  ui.heroes.forEach((h,i)=>{
+test('without a photo or thumbnail the hero shows a network-free preparation stage',()=>{
+  const ui=start([{}, {visual:'svg'}, {video:true,src:''}]);
+  ui.heroes.forEach(h=>{
     const stage=h.querySelector('.pj-video-stage');
-    assert.ok(stage);assert.equal(stage.hidden,false);assert.equal(stage.dataset.state,'empty');assert.equal(h.classList.contains('pj-video'),true);
-    ui.before[i].forEach(node=>assert.ok(h.children.includes(node)||stage.children.includes(node),'기존 그림 · 꼬리표는 그대로(숨김만)'));
+    assert.ok(stage);assert.equal(stage.hidden,false);assert.equal(stage.dataset.state,'empty');
     assert.equal(h.querySelector('.pj-video-message').textContent,'시연 영상을 준비하고 있어요.');
+    assert.equal(h.querySelector('video').loads.length,0);
   });
-  assert.equal(ui.heroes[4].querySelector('video').loads.length,0);
+});
+
+test('without a demo, photos, galleries and thumbnails stay visible without preparation UI',()=>{
+  const ui=start([{visual:'img'},{visual:'phs'},{visual:'pjthumb'}]);
+  ui.heroes.forEach((h,i)=>{
+    assert.deepEqual(h.children,ui.before[i]);
+    assert.equal(h.querySelector('.pj-video-stage'),null);
+    assert.equal(h.querySelector('.pj-video-message'),null);
+    assert.equal(h.querySelector('video'),null);
+    assert.equal(h.classList.contains('pj-video'),false);
+  });
+  ui.context.mutate();ui.fire('hashchange');
+  ui.heroes.forEach((h,i)=>assert.deepEqual(h.children,ui.before[i],'repeated sync preserves each medium without a media request'));
 });
 
 test('a hero with a YouTube demo (data-pj-yt) is left to the renderer',()=>{
@@ -55,7 +66,7 @@ test('source elements retain photo albums, controls and their attached handlers'
   assert.equal(h.querySelector('.phs'),album);assert.equal(album.onclick(),42);assert.equal(h.querySelector('source').getAttribute('src'),'https://example.test/demo.webm');
 });
 
-test('the network-free preparation stage stays when photos arrive, until a video address plays',()=>{
+test('an initialized native player keeps its lifecycle as fallback photos and a video address arrive',()=>{
   const ui=start([{}]),h=ui.heroes[0],video=h.querySelector('video'),stage=h.querySelector('.pj-video-stage');
   assert.equal(stage.dataset.state,'empty');assert.equal(video.loads.length,0);assert.equal(video.plays,0);assert.equal(video.hidden,true);
   const image=new ui.El('img','illu');h.append(image);ui.context.mutate();assert.equal(stage.hidden,false);assert.equal(stage.dataset.state,'empty');assert.equal(h.classList.contains('pj-video'),true);assert.equal(h.querySelector('img'),image);

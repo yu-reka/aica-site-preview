@@ -99,7 +99,7 @@
   function visual(item, opts) {
     opts = opts || {};
     var m = opts.large && item.imgLarge ? item.imgLarge : item.img;
-    if (m && m.src) return imgTag(opts.alt === false ? { src: m.src, alt: '', w: m.w, h: m.h, fit: m.fit } : m, 'illu', true, opts.fit && m === item.img, opts.field, opts.sizes || (opts.large ? '(max-width: 1000px) calc(100vw - 40px), 720px' : null));
+    if (m && m.src) return imgTag(opts.alt === false ? { src: m.src, alt: '', w: m.w, h: m.h, fit: m.fit } : m, 'illu', true, opts.fit && m === item.img, opts.field, opts.large ? '(max-width: 1000px) calc(100vw - 40px), 720px' : null);
     if (item.art) return opts.hidden && !/^<svg\b[^>]*\saria-hidden=/.test(item.art) ? item.art.replace(/^<svg\b/, '<svg aria-hidden="true"') : item.art;
     return '<svg class="illu" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"' + (opts.hidden ? ' aria-hidden="true"' : '') + '><rect width="100%" height="100%" fill="#E4E9F7"/></svg>';
   }

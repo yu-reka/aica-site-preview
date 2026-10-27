@@ -173,7 +173,7 @@ html.school-about main :is(.why-school-card h4, .eligibility-condition h4, .care
 
 html.school-about main :is(.career-program-detail h5){font-family:var(--ff-text)!important;font-size:15px!important;font-weight:700!important}
 
-html.school-about main :is(.cohort-topic-label, .why-school-highlight-label){font-family:var(--ff-text)!important;font-weight:600!important}
+html.school-about main :is(.cohort-topic-label){font-family:var(--ff-text)!important;font-weight:600!important}
 
 html.school-about main :is(.cohort-topic-label){font-size:13.5px!important}
 
@@ -187,9 +187,6 @@ html.school-about main .career-program-summary{font-size:15px!important;line-hei
 
   html.school-about main :is(.why-school-heading, .common-courses-heading, .guest-lecture-heading, .career-guide-heading) > p{font-size:16px!important}
 }
-
-/* 인사교 알아보기: 강조 칸 제목(맞춤형 교육 등)이 Pretendard였던 것 → Paperlogy */
-html.school-about .why-school-highlight-label+strong{font-family:'School Paperlogy','Paperlogy','Pretendard',sans-serif}
 
 html.school-about main#main :is(.hero-masthead>span,.cohort-card-header>span,.cohort-fact dt,.cohort-value small,div.partner-node>p,.graduate-count>span,.graduate-breakdown dt,.graduate-breakdown dd>small,.graduate-breakdown strong>span,.graduate-stats-note,.why-school-learning-step small,.education-hours-stat strong>small,.career-program-funding small,.graduate-total small,.daily-routine-period,.activity-project-description,.career-program-meta>span,.career-program-targets dt,.career-program-targets dd){font-family:'School Paperlogy','Paperlogy','Pretendard',sans-serif!important}
 
@@ -225,8 +222,6 @@ html.school-about main#main .cohort-doodle b{font:400 40px/1 "Caveat",cursive;le
 /* 알아보기 "왜 인사교를 선택해야 할까요?" 카드 3장: 분류 · 제목 · 설명 가운데 정렬(10-14) */
 html.school-about main#main .why-school-card :is(.why-school-card-category,h4),
 html.school-about main#main .why-school-card>p{text-align:center}
-
-html.school-about main#main .why-school-card .why-school-card-category{display:block}
 
 /* 알아보기 공통 교과목 카드 10장: 제목 · 아래 작은 글씨 가운데 정렬, 작은 글씨는 Pretendard(10-14 요청) */
 html.school-about main#main .common-course-caption{text-align:center}

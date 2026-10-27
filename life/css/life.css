@@ -194,8 +194,6 @@
 .life-page :is(#pg-facility,#pg-tips,#pg-way) .bdg.base{background:var(--axl);color:var(--cat);font-family:var(--anton);font-weight:400}
 .life-page :is(#pg-facility,#pg-tips,#pg-way) .bdg.part{background:var(--ny);color:var(--ink);border:1.5px solid var(--axl)}
 .life-page #pg-facility .sh h2,.life-page #pg-tips .sh h2,.life-page #pg-way .sh h2{font-family:var(--jua);font-weight:700}
-/* 고정 지도: 커진 카드가 헤더 아래로 숨지 않게 */
-/* 위쪽 핀: 설명을 카드 아래로 */
 .life-page .bx-ex.tmp{background:var(--ny)!important;color:var(--ink)}
 /* 8F 구내식당 공개 사진 예시 */
 .life-page .im-fac_8f_cafeteria_01{background-image:url(../assets/fac_8f_cafeteria_01.webp)}
@@ -219,8 +217,6 @@
 .life-page .im-yl_tmp{background-image:url("../assets/yl_tmp.webp");background-position:45% 45%}
 /* 송정역시장 사진 */
 .life-page .im-sj_tmp{background-image:url("../assets/sj_tmp.webp");background-position:30% 45%}
-/* ===== 생활 적응: 시간 순서 체크리스트 ===== */
-/* 장식 점: 시안의 빈 네모는 눌리는 체크박스처럼 보였음(눌리지 않음) */
 /* ===== 오시는 길: 지하철 · 버스 카드 여백 정리 ===== */
 .life-page #pg-way .route{border:0;box-shadow:none;background:none;padding:0;margin-top:calc(1.8*var(--lr))}
 .life-page #pg-way .route li{grid-template-columns:calc(3.2*var(--lr)) minmax(0,1fr);gap:calc(.2*var(--lr)) calc(1.4*var(--lr));padding-bottom:calc(2.4*var(--lr))}
@@ -798,7 +794,7 @@
 .life-page .bx9-g:not(:has(.bx9-tabs)) .bx9-head{margin:0}}
 
 /* ===== v55 피드백(전체): 페이지 인트로 문장 · 많은 글은 프리텐다드 =====
-   .pgi = 페이지 맨 위 머리(청록 머리글 + 인트로 한 문장 + 그 페이지 안 바로가기). 시설 둘러보기는 제목 아래 .pgi-t 한 줄 */
+   .pgi = 페이지 맨 위 머리(청록 머리글 + 인트로 한 문장 + 그 페이지 안 바로가기). 시설 둘러보기는 제목 아래 소개 한 줄 */
 .life-page #pg-way .sec{scroll-margin-top:calc(24px - clamp(40px,4.4vw,60px))}
 .life-page #way-park{scroll-margin-top:24px}
 /* 시설 둘러보기: 인트로 한 줄만큼 사진 높이 계산에 더함 */

@@ -347,7 +347,7 @@
       }).join('');
       var links = (x.links || []).filter(function (l) { return l && l.url; }).map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label || '자료 보기') + ' ↗</a>'; }).join('');
       return '<div class="pjd" id="' + id + '"><a class="ivback" href="#p-pr">← 프로젝트 목록</a><div class="ivwrap"><div>'
-        + (pjVideo(x) || '<div class="ivhero pjhero"><span class="ivtag">' + esc(pjSubject(x)) + '</span>' + (slides(x, x.title) || (hasThumb(x) && !hasPhoto(x) ? pjThumb(x, 'illu') : visual(x, { hidden: true }))) + '</div>')
+        + (pjVideo(x) || '<div class="ivhero pjhero"><span class="ivtag">' + esc(pjSubject(x)) + '</span>' + (photos(x, x.title) || (hasThumb(x) ? pjThumb(x, 'illu') : visual(x, { hidden: true }))) + '</div>')
         + '<span class="pjno">' + pad2(i + 1) + '</span><h2>' + esc(x.title) + '</h2><p class="lead">' + esc(x.summary) + '</p>'
         + '<div class="pjtags">' + (x.tags || []).map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div>'
         + '<div class="pjsec">' + secs + '</div>'

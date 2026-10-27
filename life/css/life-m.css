@@ -88,12 +88,15 @@
 .lm-content .photo-prev{left:8px}
 .lm-content .photo-prev svg{transform:rotate(180deg)}
 .lm-content .photo-next{right:8px}
-.lm-content .photo-caption{position:absolute;left:8px;bottom:8px;right:8px;display:flex;justify-content:space-between;gap:8px;padding:6px 8px;border-radius:6px;background:#14233fe6;font-size:11px;color:white;pointer-events:none;text-shadow:none}
-.lm-content .photo-caption b{padding:0;background:none;white-space:nowrap}
-.lm-content .space-name{font:700 15px/1.5 Paperlogy,sans-serif;margin:17px 0 9px}
-.lm-content .notes{padding-left:16px;font-size:12px;line-height:1.8;color:var(--ink)}
-.lm-content .notes li{padding-left:1px;margin:3px 0}
-.lm-content .notes li::marker{color:var(--blue)}
+.lm-content .photo-caption{position:absolute;top:8px;right:12px;z-index:3;padding:5px 9px;border-radius:999px;background:rgba(38,38,38,.7);color:#fff;font:400 13px/1.5 var(--ff-sans);pointer-events:none;text-shadow:none}
+.lm-content .photo-caption b{padding:0;background:none;font:inherit;white-space:nowrap}
+.lm-content .space-name{font:700 15px/1.5 Paperlogy,sans-serif;margin:19px 0 12px}
+.lm-content .notes{margin:0;padding:0;list-style:none;display:grid;gap:10px;font-size:13px;line-height:1.65;color:var(--muted)}
+.lm-content .notes li{display:grid;grid-template-columns:28px minmax(0,1fr);align-items:center;gap:10px;margin:0;padding:0}
+.lm-content .space-note-icon{display:grid;place-items:center;width:28px;height:28px;border-radius:7px;background:color-mix(in srgb,var(--blue) 8%,white);color:var(--blue)}
+.lm-content .space-note-icon svg{width:17px;height:17px;stroke-width:1.8}
+.lm-content .space-note-text{min-width:0;overflow-wrap:anywhere;word-break:keep-all}
+.lm-content .space-note-text a{text-decoration:underline;text-underline-offset:3px;color:var(--blue)}
 .lm-content .cross-links{display:grid;margin-top:28px}
 .lm-content .cross-links a{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--line)}
 .lm-content .cross-links b{font-size:13px}

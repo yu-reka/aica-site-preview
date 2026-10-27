@@ -112,10 +112,12 @@ html:where(:not([data-menu="stories"]))[data-menu="life"] body,
 
 .life-page .fdk-b[aria-selected="true"] span{background:rgba(255,255,255,.18);color:#fff}
 
-/* 시설 공간 고르기(사진 달린 칩) */
+/* 작은 화면의 기존 시설 공간 칩 */
+@media (max-width:860px){
 .life-page .bx9-t{border:1px solid var(--st-chip-line)!important;box-shadow:none!important;color:var(--graphite)}
 
 .life-page .bx9-t[aria-selected="true"]{border:1px solid var(--ink)!important;background:var(--ink)!important;color:#fff!important;padding-left:5px}
+}
 
 /* 보조 버튼 */
 .life-page :is(.btn.is-line,.fs-tg){height:40px;padding:0 18px;border:1.5px solid var(--ink)!important;background:#fff!important;color:var(--ink)!important;font-size:14px;font-weight:700;box-shadow:none!important;transition:background .2s,color .2s}
@@ -322,7 +324,19 @@ body .life-page .snote small{position:absolute;top:16px;right:18px;margin:0}
 /* 시설 공간 탭: 사진 썸네일 빼고 글자만 */
 .life-page .bx9-t .bx9-tt{display:none}
 
-.life-page .bx9-t{padding-left:16px!important;padding-right:16px!important}
+@media (max-width:860px){.life-page .bx9-t{padding-left:16px!important;padding-right:16px!important}}
+
+/* 층 제목 바로 옆에서 공간을 고르는 데스크톱 탭 */
+@media (min-width:861px){
+.life-page .bx9-head{flex-wrap:nowrap;gap:10px;margin-bottom:8px}
+.life-page .bx9-head h3{white-space:nowrap}
+.life-page .bx9-tabs{margin-left:14px;padding-left:12px;border-left:1px solid var(--line);flex-wrap:nowrap;gap:2px}
+.life-page .bx9-t,.life-page .bx9-t[aria-selected="true"]{position:relative;flex-shrink:0;padding:0 12px;border:0;border-radius:0;background:transparent;box-shadow:none;color:var(--ink3)}
+.life-page .bx9-t[aria-selected="true"]{color:var(--ink)}
+.life-page .bx9-t::after{content:"";position:absolute;bottom:0;left:12px;right:12px;height:3px;background:transparent}
+.life-page .bx9-t[aria-selected="true"]::after{background:var(--primary)}
+.life-page .bx9-t:hover{color:var(--ink)}
+}
 
 /* 포스트잇 세로 길이 줄임(정사각형 해제) */
 body .life-page .snote{aspect-ratio:auto;}

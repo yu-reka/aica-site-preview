@@ -64,7 +64,7 @@
     var n=d.illu.cloneNode(true); n.removeAttribute('loading'); n.setAttribute('alt','');
     if(n.tagName==='IMG'){
       n.setAttribute('decoding','async'); if(!large)n.setAttribute('loading','lazy');
-      if(n.getAttribute('srcset'))n.setAttribute('sizes',large?'(max-width: 1000px) calc(100vw - 40px), 960px':'(max-width: 640px) calc(100vw - 40px), 600px');
+      if(n.getAttribute('srcset'))n.setAttribute('sizes',large?'(max-width: 1000px) calc(100vw - 40px), 960px':'(max-width: 600px) calc((100vw - 4px) / 3), min(309px, calc((100vw - clamp(40px, 8vw, 96px) - 8px) / 3))');
     }
     return n;
   }
@@ -164,7 +164,7 @@
       if(img.tagName==='IMG'){
         img.setAttribute('alt',img.getAttribute('alt')||d.title+' 사진 '+(index+1));
         img.setAttribute('decoding','async'); if(isFeed)img.setAttribute('loading','lazy');
-        if(img.getAttribute('srcset'))img.setAttribute('sizes',isFeed?'(max-width: 640px) calc(100vw - 40px), 600px':'(max-width: 1000px) calc(100vw - 40px), 960px');
+        if(img.getAttribute('srcset'))img.setAttribute('sizes',isFeed?'(max-width: 600px) calc((100vw - 4px) / 3), min(309px, calc((100vw - clamp(40px, 8vw, 96px) - 8px) / 3))':'(max-width: 1000px) calc(100vw - 40px), 960px');
       }
       stage.replaceChildren(img);
       if(count){if(isFeed)count.setAttribute('aria-label','사진 '+photos.length+'장 · '+(index+1)+'번째 사진');else count.textContent=(index+1)+'/'+photos.length;}

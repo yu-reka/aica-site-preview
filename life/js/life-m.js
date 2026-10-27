@@ -87,6 +87,8 @@
     }));
     $$('.photo-gallery').forEach(gallery => {
       const track = $('.photo-track', gallery);
+      const space = gallery.closest('.space-view'), title = $('.space-name', space), notes = $('.notes', space);
+      const baseTitle = title.textContent, baseNotes = notes.cloneNode(true);
       const move = direction => {
         const count = track.children.length;
         if (!count) return;
@@ -98,8 +100,15 @@
       $('.photo-next', gallery).onclick = () => move(1);
       const sync = () => {
         const index = Math.round(track.scrollLeft / track.clientWidth) || 0;
-        $('.photo-caption', gallery).firstChild.textContent = track.children[index].getAttribute('aria-label') + ' ';
-        $('.photo-caption b', gallery).textContent = (index + 1) + ' / ' + track.children.length;
+        $('.photo-caption [hidden]', gallery).textContent = track.children[index].getAttribute('aria-label') + ' ';
+        $('.photo-caption b', gallery).textContent = (index + 1) + '/' + track.children.length;
+        const photo = track.children[index];
+        title.textContent = photo.dataset.infoTitle || baseTitle;
+        if (photo.dataset.infoNote) {
+          const note = document.createElement('li'), text = document.createElement('span');
+          text.className = 'space-note-text'; text.textContent = photo.dataset.infoNote;
+          note.append(baseNotes.querySelector('.space-note-icon').cloneNode(true), text); notes.replaceChildren(note);
+        } else { notes.replaceChildren(...[...baseNotes.childNodes].map(node => node.cloneNode(true))); }
       };
       track.addEventListener('scroll', sync, { passive: true });
       sync();

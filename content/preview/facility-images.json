@@ -68,5 +68,15 @@
     "id": "fac_23f_lab_03",
     "alias": "fac_23f_lab_03.webp",
     "original": "b_project.webp"
+  },
+  {
+    "id": "fac_8f_cafeteria_01",
+    "alias": "fac_8f_cafeteria_01.webp",
+    "original": "cafe8_tmp.webp"
+  },
+  {
+    "id": "fac_8f_cafeteria_02",
+    "alias": "fac_8f_cafeteria_02.webp",
+    "original": "counter_tmp.webp"
   }
 ]

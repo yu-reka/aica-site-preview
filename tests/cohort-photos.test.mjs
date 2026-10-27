@@ -149,3 +149,43 @@ test('closing the detail restores visited posts to their covers without changing
   assert.equal(other.photoIndex,1);
   assert.equal(state.modalVisited.length,0);
 });
+
+test('responsive cohort clones retain dimensions and switch feed versus modal image sizes without changing the record',()=>{
+  const ui=start(),cover=ui.record.illu;
+  cover.setAttribute('srcset','cover-640.jpg 640w, cover.jpg 1280w');
+  cover.setAttribute('width','1280');cover.setAttribute('height','720');
+  const original=JSON.stringify(cover.attrs);
+  const feed=ui.mount(ui.record,'article'),detail=ui.mount(ui.record);
+  const active=host=>ui.control(host,'cv3-photo-stage').children[0];
+  for(const host of [feed,detail]){
+    assert.equal(active(host).getAttribute('srcset'),'cover-640.jpg 640w, cover.jpg 1280w');
+    assert.equal(active(host).getAttribute('width'),'1280');assert.equal(active(host).getAttribute('height'),'720');
+    assert.equal(active(host).getAttribute('decoding'),'async');
+  }
+  assert.match(active(feed).getAttribute('sizes'),/600px$/);
+  assert.match(active(detail).getAttribute('sizes'),/960px$/);
+  assert.equal(active(feed).getAttribute('loading'),'lazy');
+  assert.equal(active(detail).getAttribute('loading'),null);
+  ui.changePhoto(ui.record,1);
+  assert.equal(active(detail).getAttribute('srcset'),null,'an original-only next image must not reuse the previous candidates');
+  assert.equal(JSON.stringify(cover.attrs),original);
+});
+
+test('fullscreen cohort zoom upgrades responsive sizing without retaining lazy loading or changing the source',()=>{
+  const ui=start(),cover=ui.record.illu;
+  cover.setAttribute('srcset','cover-640.jpg 640w, cover.jpg 1280w');
+  cover.setAttribute('sizes','320px');cover.setAttribute('loading','lazy');
+  cover.setAttribute('width','1280');cover.setAttribute('height','720');
+  ui.record.photos=[];const before=JSON.stringify(cover.attrs);
+  const box={children:[],contains(){return false;},appendChild(n){this.children.push(n);}},caption={};
+  const source=readFileSync(new URL('../stories/js/cohort-v3.js',import.meta.url),'utf8');
+  const state={list:()=>[ui.record],cur:0,galleryPhotos:ui.galleryPhotos,document:{activeElement:null},
+    Z:{querySelector:s=>s==='figcaption'?caption:box},bindPhotoSwipe(){},closeZ(){throw Error('unexpected close');}};
+  vm.runInNewContext(source.slice(source.indexOf('  function zfill()'),source.indexOf('  function openZ()'))+'\nzfill();',state);
+  const img=box.children[0];
+  assert.equal(img.getAttribute('sizes'),'(max-width: 1328px) calc(100vw - 48px), 1280px');
+  assert.equal(img.getAttribute('loading'),null);assert.equal(img.getAttribute('decoding'),'async');
+  assert.equal(img.getAttribute('srcset'),cover.getAttribute('srcset'));
+  assert.equal(img.getAttribute('width'),null);assert.equal(img.getAttribute('height'),null);
+  assert.equal(JSON.stringify(cover.attrs),before);
+});

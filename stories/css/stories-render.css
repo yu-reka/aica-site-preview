@@ -40,13 +40,17 @@
    후기 창 본문 · 인터뷰 요약과 답변 · 프로젝트 요약과 칸 글 · 기수별 이모저모 글 창 */
 .ov .mbody p,.ivd .lead,.ivd .qa .a,.pjd .lead,.pjd .pjph-t,.cv3-m-body p{white-space:pre-line}
 
-/* 프로젝트 썸네일(2026-10-26, 백오피스 프로젝트 글의 '썸네일 그림' — stories-render.js pjThumb): 흰 바탕 왼쪽에 프로젝트 주제, 오른쪽에 고른 그림(투명 배경).
-   글자 크기는 칸 너비 기준(cqw)이라 카드 · 한눈에 보기 · 상세 맨 위 · 모바일 목록 어디서나 같은 비율. em(관리자가 고른 글자)은 파란 한 줄로 따로.
-   주제가 길면 글자를 줄여요(pjthumb-m 25~40자 · pjthumb-s 41자부터). 카드에 마우스를 올리면 칸 전체가 커지고 그림만 따로 커지지는 않아요.
-   그림은 비율이 달라도(세로로 긴 퍼즐 그림 등) 늘 같은 틀(칸 너비의 50% · 가로:세로 3:2) 안에 맞춰 크기가 같아 보여요 */
-.stories-page .pjthumb{position:relative;display:block;width:100%;height:100%;overflow:hidden;background:#fff;container-type:inline-size}
-.stories-page .pjthumb-t{position:absolute;left:4%;top:50%;z-index:1;width:47%;transform:translateY(-50%);font-family:var(--f);font-size:6.6cqw;font-weight:800;line-height:1.28;letter-spacing:-.03em;color:#111;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance}
-.stories-page .pjthumb-m .pjthumb-t{font-size:5.6cqw}
-.stories-page .pjthumb-s .pjthumb-t{font-size:4.7cqw}
-.stories-page .pjthumb-t em{display:block;font-style:normal;color:var(--l-eb,#2b75ff)}
-.stories-page .pjthumb .pjthumb-i,.stories-page a:hover .ph .pjthumb .pjthumb-i{position:absolute;right:1%;top:50%;width:50%;height:auto;aspect-ratio:3/2;transform:translateY(-50%);object-fit:contain;scale:none}
+/* 프로젝트 카드 · 한눈에 보기 프로젝트 카드의 그림 칸은 16:9(2026-10-27 사용자 요청 — 썸네일 그림이 1600×900 이라 잘리지 않게. 디자이너 파일은 16:10 그대로) */
+.stories-page .pjc .ph,.stories-page .hb-pjc-ph{aspect-ratio:16/9}
+/* 프로젝트 썸네일(2026-10-26, 백오피스 프로젝트 글의 '썸네일 그림' — stories-render.js pjThumb): 흰 바탕에 고른 그림만 크게(기본 썸네일 5장도 2026-10-27부터 16:9 흰 바탕 그림).
+   그림 비율이 달라도(세로로 긴 퍼즐 그림 등) 칸 안에 잘리지 않게 맞춰요. 카드에 마우스를 올리면 칸 전체가 커지고 그림만 따로 커지지는 않아요.
+   (처음에는 왼쪽에 프로젝트 주제 글자를 넣었으나 같은 날 사용자 요청으로 그림만 — 주제는 카드 글로) */
+.stories-page .pjthumb{position:relative;display:block;width:100%;height:100%;overflow:hidden;background:#fff}
+.stories-page .pjthumb .pjthumb-i,.stories-page a:hover .ph .pjthumb .pjthumb-i{position:absolute;left:6%;top:7%;width:88%;height:86%;object-fit:contain;scale:none}
+/* 프로젝트 시연 영상(2026-10-27, stories-render.js pjVideo): 상세 맨 위 대표 그림 위에 인터뷰 영상과 같은 재생 단추(.ivvid .ivplay 모양), 아래 글은 '시연 영상' */
+.stories-page .pjhero.pjvid::after{content:"시연 영상 · 유튜브"!important}
+/* 카드 큰 글씨가 프로젝트 주제(글쓰기 화면 '프로젝트 주제')라 길 수 있어 세 줄까지 */
+/* 사진처럼 투명한 곳이 없는 그림(stories-render.js 가 그림이 온 뒤 확인해 pjthumb-full): 썸네일 칸 크기에 맞춰 꽉 채워요
+   (비율이 달라도 칸을 다 덮고, 넘치는 가장자리는 잘림 — 2026-10-27 사용자 요청: 뒤 흐린 배경 없이 확대돼도 괜찮게). 투명 그림은 위처럼 흰 바탕 여백 안에 */
+.stories-page .pjthumb-full .pjthumb-i,.stories-page a:hover .ph .pjthumb-full .pjthumb-i{left:0;top:0;width:100%;height:100%;object-fit:cover}
+.stories-page .pjc-tx h3[data-field="summary"],.hb-pjc .hb-pjc-nm + h3{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}

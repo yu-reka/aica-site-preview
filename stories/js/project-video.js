@@ -1,5 +1,8 @@
 /* Project demo view. No API/data mapping: a future integration supplies video[src]
-   or source[src] in .pjhero. Empty previews never request an empty URL. */
+   or source[src] in .pjhero. Empty previews never request an empty URL.
+   2026-10-27 (user request): without a video address the preparation stage is the hero even when the
+   project has photos or a thumbnail (they stay in the DOM, hidden). Heroes with a YouTube demo
+   (data-pj-yt, stories-render.js pjVideo) are left alone. */
 (() => {
   'use strict';
   const players = new Map();
@@ -15,19 +18,10 @@
   function isCurrent(hero) {
     return hero.closest('.pjd')?.id === location.hash.slice(1) && !document.hidden;
   }
-  // The renderer's blank placeholder (one flat rect) is not a project image.
-  function isPlaceholder(svg) { const kids = svg.children; return kids.length === 1 && kids[0].tagName.toLowerCase() === 'rect'; }
-  function hasVisual(hero) {
-    if (hero.querySelector('img,.phs,.pjthumb')) return true;
-    const svg = hero.querySelector('svg.illu');
-    return !!svg && !isPlaceholder(svg);
-  }
   function enhance(hero) {
     if (players.has(hero)) return;
+    if (hero.getAttribute('data-pj-yt')) return;   // YouTube demo (stories-render.js pjVideo) owns this hero
     const existing = hero.querySelector('video');
-    const hasSource = sourceNodes(existing).some(node => (node.getAttribute('src') || '').trim());
-    // Unconnected demos leave the existing media and its caption untouched.
-    if (!hasSource && hasVisual(hero)) return;
     const video = existing || document.createElement('video');
     const stage = document.createElement('div');
     stage.className = 'pj-video-stage';
@@ -97,9 +91,6 @@
         if (source || invalid) video.load();
         if (active === player) active = null;
       }
-      const emptyWithPhotos = !source && hasVisual(hero);
-      player.stage.hidden = emptyWithPhotos;
-      hero.classList.toggle('pj-video', !emptyWithPhotos);
       if (isCurrent(hero)) next = player;
       else video.pause();
     });

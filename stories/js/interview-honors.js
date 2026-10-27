@@ -1,11 +1,13 @@
-/* Independent design-preview cards; never draw from the general interview list. */
+/* Honors cards: interviews checked as 우수 수료생 in the backoffice (stories-render.js draws them before this runs and
+   leaves them out of the general list), or the design-preview '준비 중' cards when none is checked. */
 (function () {
   var section = document.querySelector('.iv-honors');
   if (!section) return;
   var track = section.querySelector('.sm-ivf-track');
   var cards = Array.from(track.querySelectorAll('.sm-ivf-c'));
-  // These draft details belong only to the independent honors cards.
+  // These draft details belong only to the preview cards; checked interviews open their own detail (.ivd).
   cards.forEach(function (card, index) {
+    if (!/^#iv-honors-/.test(card.getAttribute('href') || '')) return;
     var detail = document.createElement('div');
     detail.className = 'ivd ivd-honors'; detail.id = 'iv-honors-' + (index + 1);
     var back = document.createElement('a'); back.className = 'ivback';

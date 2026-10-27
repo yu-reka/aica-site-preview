@@ -331,12 +331,17 @@ const Site = (() => {
       const a = e.target.closest('#siteHeader a[href], #drawer a[href], #siteFooter a[href], #siteLnb a[href]');
       if (!a || a.hasAttribute('data-toast') || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       const u = new URL(a.href);
+      // Page entries in the LNB start a fresh page visit. A synthetic hashchange
+      // after pushState does not clear the browser's CSS :target detail state.
+      if (a.closest('#siteLnb') && !u.hash) { closeDrawer(); return; }
       if (!samePage(u)) { closeDrawer(); return; }
       e.preventDefault();
       closeDrawer();
       if (header.classList.contains('menu-open')) { megaHold = true; setMega(false); }
       goTo(u.hash);
       applyCat(u.searchParams);   // 같은 페이지의 분류 조건(?cat=)
+      // Life's LNB entries use hashes for full views, rather than reading anchors.
+      if (a.closest('#siteLnb')) requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'instant' }));
     });
     // Same-document Back/Forward does not trigger pageshow. Release the modal
     // before the history destination is shown, without adding history entries.

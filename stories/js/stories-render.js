@@ -50,7 +50,7 @@
       var src = safe.url(value.src, true); if (!src) return null;
       return Object.assign({}, value, {src:src,w:Math.max(0,num(value.w,0)),h:Math.max(0,num(value.h,0))});
     }
-    out.img = image(item.img); out.imgLarge = image(item.imgLarge); out.thumb = image(item.thumb);   // thumb: 프로젝트 썸네일(파란 글자 em 은 그대로)
+    out.img = image(item.img); out.imgLarge = image(item.imgLarge); out.thumb = image(item.thumb);   // thumb: 프로젝트 썸네일(그림만)
     out.photos = (Array.isArray(item.photos) ? item.photos : []).map(image).filter(Boolean);
     out.art = safe ? safe.svg(item.art) : '';
     out.links = (Array.isArray(item.links) ? item.links : []).map(function (link) { return link && Object.assign({}, link,{url:safe ? safe.url(link.url,false) : ''}); }).filter(function (link) { return link && link.url; });
@@ -111,16 +111,25 @@
     var svg = item.art || '<svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#E4E9F7"/></svg>';
     return svg.replace(/^<svg\b([^>]*)>/, function (all, attrs) { return '<svg aria-hidden="true"' + attrs.replace(/\s(class|aria-hidden)="[^"]*"/g, '') + '>'; });
   }
-  // 프로젝트 썸네일(2026-10-26): 흰 바탕 왼쪽에 프로젝트 주제, 오른쪽에 관리자가 고른 그림(thumb, 투명 배경).
-  // thumb.em 글자가 주제 안에 있으면 그 부분만 파란 한 줄로 따로 보여요. 글자 수에 따라 크기를 세 단계로(긴 주제도 칸 안에)
+  // 프로젝트 썸네일(2026-10-26): 흰 바탕에 관리자가 고른 그림(thumb, 투명 배경)만 크게. 글자는 넣지 않아요(사용자 요청 — 주제는 카드 글로)
+  // 사진처럼 꽉 찬 그림은 그림이 오면 칸 크기에 맞춰 채워요(이 파일 끝 '썸네일 그림 맞추기')
   function hasThumb(item) { return !!(item.thumb && item.thumb.src); }
   function pjThumb(item, cls) {
-    var t = item.thumb, text = String(item.headline || item.title || '').trim(), em = String(t.em || '').trim(), at = em ? text.indexOf(em) : -1;
-    var words = at < 0 ? esc(text) : esc(text.slice(0, at).trim()) + '<em>' + esc(em) + '</em>' + esc(text.slice(at + em.length).trim());
-    var size = text.length > 40 ? ' pjthumb-s' : text.length > 24 ? ' pjthumb-m' : '';
-    return '<div class="pjthumb' + size + (cls ? ' ' + cls : '') + '" aria-hidden="true"><p class="pjthumb-t">' + words + '</p>'
+    var t = item.thumb;
+    return '<div class="pjthumb' + (cls ? ' ' + cls : '') + '" aria-hidden="true">'
       + '<img class="pjthumb-i" src="' + esc(t.src) + '" alt="" loading="lazy" decoding="async"' + (t.w && t.h ? ' width="' + t.w + '" height="' + t.h + '"' : '') + '></div>';
   }
+  // 프로젝트 시연 영상(2026-10-27): 유튜브 번호가 있으면 상세 맨 위(대표 이미지 자리)에 대표 그림(썸네일 · 대표 사진) + 재생 단추.
+  // 누르면 그 자리에서 재생해요(이 파일 끝 '프로젝트 시연 영상'). data-yt 가 아니라 data-pj-yt — 인터뷰용 재생(stories-sections.js)과 겹치지 않게
+  function pjVideo(x) {
+    var yt = x.video && x.video.yt;
+    if (!yt) return '';
+    return '<div class="ivhero pjhero ivvid pjvid" data-pj-yt="' + esc(yt) + '"><span class="ivtag">' + esc(pjSubject(x)) + '</span>'
+      + (hasThumb(x) ? pjThumb(x, 'illu') : visual(x, { hidden: true }))
+      + '<button class="ivplay" type="button" aria-label="' + esc(x.title) + ' 시연 영상 재생"><i></i></button></div>';
+  }
+  // 카드 큰 글씨: 프로젝트 주제(글쓰기 화면 '프로젝트 주제' = summary). 줄바꿈은 카드에서 한 줄로 이어요
+  function pjTopic(x) { return String(x.summary || '').replace(/\s+/g, ' ').trim(); }
   // 글 안 사진 여러 장: 옆으로 넘겨 봐요(손가락으로 밀기 · 화살표 · 키보드 ←→, 움직임은 stories.js)
   function photoList(item) { return (item.photos || []).filter(function (p) { return p && p.src; }); }
   function slides(item, label) {
@@ -243,7 +252,20 @@
   var ivPane = $('#p-iv');
   if (ivPane) {
     var grid2 = $('.ivgrid', ivPane), dots = $('.ivdots', ivPane);
-    if (grid2) grid2.innerHTML = IV.map(function (v) {
+    // 우수 수료생(2026-10-26): 백오피스에서 체크한 인터뷰(honors)는 위 '우수 수료생' 섹션 카드로만 그리고 아래 목록 · 넘김 점에서는 빼요.
+    // 상세(.ivd)는 모두 만들어 카드가 그 글로 열려요. 체크한 글이 없으면 섹션은 페이지에 적힌 '준비 중' 카드 그대로(넘김은 interview-honors.js)
+    var honors = IV.filter(function (v) { return v.honors; }), listed = IV.filter(function (v) { return !v.honors; });
+    var honorsTrack = $('.iv-honors .sm-ivf-track', ivPane);
+    if (honorsTrack && honors.length) {
+      honorsTrack.innerHTML = honors.map(function (v, i) {
+        var vid = v.video && v.video.yt;
+        return '<a class="sm-ivf-c' + (i ? '' : ' is-on') + '" href="#' + esc(v.anchor) + '" aria-label="' + esc(v.title) + ' 상세보기">'
+          + '<div class="ph">' + visual(v, { alt: false, fit: true }) + (vid ? '<span class="play"><i></i></span>' : '') + '</div>'
+          + '<div class="sm-ivf-tx"><b>' + esc(v.title) + '</b><p class="sm-ivf-summary">' + esc(v.summary) + '</p><span>' + esc(who(v)) + '</span></div></a>';
+      }).join('');
+      honorsTrack.parentNode.setAttribute('aria-label', '우수 수료생 인터뷰');
+    }
+    if (grid2) grid2.innerHTML = listed.map(function (v) {
       var vid = v.video && v.video.yt;
       return '<a class="iv" href="#' + esc(v.anchor) + '" data-interview-summary="' + esc(v.summary || '') + '"' + (vid ? ' data-yt="' + esc(v.video.yt) + '"' : '') + '>'
         + '<div class="ph">' + visual(v, { alt: false, fit: true, field: 'thumbnail' }) + (vid ? '<span class="play"><i></i></span><span class="dur" data-field="duration">' + esc(v.video.dur || '') + '</span>' : '') + '</div>'
@@ -251,7 +273,7 @@
         + '<p data-field="summary">' + esc(v.summary) + '</p>'
         + '<div class="by"><span class="av" data-field="cohort">' + coh(v.cohort) + '</span><b data-field="author">' + esc(v.author) + '</b><em data-field="track">' + esc(v.track) + '</em></div></div></a>';
     }).join('');
-    if (dots) dots.innerHTML = IV.map(function (v, i) { return '<button type="button" aria-label="' + (i + 1) + '번째 인터뷰"></button>'; }).join('');
+    if (dots) dots.innerHTML = listed.map(function (v, i) { return '<button type="button" aria-label="' + (i + 1) + '번째 인터뷰"></button>'; }).join('');
     $$('.ivd', ivPane).forEach(function (d) { d.remove(); });
     var details = IV.map(function (v) {
       var id = esc(v.anchor), no = anchorNo(v.anchor, id), vid = v.video && v.video.yt;
@@ -290,12 +312,12 @@
     // 과정(data-subject)은 글의 과정(course, 기수 정보 교육과정 트랙), 기수는 기수 · 반(term, 예: 6기 · 01반)의 숫자. 썸네일 위 글자는 반 이름(type) 그대로
     var pjCohort = function (x) { var m = /(\d{1,2})\s*기/.exec(x.term || ''); return x.cohort ? String(x.cohort) : m ? m[1] : ''; };
     var pjSubject = subjectOf;
+    // 카드(2026-10-26 사용자 요청): 썸네일(그림만) 아래에 서비스 이름(작은 파란 글씨) · 프로젝트 주제(큰 글씨) · 팀 이름 · 인원.
+    // 주제가 없는 예전 글은 서비스 이름을 큰 글씨로. 회색 요약 줄은 주제와 같은 글이라 두지 않아요
     if (pjgrid) pjgrid.innerHTML = PJ.map(function (x) {
-      var head = x.headline || x.title;
+      var topic = pjTopic(x);
       return '<a data-cohort="' + esc(pjCohort(x)) + '" data-subject="' + esc(courseOf(x)) + '" class="pjc" href="#' + esc(x.anchor) + '"><div class="ph">' + (hasThumb(x) ? pjThumb(x, 'illu') : visual(x, { fit: true })) + '<span class="pjc-type" data-field="subject">' + esc(pjSubject(x)) + '</span></div>'
-        + '<div class="pjc-tx">' + (x.headline ? '<p class="pjname">' + esc(projectName(x)) + '</p>' : '')
-        + '<h3 data-field="title">' + esc(head) + '</h3>'
-        + '<p class="sum" data-field="summary">' + esc(x.cardSummary || firstSentence(x.summary)) + '</p>'
+        + '<div class="pjc-tx">' + (topic ? '<p class="pjname">' + esc(projectName(x)) + '</p><h3 data-field="summary">' + esc(topic) + '</h3>' : '<h3 data-field="title">' + esc(projectName(x)) + '</h3>')
         + '<div class="tags">' + (x.tags || []).map(function (t) { return '<span data-field="tag">' + esc(t) + '</span>'; }).join('') + '</div>'
         + '<p class="team" data-field="team">' + esc(x.team) + '</p></div></a>';
     }).join('');
@@ -325,7 +347,7 @@
       }).join('');
       var links = (x.links || []).filter(function (l) { return l && l.url; }).map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label || '자료 보기') + ' ↗</a>'; }).join('');
       return '<div class="pjd" id="' + id + '"><a class="ivback" href="#p-pr">← 프로젝트 목록</a><div class="ivwrap"><div>'
-        + '<div class="ivhero pjhero"><span class="ivtag">' + esc(pjSubject(x)) + '</span>' + (slides(x, x.title) || (hasThumb(x) && !hasPhoto(x) ? pjThumb(x, 'illu') : visual(x, { hidden: true }))) + '</div>'
+        + (pjVideo(x) || '<div class="ivhero pjhero"><span class="ivtag">' + esc(pjSubject(x)) + '</span>' + (slides(x, x.title) || (hasThumb(x) && !hasPhoto(x) ? pjThumb(x, 'illu') : visual(x, { hidden: true }))) + '</div>')
         + '<span class="pjno">' + pad2(i + 1) + '</span><h2>' + esc(x.title) + '</h2><p class="lead">' + esc(x.summary) + '</p>'
         + '<div class="pjtags">' + (x.tags || []).map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div>'
         + '<div class="pjsec">' + secs + '</div>'
@@ -444,8 +466,8 @@
       PJ.forEach(function (x) { if (three.length < 3 && three.indexOf(x) < 0) three.push(x); });
       pjBox.innerHTML = three.map(function (x) {
         return '<a class="hb-pjc" href="projects.html#' + esc(x.anchor) + '"><span class="hb-pjc-ph">' + (hasThumb(x) ? pjThumb(x) : hubVisual(x)) + '<span class="hb-pjc-type">' + esc(subjectOf(x)) + '</span></span>'
-          + '<div class="hb-pjc-tx">' + (x.headline ? '<p class="hb-pjc-nm">' + esc(projectName(x)) + '</p>' : '') + '<h3>' + esc(x.headline || x.title) + '</h3>'
-          + '<p class="hb-pjc-s">' + esc(x.cardSummary || firstSentence(x.summary)) + '</p><span class="hb-pjc-tm">' + esc(x.team) + '</span></div></a>';
+          + '<div class="hb-pjc-tx">' + (pjTopic(x) ? '<p class="hb-pjc-nm">' + esc(projectName(x)) + '</p><h3>' + esc(pjTopic(x)) + '</h3>' : '<h3>' + esc(projectName(x)) + '</h3>')
+          + '<span class="hb-pjc-tm">' + esc(x.team) + '</span></div></a>';   // 프로젝트 카드와 같게: 서비스 이름 · 프로젝트 주제 · 팀
       }).join('');
     }
     // 기수별 이모저모: 행사 단계마다 사진 있는 기록 하나(영상 먼저, 그다음 최근), 기수가 겹치지 않게. 영상은 유튜브로, 기록은 그 글 창으로
@@ -521,4 +543,48 @@
     e.preventDefault(); e.stopPropagation();
     step(t, e.key === 'ArrowRight' ? 1 : -1);
   }, true);
+
+  // 썸네일 그림 맞추기(2026-10-26 사용자 요청): 배경이 투명한 그림(기본 썸네일 같은 그림)은 흰 바탕 여백 안에 두고,
+  // 사진처럼 투명한 곳이 없는 그림은 썸네일 칸 크기에 맞춰 꽉 채워요(pjthumb-full — 비율이 달라도 칸을 다 덮고 넘치는 가장자리는 잘림, 2026-10-27 사용자 요청: 뒤 흐린 배경 없이).
+  // 그림이 오면 작은 캔버스에 그려 투명한 곳이 있는지 봐요. 다른 주소라 읽지 못하는 그림은 예전처럼 여백 안에
+  function fitThumb(img) {
+    var box = img.parentNode;
+    if (!box || box.hasAttribute('data-fit')) return;
+    var full = false;
+    try {
+      var c = document.createElement('canvas'), n = 40, g, a, i;
+      c.width = c.height = n;
+      g = c.getContext('2d'); g.drawImage(img, 0, 0, n, n);
+      a = g.getImageData(0, 0, n, n).data; full = true;
+      for (i = 3; i < a.length; i += 4) if (a[i] < 250) { full = false; break; }
+    } catch (e) { full = false; }
+    box.setAttribute('data-fit', full ? 'full' : 'art');
+    if (full) box.classList.add('pjthumb-full');
+  }
+  // 프로젝트 시연 영상(2026-10-27): 재생 단추를 누르면 그 자리에서 유튜브(쿠키 없는 주소)로 재생, 상세를 떠나면 다시 대표 그림으로(소리가 계속 나지 않게)
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.pjvid .ivplay'); if (!b) return;
+    var box = b.closest('.pjvid'), id = box.getAttribute('data-pj-yt') || '';
+    if (!/^[A-Za-z0-9_-]{6,20}$/.test(id)) return;
+    e.preventDefault();
+    box.pjPoster = box.pjPoster || box.innerHTML;
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1';
+    f.title = '프로젝트 시연 영상'; f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true;
+    var tag = box.querySelector('.ivtag');
+    box.replaceChildren(); if (tag) box.appendChild(tag); box.appendChild(f); f.focus();
+  });
+  if (window.addEventListener) window.addEventListener('hashchange', function () {
+    [].forEach.call(document.querySelectorAll('.pjvid'), function (box) {
+      var d = box.closest('.pjd');
+      if (box.pjPoster && box.querySelector('iframe') && (!d || location.hash !== '#' + d.id)) box.innerHTML = box.pjPoster;
+    });
+  });
+
+  // load 는 거품이 안 올라와서 잡는 단계에서, 이미 와 있는 그림은 바로
+  document.addEventListener('load', function (e) {
+    var t = e.target;
+    if (t && t.classList && t.classList.contains('pjthumb-i')) fitThumb(t);
+  }, true);
+  if (document.querySelectorAll) [].forEach.call(document.querySelectorAll('.pjthumb-i'), function (img) { if (img.complete && img.naturalWidth) fitThumb(img); });
 })();

@@ -131,6 +131,9 @@
 .stories-page #p-pr:has(.pjd:target) .pjlist{display:none}
 .stories-page .pjd h2{margin:6px 0 0;font-family:var(--disp);font-size:clamp(28px,3vw,36px);line-height:1.3;letter-spacing:-.02em;color:var(--ink)}
 .stories-page .pjd .lead{margin-top:12px;font-size:17px;line-height:1.7;color:var(--g600)}
+/* Long unspaced words must fit the detail column, including its grid minimum. */
+.stories-page :is(.ivd,.pjd) :is(h2,.lead){overflow-wrap:anywhere}
+.stories-page :is(.ivd,.pjd) .ivwrap > *{min-width:0}
 .stories-page .pjno{display:block;margin-top:32px;font:400 28px/1 var(--num);color:var(--yellow);-webkit-text-stroke:1.2px var(--ink)}
 .stories-page .pjtags{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
 .stories-page .pjtags span{height:30px;padding:0 12px;border:1px solid var(--l-line);border-radius:999px;font-size:13.5px;font-weight:700;line-height:28px;color:var(--l-eb,#2b75ff);background:#fff}

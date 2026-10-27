@@ -46,7 +46,7 @@ var StoryState = (function(){
     var kind=document.documentElement.dataset.sub,subject=subjects[kind];if(!subject)return;
     var section=document.querySelector({reviews:'#p-rev',interviews:'#p-iv',projects:'#p-pr',cohorts:'#p-coh'}[kind]);
     var host=section?.querySelector('[data-story-list-state]');if(!host)return;
-    var cards=kind==='cohorts'?Array.from(document.getElementById('cv3-data').content.querySelectorAll('a.st')).filter(function(card){return parseInt(card.querySelector('.cg')?.textContent,10)>0;}):section.querySelectorAll({reviews:'.idgrid .idc',interviews:'.ivgrid .iv',projects:'.pjgrid .pjc'}[kind]);
+    var cards=kind==='cohorts'?Array.from(document.getElementById('cv3-data').content.querySelectorAll('a.st')).filter(function(card){return parseInt(card.querySelector('.cg')?.textContent,10)>0;}):section.querySelectorAll({reviews:'.idgrid .idc',interviews:'.ivgrid .iv,.iv-honors a.sm-ivf-c[href^="#iv-p"]',projects:'.pjgrid .pjc'}[kind]);
     // Cohort chips come only from posts with a cohort (cohort-v3.js), so a failed load or no such post hides the whole cohort view behind the page state.
     if(failed()||!cards.length){
       render(host,failed()?'error':'empty',{subject:subject});host.hidden=false;

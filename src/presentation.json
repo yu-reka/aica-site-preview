@@ -1606,12 +1606,12 @@
         "template": "life/facilities/panel-5",
         "photos": [
           {
-            "className": "bx9-sl im-cafe8_tmp",
-            "thumbnailClass": "bx9-tb im-cafe8_tmp"
+            "className": "bx9-sl im-fac_8f_cafeteria_01",
+            "thumbnailClass": "bx9-tb im-fac_8f_cafeteria_01"
           },
           {
-            "className": "bx9-sl im-counter_tmp",
-            "thumbnailClass": "bx9-tb im-counter_tmp"
+            "className": "bx9-sl im-fac_8f_cafeteria_02",
+            "thumbnailClass": "bx9-tb im-fac_8f_cafeteria_02"
           }
         ]
       }

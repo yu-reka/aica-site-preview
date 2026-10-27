@@ -197,10 +197,10 @@
 /* 고정 지도: 커진 카드가 헤더 아래로 숨지 않게 */
 /* 위쪽 핀: 설명을 카드 아래로 */
 .life-page .bx-ex.tmp{background:var(--ny)!important;color:var(--ink)}
-/* 구내식당 임시 사진 */
-.life-page .im-cafe8_tmp{background-image:url("../assets/cafe8_tmp.webp")}
-/* 배식대 임시 사진 */
-.life-page .im-counter_tmp{background-image:url("../assets/counter_tmp.webp")}
+/* 8F 구내식당 공개 사진 예시 */
+.life-page .im-fac_8f_cafeteria_01{background-image:url(../assets/fac_8f_cafeteria_01.webp)}
+/* 8F 배식대 공개 사진 예시 */
+.life-page .im-fac_8f_cafeteria_02{background-image:url(../assets/fac_8f_cafeteria_02.webp)}
 /* ACC 사진(확대) */
 .life-page .im-acc_tmp{background-image:url("../assets/acc_tmp.webp");background-position:40% 50%}
 /* 무등산 임시 사진 */

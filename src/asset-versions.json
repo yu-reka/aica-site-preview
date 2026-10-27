@@ -59,11 +59,11 @@
   "life": {
     "css": {
       "life-m": "1026life-top",
-      "life": "1026facility-preview",
+      "life": "1027cafeteria-preview",
       "presentation": "1026floor-equal"
     },
     "js": {
-      "life-m-view": "1021area-arrows",
+      "life-m-view": "1027cafeteria-preview",
       "life-m": "1021area-arrows",
       "life": "1023dicecancel"
     }

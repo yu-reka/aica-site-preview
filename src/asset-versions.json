@@ -110,7 +110,7 @@
         "legacyLoader": "1016cleanup"
       },
       "stories-m": "1026thumb-image",
-      "stories-render": "1027demo-video",
+      "stories-render": "1027no-headline",
       "stories-sections": "1023cardrows",
       "stories": "1022dialog-transfer",
       "story-state": "1026honors-checked",

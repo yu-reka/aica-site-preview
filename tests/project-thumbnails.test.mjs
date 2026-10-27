@@ -53,8 +53,9 @@ test('a picked thumbnail is the picture alone, and the card text is service name
   assert.match(card(out.cards,3),/<div class="pjthumb illu" aria-hidden="true"><img class="pjthumb-i" src="assets\/uploads\/post-thumb2.webp"[^>]*><\/div>/);
   assert.match(card(out.cards,3),/<h3 data-field="title">주제 없는 썸네일<\/h3>/);
   assert.match(detail(out.details,3),/class="pjthumb illu"/);
-  // 요약이 없는 예전 글은 예전 프로젝트 주제(headline)
-  assert.match(card(out.cards,5),/<p class="pjname">예전 글<\/p><h3 data-field="summary">카메라가 신호등을 읽어요<\/h3>/);
+  // 예전 프로젝트 주제(headline)는 2026-10-27 DB에서 없앤 칸 — 카드는 프로젝트 주제(summary)만 보고, 없으면 서비스 이름이 큰 글씨
+  assert.match(card(out.cards,5),/<div class="pjc-tx"><h3 data-field="title">예전 글<\/h3>/);
+  assert.doesNotMatch(card(out.cards,5),/카메라가 신호등을 읽어요/);
 
   // 위험한 주소는 버리고(썸네일 없이), 글자는 이스케이프
   assert.doesNotMatch(out.cards+out.details+out.hub,/javascript:|alert\(1\)|<b>/);

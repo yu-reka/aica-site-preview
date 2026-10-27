@@ -19,7 +19,7 @@
     var list = lnb && $('.lnb-list', lnb);
     if (!list || $('.sm-dock')) return;
     /* 짧은 이름은 600px 이하에서만(웹은 원래 이름) */
-    var names = $$('a', list).map(function(a){ return { a: a, full: a.textContent, short: SHORT[a.dataset.sub] }; });
+    var names = (list.hasAttribute('data-static-labels') ? [] : $$('a', list)).map(function(a){ return { a: a, full: a.textContent, short: SHORT[a.dataset.sub] }; });
     var label = function(){
       names.forEach(function(n){ if (n.short) n.a.textContent = mq.matches ? n.short : n.full; });
     };

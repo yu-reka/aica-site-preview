@@ -1,0 +1,10 @@
+<nav class="lnb" id="siteLnb" aria-label="{{label}} 메뉴">
+  <div class="lnb-in">
+    <p class="lnb-head"><strong class="lnb-title">{{label}}</strong></p>
+    <ul class="lnb-list ui-segment" role="list" data-scroll-fade data-static-labels>
+{{#each items}}
+      <li><a href="../{{page}}" data-sub="{{id}}"{{#each states}} aria-current="{{value}}"{{/each}}><span class="lnb-label-full">{{label}}</span><span class="lnb-label-mobile">{{mobileLabel}}</span></a></li>
+{{/each}}
+    </ul>
+  </div>
+</nav>

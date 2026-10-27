@@ -128,8 +128,8 @@
       + (hasThumb(x) ? pjThumb(x, 'illu') : visual(x, { hidden: true }))
       + '<button class="ivplay" type="button" aria-label="' + esc(x.title) + ' 시연 영상 재생"><i></i></button></div>';
   }
-  // 카드 큰 글씨: 프로젝트 주제(글쓰기 화면 '프로젝트 주제' = summary, 예전 글은 headline). 줄바꿈은 카드에서 한 줄로 이어요
-  function pjTopic(x) { return String(x.summary || x.headline || '').replace(/\s+/g, ' ').trim(); }
+  // 카드 큰 글씨: 프로젝트 주제(글쓰기 화면 '프로젝트 주제' = summary). 줄바꿈은 카드에서 한 줄로 이어요
+  function pjTopic(x) { return String(x.summary || '').replace(/\s+/g, ' ').trim(); }
   // 글 안 사진 여러 장: 옆으로 넘겨 봐요(손가락으로 밀기 · 화살표 · 키보드 ←→, 움직임은 stories.js)
   function photoList(item) { return (item.photos || []).filter(function (p) { return p && p.src; }); }
   function slides(item, label) {

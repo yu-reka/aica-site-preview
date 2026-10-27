@@ -1,18 +1,12 @@
 {
   "about": {
     "css": {
-      "about-m": {
-        "legacyComment": "1016channel",
-        "default": "1027project-source"
-      },
+      "about-m": "1027project-source",
       "about": "1027news-links",
       "presentation": "1022anchor40"
     },
     "js": {
-      "about-m": {
-        "legacyComment": "1016spacing",
-        "default": "1026dockrepeat"
-      },
+      "about-m": "1026dockrepeat",
       "about": "1026singlevideo"
     }
   },
@@ -74,7 +68,7 @@
         "cohorts": "1026month-modal-wrap",
         "hub": "1026month-modal-wrap"
       },
-      "detail-navigation": "1027story-list-return",
+      "detail-navigation": "1020outsidegrid",
       "hub": "1026honors-separate",
       "presentation": {
         "hub": "1016split",
@@ -99,7 +93,7 @@
     "js": {
       "cohort-modal-scroll": "1022swipereading",
       "cohort-v3": "1026month-navigation-tags",
-      "detail-navigation": "1020outsidegrid",
+      "detail-navigation": "1027story-list-return",
       "old-hash": "1022hubmodals",
       "project-reading": "1027list-markers",
       "projects-filter": "1023course",

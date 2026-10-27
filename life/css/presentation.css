@@ -42,7 +42,7 @@ html:where(:not([data-menu="stories"]))[data-menu="life"] body,
 /* 알아보기 */
 :where(html:not([data-menu="stories"])) .ov .mbody p,
 .life-page :is(
-  .lh-s, .pgi-t, .note, .fdisc, .hzmw-ds, .park2-d, .fdc-r blockquote,
+  .lh-s, .note, .fdisc, .hzmw-ds, .park2-d, .fdc-r blockquote,
   .adt li p, .fsc-d
 ){
   font-family:var(--ff-sans);
@@ -441,14 +441,6 @@ body .life-page #pg-tips[data-topic="tp-adapt"] #tp-adapt{display:block}
 
 body .life-page .tp-hub{padding-bottom:clamp(64px,6vw,96px)}
 
-body .life-page .tp-htx{display:flex;flex-direction:column;gap:8px}
-
-body .life-page .tp-htx em{font:600 13px/1 var(--ff-text);font-style:normal;color:var(--primary)}
-
-body .life-page .tp-htx b{font:600 22px/1.3 var(--ff-text);letter-spacing:-.02em}
-
-body .life-page .tp-htx small{font:400 14.5px/1.5 var(--ff-sans);color:var(--muted)}
-
 body .life-page .tp-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:clamp(32px,3vw,44px)}
 
 body .life-page .tp-bar a{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 15px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--line);
@@ -472,10 +464,6 @@ body .life-page #pg-tips[data-topic] .tp-sec{padding-top:clamp(28px,3vw,40px)}
 
 .lnb .lnb-tp a.is-on{font-weight:700!important}
 
-@media (max-width:860px){
-
-body .life-page .tp-htx b{font-size:18px}
-}
 
 @media (max-width:1199px){.lnb .lnb-tp{display:none}
 }

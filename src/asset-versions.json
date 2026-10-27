@@ -1,18 +1,12 @@
 {
   "about": {
     "css": {
-      "about-m": {
-        "legacyComment": "1016channel",
-        "default": "1027project-source"
-      },
+      "about-m": "1027project-source",
       "about": "1027news-links",
       "presentation": "1022anchor40"
     },
     "js": {
-      "about-m": {
-        "legacyComment": "1016spacing",
-        "default": "1026dockrepeat"
-      },
+      "about-m": "1026dockrepeat",
       "about": "1026singlevideo"
     }
   },
@@ -53,7 +47,7 @@
     },
     "js": {
       "home": "1027ticker-tap-state",
-      "ticker-render": "design-20261026-projectthumbs"
+      "ticker-render": "design-20261027-serviceintro"
     }
   },
   "life": {
@@ -99,18 +93,18 @@
     "js": {
       "cohort-modal-scroll": "1022swipereading",
       "cohort-v3": "1026month-navigation-tags",
-      "detail-navigation": "1020outsidegrid",
+      "detail-navigation": "1027story-list-return",
       "old-hash": "1022hubmodals",
       "project-reading": "1027list-markers",
       "projects-filter": "1023course",
       "review-notes": "1021centerellipsis",
-      "stories-data": "design-20261026-projectthumbs",
+      "stories-data": "design-20261027-serviceintro",
       "stories-m-reviews": {
         "default": "1020states",
         "legacyLoader": "1016cleanup"
       },
       "stories-m": "1027nav-stable2",
-      "stories-render": "1027photo-first-hero",
+      "stories-render": "1027intro-photo-hero",
       "stories-sections": "1023cardrows",
       "stories": "1022dialog-transfer",
       "story-state": "1026honors-checked",

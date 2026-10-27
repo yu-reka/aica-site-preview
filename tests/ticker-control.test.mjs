@@ -4,10 +4,10 @@ import vm from 'node:vm';
 import { readFileSync } from 'node:fs';
 
 function start(reduced, mobile = false) {
-  const classes = new Set(), handlers = {}, label = {}, icon = {};
+  const classes = new Set(), handlers = {}, icon = {};
   let preferenceChange;
   const preference = { matches: reduced, addEventListener(type, fn) { preferenceChange = fn; } };
-  const button = { querySelector: selector => selector === '.tk-toggle-label' ? label : icon,
+  const button = { querySelector: selector => selector === '.tk-toggle-icon' ? icon : null,
     addEventListener(type, fn) { handlers[type] = fn; }, setAttribute(name, value) { this[name] = value; } };
   const areaHandlers = {};
   const area = { addEventListener(type, fn) { areaHandlers[type] = fn; } };
@@ -17,7 +17,7 @@ function start(reduced, mobile = false) {
     document: { querySelector: selector => selector === '.tk' ? ticker : selector === '#main' ? main : null },
     matchMedia: query => query.includes('prefers-reduced-motion') ? preference : { matches: mobile } };
   vm.runInNewContext(readFileSync(new URL('../home/js/home.js', import.meta.url), 'utf8'), context);
-  return { classes, label, icon, button, click: () => handlers.click(), tapArea: () => areaHandlers.click(), preference: value => preferenceChange({ matches: value }) };
+  return { classes, icon, button, click: () => handlers.click(), tapArea: () => areaHandlers.click(), preference: value => preferenceChange({ matches: value }) };
 }
 
 test('ticker exposes persistent user pause and resume, with a reduced-motion default and live preference changes', () => {

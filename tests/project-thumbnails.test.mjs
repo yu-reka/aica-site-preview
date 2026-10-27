@@ -161,3 +161,14 @@ test('pressing play swaps the poster for a privacy-friendly YouTube player, and 
   listeners['win:hashchange'].forEach(fn=>fn());
   assert.equal(box.innerHTML,'<span class="ivtag">자연어처리B</span><img><button class="ivplay"></button>');
 });
+
+test('the project detail shows an escaped service introduction only when present, directly below its subject',()=>{
+  const out=render([
+    {id:1,anchor:'pj-p1',title:'공개 프로젝트',summary:'공개 시안 요약',serviceIntro:'공개 샘플 안내\n<b>서식</b> 확인',tags:['#예시']},
+    {id:2,anchor:'pj-p2',title:'소개 없음',summary:'주제만 있는 글'}]);
+  const body=id=>out.details.match(new RegExp('id="pj-p'+id+'"([\\s\\S]*?)<aside'))?.[1]||'';
+  assert.match(body(1),/<p class="lead">공개 시안 요약<\/p><section class="pjintro"><h3>서비스 소개<\/h3><p class="pjph-t" data-field="serviceIntro">공개 샘플 안내\n&lt;b&gt;서식&lt;\/b&gt; 확인<\/p><\/section><div class="pjtags">/);
+  assert.doesNotMatch(body(2),/pjintro|서비스 소개/);
+  assert.match(body(2),/<p class="lead">주제만 있는 글<\/p><div class="pjtags">/);
+  assert.doesNotMatch(out.cards+out.hub,/서비스 소개|pjintro/);
+});

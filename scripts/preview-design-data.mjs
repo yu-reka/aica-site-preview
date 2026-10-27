@@ -66,6 +66,7 @@ export function designPreviewData() {
     projects: content.stories.projects.map((record, index) => ({...meta(record, 920000, 'pj-p', index),
       cohort: record.cohort, term: record.cohortClass || record.duration, subject: record.subject, course: record.subject || record.type, type: record.type,
       title: title(record.name), headline: title(record.title), summary: record.detailSummary, cardSummary: record.summary,
+      serviceIntro: index < content.stories.projects.length - 1 ? record.detailSummary : '',
       team: record.team, tags: record.tags, art: art(record),
       // Public illustrations and existing design words only; never import the DB-selected thumbnail.
       thumb: {src: `assets/project-thumbs/project-thumb-${String(index % 5 + 1).padStart(2, '0')}.webp`,

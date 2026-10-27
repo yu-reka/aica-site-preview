@@ -235,7 +235,6 @@ body{background:var(--ax-bg)}
 /* 한 줄 로그 띠: 검정 터미널 줄이 흐름 */
 .tk{position:relative;z-index:2;flex:none;margin:0 calc(clamp(14px,2.2vw,34px) * -1);background:var(--ax-line);border-top:3px solid var(--hm-primary);overflow:hidden;height:44px;display:flex;align-items:center}
 .tk-track{display:flex;width:max-content;animation:tk 60s linear infinite}
-.tk-window:hover .tk-track{animation-play-state:paused}
 .tk.is-paused .tk-track{animation-play-state:paused}
 .tk-list{display:flex;margin:0;padding:0;list-style:none}
 .tk-list li{white-space:nowrap;padding:0 34px 0 0;font-size:14px;font-weight:600;color:#E9E9EA}
@@ -386,4 +385,6 @@ body{background:var(--ax-bg)}
 .tk-toggle:focus-visible{outline:2px solid #fff;outline-offset:-4px}
 .tk.is-running .tk-track{animation-play-state:running}
 
-.tk.is-running .tk-window:hover .tk-track{animation-play-state:paused}
+@media (min-width:861px) and (hover:hover) and (pointer:fine){
+  .tk.is-running .tk-window:hover .tk-track{animation-play-state:paused}
+}

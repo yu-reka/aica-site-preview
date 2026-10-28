@@ -7,6 +7,43 @@ import { springArtifacts } from '../scripts/export-spring.mjs';
 
 const uiSource = readFileSync(new URL('../common/js/ui.js', import.meta.url), 'utf8');
 
+test('shared mobile controls keep text, clone IDs, group labels and click callbacks intact', () => {
+  const context = { document: { createElement: tag => ({
+    tag, children: [], attributes: {}, events: {},
+    setAttribute(name, value) { this.attributes[name] = value; },
+    appendChild(node) { this.children.push(node); },
+    addEventListener(name, action) { this.events[name] = action; },
+  }) } };
+  vm.runInNewContext(uiSource, context);
+  const ui = context.SiteUI;
+  const zero = ui.element('span', '', 0);
+  assert.equal(zero.textContent, 0);
+  const plain = ui.element('b', 'label', '<em>literal</em>');
+  assert.equal(plain.className, 'label');
+  assert.equal(plain.textContent, '<em>literal</em>');
+  const group = ui.buttonGroup('후기 카테고리', 'sm-filter-tabs');
+  let clicked = 0;
+  const button = ui.toggleButton(group, '전체', false, () => clicked++);
+  assert.equal(group.className, 'sm-filter-tabs');
+  assert.equal(group.attributes.role, 'group');
+  assert.equal(group.attributes['aria-label'], '후기 카테고리');
+  assert.equal(button.type, 'button');
+  assert.equal(button.attributes['aria-pressed'], 'false');
+  assert.equal(group.children[0], button);
+  button.events.click();
+  assert.equal(clicked, 1);
+  const removed = [];
+  const descendant = { removeAttribute: name => removed.push('child:' + name) };
+  const copy = {
+    removeAttribute: name => removed.push('root:' + name),
+    querySelectorAll: selector => selector === '[id]' ? [descendant] : [],
+  };
+  const source = { cloneNode(deep) { assert.equal(deep, true); return copy; } };
+  assert.equal(ui.cloneWithoutIds(null), null);
+  assert.equal(ui.cloneWithoutIds(source), copy);
+  assert.deepEqual(removed, ['root:id', 'child:id']);
+});
+
 test('all shared-runtime consumers load it first, including early cohort initialization and Spring pages', () => {
   const pages = [...build(), ...springArtifacts()];
   for (const [path, html] of pages) {
@@ -15,7 +52,7 @@ test('all shared-runtime consumers load it first, including early cohort initial
     const ui = scripts.findIndex(s => s.endsWith('/common/js/ui.js'));
     assert.ok(ui >= 0, path);
     assert.equal(scripts.filter(s => s.endsWith('/common/js/ui.js')).length, 1, path);
-    for (const name of ['site.js', 'cohort-v3.js', 'stories.js', 'stories-m.js', 'life-m.js', 'about-m.js']) {
+    for (const name of ['site.js', 'cohort-v3.js', 'stories.js', 'stories-m.js', 'stories-m-reviews.js', 'life-m.js', 'about-m.js']) {
       const consumer = scripts.findIndex(s => s.endsWith('/' + name));
       if (consumer >= 0) assert.ok(ui < consumer, path + ': ' + name);
     }

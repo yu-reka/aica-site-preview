@@ -1,5 +1,32 @@
 /* Shared interaction contracts. No content or route ownership lives here. */
 var SiteUI = (() => {
+  function element(tag, cls, text) {
+    const node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (text != null) node.textContent = text;
+    return node;
+  }
+  function cloneWithoutIds(node) {
+    if (!node) return null;
+    const copy = node.cloneNode(true);
+    copy.removeAttribute('id');
+    copy.querySelectorAll('[id]').forEach(child => child.removeAttribute('id'));
+    return copy;
+  }
+  function toggleButton(group, text, active, action) {
+    const button = element('button', '', text);
+    button.type = 'button';
+    button.setAttribute('aria-pressed', String(active));
+    button.addEventListener('click', action);
+    group.appendChild(button);
+    return button;
+  }
+  function buttonGroup(label, cls) {
+    const group = element('div', cls);
+    group.setAttribute('role', 'group');
+    group.setAttribute('aria-label', label);
+    return group;
+  }
   const focusable = root => [...root.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),iframe,[tabindex]')]
     .filter(el => el.tabIndex >= 0 && el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden' && !el.closest('[inert],[hidden]'));
   function trapFocus(event, dialog) {
@@ -50,7 +77,7 @@ var SiteUI = (() => {
     observer.observe(document.documentElement,{childList:true,subtree:true});
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>enhance());else enhance();
   }
-  return { enhance, focusable, trapFocus, createDialogScope, railState, syncRail, railKeys };
+  return { element, cloneWithoutIds, toggleButton, buttonGroup, enhance, focusable, trapFocus, createDialogScope, railState, syncRail, railKeys };
 })();
 
 /* Restore view choices only for a reload of this exact URL. Links and browser

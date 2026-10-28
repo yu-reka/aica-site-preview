@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 
+const uiSource = readFileSync(new URL('../common/js/ui.js', import.meta.url), 'utf8');
+
 // Minimal DOM boundary for running the shipped mobile script without browser packages.
 // Layout, focus and responsive behavior are covered separately in the browser.
 class Element {
@@ -40,7 +42,7 @@ function startReviews(classes) {
     querySelectorAll: () => [], getElementById: () => null,
     createElement: tag => { const node = new Element(tag); created.push(node); return node; },
   };
-  vm.runInNewContext(readFileSync(new URL('../stories/js/stories-m-reviews.js', import.meta.url), 'utf8') + '\nStoriesMobileReviews.init();', {
+  vm.runInNewContext(uiSource + '\n' + readFileSync(new URL('../stories/js/stories-m-reviews.js', import.meta.url), 'utf8') + '\nStoriesMobileReviews.init();', {
     document, location, matchMedia: () => ({ matches: true }),
     addEventListener(name, fn) { listeners[name] = fn; }, setTimeout() {},
   });
@@ -108,10 +110,11 @@ test('legacy Spring entry loads reviews only on a review page', () => {
     };
     const context = vm.createContext({ document, URL, location: { hash: '' },
       matchMedia: () => ({ matches: true }), addEventListener() {}, setTimeout() {} });
+    vm.runInContext(uiSource, context);
     vm.runInContext(readFileSync(new URL('../stories/js/stories-m.js', import.meta.url), 'utf8'), context);
     assert.equal(appended.length, hasReviews ? 1 : 0);
     if (hasReviews) {
-      assert.equal(appended[0].src, 'https://site.example/stories/js/stories-m-reviews.js?v=1016cleanup');
+      assert.equal(appended[0].src, 'https://site.example/stories/js/stories-m-reviews.js?v=1028shared-controls');
       let initialized = 0;
       context.StoriesMobileReviews = { init() { initialized++; } };
       appended[0].onload();

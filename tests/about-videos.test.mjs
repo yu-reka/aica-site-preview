@@ -43,6 +43,9 @@ test('project and documentary switches unload the old player and restore replaya
     oldFrames.push(...f.frames());
     play[index]();
     assert.equal(f.frames().length, 1, 'only the newest iframe stays in the page');
+    assert.doesNotMatch(f.frames()[0].allow, /\bweb-share\b/);
+    assert.match(f.frames()[0].allow, /autoplay/);
+    assert.equal(f.frames()[0].allowFullscreen, true);
     assert.equal(f.focused(), f.frames()[0]);
     assert.ok(oldFrames.every(frame => !f.frames().includes(frame)), 'no previous player survives');
     for (let i = 0; i < f.projects.length; i++) {

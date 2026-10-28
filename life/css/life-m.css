@@ -104,10 +104,6 @@
 .lm-content .space-note-icon svg{width:17px;height:17px;stroke-width:1.8}
 .lm-content .space-note-text{min-width:0;overflow-wrap:anywhere;word-break:keep-all}
 .lm-content .space-note-text a{text-decoration:underline;text-underline-offset:3px;color:var(--blue)}
-.lm-content .cross-links{display:grid;margin-top:28px}
-.lm-content .cross-links a{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--line)}
-.lm-content .cross-links b{font-size:13px}
-.lm-content .cross-links small{display:block;font-size:12px;color:var(--muted);margin-top:5px}
 .lm-content .tips-cards{display:grid;gap:48px}
 .lm-content .tip-card{display:block;min-width:0;color:var(--ink)}
 .lm-content .tip-0{--tip-accent:#8CC3FF}
@@ -126,53 +122,21 @@
 .lm-content .tip-go{display:flex;align-items:center;gap:6px;font:600 12px/1.4 Paperlogy,sans-serif;color:#374151}
 .lm-content .tip-go svg{width:14px;height:14px}
 .lm-content .caption{font-size:11px;line-height:1.8;color:var(--muted);word-break:keep-all;margin-top:18px}
-.lm-content .house-ref{margin:-12px 0 20px}
-.lm-content .budget-box{padding:18px 16px;border:1.5px solid var(--ink);border-radius:16px;margin-bottom:20px}
-.lm-content .budget-box>div:first-child{display:flex;align-items:center;justify-content:space-between}
-.lm-content .budget-box label, .lm-content .budget-box #budget-label{font-size:12px;font-weight:700}
-.lm-content .budget-box output{color:var(--blue);font:800 22px/1.2 Paperlogy,sans-serif}
-.lm-content .budget-options{display:flex;gap:6px;margin-top:16px}
-.lm-content .budget-options button{flex:1;min-width:0;height:38px;border:1px solid #c5cddd;border-radius:30px;background:#fff;font-size:12px;padding:0}
-.lm-content .budget-options button[aria-pressed=true]{background:var(--blue);color:#fff;border-color:var(--black);box-shadow:1px 2px 0 var(--black);font-weight:700}
-.lm-content .budget-box .caption{margin-top:11px;font-size:10px}
+.lm-content .house-ref{margin:-4px 2px 8px;text-align:right}
 .lm-content .housing-map{position:relative;height:280px;border-radius:18px;overflow:hidden;background:#f3f5f2;margin-bottom:16px;border:1px solid #e3e7ed}
 .lm-content .housing-map .hzmap2{height:100%;width:100%;display:block}
+.lm-content .housing-list{list-style:none;margin:0 0 16px;padding:0;border-top:1px solid #edf0f3}
+.lm-content .housing-list button{width:100%;display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:10px;align-items:center;padding:14px 6px;border:0;border-bottom:1px solid #edf0f3;background:none;color:var(--ink);font:inherit;text-align:left}
+.lm-content .housing-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#eef1f3;font-size:12px;font-weight:700}
+.lm-content .housing-name{display:flex;flex-direction:column;gap:3px;min-width:0}
+.lm-content .housing-name b{font-size:15px;font-weight:800}
+.lm-content .housing-name small, .lm-content .housing-meta small{font-size:11px;color:var(--muted)}
+.lm-content .housing-meta{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.lm-content .housing-meta em{font-style:normal;font-size:12px;font-weight:700;color:var(--blue);white-space:nowrap}
+.lm-content .housing-list .bus .housing-meta em{color:var(--ink)}
+.lm-content .housing-list button[aria-pressed=true]{background:#eef3ff}
+.lm-content .housing-list button[aria-pressed=true] .housing-no{background:var(--ink);color:#fff}
 .lm-content .map-note{position:absolute;right:10px;bottom:8px;background:#ffffffdb;padding:4px 7px;border-radius:8px;font-size:9px;color:var(--muted)}
-.lm-content .housing-selector-wrap{position:relative;margin-bottom:20px}
-.lm-content .housing-selector{gap:12px;white-space:nowrap;margin-bottom:0;scroll-padding-inline:44px}
-.lm-content .housing-tab-arrow{position:absolute;top:0;bottom:1px;width:44px;min-height:44px;padding:0;border:0;border-radius:0;display:grid;place-items:center;color:var(--ink);z-index:1}
-.lm-content .housing-tab-arrow[hidden]{display:none}
-.lm-content .housing-tab-prev{left:0;background:linear-gradient(90deg,#fff 65%,#fff0)}
-.lm-content .housing-tab-next{right:0;background:linear-gradient(270deg,#fff 65%,#fff0)}
-.lm-content .housing-tab-arrow svg{width:16px;height:16px}
-.lm-content .housing-tab-prev svg{transform:rotate(180deg)}
-.lm-content .housing-tab-arrow:focus-visible{outline-offset:-3px}
-.lm-content .housing-selector>button{font-size:12px;padding:0 3px}
-.lm-content .housing-rail .rail{align-items:stretch;padding-top:3px;padding-bottom:12px}
-.lm-content .housing-card{width:calc(100vw - 50px);flex:0 0 calc(100vw - 50px);padding:18px;border:2px solid var(--black);border-radius:20px;background:#fff;box-shadow:3px 4px 0 var(--black);scroll-snap-align:center;min-width:0;max-width:550px}
-.lm-content .housing-card-nav{display:grid;grid-template-columns:auto auto auto;justify-content:center;align-items:center;gap:16px;margin:2px 20px 0}
-.lm-content .housing-rail .rail-arrow{position:static;transform:none;display:flex;align-items:center;justify-content:center;gap:8px;min-width:72px;width:auto;height:44px;padding:0 12px;border:1px solid var(--line);border-radius:24px;box-shadow:none;font-size:12px;font-weight:700}
-.lm-content .housing-rail .rail-arrow.previous{justify-self:start}
-.lm-content .housing-rail .rail-arrow.next{justify-self:end}
-.lm-content .housing-rail .rail-arrow:disabled{opacity:.4}
-.lm-content .housing-rail .rail-arrow svg{width:6px;height:12px}
-.lm-content .housing-card-count{min-width:40px;text-align:center;font-size:12px;color:var(--muted);white-space:nowrap}
-.lm-content .housing-title{display:flex;align-items:center;gap:9px}
-.lm-content .housing-title>span{display:grid;place-items:center;background:var(--ink);color:#fff;width:26px;height:26px;border-radius:50%;font-size:12px;font-weight:700}
-.lm-content .housing-title h3{font:800 23px/1.3 Paperlogy,sans-serif}
-.lm-content .housing-description{margin-top:10px;font-size:12px;color:var(--muted);line-height:1.8}
-.lm-content .rent{padding:13px 14px;background:#eef3ff;border-radius:13px;margin-top:12px}
-.lm-content .rent>span{display:block;font-size:11px;color:var(--muted);margin-bottom:4px}
-.lm-content .rent>b{display:block;color:var(--blue);font:800 23px/1.4 Paperlogy,sans-serif;letter-spacing:-.05em}
-.lm-content .rent small{display:block;margin-top:4px;font-size:10px;line-height:1.7;color:var(--muted)}
-.lm-content .housing-details{display:grid;gap:10px;margin-top:14px}
-.lm-content .housing-details>div{display:grid;gap:4px;padding-bottom:8px;border-bottom:1px solid #edf0f3;font-size:12px;line-height:1.7}
-.lm-content .housing-details>div:last-child{padding-bottom:0;border-bottom:0}
-.lm-content .housing-details dt{font-size:11px;color:var(--muted)}
-.lm-content .housing-details dd{color:var(--ink)}
-.lm-content .housing-details small{display:block;font-size:10px;color:var(--muted);margin-top:4px}
-.lm-content .housing-details .hzm{display:none}
-.lm-content .housing-details .hzt{margin-right:8px}
 .lm-content .source-caption{font-size:10px;color:var(--muted);line-height:1.8;margin-top:10px}
 .lm-content .support-card{margin-top:30px;border-radius:15px;border:1px solid var(--line);background:#fcf8e8}
 .lm-content .support-card>summary{display:flex;justify-content:space-between;padding:18px 15px;font-weight:700;font-size:13px}
@@ -290,7 +254,6 @@
 .lm-content .food-card h3{font-size:15px}
 .lm-content .topic-row{grid-template-columns:22px minmax(0,1fr) 48px 12px;gap:8px}
 .lm-content .tip-copy h3{font-size:20px}
-.lm-content .housing-card{padding:18px 16px}
 }
 @media (prefers-reduced-motion:reduce){}
 .lm-content .life-page .hm-bg{fill:#F3F5F2}
@@ -312,15 +275,20 @@
 .lm-content .life-page .hm-no path{fill:#2A2F38}
 .lm-content .life-page .hm-no text{font-weight:800;fill:#2A2F38}
 .lm-content .life-page .hzmap-d{cursor:pointer;outline:none}
-.lm-content .life-page .hzmap-d .a{fill:color-mix(in srgb,var(--nc) 26%,transparent);stroke:var(--nc);stroke-width:4;stroke-dasharray:10 10;transition:fill .2s}
-.lm-content .life-page .hzmap-d.lv3 .a{fill:color-mix(in srgb,var(--primary) 22%,transparent);stroke:var(--primary)}
-.lm-content .life-page .hzmap-d.lv1 .a{fill:color-mix(in srgb,var(--nc) 8%,transparent)}
+.lm-content .life-page .hzmap-d .a{fill:color-mix(in srgb,var(--primary) 24%,transparent);stroke:color-mix(in srgb,var(--primary) 55%,#fff);stroke-dasharray:none;stroke-width:4;transition:stroke .2s}
+.lm-content .life-page .hzmap-d.lv3 .a{fill:color-mix(in srgb,var(--primary) 62%,transparent);stroke:var(--primary);stroke-dasharray:none}
+.lm-content .life-page .hzmap-d.lv1 .a{fill:color-mix(in srgb,var(--primary) 4%,transparent);stroke:color-mix(in srgb,var(--ink) 40%,#fff);stroke-dasharray:10 10}
 .lm-content .life-page .hzmap-d .n{fill:var(--ink);stroke:#fff;stroke-width:6}
 .lm-content .life-page .hzmap-d .nn{font-weight:900;fill:#fff}
 .lm-content .life-page .hzmap-d .dn{font-weight:900;fill:var(--ink);paint-order:stroke;stroke:#F3F5F2;stroke-width:12px;stroke-linejoin:round}
 .lm-content .life-page .hzmap-d .dt{font-weight:800;fill:var(--primary);paint-order:stroke;stroke:#F3F5F2;stroke-width:10px;stroke-linejoin:round}
-.lm-content .life-page .hzmap-d:is(:hover,:focus-visible,.on) .a{fill:color-mix(in srgb,var(--primary) 40%,transparent);stroke-dasharray:none}
+/* 원룸 건물 수 단계(채움색)는 그대로 두고, 고른 동은 테두리로만 표시 */
+.lm-content .life-page .hzmap-d{transition:opacity .2s}
+.lm-content .life-page .hzmap2:has(.hzmap-d.on) .hzmap-d:not(.on){opacity:.35}
+.lm-content .life-page .hzmap2:has(.hzmap-d.on) .hzmap-d:not(.on):is(:hover,:focus-visible){opacity:.75}
+.lm-content .life-page .hzmap-d.on .n{fill:var(--primary);r:54px}
 .lm-content .life-page .hzmap-d:focus-visible .n{stroke:var(--primary);stroke-width:10}
+.lm-content .life-page .hzmap-d.on:focus-visible .n{stroke:var(--ink)}
 .lm-content .life-page .hm-st text{font-size:40px}
 .lm-content .life-page .hm-lm text{font-size:38px}
 .lm-content .life-page .hm-lm text.b{font-size:44px}
@@ -366,15 +334,14 @@
 .lm-content .housing-map .hm-me text.b{font-size:60px}
 .lm-content .housing-map .hm-me .p{animation:none}
 .lm-content .housing-map .hzmap-d .a{stroke-width:5;transition:none}
-.lm-content .housing-map .hzmap-d.on .a{fill:#2457f580;stroke:#2457f5;stroke-width:12;stroke-dasharray:none}
-.lm-content .housing-map .hzmap-d.on .n{fill:#2457f5;stroke:#14233f;stroke-width:8}
+.lm-content .housing-map .hzmap-d.on .n{fill:#2457f5;r:80px}
 .lm-content .housing-map .hm-lm, .lm-content .housing-map .hm-st, .lm-content .housing-map .hzmap-d .dn{display:none}
 .lm-content .housing-map .hzmap-d .nn{font-size:90px;text-anchor:middle;dominant-baseline:central;pointer-events:none}
 .lm-content .source-caption{display:flex;flex-wrap:wrap;gap:5px 12px}
 .lm-content .source-caption>span{white-space:nowrap}
-.lm-content .source-caption>span::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#2457f559;margin-right:4px}
-.lm-content .source-caption>span:nth-child(2)::before{background:#2457f533}
-.lm-content .source-caption>span:nth-child(3)::before{background:#2457f51a}
+.lm-content .source-caption>span::before{content:"";display:inline-block;width:9px;height:9px;box-sizing:border-box;border-radius:50%;background:color-mix(in srgb,#2457f5 62%,#fff);border:1.5px solid #2457f5;margin-right:4px;vertical-align:-1px}
+.lm-content .source-caption>span:nth-child(2)::before{background:color-mix(in srgb,#2457f5 24%,#fff);border-color:color-mix(in srgb,#2457f5 55%,#fff)}
+.lm-content .source-caption>span:nth-child(3)::before{background:#fff;border:1.5px dashed color-mix(in srgb,#14233f 40%,#fff)}
 .lm-content [hidden]{display:none}
 
 .lm-content [hidden]{display:none}

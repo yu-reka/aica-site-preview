@@ -26,7 +26,7 @@
   "common": {
     "css": {
       "availability": "1026loading-soft-backdrop",
-      "components": "1021audit-pr28",
+      "components": "1028housing-no-rent",
       "masthead": "1016cleanup",
       "navigation-mobile": "1016nav",
       "presentation": "1016split",
@@ -52,14 +52,15 @@
   },
   "life": {
     "css": {
-      "life-m": "1027housing-note-line-center",
-      "life": "1028food-no-reviews-preview",
-      "presentation": "1028food-no-reviews"
+      "life-m": "1028life-merged",
+      "life": "1028life-merged",
+      "presentation": "1028life-merged",
+      "housing-map": "20261028-map9"
     },
     "js": {
-      "life-m-view": "1027culture-collapsed",
-      "life-m": "1027remove-tips-back",
-      "life": "1028topic-alias-reset"
+      "life-m-view": "1028life-merged",
+      "life-m": "1028life-merged",
+      "life": "1028life-merged"
     }
   },
   "stories": {
@@ -106,7 +107,7 @@
       "stories-m": "1028shared-controls",
       "stories-render": "1028review-filter-pages",
       "stories-sections": "1023cardrows",
-      "stories": "1028review-filter-pages",
+      "stories": "1028clean-list-hash-main",
       "story-state": "1028stable-filter-reset",
       "interview-honors": "1026honors-checked",
       "cohort-month-navigation": "1026month-navigation",

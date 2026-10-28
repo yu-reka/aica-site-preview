@@ -12,10 +12,11 @@ test('food source records and generated cards contain no senior reviews', () => 
   assert.equal((html.match(/class="fdc"/g) || []).length, food.length);
 });
 
-test('old backoffice site copies cannot expose food reviews after a stylesheet update', () => {
-  const css = readFileSync(new URL('../life/css/life.css', import.meta.url), 'utf8');
-  assert.match(css, /\.life-page #tp-food \.fdc-r\{display:none\}/);
-  assert.doesNotMatch(css, /\.fdc-r (?:figcaption|blockquote)/);
+test('food review styles are deleted, not hidden', () => {
+  for (const file of ['life.css', 'life-m.css', 'presentation.css']) {
+    const css = readFileSync(new URL('../life/css/' + file, import.meta.url), 'utf8');
+    assert.doesNotMatch(css, /\.fdc-r\b/, file);
+  }
 });
 
 test('the separate stories review collection is retained', () => {

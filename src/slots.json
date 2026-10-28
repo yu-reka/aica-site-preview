@@ -43,12 +43,12 @@
       "index": 0
     },
     {
-      "id": "area-2",
+      "id": "area-5",
       "panelId": "hzp-1",
       "index": 1
     },
     {
-      "id": "area-3",
+      "id": "area-2",
       "panelId": "hzp-2",
       "index": 2
     },
@@ -58,19 +58,14 @@
       "index": 3
     },
     {
-      "id": "area-5",
+      "id": "area-6",
       "panelId": "hzp-4",
       "index": 4
     },
     {
-      "id": "area-6",
+      "id": "area-3",
       "panelId": "hzp-5",
       "index": 5
-    },
-    {
-      "id": "area-7",
-      "panelId": "hzp-6",
-      "index": 6
     }
   ]
 }

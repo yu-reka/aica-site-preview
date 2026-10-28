@@ -92,6 +92,15 @@
     var goPane = function(){ toTabs(true); };
     if (document.readyState === 'complete') requestAnimationFrame(goPane); else addEventListener('load', goPane, { once: true });
   }
+  // 목록 주소(#p-rev · #p-iv · #p-pr · #p-coh)는 파일 이름과 겹치는 화면 안 이름이라 주소창에서는 뺌(2026-10-28).
+  // 링크 · 옛 주소는 그대로 동작: 탭 · 스크롤 · 다른 hashchange 처리를 마친 뒤 같은 기록 칸에서 #만 지움(replaceState는 :target을 바꾸지 않음)
+  function cleanListHash(){
+    var el = document.getElementById(Site.decodeHash(location.hash.slice(1)));
+    if (el && PANE_TAB[el.id] && page.contains(el)) history.replaceState(history.state, '', location.pathname + location.search);
+  }
+  function afterListHash(){ requestAnimationFrame(function(){ setTimeout(cleanListHash, 0); }); }
+  addEventListener('hashchange', afterListHash);
+  if (document.readyState === 'complete') afterListHash(); else addEventListener('load', afterListHash, { once: true });
 
   /* ---------- 글 창(.ov): 주소(:target)로 열리는 창 ----------
      Esc로 닫기(닫기 링크와 같은 주소로), 열리면 닫기 단추로 포커스, 닫히면 연 링크로 포커스를 돌려줌.

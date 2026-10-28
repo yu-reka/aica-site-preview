@@ -61,9 +61,16 @@
 .lm-content .way-preview .kicker{font-size:11px}
 .lm-content .way-preview b{display:block;font:700 16px/1.65 Paperlogy,sans-serif;word-break:keep-all}
 .lm-content .way-preview>div>span:last-child{display:flex;align-items:center;justify-content:space-between;font-size:12px;margin-top:20px;color:var(--blue);font-weight:700}
-.lm-content .topic-nav{padding:16px 20px 0}
-.lm-content .back-link{display:inline-flex;align-items:center;min-height:36px;font-size:12px;color:var(--muted)}
-.lm-content .topic-nav .underline-tabs{gap:22px}
+.lm-content .topic-heading-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+.lm-content .topic-heading-row .kicker{margin:0}
+.lm-content .topic-picker{position:relative;flex:none;height:20.8px}
+.lm-content .topic-picker summary{position:relative;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:6px;min-height:44px;padding:0 2px;color:var(--muted);font-size:12px;font-weight:600;list-style:none;cursor:pointer}
+.lm-content .topic-picker summary::-webkit-details-marker{display:none}
+.lm-content .topic-picker summary svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7}
+.lm-content .topic-picker[open] summary svg{transform:rotate(180deg)}
+.lm-content .topic-picker nav{position:absolute;right:0;top:calc(50% + 26px);z-index:10;width:170px;padding:6px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:0 8px 24px #14233f1c}
+.lm-content .topic-picker nav a{display:flex;align-items:center;min-height:44px;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--muted)}
+.lm-content .topic-picker nav a[aria-current=page]{background:#eef2ff;color:var(--blue);font-weight:700}
 .lm-content .floors{display:grid;gap:12px}
 .lm-content .floor-card{border:1px solid var(--line);border-radius:18px;background:var(--soft);min-width:0;overflow:hidden}
 .lm-content .floor-card[open]{border:2px solid var(--black);background:#fff;box-shadow:3px 4px 0 var(--black)}
@@ -142,17 +149,25 @@
 .lm-content .housing-tab-arrow:focus-visible{outline-offset:-3px}
 .lm-content .housing-selector>button{font-size:12px;padding:0 3px}
 .lm-content .housing-rail .rail{align-items:stretch;padding-top:3px;padding-bottom:12px}
-.lm-content .housing-card{width:calc(100vw - 50px);flex:0 0 calc(100vw - 50px);padding:22px 20px 24px;border:2px solid var(--black);border-radius:20px;background:#fff;box-shadow:3px 4px 0 var(--black);scroll-snap-align:center;min-width:0;max-width:550px}
+.lm-content .housing-card{width:calc(100vw - 50px);flex:0 0 calc(100vw - 50px);padding:18px;border:2px solid var(--black);border-radius:20px;background:#fff;box-shadow:3px 4px 0 var(--black);scroll-snap-align:center;min-width:0;max-width:550px}
+.lm-content .housing-card-nav{display:grid;grid-template-columns:auto auto auto;justify-content:center;align-items:center;gap:16px;margin:2px 20px 0}
+.lm-content .housing-rail .rail-arrow{position:static;transform:none;display:flex;align-items:center;justify-content:center;gap:8px;min-width:72px;width:auto;height:44px;padding:0 12px;border:1px solid var(--line);border-radius:24px;box-shadow:none;font-size:12px;font-weight:700}
+.lm-content .housing-rail .rail-arrow.previous{justify-self:start}
+.lm-content .housing-rail .rail-arrow.next{justify-self:end}
+.lm-content .housing-rail .rail-arrow:disabled{opacity:.4}
+.lm-content .housing-rail .rail-arrow svg{width:6px;height:12px}
+.lm-content .housing-card-count{min-width:40px;text-align:center;font-size:12px;color:var(--muted);white-space:nowrap}
 .lm-content .housing-title{display:flex;align-items:center;gap:9px}
 .lm-content .housing-title>span{display:grid;place-items:center;background:var(--ink);color:#fff;width:26px;height:26px;border-radius:50%;font-size:12px;font-weight:700}
 .lm-content .housing-title h3{font:800 23px/1.3 Paperlogy,sans-serif}
-.lm-content .housing-description{margin-top:14px;font-size:12px;color:var(--muted);line-height:1.8;min-height:43px}
-.lm-content .rent{padding:17px 14px;background:#eef3ff;border-radius:13px;margin-top:17px}
-.lm-content .rent>span{display:block;font-size:11px;color:var(--muted);margin-bottom:6px}
+.lm-content .housing-description{margin-top:10px;font-size:12px;color:var(--muted);line-height:1.8}
+.lm-content .rent{padding:13px 14px;background:#eef3ff;border-radius:13px;margin-top:12px}
+.lm-content .rent>span{display:block;font-size:11px;color:var(--muted);margin-bottom:4px}
 .lm-content .rent>b{display:block;color:var(--blue);font:800 23px/1.4 Paperlogy,sans-serif;letter-spacing:-.05em}
-.lm-content .rent small{display:block;margin-top:7px;font-size:10px;line-height:1.7;color:var(--muted)}
-.lm-content .housing-details{display:grid;gap:14px;margin-top:20px}
-.lm-content .housing-details>div{display:grid;gap:6px;padding-bottom:12px;border-bottom:1px solid #edf0f3;font-size:12px;line-height:1.7}
+.lm-content .rent small{display:block;margin-top:4px;font-size:10px;line-height:1.7;color:var(--muted)}
+.lm-content .housing-details{display:grid;gap:10px;margin-top:14px}
+.lm-content .housing-details>div{display:grid;gap:4px;padding-bottom:8px;border-bottom:1px solid #edf0f3;font-size:12px;line-height:1.7}
+.lm-content .housing-details>div:last-child{padding-bottom:0;border-bottom:0}
 .lm-content .housing-details dt{font-size:11px;color:var(--muted)}
 .lm-content .housing-details dd{color:var(--ink)}
 .lm-content .housing-details small{display:block;font-size:10px;color:var(--muted);margin-top:4px}
@@ -165,30 +180,45 @@
 .lm-content .hhl-big{font-weight:700}
 .lm-content .hhl-big br{display:none}
 .lm-content .hhl-big mark{background:linear-gradient(transparent 45%,#fbe07b 45%)}
-.lm-content .hhl-sub{margin-top:15px}
-.lm-content .hhl-sub>div{display:flex;gap:8px;margin-top:12px}
-.lm-content .hhl-sub i{font-style:normal;color:var(--blue);font-size:10px;font-weight:800}
-.lm-content .food-kind{margin-top:4px;margin-bottom:16px}
-.lm-content .food-kind button{font-size:16px;padding:0 10px}
-.lm-content .food-kind span{color:var(--blue);font-size:12px;font-weight:700}
-.lm-content .food-filters{display:flex;gap:6px;flex-wrap:wrap}
-.lm-content .food-filters button{min-height:38px;padding:0 13px;background:#fff;border:1px solid var(--line);border-radius:30px;font-size:12px}
-.lm-content .food-filters button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
-.lm-content .food-filters #near{margin-left:auto;font-size:11px;padding:0 10px}
-.lm-content .list-count{font-size:11px;color:var(--muted);margin:20px 0 12px}
-.lm-content .food-list{display:grid;gap:15px}
-.lm-content .food-card{border:1px solid #e2e6ed;border-radius:17px;background:#fff;overflow:hidden}
-.lm-content .food-card-top{display:grid;grid-template-columns:82px minmax(0,1fr);gap:13px;padding:14px}
-.lm-content .food-card-top>img{width:82px;height:92px;object-fit:cover;border-radius:12px}
-.lm-content .food-meta{display:flex;gap:8px;justify-content:space-between;font-size:10px;line-height:1.5;color:var(--muted)}
-.lm-content .food-meta b{font-size:10px;color:var(--blue);font-weight:600;white-space:nowrap}
-.lm-content .food-card h3{font:800 16px/1.5 Paperlogy,sans-serif;margin-top:7px;letter-spacing:-.05em;word-break:keep-all}
-.lm-content .food-card-top p{font-size:12px;line-height:1.7;margin-top:5px;color:var(--muted)}
-.lm-content .food-card-top small{display:block;font-size:10px;color:var(--blue);margin-top:5px}
-.lm-content .food-review{background:var(--soft);margin:0 14px 14px;border-radius:10px}
-.lm-content .food-review summary{display:flex;align-items:center;justify-content:space-between;min-height:42px;padding:8px 11px;font-size:10px;font-weight:600}
-.lm-content .food-review em{font-style:normal;font-size:9px;padding:2px 4px;border:1px solid #c8cfd8;color:var(--muted);margin-left:5px;border-radius:4px}
-.lm-content .food-review p{padding:0 11px 13px;font-size:12px;line-height:1.8;color:var(--muted)}
+.lm-content .hhl-sub{--housing-note-line:calc(2.465 * var(--lr));margin-top:15px}
+.lm-content .hhl-sub>div{display:flex;align-items:flex-start;gap:8px;margin-top:12px}
+.lm-content .hhl-sub i{line-height:var(--housing-note-line);font-style:normal;color:var(--blue);font-size:10px;font-weight:800}
+.lm-content .hhl-sub p{line-height:var(--housing-note-line)}
+.lm-content .food-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:4px;border-bottom:1px solid var(--line)}
+.lm-content .food-kind{--filter-gap:16px;flex:0 0 auto;margin:0}
+.life-page .lm-content .food-kind.ui-filter{border-bottom:0;overflow:visible}
+.life-page .lm-content .food-kind.ui-filter button{min-height:68px}
+.lm-content .food-kind button{display:inline-flex;align-items:center;gap:6px;font-size:16px;padding:0 10px}
+.lm-content .food-kind span{display:inline-flex;align-items:center;align-self:center;color:var(--blue);font-size:12px;font-weight:700;line-height:1}
+.lm-content .food-filters{display:flex;flex:0 0 auto;gap:6px;flex-wrap:nowrap;margin-left:auto;padding:0}
+.life-page .lm-content .food-filters button{flex:0 0 auto;height:38px;min-height:38px;min-width:0;padding:0 12px;border:1px solid var(--line);border-radius:30px;background:#fff;color:var(--muted);font:600 12px/1.2 var(--ff-sans)}
+.life-page .lm-content .food-filters button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:800}
+.lm-content .list-count{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.lm-content #food-results{margin-top:32px}
+.lm-content .food-list{display:grid;gap:0}
+.lm-content .food-card{border-bottom:1px solid var(--line);background:#fff;min-width:0}
+.lm-content .food-card-top{display:grid;grid-template-columns:96px minmax(0,1fr);align-items:center;gap:12px;padding:14px 0}
+.lm-content .food-card:first-child .food-card-top{padding-top:0}
+.lm-content .food-card-top>img{display:block;width:96px;height:94px;object-fit:contain;padding:0}
+.lm-content .food-meta{display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:11px;line-height:1.5;color:var(--muted)}
+.lm-content .food-meta b{font-size:11px;color:var(--ink);font-weight:600;white-space:nowrap}
+.lm-content .food-card-info{margin-top:6px}
+.lm-content .food-card h3{font:800 15px/1.45 Paperlogy,sans-serif;letter-spacing:-.035em;word-break:keep-all;overflow-wrap:anywhere}
+.lm-content .food-menu{margin-top:4px;color:var(--muted);font-size:12px;line-height:1.6;word-break:keep-all;overflow-wrap:anywhere}
+.lm-content .food-card-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px 10px;margin-top:8px}
+.lm-content .food-card-bottom small{font-size:11px;line-height:1.5;color:var(--blue)}
+.lm-content .food-location{display:flex;justify-content:flex-end;align-items:center;gap:4px;margin-left:auto;color:var(--muted);font-size:11px;line-height:1.5;white-space:nowrap}
+.lm-content .food-location svg{width:13px;height:13px;stroke-width:1.7;flex:none}
+@media(max-width:359px){
+  .lm-content .food-controls{gap:8px}
+  .lm-content .food-kind{--filter-gap:10px}
+  .lm-content .food-filters{gap:4px}
+  .life-page .lm-content .food-filters button{padding-inline:9px}
+}
+@media(max-width:380px){
+  .lm-content .food-card-top{grid-template-columns:80px minmax(0,1fr);gap:10px}
+  .lm-content .food-card-top>img{width:80px;height:90px}
+}
 .lm-content .pagination{display:flex;justify-content:center;gap:7px;margin-top:28px}
 .lm-content .pagination:empty{display:none}
 .lm-content .pagination button{width:40px;height:40px;border:1px solid var(--line);background:#fff;border-radius:50%;font-size:13px;font-weight:700}
@@ -210,7 +240,7 @@
 .lm-content .leisure-card em{display:inline-block;font-style:normal;font-size:10px;color:var(--blue);padding:4px 7px;background:#eef3ff;border-radius:6px;margin-top:8px}
 .lm-content .leisure-card p{margin:0 16px;padding:15px 0 20px;border-top:1px solid #edf0f3;font-size:13px;line-height:1.9;color:var(--muted)}
 .lm-content .address-card{border:2px solid var(--black);border-radius:20px;overflow:hidden;box-shadow:4px 5px 0 var(--black)}
-.lm-content .address-card>img{width:100%;aspect-ratio:1.35;object-fit:cover}
+.lm-content .address-card>img{width:100%;aspect-ratio:1.35;object-fit:cover;object-position:70% center}
 .lm-content .address-copy{padding:20px 16px}
 .lm-content .address-copy>small{font-size:11px;color:var(--blue);font-weight:700}
 .lm-content .address-copy>b{display:block;font:800 17px/1.6 Paperlogy,sans-serif;word-break:keep-all;margin-top:6px;letter-spacing:-.04em}
@@ -256,15 +286,11 @@
 .lm-content .floor-card>summary{gap:9px;padding:15px 12px;grid-template-columns:47px minmax(0,1fr) 10px}
 .lm-content .floor-number{width:46px;font-size:15px}
 .lm-content .floor-card summary strong{font-size:15px}
-.lm-content .food-card-top{grid-template-columns:74px minmax(0,1fr);gap:10px;padding:12px}
-.lm-content .food-card-top>img{width:74px}
+.lm-content .food-card-top{padding:12px 0}
 .lm-content .food-card h3{font-size:15px}
-.lm-content .food-filters{gap:5px}
-.lm-content .food-filters button{padding:0 11px}
-.lm-content .food-filters #near{padding:0 8px}
 .lm-content .topic-row{grid-template-columns:22px minmax(0,1fr) 48px 12px;gap:8px}
 .lm-content .tip-copy h3{font-size:20px}
-.lm-content .housing-card{padding:20px 16px}
+.lm-content .housing-card{padding:18px 16px}
 }
 @media (prefers-reduced-motion:reduce){}
 .lm-content .life-page .hm-bg{fill:#F3F5F2}
@@ -339,11 +365,11 @@
 .lm-content .housing-map .hm-me text{font-size:48px}
 .lm-content .housing-map .hm-me text.b{font-size:60px}
 .lm-content .housing-map .hm-me .p{animation:none}
-.lm-content .housing-map .hzmap-d .a{stroke-width:5}
-.lm-content .housing-map .hzmap-d.on .a{fill:#2457f54d;stroke:#2457f5}
+.lm-content .housing-map .hzmap-d .a{stroke-width:5;transition:none}
+.lm-content .housing-map .hzmap-d.on .a{fill:#2457f580;stroke:#2457f5;stroke-width:12;stroke-dasharray:none}
 .lm-content .housing-map .hzmap-d.on .n{fill:#2457f5;stroke:#14233f;stroke-width:8}
 .lm-content .housing-map .hm-lm, .lm-content .housing-map .hm-st, .lm-content .housing-map .hzmap-d .dn{display:none}
-.lm-content .housing-map .hzmap-d .nn{font-size:90px}
+.lm-content .housing-map .hzmap-d .nn{font-size:90px;text-anchor:middle;dominant-baseline:central;pointer-events:none}
 .lm-content .source-caption{display:flex;flex-wrap:wrap;gap:5px 12px}
 .lm-content .source-caption>span{white-space:nowrap}
 .lm-content .source-caption>span::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#2457f559;margin-right:4px}

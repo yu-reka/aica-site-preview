@@ -6,6 +6,7 @@ import vm from 'node:vm';
 // Only the source/map DOM boundary is mocked. Browser comparisons cover full pages.
 function createView(state) {
   const pin = attrs => ({ attrs: { ...attrs },
+    querySelector() { return null; },
     removeAttribute(name) { delete this.attrs[name]; },
     setAttribute(name, value) { this.attrs[name] = value; },
   });
@@ -49,7 +50,7 @@ test('mobile food view reads controller page state, keeps eight-card pages and e
   const items = Array.from({ length: 13 }, (_, index) => ({
     image: 'assets/food.webp', photoLabel: '음식', category: '식당', walkLabel: '5분',
     name: index === 0 ? '<img onerror="bad">' : '식당 ' + index,
-    menu: '메뉴', review: '후기', groupLabel: '혼밥',
+    menu: '메뉴', groupLabel: '혼밥',
   }));
   const first = view.foodResults(items);
   assert.equal((first.match(/class="food-card"/g) || []).length, 8);

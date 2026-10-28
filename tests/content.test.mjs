@@ -51,6 +51,20 @@ test('FAQ categories and food counts follow managed records', () => {
   }
 });
 
+test('food menus and neighborhoods can change independently while preserving editor text', () => {
+  const context = loadContent();
+  for (const card of context.life.food) {
+    assert.ok(card.neighborhood, `${card.id} has a neighborhood`);
+    assert.ok(!card.menu.endsWith(` · ${card.neighborhood}`), `${card.id} menu excludes a combined location suffix`);
+  }
+  const card = { ...context.life.food[0], menu: '메뉴 <신규>', neighborhood: '새 동네 & 거리' };
+  for (const name of ['card', 'card-2']) {
+    const html = render(readFileSync(join(root, `src/components/life/food/${name}.html`), 'utf8'), card);
+    assert.ok(html.includes('data-menu="메뉴 &lt;신규&gt;" data-neighborhood="새 동네 &amp; 거리"'));
+    assert.ok(html.includes('>메뉴 &lt;신규&gt; · 새 동네 &amp; 거리</p>'));
+  }
+});
+
 test('collection insertion and removal update generated cards', () => {
   const context = loadContent();
   const source = readFileSync(join(root, 'src/pages/about/index.html'), 'utf8');
@@ -119,4 +133,11 @@ test('nested collections and components preserve context and fail on missing fie
     assert.throws(() => renderTest('{{constructor.name}}', {}), /Missing template value/);
     assert.throws(() => renderTest('{{> ../outside}}', {}), /Invalid component/);
   } finally { rmSync(temporary, { recursive: true }); }
+});
+
+// Public fixtures retain their already approved set; private-only additions stay out.
+test('public LIFE fixtures keep the approved 20-card set', () => {
+  const context = loadContent();
+  assert.deepEqual(context.life.food.map(card => card.id), Array.from({length:20}, (_, i) => `place-${i + 1}`));
+  assert.deepEqual(context.life.foodCounts, {food:13, cafe:7});
 });

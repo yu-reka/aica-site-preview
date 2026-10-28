@@ -356,7 +356,7 @@
 
 /* 단독 시안(2026-10-12): 주거 — 시세 · 월세 금액 대신 '집이 모여 있는 곳'(밀집 개념도 + 동별 모인 정도 · 형태) */
 
-/* 단독 시안(2026-10-12): 근처 먹거리 — 식당 · 카페 카드(사진 자리 + 이름 · 메뉴 · 가격대 + 선배 후기), 거르기는 전체 · 혼밥 · 여럿이 · 도보 10분 안 */
+/* 단독 시안(2026-10-12): 근처 먹거리 — 식당 · 카페 카드(사진 자리 + 이름 · 메뉴 · 가격대), 거르기는 전체 · 혼밥 · 여럿이 · 도보 10분 안 */
 .life-page .fdg{display:grid;list-style:none;margin:0;padding:0}
 .life-page .fdc{display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--bline);border-radius:var(--r-card);background:var(--card);box-shadow:var(--soft)}
 .life-page .fdc-ph{position:relative;aspect-ratio:16/10;display:grid;place-items:center;background-color:color-mix(in srgb,var(--nc) 16%,var(--card));background-image:repeating-linear-gradient(135deg,transparent 0 14px,color-mix(in srgb,var(--nc) 22%,transparent) 14px 15px)}
@@ -366,10 +366,8 @@
 .life-page .fdc-g.group{color:var(--ink2)}
 .life-page .fdc-b h3{margin-top:4px;font-weight:700;letter-spacing:-.02em;line-height:1.35}
 .life-page .fdc-m{margin-top:2px;color:var(--ink2)}
-.life-page .fdc-r{border-radius:10px;background:var(--paper)}
-.life-page .fdc-r figcaption{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--ink)}
-.life-page .fdc-r blockquote{position:relative;margin:6px 0 0;padding-left:14px;color:var(--ink)}
-.life-page .fdc-r blockquote::before{content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:3px;border-radius:2px;background:var(--nc)}
+/* Older backoffice site copies can still contain review nodes; keep them hidden. */
+.life-page #tp-food .fdc-r{display:none}
 .life-page .fdmore2{display:flex;justify-content:center;margin-top:calc(2.4*var(--lr))}
 .life-page .fdmore2[hidden]{display:none!important}
 
@@ -530,8 +528,11 @@
 .life-page .fdc-b{padding:14px 16px 10px}
 .life-page .fdc-b h3{font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .life-page .fdc-m{font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.life-page .fdc-r{margin:auto 12px 12px;padding:10px 12px}
-.life-page .fdc-r blockquote{font-size:13.5px;line-height:1.55;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;min-height:3.1em}
+.life-page #tp-food .fdc-b h3{margin:10px -16px 0;padding:10px 16px 0;background:var(--paper)}
+.life-page #tp-food .fdc-b .fdc-menu{margin:0 -16px;padding:2px 16px 0;background:var(--paper);color:var(--ink2);font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.life-page #tp-food .fdc-b .fdc-location{display:flex;justify-content:flex-end;align-items:center;gap:5px;margin:0 -16px -10px;padding:6px 16px 12px;background:var(--paper);color:var(--ink3);font-size:12px;line-height:1.5}
+.life-page .fdc-location svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.7;flex:none}
+.life-page #tp-food .fdc-b .fdc-menu:last-child{padding-bottom:12px;margin-bottom:-10px}
 .life-page .fdc-cat,.life-page .fdc-wk{font-size:12px;padding:3px 9px}
 @media (max-width:1100px){.life-page .fdg{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:860px){.life-page .fdg{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -667,7 +668,7 @@
 @media (max-width:600px){.life-page .sh .sh-k{font-size:13.5px}}
 
 /* 두 줄 이상 본문 · 작은 안내 글 → 프리텐다드 */
-.life-page :is(#pg-facility,#pg-tips,#pg-way) :is(.note,.fdisc,.hzmw-ds,.hzc-s,.fdc-r blockquote,.fsc-d,.wbld figcaption span,.park2-d){font-family:var(--ff-sans)!important;letter-spacing:-.005em}
+.life-page :is(#pg-facility,#pg-tips,#pg-way) :is(.note,.fdisc,.hzmw-ds,.hzc-s,.fsc-d,.wbld figcaption span,.park2-d){font-family:var(--ff-sans)!important;letter-spacing:-.005em}
 .life-page :is(.note,.fdisc,.hzmw-ds){line-height:1.7}
 
 /* 주차 안내 배너 */

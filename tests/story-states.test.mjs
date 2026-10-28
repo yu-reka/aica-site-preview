@@ -42,7 +42,7 @@ test('all four exported collection pages share states and failure contract witho
     const html=artifacts.get('templates/public-site/'+kind+'.html');
     assert.equal((html.match(/data-story-list-state/g)||[]).length,1,kind);
     assert.ok(html.includes('data-public-content-unavailable=${publicContentUnavailable == true}'),kind);
-    assert.ok(html.includes('/stories/js/story-state.js?v=1026honors-checked'),kind);
+    assert.ok(html.includes('/stories/js/story-state.js?v=1028stable-filter-reset'),kind);
     assert.ok(html.includes('/stories/css/story-state.css?v=1020states'),kind);
     assert.ok(html.indexOf('story-state.js')<html.indexOf(kind==='cohorts'?'cohort-v3.js':kind==='projects'?'projects-filter.js':kind==='interviews'?'stories-sections.js':'stories-m-reviews.js'));
   }
@@ -84,4 +84,35 @@ test('cohort page without posts or with a failed load shows only the page state,
     assert.equal(cv3.hidden,true);assert.equal(host.hidden,false);
     assert.equal(host.dataset.storyState,unavailable?'error':'empty');
   }
+});
+
+test('desktop review empty updates preserve the reset action through resize/change and still reset real radios',()=>{
+  const host=new Element('div'),card=new Element('a'),pager=new Element('nav'),summary=new Element('summary');
+  let focused=false;summary.focus=()=>{focused=true;};
+  const section=new Element('section'),radios=new Map(),listeners={};
+  for(const id of ['rc_all','fco_all','pgn1'])radios.set(id,{
+    checked:false,
+    dispatchEvent(event){section.events[event.type]?.({target:this});}
+  });
+  section.dispatchEvent=event=>section.events[event.type]?.(event);
+  section.querySelector=selector=>({'[data-story-list-state]':host,'.pager':pager,'.dw-fco summary':summary}[selector]||null);
+  section.querySelectorAll=selector=>selector==='.idgrid .idc'?[card]:[];
+  const document={readyState:'complete',body:{dataset:{}},documentElement:{dataset:{sub:'reviews'}},
+    createElement:tag=>new Element(tag),getElementById:id=>radios.get(id),
+    querySelector:selector=>selector==='#p-rev'?section:null};
+  const context=vm.createContext({document,Event,location:{hash:''},matchMedia:()=>({matches:false}),
+    getComputedStyle:()=>({display:radios.get('rc_all').checked&&radios.get('fco_all').checked?'flex':'none'}),
+    addEventListener(name,callback){listeners[name]=callback;}});
+  vm.runInContext(readFileSync(new URL('../stories/js/story-state.js',import.meta.url),'utf8'),context);
+  const action=host.children[3];
+  assert.equal(host.hidden,false);assert.equal(action.textContent,'필터 초기화');
+  for(const update of [listeners.resize,section.events.change,listeners.resize,listeners.hashchange]){
+    update();assert.equal(host.children[3],action,'an empty update must not detach a pending pointer-click target');
+  }
+  action.events.click();
+  assert.ok([...radios.values()].every(radio=>radio.checked));
+  assert.equal(host.hidden,true);assert.equal(pager.hidden,false);assert.equal(focused,true);
+  // Returning to the same empty filter reuses its valid reset action as well.
+  radios.get('fco_all').checked=false;section.events.change();
+  assert.equal(host.hidden,false);assert.equal(host.children[3],action);
 });

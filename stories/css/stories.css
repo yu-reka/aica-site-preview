@@ -268,23 +268,23 @@ body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:i
 /* 보기 전환 — 둘 중 하나만 */
 .stories-page .rev:has(#vm-list:checked) .idgrid{display:none}
 .stories-page .rev:not(:has(#vm-list:checked)) .rvlist{display:none}
-/* 쪽 번호 — 필터가 걸리면 쪽 나눔 없이 결과를 다 보여 준다 */
-.stories-page .rev:has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn1:checked) .idc:not(.pg1),
-.stories-page .rev:has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn1:checked) .rvr:not(.pg1){display:none}
-.stories-page .rev:has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn2:checked) .idc:not(.pg2),
-.stories-page .rev:has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn2:checked) .rvr:not(.pg2){display:none}
-.stories-page .rev:has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn3:checked) .idc:not(.pg3),
-.stories-page .rev:has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn3:checked) .rvr:not(.pg3){display:none}
+/* 스크립트 미적용 시 유지하는 기존 쪽 번호·필터 규칙 */
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn1:checked) .idc:not(.pg1),
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn1:checked) .rvr:not(.pg1){display:none}
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn2:checked) .idc:not(.pg2),
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn2:checked) .rvr:not(.pg2){display:none}
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn3:checked) .idc:not(.pg3),
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn3:checked) .rvr:not(.pg3){display:none}
 .stories-page .rev:has(#pgn3:checked) .pager label[for=pgn3]{background:var(--g900);color:#fff}
-.stories-page .rev:has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn4:checked) .idc:not(.pg4),
-.stories-page .rev:has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn4:checked) .rvr:not(.pg4){display:none}
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn4:checked) .idc:not(.pg4),
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn4:checked) .rvr:not(.pg4){display:none}
 .stories-page .rev:has(#pgn4:checked) .pager label[for=pgn4]{background:var(--g900);color:#fff}
-.stories-page .rev:has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn5:checked) .idc:not(.pg5),
-.stories-page .rev:has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn5:checked) .rvr:not(.pg5){display:none}
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn5:checked) .idc:not(.pg5),
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn5:checked) .rvr:not(.pg5){display:none}
 .stories-page .rev:has(#pgn5:checked) .pager label[for=pgn5]{background:var(--g900);color:#fff}
-.stories-page .rev:not(:has(#rc_all:checked)) .pager,
-.stories-page .rev:not(:has(#fco_all:checked)) .pager,
-.stories-page .rev:has(.tgt:target) .pager{display:none}
+.stories-page .rev:not([data-review-paging]):not(:has(#rc_all:checked)) .pager,
+.stories-page .rev:not([data-review-paging]):not(:has(#fco_all:checked)) .pager,
+.stories-page .rev:not([data-review-paging]):has(.tgt:target) .pager{display:none}
 .stories-page .pager{margin-top:40px;display:flex;justify-content:center;align-items:center;gap:6px}
 /* 리스트 보기 — 한 줄에 한 편 */
 .stories-page .rvlist{border-top:1px solid var(--g200)}
@@ -740,3 +740,15 @@ body .stories-page .st h3{font-size:16px}
 .stories-page .rev:not(:has(.tgt:target)) .dw-ftg .dwin a[href="#p-rev"],
 html[data-review-source="spring"] .stories-page .rev .dw-fco .dwin button[aria-pressed="true"]{background:#F2F5FF;color:var(--primary);font-weight:700}
 @media(max-width:600px){.stories-page .rev .dw .dwin{min-width:min(220px,calc(100vw - 40px));max-width:calc(100vw - 40px)}}
+
+/* Published desktop reviews slice every filter intersection before card/list display.
+   Keep these rules above 600px so the mobile ten-card projection owns its view. */
+.stories-page .review-count{display:none}
+@media(min-width:601px){
+  .stories-page .review-count{display:block;margin:0 0 20px;color:var(--g600);font-size:14px}
+  .stories-page .rev[data-review-paging] .idc[data-review-visible="false"],
+  .stories-page .rev[data-review-paging] .rvr[data-review-visible="false"],
+  .stories-page .rev[data-review-pages="0"] .pager,
+  .stories-page .rev[data-review-pages="1"] .pager{display:none}
+  .stories-page .rev[data-review-paging] .pager.cpager button[aria-current="page"]{background:#2B2D31;border-color:#2B2D31;color:#fff}
+}

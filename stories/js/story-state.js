@@ -67,7 +67,8 @@ var StoryState = (function(){
         var listView=section.querySelector('#vm-list')?.checked;
         var entries=listView?section.querySelectorAll('.rvlist .rvr'):cards;
         var any=Array.from(entries).some(function(card){return getComputedStyle(card).display!=='none';});
-        if(!any)render(host,'filter',{subject:subject,onReset:reset});host.hidden=any;
+        // Keep a pending pointer-click target alive through repeated empty updates.
+        if(!any&&host.dataset.storyState!=='filter')render(host,'filter',{subject:subject,onReset:reset});host.hidden=any;
         var pager=section.querySelector('.pager');if(pager)pager.hidden=!any;
       }
       section.addEventListener('change',update);addEventListener('hashchange',update);addEventListener('resize',update);update();

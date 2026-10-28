@@ -37,9 +37,15 @@ const LifeMobileView = (() => {
       }
     });
     if(map.classList.contains('housing-map-refined')){
-      map.setAttribute('viewBox','0 0 320 580');
+      all('.hzmap-d',map).forEach(pin=>{
+        pick('.n',pin).setAttribute('cy','-10');
+        pick('.nn',pin).setAttribute('y','-10');
+        pick('.dn',pin).setAttribute('y','8');
+      });
+      // Crop only the empty margins; keep all map and pin coordinates unchanged.
+      map.setAttribute('viewBox','0 100 320 320');
       const basemap=pick('.housing-basemap',map);
-      basemap.setAttribute('href','assets/housing-map-mobile.svg?v=1028north');
+      basemap.setAttribute('href','assets/housing-map-mobile.svg?v=1028simple');
       basemap.setAttribute('width','320');basemap.setAttribute('height','580');
       all('[data-mobile-transform]',map).forEach(n=>n.setAttribute('transform',n.dataset.mobileTransform));
     }

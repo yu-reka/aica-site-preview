@@ -210,8 +210,13 @@
       var badge = el('span', 'sm-project-type', type);
       badge.dataset.type = type.trim(); tx.appendChild(badge);
       // 서비스 이름: 카드의 작은 파란 글씨(.pjname), 주제가 없는 글은 카드 제목(h3)
-      tx.appendChild(el('strong', '', ($('.pjname', card) || $('.pjc-tx h3', card) || {}).textContent || ''));
-      summary.appendChild(tx); item.appendChild(summary);
+      var titleLink = el('a', 'sm-project-card-link');
+      titleLink.href = card.getAttribute('href');
+      titleLink.appendChild(el('strong', '', ($('.pjname', card) || $('.pjc-tx h3', card) || {}).textContent || ''));
+      tx.appendChild(titleLink);
+      summary.appendChild(tx);
+      var toggle = el('span', 'sm-project-toggle'); toggle.setAttribute('aria-hidden', 'true');
+      summary.appendChild(toggle); item.appendChild(summary);
       var body = el('div', 'sm-project-body');
       var artwork = cleanClone($('.ph .illu', card) || $('.ph img, .ph svg', card));
       if (artwork){
@@ -222,6 +227,17 @@
       var link = el('a', 'sm-project-link', '프로젝트 자세히 보기 →');
       link.href = card.getAttribute('href'); body.appendChild(link); item.appendChild(body);
       item.open = i === 0;
+      item.addEventListener('click', function(event){
+        if (!mq.matches || event.defaultPrevented || event.target.closest('.sm-project-toggle')) return;
+        if (!item.open) {
+          event.preventDefault();
+          item.open = true;
+          return;
+        }
+        if (event.target.closest('a, button, input, select, textarea')) return;
+        event.preventDefault();
+        titleLink.click();
+      });
       item.addEventListener('toggle', function(){
         if (item.open) items.forEach(function(other){ if (other !== item) other.open = false; });
       });

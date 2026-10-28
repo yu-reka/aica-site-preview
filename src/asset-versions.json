@@ -38,7 +38,7 @@
       "site-layout": "1023newtab",
       "site": "1027lnb-page-start2",
       "track": "1027admin-views",
-      "ui": "1021audit-pr28"
+      "ui": "1027reload-only-final"
     }
   },
   "home": {
@@ -52,14 +52,14 @@
   },
   "life": {
     "css": {
-      "life-m": "1027facility-note-icons",
-      "life": "1027floor-arrows-preview",
-      "presentation": "1027tab-spacing"
+      "life-m": "1027housing-note-line-center",
+      "life": "1028food-no-reviews-preview",
+      "presentation": "1028food-no-reviews"
     },
     "js": {
-      "life-m-view": "1027facility-note-icons",
-      "life-m": "1027facility-note-icons",
-      "life": "1027facility-note-up"
+      "life-m-view": "1027culture-collapsed",
+      "life-m": "1027remove-tips-back",
+      "life": "1028topic-alias-reset"
     }
   },
   "stories": {
@@ -77,8 +77,8 @@
       "projects-grid": "1021listbadges",
       "review-notes": "1022footerspacing",
       "stories-m": {
-        "default": "1027nav-stable2",
-        "cohorts": "1027nav-stable2"
+        "default": "1027project-card-click2",
+        "cohorts": "1027project-card-click2"
       },
       "stories-render": "1027demo-video",
       "stories-sections": {
@@ -103,7 +103,7 @@
         "default": "1020states",
         "legacyLoader": "1016cleanup"
       },
-      "stories-m": "1027nav-stable2",
+      "stories-m": "1027nav-project-refresh",
       "stories-render": "1027responsive-photos",
       "stories-sections": "1023cardrows",
       "stories": "1022dialog-transfer",

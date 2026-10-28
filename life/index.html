@@ -24,25 +24,25 @@
 <link rel="stylesheet" href="../common/css/tokens.css?v=1021audit-colors">
 <link rel="stylesheet" href="../common/css/base.css">
 <link rel="stylesheet" href="../common/css/site.css?v=1026footer-touch44">
-<link rel="stylesheet" href="css/life.css?v=1027floor-arrows-preview">
+<link rel="stylesheet" href="css/life.css?v=1028food-no-reviews-preview">
   <link rel="stylesheet" href="../common/css/presentation.css?v=1016split">
-  <link rel="stylesheet" href="css/presentation.css?v=1027tab-spacing">
+  <link rel="stylesheet" href="css/presentation.css?v=1028food-no-reviews">
   <link rel="stylesheet" href="../common/css/lnb.css">
   <link rel="stylesheet" href="../common/css/masthead.css?v=1016cleanup">
-  <link rel="stylesheet" href="css/life-m.css?v=1027facility-note-icons">
+  <link rel="stylesheet" href="css/life-m.css?v=1027housing-note-line-center">
   <link rel="stylesheet" href="../common/css/components.css?v=1021audit-pr28">
 <link rel="stylesheet" href="../common/css/navigation-mobile.css?v=1016nav">
 <script src="../common/js/menu.js" defer></script>
 <script src="../common/js/site-layout.js?v=1023newtab" defer></script>
-<script src="../common/js/ui.js?v=1021audit-pr28" defer></script>
+<script src="../common/js/ui.js?v=1027reload-only-final" defer></script>
 <script src="../common/js/site.js?v=1027lnb-page-start2" defer></script>
 <script src="../common/js/track.js?v=1027admin-views" defer></script>
 <link rel="stylesheet" href="../common/css/availability.css?v=1026loading-soft-backdrop">
 <script src="../common/js/availability.js?v=1026loading-soft-backdrop" defer></script>
 <script src="../stories/js/mast-fix.js" defer></script>
-<script src="js/life.js?v=1027facility-note-up" defer></script>
-<script src="js/life-m-view.js?v=1027facility-note-icons" defer></script>
-<script src="js/life-m.js?v=1027facility-note-icons" defer></script>
+<script src="js/life.js?v=1028topic-alias-reset" defer></script>
+<script src="js/life-m-view.js?v=1027culture-collapsed" defer></script>
+<script src="js/life-m.js?v=1027remove-tips-back" defer></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
@@ -432,8 +432,6 @@
               <button type="button" class="chip" data-fg2="all" aria-pressed="true">전체</button>
               <button type="button" class="chip" data-fg2="solo" aria-pressed="false">혼밥</button>
               <button type="button" class="chip" data-fg2="group" aria-pressed="false">여럿이</button>
-              <span class="chip-sep" aria-hidden="true"></span>
-              <button type="button" class="chip tg" id="fdNear" aria-pressed="false">도보 10분 안</button>
             </div>
           </div>
         </div>
@@ -441,302 +439,222 @@
           <li class="fdc" data-t="food" data-g="solo" data-w="4">
             <div class="fdc-ph has-img" role="img" aria-label="첨단공원국밥 동명직영점 대표 메뉴 그림" data-field="photo"><img src="assets/food/f01.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">한식</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g solo">혼밥하기 편해요</p><span class="fdc-wk" data-field="walk">도보 약 4분</span></div>
               <h3 data-field="name">첨단공원국밥 동명직영점</h3>
-              <p class="fdc-m" data-field="menu">국밥&nbsp;· 동명동</p>
+              <p class="fdc-m" data-field="menu" data-menu="국밥" data-neighborhood="동명동">국밥 · 동명동</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">혼자 가도 자리 잡기 편했어요. 수업 끝나고 바로 가기 좋은 거리예요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="food" data-g="group" data-w="4">
             <div class="fdc-ph has-img" role="img" aria-label="시골집 대표 메뉴 그림" data-field="photo"><img src="assets/food/f02.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">한식</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g group">여럿이 가기 좋아요</p><span class="fdc-wk" data-field="walk">도보 약 4분</span></div>
               <h3 data-field="name">시골집</h3>
-              <p class="fdc-m" data-field="menu">백반&nbsp;· 김치찜&nbsp;· 동명동</p>
+              <p class="fdc-m" data-field="menu" data-menu="백반&nbsp;· 김치찜" data-neighborhood="동명동">백반&nbsp;· 김치찜 · 동명동</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">팀원들이랑 점심 메뉴를 못 정할 때 무난했어요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="food" data-g="group" data-w="4">
             <div class="fdc-ph has-img" role="img" aria-label="초필살 돼지구이 대표 메뉴 그림" data-field="photo"><img src="assets/food/f03.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">고기</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g group">여럿이 가기 좋아요</p><span class="fdc-wk" data-field="walk">도보 약 4분</span></div>
               <h3 data-field="name">초필살 돼지구이</h3>
-              <p class="fdc-m" data-field="menu">오겹살&nbsp;· 뒷고기&nbsp;· 동명동</p>
+              <p class="fdc-m" data-field="menu" data-menu="오겹살&nbsp;· 뒷고기" data-neighborhood="동명동">오겹살&nbsp;· 뒷고기 · 동명동</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">프로젝트 중간발표 끝난 날 팀끼리 갔어요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="food" data-g="group" data-w="4">
             <div class="fdc-ph has-img" role="img" aria-label="페이즈 대표 메뉴 그림" data-field="photo"><img src="assets/food/f04.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">양식</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g group">여럿이 가기 좋아요</p><span class="fdc-wk" data-field="walk">도보 약 4분</span></div>
               <h3 data-field="name">페이즈</h3>
-              <p class="fdc-m" data-field="menu">뇨끼&nbsp;· 오리 스테이크&nbsp;· 동명동</p>
+              <p class="fdc-m" data-field="menu" data-menu="뇨끼&nbsp;· 오리 스테이크" data-neighborhood="동명동">뇨끼&nbsp;· 오리 스테이크 · 동명동</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">발표 끝나고 기분 내고 싶을 때 갔어요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="food" data-g="solo" data-w="7">
             <div class="fdc-ph has-img" role="img" aria-label="싱푸미엔관 대표 메뉴 그림" data-field="photo"><img src="assets/food/f05.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">면</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g solo">혼밥하기 편해요</p><span class="fdc-wk" data-field="walk">도보 약 7분</span></div>
               <h3 data-field="name">싱푸미엔관</h3>
-              <p class="fdc-m" data-field="menu">우육면&nbsp;· 동명동</p>
+              <p class="fdc-m" data-field="menu" data-menu="우육면" data-neighborhood="동명동">우육면 · 동명동</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">면 요리가 생각날 때 동기랑 한 번씩 갔어요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="food" data-g="group" data-w="7">
             <div class="fdc-ph has-img" role="img" aria-label="규슈 동명점 대표 메뉴 그림" data-field="photo"><img src="assets/food/f06.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">일식</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g group">여럿이 가기 좋아요</p><span class="fdc-wk" data-field="walk">도보 약 7분</span></div>
               <h3 data-field="name">규슈 동명점</h3>
-              <p class="fdc-m" data-field="menu">샤브샤브&nbsp;· 비빔밥&nbsp;· 동명동</p>
+              <p class="fdc-m" data-field="menu" data-menu="샤브샤브&nbsp;· 비빔밥" data-neighborhood="동명동">샤브샤브&nbsp;· 비빔밥 · 동명동</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">나눠 먹기 좋아서 팀 점심으로 갔어요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="food" data-g="group" data-w="7">
             <div class="fdc-ph has-img" role="img" aria-label="동국 대표 메뉴 그림" data-field="photo"><img src="assets/food/f07.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">한식</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g group">여럿이 가기 좋아요</p><span class="fdc-wk" data-field="walk">도보 약 7분</span></div>
               <h3 data-field="name">동국</h3>
-              <p class="fdc-m" data-field="menu">국물 요리(맑은&nbsp;· 하얀&nbsp;· 빨간 국)&nbsp;· 동명동</p>
+              <p class="fdc-m" data-field="menu" data-menu="국물 요리(맑은&nbsp;· 하얀&nbsp;· 빨간 국)" data-neighborhood="동명동">국물 요리(맑은&nbsp;· 하얀&nbsp;· 빨간 국) · 동명동</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">날이 추울 때 팀이랑 국물 요리 먹으러 자주 갔어요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="food" data-g="solo" data-w="8">
             <div class="fdc-ph has-img" role="img" aria-label="충장옥 구시청본점 대표 메뉴 그림" data-field="photo"><img src="assets/food/f08.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">한식</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g solo">혼밥하기 편해요</p><span class="fdc-wk" data-field="walk">도보 약 8분</span></div>
               <h3 data-field="name">충장옥 구시청본점</h3>
-              <p class="fdc-m" data-field="menu">돼지 맑은 국밥&nbsp;· 장동</p>
+              <p class="fdc-m" data-field="menu" data-menu="돼지 맑은 국밥" data-neighborhood="장동">돼지 맑은 국밥 · 장동</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">아침을 거른 날 점심으로 자주 찾았어요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="food" data-g="group" data-w="9">
             <div class="fdc-ph has-img" role="img" aria-label="오감탄 본점 대표 메뉴 그림" data-field="photo"><img src="assets/food/f09.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">한식</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g group">여럿이 가기 좋아요</p><span class="fdc-wk" data-field="walk">도보 약 9분</span></div>
               <h3 data-field="name">오감탄 본점</h3>
-              <p class="fdc-m" data-field="menu">불고기 한상&nbsp;· 청국장&nbsp;· 동명동</p>
+              <p class="fdc-m" data-field="menu" data-menu="불고기 한상&nbsp;· 청국장" data-neighborhood="동명동">불고기 한상&nbsp;· 청국장 · 동명동</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">멘토링 끝나고 팀원들이랑 저녁 먹으러 갔어요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="food" data-g="solo" data-w="12">
             <div class="fdc-ph has-img" role="img" aria-label="모두가 대표 메뉴 그림" data-field="photo"><img src="assets/food/f10.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">분식</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g solo">혼밥하기 편해요</p><span class="fdc-wk" data-field="walk">도보 약 12분</span></div>
               <h3 data-field="name">모두가</h3>
-              <p class="fdc-m" data-field="menu">고기완탕&nbsp;· 튀김만두&nbsp;· 지산동</p>
+              <p class="fdc-m" data-field="menu" data-menu="고기완탕&nbsp;· 튀김만두" data-neighborhood="지산동">고기완탕&nbsp;· 튀김만두 · 지산동</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">간단히 먹고 싶을 때 들렀어요. 포장해서 AI 카페에서 먹기도 했어요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="food" data-g="solo" data-w="13">
             <div class="fdc-ph has-img" role="img" aria-label="해남식당 대표 메뉴 그림" data-field="photo"><img src="assets/food/f11.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">한식</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g solo">혼밥하기 편해요</p><span class="fdc-wk" data-field="walk">도보 약 13분</span></div>
               <h3 data-field="name">해남식당</h3>
-              <p class="fdc-m" data-field="menu">조개해장국&nbsp;· 충장로</p>
+              <p class="fdc-m" data-field="menu" data-menu="조개해장국" data-neighborhood="충장로">조개해장국 · 충장로</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">충장로 쪽에 볼일 있을 때 같이 들르기 좋았어요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="food" data-g="solo" data-w="14">
             <div class="fdc-ph has-img" role="img" aria-label="쿠로시로 대표 메뉴 그림" data-field="photo"><img src="assets/food/f12.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">면</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g solo">혼밥하기 편해요</p><span class="fdc-wk" data-field="walk">도보 약 14분</span></div>
               <h3 data-field="name">쿠로시로</h3>
-              <p class="fdc-m" data-field="menu">일본식 라멘&nbsp;· 금남로2가</p>
+              <p class="fdc-m" data-field="menu" data-menu="일본식 라멘" data-neighborhood="금남로2가">일본식 라멘 · 금남로2가</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">조금 걸어도 괜찮은 날 점심으로 갔어요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="food" data-g="solo" data-w="15">
             <div class="fdc-ph has-img" role="img" aria-label="제일반점 대표 메뉴 그림" data-field="photo"><img src="assets/food/f13.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">중식</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g solo">혼밥하기 편해요</p><span class="fdc-wk" data-field="walk">도보 약 15분</span></div>
               <h3 data-field="name">제일반점</h3>
-              <p class="fdc-m" data-field="menu">짜장면&nbsp;· 금남로5가</p>
+              <p class="fdc-m" data-field="menu" data-menu="짜장면" data-neighborhood="금남로5가">짜장면 · 금남로5가</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">혼자 빨리 먹고 들어와야 할 때 갔어요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="cafe" data-g="solo" data-w="10" hidden>
             <div class="fdc-ph has-img" role="img" aria-label="플로리다 대표 메뉴 그림" data-field="photo"><img src="assets/food/f14.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">커피</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g solo">혼자 가기 편해요</p><span class="fdc-wk" data-field="walk">도보 약 10분</span></div>
               <h3 data-field="name">플로리다</h3>
-              <p class="fdc-m" data-field="menu">동명동에서 오래 자리를 지켜 온 카페</p>
+              <p class="fdc-m" data-field="menu" data-menu="오래 자리를 지켜 온 카페" data-neighborhood="동명동">오래 자리를 지켜 온 카페 · 동명동</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">수업 전에 일찍 도착한 날 커피 한 잔 하고 들어갔어요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="cafe" data-g="solo" data-w="10" hidden>
             <div class="fdc-ph has-img" role="img" aria-label="물고기커피 로스터스 대표 메뉴 그림" data-field="photo"><img src="assets/food/f15.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">커피</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g solo">혼자 가기 편해요</p><span class="fdc-wk" data-field="walk">도보 약 10분</span></div>
               <h3 data-field="name">물고기커피 로스터스</h3>
-              <p class="fdc-m" data-field="menu">직접 볶은 원두&nbsp;· 동명동</p>
+              <p class="fdc-m" data-field="menu" data-menu="직접 볶은 원두" data-neighborhood="동명동">직접 볶은 원두 · 동명동</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">원두를 사 와서 쉬는 시간에 내려 마시기도 했어요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="cafe" data-g="group" data-w="10" hidden>
             <div class="fdc-ph has-img" role="img" aria-label="비미 대표 메뉴 그림" data-field="photo"><img src="assets/food/f16.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">디저트</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g group">여럿이 가기 좋아요</p><span class="fdc-wk" data-field="walk">도보 약 10분</span></div>
               <h3 data-field="name">비미</h3>
-              <p class="fdc-m" data-field="menu">디저트&nbsp;· 공간이 예쁜 카페&nbsp;· 동명동</p>
+              <p class="fdc-m" data-field="menu" data-menu="디저트&nbsp;· 공간이 예쁜 카페" data-neighborhood="동명동">디저트&nbsp;· 공간이 예쁜 카페 · 동명동</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">팀 회의를 디저트 먹으면서 가볍게 했어요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="cafe" data-g="group" data-w="10" hidden>
             <div class="fdc-ph has-img" role="img" aria-label="코다 프롤로그 대표 메뉴 그림" data-field="photo"><img src="assets/food/f17.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">커피</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g group">여럿이 가기 좋아요</p><span class="fdc-wk" data-field="walk">도보 약 10분</span></div>
               <h3 data-field="name">코다 프롤로그</h3>
-              <p class="fdc-m" data-field="menu">커피&nbsp;· 동명동</p>
+              <p class="fdc-m" data-field="menu" data-menu="커피" data-neighborhood="동명동">커피 · 동명동</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">동기들이랑 점심 먹고 산책 겸 들렀어요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="cafe" data-g="solo" data-w="10" hidden>
             <div class="fdc-ph has-img" role="img" aria-label="JB로스터리 대표 메뉴 그림" data-field="photo"><img src="assets/food/f18.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">커피</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g solo">혼자 가기 편해요</p><span class="fdc-wk" data-field="walk">도보 약 10분</span></div>
               <h3 data-field="name">JB로스터리</h3>
-              <p class="fdc-m" data-field="menu">직접 로스팅&nbsp;· 에스프레소&nbsp;· 동명동</p>
+              <p class="fdc-m" data-field="menu" data-menu="직접 로스팅&nbsp;· 에스프레소" data-neighborhood="동명동">직접 로스팅&nbsp;· 에스프레소 · 동명동</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">진한 커피가 필요한 오후에 혼자 다녀왔어요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="cafe" data-g="solo" data-w="10" hidden>
             <div class="fdc-ph has-img" role="img" aria-label="으뜸 브루어스 대표 메뉴 그림" data-field="photo"><img src="assets/food/f19.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">커피</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g solo">혼자 가기 편해요</p><span class="fdc-wk" data-field="walk">도보 약 10분</span></div>
               <h3 data-field="name">으뜸 브루어스</h3>
-              <p class="fdc-m" data-field="menu">커피&nbsp;· 동명동</p>
+              <p class="fdc-m" data-field="menu" data-menu="커피" data-neighborhood="동명동">커피 · 동명동</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">혼자 조용히 쉬고 싶을 때 들렀어요.</blockquote>
-            </figure>
           </li>
           <li class="fdc" data-t="cafe" data-g="group" data-w="10" hidden>
             <div class="fdc-ph has-img" role="img" aria-label="을커피브루어스 대표 메뉴 그림" data-field="photo"><img src="assets/food/f20.webp" alt="" loading="lazy">
               <span class="fdc-cat" data-field="category">커피</span>
-              
+
             </div>
             <div class="fdc-b">
               <div class="fdc-gw"><p class="fdc-g group">여럿이 가기 좋아요</p><span class="fdc-wk" data-field="walk">도보 약 10분</span></div>
               <h3 data-field="name">을커피브루어스</h3>
-              <p class="fdc-m" data-field="menu">원두 편집숍&nbsp;· 커피&nbsp;· 동명동</p>
+              <p class="fdc-m" data-field="menu" data-menu="원두 편집숍&nbsp;· 커피" data-neighborhood="동명동">원두 편집숍&nbsp;· 커피 · 동명동</p>
             </div>
-            <figure class="fdc-r">
-              <figcaption><b>선배 후기</b><span class="bdg ex">예시</span></figcaption>
-              <blockquote data-field="review">원두 고르는 재미가 있어서 동기랑 같이 갔어요.</blockquote>
-            </figure>
           </li>
           
         </ul>

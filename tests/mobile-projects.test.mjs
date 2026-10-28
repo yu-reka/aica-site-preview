@@ -72,3 +72,43 @@ test('static cohort and subject filters do not get duplicate mobile type control
   assert.equal(ui.filters, undefined);
   assert.equal(ui.items.length, 5);
 });
+
+// The title link remains outside the collapsible body, so a closed card can
+// still navigate with the same published URL as its expanded CTA.
+test('closed mobile project cards retain a named detail link and a separate toggle', () => {
+  const ui = start();
+  ui.items.forEach((item, index) => {
+    const summary = item.children[0];
+    const heading = summary.children.find(node => node.className === 'sm-project-heading');
+    const link = heading.children.find(node => node.className === 'sm-project-card-link');
+    assert.equal(link.tagName, 'a');
+    assert.equal(link.href, '#pj-db-' + (100 + index));
+    assert.equal(link.children[0].textContent, 'Project ' + index);
+    assert.ok(summary.children.some(node => node.className === 'sm-project-toggle'));
+  });
+});
+
+test('closed mobile cards expand first; open cards navigate except the toggle', () => {
+  const ui = start(), item = ui.items[0];
+  const heading = item.children[0].children.find(node => node.className === 'sm-project-heading');
+  const link = heading.children.find(node => node.className === 'sm-project-card-link');
+  let opened = 0, prevented = 0;
+  link.click = () => { opened++; };
+  const fire = target => item.events.click({ target: { closest: selector => {
+    if (target === 'toggle') return selector.includes('.sm-project-toggle') ? {} : null;
+    if (target === 'link') return selector.includes('a,') ? link : null;
+    return null;
+  } }, preventDefault() { prevented++; } });
+  for (const target of ['blank', 'link']) {
+    item.open = false;
+    fire(target);
+    assert.equal(item.open, true);
+    assert.equal(opened, 0);
+  }
+  fire('blank');
+  assert.equal(opened, 1);
+  fire('toggle');
+  fire('link');
+  assert.equal(opened, 1);
+  assert.equal(prevented, 3);
+});

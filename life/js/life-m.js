@@ -6,13 +6,12 @@
   const source = host.cloneNode(true);
   const state = {
     page: 'overview',
-    chosenFloor: '23',
+    chosenFloor: '1',
     chosenSpace: { '1': '0', '23': '0', '8': '0' },
     budget: 35,
     housingIndex: 0,
     foodType: 'food',
     foodGroup: 'all',
-    foodNear: false,
     foodPage: 1,
     culture: 'walk',
     departure: 0,
@@ -39,7 +38,15 @@
     const next = topic || aliases[raw] || (view.screens[raw] ? raw : paneRoutes[pane]);
     // Contact, privacy and skip-link anchors preserve the current LIFE screen.
     if (!next && raw && main.childElementCount) return;
-    state.page = next || paneRoutes[host.querySelector(':scope>.page:not([hidden])')?.dataset.page] || 'overview';
+    const destination = next || paneRoutes[host.querySelector(':scope>.page:not([hidden])')?.dataset.page] || 'overview';
+    if (destination !== state.page) {
+      if (state.page === 'tp-food') { state.foodType='food'; state.foodGroup='all'; state.foodPage=1; }
+      if (state.page === 'tp-fun') state.culture='walk';
+      if (state.page === 'tp-house') { state.budget=35; state.housingIndex=0; }
+      if (state.page === 'directions') state.departure=0;
+      if (state.page === 'facilities') { state.chosenFloor='1'; state.chosenSpace={ '1':'0','23':'0','8':'0' }; }
+    }
+    state.page = destination;
     const facility = target?.closest('.bx9-s');
     if (facility) {
       state.chosenFloor = facility.closest('.bx9-g').dataset.g;
@@ -48,7 +55,7 @@
     const area = target?.closest('.hzp');
     if (area) state.housingIndex = +area.dataset.i;
 
-    main.innerHTML = (state.page.startsWith('tp-') ? view.topicNav(state.page) : '') + view.screens[state.page]();
+    main.innerHTML = view.screens[state.page]();
     main.dataset.screen = state.page;
     wireRails();
     wireFacilities();
@@ -61,6 +68,7 @@
 
   function wireRails() {
     $$('.rail-wrap').forEach(wrapper => {
+      if (wrapper.classList.contains('housing-rail')) return;
       const track = $('.rail', wrapper);
       const previous = $('.previous', wrapper);
       const next = $('.next', wrapper);
@@ -158,10 +166,16 @@
     const track = $('.housing-rail .rail');
     track.scrollLeft = state.housingIndex * (track.clientWidth - 10);
     const revealArea = wireHousingTabs();
+    const previous = $('.housing-rail .previous'), next = $('.housing-rail .next');
+    const count = $('.housing-card-count');
+    const total = $$('.housing-card').length;
     let revealTimer;
     railObservers.push({ disconnect: () => clearTimeout(revealTimer) });
     const sync = (index, reveal = true) => {
       state.housingIndex = index;
+      previous.disabled = index === 0;
+      next.disabled = index === total - 1;
+      count.textContent = (index + 1) + ' / ' + total;
       if (reveal) revealArea(index);
       $$('[data-area]').forEach(button => button.setAttribute('aria-pressed', String(+button.dataset.area === index)));
       $$('.hzmap-d').forEach(pin => {
@@ -170,9 +184,16 @@
       });
     };
     const select = index => {
-      track.scrollTo({ left: $$('.housing-card')[index].offsetLeft - 20, behavior: reduce.matches ? 'auto' : 'smooth' });
+      clearTimeout(revealTimer);
+      // A direct area choice must not activate every card passed during a smooth scroll.
+      track.scrollTo({ left: $$('.housing-card')[index].offsetLeft - 20, behavior: 'instant' });
       sync(index);
     };
+    previous.onclick = () => select(Math.max(0, state.housingIndex - 1));
+    next.onclick = () => select(Math.min(total - 1, state.housingIndex + 1));
+    track.addEventListener('keydown', event => {
+      if (event.target === track) SiteUI.railKeys(event, direction => select(Math.max(0, Math.min(total - 1, state.housingIndex + direction))));
+    });
     $$('[data-area]').forEach(button => { button.onclick = () => select(+button.dataset.area); });
     $$('.hzmap-d').forEach(pin => {
       pin.onclick = () => select(+pin.dataset.i);
@@ -211,7 +232,7 @@
 
   function renderFood() {
     const matches = life.food.filter(food => food.type === state.foodType &&
-      (state.foodGroup === 'all' || food.group === state.foodGroup) && (!state.foodNear || food.walkMinutes <= 10));
+      (state.foodGroup === 'all' || food.group === state.foodGroup));
     const pages = Math.max(1, Math.ceil(matches.length / 8));
     state.foodPage = Math.min(state.foodPage, pages);
     $('#food-count').textContent = matches.length + '곳';
@@ -222,7 +243,6 @@
       button.setAttribute('aria-pressed', String(button.dataset.foodGroup === state.foodGroup));
       if (button.dataset.foodGroup === 'solo') button.textContent = state.foodType === 'cafe' ? '혼자' : '혼밥';
     });
-    $('#near').setAttribute('aria-pressed', String(state.foodNear));
   }
 
   function handleClick(event) {
@@ -244,15 +264,13 @@
     if (button.dataset.budget) { state.budget = +button.dataset.budget; updateBudget(); }
     if (button.dataset.kind) { state.foodType = button.dataset.kind; state.foodPage = 1; renderFood(); }
     if (button.dataset.foodGroup) { state.foodGroup = button.dataset.foodGroup; state.foodPage = 1; renderFood(); }
-    if (button.id === 'near') { state.foodNear = !state.foodNear; state.foodPage = 1; renderFood(); }
     if (button.dataset.foodPage) {
       state.foodPage = +button.dataset.foodPage;
       renderFood();
-      $('#food-count').tabIndex = -1;
-      $('#food-count').focus({ preventScroll: true });
+      $('.food-kind [aria-pressed=true]').focus({ preventScroll: true });
       $('.food-kind').scrollIntoView({ block: 'start', behavior: reduce.matches ? 'auto' : 'smooth' });
     }
-    if (button.hasAttribute('data-reset-food')) { state.foodGroup = 'all'; state.foodNear = false; state.foodPage = 1; renderFood(); }
+    if (button.hasAttribute('data-reset-food')) { state.foodGroup = 'all'; state.foodPage = 1; renderFood(); }
     if (button.dataset.culture) {
       state.culture = button.dataset.culture;
       $$('[data-culture]').forEach(other => other.setAttribute('aria-pressed', String(other === button)));

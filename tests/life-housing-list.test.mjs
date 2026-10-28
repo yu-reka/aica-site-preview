@@ -54,7 +54,7 @@ test('refined map keeps room-count colors and highlights selection with a pulse 
   const css = read('../life/css/housing-map.css');
   assert.match(css, /\.housing-map-refined \.hzmap-d \.a\{fill:rgb\(40 87 250 \/ 30%\)/);
   assert.match(css, /\.housing-map-refined \.hzmap-d\.lv3 \.a\{fill:rgb\(40 87 250 \/ 70%\)/);
-  assert.match(css, /\.housing-map-refined \.hzmap-d\.lv1 \.a\{fill:rgb\(255 255 255 \/ 85%\)[^}]*stroke-dasharray:4 3/);
+  assert.match(css, /\.housing-map-refined \.hzmap-d\.lv1 \.a\{fill:rgb\(255 255 255 \/ 12%\)[^}]*stroke-dasharray:4 3/);
   assert.match(css, /\.housing-map-refined:has\(\.hzmap-d\.on\) \.hzmap-d:not\(\.on\)[^{]*\{opacity:1\}/);
   assert.match(css, /\.housing-map-refined \.hzmap-d\.on \.pl\{animation:hz-pulse/);
   assert.match(css, /\.housing-map-refined:has\(\.hzmap-d\.on\[data-i="5"\]\) \.hz-tag\[data-i="5"\]\{display:block\}/);

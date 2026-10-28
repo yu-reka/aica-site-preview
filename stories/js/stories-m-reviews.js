@@ -6,30 +6,8 @@ const StoriesMobileReviews = (() => {
   const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
 
-  function el(tag, cls, text){
-    var node = document.createElement(tag);
-    if (cls) node.className = cls;
-    if (text != null) node.textContent = text;
-    return node;
-  }
-  function cleanClone(node){
-    if (!node) return null;
-    var copy = node.cloneNode(true);
-    copy.removeAttribute('id');
-    $$('[id]', copy).forEach(function(n){ n.removeAttribute('id'); });
-    return copy;
-  }
-  function tabButton(group, text, active, action){
-    var b = el('button', '', text); b.type = 'button';
-    b.setAttribute('aria-pressed', String(active));
-    b.addEventListener('click', action);
-    group.appendChild(b); return b;
-  }
-  function tabs(label){
-    var group = el('div', 'sm-filter-tabs');
-    group.setAttribute('role', 'group'); group.setAttribute('aria-label', label);
-    return group;
-  }
+  var el = SiteUI.element, cleanClone = SiteUI.cloneWithoutIds, tabButton = SiteUI.toggleButton;
+  function tabs(label){ return SiteUI.buttonGroup(label, 'sm-filter-tabs'); }
 
   function initReviews(){
     var section = $('#p-rev'), source = section && $('.idgrid', section);

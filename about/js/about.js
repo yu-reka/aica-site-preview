@@ -593,7 +593,7 @@ if (activityGallery) {
       var org = /^https?:/.test(location.protocol) ? '&origin=' + encodeURIComponent(location.origin) + '&widget_referrer=' + encodeURIComponent(location.href.split('#')[0]) : '';
       f.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?autoplay=1&rel=0&playsinline=1&hl=ko&enablejsapi=0' + org;
       f.title = title;
-      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
       f.allowFullscreen = true;
       f.referrerPolicy = 'strict-origin-when-cross-origin';
       f.className = 'activity-project-inline-frame';
@@ -617,7 +617,7 @@ if (activityGallery) {
     const f = document.createElement('iframe');
     f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1&hl=ko' + org;
     f.title = box.getAttribute('aria-label').replace(/ 재생$/, '');
-    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
     f.allowFullscreen = true;
     f.referrerPolicy = 'strict-origin-when-cross-origin';
     const wrap = document.createElement('div');

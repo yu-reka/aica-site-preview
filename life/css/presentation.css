@@ -79,12 +79,12 @@ html:where(:not([data-menu="stories"]))[data-menu="life"] body,
 .life-page{--st-card-sh:0 14px 30px -18px rgba(20,35,63,.28);--st-chip-line:rgba(16,17,22,.13)}
 
 /* 카드 */
-.life-page :is(.hzmw,.fdc,.fsg,.wmap,.rt3 > article,.park2,.bx9-foot,.fsx > a){
+.life-page :is(.hzmw,.fdc,.fsg,.wmap,.rt3 > article,.park2,.bx9-foot){
   border:1px solid var(--line)!important;border-radius:20px!important;background:#fff!important;box-shadow:var(--st-card-sh)!important}
 
-.life-page :is(.fdc,.fsx > a):is(a,li){transition:transform .25s cubic-bezier(.22,.61,.36,1),border-color .2s,box-shadow .25s}
+.life-page .fdc:is(a,li){transition:transform .25s cubic-bezier(.22,.61,.36,1),border-color .2s,box-shadow .25s}
 
-.life-page :is(.fsx > a,.adlk,a.hac:not(.main)):hover{border-color:var(--primary)!important;transform:translateY(-2px)}
+.life-page :is(.adlk,a.hac:not(.main)):hover{border-color:var(--primary)!important;transform:translateY(-2px)}
 
 .life-page .bx9-ph{border-radius:20px!important}
 
@@ -92,14 +92,11 @@ html:where(:not([data-menu="stories"]))[data-menu="life"] body,
 
 /* 거르기 칩 · 동 고르기 */
 .life-page .chip,
-.life-page .hzp-t{height:40px;border:1px solid var(--st-chip-line)!important;background:#fff;color:var(--graphite);font-size:15px;font-weight:600}
 
-.life-page .hzp-t{height:36px;font-size:14px}
 
-.life-page :is(.chip,.hzp-t):hover{border-color:var(--ink)!important;color:var(--ink)}
+.life-page .chip:hover{border-color:var(--ink)!important;color:var(--ink)}
 
 .life-page .chip[aria-pressed="true"],
-.life-page .hzp-t:is([aria-pressed="true"],[aria-selected="true"],.on,.is-on){background:var(--ink)!important;border-color:var(--ink)!important;color:#fff!important}
 
 /* 식당 · 카페 고르기: 큰 알약 탭(선배 이야기 '후기 · 인터뷰' 탭과 같음) */
 .life-page .fdk{padding:0;gap:10px;border:0;background:none;box-shadow:none}
@@ -137,23 +134,9 @@ html:where(:not([data-menu="stories"]))[data-menu="life"] body,
 
 .life-page .btn.is-line.park2-b{height:40px}
 
-/* 라이프 인터랙션: 하루 슬라이더 · 월세 예산 · 점심 주사위 (색은 기존 프라이머리 유지) */
+/* 라이프 인터랙션: 하루 슬라이더 · 점심 주사위 (색은 기존 프라이머리 유지) */
 .life-page .lunch-go,
 .life-page #fdList{--cat:var(--primary);--cat-l:#E8EEFF;--cat-d:var(--primary)}
-
-:where(html:not([data-menu="stories"])) .rentslide{margin:0 0 14px;padding:12px 14px;border-radius:14px;background:#fff;border:1px solid rgba(16,17,22,.1)}
-
-:where(html:not([data-menu="stories"])) .rentslide label{display:flex;justify-content:space-between;align-items:baseline;font:700 13.5px/1 var(--ff-text);color:var(--ink)}
-
-:where(html:not([data-menu="stories"])) .rentslide label output{font:400 20px/1 var(--ff-title);color:var(--primary)}
-
-:where(html:not([data-menu="stories"])) .rentslide input{width:100%;margin:10px 0 2px;accent-color:var(--primary)}
-
-:where(html:not([data-menu="stories"])) .rentslide small{font:500 12px/1.4 var(--ff-sans);color:var(--graphite)}
-
-.life-page .hzp-t.over{opacity:.35}
-
-.life-page .hzp-t.fit{box-shadow:0 0 0 2px var(--primary) inset}
 
 :where(html:not([data-menu="stories"])) .lunch-go{display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 22px;border:0;border-radius:999px;background:var(--cat,#FFB685);color:#fff!important;font:700 16px/1 var(--ff-text);cursor:pointer;box-shadow:0 8px 18px -10px rgba(36,87,245,.7);transition:transform .2s}
 
@@ -194,9 +177,7 @@ html:where(:not([data-menu="stories"]))[data-menu="life"] body,
 :where(html:not([data-menu="stories"])) .snote-a{height:auto}
 }
 
-.life-page #tp-house .hz-ref{margin:-10px 0 8px;text-align:right;font:500 12.5px/1.4 var(--ff-sans);color:var(--graphite);letter-spacing:0}
 
-.life-page #tp-house .hz-ref + .hz2{margin-top:0!important}
 
 .life-page #tp-house .hz2{position:relative}
 .life-page #tp-house .hz2>.snote-a{position:absolute;left:0;top:0;width:100%}
@@ -428,7 +409,7 @@ body .life-page #tp-food .lunch-go .cue svg{flex:none;width:58px;height:56px;mar
    - 두 줄 이상 본문: Pretendard
    Paperlogy를 한 가족으로 합치면서 800 · 900으로 적혀 있던 짧은 글이 더 굵어지지 않게 600으로 맞춤(전에도 화면은 SemiBold였음)
    ========================================================= */
-.life-page :is(.bx9-info h4,.bx9-head h3,.hzmw-tt,.hzc-here,.wmap .ad b,.wbld figcaption b,.fsx a i,a.more,.rt3 article h3,.rt3 article ol li i){font-weight:600!important}
+.life-page :is(.bx9-info h4,.bx9-head h3,.wmap .ad b,.wbld figcaption b,a.more,.rt3 article h3,.rt3 article ol li i){font-weight:600!important}
 
 /* 시설 둘러보기 사진 옆 선배 포스트잇: 화면 오른쪽에서 잘리지 않게 폭을 줄이고 사진 쪽으로 당김(10-13) */
 body .life-page .bx9-g .snote{width:150px;padding:20px 14px;right:-12px!important}
@@ -675,32 +656,6 @@ body .life-page .lo-tr:hover .ph img{transform:translateY(-4px) scale(1.04)}
 @media (max-width:560px){body .life-page .lo-tr .ph{height:72px}
 }
 
-/* 시설 둘러보기 끝 관련 링크(.fsx, 10-14): 위 정보 카드(흰 카드 + 그림자)와 구분 — 위 구분선 + "함께 보면 좋아요" 라벨, 그림자 없는 회색 판 + 화살표 원(라이프 전체 줄 목록 화살표와 같은 모양) */
-html .life-page .fsx{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:clamp(40px,4vw,56px)!important;padding-top:clamp(24px,2.4vw,32px);border-top:1px solid var(--line)}
-
-html .life-page .fsx::before{content:"함께 보면 좋아요";grid-column:1/-1;margin-bottom:-2px;font:600 15px/1.2 var(--ff-text);color:var(--ink)}
-
-html .life-page .fsx > a{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;column-gap:16px;row-gap:6px;align-items:center;padding:22px 22px 22px 26px;border:0!important;border-radius:16px!important;background:#F3F5F8!important;box-shadow:none!important;color:var(--ink);text-decoration:none;transition:background .25s,transform .25s cubic-bezier(.22,.61,.36,1)}
-
-html .life-page .fsx > a span{grid-column:1;grid-row:1;flex:none;font:500 13px/1.3 var(--ff-sans);color:var(--graphite)}
-
-html .life-page .fsx > a b{grid-column:1;grid-row:2;font:700 18px/1.4 var(--ff-text);letter-spacing:-.02em;transition:color .2s}
-
-html .life-page .fsx > a i{grid-column:2;grid-row:1/3;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;border:1px solid #E6E8EC;background:#fff;color:#374151;font:600 15px/1 var(--ff-sans);transition:.25s}
-
-html .life-page .fsx > a:hover{background:#EAF0FF!important;transform:translateY(-2px)}
-
-html .life-page .fsx > a:hover b{color:var(--primary)}
-
-html .life-page .fsx > a:hover i{background:var(--ink);border-color:var(--ink);color:#fff}
-
-html .life-page .fsx > a:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
-
-@media (max-width:760px){html .life-page .fsx{grid-template-columns:1fr;gap:10px}
-html .life-page .fsx > a{padding:18px 18px 18px 20px}
-html .life-page .fsx > a b{font-size:16px}
-}
-
 /* 인사교 라이프: 섹션 보조글 · 안내 문장이 Paperlogy였던 것 → 이야기 보조글과 같은 Pretendard */
 .life-page :is(.sh-lead,p.note,.disc p,.disc .wrap>p){font-family:var(--ff-sans)!important}
 
@@ -712,7 +667,7 @@ html .life-page .fsx > a b{font-size:16px}
 
 html body .life-page #pg-tips .hhl :is(p.hhl-big,p.hhl-big mark){font-family:var(--ff-text)!important;letter-spacing:-.03em}
 
-html body .life-page :is(.lo-c .lo-tx small,.lo-tr .tx small,.lo-way .lo-wtx small,.bx9-info li,.hz-ref,.hzc-s,.hzc-gs dd,#pg-way ol li span){font-family:var(--ff-text)!important}
+html body .life-page :is(.lo-c .lo-tx small,.lo-tr .tx small,.lo-way .lo-wtx small,.bx9-info li,#pg-way ol li span){font-family:var(--ff-text)!important}
 
 /* 라이프 문화·여가 '펼쳐보기' 버튼(10-14): 넓은 화면에서 접힘 상태도 카드 오른쪽 끝(세로 가운데)에 둠 — 펼침 상태의 '접기'와 같은 오른쪽 줄 */
 @media (min-width:1400px){

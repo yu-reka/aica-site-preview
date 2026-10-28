@@ -8,7 +8,6 @@
     page: 'overview',
     chosenFloor: '1',
     chosenSpace: { '1': '0', '23': '0', '8': '0' },
-    budget: 35,
     housingIndex: 0,
     foodType: 'food',
     foodGroup: 'all',
@@ -42,7 +41,7 @@
     if (destination !== state.page) {
       if (state.page === 'tp-food') { state.foodType='food'; state.foodGroup='all'; state.foodPage=1; }
       if (state.page === 'tp-fun') state.culture='walk';
-      if (state.page === 'tp-house') { state.budget=35; state.housingIndex=0; }
+      if (state.page === 'tp-house') state.housingIndex=0;
       if (state.page === 'directions') state.departure=0;
       if (state.page === 'facilities') { state.chosenFloor='1'; state.chosenSpace={ '1':'0','23':'0','8':'0' }; }
     }
@@ -52,7 +51,7 @@
       state.chosenFloor = facility.closest('.bx9-g').dataset.g;
       state.chosenSpace[state.chosenFloor] = facility.id.split('-').pop();
     }
-    const area = target?.closest('.hzp');
+    const area = target?.closest('.hzr');
     if (area) state.housingIndex = +area.dataset.i;
 
     main.innerHTML = view.screens[state.page]();
@@ -68,7 +67,6 @@
 
   function wireRails() {
     $$('.rail-wrap').forEach(wrapper => {
-      if (wrapper.classList.contains('housing-rail')) return;
       const track = $('.rail', wrapper);
       const previous = $('.previous', wrapper);
       const next = $('.next', wrapper);
@@ -123,111 +121,30 @@
     });
   }
 
-  function wireHousingTabs() {
-    const tabs = $('.housing-selector');
-    const buttons = $$('[data-area]', tabs);
-    const previous = $('.housing-tab-prev');
-    const next = $('.housing-tab-next');
-    const sync = () => {
-      const focused = document.activeElement;
-      previous.hidden = tabs.scrollLeft <= 2;
-      next.hidden = tabs.scrollLeft >= tabs.scrollWidth - tabs.clientWidth - 2;
-      // Keep keyboard focus available when the focused edge disappears.
-      if ((focused === previous && previous.hidden) ||
-          (focused === next && next.hidden)) {
-        const target = !next.hidden ? next : !previous.hidden ? previous : buttons[state.housingIndex];
-        target?.focus({ preventScroll: true });
-      }
-    };
-    const reveal = button => {
-      if (!button || !tabs.clientWidth) return;
-      const viewport = tabs.getBoundingClientRect();
-      const rect = button.getBoundingClientRect();
-      const left = viewport.left + (tabs.scrollLeft > 2 ? previous.offsetWidth : 0);
-      const right = viewport.right - (tabs.scrollLeft < tabs.scrollWidth - tabs.clientWidth - 2 ? next.offsetWidth : 0);
-      const delta = rect.left < left ? rect.left - left : rect.right > right ? rect.right - right : 0;
-      // Card swipes can cross several areas; reveal immediately without competing animations.
-      if (delta) tabs.scrollBy({ left: delta, behavior: 'instant' });
-      sync();
-    };
-    const move = direction => tabs.scrollBy({ left: direction * tabs.clientWidth * .72, behavior: reduce.matches ? 'auto' : 'smooth' });
-    previous.onclick = () => move(-1);
-    next.onclick = () => move(1);
-    tabs.addEventListener('scroll', sync, { passive: true });
-    tabs.addEventListener('focusin', event => reveal(event.target.closest('[data-area]')));
-    const observer = new ResizeObserver(() => { sync(); reveal(buttons[state.housingIndex]); });
-    observer.observe(tabs);
-    railObservers.push(observer);
-    sync();
-    return index => reveal(buttons[index]);
-  }
-
   function wireHousing() {
-    const track = $('.housing-rail .rail');
-    track.scrollLeft = state.housingIndex * (track.clientWidth - 10);
-    const revealArea = wireHousingTabs();
-    const previous = $('.housing-rail .previous'), next = $('.housing-rail .next');
-    const count = $('.housing-card-count');
-    const total = $$('.housing-card').length;
-    let revealTimer;
-    railObservers.push({ disconnect: () => clearTimeout(revealTimer) });
-    const sync = (index, reveal = true) => {
+    const select = index => {
       state.housingIndex = index;
-      previous.disabled = index === 0;
-      next.disabled = index === total - 1;
-      count.textContent = (index + 1) + ' / ' + total;
-      if (reveal) revealArea(index);
       $$('[data-area]').forEach(button => button.setAttribute('aria-pressed', String(+button.dataset.area === index)));
       $$('.hzmap-d').forEach(pin => {
         pin.classList.toggle('on', +pin.dataset.i === index);
         pin.setAttribute('aria-pressed', String(+pin.dataset.i === index));
       });
     };
-    const select = index => {
-      clearTimeout(revealTimer);
-      // A direct area choice must not activate every card passed during a smooth scroll.
-      track.scrollTo({ left: $$('.housing-card')[index].offsetLeft - 20, behavior: 'instant' });
-      sync(index);
-    };
-    previous.onclick = () => select(Math.max(0, state.housingIndex - 1));
-    next.onclick = () => select(Math.min(total - 1, state.housingIndex + 1));
-    track.addEventListener('keydown', event => {
-      if (event.target === track) SiteUI.railKeys(event, direction => select(Math.max(0, Math.min(total - 1, state.housingIndex + direction))));
-    });
     $$('[data-area]').forEach(button => { button.onclick = () => select(+button.dataset.area); });
     $$('.hzmap-d').forEach(pin => {
-      pin.onclick = () => select(+pin.dataset.i);
+      const choose = () => {
+        select(+pin.dataset.i);
+        $(`[data-area="${pin.dataset.i}"]`)?.scrollIntoView({ block: 'nearest', behavior: reduce.matches ? 'auto' : 'smooth' });
+      };
+      pin.onclick = choose;
       pin.onkeydown = event => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
-          select(+pin.dataset.i);
+          choose();
         }
       };
     });
-    track.addEventListener('scroll', () => {
-      const midpoint = track.getBoundingClientRect().left + track.clientWidth / 2;
-      let best = 0, distance = Infinity;
-      $$('.housing-card').forEach((card, index) => {
-        const rect = card.getBoundingClientRect();
-        const difference = Math.abs(rect.left + rect.width / 2 - midpoint);
-        if (difference < distance) { distance = difference; best = index; }
-      });
-      sync(best, false);
-      clearTimeout(revealTimer);
-      revealTimer = setTimeout(() => revealArea(state.housingIndex), 120);
-    }, { passive: true });
-    sync(state.housingIndex);
-    updateBudget();
-  }
-
-  function updateBudget() {
-    const total = life.housing.filter(housing => {
-      const rent = new DOMParser().parseFromString(housing.rentHtml, 'text/html').body.textContent;
-      return +(/\d+/.exec(rent)?.[0] || Infinity) <= state.budget;
-    }).length;
-    $('#budget-value').textContent = state.budget + '만 원';
-    $('#budget-result').textContent = '표시된 월세의 하한 기준 ' + total + '곳 · 집마다 차이가 있어요';
-    $$('[data-budget]').forEach(button => button.setAttribute('aria-pressed', String(+button.dataset.budget === state.budget)));
+    select(state.housingIndex);
   }
 
   function renderFood() {
@@ -261,7 +178,6 @@
       $$('[data-space-select]', card).forEach(other => other.setAttribute('aria-pressed', String(other === button)));
       $$('.space-view', card).forEach(space => { space.hidden = space.dataset.space !== button.dataset.spaceSelect; });
     }
-    if (button.dataset.budget) { state.budget = +button.dataset.budget; updateBudget(); }
     if (button.dataset.kind) { state.foodType = button.dataset.kind; state.foodPage = 1; renderFood(); }
     if (button.dataset.foodGroup) { state.foodGroup = button.dataset.foodGroup; state.foodPage = 1; renderFood(); }
     if (button.dataset.foodPage) {

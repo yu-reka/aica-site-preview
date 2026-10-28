@@ -12,6 +12,7 @@ function createView(state) {
   });
   const map = nodes => ({
     nodes,
+    classList: { contains: () => false },
     cloneNode() { return map(this.nodes.map(node => pin(node.attrs))); },
     querySelectorAll(selector) {
       if (selector === '[id]') return this.nodes.filter(node => 'id' in node.attrs);
@@ -29,7 +30,7 @@ function createView(state) {
   vm.runInContext(readFileSync(new URL('../life/js/life-m-view.js', import.meta.url), 'utf8'), context);
   return { view: vm.runInContext('LifeMobileView.create(source, state)', context), originalMap };
 }
-const initialState = () => ({ budget: 35, housingIndex: 0, foodPage: 1 });
+const initialState = () => ({ housingIndex: 0, foodPage: 1 });
 
 test('mobile housing map removes copied desktop IDs/ARIA without mutating the source', () => {
   const state = initialState(), before = { ...state };

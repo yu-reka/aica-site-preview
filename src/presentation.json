@@ -1362,38 +1362,33 @@
   },
   "life/housing": {
     "area-1": {
-      "panel": {
-        "template": "life/housing/panel"
+      "row": {
+        "template": "life/housing/row"
       }
     },
     "area-2": {
-      "panel": {
-        "template": "life/housing/panel-5"
+      "row": {
+        "template": "life/housing/row"
       }
     },
     "area-3": {
-      "panel": {
-        "template": "life/housing/panel-7"
+      "row": {
+        "template": "life/housing/row"
       }
     },
     "area-4": {
-      "panel": {
-        "template": "life/housing/panel-3"
+      "row": {
+        "template": "life/housing/row"
       }
     },
     "area-5": {
-      "panel": {
-        "template": "life/housing/panel-4"
+      "row": {
+        "template": "life/housing/row"
       }
     },
     "area-6": {
-      "panel": {
-        "template": "life/housing/panel-2"
-      }
-    },
-    "area-7": {
-      "panel": {
-        "template": "life/housing/panel-6"
+      "row": {
+        "template": "life/housing/row"
       }
     }
   },

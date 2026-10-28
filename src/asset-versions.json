@@ -38,7 +38,7 @@
       "site-layout": "1023newtab",
       "site": "1027lnb-page-start2",
       "track": "1027admin-views",
-      "ui": "1027reload-only-final"
+      "ui": "1028shared-controls"
     }
   },
   "home": {
@@ -100,10 +100,10 @@
       "review-notes": "1021centerellipsis",
       "stories-data": "design-20261027-serviceintro",
       "stories-m-reviews": {
-        "default": "1020states",
-        "legacyLoader": "1016cleanup"
+        "default": "1028shared-controls",
+        "legacyLoader": "1028shared-controls"
       },
-      "stories-m": "1027nav-project-refresh",
+      "stories-m": "1028shared-controls",
       "stories-render": "1028review-filter-pages",
       "stories-sections": "1023cardrows",
       "stories": "1028review-filter-pages",

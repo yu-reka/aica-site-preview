@@ -50,16 +50,14 @@ test('the housing support notes stay as their own block below the map card', () 
   assert.match(read('../life/css/life-m.css'), /--housing-note-line/);
 });
 
-test('room-count levels use clearly different fills and the selection dims the other areas', () => {
-  const desktop = read('../life/css/life.css'), mobile = read('../life/css/life-m.css');
-  for (const css of [desktop, mobile]) {
-    assert.match(css, /\.hzmap-d\.lv3 \.a\{fill:color-mix\(in srgb,var\(--primary\) 62%,transparent\)/);
-    assert.match(css, /\.hzmap-d \.a\{fill:color-mix\(in srgb,var\(--primary\) 24%,transparent\)/);
-    assert.match(css, /\.hzmap-d\.lv1 \.a\{fill:color-mix\(in srgb,var\(--primary\) 4%,transparent\)[^}]*stroke-dasharray:10 10/);
-    assert.match(css, /\.hzmap2:has\(\.hzmap-d\.on\) \.hzmap-d:not\(\.on\)\{opacity:\.35\}/);
-    assert.match(css, /\.hzmap-d\.on \.n\{fill:var\(--primary\);r:54px\}/);
-    assert.doesNotMatch(css, /\.hzmap-d:is\(:hover,:focus-visible,\.on\) \.a\{stroke:var\(--ink\)/);
-  }
-  assert.match(desktop, /\.hzmw-lg i\.lv3\{background:color-mix\(in srgb,var\(--primary\) 62%,#fff\)/);
-  assert.match(desktop, /\.hzmw-lg i\.lv1\{background:#fff;border:2px dashed/);
+test('refined map keeps room-count colors and highlights selection with a pulse and information tag', () => {
+  const css = read('../life/css/housing-map.css');
+  assert.match(css, /\.housing-map-refined \.hzmap-d \.a\{fill:rgb\(40 87 250 \/ 30%\)/);
+  assert.match(css, /\.housing-map-refined \.hzmap-d\.lv3 \.a\{fill:rgb\(40 87 250 \/ 70%\)/);
+  assert.match(css, /\.housing-map-refined \.hzmap-d\.lv1 \.a\{fill:rgb\(255 255 255 \/ 85%\)[^}]*stroke-dasharray:4 3/);
+  assert.match(css, /\.housing-map-refined:has\(\.hzmap-d\.on\) \.hzmap-d:not\(\.on\)[^{]*\{opacity:1\}/);
+  assert.match(css, /\.housing-map-refined \.hzmap-d\.on \.pl\{animation:hz-pulse/);
+  assert.match(css, /\.housing-map-refined:has\(\.hzmap-d\.on\[data-i="5"\]\) \.hz-tag\[data-i="5"\]\{display:block\}/);
+  const html = build().get('life/index.html');
+  assert.ok(html.indexOf('css/housing-map.css') > html.indexOf('css/life-m.css'));
 });

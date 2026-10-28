@@ -62,7 +62,7 @@ function route(){
   } else if (CANON[part[0]]) history.replaceState(null, '', CANON[part[0]]);
   if (!id && raw) {
     var el = document.getElementById(raw), pg = el && el.closest('.page');
-    if (pg && PG.indexOf(pg) > -1) { id = pg.dataset.page; target = el; }
+    if (pg && PG.indexOf(pg) > -1) { id = pg.dataset.page; target = el.closest('.tp-sec') === el ? null : el; }   // #tp-house 등 주제 화면 자체는 다른 화면처럼 맨 위에서 시작(새로고침 포함). 그 안의 위치(#hzp-0 등)만 내려감
     else return;   // 화면 밖 위치(본문으로 바로가기 #main 등)나 모르는 주소: 지금 화면 그대로
   }
   if (!id) id = 'home';   // 주소 없이 들어오면(헤더 '인사교 라이프') 히어로 페이지

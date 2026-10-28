@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 
+const uiSource = readFileSync(new URL('../common/js/ui.js', import.meta.url), 'utf8');
+
 // Execute the shipped initializer against rendered public cards. Browser QA
 // separately covers CSS, focus, and the static cohort/subject controls.
 class Element {
@@ -39,7 +41,7 @@ function start({ staticFilters = false } = {}) {
       : selector === '#p-pr .pj-filter-row' && staticFilters ? new Element() : null,
     querySelectorAll: () => [], createElement: tag => new Element(tag),
   };
-  vm.runInNewContext(readFileSync(new URL('../stories/js/stories-m.js', import.meta.url), 'utf8'), {
+  vm.runInNewContext(uiSource + '\n' + readFileSync(new URL('../stories/js/stories-m.js', import.meta.url), 'utf8'), {
     document, URL, matchMedia: () => ({ matches: true }), addEventListener() {}, setTimeout() {},
   });
   const filters = projection.children.find(node => node.className === 'sm-filter-tabs');

@@ -166,30 +166,8 @@
   }
 
   // Mobile views read the existing, escaped static/Spring markup. IDs and detail links stay intact.
-  function el(tag, cls, text){
-    var node = document.createElement(tag);
-    if (cls) node.className = cls;
-    if (text != null) node.textContent = text;
-    return node;
-  }
-  function cleanClone(node){
-    if (!node) return null;
-    var copy = node.cloneNode(true);
-    copy.removeAttribute('id');
-    $$('[id]', copy).forEach(function(n){ n.removeAttribute('id'); });
-    return copy;
-  }
-  function tabButton(group, text, active, action){
-    var b = el('button', '', text); b.type = 'button';
-    b.setAttribute('aria-pressed', String(active));
-    b.addEventListener('click', action);
-    group.appendChild(b); return b;
-  }
-  function tabs(label){
-    var group = el('div', 'sm-filter-tabs');
-    group.setAttribute('role', 'group'); group.setAttribute('aria-label', label);
-    return group;
-  }
+  var el = SiteUI.element, cleanClone = SiteUI.cloneWithoutIds, tabButton = SiteUI.toggleButton;
+  function tabs(label){ return SiteUI.buttonGroup(label, 'sm-filter-tabs'); }
 
   function initProjects(){
     var grid = $('#p-pr .pjgrid');
@@ -260,7 +238,7 @@
 
   // Older Spring templates only load this entry. Keep their review UI working
   // while new templates explicitly preload the page-owned review initializer.
-  var reviewScript = new URL('stories-m-reviews.js?v=1016cleanup', document.currentScript.src).href;
+  var reviewScript = new URL('stories-m-reviews.js?v=1028shared-controls', document.currentScript.src).href;
   var reviewLoading = false;
   function initReviews(){
     if (!$('#p-rev')) return;

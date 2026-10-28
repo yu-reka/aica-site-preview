@@ -7,7 +7,7 @@
     },
     "js": {
       "about-m": "1026dockrepeat",
-      "about": "1026singlevideo"
+      "about": "1028iframe-policy"
     }
   },
   "check": {
@@ -85,7 +85,7 @@
         "interviews": "1027detail-word-wrap",
         "projects": "1027project-reading-lead"
       },
-      "stories": "1021audit-pr28",
+      "stories": "1028review-filter-pages",
       "story-state": "1020states",
       "interview-honors": "1026honors-no-hint",
       "project-video": "1027prep-always"
@@ -104,10 +104,10 @@
         "legacyLoader": "1016cleanup"
       },
       "stories-m": "1027nav-project-refresh",
-      "stories-render": "1027responsive-photos",
+      "stories-render": "1028review-filter-pages",
       "stories-sections": "1023cardrows",
-      "stories": "1022dialog-transfer",
-      "story-state": "1026honors-checked",
+      "stories": "1028review-filter-pages",
+      "story-state": "1028stable-filter-reset",
       "interview-honors": "1026honors-checked",
       "cohort-month-navigation": "1026month-navigation",
       "project-video": "1027photo-first-hero",

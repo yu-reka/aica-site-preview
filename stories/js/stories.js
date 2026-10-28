@@ -154,7 +154,7 @@
 
 /* 후기 숫자 페이지(10-13): 기수별 이모저모 페이지 넘김과 같은 모양 — 앞뒤에 ← → 버튼을 붙이고 끝에서는 흐리게 */
 (function(){
-  var pager = document.querySelector('#p-rev .pager'); if (!pager) return;
+  var pager = document.querySelector('#p-rev .pager'); if (!pager || pager.closest('[data-review-paging]')) return;
   var radios = [].slice.call(document.querySelectorAll('input[name="pgn"]')); if (!radios.length) return;
   pager.classList.add('cpager');
   function cur(){ for (var i = 0; i < radios.length; i++) if (radios[i].checked) return i; return 0; }

@@ -4,7 +4,7 @@
    각 페이지 시안과 같은 마크업으로 그립니다. 글은 window.STORIES_DATA 로 받아요(head의 defer 순서):
      1) js/stories-data.js        — 사본(백오피스가 꺼져 있을 때 · 서버 없이 볼 때). 백오피스가 글이 바뀔 때마다 다시 써요
      2) ../api/public/stories.js  — 백오피스 공개 API(DB의 지금 글). 불러오면 1)을 덮어써요
-   거르기 · 페이지 넘김 · 창 열기는 지금처럼 CSS와 디자이너 스크립트(stories.js · stories-sections.js · cohort-v3.js · hub.js)가 맡아요.
+   후기 데스크톱 거르기·쪽 넘김은 이 파일이 맡고, 나머지 보기·창 열기는 CSS와 기존 스크립트(stories.js · stories-sections.js · cohort-v3.js · hub.js)가 맡아요.
    이 파일은 그 스크립트들보다 먼저 불러옵니다(defer 순서).
    - reviews.html: 카드 · 리스트 · 쪽 번호 · 글 창(.ov), 새 기수 거르기 단추
    - interviews.html: 카드 · 넘김 점 · 상세(.ivd)
@@ -248,7 +248,7 @@
     insertAfter($('.st-main'), ovs);
     // 쪽 번호 넘김 규칙이 모자라면 더 만들어요(CSS에는 7쪽까지)
     for (var k = CSS_PAGES + 1; k <= pages; k++) {
-      var on = '.stories-page .rev:has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn' + k + ':checked)';
+      var on = '.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn' + k + ':checked)';
       css += on + ' .idc:not(.pg' + k + '),' + on + ' .rvr:not(.pg' + k + '){display:none}'
         + '.stories-page .rev:has(#pgn' + k + ':checked) .pager.cpager label[for=pgn' + k + ']{background:#2B2D31;border-color:#2B2D31;color:#fff}';   // 1~5쪽과 같은 지금 쪽 표시(presentation.css)
     }
@@ -533,6 +533,86 @@
     }
   }
 })();
+
+/* Desktop review paging: intersect the published card metadata before slicing.
+   Mobile keeps its independent ten-card projection; IDs, links and radios remain compatible. */
+(function () {
+  'use strict';
+  if (document.documentElement && document.documentElement.dataset.reviewSource === 'spring') return;
+  var section = document.getElementById && document.getElementById('p-rev');
+  if (!section || section.hasAttribute('data-review-paging')) return;
+  var cards = [].slice.call(section.querySelectorAll('.idgrid .idc'));
+  var rows = [].slice.call(section.querySelectorAll('.rvlist .rvr'));
+  var pager = section.querySelector('.pager');
+  if (!cards.length || !pager) return; // Shared published-empty/error states own an empty collection.
+  var radios = [].slice.call(section.querySelectorAll('input[name="pgn"]'));
+  var page = 1, tag = '', pageSize = 12;
+  var count = document.createElement('p');
+  count.className = 'review-count story-state--desktop'; count.setAttribute('role', 'status');
+  section.querySelector('.idgrid').before(count);
+  section.setAttribute('data-review-paging', '');
+  pager.classList.add('cpager'); pager.setAttribute('role', 'navigation'); pager.setAttribute('aria-label', '후기 페이지');
+  radios.forEach(function (radio) { radio.setAttribute('tabindex', '-1'); radio.setAttribute('aria-hidden', 'true'); });
+
+  function button(label, value, disabled) {
+    var node = document.createElement('button'); node.type = 'button'; node.textContent = label; node.disabled = disabled;
+    node.setAttribute('aria-label', label === '←' ? '이전 페이지' : label === '→' ? '다음 페이지' : value + '페이지');
+    if (String(value) === label && page === value) node.setAttribute('aria-current', 'page');
+    node.addEventListener('click', function () {
+      page = value; refresh();
+      var current = pager.querySelector('button[aria-current="page"]');
+      if (current) current.focus({ preventScroll: true });
+      var filters = section.querySelector('.filters');
+      if (filters) filters.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    });
+    return node;
+  }
+  function refresh() {
+    var category = section.querySelector('input[name="rc"]:checked');
+    category = category ? category.id.slice(3) : 'all';
+    var cohort = section.querySelector('input[name="fco"]:checked');
+    var cohortId = cohort ? cohort.id : 'fco_all';
+    var known = /^fco_([0-4])$/.exec(cohortId), extra = /^fco_c(\d+)$/.exec(cohortId);
+    cohort = known ? String(7 - Number(known[1])) : extra ? extra[1] : '';
+    var matching = cards.map(function (card, index) { return { card: card, index: index }; }).filter(function (entry) {
+      return (category === 'all' || entry.card.classList.contains('cat-' + category)) &&
+        (!cohort || entry.card.classList.contains('coh' + cohort)) && (!tag || entry.card.classList.contains('tg' + tag));
+    });
+    var total = Math.max(1, Math.ceil(matching.length / pageSize));
+    page = Math.max(1, Math.min(page, total));
+    var visible = new Set(matching.slice((page - 1) * pageSize, page * pageSize).map(function (entry) { return entry.index; }));
+    cards.forEach(function (card, index) {
+      var shown = String(visible.has(index)); card.setAttribute('data-review-visible', shown);
+      if (rows[index]) rows[index].setAttribute('data-review-visible', shown);
+    });
+    radios.forEach(function (radio) { radio.checked = radio.id === 'pgn' + page; });
+    count.textContent = matching.length + '개의 후기' + (matching.length ? ' · ' + ((page - 1) * pageSize + 1) + '–' + Math.min(page * pageSize, matching.length) : '');
+    // StoryState also toggles `hidden`; this result count keeps a single-page pager
+    // suppressed after its empty-state check, without changing the shared owner.
+    section.setAttribute('data-review-pages', matching.length ? total : 0);
+    pager.replaceChildren(); pager.hidden = matching.length <= pageSize;
+    if (matching.length > pageSize) {
+      pager.appendChild(button('←', page - 1, page === 1));
+      var first = Math.max(1, Math.min(page - 2, total - 4));
+      for (var n = first; n <= Math.min(total, first + 4); n++) pager.appendChild(button(String(n), n, false));
+      pager.appendChild(button('→', page + 1, page === total));
+    }
+  }
+  function fromHash() {
+    var hash = /^#tg-([0-6])$/.exec(location.hash);
+    var nextTag = hash ? hash[1] : /^#r-/.test(location.hash) ? tag : '';
+    if (nextTag !== tag) { tag = nextTag; page = 1; }
+    refresh();
+  }
+  section.addEventListener('change', function (event) {
+    if (event.target.name === 'rc' || event.target.name === 'fco') { page = 1; refresh(); }
+    else if (event.target.name === 'pgn') { page = Number(event.target.id.slice(3)) || 1; refresh(); }
+  });
+  section.addEventListener('reviews:reset', function () { tag = ''; page = 1; refresh(); });
+  addEventListener('hashchange', fromHash);
+  fromHash();
+})();
+/* End desktop review paging. */
 
 /* ---------- 글 안 사진 넘김(.phs, 위에서 그림): 화살표 · 손가락으로 밀기 · 키보드 ←→ (백오피스) ----------
    팀 사이트에서는 stories.js에 있던 부분이에요. 최신 디자이너 stories.js를 그대로 두려고 이 파일로 옮겼어요. */

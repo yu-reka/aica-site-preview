@@ -133,28 +133,21 @@ if (cA) cA.addEventListener('click', function(){
   try { navigator.clipboard.writeText(t).then(done, done); } catch (e) { done(); }
 });
 
-/* ---------- 주거(단독 시안 2026-10-12): 교육장 가운데 지도 + 오른쪽 '동별 주거 정보'(탭 1~5)
-   지도의 동 원을 누르거나 탭을 누르면 그 동 정보로 바뀌고 지도 원도 강조. 탭은 ← → · Home · End ---------- */
+/* ---------- 주거: 교육장 가운데 지도 + 오른쪽 가까운 순 동네 목록(2026-10-28)
+   목록 줄이나 지도의 동 원을 누르면 둘 다 같은 동을 강조 ---------- */
 (function(){
-  var tabs = $$('.hzp-t', MAIN), panels = $$('.hzp', MAIN), dots = $$('.hzmap-d', MAIN); if (!tabs.length) return;
-  function sel(i, focus){
+  var rows = $$('.hzr-b', MAIN), dots = $$('.hzmap-d', MAIN); if (!rows.length) return;
+  function sel(i){
     i = String(i);
-    tabs.forEach(function(t){ var on = t.dataset.i === i; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; if (on && focus) t.focus(); });
-    panels.forEach(function(p){ p.hidden = p.dataset.i !== i; });
-    dots.forEach(function(d){ d.classList.toggle('on', d.dataset.i === i); });
+    rows.forEach(function(r){ var on = r.dataset.i === i; r.setAttribute('aria-pressed', on); r.parentNode.classList.toggle('on', on); });
+    dots.forEach(function(d){ d.classList.toggle('on', d.dataset.i === i); d.setAttribute('aria-pressed', String(d.dataset.i === i)); });
   }
-  tabs.forEach(function(t, k){
-    t.addEventListener('click', function(){ sel(t.dataset.i); });
-    t.addEventListener('keydown', function(e){
-      var j = { ArrowRight:k + 1, ArrowLeft:k - 1, ArrowDown:k + 1, ArrowUp:k - 1, Home:0, End:tabs.length - 1 }[e.key];
-      if (j === undefined) return; e.preventDefault(); sel(tabs[(j + tabs.length) % tabs.length].dataset.i, true);
-    });
-  });
+  rows.forEach(function(r){ r.addEventListener('click', function(){ sel(r.dataset.i); }); });
   dots.forEach(function(d){
     d.addEventListener('click', function(){
       sel(d.dataset.i);
-      var side = $('.hzmw-side', MAIN), r = side.getBoundingClientRect();
-      if (r.top > innerHeight - 120) side.scrollIntoView({ behavior:'smooth', block:'start' });   // 좁은 화면: 지도 아래 정보 칸으로
+      var row = rows.filter(function(r){ return r.dataset.i === d.dataset.i; })[0], r = row.getBoundingClientRect();
+      if (r.top > innerHeight - 80 || r.bottom < 80) row.scrollIntoView({ behavior:'smooth', block:'center' });   // 좁은 화면: 지도 아래 목록의 그 줄로
     });
     d.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); d.dispatchEvent(new MouseEvent('click')); } });
   });
@@ -380,21 +373,6 @@ route();
 topic();
 })();
 
-/* 라이프 인터랙션 */
-(function(){
-  var q=function(s){return document.querySelector(s)}, qa=function(s){return [].slice.call(document.querySelectorAll(s))};
-  // 월세 예산 슬라이더
-  var tabs=q('#tp-house .hzp-tabs');
-  if(tabs){
-    var rents=qa('#tp-house .hzp').map(function(p){var b=p.querySelector('.hzc-rent b');var m=b&&b.textContent.match(/(\d+)/);return m?+m[1]:99});
-    var w=document.createElement('div');w.className='rentslide';
-    w.innerHTML='<label for="rentIn">월세 예산<output id="rentOut">35만 원</output></label><input id="rentIn" type="range" min="20" max="60" step="1" value="35"><small>예산 안에 드는 동만 진하게 보여요</small>';
-    tabs.parentNode.insertBefore(w,tabs);
-    var inp=w.querySelector('input'),out=w.querySelector('output');
-    function up(){var v=+inp.value;out.textContent=v+'만 원';qa('#tp-house .hzp-t').forEach(function(t,i){t.classList.toggle('over',rents[i]>v);t.classList.toggle('fit',rents[i]<=v)})}
-    inp.addEventListener('input',up);up();
-  }
-})();
 (function(){
   var q=function(s){return document.querySelector(s)};
   var bar=q('#tp-food .fdbar .r'); var list=q('#fdList'); if(!bar||!list) return;
@@ -449,7 +427,7 @@ topic();
   note(q('.bx9-g[data-g="23"] .bx9-ph'),'같이 고민하면<br>더 빨리 풀려요',{top:'-18px','--r':'4deg'});
   note(q('.bx9-g[data-g="8"] .bx9-ph'),'밥 먹으면서<br>동기랑 제일 친해져요',{top:'-18px','--r':'4deg'});
   note(q('.bx9-g[data-g="1"] .bx9-ph'),'머리 식힐 땐<br>1층으로 내려가 봐요',{top:'-18px','--r':'4deg'});
-  note(q('#tp-house .hzmw'),'방 구할 땐<br>천천히 비교해 봐요',{left:'-34px',top:'24px','--r':'4deg'});
+
   note(q('#tp-fun .fsg'),'수업 끝나면<br>동네 산책 추천!',{right:'-14px',top:'-80px','--r':'0deg'});
   note(q('#pg-way .wmap'),'여기까지 오는 길,<br>첫걸음부터 응원해요',{left:'calc(66% - 16px)',top:'-136px','--r':'4deg'});   // 10-13: 조금 왼쪽 · 위로, 오른쪽으로 기울임
 })();

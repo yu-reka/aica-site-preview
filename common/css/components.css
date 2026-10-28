@@ -17,8 +17,8 @@
   }
   :is(html[data-nav="side"] .stories-page,.lm-content) .ui-filter :is([aria-pressed="true"],[aria-current]){border-bottom-color:var(--ink);color:var(--ink);font-weight:800}
   :is(html[data-nav="side"] .stories-page,.lm-content) .ui-filter :is(a,button):focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
-  .lm-content :is(.food-filters,.budget-options) button,.stories-page .sm-cohort-chips button{min-height:var(--control-target)}
-  .lm-content .budget-options button,.lm-content .food-filters button{border-color:var(--line-ui)}
+  .lm-content .food-filters button,.stories-page .sm-cohort-chips button{min-height:var(--control-target)}
+  .lm-content .food-filters button{border-color:var(--line-ui)}
   .stories-page .cv3-pin .sm-pin-more{min-height:var(--control-target);padding:8px 0;font-size:12px}
   .ui-rail-arrow{width:44px;height:44px;min-width:44px;min-height:44px}
 }

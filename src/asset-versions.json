@@ -55,10 +55,10 @@
       "life-m": "1028life-merged",
       "life": "1028life-merged",
       "presentation": "1028life-merged",
-      "housing-map": "20261028-map9"
+      "housing-map": "20261028-map-credit-center"
     },
     "js": {
-      "life-m-view": "1028life-merged",
+      "life-m-view": "20261028-map-town-spacing",
       "life-m": "1028life-merged",
       "life": "1028life-merged"
     }

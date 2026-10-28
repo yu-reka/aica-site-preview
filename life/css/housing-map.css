@@ -1,10 +1,10 @@
 /* OSM 기반 주거 지도. 동네 원은 행정 경계가 아닌 대표 지점이다. */
 .life-page .hzmw-map{display:flex;flex-direction:column;justify-content:center;overflow:hidden}
 .life-page svg.housing-map-refined{position:relative;inset:auto;display:block;width:100%;height:auto;max-height:none;overflow:hidden;background:#f4f6f3;aspect-ratio:704/660}
-/* 원룸 건물 수 3단계: 진한 파랑 · 연한 파랑 · 흰 바탕 회색 점선 */
+/* 원룸 건물 수 3단계: 진한 파랑 · 연한 파랑 · 투명 바탕 회색 점선 */
 .life-page .housing-map-refined .hzmap-d .a{fill:rgb(40 87 250 / 30%);stroke:rgb(40 87 250 / 70%);stroke-width:1.5;stroke-dasharray:none;transform-box:fill-box;transform-origin:center;transition:transform .25s ease}
 .life-page .housing-map-refined .hzmap-d.lv3 .a{fill:rgb(40 87 250 / 70%);stroke:#2857fa;stroke-width:2}
-.life-page .housing-map-refined .hzmap-d.lv1 .a{fill:rgb(255 255 255 / 85%);stroke:#5f6b7a;stroke-width:1.5;stroke-dasharray:4 3}
+.life-page .housing-map-refined .hzmap-d.lv1 .a{fill:rgb(255 255 255 / 12%);stroke:#5f6b7a;stroke-width:1.5;stroke-dasharray:4 3}
 .life-page .housing-map-refined .hzmap-d .n{r:14px;fill:#14233f;stroke:none}
 .life-page .housing-map-refined .hzmap-d .nn{font:800 14px var(--ff-sans);fill:#fff;dominant-baseline:central;text-anchor:middle;pointer-events:none}
 .life-page .housing-map-refined .hzmap-d .dn{display:block;font:800 16px var(--ff-sans);fill:#14233f;stroke:#f4f6f3;stroke-width:3px;paint-order:stroke;stroke-linejoin:round;text-anchor:middle;dominant-baseline:central;pointer-events:none}
@@ -13,7 +13,7 @@
 .life-page .housing-map-refined .housing-school{pointer-events:none}
 .life-page .housing-map-refined .housing-school>path{fill:none;stroke:#2857fa;stroke-width:1.4}
 .life-page .housing-map-refined .housing-school>circle{fill:#2857fa;stroke:#fff;stroke-width:2}
-.life-page .housing-map-refined .housing-school-label rect{fill:#fff;stroke:#2857fa;stroke-width:2}
+.life-page .housing-map-refined .housing-school-label rect{fill:#fff;stroke:none;stroke-width:0}
 .life-page .housing-map-refined .housing-school-label text{text-anchor:middle;font-family:var(--ff-sans)}
 .life-page .housing-map-refined .school-title{font-size:13px;font-weight:800;fill:#14233f}
 .life-page .housing-map-refined .school-address{font-size:10px;fill:#68778b}
@@ -23,18 +23,18 @@
 .life-page .hzmw-lg i.lv2{background:rgb(40 87 250 / 30%);border-color:rgb(40 87 250 / 70%)}
 .life-page .hzmw-lg i.lv1{background:#fff;border:2px dashed #5f6b7a}
 .lm-content .housing-map:has(.housing-map-refined){height:auto}
-.lm-content .housing-map svg.housing-map-refined{width:100%;height:auto;aspect-ratio:320/580;transform:none;position:relative;inset:auto}
-.lm-content .housing-map .housing-map-refined .hzmap-d .a{r:40px;stroke-width:1}
-.lm-content .housing-map .housing-map-refined .hzmap-d .n{r:12px}
-.lm-content .housing-map .housing-map-refined .hzmap-d.on .n{r:13px}
-.lm-content .housing-map .housing-map-refined .hzmap-d .nn{font-size:12.5px}
-.lm-content .housing-map .housing-map-refined .hzmap-d .dn{font-size:14px;display:block}
-.lm-content .housing-map .housing-map-refined .school-title{font-size:12px}
+.lm-content .housing-map svg.housing-map-refined{width:100%;height:auto;aspect-ratio:320/320;overflow:hidden;transform:none;position:relative;inset:auto}
+.lm-content .housing-map .housing-map-refined .hzmap-d .a{r:30px;stroke-width:1}
+.lm-content .housing-map .housing-map-refined .hzmap-d .n{r:10px}
+.lm-content .housing-map .housing-map-refined .hzmap-d.on .n{r:11px}
+.lm-content .housing-map .housing-map-refined .hzmap-d .nn{font-size:11px}
+.lm-content .housing-map .housing-map-refined .hzmap-d .dn{font-size:10.5px;stroke-width:2px;display:block}
+.lm-content .housing-map .housing-map-refined .school-title{font-size:11px}
 /* PC 말풍선: 동명동·서남동 원 사이에 같은 여백으로 들어가도록 높이를 줄임 */
 .life-page .housing-map-refined .housing-school-label rect{y:-23px;height:46px}
 /* 모바일 말풍선: 동명동·지산1동 원 사이에 들어가도록 작게 */
-.lm-content .housing-map .housing-school-label rect{x:-48px;y:-20.5px;width:96px;height:42px;rx:10px}
-.lm-content .housing-map .housing-map-credit{font-size:11px;padding:9px 10px}
+.lm-content .housing-map .housing-school-label rect{x:-48px;y:-18px;width:96px;height:36px;rx:10px}
+.lm-content .housing-map .housing-map-credit{font-size:clamp(7px,2.25vw,10px);padding:9px 10px;white-space:nowrap;text-align:center}
 /* 지도 SVG가 모바일 공통 아이콘의 stroke를 상속하지 않게 한다. */
 .life-page svg.housing-map-refined{stroke:none;stroke-width:0}
 .life-page .housing-map-refined .nn,.life-page .housing-map-refined .housing-school-label text{stroke:none}
@@ -68,3 +68,17 @@
 .lm-content .source-caption>span:first-child::before{background:rgb(40 87 250 / 70%);border-color:#2857fa}
 .lm-content .source-caption>span:nth-child(2)::before{background:rgb(40 87 250 / 30%);border-color:rgb(40 87 250 / 70%)}
 .lm-content .source-caption>span:nth-child(3)::before{background:#fff;border:1.5px dashed #5f6b7a}
+/* PC 목록 아래의 남는 높이를 여섯 동네 행에 균등하게 나눈다. */
+@media(min-width:861px){
+  .life-page .hzmw-side .hzl{flex:1}
+  .life-page .hzmw-side .hzr{display:flex;flex:1}
+  .life-page .hzmw-side .hzr-b{align-content:center}
+}
+
+/* 모바일은 번호·동 이름·교육장 중심으로 단순화하고 상세 수치는 아래 목록에서 보여준다. */
+.lm-content .housing-map .housing-map-refined .hz-tags,
+.lm-content .housing-map .housing-map-refined .hzmap-d .pl{display:none}
+.lm-content .housing-map .housing-map-refined .hzmap-d.on .a,
+.lm-content .housing-map .housing-map-refined .hzmap-d:not(.on):hover .a{transform:none;filter:none}
+.lm-content .housing-map .housing-map-refined .hzmap-d.on .a{stroke:#2857fa;stroke-width:2}
+.lm-content .housing-map .housing-map-refined .school-address{font-size:9px}

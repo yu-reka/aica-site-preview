@@ -15,6 +15,30 @@ var NARROW = matchMedia('(max-width: 860px)');   // 폰 · 태블릿: 목록 안
 var MAIN = $('.life-page');
 if (!MAIN) return;
 
+/* Prefer structured source fields; keep combined text compatible with the existing editor. */
+$$('#fdList .fdc').forEach(function(card){
+  var raw = $('.fdc-m', card); if (!raw) return;
+  var original = raw.textContent.trim();
+  var menu = raw.dataset.menu || original, location = raw.dataset.neighborhood || '';
+  // Older backoffice markup still provides a combined menu field.
+  if (!raw.hasAttribute('data-neighborhood')) {
+    var locations = ['동명동','장동','지산동','충장로','금남로2가','금남로5가'];
+    locations.some(function(name){
+      var end = new RegExp('\\s*·\\s*' + name + '$');
+      if (end.test(original)) { menu = original.replace(end, '').trim(); location = name; return true; }
+      if (original.indexOf(name + '에서 ') === 0) { menu = original.slice(name.length + 3).trim(); location = name; return true; }
+      return false;
+    });
+  }
+  var display = document.createElement('p'); display.className = 'fdc-menu'; display.textContent = menu;
+  raw.hidden = true; raw.after(display);
+  if (location) {
+    var place = document.createElement('p'), label = document.createElement('span'); place.className = 'fdc-location';
+    place.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>';
+    label.textContent = location; place.appendChild(label); display.after(place);
+  }
+});
+
 /* ---------- 화면 전환 ([01] 라우터 → 메뉴 주소) ----------
    #facilities(기본) · #tips · #directions. 시안 주소 #facility · #way · #tips/house 도 받음.
    화면 안 위치(#tp-house 등)로 오면 그 화면을 연 뒤 그 위치로. 하위 메뉴 바 · 헤더 드롭다운에서 고르면 site.js가 location.hash를 바꿈 */
@@ -24,6 +48,12 @@ var CANON = { facility:'#facilities', way:'#directions' };
 var NAME = { home:'인사교 LIFE', facility:'시설 둘러보기', tips:'생활 꿀팁', way:'오시는 길' };
 var SUB = { home:'overview', facility:'facilities', tips:'tips', way:'directions' };   // home: 하위 메뉴 바에 표시 없음   // menu.js 하위 메뉴 id
 var BASE_TITLE = document.title;
+function topicFromHash(hash){
+  var raw = Site.decodeHash((hash == null ? location.hash : hash).replace(/^#/, ''));
+  if (raw.indexOf('tips/') === 0) raw = 'tp-' + raw.split('/')[1];
+  var target = document.getElementById(raw);
+  return target?.closest('.tp-sec')?.id || '';
+}
 function route(){
   var raw = Site.decodeHash(location.hash.slice(1)), part = raw.split('/'), id = SCREEN[part[0]], target = null;
   if (id && part[1]) {
@@ -129,21 +159,28 @@ if (cA) cA.addEventListener('click', function(){
     d.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); d.dispatchEvent(new MouseEvent('click')); } });
   });
   sel('0');
+  var wasHousing=topicFromHash()==='tp-house';
+  addEventListener('hashchange', function(event){
+    var hash=event.newURL ? new URL(event.newURL).hash : location.hash;
+    var isHousing=topicFromHash(hash)==='tp-house';
+    if (!isHousing && wasHousing) sel('0');
+    wasHousing=isHousing;
+  });
   // 좁은 화면: 지도가 화면보다 넓어 가로로 밀어 봄 → 처음엔 교육장(가운데)이 보이게
   var mw = $('.hzmw-map', MAIN);
   function center(){ if (mw && mw.scrollWidth > mw.clientWidth + 4 && mw.offsetParent) mw.scrollLeft = (mw.scrollWidth - mw.clientWidth) / 2; }
   center(); addEventListener('hashchange', function(){ setTimeout(center, 60); }); addEventListener('resize', center);
 })();
 
-/* ---------- 근처 먹거리: 식당 · 카페 탭 + 거르기(전체 · 혼밥/혼자 · 여럿이 + 도보 10분 안)
+/* ---------- 근처 먹거리: 식당 · 카페 탭 + 거르기(전체 · 혼밥/혼자 · 여럿이)
    카드 8개씩 숫자 페이지로 표시하고, 탭 · 거르기를 바꾸면 첫 페이지로 돌아감 ---------- */
 (function(){
-  var bs = $$('[data-fg2]', MAIN), nb = $('#fdNear'); if (!bs.length) return;
+  var bs = $$('[data-fg2]', MAIN); if (!bs.length) return;
   var ks = $$('[data-fk]', MAIN), solo = $('[data-fg2="solo"]', MAIN), list = $('.fdg', MAIN);
   var cards = $$('.fdg .fdc', MAIN), empty = $('.fdempty', MAIN), rs = $('[data-fdreset]', MAIN);
   var mw = $('.fdmore2', MAIN), mb = mw && mw.querySelector('button'), pageSize = 8;
   var MID = matchMedia('(max-width: 1100px)');
-  var k = 'food', g = 'all', near = false, all = false, pg = 1, sig = '';
+  var k = 'food', g = 'all', all = false, pg = 1, sig = '';
   var nav = document.createElement('nav'); nav.className = 'cpager fdpager'; nav.setAttribute('aria-label', '먹거리 페이지');
   var dsc = list.nextElementSibling; list.parentNode.insertBefore(nav, dsc && dsc.classList.contains('fdisc') ? dsc.nextSibling : list.nextSibling);   // 10-14: 안내 문구는 카드 바로 아래 오른쪽
   function pbtn(t, to, o){ var b = document.createElement('button'); b.type = 'button'; b.textContent = t;
@@ -152,8 +189,8 @@ if (cA) cA.addEventListener('click', function(){
     return b; }
   function ap(){
     list.dispatchEvent(new Event('foodchange'));
-    var s2 = k + '|' + g + '|' + near; if (s2 !== sig) { sig = s2; pg = 1; }
-    var hits = cards.filter(function(c){ return c.dataset.t === k && (g === 'all' || c.dataset.g === g) && (!near || +c.dataset.w <= 10); });
+    var s2 = k + '|' + g; if (s2 !== sig) { sig = s2; pg = 1; }
+    var hits = cards.filter(function(c){ return c.dataset.t === k && (g === 'all' || c.dataset.g === g); });
     var pages = Math.max(1, Math.ceil(hits.length / pageSize)); if (pg > pages) pg = pages;
     cards.forEach(function(c){ c.hidden = true; });
     hits.forEach(function(c, i){ c.hidden = !(i >= (pg - 1) * pageSize && i < pg * pageSize); });
@@ -184,10 +221,16 @@ if (cA) cA.addEventListener('click', function(){
   });
   function press(b){ bs.forEach(function(x){ x.setAttribute('aria-pressed', x === b); }); }
   bs.forEach(function(b){ b.addEventListener('click', function(){ g = b.dataset.fg2; all = false; press(b); ap(); }); });
-  if (nb) nb.addEventListener('click', function(){ near = !near; all = false; nb.setAttribute('aria-pressed', near); ap(); });
   if (mb) mb.addEventListener('click', function(){ all = true; ap(); mb.setAttribute('aria-expanded', 'true'); });
-  if (rs) rs.addEventListener('click', function(){ g = 'all'; near = false; all = false; press(bs[0]); if (nb) nb.setAttribute('aria-pressed', false); ap(); });
+  if (rs) rs.addEventListener('click', function(){ g = 'all'; all = false; press(bs[0]); ap(); });
   if (MID.addEventListener) MID.addEventListener('change', function(){ if (!all) ap(); });
+  function onFoodPage(hash){ return topicFromHash(hash) === 'tp-food'; }
+  var wasFood = onFoodPage();
+  addEventListener('hashchange', function(event){
+    var isFood=onFoodPage(event.newURL ? new URL(event.newURL).hash : location.hash);
+    if (!isFood && wasFood) { g='all'; pg=1; press(bs[0]); tab(ks[0]); }
+    wasFood=isFood;
+  });
   ap();
 })();
 
@@ -234,6 +277,13 @@ if (cA) cA.addEventListener('click', function(){
       function done(){ g.classList.remove('fs-flip'); busy = false; }
       Promise.all(an.map(function(x){ return x.finished; })).then(done, done);
     }
+    var wasCulture=topicFromHash()==='tp-fun';
+    addEventListener('hashchange', function(event){
+      var hash=event.newURL ? new URL(event.newURL).hash : location.hash;
+      var isCulture=topicFromHash(hash)==='tp-fun';
+      if (!isCulture && wasCulture) { g.classList.remove('is-open'); b.setAttribute('aria-expanded','false'); }
+      wasCulture=isCulture;
+    });
     b.addEventListener('click', function(){ set(!g.classList.contains('is-open')); });
     d.addEventListener('click', function(){ if (!g.classList.contains('is-open')) set(true); });
     addEventListener('resize', function(){ cards.forEach(origin); });
@@ -290,6 +340,7 @@ if (BX) (function(){
     $('.bx9-a.prev', ph).addEventListener('click', function(){ go(k - 1); });
     $('.bx9-a.next', ph).addEventListener('click', function(){ go(k + 1); });
     tb.forEach(function(b, j){ b.addEventListener('click', function(){ go(j); }); });
+    BX.addEventListener('facilities:reset', function(){ go(0); });
     ph.addEventListener('keydown', function(e){ if (e.key === 'ArrowRight') { e.preventDefault(); go(k + 1); } else if (e.key === 'ArrowLeft') { e.preventDefault(); go(k - 1); } });
     var x0 = null;
     ph.addEventListener('pointerdown', function(e){ if (e.target.closest('.bx9-a')) return; x0 = e.clientX; });
@@ -301,6 +352,22 @@ if (BX) (function(){
     var a = e.target.closest('[data-fac]'); if (!a) return;
     var q = a.dataset.fac.split('-'); floor(q[0]);
     var t = document.getElementById('bx9t-' + q[0] + '-' + (q[1] || 0)); if (t) tab(t);
+  });
+  function onFacilityPage(hash){
+    var raw=Site.decodeHash((hash || location.hash).slice(1)), target=document.getElementById(raw);
+    return raw==='facilities' || raw==='facility' || target?.closest('.page')?.dataset.page==='facility';
+  }
+  var wasFacility=onFacilityPage();
+  var initialTarget=document.getElementById(Site.decodeHash(location.hash.slice(1)))?.closest('.bx9-s');
+  floor(initialTarget ? initialTarget.closest('.bx9-g').dataset.g : '1');
+  addEventListener('hashchange', function(event){
+    var isFacility=onFacilityPage(event.newURL ? new URL(event.newURL).hash : location.hash);
+    if (!isFacility && wasFacility) {
+      floor('1');
+      gs.forEach(function(group){ var first=group.querySelector('.bx9-t'); if(first)tab(first); });
+      BX.dispatchEvent(new Event('facilities:reset'));
+    }
+    wasFacility=isFacility;
   });
   addEventListener('resize', place); addEventListener('hashchange', function(){ setTimeout(place, 60); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);

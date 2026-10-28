@@ -42,7 +42,7 @@ html:where(:not([data-menu="stories"]))[data-menu="life"] body,
 /* 알아보기 */
 :where(html:not([data-menu="stories"])) .ov .mbody p,
 .life-page :is(
-  .lh-s, .note, .fdisc, .hzmw-ds, .park2-d, .fdc-r blockquote,
+  .lh-s, .note, .fdisc, .hzmw-ds, .park2-d,
   .adt li p, .fsc-d
 ){
   font-family:var(--ff-sans);
@@ -204,7 +204,10 @@ html:where(:not([data-menu="stories"]))[data-menu="life"] body,
 /* 맛집 카드 대표 메뉴 그림 */
 .life-page .fdc-ph.has-img{background:#fff!important}
 
-.life-page .fdc-ph.has-img>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:10px 6px 4px;z-index:0}
+.life-page .fdc-ph.has-img>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:16px 12px 10px;z-index:0}
+@media(min-width:861px){
+  .life-page .fdc-ph.has-img>img{padding-top:10px;padding-bottom:16px}
+}
 
 .life-page .fdc-ph.has-img>:not(img){z-index:1}
 

@@ -90,13 +90,12 @@ html:where(:not([data-menu="stories"]))[data-menu="life"] body,
 
 .life-page .hzmw{overflow:hidden}
 
-/* 거르기 칩 · 동 고르기 */
-.life-page .chip,
-
+/* 거르기 칩 */
+.life-page .chip{height:40px;border:1px solid var(--st-chip-line)!important;background:#fff;color:var(--graphite);font-size:15px;font-weight:600}
 
 .life-page .chip:hover{border-color:var(--ink)!important;color:var(--ink)}
 
-.life-page .chip[aria-pressed="true"],
+.life-page .chip[aria-pressed="true"]{background:var(--ink)!important;border-color:var(--ink)!important;color:#fff!important}
 
 /* 식당 · 카페 고르기: 큰 알약 탭(선배 이야기 '후기 · 인터뷰' 탭과 같음) */
 .life-page .fdk{padding:0;gap:10px;border:0;background:none;box-shadow:none}
@@ -387,17 +386,7 @@ body .life-page #tp-food .lunch-go .cue svg{flex:none;width:58px;height:56px;mar
 @media (max-width:860px){body .life-page #tp-food .lunch-go .cue em{font-size:26px}
 }
 
-@media (max-width:860px){
-  body .life-page #tp-food .lunch-go .cue{right:auto;flex-direction:row-reverse}
-}
-
-@media (max-width:860px){
-  body .life-page #tp-food .lunch-go .cue{bottom:auto;top:50%;left:calc(100% + 2px);align-items:center;transform:translateY(-50%)}
-
-  body .life-page #tp-food .lunch-go .cue svg{width:46px;height:44px;margin:0 8px 0 0;transform:rotate(45deg) scaleX(-1)}
-
-  body .life-page #tp-food .lunch-go .cue em{transform:rotate(-4deg);margin:0}
-}
+/* 601~860px도 PC 화면이라 안내 글씨는 PC처럼 주사위 왼쪽 위에 둔다(주사위 오른쪽에 두면 거르기 칩을 덮음). 600px 이하는 모바일 화면(life-m) */
 
 /* 생활 꿀팁 · 오시는 길(10-13): 맨 위 인트로 없앰 → 시설 둘러보기처럼 섹션 제목부터. 인트로 문장은 첫 제목 아래 보조글 */
 .life-page .sh .sh-lead{margin:14px 0 0;max-width:62ch;font:400 clamp(15.5px,1.2vw,17px)/1.7 var(--ff-sans);letter-spacing:-.01em;color:var(--graphite);text-wrap:pretty}
@@ -497,8 +486,7 @@ html[data-sub="tips"] .lnb .lnb-tp{animation:lnbTpOpen .28s ease-out}
 /* 주사위 안내 화살표(10-13): 선 끝에 화살촉을 붙이고, 시작은 '고민된다면?' 바로 옆 · 끝은 주사위를 가리키게 */
 body .life-page #tp-food .lunch-go .cue svg{overflow:visible}
 
-@media (min-width:861px){body .life-page #tp-food .lunch-go .cue svg{margin:4px 0 0 2px}
-}
+body .life-page #tp-food .lunch-go .cue svg{margin:4px 0 0 2px}
 
 /* 생활 꿀팁 첫 화면 = 하루 흐름(10-13, 시안 2): 오기 전 → 첫 주 → 매일 점심 → 수업 끝나고. 점선 위 번호 + 세로 사진(3:4) 네 장 */
 body .life-page .tp-flow{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;}
@@ -553,6 +541,9 @@ body .life-page .tp-sec .sh + .hst{margin-top:clamp(20px,2.4vw,32px)}
 
 /* 주제 제목(어느 동에 살면…)과 01 소제목 사이 여백 넓힘(10-14) */
 body .life-page #tp-food .sh + .fdbar{margin-top:clamp(20px,2.4vw,32px)}
+
+/* 601~860px: 주사위 위 안내 글씨가 제목과 겹치지 않게 제목과 칩 줄 사이를 넓힘 */
+@media (max-width:860px){body .life-page #tp-food .sh + .fdbar{margin-top:64px}}
 
 /* 먹거리: 제목과 식당/카페 버튼 사이 여백(10-14) */
 body .life-page #tp-food .fdk-b{height:40px;padding:0 18px;font-size:15px}

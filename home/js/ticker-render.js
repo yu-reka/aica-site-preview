@@ -38,5 +38,5 @@
     s.onerror = function () { if (onError) onError(); else render(); };
     document.head.appendChild(s);
   }
-  load('../api/public/stories.js', function () { load('../stories/js/stories-data.js?v=design-20261027-serviceintro'); });
+  load('../api/public/stories.js', function () { load('../stories/js/stories-data.js?v=design-20261029-hub-honors'); });
 })();

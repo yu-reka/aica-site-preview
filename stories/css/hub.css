@@ -132,6 +132,7 @@ html[data-nav="side"] .stories-hub{background:var(--surface)}
 .hb-ivf-q::before{content:"“";color:var(--primary-bright)}
 .hb-ivf-q::after{content:"”";color:var(--primary-bright)}
 .hb-ivf .hb-by{display:block;margin-top:16px;font-size:13px;color:var(--graphite)}
+.hb-ivf .hb-by[hidden]{display:none}
 /* 목록: 세 줄을 대표 사진 높이에 나눔, 줄 사이 가는 선.
    10-13 다듬기: 첫 썸네일 윗변 = 대표 사진 윗변, 마지막 썸네일 아랫변 = 대표 사진 아랫변. 남는 높이를 1 : 2 : 1로 나눠(첫 줄은 위, 가운데는 가운데, 끝 줄은 아래에 붙임)
    썸네일과 선 사이 간격이 네 곳 모두 같음(전에는 줄마다 가운데 정렬이라 위아래 끝이 대표 사진과 14px씩 어긋남) */

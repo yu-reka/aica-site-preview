@@ -16,6 +16,22 @@
 @font-face{font-family:"Paperlogy";src:url("../../../common/assets/fonts/Paperlogy-6SemiBold.woff2") format("woff2");font-weight:550 749;font-style:normal;font-display:swap}
 @font-face{font-family:"Paperlogy";src:url("../../../common/assets/fonts/Paperlogy-8ExtraBold.woff2") format("woff2");font-weight:750 849;font-style:normal;font-display:swap}
 @font-face{font-family:"Paperlogy";src:url("../../../common/assets/fonts/Paperlogy-9Black.woff2") format("woff2");font-weight:850 900;font-style:normal;font-display:swap}
+/* 숫자 · 영문 Anton, 랜딩 코드 글씨 JetBrains Mono: Google Fonts의 라틴 서브셋 그대로(2026-10-29 로컬화). JetBrains Mono는 가변 글꼴 한 파일을 400 · 500 · 700에 씁니다 */
+@font-face{font-family:"Anton";src:url("../../../common/assets/fonts/Anton-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"JetBrains Mono";src:url("../../../common/assets/fonts/JetBrainsMono-Variable.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"JetBrains Mono";src:url("../../../common/assets/fonts/JetBrainsMono-Variable.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"JetBrains Mono";src:url("../../../common/assets/fonts/JetBrainsMono-Variable.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+/* 손글씨 */
+@font-face{font-family:"Caveat";src:url("../../../common/assets/fonts/Caveat-SemiBold.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Caveat";src:url("../../../common/assets/fonts/Caveat-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Nanum Pen Script";src:url("../../../common/assets/fonts/NanumPenScript-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+/* 관리자 페이지 편집기 호환 별칭: 편집기 글꼴 목록(backend page/editor/format.js · canvas.js)이 저장하는 이름. 사이트 CSS는 위 공통 이름을 씁니다.
+   School Paperlogy는 Black 한 파일이라 어떤 굵기든 Black으로 보입니다(예전 about.css 정의 그대로) */
+@font-face{font-family:"School Pretendard";src:url("../../../common/assets/fonts/Pretendard-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"School Pretendard";src:url("../../../common/assets/fonts/Pretendard-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"School Pretendard";src:url("../../../common/assets/fonts/Pretendard-Black.woff2") format("woff2");font-weight:900;font-display:swap}
+@font-face{font-family:"School Paperlogy";src:url("../../../common/assets/fonts/Paperlogy-9Black.woff2") format("woff2");font-weight:900;font-style:normal;font-display:swap}
+@font-face{font-family:"School Giants";src:url("../../../common/assets/fonts/Giants-Bold.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
 
 :root{
   /* 색 */

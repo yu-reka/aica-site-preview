@@ -1,9 +1,9 @@
 {
   "about": {
     "css": {
-      "about-m": "1027project-source",
-      "about": "1027news-links",
-      "presentation": "1022anchor40"
+      "about-m": "1029local-fonts",
+      "about": "1029local-fonts",
+      "presentation": "1029local-fonts"
     },
     "js": {
       "about-m": "1026dockrepeat",
@@ -29,9 +29,9 @@
       "components": "1028housing-no-rent",
       "masthead": "1016cleanup",
       "navigation-mobile": "1016nav",
-      "presentation": "1016split",
+      "presentation": "1029local-fonts",
       "site": "1026footer-touch44",
-      "tokens": "1021audit-colors"
+      "tokens": "1029local-fonts"
     },
     "js": {
       "availability": "1026loading-soft-backdrop",

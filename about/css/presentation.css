@@ -188,10 +188,10 @@ html.school-about main .career-program-summary{font-size:15px!important;line-hei
   html.school-about main :is(.why-school-heading, .common-courses-heading, .guest-lecture-heading, .career-guide-heading) > p{font-size:16px!important}
 }
 
-html.school-about main#main :is(.hero-masthead>span,.cohort-card-header>span,.cohort-fact dt,.cohort-value small,div.partner-node>p,.graduate-count>span,.graduate-breakdown dt,.graduate-breakdown dd>small,.graduate-breakdown strong>span,.graduate-stats-note,.why-school-learning-step small,.education-hours-stat strong>small,.career-program-funding small,.graduate-total small,.daily-routine-period,.activity-project-description,.career-program-meta>span,.career-program-targets dt,.career-program-targets dd){font-family:'School Paperlogy','Paperlogy','Pretendard',sans-serif!important}
+html.school-about main#main :is(.hero-masthead>span,.cohort-card-header>span,.cohort-fact dt,.cohort-value small,div.partner-node>p,.graduate-count>span,.graduate-breakdown dt,.graduate-breakdown dd>small,.graduate-breakdown strong>span,.graduate-stats-note,.why-school-learning-step small,.education-hours-stat strong>small,.career-program-funding small,.graduate-total small,.daily-routine-period,.activity-project-description,.career-program-meta>span,.career-program-targets dt,.career-program-targets dd){font-family:'Paperlogy','Pretendard',sans-serif!important;font-weight:900!important}
 
 /* 알아보기 큰 숫자 = Giants(10-14, 이야기 · 체크의 강조 숫자와 같게). 단위(만원 · 명 · 시간)는 Paperlogy */
-html.school-about main#main :is(.career-program-funding>strong,.graduate-total>strong,.education-hours-stat .education-hours-number,.education-hours-stat .education-hours-number-label,.graduate-count>strong,.cohort-value>strong,.graduate-breakdown dd>strong,.cohort-card-header>h4){font-family:'Giants','School Paperlogy',sans-serif!important;font-weight:700!important;letter-spacing:0!important}
+html.school-about main#main :is(.career-program-funding>strong,.graduate-total>strong,.education-hours-stat .education-hours-number,.education-hours-stat .education-hours-number-label,.graduate-count>strong,.cohort-value>strong,.graduate-breakdown dd>strong,.cohort-card-header>h4){font-family:'Giants','Paperlogy',sans-serif!important;font-weight:700!important;letter-spacing:0!important}
 
 /* 알아보기 6기 · 7기 비교 카드(10-14): 7기 머리 글자 왼쪽 정렬(6기와 같게). 수치 줄은 왼쪽 정렬 그대로(10-14 되돌림) */
 html.school-about main#main .cohort-card--current .cohort-card-header{justify-content:flex-start!important;text-align:left!important}
@@ -228,7 +228,7 @@ html.school-about main#main .common-course-caption{text-align:center}
 
 html.school-about main#main .common-course-caption :is(h3,p){text-align:center;margin-left:auto;margin-right:auto}
 
-html.school-about main#main .common-course-caption p{font-family:'School Pretendard','Pretendard',sans-serif!important;font-weight:500!important}
+html.school-about main#main .common-course-caption p{font-family:'Pretendard',sans-serif!important;font-weight:500!important}
 
 /* 7기 체크 낙서 위치 · 색 바꿈(10-14): 7기 카드 오른쪽 위 모서리(파란 머리)에 걸치게, 색은 'Real interview'와 같은 하늘색(tab-sky #8CC3FF + 옅은 그림자) */
 html.school-about main#main .cohort-doodle path{stroke:#8CC3FF;}

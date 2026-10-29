@@ -31,7 +31,7 @@
       "navigation-mobile": "1016nav",
       "presentation": "1029local-fonts",
       "site": "1026footer-touch44",
-      "tokens": "1029local-fonts"
+      "tokens": "1029pretendard-subset"
     },
     "js": {
       "availability": "1026loading-soft-backdrop",

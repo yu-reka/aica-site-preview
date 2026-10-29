@@ -70,7 +70,7 @@
         "hub": "1026month-modal-wrap"
       },
       "detail-navigation": "1020outsidegrid",
-      "hub": "1029hub-honors-feature",
+      "hub": "1029summary-clamp",
       "presentation": {
         "hub": "1016split",
         "default": "1022notaglabel"
@@ -88,7 +88,7 @@
       },
       "stories": "1028review-filter-pages",
       "story-state": "1020states",
-      "interview-honors": "1026honors-no-hint",
+      "interview-honors": "1029summary-clamp",
       "project-video": "1027prep-always"
     },
     "js": {

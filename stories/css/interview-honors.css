@@ -11,9 +11,8 @@
   .stories-page .iv-honors .sm-ivf-c .ph .play i{transform:scale(.8)}
   .stories-page .iv-honors .sm-ivf-tx{display:flex;flex-direction:column;gap:6px;padding:30px 16px 16px}
   .stories-page .iv-honors .sm-ivf-tx b{font-size:17px;font-weight:800;line-height:1.4;letter-spacing:-.02em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .stories-page .iv-honors .sm-ivf-tx q,.stories-page .iv-honors .sm-ivf-tx .sm-ivf-summary{font-family:"Nanum Pen Script",cursive;font-size:20px;line-height:1.2;color:#2457F5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .stories-page .iv-honors .sm-ivf-tx q,.stories-page .iv-honors .sm-ivf-tx .sm-ivf-summary{font-family:"Nanum Pen Script",cursive;font-size:20px;line-height:1.2;color:#2457F5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:2.4em}
   .stories-page .iv-honors .sm-ivf-tx .sm-ivf-summary{margin:0}
-  .stories-page .iv-honors .sm-ivf-tx q,.stories-page .iv-honors .sm-ivf-tx .sm-ivf-summary{display:block;max-height:2.4em}
   .stories-page .iv-honors .sm-ivf-tx span{font-size:13px;color:#566175}
   .stories-page .iv-honors .sm-ivf .sm-arrow{top:159px}
  .stories-page .iv-honors .sm-ivf .sm-arrow--prev{left:calc(50% - var(--cw) / 2 - 21px)}

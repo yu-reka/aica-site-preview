@@ -128,7 +128,8 @@ html[data-nav="side"] .stories-hub{background:var(--surface)}
 /* 카드 제목 3단계(10-13 다듬기): 대표 21~24 · 카드 18 · 작은 카드 16.5. 보조 줄은 13 하나 */
 .hb-ivf h3{margin-top:12px;font-size:clamp(21px,1.7vw,24px);font-weight:700;line-height:1.35;letter-spacing:-.025em;text-wrap:balance}
 .hb-ivf-q{margin-top:10px;max-width:48ch;font-family:var(--ff-sans);font-size:15px;line-height:1.65;letter-spacing:-.01em;color:var(--graphite);
-  display:block}
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:3.3em}
+.hb-ivf-q[hidden]{display:none}
 .hb-ivf-q::before{content:"“";color:var(--primary-bright)}
 .hb-ivf-q::after{content:"”";color:var(--primary-bright)}
 .hb-ivf .hb-by{display:block;margin-top:16px;font-size:13px;color:var(--graphite)}

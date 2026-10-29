@@ -56,7 +56,7 @@ export function designPreviewData() {
     }),
     interviews: content.stories.interviews.map((source, index) => {
       const record = circleDesignName(source);
-      return {...meta(record, 910000, 'iv-p', index), cohort: record.cohort, author: record.author,
+      return {...meta(record, 910000, 'iv-p', index), honors: index === 0, cohort: record.cohort, author: record.author,
         title: title(record.title), track: record.track, summary: record.summary,
         img: image(record.thumbnail, record.thumbnailAlt), imgLarge: image(record.heroImage, record.heroAlt), art: art(record),
         photos: photos(record),

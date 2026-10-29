@@ -47,7 +47,7 @@
     },
     "js": {
       "home": "1027ticker-tap-state",
-      "ticker-render": "design-20261027-serviceintro"
+      "ticker-render": "design-20261029-hub-honors"
     }
   },
   "life": {
@@ -70,7 +70,7 @@
         "hub": "1026month-modal-wrap"
       },
       "detail-navigation": "1020outsidegrid",
-      "hub": "1026honors-separate",
+      "hub": "1029hub-honors-feature",
       "presentation": {
         "hub": "1016split",
         "default": "1022notaglabel"
@@ -99,13 +99,13 @@
       "project-reading": "1027list-markers",
       "projects-filter": "1023course",
       "review-notes": "1021centerellipsis",
-      "stories-data": "design-20261027-serviceintro",
+      "stories-data": "design-20261029-hub-honors",
       "stories-m-reviews": {
         "default": "1028shared-controls",
         "legacyLoader": "1028shared-controls"
       },
       "stories-m": "1028shared-controls",
-      "stories-render": "1028review-filter-pages",
+      "stories-render": "1029hub-honors-feature",
       "stories-sections": "1023cardrows",
       "stories": "1028clean-list-hash-main",
       "story-state": "1028stable-filter-reset",

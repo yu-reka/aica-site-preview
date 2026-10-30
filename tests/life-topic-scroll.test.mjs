@@ -7,7 +7,7 @@ const source = readFileSync(new URL('../life/js/life.js', import.meta.url), 'utf
 const routers = source.slice(source.indexOf("var PG = $$(':scope > .page', MAIN);"), source.indexOf("addEventListener('hashchange', topic);"));
 
 // Run both shipped routers, including their timers, with ready and delayed fonts.
-async function open(hash, delayedFonts) {
+async function open(hash, delayedFonts, mobile = false) {
   const timers = [], scrolls = [];
   let fontsReady, now = 0;
   const pages = ['home', 'facility', 'tips', 'way'].map(name => ({
@@ -25,7 +25,8 @@ async function open(hash, delayedFonts) {
   const ready = new Promise(resolve => { fontsReady = resolve; });
   if (!delayedFonts) fontsReady();
   const context = {
-    MAIN: {}, $: () => null, $$: selector => selector === ':scope > .page' ? pages : [],
+    MAIN: { classList: { contains: () => true } }, matchMedia: () => ({ matches: mobile }),
+    $: () => null, $$: selector => selector === ':scope > .page' ? pages : [],
     Site: { decodeHash: value => decodeURIComponent(value) }, location,
     document: { title: 'Life', documentElement: { dataset: {} }, fonts: { ready },
       getElementById: id => [...pages, ...sections, detail].find(el => el.id === id) || null },
@@ -35,6 +36,7 @@ async function open(hash, delayedFonts) {
     dispatchEvent() {}, Event: class {}, addEventListener() {},
   };
   vm.runInNewContext(routers + '\nroute();\ntopic();', context);
+  const scheduledDelays = timers.map(timer => timer.at);
   const flush = async () => {
     await Promise.resolve();
     while (timers.length) {
@@ -47,8 +49,16 @@ async function open(hash, delayedFonts) {
   };
   await flush();
   if (delayedFonts) { fontsReady(); await flush(); }
-  return { scrolls, hash: location.hash, tips };
+  return { scrolls, hash: location.hash, tips, scheduledDelays };
 }
+
+test('mobile topic transitions do not queue a late scroll reset after the next menu click', async () => {
+  const mobile = await open('#tp-food', false, true);
+  assert.deepEqual(mobile.scheduledDelays, []);
+  assert.ok(mobile.scrolls.every(value => value === 'top'));
+  const desktop = await open('#tp-food', false);
+  assert.deepEqual(desktop.scheduledDelays, [200]);
+});
 
 for (const delayedFonts of [false, true]) {
   for (const topic of ['house', 'food', 'fun']) {

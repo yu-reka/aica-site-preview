@@ -101,11 +101,17 @@ function topic(){
     a.classList.toggle('is-on', on);   // 왼쪽 메뉴는 site.js가 aria-current를 다시 정하므로 표시는 클래스로
     if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
-  if (now !== was || el === sec) setTimeout(function(){
-    // 주제 안의 앵커는 route()의 위치 맞춤을 유지한다.
-    if (!sec || el === sec) window.scrollTo({ top: 0, behavior: 'instant' });
-    dispatchEvent(new Event('resize'));
-  }, 200);
+  if (now !== was || el === sec) {
+    var settleTopic = function(){
+      // 주제 안의 앵커는 route()의 위치 맞춤을 유지한다.
+      if (!sec || el === sec) window.scrollTo({ top: 0, behavior: 'instant' });
+      dispatchEvent(new Event('resize'));
+    };
+    // 모바일은 별도 뷰를 바로 그린다. 데스크톱 레이아웃을 기다리는
+    // 타이머가 다음 메뉴 이동이나 사용자의 스크롤을 뒤늦게 덮지 않게 한다.
+    if (matchMedia('(max-width:600px)').matches && MAIN.classList.contains('lm-ready')) settleTopic();
+    else setTimeout(settleTopic, 200);
+  }
 }
 addEventListener('hashchange', topic);
 function lnbTopics(){

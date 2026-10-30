@@ -4,9 +4,15 @@
    Small text on tinted surfaces uses --text-secondary or --text-on-soft.
 */
 
-/* 글꼴 파일은 common/assets/fonts. Pretendard는 400 · 700 · 900 파일만 있어 500 이하는 Regular, 600~800은 Bold로 씁니다 */
+/* 글꼴 파일은 common/assets/fonts. Pretendard는 400 · 700 · 900 파일만 있어 500 이하는 Regular, 600~800은 Bold로 씁니다
+   Pretendard는 굵기마다 두 파일(2026-10-29): 이름.woff2 = KS X 1001 한글 2,350자 + 사이트 · DB 글에 실제로 나온 글자(예: 으쌰으쌰의 쌰) + 라틴-1 · 문장부호 · 기호 · 자모,
+   이름-ext.woff2 = 나머지(드문 한글 · 라틴 확장 · 그리스 · 키릴 등). 같은 이름 · 굵기의 두 규칙은 뒤에 쓴 것부터 찾으므로 보통은 앞 파일만 받고,
+   거기 없는 글자가 나올 때만 -ext를 받습니다(-ext 규칙의 unicode-range 안일 때). 두 파일을 합치면 원래 Pretendard 글자 전부 */
+@font-face{font-family:"Pretendard";src:url("../../../common/assets/fonts/Pretendard-Regular-ext.woff2") format("woff2");font-weight:100 500;font-style:normal;font-display:swap;unicode-range:U+0100-052F,U+0E3F,U+1D00-1FFF,U+A640-A9FF,U+AC00-D7A3,U+E000-F6FF,U+F0000-F00FF}
 @font-face{font-family:"Pretendard";src:url("../../../common/assets/fonts/Pretendard-Regular.woff2") format("woff2");font-weight:100 500;font-style:normal;font-display:swap}
+@font-face{font-family:"Pretendard";src:url("../../../common/assets/fonts/Pretendard-Bold-ext.woff2") format("woff2");font-weight:600 800;font-style:normal;font-display:swap;unicode-range:U+0100-052F,U+0E3F,U+1D00-1FFF,U+A640-A9FF,U+AC00-D7A3,U+E000-F6FF,U+F0000-F00FF}
 @font-face{font-family:"Pretendard";src:url("../../../common/assets/fonts/Pretendard-Bold.woff2") format("woff2");font-weight:600 800;font-style:normal;font-display:swap}
+@font-face{font-family:"Pretendard";src:url("../../../common/assets/fonts/Pretendard-Black-ext.woff2") format("woff2");font-weight:900;font-style:normal;font-display:swap;unicode-range:U+0100-052F,U+0E3F,U+1D00-1FFF,U+A640-A9FF,U+AC00-D7A3,U+E000-F6FF,U+F0000-F00FF}
 @font-face{font-family:"Pretendard";src:url("../../../common/assets/fonts/Pretendard-Black.woff2") format("woff2");font-weight:900;font-style:normal;font-display:swap}
 @font-face{font-family:"Giants";src:url("../../../common/assets/fonts/Giants-Bold.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
 /* Paperlogy 한 가족(2026-10-13 정리): 전에는 Paperlogy · Paperlogy Text · Paperlogy Title · Paperlogy XB · School Paperlogy 다섯 이름.
@@ -27,8 +33,11 @@
 @font-face{font-family:"Nanum Pen Script";src:url("../../../common/assets/fonts/NanumPenScript-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
 /* 관리자 페이지 편집기 호환 별칭: 편집기 글꼴 목록(backend page/editor/format.js · canvas.js)이 저장하는 이름. 사이트 CSS는 위 공통 이름을 씁니다.
    School Paperlogy는 Black 한 파일이라 어떤 굵기든 Black으로 보입니다(예전 about.css 정의 그대로) */
+@font-face{font-family:"School Pretendard";src:url("../../../common/assets/fonts/Pretendard-Regular-ext.woff2") format("woff2");font-weight:400;font-display:swap;unicode-range:U+0100-052F,U+0E3F,U+1D00-1FFF,U+A640-A9FF,U+AC00-D7A3,U+E000-F6FF,U+F0000-F00FF}
 @font-face{font-family:"School Pretendard";src:url("../../../common/assets/fonts/Pretendard-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"School Pretendard";src:url("../../../common/assets/fonts/Pretendard-Bold-ext.woff2") format("woff2");font-weight:700;font-display:swap;unicode-range:U+0100-052F,U+0E3F,U+1D00-1FFF,U+A640-A9FF,U+AC00-D7A3,U+E000-F6FF,U+F0000-F00FF}
 @font-face{font-family:"School Pretendard";src:url("../../../common/assets/fonts/Pretendard-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"School Pretendard";src:url("../../../common/assets/fonts/Pretendard-Black-ext.woff2") format("woff2");font-weight:900;font-display:swap;unicode-range:U+0100-052F,U+0E3F,U+1D00-1FFF,U+A640-A9FF,U+AC00-D7A3,U+E000-F6FF,U+F0000-F00FF}
 @font-face{font-family:"School Pretendard";src:url("../../../common/assets/fonts/Pretendard-Black.woff2") format("woff2");font-weight:900;font-display:swap}
 @font-face{font-family:"School Paperlogy";src:url("../../../common/assets/fonts/Paperlogy-9Black.woff2") format("woff2");font-weight:900;font-style:normal;font-display:swap}
 @font-face{font-family:"School Giants";src:url("../../../common/assets/fonts/Giants-Bold.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}

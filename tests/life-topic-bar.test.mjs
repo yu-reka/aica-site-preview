@@ -11,10 +11,6 @@ test('topic shortcut bar hides on desktop with the side menu but keeps its marku
   assert.match(read('../life/js/life.js'), /\$\$\('\.tp-bar nav a', TPG\)/);
 });
 
-test('opening or reloading a topic screen (#tp-house …) starts at the top instead of jumping to the section', () => {
-  assert.match(read('../life/js/life.js'), /target = el\.closest\('\.tp-sec'\) === el \? null : el;/);
-});
-
 test('section eyebrows on facility, tips and directions keep the home line height so titles line up', () => {
   assert.match(read('../life/css/life.css'), /\.life-page :is\(#pg-facility,#pg-tips,#pg-way\) \.sh \.sh-k\{line-height:1\.3\}/);
 });

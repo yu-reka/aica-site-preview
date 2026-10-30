@@ -65,6 +65,8 @@ function route(){
     if (pg && PG.indexOf(pg) > -1) { id = pg.dataset.page; target = el; }
     else return;   // 화면 밖 위치(본문으로 바로가기 #main 등)나 모르는 주소: 지금 화면 그대로
   }
+  // 주제 자체는 예전 #tips/house 주소도 상단에서 시작하고, 내부 위치만 내려간다.
+  if (target && target.closest('.tp-sec') === target) target = null;
   if (!id) id = 'home';   // 주소 없이 들어오면(헤더 '인사교 라이프') 히어로 페이지
   var cur = document.getElementById('pg-' + id), was = !cur.hidden;
   PG.forEach(function(p){ p.hidden = p !== cur; });
@@ -99,7 +101,11 @@ function topic(){
     a.classList.toggle('is-on', on);   // 왼쪽 메뉴는 site.js가 aria-current를 다시 정하므로 표시는 클래스로
     if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
-  if (now !== was || el === sec) setTimeout(function(){ window.scrollTo({ top: 0, behavior: 'instant' }); dispatchEvent(new Event('resize')); }, 200);
+  if (now !== was || el === sec) setTimeout(function(){
+    // 주제 안의 앵커는 route()의 위치 맞춤을 유지한다.
+    if (!sec || el === sec) window.scrollTo({ top: 0, behavior: 'instant' });
+    dispatchEvent(new Event('resize'));
+  }, 200);
 }
 addEventListener('hashchange', topic);
 function lnbTopics(){

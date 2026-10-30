@@ -101,7 +101,11 @@ function topic(){
     a.classList.toggle('is-on', on);   // 왼쪽 메뉴는 site.js가 aria-current를 다시 정하므로 표시는 클래스로
     if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
-  if (now !== was || el === sec) setTimeout(function(){ window.scrollTo({ top: 0, behavior: 'instant' }); dispatchEvent(new Event('resize')); }, 200);
+  if (now !== was || el === sec) setTimeout(function(){
+    // 주제 안의 앵커는 route()의 위치 맞춤을 유지한다.
+    if (!sec || el === sec) window.scrollTo({ top: 0, behavior: 'instant' });
+    dispatchEvent(new Event('resize'));
+  }, 200);
 }
 addEventListener('hashchange', topic);
 function lnbTopics(){

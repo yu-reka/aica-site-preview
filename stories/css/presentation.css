@@ -50,7 +50,7 @@ box-shadow:inset 0 0 0 1px rgba(120,86,48,.18),inset 0 2px 12px rgba(90,60,28,.1
 
 .stories-page #p-rev .idc.cat-life{--pi:#C6EBF1}
 
-.stories-page #p-rev .idc.cat-class{--pi:#FBEFA4}
+.stories-page #p-rev .idc.cat-class{--pi:#FFF1A6}
 
 .stories-page #p-rev .idc.cat-proj{--pi:#D3F0CF}
 
@@ -105,11 +105,11 @@ box-shadow:inset 0 0 0 1px rgba(120,86,48,.18),inset 0 2px 12px rgba(90,60,28,.1
 .stories-page #p-rev .idc .cbar b,
 .stories-page #p-rev .idc .cbar span{color:var(--graphite)!important}
 
-.stories-page #p-rev .idc{--pi:#FAEDA6!important}
+.stories-page #p-rev .idc{--pi:#FFF1A6!important}
 
-.stories-page #p-rev .idc:nth-child(3n+1){--pi:#FBF0B4!important}
+.stories-page #p-rev .idc:nth-child(3n+1){--pi:#FFF1A6!important}
 
-.stories-page #p-rev .idc:nth-child(3n){--pi:#F7E79A!important}
+.stories-page #p-rev .idc:nth-child(3n){--pi:#FFF1A6!important}
 
 /* 후기 글 창(모달) 색 빼기(10-12): 분류색 머리 바탕 → 연회색, 분류 점 · 분류명 · 기수 숫자 → 회색/남색 */
 .stories-page .ov .mcat::before{background:var(--g300)}

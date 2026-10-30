@@ -221,6 +221,28 @@
   dock.setAttribute('aria-label', '인사교 라이프 빠른 이동');
   if (nav) { dock.append(nav.querySelector('.lnb-list').cloneNode(true)); document.body.append(dock); }
 
+  // These pills switch complete mobile views, rather than scroll to the hidden
+  // desktop anchors. Handle both menus before the shared document link handler.
+  function navigatePill(event) {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey ||
+        !matchMedia('(max-width:600px)').matches || !host.classList.contains('lm-ready')) return;
+    const link = event.target.closest('.lnb-list>li>a[href]');
+    if (!link || !['#overview', '#facilities', '#tips', '#directions'].includes(link.hash)) return;
+    event.preventDefault();
+    if (link.hash !== location.hash) {
+      const oldURL = location.href;
+      history.pushState(null, '', link.href);
+      // Run the existing route/state reset/nav sync in this click, without the
+      // browser's smooth anchor scroll or an extra asynchronous hash navigation.
+      dispatchEvent(new HashChangeEvent('hashchange', { oldURL, newURL: location.href }));
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    const heading = $('h2');
+    if (heading) { heading.setAttribute('tabindex', '-1'); heading.focus({ preventScroll: true }); }
+  }
+  nav?.addEventListener('click', navigatePill);
+  dock.addEventListener('click', navigatePill);
+
   function syncNav() {
     const group = state.page.startsWith('tp-') ? 'tips' : state.page;
     [nav, dock].filter(Boolean).forEach(menu => menu.querySelectorAll('.lnb-list>li>a').forEach(link => {

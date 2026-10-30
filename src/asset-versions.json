@@ -59,8 +59,8 @@
     },
     "js": {
       "life-m-view": "20261028-map-town-spacing",
-      "life-m": "1028life-merged",
-      "life": "1030topic-alias"
+      "life-m": "1030life-pill-navigation",
+      "life": "1030life-pill-navigation"
     }
   },
   "stories": {
@@ -72,8 +72,8 @@
       "detail-navigation": "1020outsidegrid",
       "hub": "1029summary-clamp",
       "presentation": {
-        "hub": "1016split",
-        "default": "1022notaglabel"
+        "hub": "1030paper-yellow",
+        "default": "1030paper-yellow"
       },
       "projects-grid": "1021listbadges",
       "review-notes": "1022footerspacing",

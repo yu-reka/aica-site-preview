@@ -18,7 +18,7 @@
     },
     "js": {
       "check-m": "1016integrated",
-      "check": "1026noselfcheck",
+      "check": "1030benefits-anchor",
       "faq-data": "design-20261022",
       "faq-render": "1020"
     }
@@ -34,7 +34,7 @@
       "tokens": "1029pretendard-subset"
     },
     "js": {
-      "availability": "1026loading-soft-backdrop",
+      "availability": "1030offline-art60",
       "site-layout": "1023newtab",
       "site": "1027lnb-page-start2",
       "track": "1027admin-views",
@@ -52,15 +52,15 @@
   },
   "life": {
     "css": {
-      "life-m": "1028life-merged",
+      "life-m": "1030building-title",
       "life": "1028eyebrow-lh",
       "presentation": "1028topic-top-chips",
       "housing-map": "20261028-map-credit-center"
     },
     "js": {
-      "life-m-view": "20261028-map-town-spacing",
-      "life-m": "1030life-pill-navigation",
-      "life": "1030life-pill-navigation"
+      "life-m-view": "1030building-title",
+      "life-m": "1030address-toast",
+      "life": "1030directions-address"
     }
   },
   "stories": {

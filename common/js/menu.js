@@ -137,7 +137,7 @@ const SITE_LINKS = {
 
 const SITE_INFO = {
   "name": "인공지능사관학교",
-  "address": "광주광역시 동구 제봉로 92 (대성학원 1-3층)",
+  "address": "광주광역시 동구 제봉로 92 (광주대성학원, 1~3층)",
   "phone": "062-716-0677",
   "email": "aica_hrd@aicluster.or.kr",
   "kakaoChannel": "@인공지능사관학교",

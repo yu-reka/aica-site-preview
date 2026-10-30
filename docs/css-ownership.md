@@ -6,10 +6,10 @@
 
 | 범위 | 파일 | 담당 내용 |
 | --- | --- | --- |
-| 공통 기반 | `common/css/tokens.css`, `base.css` | 브랜드 변수·폰트, 기본 요소 |
+| 공통 기반 | `common/css/tokens.css`, `base.css` | 브랜드 변수·모든 `@font-face`(로컬 글꼴만, 외부 웹폰트 없음), 기본 요소 |
 | 공통 구조 | `common/css/site.css`, `lnb.css` | 헤더·드로어·푸터, 데스크톱 좌측 메뉴 |
 | 이야기·라이프 배너 | `common/css/masthead.css` | 마스트헤드 구조·페이지 변형·반응형 규칙 |
-| 공통 표현 | `common/css/presentation.css` | 콘텐츠 페이지의 공통 팔레트·손글씨 폰트·입력 폰트 상속·푸터 색상 |
+| 공통 표현 | `common/css/presentation.css` | 콘텐츠 페이지의 공통 팔레트·입력 폰트 상속·푸터 색상 |
 | 모바일 메뉴 | `common/css/navigation-mobile.css` | 1080px 이하 헤더·햄버거·드로어의 공통 기준 |
 | 알아보기 | `about/css/about.css`, `presentation.css`, `about-m.css` | 알아보기 본문과 600px 이하 모바일 화면 |
 | 지원 전 체크 | `check/css/check.css`, `presentation.css`, `check-m.css` | 체크 본문과 600px 이하 모바일 화면 |

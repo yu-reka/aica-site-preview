@@ -89,7 +89,7 @@
   html.school-about main#main .cohort-comparison.am-on .cohort-fact dt{font-size:14px;font-weight:400;color:var(--am-muted)}
   html.school-about main#main .cohort-comparison.am-on .cohort-fact:first-child dt{font-size:13px}
   html.school-about main#main .cohort-comparison.am-on .cohort-fact dd{margin:0}
-  html.school-about main#main .cohort-comparison.am-on .cohort-direction{display:block;margin:2px 0 12px;font-size:18px;font-weight:800;color:var(--am-ink)}
+  html.school-about main#main .cohort-comparison.am-on .cohort-direction{display:block;margin:2px 0 12px;font-size:18px;font-weight:900;color:var(--am-ink)}
   html.school-about main#main .cohort-comparison.am-on .cohort-topics{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;overflow:visible;list-style:none}
   html.school-about main#main .cohort-comparison.am-on .cohort-topics li{display:flex;align-items:center;min-height:30px;width:auto;margin:0;padding:0 11px;border:0;border-radius:40px;background:#DCE5F7;box-shadow:none}
   html.school-about main#main .cohort-comparison.am-on .cohort-topic-label{font-size:13px;font-weight:700;line-height:1.2;color:#102D80;white-space:nowrap}

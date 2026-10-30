@@ -74,6 +74,7 @@
   }
   REV = REV.map(function (item) { return publicItem(item,'r-p'); });
   IV = IV.map(function (item) { return publicItem(item,'iv-p'); });
+  var photoIV = IV.filter(hasPhoto);   // 허브 일반 목록은 표시용 기본 아바타를 채우기 전, 실제 대표 사진이 있는 글에서 고릅니다.
   // 대표 사진(관리자가 고른 아바타 포함)은 유지하고, 없는 옛 글만 표시 전용 아바타로 채웁니다.
   // ID 순서로 순환 배정하므로 정렬·기수 필터·페이지 이동에도 같은 글의 아바타가 유지됩니다.
   var avatarOrder = IV.map(function (item) { return item.anchor; }).sort(function (a, b) { return a.localeCompare(b, 'en', { numeric: true }); });
@@ -409,14 +410,14 @@
 
   /* ── 한눈에 보기(index.html) ── */
   if (page.classList.contains('stories-hub')) {
-    // 인터뷰: 사진이 있는 글 인터뷰만(그림 · 영상 카드는 전체 목록에서). 첫째는 크게(사진 아래 글), 나머지 3개는 목록
-    var ivs = IV.filter(function (v) { return hasPhoto(v) && !(v.video && v.video.yt); });
-    // 사진이 있는 인터뷰가 하나도 없으면 사진 없는 글 인터뷰로(그림 자리에 기본 바탕)
-    if (!ivs.length) ivs = IV.filter(function (v) { return !(v.video && v.video.yt); });
+    // 우수 수료생 대표는 받은 순서의 첫 글, 옆 목록은 일반 사진 인터뷰 3개로 고릅니다.
+    var honorsFeature = !!$('#hub-interviews[data-honors-feature]');
+    var ivs = (honorsFeature ? photoIV : IV).filter(function (v) { return (!honorsFeature || !v.honors) && hasPhoto(v) && !(v.video && v.video.yt); });
+    // 우수 수료생 칸이 없는 예전 페이지의 사진 없는 글 대체는 유지합니다.
+    if (!ivs.length && !honorsFeature) ivs = IV.filter(function (v) { return !(v.video && v.video.yt); });
     var ivBox = $('.hb-ivg');
     if (ivBox) {
-      var honorsFeature = !!$('#hub-interviews[data-honors-feature]');
-      var f = honorsFeature ? null : ivs[0];
+      var f = honorsFeature ? IV.filter(function (v) { return v.honors; })[0] : ivs[0];
       var list = '<ul class="hb-ivl" role="list">' + ivs.slice(honorsFeature ? 0 : 1, honorsFeature ? 3 : 4).map(function (v) {
         return '<li><a href="interviews.html#' + esc(v.anchor) + '"><span class="hb-ivl-ph">' + hubVisual(v) + '</span>'
           + '<div><h3>' + esc(v.title) + '</h3><span class="hb-by">' + esc(who(v)) + '</span></div></a></li>';
@@ -426,7 +427,7 @@
       // 페이지에 시안 사진 · 목록이 남아 있으면(빌드가 비우지 않은 페이지) 겹치지 않게 먼저 지워요
       if (card && !honorsFeature) $$(':scope > .hb-ivf-ph, :scope > .hb-ph, :scope > svg', card).forEach(function (el) { el.remove(); });
       $$('.hb-ivl', ivBox).forEach(function (el) { el.remove(); });
-      if (card && honorsFeature) {
+      if (card && honorsFeature && !f) {
         card.setAttribute('href', 'interviews.html#iv-honors-1');
         var honorsPhoto = $('.hb-ivf-ph', card);
         if (honorsPhoto) {
@@ -436,13 +437,23 @@
         var honorsTitle = $('h3', card), honorsQuote = $('.hb-ivf-q', card);
         if (honorsTitle) honorsTitle.textContent = '우수 수료생 인터뷰를 준비하고 있어요';
         if (honorsQuote) honorsQuote.textContent = '배움 이후의 도전과 성장을 곧 전해드릴게요.';
+        var honorsBy = $('.hb-by', card);
+        if (honorsBy) { honorsBy.textContent = ''; honorsBy.hidden = true; }
         ivBox.insertAdjacentHTML('beforeend', list);
       } else if (card && f) {
         card.setAttribute('href', 'interviews.html#' + f.anchor);
-        card.insertAdjacentHTML('afterbegin', '<span class="hb-ivf-ph">' + hubVisual(f, { large: true }) + '</span>');
+        if (honorsFeature) {
+          var featuredPhoto = $('.hb-ivf-ph', card);
+          if (featuredPhoto) {
+            featuredPhoto.classList.remove('honors-placeholder');
+            featuredPhoto.innerHTML = hubVisual(f, { large: true });
+          }
+        } else {
+          card.insertAdjacentHTML('afterbegin', '<span class="hb-ivf-ph">' + hubVisual(f, { large: true }) + '</span>');
+        }
         var h = $('h3', card), by = $('.hb-by', card), em = $('em', card), q = $('.hb-ivf-q', card);
         if (h) h.textContent = f.title || '';
-        if (by) by.textContent = who(f);
+        if (by) { by.textContent = who(f); by.hidden = !by.textContent.trim(); }
         if (em) em.hidden = !em.textContent.trim();
         if (q) q.textContent = f.summary || '';
         if (q) q.hidden = !q.textContent.trim();

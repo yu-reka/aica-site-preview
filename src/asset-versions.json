@@ -1,9 +1,9 @@
 {
   "about": {
     "css": {
-      "about-m": "1027project-source",
-      "about": "1027news-links",
-      "presentation": "1022anchor40"
+      "about-m": "1029local-fonts",
+      "about": "1029local-fonts",
+      "presentation": "1029local-fonts"
     },
     "js": {
       "about-m": "1026dockrepeat",
@@ -29,9 +29,9 @@
       "components": "1028housing-no-rent",
       "masthead": "1016cleanup",
       "navigation-mobile": "1016nav",
-      "presentation": "1016split",
+      "presentation": "1029local-fonts",
       "site": "1026footer-touch44",
-      "tokens": "1021audit-colors"
+      "tokens": "1029pretendard-subset"
     },
     "js": {
       "availability": "1026loading-soft-backdrop",
@@ -47,7 +47,7 @@
     },
     "js": {
       "home": "1027ticker-tap-state",
-      "ticker-render": "design-20261027-serviceintro"
+      "ticker-render": "design-20261029-hub-honors"
     }
   },
   "life": {
@@ -70,7 +70,7 @@
         "hub": "1026month-modal-wrap"
       },
       "detail-navigation": "1020outsidegrid",
-      "hub": "1026honors-separate",
+      "hub": "1029summary-clamp",
       "presentation": {
         "hub": "1016split",
         "default": "1022notaglabel"
@@ -88,7 +88,7 @@
       },
       "stories": "1028review-filter-pages",
       "story-state": "1020states",
-      "interview-honors": "1026honors-no-hint",
+      "interview-honors": "1029summary-clamp",
       "project-video": "1027prep-always"
     },
     "js": {
@@ -99,13 +99,13 @@
       "project-reading": "1027list-markers",
       "projects-filter": "1023course",
       "review-notes": "1021centerellipsis",
-      "stories-data": "design-20261027-serviceintro",
+      "stories-data": "design-20261029-hub-honors",
       "stories-m-reviews": {
         "default": "1028shared-controls",
         "legacyLoader": "1028shared-controls"
       },
       "stories-m": "1028shared-controls",
-      "stories-render": "1028review-filter-pages",
+      "stories-render": "1029hub-honors-feature",
       "stories-sections": "1023cardrows",
       "stories": "1028clean-list-hash-main",
       "story-state": "1028stable-filter-reset",

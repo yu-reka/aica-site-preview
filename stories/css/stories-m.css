@@ -121,7 +121,7 @@
   html[data-nav="side"] .stories-page .sm-cv-badge circle{fill:#2457F5}
   html[data-nav="side"] .stories-page .sm-cv-badge path{fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
   html[data-nav="side"] .stories-page .sm-cv-mid{display:flex;align-items:center;gap:18px}
-  html[data-nav="side"] .stories-page .sm-cv-mid .cv3-ring{width:84px}
+  html[data-nav="side"] .stories-page .sm-cv-mid .cv3-ring{width:84px;height:84px;box-sizing:border-box}
   html[data-nav="side"] .stories-page .sm-cv-mid .cv3-stat{flex:1;display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,.7fr) minmax(0,1.6fr);gap:0;text-align:center;font-size:12px;color:#566175}
   html[data-nav="side"] .stories-page .sm-cv-mid .cv3-stat span{display:flex;flex-direction:column-reverse;align-items:center;gap:2px}
   html[data-nav="side"] .stories-page .sm-cv-mid .cv3-stat b{font-size:18px;font-weight:800;line-height:1.2;color:#14233F}

@@ -78,8 +78,8 @@
       "projects-grid": "1021listbadges",
       "review-notes": "1022footerspacing",
       "stories-m": {
-        "default": "1027project-card-click2",
-        "cohorts": "1027project-card-click2"
+        "default": "1030profile-circle",
+        "cohorts": "1030profile-circle"
       },
       "stories-render": "1027demo-video",
       "stories-sections": {

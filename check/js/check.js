@@ -80,9 +80,21 @@
     const stop = () => { moved = true; };
     ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(t => addEventListener(t, stop, { once: true, passive: true }));
     jumpTo(first, true);
-    const again = () => { if (!moved) jumpTo(first, true); };
+    const align = () => {
+      if (!moved && document.getElementById(Site.decodeHash(location.hash.slice(1))) === first) jumpTo(first, true);
+    };
+    const again = () => {
+      if (mobile.matches && first.id === 'benefits') {
+        // Cross-page fragment scrolling can finish after load/pageshow on mobile.
+        // Measure the chapter after layout and the browser's own anchor move settle.
+        requestAnimationFrame(() => requestAnimationFrame(align));
+      } else align();
+    };
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(again);
     if (document.readyState === 'complete') again(); else addEventListener('load', again, { once: true });
+    addEventListener('pageshow', event => {
+      if (!event.persisted && mobile.matches && first.id === 'benefits') again();
+    }, { once: true });
   }
 
   /* ---------- 스크롤 등장 ---------- */

@@ -202,7 +202,7 @@
 
   async function copyAddress() {
     const address = view.text('.ad>div>b');
-    try { await navigator.clipboard.writeText(address); Site.toast('주소를 복사했어요'); }
+    try { await navigator.clipboard.writeText(address); Site.toast('주소가 복사되었습니다.'); }
     catch { Site.toast(address); }
   }
   main.addEventListener('click', handleClick);

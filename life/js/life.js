@@ -140,7 +140,7 @@ document.addEventListener('click', function(e){
 /* ---------- 주소 복사 ([01]) ---------- */
 var cA = $('#copyAd');
 if (cA) cA.addEventListener('click', function(){
-  var b = this, t = '광주광역시 동구 제봉로 92';
+  var b = this, t = $('.ad>div>b', MAIN).textContent.trim();
   function done(){ b.textContent = '복사했어요'; setTimeout(function(){ b.textContent = '주소 복사'; }, 1600); }
   try { navigator.clipboard.writeText(t).then(done, done); } catch (e) { done(); }
 });

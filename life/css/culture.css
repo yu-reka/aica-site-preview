@@ -80,9 +80,10 @@
 .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-ph{display:block;width:100%;aspect-ratio:1;background-size:cover;background-position:center;background-color:#E9EEF3;box-shadow:0 12px 24px -14px rgba(20,35,63,.55)}
 .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-card figcaption{display:none}
 .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-g:not(.is-open) .cf-pile:hover .cf-card:not(:first-child){transform:rotate(calc(var(--rt) * 1.7)) translate(calc(var(--i) * 4px),calc(var(--i) * -2px))}
-.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-yb{position:absolute;z-index:20;top:50%;left:100%;width:56px;height:56px;margin:-28px 0 0 -28px;padding:0;display:grid;place-items:center;border:0;border-radius:50%;background:var(--cf-y);color:var(--ink);cursor:pointer;box-shadow:0 6px 14px -8px rgba(20,35,63,.55);transition:transform .25s var(--cf-ease),translate .3s var(--cf-ease)}
-.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-yb:hover{transform:scale(1.08)}
-.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-yb svg{width:20px;height:20px;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;fill:none}
+.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-yb{position:absolute;z-index:20;top:50%;left:100%;width:40px;height:40px;margin:-20px 0 0 -20px;padding:0;display:grid;place-items:center;border:1.2px solid var(--ink);border-radius:50%;background:#fff;color:var(--ink);cursor:pointer;box-shadow:none;transition:background .2s,color .2s}
+.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-yb:hover{background:var(--ink);color:#fff}
+.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-yb:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-yb svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;stroke-linecap:round;fill:none}
 .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-yb .v{transition:opacity .2s}
 .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-g.is-open .cf-yb .v{opacity:0}
 
@@ -123,17 +124,12 @@
   .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-g.is-open .cf-card{flex-basis:calc(var(--cf-w,300px) * .82)}
 }
 @media (max-width:640px){.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-g.no-head:not(.is-open) .cf-tg{grid-column:1 / -1;grid-row:2;justify-self:end}.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-g.no-head:not(.is-open) :is(.cf-intro,.cf-names){grid-row:3}}
-@media (max-width:640px){.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-g:not(.is-open){grid-template-columns:1fr}.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-g.no-head:not(.is-open) :is(.cf-intro,.cf-names){grid-row:2}}
+@media (max-width:640px){.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-g:not(.is-open){grid-template-columns:1fr;row-gap:24px}.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-g.no-head:not(.is-open) :is(.cf-intro,.cf-names){grid-row:2}}
 @media (max-width:640px){.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-g.rev:not(.is-open){grid-template-columns:1fr}.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-g.rev:not(.is-open) .cf-pile{grid-column:1}.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-g.rev:not(.is-open) :is(.cf-intro,.cf-names){grid-column:1;justify-self:stretch}}
 @media (max-width:1100px){.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-br{display:none}}
-.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-nav .cf-close{display:none}
-/* 모바일: 사진 위 노란 − 대신, 좌우 버튼 왼쪽 '접기' 버튼으로 접음 */
-.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]).lm-content .cf-g.is-open .cf-yb{display:none}
-.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]).lm-content .cf-nav .cf-close{display:inline-flex;align-items:center;width:auto;height:40px;padding:0 16px;border-radius:999px;font-size:13.5px;font-weight:700;line-height:1;white-space:nowrap}
-@media (max-width:640px){
-  .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"])#tp-fun .cf-g.is-open .cf-yb{display:none}
-  .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"])#tp-fun .cf-nav .cf-close{display:inline-flex;align-items:center;width:auto;height:40px;padding:0 16px;border-radius:999px;font-size:13.5px;font-weight:700;line-height:1;white-space:nowrap}
-}
+/* Fold the open gallery from the navigation row, keeping photos unobstructed. */
+.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-g.is-open .cf-yb{display:none}
+.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-nav .cf-close{display:inline-flex;align-items:center;justify-content:center;gap:4px;width:auto;height:40px;padding:0 12px;border-radius:999px;font-size:13.5px;font-weight:600;line-height:1;white-space:nowrap}
 .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]).lm-content .cf-g.rev.wide .cf-intro{width:auto}
 @media (max-width:640px){.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"])#tp-fun .cf-g.rev.wide .cf-intro{width:auto}}
 @media (prefers-reduced-motion:reduce){.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) :is(.cf-card,.cf-yb,figcaption){transition:none;animation:none}}

@@ -6,7 +6,7 @@
     active.forEach(function(dispose, group){ if(!group.isConnected){ dispose(); active.delete(group); } });
     [].forEach.call((root||document).querySelectorAll('.cf-g'), function(group){ if(!active.has(group)) bind(group); });
   }
-  var RMQ = matchMedia('(prefers-reduced-motion: reduce)'), EASE = 'cubic-bezier(.22,.8,.24,1)', DUR = 600;
+  var RMQ = matchMedia('(prefers-reduced-motion: reduce)'), EASE = 'cubic-bezier(.22,.8,.24,1)', DUR = 600, CLOSE_DUR = 360;
   function bind(g){
     active.set(g, function(){});
     var pile = g.querySelector('.cf-pile'), yb = g.querySelector('.cf-yb'), tg = g.querySelector('.cf-tg');
@@ -61,24 +61,25 @@
       if (open){ addClones(); pile.scrollLeft = setW(); upd(); }
       if(hadFocus) (open && !yb.offsetParent && cl ? cl : yb).focus({preventScroll:true});
     }
-    function slide(e, a, z){ var dx = a.x-z.x, dy = a.y-z.y; return Math.abs(dx)+Math.abs(dy) > 1 ? e.animate([{transform:'translate('+dx+'px,'+dy+'px)'},{transform:'none'}],{duration:DUR,easing:EASE}) : null; }
+    function slide(e, a, z, duration){ var dx = a.x-z.x, dy = a.y-z.y; return Math.abs(dx)+Math.abs(dy) > 1 ? e.animate([{transform:'translate('+dx+'px,'+dy+'px)'},{transform:'none'}],{duration:duration,easing:EASE}) : null; }
     function set(open){
       if (busy || open === g.classList.contains('is-open')) return;
       if (RMQ.matches || !g.animate){ apply(open); return; }
       busy = true;
+      var duration = open ? DUR : CLOSE_DUR;
       /* 애니메이션 동안 사진이 움직여 스크롤 맞춤(snap)이 엉뚱한 사진에 붙지 않도록 잠시 끔 */
       pile.style.scrollSnapType = 'none';
       if (!open && clones.length){ var r = rel(); removeClones(); pile.scrollLeft = r; }
       var A = snap(); apply(open); var B = snap(), an = [];
-      an.push(g.animate([{height:A.h+'px'},{height:B.h+'px'}],{duration:DUR,easing:EASE}));
-      an.push(slide(yb, A.yb, B.yb));
-      heads.forEach(function(e,i){ an.push(slide(e, A.heads[i], B.heads[i])); });
+      an.push(g.animate([{height:A.h+'px'},{height:B.h+'px'}],{duration:duration,easing:EASE}));
+      an.push(slide(yb, A.yb, B.yb, duration));
+      heads.forEach(function(e,i){ an.push(slide(e, A.heads[i], B.heads[i], duration)); });
       cards.forEach(function(c,i){
         var a = A.c[i], z = B.c[i], s = a.w/z.w, rt = parseFloat(c.style.getPropertyValue('--rt')) || 0;
         an.push(c.animate([
           {transform:'translate('+(a.x-z.x)+'px,'+(a.y-z.y)+'px) rotate('+(open?rt:0)+'deg) scale('+s+')'},
           {transform:'rotate('+(open?0:rt)+'deg)'}
-        ],{duration:DUR,easing:EASE,delay:(open?i:cards.length-1-i)*45,fill:'backwards'}));
+        ],{duration:duration,easing:EASE,delay:open ? i*45 : 0,fill:'backwards'}));
       });
       g.style.overflow = 'hidden';
       function done(){

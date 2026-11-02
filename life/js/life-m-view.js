@@ -90,7 +90,7 @@ const LifeMobileView = (() => {
         gallery.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));
         gallery.querySelectorAll('[aria-labelledby]').forEach(n=>{n.setAttribute('aria-label',value('h3',n));n.removeAttribute('aria-labelledby');});
       }
-      return `<section class="section first">${topicHeading('문화 · 여가',text('#tp-fun .sh h2'),'tp-fun')}${gallery?.outerHTML||''}<p class="caption">${esc(text('#tp-fun .note'))}</p></section>`;
+      return `<section class="section first">${topicHeading('문화 · 여가',text('#tp-fun .sh h2'),'tp-fun')}${gallery?.outerHTML||''}</section>`;
     }
     
     function routeCard(){let article=$$('.rt3 article',src)[state.departure];return `<div class="route-steps"><h4>${esc($('h3',article).textContent)}</h4>${$('ol',article).outerHTML}${$('.rtr',article).outerHTML}</div>`;}

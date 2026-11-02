@@ -1,8 +1,7 @@
 <section class="{{view.className}}" id="{{view.anchor}}" data-k="{{view.groupKey}}" aria-labelledby="{{view.anchor}}-t">
   <div class="{{view.headerClass}}"><span class="cf-n" aria-hidden="true">{{view.number}}</span><div><h3 id="{{view.anchor}}-t">{{heading}}</h3><p>{{subtitle}}</p></div></div>
   <div class="cf-pile" role="list" aria-label="{{name}} 사진">
-    {{#each photos}}{{> life/culture-photo}}{{/each}}
-    <button type="button" class="cf-yb" aria-expanded="false" aria-label="{{name}} 사진 펼쳐보기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path class="v" d="M12 5v14"/></svg></button>
+{{#each photos}}    {{> life/culture-photo}}{{/each}}    <button type="button" class="cf-yb" aria-expanded="false" aria-label="{{name}} 사진 펼쳐보기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path class="v" d="M12 5v14"/></svg></button>
   </div>
   <div class="cf-intro"><h4>{{name}}</h4>{{{introHtml}}}</div>
   <button type="button" class="cf-tg" aria-expanded="false"><span class="o">펼쳐보기</span><span class="c">접기</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/></svg></button>

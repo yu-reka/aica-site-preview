@@ -357,13 +357,14 @@ box-shadow:inset 0 0 0 1px rgba(120,86,48,.18),inset 0 2px 12px rgba(90,60,28,.1
 /* 손 낙서(10-13, 사용자 시안 그대로): 마커로 그린 별 · 'SSUL' 동그라미(줄 그은 동그라미 · 분홍 지그재그는 10-13 뺌). 포스트잇 모서리 위에 걸쳐 그림 */
 .stories-page #p-rev .idc{z-index:1}
 
+.stories-page #p-rev{--review-doodle-star:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%231E3FCF' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M30 8c2 8 4 13 7 17 6 1 12 1 18 3-5 4-10 7-13 11 1 7 3 13 3 18-6-3-11-7-15-9-5 3-10 7-16 10 1-6 3-12 5-18-4-4-9-8-13-12 6-1 12-1 18-2 3-5 5-11 6-18z' stroke-width='3.6'/%3E%3Cpath d='M22 30l14-3M21 37l18-5M24 44l14-5' stroke-width='3'/%3E%3Cpath d='M50 8l4-5M56 16l6-2M8 52l-5 4' stroke-width='2.6'/%3E%3C/g%3E%3C/svg%3E")}
 .stories-page #p-rev .idgrid::before{content:"";position:absolute;inset:-14px;z-index:3;pointer-events:none;
   background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%231E3FCF' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M30 8c2 8 4 13 7 17 6 1 12 1 18 3-5 4-10 7-13 11 1 7 3 13 3 18-6-3-11-7-15-9-5 3-10 7-16 10 1-6 3-12 5-18-4-4-9-8-13-12 6-1 12-1 18-2 3-5 5-11 6-18z' stroke-width='3.6'/%3E%3Cpath d='M22 30l14-3M21 37l18-5M24 44l14-5' stroke-width='3'/%3E%3Cpath d='M50 8l4-5M56 16l6-2M8 52l-5 4' stroke-width='2.6'/%3E%3C/g%3E%3C/svg%3E") left 22px top 30px/70px no-repeat;
+    var(--review-doodle-star) left 22px top 30px/70px no-repeat;
 }
 
 /* 오른쪽 위 'SSUL': 손으로 두 번 감은 동그라미 */
-.stories-page #p-rev .idgrid::after{content:"SSUL";position:absolute;right:clamp(10px,2vw,28px);top:-8px;z-index:3;pointer-events:none;
+.stories-page #p-rev :is(.idgrid,.sm-review-stage)::after{content:"SSUL";position:absolute;right:clamp(10px,2vw,28px);top:-8px;z-index:3;pointer-events:none;
   padding:14px 30px 12px;border:0;border-radius:0;
   font-family:"Caveat",cursive;font-weight:600;font-size:36px;line-height:1;letter-spacing:.04em;color:#1E3FCF;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 56' preserveAspectRatio='none'%3E%3Cpath d='M22 12C46 2 92 0 110 12c14 10 2 28-26 36-30 8-66 6-78-6C-4 32 8 16 30 8c10-3 22-4 30-4' fill='none' stroke='%231E3FCF' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E") center/100% 100% no-repeat;transform:rotate(-9deg)}
@@ -372,6 +373,8 @@ box-shadow:inset 0 0 0 1px rgba(120,86,48,.18),inset 0 2px 12px rgba(90,60,28,.1
 .stories-page #p-rev .idgrid::before{background-size:42px}
 
 .stories-page #p-rev .idgrid::after{font-size:26px;top:-14px}
+.stories-page #p-rev .sm-review-stage::after{font-size:22px;top:3px;right:10px;padding:7px 17px}
+.stories-page #p-rev .sm-review-stage:not(.is-list)::before{content:"";position:absolute;left:10px;top:4px;z-index:3;width:42px;height:42px;pointer-events:none;background:var(--review-doodle-star) center/contain no-repeat}
 }
 
 /* =========================================================

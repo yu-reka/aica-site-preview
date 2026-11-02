@@ -10,6 +10,9 @@ const uiSource = readFileSync(new URL('../common/js/ui.js', import.meta.url), 'u
 class Element {
   constructor(tag = 'div', classes = []) {
     this.tagName = tag; this.classList = new Set(classes); this.children = [];
+    this.classList.contains = name => this.classList.has(name);
+    this.classList.toggle = (name, enabled) => enabled ? this.classList.add(name) : this.classList.delete(name);
+    this.scrollLeft = 0; this.clientWidth = 300; this.scrollWidth = 300;
     this.dataset = {}; this.attrs = {}; this.events = {}; this.textContent = '';
   }
   appendChild(node) { this.children.push(node); return node; }
@@ -36,7 +39,12 @@ function startReviews(classes) {
   });
   source.querySelectorAll = selector => selector === '.idc' ? records : [];
   section.querySelector = selector => selector === '.idgrid' ? source : null;
+  section.querySelectorAll = selector => selector === '.dw-ftg .dwin a' ? ['', '0', '5'].map(value => {
+    const link = new Element('a'); link.attrs.href = value ? '#tg-' + value : '#p-rev';
+    link.textContent = value ? '#태그' + value : '전체'; return link;
+  }) : [];
   const document = {
+    addEventListener() {},
     readyState: 'complete', documentElement: new Element(),
     querySelector: selector => selector === '#p-rev' ? section : null,
     querySelectorAll: () => [], getElementById: () => null,
@@ -44,7 +52,7 @@ function startReviews(classes) {
   };
   vm.runInNewContext(uiSource + '\n' + readFileSync(new URL('../stories/js/stories-m-reviews.js', import.meta.url), 'utf8') + '\nStoriesMobileReviews.init();', {
     document, location, matchMedia: () => ({ matches: true }),
-    addEventListener(name, fn) { listeners[name] = fn; }, setTimeout() {},
+    addEventListener(name, fn) { listeners[name] = fn; }, setTimeout() {}, requestAnimationFrame(fn) { fn(); },
   });
   const categories = created.find(node => node.attrs['aria-label'] === '후기 카테고리');
   const cohorts = created.find(node => node.attrs['aria-label'] === '후기 기수');
@@ -54,7 +62,11 @@ function startReviews(classes) {
   const empty = created.find(node => node.className === 'sm-review-empty');
   const choose = (group, value) => group.children.find(node => node.dataset.value === value).events.click();
 
-  return { categories, cohorts, board, count, empty, pager, choose, listeners, location };
+  return { categories, cohorts, board, count, empty, pager, choose, listeners, location,
+    tagSelect: created.find(node => node.className === 'sm-review-tag-dropdown dw'),
+    tagOptions: created.find(node => node.className === 'sm-review-tag-options'),
+    views: created.find(node => node.className === 'sm-review-views'),
+    stage: created.find(node => node.className === 'sm-review-stage') };
 }
 
 test('mobile review tabs match specific categories even after a shared career class', () => {
@@ -114,11 +126,48 @@ test('legacy Spring entry loads reviews only on a review page', () => {
     vm.runInContext(readFileSync(new URL('../stories/js/stories-m.js', import.meta.url), 'utf8'), context);
     assert.equal(appended.length, hasReviews ? 1 : 0);
     if (hasReviews) {
-      assert.equal(appended[0].src, 'https://site.example/stories/js/stories-m-reviews.js?v=1028shared-controls');
+      assert.equal(appended[0].src, 'https://site.example/stories/js/stories-m-reviews.js?v=1102review-empty-note');
       let initialized = 0;
       context.StoriesMobileReviews = { init() { initialized++; } };
       appended[0].onload();
       assert.equal(initialized, 1);
     }
   }
+});
+
+// Modal hash changes retain the current rail position; selecting a different
+// filter/page starts at its first matching card.
+test('mobile review rail keeps its position across modal open and close', () => {
+  const { board, categories, choose, location, listeners } = startReviews([
+    ['cat-life', 'coh7'], ['cat-class', 'coh7'],
+  ]);
+  board.scrollLeft = 180;
+  location.hash = '#r-1'; listeners.hashchange();
+  assert.equal(board.scrollLeft, 180);
+  location.hash = '#p-rev'; listeners.hashchange();
+  assert.equal(board.scrollLeft, 180);
+  choose(categories, 'life');
+  assert.equal(board.scrollLeft, 0);
+});
+
+test('mobile tag selection filters both views and survives modal close', () => {
+  const { tagSelect, tagOptions, views, stage, board, count, location, listeners } = startReviews([
+    ['cat-life', 'coh7', 'tg0'], ['cat-class', 'coh7', 'tg5'],
+  ]);
+  tagSelect.open = true;
+  tagOptions.children.find(button => button.dataset.value === '5').events.click();
+  assert.equal(tagSelect.open, false);
+  assert.equal(count.textContent, '1개의 후기');
+  assert.equal(board.children[0].href, '#r-1');
+  views.children[1].events.click();
+  assert.equal(stage.classList.has('is-list'), true);
+  assert.equal(views.children[1].attrs['aria-pressed'], 'true');
+  location.hash = '#r-1'; listeners.hashchange();
+  location.hash = '#p-rev'; listeners.hashchange();
+  assert.equal(tagOptions.children.find(button => button.dataset.value === '5').attrs['aria-pressed'], 'true');
+  assert.equal(board.children.length, 1);
+  views.children[0].events.click();
+  assert.equal(stage.classList.has('is-list'), false);
+  tagOptions.children.find(button => button.dataset.value === '').events.click();
+  assert.equal(board.children.length, 2);
 });

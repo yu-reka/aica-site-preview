@@ -1876,5 +1876,133 @@
         "template": "about/gallery/slide-4"
       }
     }
+  },
+  "life/culture": {
+    "culture-dongmyeong": {
+      "className": "cf-g no-head wide",
+      "headerClass": "cf-h cf-sr",
+      "groupKey": "walk",
+      "number": "01",
+      "photos": [
+        {
+          "style": "--i:0;--rt:0deg;--z:8"
+        },
+        {
+          "style": "--i:1;--rt:-6deg;--z:7"
+        },
+        {
+          "style": "--i:2;--rt:5deg;--z:6"
+        },
+        {
+          "style": "--i:3;--rt:-3deg;--z:5"
+        },
+        {
+          "style": "--i:4;--rt:7deg;--z:4"
+        },
+        {
+          "style": "--i:5;--rt:-4deg;--z:3"
+        },
+        {
+          "style": "--i:6;--rt:3deg;--z:2"
+        },
+        {
+          "style": "--i:7;--rt:-7deg;--z:1"
+        }
+      ],
+      "anchor": "fs-walk"
+    },
+    "culture-haneul": {
+      "className": "cf-g no-head rev wide",
+      "headerClass": "cf-h cf-sr",
+      "groupKey": "near",
+      "number": "02",
+      "photos": [
+        {
+          "style": "--i:0;--rt:0deg;--z:8"
+        },
+        {
+          "style": "--i:1;--rt:-6deg;--z:7"
+        },
+        {
+          "style": "--i:2;--rt:5deg;--z:6"
+        },
+        {
+          "style": "--i:3;--rt:-3deg;--z:5"
+        },
+        {
+          "style": "--i:4;--rt:7deg;--z:4"
+        },
+        {
+          "style": "--i:5;--rt:-4deg;--z:3"
+        },
+        {
+          "style": "--i:6;--rt:3deg;--z:2"
+        },
+        {
+          "style": "--i:7;--rt:-7deg;--z:1"
+        }
+      ],
+      "anchor": "fs-near"
+    },
+    "culture-acc": {
+      "className": "cf-g no-head wide",
+      "headerClass": "cf-h cf-sr",
+      "groupKey": "acc",
+      "number": "03",
+      "photos": [
+        {
+          "style": "--i:0;--rt:0deg;--z:8"
+        },
+        {
+          "style": "--i:1;--rt:-6deg;--z:7"
+        },
+        {
+          "style": "--i:2;--rt:5deg;--z:6"
+        },
+        {
+          "style": "--i:3;--rt:-3deg;--z:5"
+        },
+        {
+          "style": "--i:4;--rt:7deg;--z:4"
+        },
+        {
+          "style": "--i:5;--rt:-4deg;--z:3"
+        },
+        {
+          "style": "--i:6;--rt:3deg;--z:2"
+        },
+        {
+          "style": "--i:7;--rt:-7deg;--z:1"
+        }
+      ],
+      "anchor": "cf-acc"
+    },
+    "culture-square": {
+      "className": "cf-g no-head rev wide",
+      "headerClass": "cf-h cf-sr",
+      "groupKey": "plaza",
+      "number": "04",
+      "photos": [
+        {
+          "style": "--i:0;--rt:0deg;--z:6"
+        },
+        {
+          "style": "--i:1;--rt:-6deg;--z:5"
+        },
+        {
+          "style": "--i:2;--rt:5deg;--z:4"
+        },
+        {
+          "style": "--i:3;--rt:-3deg;--z:3"
+        },
+        {
+          "style": "--i:4;--rt:7deg;--z:2"
+        },
+        {
+          "style": "--i:5;--rt:-4deg;--z:1"
+        }
+      ],
+      "anchor": "cf-square"
+    }
   }
 }

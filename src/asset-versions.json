@@ -59,9 +59,9 @@
       "culture": "1102culture-public-responsive"
     },
     "js": {
-      "life-m-view": "1102culture-note-removed",
+      "life-m-view": "1102facility-inline-photo",
       "life-m": "1030address-toast",
-      "life": "1030directions-address",
+      "life": "1102facility-preview-photo",
       "culture": "1102culture-smooth-fold"
     }
   },
@@ -72,7 +72,7 @@
         "hub": "1030modal-date-gap"
       },
       "detail-navigation": "1020outsidegrid",
-      "hub": "1102honors-closing-quote",
+      "hub": "1102mosaic-admin-fit",
       "presentation": {
         "hub": "1030review-ssul-small",
         "default": "1030review-ssul-small"
@@ -90,7 +90,7 @@
       },
       "stories": "1028review-filter-pages",
       "story-state": "1020states",
-      "interview-honors": "1029summary-clamp",
+      "interview-honors": "1102uploaded-avatar-fit",
       "project-video": "1027prep-always"
     },
     "js": {

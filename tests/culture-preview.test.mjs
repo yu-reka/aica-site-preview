@@ -19,5 +19,5 @@ test('public culture gallery uses the approved example image bytes and labels', 
     assert.equal(createHash('sha256').update(bytes).digest('hex'), approved.sha256);
   }
   assert.doesNotMatch(read('life/css/culture.css'), /assets\/culture\//);
-  assert.match(read('life/index.html'), /공개 프리뷰의 사진은 기존 디자인 이미지로 구성한 예시/);
+  for (const group of groups) assert.ok(read('life/index.html').includes('<h4>' + group.name + '</h4>'));
 });

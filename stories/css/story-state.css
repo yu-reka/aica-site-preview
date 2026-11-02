@@ -15,6 +15,13 @@
 }
 
 /* Reserve the first list viewport while the API or its fallback is pending. */
-.stories-page[data-story-loading] .idgrid,.stories-page[data-story-loading] .pjgrid,.stories-page[data-story-loading] .cv3-grid{min-block-size:min(70vh,700px)}
+.stories-page[data-story-loading] .idgrid,.stories-page[data-story-loading] .pjgrid{min-block-size:min(70vh,700px)}
 .stories-page[data-story-loading] .hb-ivg{min-block-size:420px}
-.stories-page[data-story-loading] .idgrid:empty::before,.stories-page[data-story-loading] .pjgrid:empty::before,.stories-page[data-story-loading] .cv3-grid:empty::before{content:"";display:block;min-block-size:300px;border-radius:16px;background:var(--g50,#F5F6F6)}
+.stories-page[data-story-loading] .idgrid:empty::before,.stories-page[data-story-loading] .pjgrid:empty::before{content:"";display:block;min-block-size:300px;border-radius:16px;background:var(--g50,#F5F6F6)}
+
+/* Cohort controllers build desktop markup, then adapt it for mobile. Present one
+   loading view until both finish, rather than flashing each intermediate layout.
+   The reservation exists only while loading; short/filtered lists keep their size. */
+.stories-page[data-story-loading] #cv3{position:relative;min-block-size:min(80vh,720px)}
+.stories-page[data-story-loading] #cv3 > *{visibility:hidden}
+.stories-page[data-story-loading] #cv3::before{content:"기수 이야기를 불러오는 중…";position:absolute;inset:0 0 auto;box-sizing:border-box;min-block-size:min(80vh,720px);padding:24px;border-radius:16px;background:var(--g50,#F5F6F6);color:var(--graphite,#566175);font:400 15px/1.8 var(--ff-sans);text-align:center}

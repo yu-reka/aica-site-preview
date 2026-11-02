@@ -40,10 +40,12 @@
     const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
     step = first.getBoundingClientRect().width + gap;
     const total = items.length * step - gap + 24;
-    const overflow = total > box.clientWidth + 1;
+    // Keep the same rail origin whether the month arrows are visible or not.
+    const available = Math.max(0, box.clientWidth - 104);
+    const overflow = total > available + 1;
     box.dataset.overflow = String(overflow);
-    count = Math.max(1, Math.floor((box.clientWidth - (overflow ? 104 : 0) - 24 + gap) / step));
-    const width = overflow ? count * step - gap + 24 : box.clientWidth;
+    count = Math.max(1, Math.floor((available - 24 + gap) / step));
+    const width = count * step - gap + 24;
     box.style.setProperty('--month-rail-width', width + 'px');
     // A full number of items fits between the two controls, including the last page.
     const max = Math.max(0, items.length - count);

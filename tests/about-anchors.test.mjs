@@ -60,3 +60,25 @@ for (const pathname of ['/aica-site-preview/about', '/aica-site-preview/about/',
     assert.equal(scrolls.length, 0, 'modified clicks remain native');
   });
 }
+
+test('chapter scroll completion corrects layout shifts and manual scrolling cancels correction', () => {
+  const handlers = [], events = {}, scrolls = [];
+  let y = 0, chapterTop = 4000;
+  vm.runInNewContext(chapterController, {
+    Date, mq: {matches:true}, reduce: {matches:false},
+    btns: [{dataset:{jump:'2'}, addEventListener:(_, fn) => handlers.push(fn)}],
+    document: {readyState:'loading', addEventListener() {}, getElementById:()=>({getBoundingClientRect:()=>({top:chapterTop-y})})},
+    addEventListener:(type, fn)=>{(events[type] ||= []).push(fn);},
+    setCur() {}, hdr:()=>60, requestAnimationFrame:()=>1, cancelAnimationFrame() {},
+    get scrollY(){return y;}, scrollTo:options=>{scrolls.push(options); y=options.top;},
+  });
+  handlers[0]();
+  chapterTop += 48; // An image above the destination gains its final height.
+  events.scrollend.forEach(fn=>fn());
+  assert.equal(scrolls.at(-1).top, chapterTop - 60);
+  assert.equal(scrolls.at(-1).behavior, 'instant');
+  const count = scrolls.length;
+  events.wheel.forEach(fn=>fn());
+  events.scrollend.forEach(fn=>fn());
+  assert.equal(scrolls.length, count, 'manual scrolling must not snap back to a chapter');
+});

@@ -73,6 +73,7 @@
   track.setAttribute('role', 'group');
   track.setAttribute('aria-label', '우수 수료생 인터뷰 ' + originals.length + '개, 좌우 방향키로 넘기기');
   var desktopFan = matchMedia('(min-width:1081px)');
+  var mobileSwipeView = matchMedia('(max-width:600px)'), mobileSwipe = null;
   var fanIndex = 0, fanCursor = 0;
   // Small collections repeat visually across five positions, in continuous post order.
   // These nodes never join the mobile scroller or create extra detail pages.
@@ -88,6 +89,37 @@
       track.appendChild(copy); desktopCopies.push(copy);
     }
   }
+
+  // Keep the full summary in memory; only the two-line card excerpt is shortened.
+  var summaries = Array.from(track.querySelectorAll('.sm-ivf-summary')).map(function (el) {
+    return {el:el, text:el.textContent};
+  });
+  function fitSummaries() {
+    summaries.forEach(function (entry) {
+      var el = entry.el;
+      if (!el.clientWidth || entry.width === el.clientWidth) return;
+      entry.width = el.clientWidth;
+      el.setAttribute('data-honors-summary-fit', '');
+      el.textContent = entry.text;
+      if (el.scrollHeight <= el.clientHeight + 1) return;
+      var chars = Array.from(entry.text), low = 0, high = chars.length;
+      while (low < high) {
+        var mid = Math.ceil((low + high) / 2);
+        el.textContent = chars.slice(0, mid).join('').trimEnd() + '⋯';
+        if (el.scrollHeight <= el.clientHeight + 1) low = mid; else high = mid - 1;
+      }
+      el.textContent = chars.slice(0, low).join('').trimEnd() + '⋯';
+    });
+  }
+  var summaryFrame;
+  function scheduleSummaries() {
+    cancelAnimationFrame(summaryFrame);
+    summaryFrame = requestAnimationFrame(fitSummaries);
+  }
+  addEventListener('resize', scheduleSummaries);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () {
+    summaries.forEach(function (entry) { entry.width = 0; }); scheduleSummaries();
+  });
 
   var desktopCount = document.createElement('span');
   desktopCount.className = 'honors-position-count';
@@ -109,7 +141,7 @@
   });
 
   var drag = null, suppressClickUntil = 0;
-  track.addEventListener('dragstart', function (event) { if (desktopFan.matches) event.preventDefault(); });
+  track.addEventListener('dragstart', function (event) { if (desktopFan.matches || mobileSwipeView.matches) event.preventDefault(); });
   track.addEventListener('pointerdown', function (event) {
     if (!desktopFan.matches || event.button !== 0) return;
     drag = {id:event.pointerId, x:event.clientX, y:event.clientY, active:false};
@@ -138,7 +170,50 @@
   track.addEventListener('lostpointercapture', function () {
     drag = null; track.classList.remove('is-dragging'); track.style.removeProperty('--honors-drag-x');
   });
+  // Follow the finger directly on phones, then use the same 160ms settle as arrows.
+  // Native momentum otherwise keeps scrolling long after a short flick has ended.
+  track.addEventListener('pointerdown', function (event) {
+    if (!mobileSwipeView.matches || event.button !== 0 || !event.isPrimary) return;
+    clearTimeout(timer);
+    mobileSwipe = {id:event.pointerId, x:event.clientX, y:event.clientY,
+      left:track.scrollLeft, index:nearest(), began:performance.now(), active:false};
+  });
+  track.addEventListener('pointermove', function (event) {
+    if (!mobileSwipe || mobileSwipe.id !== event.pointerId) return;
+    var dx = event.clientX - mobileSwipe.x, dy = event.clientY - mobileSwipe.y;
+    if (!mobileSwipe.active && Math.abs(dy) > 6 && Math.abs(dy) > Math.abs(dx)) { mobileSwipe = null; return; }
+    if (!mobileSwipe.active && Math.abs(dx) > 6) {
+      mobileSwipe.active = true;
+      track.classList.add('is-swiping'); track.setPointerCapture(event.pointerId);
+    }
+    if (!mobileSwipe.active) return;
+    event.preventDefault();
+    track.scrollTo({left:mobileSwipe.left - dx, behavior:'instant'});
+  });
+  function endMobileSwipe(event, cancelled) {
+    if (!mobileSwipe || mobileSwipe.id !== event.pointerId) return;
+    var swipe = mobileSwipe; mobileSwipe = null;
+    if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
+    if (!swipe.active) return;
+    suppressClickUntil = performance.now() + 300;
+    var dx = event.clientX - swipe.x, elapsed = performance.now() - swipe.began;
+    var threshold = Math.min(60, cards[swipe.index].offsetWidth * .2);
+    var advance = !cancelled && (Math.abs(dx) >= threshold || (Math.abs(dx) >= 12 && elapsed < 200));
+    var target = swipe.index;
+    if (advance) {
+      target = nearest();
+      if (target === swipe.index) target += dx < 0 ? 1 : -1;
+    }
+    align(Math.max(0, Math.min(cards.length - 1, target)), false);
+    track.classList.remove('is-swiping');
+  }
+  track.addEventListener('pointerup', function (event) { endMobileSwipe(event, false); });
+  track.addEventListener('pointercancel', function (event) { endMobileSwipe(event, true); });
+  track.addEventListener('lostpointercapture', function (event) { endMobileSwipe(event, true); });
   track.addEventListener('click', function (event) {
+    if (mobileSwipeView.matches && event.detail > 0 && performance.now() < suppressClickUntil) {
+      event.preventDefault(); event.stopPropagation(); return;
+    }
     if (!desktopFan.matches || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
     if (event.detail > 0 && performance.now() < suppressClickUntil) { event.preventDefault(); event.stopPropagation(); return; }
     var card = event.target.closest('a.sm-ivf-c');
@@ -177,10 +252,12 @@
     });
     current = fanIndex + first;
     desktopCount.textContent = String(fanIndex + 1).padStart(2, '0') + ' / ' + String(originals.length).padStart(2, '0');
+    fitSummaries();
   }
   function syncLayout() {
     cancelAnimationFrame(frame); clearTimeout(timer); destination = null;
-    drag = null; track.classList.remove('is-dragging'); track.style.removeProperty('--honors-drag-x');
+    drag = null; mobileSwipe = null; track.classList.remove('is-swiping');
+    track.classList.remove('is-dragging'); track.style.removeProperty('--honors-drag-x');
     track.classList.remove('is-animating');
     if (desktopFan.matches) {
       track.scrollLeft = 0;
@@ -213,6 +290,7 @@
       track.classList.remove('is-repositioning');
     }
     cards.forEach(function (card, i) { card.classList.toggle('is-on', i === current); });
+    fitSummaries();
   }
   function align(index, instant) {
     if (desktopFan.matches) { paintFan(); return; }
@@ -222,6 +300,7 @@
     var end = card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
     destination = index;
     cards.forEach(function (item, i) { item.classList.toggle('is-on', i === index); });
+    fitSummaries();
     track.classList.add('is-animating');
     function finish() {
       track.scrollTo({left:end, behavior:'instant'});
@@ -267,7 +346,7 @@
     }
   });
   track.addEventListener('scroll', function () {
-    if (desktopFan.matches || destination !== null) return;
+    if (desktopFan.matches || destination !== null || (mobileSwipe && mobileSwipe.active)) return;
     clearTimeout(timer); timer = setTimeout(paint, 50);
   }, {passive:true});
   ['pointerdown', 'touchstart', 'wheel'].forEach(function (type) {

@@ -191,7 +191,7 @@ html[data-nav="side"] .stories-hub{background:var(--surface)}
 .hb-nw{white-space:nowrap}   /* '이스트소프트·네이버·AWS'가 가운뎃점에서 끊기지 않게 */
 .hb-mos .is-big .hb-mos-tx{padding:clamp(22px,2.8cqw,30px)}
 .hb-mos .is-big h3{margin-top:6px;font-size:clamp(21px,1.7vw,24px);line-height:1.35}
-.hb-mos .is-big p{margin-top:8px;max-width:40ch;font-family:var(--ff-sans);font-size:15px;line-height:1.6;letter-spacing:-.01em;color:rgba(255,255,255,.86)}
+.hb-mos .is-big p{display:none}
 
 /* 초점 테두리: 둥근 카드 · 사진 위에서도 보이게 */
 .hb a:focus-visible{outline:3px solid var(--primary);outline-offset:3px}

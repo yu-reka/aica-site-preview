@@ -93,10 +93,14 @@ test('mobile review tabs match specific categories even after a shared career cl
 });
 
 
-test('mobile review pages retain canonical modal links and the ten-card boundary', () => {
+test('mobile grid exposes all matching reviews while the shared list pager keeps ten rows', () => {
   const classes = Array.from({ length: 11 }, () => ['cat-life', 'coh7', 'tg4']);
-  const { board, pager, count, location, listeners } = startReviews(classes);
+  const { board, pager, count, location, listeners, views } = startReviews(classes);
   assert.equal(count.textContent, '11개의 후기');
+  assert.equal(board.children.length, 11);
+  assert.equal(pager.hidden, true);
+  views.children[1].events.click();
+  assert.equal(pager.hidden, false);
   assert.equal(board.children.length, 10);
   assert.equal(board.children[0].tagName, 'a');
   assert.equal(board.children[0].href, '#r-0');
@@ -107,6 +111,9 @@ test('mobile review pages retain canonical modal links and the ten-card boundary
   location.hash = '#tg-4'; listeners.hashchange();
   assert.equal(board.children.length, 10);
   assert.equal(count.textContent, '11개의 후기');
+  views.children[0].events.click();
+  assert.equal(board.children.length, 11);
+  assert.equal(pager.hidden, true);
 });
 
 test('legacy Spring entry loads reviews only on a review page', () => {
@@ -126,7 +133,7 @@ test('legacy Spring entry loads reviews only on a review page', () => {
     vm.runInContext(readFileSync(new URL('../stories/js/stories-m.js', import.meta.url), 'utf8'), context);
     assert.equal(appended.length, hasReviews ? 1 : 0);
     if (hasReviews) {
-      assert.equal(appended[0].src, 'https://site.example/stories/js/stories-m-reviews.js?v=1102review-empty-note');
+      assert.equal(appended[0].src, 'https://site.example/stories/js/stories-m-reviews.js?v=1102mobile-review-list-pager');
       let initialized = 0;
       context.StoriesMobileReviews = { init() { initialized++; } };
       appended[0].onload();

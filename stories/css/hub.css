@@ -176,7 +176,7 @@ html[data-nav="side"] .stories-hub{background:var(--surface)}
 /* 수료식 사진(10-13 사본 고침): 원본 맨 위 줄(학교 이름)이 이미 반쯤 잘려 있어 그 줄만 살짝(1.11배) 밀어내고,
    왼쪽 7%에 맞춰 현수막이 낱말째 보이게 — 가로로 긴 칸은 '성과공유회 및', 세로로 긴 칸(왼쪽 메뉴 · 모바일)은 '성과공유회'.
    전에는 1.32배 · 가운데라 둘째 줄 글자가 반쯤 잘리고 흐려 보였음 */
-.hb-mos li:last-child .hb-ph{object-position:7% 50%;scale:1.11;transform-origin:0 100%}
+.hb-mos li:last-child .hb-ph:not([data-fit]){object-position:7% 50%;scale:1.11;transform-origin:0 100%}
 /* 영상 칸: 기수 · 날짜 줄 끝에 '▶ 길이' 표(기수 페이지 카드의 재생 길이 그대로). 누르면 유튜브 새 창.
    사진 위에 띄우면 현수막 글자 · 얼굴을 가려서 글 줄 안에 둠 */
 .hb-vd{display:inline-flex;align-items:center;gap:5px;height:20px;margin-left:8px;padding:0 8px 0 7px;border-radius:999px;vertical-align:1px;

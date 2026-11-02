@@ -62,15 +62,19 @@ const LifeMobileView = (() => {
     function rail(items,label,cls=''){return `<div class="rail-wrap ${cls}"><div class="rail" aria-label="${esc(label)}">${items.join('')}</div><button class="rail-arrow previous" aria-label="이전 ${esc(label)}" hidden>${arrow}</button><button class="rail-arrow next" aria-label="다음 ${esc(label)}">${arrow}</button></div>`;}
     function topicRows(){return $$('.lo-tr',src).map((a,i)=>`<a class="topic-row" href="${esc(a.getAttribute('href'))}"><span class="index">${String(i+1).padStart(2,'0')}</span><span class="topic-tx"><small>${esc($('.tx em',a).textContent)}</small><b>${esc($('.tx b',a).textContent)}</b><span>${esc($('.tx small',a).textContent)}</span></span>${image($('.ph img',a).getAttribute('src'))}<span class="row-arrow" aria-hidden="true">↗</span></a>`).join('');}
     function overview(){
-     const photos=['entrance.webp','classroom.webp','fac_8f_cafeteria_01.webp'];
      const floors=['1F','2·3F','8F'];
-     const cards=$$('.lo-pj',src).map((a,i)=>`<a href="#facilities" data-fac="${a.dataset.fac}" class="facility-card">${image('assets/'+photos[i],$('.lo-tx b',a).textContent)}<span class="floor-badge">${floors[i]}</span><div><small>${esc($('.lo-tx em',a).textContent)}</small><b>${esc($('.lo-tx b',a).textContent)}</b><p>${esc($('.lo-tx small',a).textContent)}</p></div></a>`);
+     const cards=$$('.lo-pj',src).map((a,i)=>`<a href="#facilities" data-fac="${a.dataset.fac}" class="facility-card">${image($('.lo-ph img',a).getAttribute('src'),$('.lo-tx b',a).textContent)}<span class="floor-badge">${floors[i]}</span><div><small>${esc($('.lo-tx em',a).textContent)}</small><b>${esc($('.lo-tx b',a).textContent)}</b><p>${esc($('.lo-tx small',a).textContent)}</p></div></a>`);
      return `<div class="quick-facts"><a href="#facilities" data-fac="23-0"><b>1~3F</b><span>교육장</span></a><a href="#facilities" data-fac="8-0"><b>8F</b><span>구내식당</span></a><a href="#directions"><b>5분</b><span>문화전당역 도보</span></a></div><section class="section"><div class="section-head-row">${heading('시설 둘러보기',text('#lo-fac-t'))}<a class="small-link" href="#facilities">전체 보기 →</a></div>${rail(cards,'시설 사진')}</section><section class="section">${heading('생활 꿀팁',text('#lo-tip-t'))}<div class="topic-list">${topicRows()}</div></section><section class="section">${heading('오시는 길',text('#lo-way-t'))}<a href="#directions" class="way-preview">${image('assets/way-map.webp','문화전당역에서 교육장까지 걸어서 약 5분 지도')}<div><span class="kicker">주소</span><b>${esc(text('.lo-wtx>b'))}</b><span>출발지별 길 찾기 ${arrow}</span></div></a></section>`;
     }
     const floorTitles={'8':text('.bx9-g[data-g="8"] h3'),'23':text('.bx9-g[data-g="23"] h3'),'1':text('.bx9-g[data-g="1"] h3')};
     const floorDesc={'8':text('.lo-pj[data-fac="8-0"] .lo-tx b'),'23':text('.lo-pj[data-fac="23-0"] .lo-tx b'),'1':text('.lo-pj[data-fac="1-0"] .lo-tx b')};
     
-    function photoStyle(photo){let name=/im-([\w_]+)/.exec(photo.className)?.[1];let s=photo.style||'';let size=/--bs:([^;]+)/.exec(s)?.[1]||'cover';let pos=/--bp:([^;]+)/.exec(s)?.[1]||'center';return `background-image:url('assets/${name}.webp');background-size:${size};background-position:${pos}`;}
+    function photoStyle(photo){
+      const s=photo.style||'', name=/im-([\w_]+)/.exec(photo.className)?.[1];
+      const background=/(?:^|;)\s*background-image\s*:([^;]+)/i.exec(s)?.[1].trim()||(name?`url('assets/${name}.webp')`:'none');
+      const size=/--bs:([^;]+)/.exec(s)?.[1]||'cover', pos=/--bp:([^;]+)/.exec(s)?.[1]||'center';
+      return esc(`background-image:${background};background-size:${size};background-position:${pos}`);
+    }
     function facilityNote(note){
       const paths=/예약/.test(note)?'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18m-11 5 2 2 4-4"/>':/식권/.test(note)?'<path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7Z"/><path d="M15 5v2m0 4v2m0 4v2"/>':/평일|시간/.test(note)?'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>':'<circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.01"/>';
       return `<li><span class="space-note-icon" aria-hidden="true"><svg viewBox="0 0 24 24">${paths}</svg></span><span class="space-note-text">${note}</span></li>`;

@@ -57,7 +57,7 @@
   html.school-about main#main .intro-news-stack{margin:24px -20px 0;padding:0;width:auto;height:auto;min-height:0;transform:none}
   html.school-about main#main .intro-news-motion{transform:none!important;animation:none!important;height:auto;min-height:0;position:static}
   html.school-about main#main .intro-news-papers{display:flex;gap:10px;height:auto;min-height:0;padding:0 20px 6px;position:static;transform:none}
-  html.school-about main#main .intro-news-card{position:static!important;inset:auto!important;flex:none;width:230px;height:auto!important;min-height:0;margin:0!important;padding:16px;border:0;border-radius:18px;background:var(--am-soft);box-shadow:none;transform:none!important;opacity:1!important;animation:none!important;rotate:none!important}
+  html.school-about main#main .intro-news-card{position:static!important;inset:auto!important;flex:0 0 100%;width:100%;min-width:0;height:auto!important;min-height:0;margin:0!important;padding:16px;border:0;border-radius:18px;background:var(--am-soft);box-shadow:none;transform:none!important;opacity:1!important;animation:none!important;rotate:none!important}
   html.school-about main#main .intro-news-card :is(.intro-news-browserbar,.intro-news-print-lines,.intro-news-photo){display:none}
   html.school-about main#main .intro-news-body{padding:0;display:flex;flex-direction:column;gap:8px}
   html.school-about main#main .intro-news-meta{display:flex;gap:4px;margin:0;font-size:12px;line-height:1.4;color:var(--am-muted)}
@@ -260,17 +260,17 @@
   html.school-about main#main .career-guide-heading{margin:0 0 var(--am-heading-gap)}
   html.school-about main#main .career-guide-heading p{margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--am-muted)}
   html.school-about main#main .career-guide-cards{display:flex;flex-direction:column;gap:var(--am-row-gap);margin:0;padding:0;list-style:none}
-  html.school-about main#main .career-stage-card{display:grid;grid-template-columns:96px minmax(0,1fr);column-gap:12px;align-items:center;margin:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;min-height:0}
+  html.school-about main#main .career-stage-card{display:grid;grid-template-columns:108px minmax(0,1fr);column-gap:12px;align-items:center;margin:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;min-height:0}
   html.school-about main#main .career-stage-copy{grid-column:2;grid-row:1;display:flex;flex-direction:column;gap:3px;padding:0;margin:0}
   html.school-about main#main .career-stage-label{display:inline;align-self:flex-start;margin:0;padding:0;border:0;border-radius:0;background:none;font-size:12px;font-weight:700;color:#102D80}
   html.school-about main#main .career-stage-copy h3{margin:0;font-size:15px;font-weight:800;line-height:1.4;color:var(--am-ink)}
   html.school-about main#main .career-stage-copy h3 br{display:none}
   html.school-about main#main .career-stage-copy p{margin:0;font-size:12px;line-height:1.5;color:var(--am-muted)}
-  html.school-about main#main .career-stage-media{grid-column:1;grid-row:1;width:96px;height:68px;margin:0;padding:0;border-radius:12px;overflow:hidden;background:none;aspect-ratio:auto}
+  html.school-about main#main .career-stage-media{grid-column:1;grid-row:1;width:108px;height:76.5px;margin:0;padding:0;border-radius:12px;overflow:hidden;background:none;aspect-ratio:auto}
   html.school-about main#main .career-stage-media img{width:100%;height:100%;object-fit:cover}
   /* 웹 채널 카드의 로고·이름·안내를 그대로 축소해 사용한다. */
   html.school-about main#main .career-stage-media--channel{position:relative;background:linear-gradient(140deg,#ffe96a,#fee500)}
-  html.school-about main#main .career-stage-media--channel .career-channel-art{position:absolute;left:50%;top:50%;display:flex;flex-direction:column;justify-content:center;width:360px;height:232px;padding:12px;transform:translate(-50%,-50%) scale(.266666667);transform-origin:center}
+  html.school-about main#main .career-stage-media--channel .career-channel-art{position:absolute;left:50%;top:50%;display:flex;flex-direction:column;justify-content:center;width:360px;height:232px;padding:12px;transform:translate(-50%,-50%) scale(.3);transform-origin:center}
   html.school-about main#main .career-channel-art .career-channel-name > strong{font-size:20px}
 
   /* 수료생 후속 프로그램: 하나씩 보기 + 간격 줄임(카드 색은 웹 그대로) */
@@ -314,7 +314,8 @@
   html.school-about main#main .partner-node-school{height:auto;min-height:0}
   html.school-about main#main #intro .intro-purpose > :is(h2,p){margin-inline:0;text-align:left}
   html.school-about main#main :is(.intro-news-stack,.intro-news-motion,.intro-news-papers)::before,html.school-about main#main :is(.intro-news-stack,.intro-news-motion,.intro-news-papers)::after{display:none}
-  html.school-about main#main .intro-news-papers{overflow-x:auto;overscroll-behavior-x:contain;width:auto;max-width:none}
+  html.school-about main#main .intro-news-papers{overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:20px;width:auto;max-width:none}
+  html.school-about main#main .intro-news-card{scroll-snap-align:start}
   html.school-about main#main .intro-news-meta{justify-content:flex-start;gap:4px;padding:0;border:0;font-size:12px}
   html.school-about main#main .intro-news-meta > span{font-weight:400;border-radius:0;background:none;padding:0;color:inherit}
   html.school-about main#main .cohort-comparison.am-on .cohort-fact{flex-direction:row;min-height:0}

@@ -37,10 +37,48 @@
   const $$ = (selector, parent = main) => [...parent.querySelectorAll(selector)];
   const reduce = matchMedia('(prefers-reduced-motion:reduce)');
   const railObservers = [];
+  document.addEventListener('click', event => {
+    $$('.topic-picker[open]').forEach(picker => {
+      if (!picker.contains(event.target)) picker.open = false;
+    });
+  });
+  const cultureSheet = document.createElement('dialog');
+  cultureSheet.className = 'lm-culture-sheet';
+  cultureSheet.setAttribute('aria-labelledby', 'lm-culture-title');
+  document.body.append(cultureSheet);
+  let cultureOpener, cultureIndex=0, previousOverflow='';
+  function closeCulture(){ if(cultureSheet.open) cultureSheet.close(); }
+  cultureSheet.addEventListener('close', () => {
+    document.body.style.overflow=previousOverflow;
+    if(cultureOpener?.isConnected) cultureOpener.focus({preventScroll:true});
+  });
+  cultureSheet.addEventListener('click', event => {
+    if(event.target===cultureSheet || event.target.closest('[data-culture-close]')) closeCulture();
+    const button=event.target.closest('[data-culture-photo]');
+    if(!button) return;
+    const track=cultureSheet.querySelector('.culture-photos');
+    const current=Math.round(track.scrollLeft/track.clientWidth);
+    const next=(current+Number(button.dataset.culturePhoto)+track.children.length)%track.children.length;
+    track.scrollTo({left:next*track.clientWidth,behavior:reduce.matches?'instant':'smooth'});
+  });
+  matchMedia('(max-width:600px)').addEventListener('change', closeCulture);
+  function openCulture(button){
+    cultureOpener=button; cultureIndex=Number(button.dataset.cultureOpen);
+    cultureSheet.innerHTML=view.cultureDetail(cultureIndex);
+    const track=cultureSheet.querySelector('.culture-photos');
+    track.addEventListener('scroll',()=>{
+      const photo=life.culture[cultureIndex].photos[Math.round(track.scrollLeft/track.clientWidth)];
+      cultureSheet.querySelector('.culture-photo-caption').textContent=photo?.caption||'';
+    },{passive:true});
+    previousOverflow=document.body.style.overflow;
+    document.body.style.overflow='hidden';
+    cultureSheet.showModal();
+  }
   const aliases = { home: 'overview', facility: 'facilities', way: 'directions' };
   const paneRoutes = { home: 'overview', facility: 'facilities', tips: 'tips', way: 'directions' };
 
   function render() {
+    closeCulture();
     railObservers.forEach(observer => observer.disconnect());
     railObservers.length = 0;
     const raw = Site.decodeHash(location.hash.slice(1));
@@ -84,9 +122,18 @@
       const previous = $('.previous', wrapper);
       const next = $('.next', wrapper);
       const sync = () => {
-        SiteUI.syncRail(track, previous, next);
+        previous.hidden = next.hidden = track.children.length < 2;
       };
-      const move = direction => track.scrollBy({ left: direction * track.clientWidth * .86, behavior: reduce.matches ? 'auto' : 'smooth' });
+      const move = direction => {
+        const items = [...track.children];
+        if (!items.length) return;
+        const positions = items.map(item => item.offsetLeft - items[0].offsetLeft);
+        const current = positions.reduce((best, left, index) =>
+          Math.abs(left - track.scrollLeft) < Math.abs(positions[best] - track.scrollLeft) ? index : best, 0);
+        const target = (current + direction + items.length) % items.length;
+        const max = Math.max(0, track.scrollWidth - track.clientWidth);
+        track.scrollTo({ left: Math.min(max, positions[target]), behavior: reduce.matches ? 'auto' : 'smooth' });
+      };
       track.addEventListener('keydown', event => { if(event.target===track) SiteUI.railKeys(event, move); });
       previous.onclick = () => move(-1);
       next.onclick = () => move(1);
@@ -185,6 +232,7 @@
       if (state.page === 'facilities') render();
     }
     if (!button) return;
+    if (button.hasAttribute('data-culture-open')) { openCulture(button); return; }
     if (button.dataset.spaceSelect) {
       const card = button.closest('.floor-card');
       state.chosenSpace[card.dataset.floor] = button.dataset.spaceSelect;

@@ -601,8 +601,8 @@ body .stories-page .st h3{font-size:16px}
 }
 /* 보기 전환: 필터 줄 맨 오른쪽, 알약 높이 맞춤 */
 .stories-page .rev .drawers{align-items:center}
-.stories-page .rev .drawers .vtoggle{margin:0 0 0 4px;height:44px;padding:3px;border:1px solid var(--l-line);align-items:center}
-.stories-page .rev .drawers .vtoggle label{width:44px;height:36px;border-radius:999px}
+.stories-page .rev :is(.drawers .vtoggle,.sm-review-views){display:inline-flex;gap:2px;margin:0 0 0 4px;height:44px;padding:3px;border:1px solid var(--l-line);border-radius:999px;background:#fff;align-items:center}
+.stories-page .rev :is(.drawers .vtoggle label,.sm-review-views button){display:grid;place-items:center;width:44px;height:36px;min-height:36px;padding:0;border:0;border-radius:999px;background:transparent;color:var(--g600);cursor:pointer}
 /* ───────── 표지(#cover) — 시안 v2 히어로 ───────── */
 .stories-page .cover{
  --gut:var(--gutter);line-height:1.6;letter-spacing:-.015em;position:relative;--inset:var(--gut);

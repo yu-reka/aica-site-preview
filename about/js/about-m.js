@@ -24,11 +24,22 @@
       btns.forEach(function(b){ b.setAttribute('aria-current', String(+b.dataset.jump === k)); });
     };
     var hdr = function(){ var h = $('#siteHeader'); return h ? h.getBoundingClientRect().bottom : 60; };
+    var pendingChapter = 0;
     function jumpToChapter(k, instant){
       var m = document.getElementById('am-ch' + k); if (!m) return;
       setCur(k);
+      pendingChapter = instant ? 0 : k;
       scrollTo({ top: Math.max(0, m.getBoundingClientRect().top + scrollY - hdr()), behavior: instant ? 'instant' : (reduce.matches ? 'auto' : 'smooth') });
     }
+    // Images/fonts above later chapters can settle while a smooth jump is running.
+    // Measure once more when it ends, unless the reader takes over the scroll.
+    addEventListener('scrollend', function(){
+      if (mq.matches && pendingChapter) jumpToChapter(pendingChapter, true);
+    });
+    var chapterUserMoved = false;
+    ['wheel','touchstart','keydown','pointerdown'].forEach(function(type){
+      addEventListener(type, function(){ pendingChapter = 0; chapterUserMoved = true; }, {passive:true});
+    });
     // A second tap during a quick sequence cancels the long smooth scroll.
     // Use instant rather than auto so CSS scroll-behavior cannot restart it.
     var lastChapterClick = -Infinity, rapidChapterFrame;
@@ -44,12 +55,12 @@
     // The shared drawer closes and updates the public hash first. On mobile,
     // align that section to the same chapter divider used by the bottom tabs.
     var chapterIds={intro:1,learning:2,activities:3,career:4}, chapterFrame;
-    function alignChapterHash(){
+    function alignChapterHash(instant){
       if(!mq.matches)return;
       var id=typeof Site!=='undefined'?Site.decodeHash(location.hash.slice(1)):location.hash.slice(1);
       var k=chapterIds[id];if(!k)return;
       cancelAnimationFrame(chapterFrame);
-      chapterFrame=requestAnimationFrame(function(){jumpToChapter(k);});
+      chapterFrame=requestAnimationFrame(function(){jumpToChapter(k, instant === true);});
     }
     document.addEventListener('click',function(event){
       if(!mq.matches||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
@@ -59,7 +70,15 @@
       if(url.origin===location.origin&&pagePath(url)===pagePath(location)&&chapterIds[url.hash.slice(1)])alignChapterHash();
     });
     addEventListener('hashchange',alignChapterHash);
-    if(document.readyState==='complete')alignChapterHash();else addEventListener('load',alignChapterHash,{once:true});
+    function alignInitialChapter(){
+      if (chapterUserMoved) return;
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){
+        if (!chapterUserMoved) alignChapterHash(true);
+      }); });
+    }
+    if(document.readyState==='complete')alignInitialChapter();else addEventListener('load',alignInitialChapter,{once:true});
+    if(document.fonts && document.fonts.ready)document.fonts.ready.then(alignInitialChapter);
+    addEventListener('pageshow',alignInitialChapter,{once:true});
     var raf;
     var onScroll = function(){
       cancelAnimationFrame(raf);
@@ -135,13 +154,25 @@
     var box = scroller.parentNode;
     box.classList.add('am-rail-box');
     scroller.classList.add('am-rail');
+    var moveRail = function(direction){
+      if (mq.matches && scroller.matches('.intro-news-papers')) {
+        var items = Array.from(scroller.children); if (!items.length) return;
+        var positions = items.map(function(item){ return item.offsetLeft - items[0].offsetLeft; });
+        var current = positions.reduce(function(best, left, index){
+          return Math.abs(left - scroller.scrollLeft) < Math.abs(positions[best] - scroller.scrollLeft) ? index : best;
+        }, 0);
+        var target = Math.max(0, Math.min(items.length - 1, current + direction));
+        var max = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+        scroller.scrollTo({left:Math.min(max, positions[target]), behavior:reduce.matches ? 'auto' : 'smooth'});
+      } else scroller.scrollBy({left:direction * scroller.clientWidth * .8, behavior:reduce.matches ? 'auto' : 'smooth'});
+    };
     var mk = function(dir){
       var b = document.createElement('button');
       b.type = 'button'; b.className = 'am-arrow am-arrow--' + dir;
       b.setAttribute('aria-label', (dir === 'prev' ? '이전 ' : '다음 ') + label);
       b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + ARROW[dir] + '"/></svg>';
       b.addEventListener('click', function(){
-        scroller.scrollBy({ left: (dir === 'prev' ? -1 : 1) * scroller.clientWidth * 0.8, behavior: reduce.matches ? 'auto' : 'smooth' });
+        moveRail(dir === 'prev' ? -1 : 1);
       });
       box.appendChild(b); return b;
     };
@@ -156,7 +187,7 @@
       SiteUI.syncRail(scroller, p, n);
     };
     scroller.addEventListener('scroll', upd, { passive: true });
-    scroller.addEventListener('keydown', function(event){ if(event.target===scroller) SiteUI.railKeys(event, function(dir){scroller.scrollBy({left:dir*scroller.clientWidth*.8,behavior:reduce.matches?'auto':'smooth'});}); });
+    scroller.addEventListener('keydown', function(event){ if(event.target===scroller) SiteUI.railKeys(event, moveRail); });
     addEventListener('resize', upd);
     if (media && typeof ResizeObserver !== 'undefined'){
       var observer = new ResizeObserver(upd); observer.observe(box); observer.observe(media);

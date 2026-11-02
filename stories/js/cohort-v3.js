@@ -240,10 +240,18 @@
     g.innerHTML='';
     if(!L.length){
       $('.cv3-pg').replaceChildren();
-      if(typeof StoryState!=='undefined')StoryState.render(empty,'filter',{subject:'기수 이야기',onReset:function(){
-        st.mo=0;st.v='all';st.pg=1;draw();
-        var button=root.querySelector('.sm-cv-views [data-v="all"]')||root.querySelector('.cv3-chips [aria-pressed="true"]');if(button)button.focus({preventScroll:true});
-      }});
+      var photoOnly=st.v==='video'&&D.some(function(d){return inC(d,st.coh)&&(!st.mo||ym(d)===st.mo)&&!d.yt;});
+      if(typeof StoryState!=='undefined'){
+        StoryState.render(empty,'filter',{subject:st.v==='video'?'영상':'기수 이야기',onReset:function(){
+          if(!photoOnly)st.mo=0;st.v='all';st.pg=1;draw();
+          var button=root.querySelector('.sm-cv-views [data-v="all"]')||root.querySelector('.cv3-chips [aria-pressed="true"]');if(button)button.focus({preventScroll:true});
+        }});
+        if(photoOnly){
+          empty.querySelector('.story-state__title').textContent='등록된 영상이 없어요.';
+          empty.querySelector('.story-state__copy').textContent='사진으로만 남아 있는 기록이에요. 사진 탭에서 이 기수의 순간들을 확인해 보세요.';
+          empty.querySelector('.story-state__action').textContent='사진 보기';
+        }
+      }
       return;
     }
     if(P&&st.pg===1)g.appendChild(pinEl());

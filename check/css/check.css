@@ -193,3 +193,14 @@ body[data-cat="check"] .faq-a .faq-qa{line-height:calc(var(--t-body) * 1.8)}
 
 /* 등장 숨김을 붙이는 순간은 전환 없이(첫 화면 요소도 0에서 떠오름) */
 .check-page.rv-init .rv{transition:none}
+
+/* Desktop FAQ follows the review pagination component; mobile keeps its own layout. */
+@media (min-width:601px){
+  .check-page .faq-pager{gap:6px;margin-top:44px}
+  .check-page .faq-pager button{min-width:40px;height:40px;padding:0 6px;border:1px solid #DDE0E5;border-radius:999px;background:#fff;color:var(--graphite);font:700 14px/1 var(--ff-sans);font-variant-numeric:tabular-nums;box-shadow:none;transform:none;cursor:pointer;transition:border-color .15s,background .15s,color .15s}
+  .check-page .faq-pager button:hover{border-color:#2B2D31;background:#fff;color:var(--ink);transform:none}
+  .check-page .faq-pager button[aria-current="page"]{background:#2B2D31;border-color:#2B2D31;color:#fff}
+  .check-page .faq-pager button:disabled{opacity:.35;pointer-events:none}
+  .check-page .faq-pager button:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+  .check-page #faqPrev svg{transform:rotate(180deg)}
+}

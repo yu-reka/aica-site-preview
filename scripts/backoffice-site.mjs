@@ -150,6 +150,8 @@ const PAGES = {
   // 기수 기록은 게시중인 글이 없으면 페이지 카드 그대로 보여요(팀 사이트와 같음)
   'stories/cohorts.html': (html, path) => {
     html = storyHead(html, path, '<script src="js/story-state.js');
+    // Reserve the loading view before defer/API execution, including on a slow connection.
+    html = html.replace('<main id="main" class="stories-page"', '<main id="main" class="stories-page" data-story-loading aria-busy="true"');
     return withTracking(html, path);
   }
 };

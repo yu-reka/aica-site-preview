@@ -89,18 +89,20 @@
 /* =========================================================
    푸터
    ========================================================= */
-.site-footer{padding:64px 0 calc(48px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:var(--paper);font-size:14.5px;color:var(--graphite)}
-/* 공식 교육플랫폼 푸터처럼(11-02 순서까지): 위 줄 링크(개인정보처리방침 왼쪽 · 유관 사이트 오른쪽) → 가는 선 → 기관 로고 한 줄 → 학교 BI 왼쪽 + 연락처 두 줄(| 로 구분) · 저작권 오른쪽 칸. 1080px 이하는 한 칸으로 쌓고 연락처는 한 줄씩 */
-.site-footer address{font-style:normal;line-height:1.9}
+.site-footer{padding:44px 0 calc(36px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:var(--paper);font-size:14.5px;color:var(--graphite)}
+/* 공식 교육플랫폼 푸터 순서(11-02): 위에서 아래로 링크 → 기관 로고 → 학교 BI 왼쪽 + 연락처 두 줄(| 로 구분) · 저작권 오른쪽 칸.
+   11-02 오후 촘촘하게(사용자 "푸터가 너무길어졌는데 오밀조밀 어찌 안되냐 저 줄도 보기싫고"): 기관 로고 위 구분선 없앰, 1081px 이상은 링크(왼쪽)와 기관 로고(오른쪽)를 한 줄로 합쳐 두 단.
+   1080px 이하는 한 칸으로 쌓고 연락처는 한 줄씩 */
+.site-footer .wrap{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:40px}
+.site-footer address{font-style:normal;line-height:1.75}
 .site-footer address ul{display:flex;flex-wrap:wrap;list-style:none;margin:0;padding:0}
 .site-footer address li+li::before{content:"";display:inline-block;width:1px;height:.75em;background:currentColor;opacity:.35;margin:0 12px;vertical-align:-.04em}
 .site-footer address a{text-decoration:underline;text-underline-offset:3px}
 .site-footer address a:hover{text-decoration-thickness:2px}
 .site-footer .footer-links{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;margin:0;padding:0}
-.site-footer .footer-links li:last-child{margin-left:auto}
 .site-footer .footer-links a{text-decoration:none;color:var(--ink);font-weight:500}
 .site-footer .footer-links a:hover{color:var(--primary)}
-/* 11-02 기관 로고: 기관은 링크 줄 아래 가는 선 다음 한 줄(좁으면 줄바꿈), 학교 BI는 연락처 왼쪽 칸. 높이는 기관 글자 높이가 약 11.5px로 같아 보이게.
+/* 11-02 기관 로고: 기관은 링크 줄 오른쪽(1080px 이하는 링크 아래 줄, 좁으면 줄바꿈), 학교 BI는 연락처 왼쪽 칸. 높이는 기관 글자 높이가 약 11.5px로 같아 보이게.
    푸터는 모든 페이지가 어두운 바탕으로 덮어써서(home.css · presentation.css · privacy.css) 흰 글자판 로고 · 밝은 선.
    높이 · 폭을 여기서 정함: 페이지 CSS의 전체 img 규칙(about.css img{width:100%})이 width 속성을 덮음 */
 .site-footer :is(.school-bi,.footer-orgs img){display:block;width:auto;max-width:100%;object-fit:contain}
@@ -108,10 +110,10 @@
 .site-footer .org-msit{height:26px}
 .site-footer .org-nipa{height:21px}
 .site-footer .org-aica{height:17px}
-.site-footer .footer-orgs{display:flex;flex-wrap:wrap;align-items:center;gap:16px 36px;list-style:none;margin:24px 0 0;padding:32px 0 0;border-top:1px solid rgba(255,255,255,.12)}
-.site-footer .footer-main{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:56px;margin-top:40px}
-.site-footer .footer-main .logo{align-self:start;margin-top:12px}   /* 12px: BI(30px)를 연락처 두 줄 가운데에 */
-.site-footer .footer-copy{margin:18px 0 0;font-size:13px}
+.site-footer .footer-orgs{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:12px 32px;list-style:none;margin:0;padding:0}
+.site-footer .footer-main{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:56px;margin-top:28px}
+.site-footer .footer-main .logo{align-self:start;margin-top:10px}   /* 10px: BI(30px)를 연락처 두 줄(약 51px) 가운데에 */
+.site-footer .footer-copy{margin:8px 0 0;font-size:13px}
 
 /* =========================================================
    플로팅 버튼(FAB): 맨 위로 — 모든 페이지 오른쪽 아래(지원하기는 헤더 · 모바일 메뉴에) · 안내 토스트
@@ -177,10 +179,13 @@
   .site-footer :is(.footer-links,address) a{display:inline-flex;align-items:center;min-height:44px;min-width:44px}
   .site-footer address ul{display:block}
   .site-footer address li+li::before{display:none}
-  .site-footer .footer-links li:last-child{margin-left:0}
-  .site-footer .footer-orgs{gap:14px 28px;margin-top:18px;padding-top:24px}
-  .site-footer .footer-main{display:block;margin-top:32px}
-  .site-footer .footer-main .logo{margin:0 0 14px}
+  .site-footer{padding-top:32px;padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
+  .site-footer .wrap{display:block}
+  .site-footer address{line-height:1.7}
+  .site-footer .footer-orgs{justify-content:flex-start;gap:12px 24px;margin-top:6px}
+  .site-footer .footer-main{display:block;margin-top:24px}
+  .site-footer .footer-main .logo{margin:0 0 8px}
+  .site-footer .footer-copy{padding-right:48px;font-size:12.5px}   /* 맨 아래까지 내렸을 때 오른쪽 아래 맨 위로 버튼(오른쪽 16 + 40px)이 저작권 끝을 가리지 않게. 12.5px: 430px 폭에서 한 줄 */
 }
 @media (max-width:860px){
   .site-header,.drawer,.floating{font-size:16px}

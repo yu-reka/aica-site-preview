@@ -18,8 +18,8 @@ test('Spring review export has no static records and uses escaped live fragments
   assert.ok(!fragments.includes('th:utext'));
   assert.ok(!fragments.includes('{{'));
   assert.ok(fragments.includes('th:text="${paragraph}"'));
-  assert.ok(reviews.includes('src="/stories/js/reviews-live.js?v=1020states"'));
-  assert.ok(reviews.includes('src="/stories/js/stories-m-reviews.js?v=1028shared-controls"'));
+  assert.ok(reviews.includes('src="/stories/js/reviews-live.js?v=1102review-empty-note"'));
+  assert.ok(reviews.includes('src="/stories/js/stories-m-reviews.js?v=1102review-empty-note"'));
   assert.ok(reviews.indexOf('stories-m-reviews.js') < reviews.indexOf('stories-m.js?'));
   assert.ok(reviews.includes('href="/common/css/masthead.css?v=1016cleanup"'));
 });

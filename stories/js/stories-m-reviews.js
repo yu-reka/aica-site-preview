@@ -18,7 +18,30 @@ const StoriesMobileReviews = (() => {
     var categories = tabs('후기 카테고리'), cohorts = tabs('후기 기수');
     cohorts.classList.add('sm-cohort-chips');
     var count = el('p', 'sm-review-count'); count.setAttribute('role', 'status');
+    var stage = el('div', 'sm-review-stage');
     var board = el('div', 'sm-review-board');
+    board.tabIndex = 0; board.setAttribute('aria-label', '후기 카드 가로 목록');
+    function railButton(label, direction){
+      var button = el('button', 'sm-arrow sm-review-arrow', direction < 0 ? '‹' : '›');
+      button.type = 'button'; button.setAttribute('aria-label', label);
+      button.classList.add(direction < 0 ? 'is-prev' : 'is-next');
+      button.addEventListener('click', function(){ move(direction); });
+      return button;
+    }
+    var previous = railButton('이전 후기 카드', -1), next = railButton('다음 후기 카드', 1);
+    function syncRail(){
+      SiteUI.syncRail(board, previous, next);
+      if (view === 'list' || stage.classList.contains('is-empty')) { previous.hidden = true; next.hidden = true; }
+    }
+    function move(direction){
+      var card = board.firstElementChild;
+      if (card) board.scrollBy({left:direction * (card.offsetWidth + 16), behavior:reduce.matches ? 'auto' : 'smooth'});
+    }
+    board.addEventListener('scroll', syncRail, {passive:true});
+    board.addEventListener('keydown', function(event){ SiteUI.railKeys(event, move); });
+    addEventListener('resize', syncRail);
+    stage.append(board, previous, next);
+    var lastView = '';
     var empty = el('div', 'sm-review-empty', '선택한 조건에 맞는 후기가 없습니다.');
     var pager = el('nav', 'sm-review-pager cpager'); pager.setAttribute('aria-label', '후기 페이지');
     var category = 'all', cohort = '', page = 1, tag = '', pageSize = 10;
@@ -32,12 +55,55 @@ const StoriesMobileReviews = (() => {
       note.appendChild(summary);
       var footer = el('div', 'sm-review-by');
       footer.appendChild(el('b', '', ($('.who b', card) || {}).textContent || ''));
-      var tg = $('.who .tg', card); if (tg) footer.appendChild(el('span', 'sm-review-tag', tg.textContent));
-      note.appendChild(footer);
+      var tg = $('.who .tg', card);
+      footer.appendChild(el('span', tg ? 'sm-review-tag' : 'sm-review-tag sm-review-tag-empty', tg ? tg.textContent : '태그 없음'));
+      var cohortText = ($('.cbar span', card) || {}).textContent || '';
+      footer.appendChild(el('span', 'sm-review-list-meta', cohortText.replace(/\s+/g, '') + ' · ' + (($('.who b', card) || {}).textContent || '')));
+      var arrow = el('span', 'sm-review-card-arrow', '→'); arrow.setAttribute('aria-hidden', 'true');
+      footer.appendChild(arrow); note.appendChild(footer);
       var cl = Array.from(card.classList);
       var co = cl.find(function(c){ return /^coh\d+$/.test(c); });
       return {node:note, cohort:co ? co.slice(3) : '', classes:cl};
     });
+    var toolbar = el('div', 'sm-review-toolbar'), tools = el('div', 'sm-review-tools');
+    var filterRow = el('div', 'sm-review-filter-row');
+    var tagSelect = el('details', 'sm-review-tag-dropdown dw');
+    var tagSummary = el('summary', ''), tagLabel = el('b', '', '태그');
+    tagSummary.setAttribute('aria-label', '후기 태그'); tagSummary.appendChild(tagLabel);
+    var tagChevron = cleanClone($('.dw-ftg summary svg', section));
+    if (tagChevron) tagSummary.appendChild(tagChevron);
+    var tagOptions = el('div', 'sm-review-tag-options');
+    $$('.dw-ftg .dwin a', section).forEach(function(link){
+      var match = /^#tg-([0-6])$/.exec(link.getAttribute('href'));
+      var option = el('button', '', match ? link.textContent : '전체'); option.type = 'button';
+      option.dataset.value = match ? match[1] : '';
+      option.addEventListener('click', function(){
+        tag = option.dataset.value; page = 1; tagSelect.open = false; refresh();
+        tagSummary.focus({preventScroll:true});
+      }); tagOptions.appendChild(option);
+    });
+    tagSelect.append(tagSummary, tagOptions); filterRow.append(cohorts, tagSelect);
+    document.addEventListener('click', function(event){ if (!tagSelect.contains(event.target)) tagSelect.open = false; });
+    tagSelect.addEventListener('keydown', function(event){
+      if (event.key === 'Escape'){ tagSelect.open = false; tagSummary.focus({preventScroll:true}); }
+    });
+    tagSelect.addEventListener('focusout', function(event){ if (!tagSelect.contains(event.relatedTarget)) tagSelect.open = false; });
+    var views = el('div', 'sm-review-views'); views.setAttribute('role', 'group'); views.setAttribute('aria-label', '후기 보기 방식');
+    var view = 'card';
+    ['card', 'list'].forEach(function(mode){
+      var button = el('button', ''); button.type = 'button'; button.dataset.view = mode;
+      button.setAttribute('aria-label', mode === 'card' ? '카드 보기' : '목록 보기');
+      button.setAttribute('aria-pressed', String(mode === view));
+      var icon = cleanClone($('.vtoggle label[for="vm-' + mode + '"] svg', section));
+      if (icon) button.appendChild(icon);
+      button.addEventListener('click', function(){
+        view = mode; stage.classList.toggle('is-list', mode === 'list');
+        board.setAttribute('aria-label', mode === 'list' ? '후기 목록' : '후기 카드 가로 목록');
+        $$('button', views).forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.view === view)); });
+        requestAnimationFrame(syncRail);
+      }); views.appendChild(button);
+    });
+    tools.appendChild(views); toolbar.append(count, tools);
     var categoryNames = [['all','전체'],['life','생활'],['class','수업'],['proj','프로젝트'],['job','취업'],['path','진로']];
     categoryNames.forEach(function(c){
       tabButton(categories, c[1], c[0] === category, function(){
@@ -71,12 +137,20 @@ const StoriesMobileReviews = (() => {
       });
       var total = Math.max(1, Math.ceil(matching.length / pageSize)); page = Math.min(page, total);
       count.textContent = matching.length + '개의 후기';
+      $$('button', tagOptions).forEach(function(button){ button.setAttribute('aria-pressed', String(button.dataset.value === tag)); });
+      var selectedTag = $$('button', tagOptions).find(function(button){ return button.dataset.value === tag; });
+      tagLabel.textContent = tag && selectedTag ? selectedTag.textContent : '태그';
+      var view = [category, cohort, tag, page].join('|');
+      var left = view === lastView ? board.scrollLeft : 0; lastView = view;
       board.replaceChildren();
       matching.slice((page - 1) * pageSize, page * pageSize).forEach(function(e){ board.appendChild(e.node); });
-      if(!matching.length&&typeof StoryState!=='undefined')StoryState.render(empty,'filter',{subject:'후기',onReset:function(){
+      if(!matching.length&&typeof StoryState!=='undefined')StoryState.render(empty,'filter',{subject:'후기',reviewBoard:board,onReset:function(){
         StoryState.resetReviews(section);categories.querySelector('button').focus({preventScroll:true});
       }});
-      empty.hidden = matching.length > 0; board.hidden = !matching.length;
+      empty.hidden = matching.length > 0;
+      stage.classList.toggle('is-empty', !matching.length);
+      board.tabIndex = matching.length ? 0 : -1;
+      board.scrollLeft = left; requestAnimationFrame(syncRail);
       pager.replaceChildren(); pager.hidden = !matching.length;
       if (matching.length){
         pager.appendChild(pageButton('←', page - 1, page === 1));
@@ -88,10 +162,9 @@ const StoriesMobileReviews = (() => {
     function fromHash(){
       var hash = /^#tg-([0-6])$/.exec(location.hash);
       if (hash){ tag = hash[1]; page = 1; }
-      else if (!/^#r-/.test(location.hash)) tag = '';
       refresh();
     }
-    box.append(categories, cohorts, count, board, empty, pager); source.before(box);
+    box.append(categories, filterRow, toolbar, stage, empty, pager); source.before(box);
     // Hide the legacy controls as a group on mobile, including integration-only pager styles.
     ['.filters', '.idgrid', '.rvlist', '.pager'].forEach(function(selector){
       var original = $(selector, section);

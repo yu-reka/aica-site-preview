@@ -1,34 +1,4 @@
 /* Imported culture page from the user-supplied HTML; scoped to this topic. */
-.life-page .im-dm_cup{background-image:url("../assets/cafest.webp");background-position:50% 45%}
-.life-page .im-dm_cafe{background-image:url("../assets/yl_tmp.webp");background-position:45% 50%}
-.life-page .im-dm_sign{background-image:url("../assets/cafest.webp");background-position:50% 35%}
-.life-page .im-dm_floor{background-image:url("../assets/cafest.webp");background-position:35% 50%}
-.life-page .im-dm_mural{background-image:url("../assets/yl_tmp.webp");background-position:50% 55%}
-.life-page .im-dm_ninja{background-image:url("../assets/yl_tmp.webp");background-position:35% 55%}
-.life-page .im-dm_africa{background-image:url("../assets/cafest.webp");background-position:50% 50%}
-.life-page .im-dm_shop{background-image:url("../assets/yl_tmp.webp");background-position:40% 40%}
-.life-page .im-hm_lawn{background-image:url("../assets/park_tmp.webp");background-position:55% 70%}
-.life-page .im-hm_frame{background-image:url("../assets/riverp.webp");background-position:50% 55%}
-.life-page .im-hm_happy{background-image:url("../assets/park_tmp.webp");background-position:50% 40%}
-.life-page .im-hm_road1{background-image:url("../assets/riverp.webp");background-position:45% 55%}
-.life-page .im-hm_road2{background-image:url("../assets/park_tmp.webp");background-position:40% 55%}
-.life-page .im-hm_artisan{background-image:url("../assets/riverp.webp");background-position:50% 65%}
-.life-page .im-hm_bridge{background-image:url("../assets/park_tmp.webp");background-position:35% 55%}
-.life-page .im-hm_night{background-image:url("../assets/riverp.webp");background-position:50% 55%}
-.life-page .im-ac_sign{background-image:url("../assets/acc_tmp.webp");background-position:50% 60%}
-.life-page .im-ac_museum{background-image:url("../assets/acc_tmp.webp");background-position:50% 50%}
-.life-page .im-ac_lib{background-image:url("../assets/acc_tmp.webp");background-position:50% 55%}
-.life-page .im-ac_libin{background-image:url("../assets/acc_tmp.webp");background-position:50% 55%}
-.life-page .im-ac_shop{background-image:url("../assets/acc_tmp.webp");background-position:50% 60%}
-.life-page .im-ac_hand{background-image:url("../assets/acc_tmp.webp");background-position:50% 40%}
-.life-page .im-ac_snail{background-image:url("../assets/acc_tmp.webp");background-position:55% 60%}
-.life-page .im-ac_back{background-image:url("../assets/acc_tmp.webp");background-position:60% 45%}
-.life-page .im-pz_clock{background-image:url("../assets/plaza_tmp.webp");background-position:45% 65%}
-.life-page .im-pz_gate{background-image:url("../assets/plaza_tmp.webp");background-position:50% 60%}
-.life-page .im-pz_office{background-image:url("../assets/plaza_tmp.webp");background-position:45% 50%}
-.life-page .im-pz_bell{background-image:url("../assets/plaza_tmp.webp");background-position:65% 60%}
-.life-page .im-pz_memo{background-image:url("../assets/plaza_tmp.webp");background-position:50% 40%}
-.life-page .im-pz_tower{background-image:url("../assets/plaza_tmp.webp");background-position:60% 45%}
 /* ===== 문화 · 여가 새 사진 디자인(cf-) — 이 섹션만 바뀜. 나머지는 사이트 CSS 그대로 ===== */
 .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]){--cf-nc:#7C9CFF;--cf-y:#FEE500;--cf-ease:cubic-bezier(.22,.8,.24,1)}
 .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf{display:flex;flex-direction:column;gap:56px;margin-top:44px}
@@ -77,7 +47,7 @@
 /* 사진 더미 + 노란 + */
 .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-pile{--s:240px;position:relative;width:var(--s);height:var(--s);margin:14px 34px 14px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-card{position:absolute;inset:0;margin:0;z-index:var(--z);transform:rotate(var(--rt));transition:transform .45s var(--cf-ease)}
-.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-ph{display:block;width:100%;aspect-ratio:1;background-size:cover;background-position:center;background-color:#E9EEF3;box-shadow:0 12px 24px -14px rgba(20,35,63,.55)}
+.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-ph{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;background-color:#E9EEF3;box-shadow:0 12px 24px -14px rgba(20,35,63,.55)}
 .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-card figcaption{display:none}
 .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-g:not(.is-open) .cf-pile:hover .cf-card:not(:first-child){transform:rotate(calc(var(--rt) * 1.7)) translate(calc(var(--i) * 4px),calc(var(--i) * -2px))}
 .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-yb{position:absolute;z-index:20;top:50%;left:100%;width:40px;height:40px;margin:-20px 0 0 -20px;padding:0;display:grid;place-items:center;border:1.2px solid var(--ink);border-radius:50%;background:#fff;color:var(--ink);cursor:pointer;box-shadow:none;transition:background .2s,color .2s}

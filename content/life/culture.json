@@ -31,44 +31,60 @@
     ],
     "photos": [
       {
-        "photoClass": "cf-ph im-dm_cup",
         "caption": "문화·여가 사진 예시 1",
-        "image": "assets/cafest.webp"
+        "image": "assets/cafest.webp",
+        "width": 1600,
+        "height": 1067,
+        "position": "50% 45%"
       },
       {
-        "photoClass": "cf-ph im-dm_cafe",
         "caption": "문화·여가 사진 예시 2",
-        "image": "assets/yl_tmp.webp"
+        "image": "assets/yl_tmp.webp",
+        "width": 547,
+        "height": 365,
+        "position": "45% 50%"
       },
       {
-        "photoClass": "cf-ph im-dm_sign",
         "caption": "문화·여가 사진 예시 3",
-        "image": "assets/cafest.webp"
+        "image": "assets/cafest.webp",
+        "width": 1600,
+        "height": 1067,
+        "position": "50% 35%"
       },
       {
-        "photoClass": "cf-ph im-dm_mural",
         "caption": "문화·여가 사진 예시 4",
-        "image": "assets/yl_tmp.webp"
+        "image": "assets/yl_tmp.webp",
+        "width": 547,
+        "height": 365,
+        "position": "50% 55%"
       },
       {
-        "photoClass": "cf-ph im-dm_floor",
         "caption": "문화·여가 사진 예시 5",
-        "image": "assets/cafest.webp"
+        "image": "assets/cafest.webp",
+        "width": 1600,
+        "height": 1067,
+        "position": "35% 50%"
       },
       {
-        "photoClass": "cf-ph im-dm_ninja",
         "caption": "문화·여가 사진 예시 6",
-        "image": "assets/yl_tmp.webp"
+        "image": "assets/yl_tmp.webp",
+        "width": 547,
+        "height": 365,
+        "position": "35% 55%"
       },
       {
-        "photoClass": "cf-ph im-dm_africa",
         "caption": "문화·여가 사진 예시 7",
-        "image": "assets/cafest.webp"
+        "image": "assets/cafest.webp",
+        "width": 1600,
+        "height": 1067,
+        "position": "50% 50%"
       },
       {
-        "photoClass": "cf-ph im-dm_shop",
         "caption": "문화·여가 사진 예시 8",
-        "image": "assets/yl_tmp.webp"
+        "image": "assets/yl_tmp.webp",
+        "width": 547,
+        "height": 365,
+        "position": "40% 40%"
       }
     ]
   },
@@ -104,44 +120,60 @@
     ],
     "photos": [
       {
-        "photoClass": "cf-ph im-hm_lawn",
         "caption": "문화·여가 사진 예시 1",
-        "image": "assets/park_tmp.webp"
+        "image": "assets/park_tmp.webp",
+        "width": 547,
+        "height": 365,
+        "position": "55% 70%"
       },
       {
-        "photoClass": "cf-ph im-hm_frame",
         "caption": "문화·여가 사진 예시 2",
-        "image": "assets/riverp.webp"
+        "image": "assets/riverp.webp",
+        "width": 547,
+        "height": 365,
+        "position": "50% 55%"
       },
       {
-        "photoClass": "cf-ph im-hm_happy",
         "caption": "문화·여가 사진 예시 3",
-        "image": "assets/park_tmp.webp"
+        "image": "assets/park_tmp.webp",
+        "width": 547,
+        "height": 365,
+        "position": "50% 40%"
       },
       {
-        "photoClass": "cf-ph im-hm_road1",
         "caption": "문화·여가 사진 예시 4",
-        "image": "assets/riverp.webp"
+        "image": "assets/riverp.webp",
+        "width": 547,
+        "height": 365,
+        "position": "45% 55%"
       },
       {
-        "photoClass": "cf-ph im-hm_road2",
         "caption": "문화·여가 사진 예시 5",
-        "image": "assets/park_tmp.webp"
+        "image": "assets/park_tmp.webp",
+        "width": 547,
+        "height": 365,
+        "position": "40% 55%"
       },
       {
-        "photoClass": "cf-ph im-hm_artisan",
         "caption": "문화·여가 사진 예시 6",
-        "image": "assets/riverp.webp"
+        "image": "assets/riverp.webp",
+        "width": 547,
+        "height": 365,
+        "position": "50% 65%"
       },
       {
-        "photoClass": "cf-ph im-hm_bridge",
         "caption": "문화·여가 사진 예시 7",
-        "image": "assets/park_tmp.webp"
+        "image": "assets/park_tmp.webp",
+        "width": 547,
+        "height": 365,
+        "position": "35% 55%"
       },
       {
-        "photoClass": "cf-ph im-hm_night",
         "caption": "문화·여가 사진 예시 8",
-        "image": "assets/riverp.webp"
+        "image": "assets/riverp.webp",
+        "width": 547,
+        "height": 365,
+        "position": "50% 55%"
       }
     ]
   },
@@ -177,44 +209,60 @@
     ],
     "photos": [
       {
-        "photoClass": "cf-ph im-ac_sign",
         "caption": "문화·여가 사진 예시 1",
-        "image": "assets/acc_tmp.webp"
+        "image": "assets/acc_tmp.webp",
+        "width": 1600,
+        "height": 931,
+        "position": "50% 60%"
       },
       {
-        "photoClass": "cf-ph im-ac_museum",
         "caption": "문화·여가 사진 예시 2",
-        "image": "assets/acc_tmp.webp"
+        "image": "assets/acc_tmp.webp",
+        "width": 1600,
+        "height": 931,
+        "position": "50% 50%"
       },
       {
-        "photoClass": "cf-ph im-ac_lib",
         "caption": "문화·여가 사진 예시 3",
-        "image": "assets/acc_tmp.webp"
+        "image": "assets/acc_tmp.webp",
+        "width": 1600,
+        "height": 931,
+        "position": "50% 55%"
       },
       {
-        "photoClass": "cf-ph im-ac_libin",
         "caption": "문화·여가 사진 예시 4",
-        "image": "assets/acc_tmp.webp"
+        "image": "assets/acc_tmp.webp",
+        "width": 1600,
+        "height": 931,
+        "position": "50% 55%"
       },
       {
-        "photoClass": "cf-ph im-ac_shop",
         "caption": "문화·여가 사진 예시 5",
-        "image": "assets/acc_tmp.webp"
+        "image": "assets/acc_tmp.webp",
+        "width": 1600,
+        "height": 931,
+        "position": "50% 60%"
       },
       {
-        "photoClass": "cf-ph im-ac_hand",
         "caption": "문화·여가 사진 예시 6",
-        "image": "assets/acc_tmp.webp"
+        "image": "assets/acc_tmp.webp",
+        "width": 1600,
+        "height": 931,
+        "position": "50% 40%"
       },
       {
-        "photoClass": "cf-ph im-ac_snail",
         "caption": "문화·여가 사진 예시 7",
-        "image": "assets/acc_tmp.webp"
+        "image": "assets/acc_tmp.webp",
+        "width": 1600,
+        "height": 931,
+        "position": "55% 60%"
       },
       {
-        "photoClass": "cf-ph im-ac_back",
         "caption": "문화·여가 사진 예시 8",
-        "image": "assets/acc_tmp.webp"
+        "image": "assets/acc_tmp.webp",
+        "width": 1600,
+        "height": 931,
+        "position": "60% 45%"
       }
     ]
   },
@@ -250,34 +298,46 @@
     ],
     "photos": [
       {
-        "photoClass": "cf-ph im-pz_clock",
         "caption": "문화·여가 사진 예시 1",
-        "image": "assets/plaza_tmp.webp"
+        "image": "assets/plaza_tmp.webp",
+        "width": 500,
+        "height": 333,
+        "position": "45% 65%"
       },
       {
-        "photoClass": "cf-ph im-pz_gate",
         "caption": "문화·여가 사진 예시 2",
-        "image": "assets/plaza_tmp.webp"
+        "image": "assets/plaza_tmp.webp",
+        "width": 500,
+        "height": 333,
+        "position": "50% 60%"
       },
       {
-        "photoClass": "cf-ph im-pz_office",
         "caption": "문화·여가 사진 예시 3",
-        "image": "assets/plaza_tmp.webp"
+        "image": "assets/plaza_tmp.webp",
+        "width": 500,
+        "height": 333,
+        "position": "45% 50%"
       },
       {
-        "photoClass": "cf-ph im-pz_bell",
         "caption": "문화·여가 사진 예시 4",
-        "image": "assets/plaza_tmp.webp"
+        "image": "assets/plaza_tmp.webp",
+        "width": 500,
+        "height": 333,
+        "position": "65% 60%"
       },
       {
-        "photoClass": "cf-ph im-pz_memo",
         "caption": "문화·여가 사진 예시 5",
-        "image": "assets/plaza_tmp.webp"
+        "image": "assets/plaza_tmp.webp",
+        "width": 500,
+        "height": 333,
+        "position": "50% 40%"
       },
       {
-        "photoClass": "cf-ph im-pz_tower",
         "caption": "문화·여가 사진 예시 6",
-        "image": "assets/plaza_tmp.webp"
+        "image": "assets/plaza_tmp.webp",
+        "width": 500,
+        "height": 333,
+        "position": "60% 45%"
       }
     ]
   }

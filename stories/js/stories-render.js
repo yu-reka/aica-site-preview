@@ -1,9 +1,8 @@
 /* =========================================================
    선배들의 이야기 — 글 그리기 (디자이너 시안: 한눈에 보기 + 후기 · 인터뷰 · 프로젝트 · 기수별 이모저모 페이지)
    글은 페이지에 적어 두지 않고 백오피스 DB에서 받아요. 관리자 페이지 '게시물 관리'에 게시중인 후기 · 인터뷰 · 프로젝트 · 기수 기록을
-   각 페이지 시안과 같은 마크업으로 그립니다. 글은 window.STORIES_DATA 로 받아요(head의 defer 순서):
-     1) js/stories-data.js        — 사본(백오피스가 꺼져 있을 때 · 서버 없이 볼 때). 백오피스가 글이 바뀔 때마다 다시 써요
-     2) ../api/public/stories.js  — 백오피스 공개 API(DB의 지금 글). 불러오면 1)을 덮어써요
+   각 페이지 시안과 같은 마크업으로 그립니다. stories-loader.js가 JSON API를 먼저 읽고 실패할 때만 사본을 읽어 window.STORIES_DATA에 넣습니다.
+   데이터와 공통 탐색이 준비되면 이 렌더러 → story-state.js → 페이지별 동작 순서로 실행합니다.
    후기 데스크톱 거르기·쪽 넘김은 이 파일이 맡고, 나머지 보기·창 열기는 CSS와 기존 스크립트(stories.js · stories-sections.js · cohort-v3.js · hub.js)가 맡아요.
    이 파일은 그 스크립트들보다 먼저 불러옵니다(defer 순서).
    - reviews.html: 카드 · 리스트 · 쪽 번호 · 글 창(.ov), 새 기수 거르기 단추
@@ -107,12 +106,14 @@
     if (!m.srcset || !m.srcset.length) return '';
     return ' srcset="' + m.srcset.map(function (candidate) { return esc(candidate.src) + ' ' + candidate.w + 'w'; }).join(', ') + '" sizes="' + esc(sizes || PHOTO_DETAIL_SIZES) + '"';
   }
-  function imgTag(m, cls, lazy, fit, field, sizes) {
+  function imgTag(m, cls, lazy, fit, field, sizes, priority) {
     if (!m || !m.src) return '';
     var f = fit && m.fit, style = f ? ' data-fit style="--fx:' + num(f.x, 50) + '%;--fy:' + num(f.y, 50) + '%;--z:' + num(f.z, 1) + '"' : '';
     var avatarBase = /^(assets\/interview-avatars\/avatar-card-\d{2})-(160|320|608|1080)\.webp$/.exec(m.src);
+    var uploadedAvatar = /^assets\/uploads\/post-avatar-card-(0[1-9]|10)-1080\.webp$/.exec(m.src);
+    if (uploadedAvatar) avatarBase = [m.src, 'assets/interview-avatars/avatar-card-' + uploadedAvatar[1]];
     var responsive = sourceSet(m,sizes) || (avatarBase ? ' srcset="' + [160, 320, 608, 1080].map(function (w) { return avatarBase[1] + '-' + w + '.webp?v=1026avatars10 ' + w + 'w'; }).join(', ') + '" sizes="' + esc(sizes || '(max-width: 640px) 64px, 304px') + '"' : '');
-    return '<img class="' + cls + '" src="' + esc(m.src + (avatarBase ? '?v=1026avatars10' : '')) + '" alt="' + esc(m.alt || '') + '"' + (lazy ? ' loading="lazy"' : '') + ' decoding="async"'
+    return '<img class="' + cls + '" src="' + esc(m.src + (avatarBase ? '?v=1026avatars10' : '')) + '" alt="' + esc(m.alt || '') + '"' + (lazy ? ' loading="lazy"' : ' loading="eager"') + (priority ? ' fetchpriority="high"' : '') + ' decoding="async"'
       + responsive + (m.w ? ' width="' + m.w + '"' : '') + (m.h ? ' height="' + m.h + '"' : '') + style + (field ? ' data-field="' + field + '"' : '') + '>';
   }
   // 사진 또는 그림(svg, 관리자가 가져온 시안 그림)
@@ -129,7 +130,7 @@
   function hubVisual(item, opts) {
     opts = opts || {};
     var m = opts.large && item.imgLarge ? item.imgLarge : item.img;
-    if (m && m.src) return imgTag(Object.assign({},m,{alt:''}), 'hb-ph', true, m === item.img, null, opts.sizes || (opts.large ? '(max-width: 800px) calc(100vw - 40px), 538px' : '(max-width: 640px) 104px, 140px'));
+    if (m && m.src) return imgTag(Object.assign({},m,{alt:''}), 'hb-ph', !opts.priority, m === item.img, null, opts.sizes || (opts.large ? '(max-width: 800px) calc(100vw - 40px), 538px' : '(max-width: 640px) 104px, 140px'), opts.priority);
     var svg = item.art || '<svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#E4E9F7"/></svg>';
     return svg.replace(/^<svg\b([^>]*)>/, function (all, attrs) { return '<svg aria-hidden="true"' + attrs.replace(/\s(class|aria-hidden)="[^"]*"/g, '') + '>'; });
   }
@@ -432,7 +433,7 @@
         var honorsPhoto = $('.hb-ivf-ph', card);
         if (honorsPhoto) {
           honorsPhoto.classList.remove('honors-placeholder');
-          honorsPhoto.innerHTML = '<img class="hb-ph" src="assets/interview-avatars/avatar-card-10-1080.webp" alt="" width="1080" height="675" loading="lazy" decoding="async">';
+          honorsPhoto.innerHTML = '<img class="hb-ph" src="assets/interview-avatars/avatar-card-10-1080.webp" alt="" width="1080" height="675" loading="eager" fetchpriority="high" decoding="async">';
         }
         var honorsTitle = $('h3', card), honorsQuote = $('.hb-ivf-q', card);
         if (honorsTitle) honorsTitle.textContent = '우수 수료생 인터뷰를 준비하고 있어요';
@@ -446,10 +447,10 @@
           var featuredPhoto = $('.hb-ivf-ph', card);
           if (featuredPhoto) {
             featuredPhoto.classList.remove('honors-placeholder');
-            featuredPhoto.innerHTML = hubVisual(f, { large: true });
+            featuredPhoto.innerHTML = hubVisual(f, { large: true, priority: true });
           }
         } else {
-          card.insertAdjacentHTML('afterbegin', '<span class="hb-ivf-ph">' + hubVisual(f, { large: true }) + '</span>');
+          card.insertAdjacentHTML('afterbegin', '<span class="hb-ivf-ph">' + hubVisual(f, { large: true, priority: true }) + '</span>');
         }
         var h = $('h3', card), by = $('.hb-by', card), em = $('em', card), q = $('.hb-ivf-q', card);
         if (h) h.textContent = f.title || '';
@@ -462,7 +463,7 @@
         card.hidden = true;   // 보여 줄 인터뷰가 없으면 빈 카드 대신 숨김
       } else {
         // 예전 페이지(큰 카드가 HTML에 없음): 꼬리표 · 인용 없이 통째로
-        ivBox.innerHTML = f ? '<a class="hb-ivf" href="interviews.html#' + esc(f.anchor) + '">' + '<span class="hb-ivf-ph">' + hubVisual(f, { large: true }) + '</span>'
+        ivBox.innerHTML = f ? '<a class="hb-ivf" href="interviews.html#' + esc(f.anchor) + '">' + '<span class="hb-ivf-ph">' + hubVisual(f, { large: true, priority: true }) + '</span>'
           + '<div class="hb-ivf-tx"><h3>' + esc(f.title) + '</h3><span class="hb-by">' + esc(who(f)) + '</span></div></a>' + list : '';
       }
     }

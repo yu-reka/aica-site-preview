@@ -107,13 +107,31 @@
      창이 열린 동안 Tab은 창 안에서만 돎. 처음부터 창 주소로 열 때는 포커스를 옮기지 않음 */
   (function(){
     var opener = null, link = null;
+    var reviewEntry=false, reviewScroll=0, restoreScroll=false;
     var dialogScope = SiteUI.createDialogScope();
     function open(){ return page.querySelector('.ov:target'); }
     // 연 링크: 주소 이동 때 브라우저가 포커스를 비우기도 해서 누른 순간에 기억해 둠
-    document.addEventListener('click', function(e){ link = e.target.closest && e.target.closest('a[href^="#"]'); }, true);
+    document.addEventListener('click', function(e){
+      link = e.target.closest && e.target.closest('a[href^="#"]');
+      if(!link)return;
+      var d=open();
+      if(d&&d.contains(link)&&(link.classList.contains('x')||link.classList.contains('back'))){
+        e.preventDefault();restoreScroll=true;
+        if(reviewEntry)history.back();else location.replace(location.pathname+location.search+'#');
+        return;
+      }
+      var hash=link.hash||('#'+String(link.href||'').split('#').slice(1).join('#'));
+      var target=document.getElementById(Site.decodeHash(hash.slice(1)));
+      if(target&&target.classList.contains('ov')){
+        if(d){e.preventDefault();location.replace(hash);return;}
+        reviewEntry=true;reviewScroll=window.scrollY;
+      }
+    }, true);
     addEventListener('hashchange', function(){
       var d = open(), a = link || document.activeElement; link = null;
       if (d) {
+        if(history.state&&history.state.aicaReview){reviewEntry=true;reviewScroll=history.state.reviewReturnScroll||0;}
+        else if(reviewEntry)history.replaceState(Object.assign({},history.state,{aicaReview:true,reviewReturnScroll:reviewScroll}),'',location.href);
         // Release the cohort/zoom scope before this dialog captures background state.
         if (page.classList.contains('stories-hub')) page.dispatchEvent(new CustomEvent('stories:before-review-open'));
         dialogScope.activate(d);
@@ -125,6 +143,11 @@
         }
       } else {
         dialogScope.release();
+        if(restoreScroll){
+          if(!location.hash&&location.href?.endsWith('#'))history.replaceState(history.state,'',location.pathname+location.search);
+          window.scrollTo({top:reviewScroll,behavior:'instant'});restoreScroll=false;
+        }
+        reviewEntry=false;
         if (!opener) return;
         // 창 안 태그 링크(#tg-…)로 나가면 화면이 태그 목록 자리로 가므로 연 카드로 돌려주지 않음(다음 Tab은 브라우저가 그 자리부터)
         var to = document.getElementById(Site.decodeHash(location.hash.slice(1)));
@@ -132,7 +155,10 @@
         opener = null;
       }
     });
-    if (open()) dialogScope.activate(open());
+    if (open()) {
+      if(history.state&&history.state.aicaReview){reviewEntry=true;reviewScroll=history.state.reviewReturnScroll||0;}
+      dialogScope.activate(open());
+    }
     document.addEventListener('keydown', function(e){
       var d = open();
       if (!d) return;

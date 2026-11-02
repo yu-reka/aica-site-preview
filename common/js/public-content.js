@@ -15,6 +15,7 @@
   function safeUrl(value, image) {
     var raw = String(value == null ? '' : value).trim();
     if (!raw || /[\u0000-\u001f\u007f]/.test(raw)) return '';
+    if (!image) raw = raw.replace(/^(\.\.\/stories\/)index\.html#(reviews|projects)$/, '$1$2.html');
     try {
       var url = new URL(raw, document.baseURI);
       if (/^https?:$/.test(url.protocol)) return raw;

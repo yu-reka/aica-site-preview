@@ -34,6 +34,7 @@ var StoryState = (function(){
     if(document.body?.dataset.publicContentUnavailable==='true')return true;
     if(typeof window==='undefined'||window.AicaPublicContentStatus?.storiesApiFailed!==true)return false;
     var kind=document.documentElement.dataset.sub;
+    if(kind==='overview')return !window.STORIES_DATA;
     var cached=window.STORIES_DATA&&window.STORIES_DATA[kind];
     var unavailable=window.AicaPublicContentStatus?.storiesApiFailed===true&&(!Array.isArray(cached)||cached.length===0);
     if(unavailable)document.body.dataset.publicContentUnavailable='true';
@@ -47,7 +48,23 @@ var StoryState = (function(){
     section.dispatchEvent(new Event('reviews:reset'));
   }
   function init(){
-    var kind=document.documentElement.dataset.sub,subject=subjects[kind];if(!subject)return;
+    var kind=document.documentElement.dataset.sub,subject=subjects[kind];
+    if(kind==='overview'){
+      var page=document.querySelector('.stories-hub'),hubHost=page?.querySelector('[data-story-list-state]');
+      if(!page||!hubHost)return;
+      var groups={interviews:'#hub-interviews',reviews:'#hub-reviews',projects:'#hub-projects',cohorts:'#hub-cohorts'},total=0;
+      Object.keys(groups).forEach(function(key){
+        var items=window.STORIES_DATA&&window.STORIES_DATA[key],section=page.querySelector(groups[key]);
+        var count=Array.isArray(items)?items.length:0;total+=count;
+        if(section&&!count){section.hidden=true;section.setAttribute('data-story-state-hidden','');}
+      });
+      if(failed()||!total){
+        render(hubHost,failed()?'error':'empty');hubHost.hidden=false;
+        var body=page.querySelector('.hb');if(body){body.hidden=true;body.setAttribute('data-story-state-hidden','');}
+      }
+      return;
+    }
+    if(!subject)return;
     var section=document.querySelector({reviews:'#p-rev',interviews:'#p-iv',projects:'#p-pr',cohorts:'#p-coh'}[kind]);
     var host=section?.querySelector('[data-story-list-state]');if(!host)return;
     var cards=kind==='cohorts'?Array.from(document.getElementById('cv3-data').content.querySelectorAll('a.st')).filter(function(card){return parseInt(card.querySelector('.cg')?.textContent,10)>0;}):section.querySelectorAll({reviews:'.idgrid .idc',interviews:'.ivgrid .iv,.iv-honors a.sm-ivf-c[href^="#iv-p"]',projects:'.pjgrid .pjc'}[kind]);

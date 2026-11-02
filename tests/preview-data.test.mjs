@@ -60,9 +60,9 @@ test('public release guard rejects substituted DB text without logging it or mod
 test('public HTML and home fallback request a new snapshot cache version', () => {
   const root = new URL('../', import.meta.url);
   for (const file of ['index.html','reviews.html','interviews.html','projects.html','cohorts.html']) {
-    assert.match(readFileSync(new URL('stories/' + file, root), 'utf8'), /src="js\/stories-data\.js\?v=design-20261029-hub-honors"/);
+    assert.match(readFileSync(new URL('stories/' + file, root), 'utf8'), /data-fallback="js\/stories-data\.js\?v=design-20261029-hub-honors"/);
   }
-  assert.match(readFileSync(new URL('check/index.html', root), 'utf8'), /src="js\/faq-data\.js\?v=design-20261022"/);
+  assert.match(readFileSync(new URL('check/index.html', root), 'utf8'), /src="js\/faq-data\.js\?v=design-20261102-direct-links"/);
   assert.match(readFileSync(new URL('home/index.html', root), 'utf8'), /src="js\/ticker-render\.js\?v=design-20261029-hub-honors"/);
   assert.match(readFileSync(new URL('home/js/ticker-render.js', root), 'utf8'), /stories-data\.js\?v=design-20261029-hub-honors/);
 });

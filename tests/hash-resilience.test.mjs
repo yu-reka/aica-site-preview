@@ -51,6 +51,7 @@ test('malformed Stories URL still registers modal Escape and focus handling', ()
     querySelectorAll: () => [], addEventListener() {}, contains: () => true,
   };
   const { context, document, events, documentEvents } = runtime({ '.stories-page': page });
+  context.history={state:null,replaceState(){},back(){}};
   vm.runInContext(source('../stories/js/stories.js'), context);
   const close = { focus() { document.activeElement = close; }, click() { closed = true; } };
   const modal = { contains: () => false, querySelector: selector => selector === '.x' ? close : null };

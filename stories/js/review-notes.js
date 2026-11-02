@@ -2,33 +2,43 @@
    Keep the full source in memory; modal content and data are never shortened. */
 (() => {
   'use strict';
-  const selector = '.idc > .in > p, .hb-pi p, .sm-review-preview';
+  const selector = '.idc > .in > p, .hb-pi p, .sm-review-preview, .ov .sd-title, .hb-ivf-q';
   const seen = new WeakMap();
   const segmenter = typeof Intl.Segmenter === 'function' ? new Intl.Segmenter('ko', {granularity:'grapheme'}) : null;
   let measurements = new WeakMap();
   let frame;
   function fit(element) {
     const state = seen.get(element);
-    if (!state || !element.clientWidth || !element.clientHeight) return;
+    if (!state) return;
+    const navigationTitle = element.matches('.ov .sd-title');
+    const quotedSummary = element.matches('.hb-ivf-q');
+    if (navigationTitle && !matchMedia('(max-width:600px)').matches) {
+      state.excerpt.textContent = state.source;
+      measurements.delete(element);
+      return;
+    }
+    if (!element.clientWidth || !element.clientHeight) return;
     const style = getComputedStyle(element);
     const line = parseFloat(style.lineHeight);
     if (!(line > 0)) return;
     const key = [element.clientWidth, element.clientHeight, style.font, style.letterSpacing].join('|');
     if (measurements.get(element) === key) return;
     measurements.set(element, key);
-    const lines = Math.floor(element.clientHeight / line);
+    const lines = navigationTitle || quotedSummary ? 2 : Math.floor(element.clientHeight / line);
     state.excerpt.hidden = lines < 1;
     if (lines < 1) return;
     const allowed = lines * line;
-    const write = text => { if (state.excerpt.textContent !== text) state.excerpt.textContent = text; };
+    const write = text => { if (state.copy.textContent !== text) state.copy.textContent = text; };
     write(state.source);
-    if (state.excerpt.offsetHeight <= allowed + .5) return;
+    // Line-clamped navigation spans expose the full text only through scrollHeight.
+    const height = () => navigationTitle ? state.excerpt.scrollHeight : state.excerpt.offsetHeight;
+    if (height() <= allowed + .5) return;
     const characters = segmenter ? Array.from(segmenter.segment(state.source), part => part.segment) : Array.from(state.source);
     let low = 0, high = characters.length;
     while (low < high) {
       const middle = Math.ceil((low + high) / 2);
       write(characters.slice(0, middle).join('').trimEnd() + '⋯');
-      if (state.excerpt.offsetHeight <= allowed + .5) low = middle;
+      if (height() <= allowed + .5) low = middle;
       else high = middle - 1;
     }
     write(characters.slice(0, low).join('').trimEnd() + '⋯');
@@ -36,12 +46,20 @@
   const resize = new ResizeObserver(entries => entries.forEach(entry => fit(entry.target)));
   function scan() {
     document.querySelectorAll(selector).forEach(element => {
-      if (!seen.has(element)) {
+      if (!seen.has(element) || seen.get(element).excerpt.parentNode !== element) {
         const source = element.textContent;
         const excerpt = document.createElement('span');
         excerpt.className = 'note-excerpt';
-        excerpt.textContent = source;
-        seen.set(element, {source, excerpt});
+        let copy = excerpt;
+        if (element.matches('.hb-ivf-q')) {
+          const opening = document.createElement('span'), closing = document.createElement('span');
+          opening.className = closing.className = 'note-quote';
+          opening.textContent = '“'; closing.textContent = '”';
+          copy = document.createElement('span'); copy.textContent = source;
+          excerpt.append(opening, copy, closing);
+        } else excerpt.textContent = source;
+        seen.set(element, {source, excerpt, copy});
+        measurements.delete(element);
         element.replaceChildren(excerpt);
         resize.observe(element);
       }
@@ -50,7 +68,7 @@
   }
   function schedule() { cancelAnimationFrame(frame); frame = requestAnimationFrame(scan); }
   new MutationObserver(records => {
-    if (records.some(record => [...record.addedNodes].some(node => node.nodeType === 1))) schedule();
+    if (records.some(record => (record.target.nodeType === 1 && record.target.matches('.hb-ivf-q')) || [...record.addedNodes].some(node => node.nodeType === 1))) schedule();
   }).observe(document.querySelector('main'), {childList:true, subtree:true});
   document.fonts.ready.then(() => { measurements = new WeakMap(); schedule(); });
   addEventListener('resize', schedule);

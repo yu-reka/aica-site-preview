@@ -24,7 +24,11 @@ var StoryState = (function(){
       action=node('button','story-state__action',kind==='error'?'다시 시도':'필터 초기화');action.type='button';
       action.addEventListener('click',kind==='error'?function(){location.reload();}:options.onReset);
     }else{action=node('a','story-state__action','이야기 전체 보기');action.href='index.html';}
-    host.replaceChildren(icon,heading,copy,action);return host;
+    host.replaceChildren(icon,heading,copy,action);
+    if(kind==='filter'&&options.reviewBoard){
+      host.classList.add('review-empty-note');options.reviewBoard.appendChild(host);
+    }
+    return host;
   }
   function failed(){
     if(document.body?.dataset.publicContentUnavailable==='true')return true;
@@ -68,10 +72,16 @@ var StoryState = (function(){
         var entries=listView?section.querySelectorAll('.rvlist .rvr'):cards;
         var any=Array.from(entries).some(function(card){return getComputedStyle(card).display!=='none';});
         // Keep a pending pointer-click target alive through repeated empty updates.
-        if(!any&&host.dataset.storyState!=='filter')render(host,'filter',{subject:subject,onReset:reset});host.hidden=any;
+        if(!any&&host.dataset.storyState!=='filter')render(host,'filter',{subject:subject,onReset:reset,reviewBoard:section.querySelector('.idgrid')});host.hidden=any;
         var pager=section.querySelector('.pager');if(pager)pager.hidden=!any;
       }
-      section.addEventListener('change',update);addEventListener('hashchange',update);addEventListener('resize',update);update();
+      section.addEventListener('change',function(event){
+        // A selected cohort must release the dropdown's full-screen pointer layer.
+        if(event?.target?.name==='fco'){
+          var dropdown=section.querySelector('.dw-fco');if(dropdown)dropdown.open=false;
+        }
+        update();
+      });addEventListener('hashchange',update);addEventListener('resize',update);update();
     }
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();

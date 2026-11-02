@@ -34,13 +34,15 @@
 <script src="../common/js/ui.js?v=1028shared-controls" defer></script>
 <script src="../common/js/site.js?v=1027lnb-page-start2" defer></script>
 <script src="../common/js/track.js?v=1027admin-views" defer></script>
+<link rel="stylesheet" href="css/culture.css?v=1102culture-public-example">
 <link rel="stylesheet" href="css/housing-map.css?v=20261028-map-credit-center">
 <link rel="stylesheet" href="../common/css/availability.css?v=1026loading-soft-backdrop">
 <script src="../common/js/availability.js?v=1030offline-art60" defer></script>
 <script src="../stories/js/mast-fix.js" defer></script>
 <script src="js/life.js?v=1030directions-address" defer></script>
-<script src="js/life-m-view.js?v=1030building-title" defer></script>
+<script src="js/life-m-view.js?v=1102culture-gallery" defer></script>
 <script src="js/life-m.js?v=1030address-toast" defer></script>
+<script src="js/culture.js?v=1102culture-public-label" defer></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
@@ -598,100 +600,80 @@
     <div class="wrap">
       <div>
         <div class="sh"><div><p class="sh-k">문화 · 여가</p><h2>수업 끝나고, 바람 쐬러 가요</h2></div></div>
-        <div class="fs">
-        <section class="fsg" data-k="walk" aria-labelledby="fs-walk-t">
-          <div class="fsh">
-            <span class="fsn" aria-hidden="true">01</span>
-            <div><h3 id="fs-walk-t">근처 산책길</h3><p>수업 끝나고 걷기 좋은 길 안팎</p></div>
-            <button type="button" class="fs-tg" aria-expanded="false" aria-controls="fs-walk"><span class="o">펼쳐보기</span><span class="c">접기</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"></path></svg></button>
-          </div>
-          <div class="fsd" id="fs-walk">
-            <ol class="fsl">
-              <li class="fsc" style="--i:0;--rt:-5deg;--z:4">
-                <span class="fsc-ph im-trailp" role="img" aria-label="푸른길 공원" data-field="photo"></span>
-                <span class="fsc-b"><b data-field="name">푸른길 공원</b><small data-field="distance">동쪽 · 약 1km</small><span class="fsc-t" data-field="fee">무료 · 상시 개방</span><span class="fsc-d" data-field="summary">폐선된 철길을 공원으로 바꾼 약 8km 산책로예요. 나무가 우거져 걷거나 달리기 좋아요.</span></span>
-              </li>
-              <li class="fsc" style="--i:1;--rt:3deg;--z:3">
-                <span class="fsc-ph im-riverp" role="img" aria-label="광주천 산책로" data-field="photo"></span>
-                <span class="fsc-b"><b data-field="name">광주천 산책로</b><small data-field="distance">남쪽 · 약 1km</small><span class="fsc-t" data-field="fee">무료 · 상시 개방</span><span class="fsc-d" data-field="summary">도심을 가로지르는 하천을 따라 걷는 길이에요. 양림마을 · 사직공원과 이어서 걷기 좋아요.</span></span>
-              </li>
-              <li class="fsc" style="--i:2;--rt:-2deg;--z:2">
-                <span class="fsc-ph im-cafest" role="img" aria-label="동명동 카페거리" data-field="photo"></span>
-                <span class="fsc-b"><b data-field="name">동명동 카페거리</b><small data-field="distance">북동쪽 · 약 500m</small><span class="fsc-t" data-field="fee">가게별 요금</span><span class="fsc-d" data-field="summary">카페와 골목 벽화, 작은 공원이 모여 있는 동네예요.</span></span>
-              </li>
-              <li class="fsc" style="--i:3;--rt:4deg;--z:1">
-                <span class="fsc-ph im-yl_tmp" role="img" aria-label="양림역사문화마을" data-field="photo"></span>
-                <span class="fsc-b"><b data-field="name">양림역사문화마을</b><small data-field="distance">남서쪽 · 약 1km</small><span class="fsc-t" data-field="fee">상시 개방</span><span class="fsc-d" data-field="summary">근대 서양 건축물과 한옥이 어우러진 마을이에요. 펭귄마을 · 정율성 음악거리가 있어요.</span></span>
-              </li>
-              
-            </ol>
-            <div class="fs-side" aria-hidden="true"><ul class="fs-names"><li>푸른길 공원</li><li>광주천 산책로</li><li>동명동 카페거리</li><li>양림역사문화마을</li></ul></div>
-          </div>
-        </section>
-        <section class="fsg" data-k="near" aria-labelledby="fs-near-t">
-          <div class="fsh">
-            <span class="fsn" aria-hidden="true">02</span>
-            <div><h3 id="fs-near-t">가까운 문화 · 여가 시설</h3><p>교육장에서 1km 안 · 점심시간 · 수업 끝나고</p></div>
-            <button type="button" class="fs-tg" aria-expanded="false" aria-controls="fs-near"><span class="o">펼쳐보기</span><span class="c">접기</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"></path></svg></button>
-          </div>
-          <div class="fsd" id="fs-near">
-            <ol class="fsl">
-              <li class="fsc" style="--i:0;--rt:-5deg;--z:4">
-                <span class="fsc-ph im-acc_tmp" role="img" aria-label="국립아시아문화전당(ACC)" data-field="photo"></span>
-                <span class="fsc-b"><b data-field="name">국립아시아문화전당(ACC)</b><small data-field="distance">북동쪽 · 약 300m</small><span class="fsc-t" data-field="fee">무료 전시 있음</span><span class="fsc-d" data-field="summary">교육장에서 가까운 복합문화시설이에요. 전시 · 공연 일정은 ACC 홈페이지에서 확인하세요.</span></span>
-              </li>
-              <li class="fsc" style="--i:1;--rt:3deg;--z:3">
-                <span class="fsc-ph im-plaza_tmp" role="img" aria-label="5·18민주광장 · 옛 전남도청" data-field="photo"></span>
-                <span class="fsc-b"><b data-field="name">5·18민주광장 · 옛 전남도청</b><small data-field="distance">북동쪽 · 약 200m</small><span class="fsc-t" data-field="fee">무료</span><span class="fsc-d" data-field="summary">1980년 5·18 최후 항쟁지예요. 원형 복원을 마친 옛 전남도청 앞 광장이에요.</span></span>
-              </li>
-              <li class="fsc" style="--i:2;--rt:-2deg;--z:2">
-                <span class="fsc-ph im-cj_tmp" role="img" aria-label="충장로" data-field="photo"></span>
-                <span class="fsc-b"><b data-field="name">충장로</b><small data-field="distance">북서쪽 · 약 300m</small><span class="fsc-t" data-field="fee">상가별 요금</span><span class="fsc-d" data-field="summary">광주의 대표 번화가예요. 매년 10월에는 추억의 충장축제가 열려요.</span></span>
-              </li>
-              <li class="fsc" style="--i:3;--rt:4deg;--z:1">
-                <span class="fsc-ph im-mkt_tmp" role="img" aria-label="대인시장" data-field="photo"></span>
-                <span class="fsc-b"><b data-field="name">대인시장</b><small data-field="distance">북쪽 · 약 1km</small><span class="fsc-t" data-field="fee">유료</span><span class="fsc-d" data-field="summary">1959년에 문을 연 전통시장이에요. 토요일 저녁에는 예술야시장으로 붐벼요.</span></span>
-              </li>
-              
-            </ol>
-            <div class="fs-side" aria-hidden="true"><ul class="fs-names"><li>국립아시아문화전당(ACC)</li><li>5·18민주광장 · 옛 전남도청</li><li>충장로</li><li>대인시장</li></ul></div>
-          </div>
-        </section>
-        <section class="fsg" data-k="far" aria-labelledby="fs-far-t">
-          <div class="fsh">
-            <span class="fsn" aria-hidden="true">03</span>
-            <div><h3 id="fs-far-t">멀지만 한 번 가볼 만한 곳</h3><p>버스 · 지하철로 · 주말에</p></div>
-            <button type="button" class="fs-tg" aria-expanded="false" aria-controls="fs-far"><span class="o">펼쳐보기</span><span class="c">접기</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"></path></svg></button>
-          </div>
-          <div class="fsd" id="fs-far">
-            <ol class="fsl">
-              <li class="fsc" style="--i:0;--rt:-5deg;--z:5">
-                <span class="fsc-ph im-sajikp" role="img" aria-label="사직공원 빛의 숲 · 전망타워" data-field="photo"></span>
-                <span class="fsc-b"><b data-field="name">사직공원 빛의 숲 · 전망타워</b><small data-field="distance">남서쪽 · 약 1.7km</small><span class="fsc-t" data-field="fee">무료</span><span class="fsc-d" data-field="summary">미디어아트 산책길 「빛의 숲」이 저녁마다 켜지고, 전망타워에서 시내 야경을 볼 수 있어요.</span></span>
-              </li>
-              <li class="fsc" style="--i:1;--rt:3deg;--z:4">
-                <span class="fsc-ph im-std_tmp" role="img" aria-label="광주-기아 챔피언스 필드" data-field="photo"></span>
-                <span class="fsc-b"><b data-field="name">광주-기아 챔피언스 필드</b><small data-field="distance">북서쪽 · 약 4km</small><span class="fsc-t" data-field="fee">경기별 요금</span><span class="fsc-d" data-field="summary">KIA 타이거즈의 홈구장이에요. 경기 일정 · 예매는 구단 홈페이지에서 확인하세요.</span></span>
-              </li>
-              <li class="fsc" style="--i:2;--rt:-2deg;--z:3">
-                <span class="fsc-ph im-park_tmp" role="img" aria-label="중외공원 문화예술벨트" data-field="photo"></span>
-                <span class="fsc-b"><b data-field="name">중외공원 문화예술벨트</b><small data-field="distance">북서쪽 · 약 5km</small><span class="fsc-t" data-field="fee">무료 전시 있음</span><span class="fsc-d" data-field="summary">광주비엔날레 전시관 · 광주시립미술관 · 국립광주박물관이 모여 있어요.</span></span>
-              </li>
-              <li class="fsc" style="--i:3;--rt:4deg;--z:2">
-                <span class="fsc-ph im-mud_tmp" role="img" aria-label="무등산국립공원" data-field="photo"></span>
-                <span class="fsc-b"><b data-field="name">무등산국립공원</b><small data-field="distance">동쪽 · 정상까지 약 7km</small><span class="fsc-t" data-field="fee">무료</span><span class="fsc-d" data-field="summary">광주 동쪽의 국립공원이에요. 탐방로 · 통제 여부는 국립공원공단 안내를 확인하세요.</span></span>
-              </li>
-              <li class="fsc" style="--i:4;--rt:-3deg;--z:1">
-                <span class="fsc-ph im-sj_tmp" role="img" aria-label="1913송정역시장" data-field="photo"></span>
-                <span class="fsc-b"><b data-field="name">1913송정역시장</b><small data-field="distance">서쪽 · 약 12km · 지하철 1호선</small><span class="fsc-t" data-field="fee">유료</span><span class="fsc-d" data-field="summary">1913년부터 이어 온 광주송정역 앞 시장이에요. 먹거리 골목으로 붐벼요.</span></span>
-              </li>
-              
-            </ol>
-            <div class="fs-side" aria-hidden="true"><ul class="fs-names"><li>사직공원 빛의 숲 · 전망타워</li><li>광주-기아 챔피언스 필드</li><li>중외공원 문화예술벨트</li><li>무등산국립공원</li><li>1913송정역시장</li></ul></div>
-          </div>
-        </section>
-        </div>
-        <p class="note">거리는 교육장에서 잰 대략적인 직선거리예요. 운영 시간과 요금은 각 기관 안내를 확인하세요.</p>
+        <div class="snote-a"><div class="snote" aria-hidden="true" style="right:-14px;top:-108px;--r:0deg"><p>수업 끝나면<br>동네 산책 추천!</p></div></div>
+        <span id="fs-far" aria-hidden="true"></span><span id="fs-far-t" aria-hidden="true"></span>
+<div class="cf"><section class="cf-g no-head wide" id="fs-walk" data-k="walk" aria-labelledby="fs-walk-t">
+  <div class="cf-h cf-sr"><span class="cf-n" aria-hidden="true">01</span><div><h3 id="fs-walk-t">근처 산책길</h3><p>수업 끝나고 걷기 좋은 길 안팎</p></div></div>
+  <div class="cf-pile" role="list" aria-label="[시안] 동명동 카페거리 사진">
+    <figure class="cf-card" role="listitem" style="--i:0;--rt:0deg;--z:8"><span class="cf-ph im-dm_cup" role="img" aria-label="문화·여가 사진 예시 1"></span><figcaption><b>문화·여가 사진 예시 1</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:1;--rt:-6deg;--z:7"><span class="cf-ph im-dm_cafe" role="img" aria-label="문화·여가 사진 예시 2"></span><figcaption><b>문화·여가 사진 예시 2</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:2;--rt:5deg;--z:6"><span class="cf-ph im-dm_sign" role="img" aria-label="문화·여가 사진 예시 3"></span><figcaption><b>문화·여가 사진 예시 3</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:3;--rt:-3deg;--z:5"><span class="cf-ph im-dm_mural" role="img" aria-label="문화·여가 사진 예시 4"></span><figcaption><b>문화·여가 사진 예시 4</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:4;--rt:7deg;--z:4"><span class="cf-ph im-dm_floor" role="img" aria-label="문화·여가 사진 예시 5"></span><figcaption><b>문화·여가 사진 예시 5</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:5;--rt:-4deg;--z:3"><span class="cf-ph im-dm_ninja" role="img" aria-label="문화·여가 사진 예시 6"></span><figcaption><b>문화·여가 사진 예시 6</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:6;--rt:3deg;--z:2"><span class="cf-ph im-dm_africa" role="img" aria-label="문화·여가 사진 예시 7"></span><figcaption><b>문화·여가 사진 예시 7</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:7;--rt:-7deg;--z:1"><span class="cf-ph im-dm_shop" role="img" aria-label="문화·여가 사진 예시 8"></span><figcaption><b>문화·여가 사진 예시 8</b></figcaption></figure>
+
+    <button type="button" class="cf-yb" aria-expanded="false" aria-label="[시안] 동명동 카페거리 사진 펼쳐보기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path class="v" d="M12 5v14"/></svg></button>
+  </div>
+  <div class="cf-intro"><h4>[시안] 동명동 카페거리</h4><p>광주의 감성 골목을 느끼고 싶다면 동명동 카페거리로 가볼까요? <br class="cf-br">한옥과 주택 사이로 개성 넘치는 카페와 아기자기한 가게가 모여 있어요. <br class="cf-br">골목을 산책하다 마음에 드는 카페에서 커피 한 잔의 여유도 즐겨보세요!</p></div>
+  <button type="button" class="cf-tg" aria-expanded="false"><span class="o">펼쳐보기</span><span class="c">접기</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/></svg></button>
+  <div class="cf-nav"><button type="button" class="cf-close">접기</button><button type="button" class="pv" aria-label="[시안] 동명동 카페거리 이전 사진"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><button type="button" class="nx" aria-label="[시안] 동명동 카페거리 다음 사진"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div>
+</section>
+<section class="cf-g no-head rev wide" id="fs-near" data-k="near" aria-labelledby="fs-near-t">
+  <div class="cf-h cf-sr"><span class="cf-n" aria-hidden="true">02</span><div><h3 id="fs-near-t">가까운 문화 · 여가 시설</h3><p>교육장에서 1km 안 · 점심시간 · 수업 끝나고</p></div></div>
+  <div class="cf-pile" role="list" aria-label="[시안] 하늘 마당 사진">
+    <figure class="cf-card" role="listitem" style="--i:0;--rt:0deg;--z:8"><span class="cf-ph im-hm_lawn" role="img" aria-label="문화·여가 사진 예시 1"></span><figcaption><b>문화·여가 사진 예시 1</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:1;--rt:-6deg;--z:7"><span class="cf-ph im-hm_frame" role="img" aria-label="문화·여가 사진 예시 2"></span><figcaption><b>문화·여가 사진 예시 2</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:2;--rt:5deg;--z:6"><span class="cf-ph im-hm_happy" role="img" aria-label="문화·여가 사진 예시 3"></span><figcaption><b>문화·여가 사진 예시 3</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:3;--rt:-3deg;--z:5"><span class="cf-ph im-hm_road1" role="img" aria-label="문화·여가 사진 예시 4"></span><figcaption><b>문화·여가 사진 예시 4</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:4;--rt:7deg;--z:4"><span class="cf-ph im-hm_road2" role="img" aria-label="문화·여가 사진 예시 5"></span><figcaption><b>문화·여가 사진 예시 5</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:5;--rt:-4deg;--z:3"><span class="cf-ph im-hm_artisan" role="img" aria-label="문화·여가 사진 예시 6"></span><figcaption><b>문화·여가 사진 예시 6</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:6;--rt:3deg;--z:2"><span class="cf-ph im-hm_bridge" role="img" aria-label="문화·여가 사진 예시 7"></span><figcaption><b>문화·여가 사진 예시 7</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:7;--rt:-7deg;--z:1"><span class="cf-ph im-hm_night" role="img" aria-label="문화·여가 사진 예시 8"></span><figcaption><b>문화·여가 사진 예시 8</b></figcaption></figure>
+
+    <button type="button" class="cf-yb" aria-expanded="false" aria-label="[시안] 하늘 마당 사진 펼쳐보기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path class="v" d="M12 5v14"/></svg></button>
+  </div>
+  <div class="cf-intro"><h4>[시안] 하늘 마당</h4><p>인사교 근처에서 여유롭게 산책하고 싶다면 하늘마당을 추천해요! <br class="cf-br">ACC에 자리한 탁 트인 잔디밭에서 친구들과 피크닉을 즐기거나, <br class="cf-br">바람을 맞으며 천천히 걷기에도 좋답니다.</p></div>
+  <button type="button" class="cf-tg" aria-expanded="false"><span class="o">펼쳐보기</span><span class="c">접기</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/></svg></button>
+  <div class="cf-nav"><button type="button" class="cf-close">접기</button><button type="button" class="pv" aria-label="[시안] 하늘 마당 이전 사진"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><button type="button" class="nx" aria-label="[시안] 하늘 마당 다음 사진"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div>
+</section>
+<section class="cf-g no-head wide" id="cf-acc" data-k="acc" aria-labelledby="cf-acc-t">
+  <div class="cf-h cf-sr"><span class="cf-n" aria-hidden="true">03</span><div><h3 id="cf-acc-t">ACC</h3><p>국립아시아문화전당</p></div></div>
+  <div class="cf-pile" role="list" aria-label="[시안] 국립아시아문화전당(ACC) 사진">
+    <figure class="cf-card" role="listitem" style="--i:0;--rt:0deg;--z:8"><span class="cf-ph im-ac_sign" role="img" aria-label="문화·여가 사진 예시 1"></span><figcaption><b>문화·여가 사진 예시 1</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:1;--rt:-6deg;--z:7"><span class="cf-ph im-ac_museum" role="img" aria-label="문화·여가 사진 예시 2"></span><figcaption><b>문화·여가 사진 예시 2</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:2;--rt:5deg;--z:6"><span class="cf-ph im-ac_lib" role="img" aria-label="문화·여가 사진 예시 3"></span><figcaption><b>문화·여가 사진 예시 3</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:3;--rt:-3deg;--z:5"><span class="cf-ph im-ac_libin" role="img" aria-label="문화·여가 사진 예시 4"></span><figcaption><b>문화·여가 사진 예시 4</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:4;--rt:7deg;--z:4"><span class="cf-ph im-ac_shop" role="img" aria-label="문화·여가 사진 예시 5"></span><figcaption><b>문화·여가 사진 예시 5</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:5;--rt:-4deg;--z:3"><span class="cf-ph im-ac_hand" role="img" aria-label="문화·여가 사진 예시 6"></span><figcaption><b>문화·여가 사진 예시 6</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:6;--rt:3deg;--z:2"><span class="cf-ph im-ac_snail" role="img" aria-label="문화·여가 사진 예시 7"></span><figcaption><b>문화·여가 사진 예시 7</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:7;--rt:-7deg;--z:1"><span class="cf-ph im-ac_back" role="img" aria-label="문화·여가 사진 예시 8"></span><figcaption><b>문화·여가 사진 예시 8</b></figcaption></figure>
+
+    <button type="button" class="cf-yb" aria-expanded="false" aria-label="[시안] 국립아시아문화전당(ACC) 사진 펼쳐보기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path class="v" d="M12 5v14"/></svg></button>
+  </div>
+  <div class="cf-intro"><h4>[시안] 국립아시아문화전당(ACC)</h4><p>문화와 예술을 한자리에서 만날 수 있는 국립아시아문화전당이에요! <br class="cf-br">지하 공간을 중심으로 지은 독특한 건축물 안에서 전시와 공연, <br class="cf-br">다양한 문화예술 프로그램을 즐길 수 있답니다. 꼭 한번 들러보세요!</p></div>
+  <button type="button" class="cf-tg" aria-expanded="false"><span class="o">펼쳐보기</span><span class="c">접기</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/></svg></button>
+  <div class="cf-nav"><button type="button" class="cf-close">접기</button><button type="button" class="pv" aria-label="[시안] 국립아시아문화전당(ACC) 이전 사진"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><button type="button" class="nx" aria-label="[시안] 국립아시아문화전당(ACC) 다음 사진"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div>
+</section>
+<section class="cf-g no-head rev wide" id="cf-square" data-k="plaza" aria-labelledby="cf-square-t">
+  <div class="cf-h cf-sr"><span class="cf-n" aria-hidden="true">04</span><div><h3 id="cf-square-t">5·18 민주광장</h3><p>옛 전남도청 앞 광장</p></div></div>
+  <div class="cf-pile" role="list" aria-label="[시안] 5·18 민주광장 사진">
+    <figure class="cf-card" role="listitem" style="--i:0;--rt:0deg;--z:6"><span class="cf-ph im-pz_clock" role="img" aria-label="문화·여가 사진 예시 1"></span><figcaption><b>문화·여가 사진 예시 1</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:1;--rt:-6deg;--z:5"><span class="cf-ph im-pz_gate" role="img" aria-label="문화·여가 사진 예시 2"></span><figcaption><b>문화·여가 사진 예시 2</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:2;--rt:5deg;--z:4"><span class="cf-ph im-pz_office" role="img" aria-label="문화·여가 사진 예시 3"></span><figcaption><b>문화·여가 사진 예시 3</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:3;--rt:-3deg;--z:3"><span class="cf-ph im-pz_bell" role="img" aria-label="문화·여가 사진 예시 4"></span><figcaption><b>문화·여가 사진 예시 4</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:4;--rt:7deg;--z:2"><span class="cf-ph im-pz_memo" role="img" aria-label="문화·여가 사진 예시 5"></span><figcaption><b>문화·여가 사진 예시 5</b></figcaption></figure>
+<figure class="cf-card" role="listitem" style="--i:5;--rt:-4deg;--z:1"><span class="cf-ph im-pz_tower" role="img" aria-label="문화·여가 사진 예시 6"></span><figcaption><b>문화·여가 사진 예시 6</b></figcaption></figure>
+
+    <button type="button" class="cf-yb" aria-expanded="false" aria-label="[시안] 5·18 민주광장 사진 펼쳐보기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path class="v" d="M12 5v14"/></svg></button>
+  </div>
+  <div class="cf-intro"><h4>[시안] 5·18 민주광장</h4><p>1980년 5월, 시민들이 민주주의를 외쳤던 옛 전남도청 앞 광장이에요. <br class="cf-br">분수대와 상무관, 시계탑이 그날의 역사를 기억하고 있어요. <br class="cf-br">하늘마당 바로 앞이라 함께 천천히 둘러보기 좋답니다.</p></div>
+  <button type="button" class="cf-tg" aria-expanded="false"><span class="o">펼쳐보기</span><span class="c">접기</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/></svg></button>
+  <div class="cf-nav"><button type="button" class="cf-close">접기</button><button type="button" class="pv" aria-label="[시안] 5·18 민주광장 이전 사진"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><button type="button" class="nx" aria-label="[시안] 5·18 민주광장 다음 사진"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div>
+</section>
+</div>
+        <p class="note">공개 프리뷰의 사진은 기존 디자인 이미지로 구성한 예시입니다. 운영 시간과 요금은 각 기관 안내를 확인하세요.</p>
       </div>
     </div>
   </section>

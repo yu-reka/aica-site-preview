@@ -32,6 +32,7 @@
 <script src="../common/js/site-layout.js?v={{v.common.js.site-layout}}" defer></script>
 <script src="../common/js/ui.js?v={{v.common.js.ui}}" defer></script>
 <script src="../common/js/site.js?v={{v.common.js.site}}" defer></script>
+<link rel="stylesheet" href="css/culture.css?v={{v.life.css.culture}}">
 <link rel="stylesheet" href="css/housing-map.css?v={{v.life.css.housing-map}}">
 <link rel="stylesheet" href="../common/css/availability.css?v={{v.common.css.availability}}">
 <script src="../common/js/availability.js?v={{v.common.js.availability}}" defer></script>
@@ -39,6 +40,7 @@
 <script src="js/life.js?v={{v.life.js.life}}" defer></script>
 <script src="js/life-m-view.js?v={{v.life.js.life-m-view}}" defer></script>
 <script src="js/life-m.js?v={{v.life.js.life-m}}" defer></script>
+<script src="js/culture.js?v={{v.life.js.culture}}" defer></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
@@ -201,51 +203,10 @@
     <div class="wrap">
       <div>
         <div class="sh"><div><p class="sh-k">문화 · 여가</p><h2>수업 끝나고, 바람 쐬러 가요</h2></div></div>
-        <div class="fs">
-        <section class="fsg" data-k="walk" aria-labelledby="fs-walk-t">
-          <div class="fsh">
-            <span class="fsn" aria-hidden="true">01</span>
-            <div><h3 id="fs-walk-t">근처 산책길</h3><p>수업 끝나고 걷기 좋은 길 안팎</p></div>
-            <button type="button" class="fs-tg" aria-expanded="false" aria-controls="fs-walk"><span class="o">펼쳐보기</span><span class="c">접기</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"></path></svg></button>
-          </div>
-          <div class="fsd" id="fs-walk">
-            <ol class="fsl">
-              {{#each life.leisureGroups.walk}}{{> @view.card.template}}
-              {{/each}}
-            </ol>
-            <div class="fs-side" aria-hidden="true"><ul class="fs-names">{{#each life.leisureGroups.walk}}<li>{{name}}</li>{{/each}}</ul></div>
-          </div>
-        </section>
-        <section class="fsg" data-k="near" aria-labelledby="fs-near-t">
-          <div class="fsh">
-            <span class="fsn" aria-hidden="true">02</span>
-            <div><h3 id="fs-near-t">가까운 문화 · 여가 시설</h3><p>교육장에서 1km 안 · 점심시간 · 수업 끝나고</p></div>
-            <button type="button" class="fs-tg" aria-expanded="false" aria-controls="fs-near"><span class="o">펼쳐보기</span><span class="c">접기</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"></path></svg></button>
-          </div>
-          <div class="fsd" id="fs-near">
-            <ol class="fsl">
-              {{#each life.leisureGroups.near}}{{> @view.card.template}}
-              {{/each}}
-            </ol>
-            <div class="fs-side" aria-hidden="true"><ul class="fs-names">{{#each life.leisureGroups.near}}<li>{{name}}</li>{{/each}}</ul></div>
-          </div>
-        </section>
-        <section class="fsg" data-k="far" aria-labelledby="fs-far-t">
-          <div class="fsh">
-            <span class="fsn" aria-hidden="true">03</span>
-            <div><h3 id="fs-far-t">멀지만 한 번 가볼 만한 곳</h3><p>버스 · 지하철로 · 주말에</p></div>
-            <button type="button" class="fs-tg" aria-expanded="false" aria-controls="fs-far"><span class="o">펼쳐보기</span><span class="c">접기</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"></path></svg></button>
-          </div>
-          <div class="fsd" id="fs-far">
-            <ol class="fsl">
-              {{#each life.leisureGroups.far}}{{> @view.card.template}}
-              {{/each}}
-            </ol>
-            <div class="fs-side" aria-hidden="true"><ul class="fs-names">{{#each life.leisureGroups.far}}<li>{{name}}</li>{{/each}}</ul></div>
-          </div>
-        </section>
-        </div>
-        <p class="note">거리는 교육장에서 잰 대략적인 직선거리예요. 운영 시간과 요금은 각 기관 안내를 확인하세요.</p>
+        <div class="snote-a"><div class="snote" aria-hidden="true" style="right:-14px;top:-108px;--r:0deg"><p>수업 끝나면<br>동네 산책 추천!</p></div></div>
+        <span id="fs-far" aria-hidden="true"></span><span id="fs-far-t" aria-hidden="true"></span>
+<div class="cf">{{#each life.culture}}{{> life/culture-group}}{{/each}}</div>
+        <p class="note">공개 프리뷰의 사진은 기존 디자인 이미지로 구성한 예시입니다. 운영 시간과 요금은 각 기관 안내를 확인하세요.</p>
       </div>
     </div>
   </section>

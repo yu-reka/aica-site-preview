@@ -48,7 +48,7 @@
     const total = Math.max(1, Math.ceil(matching.length / pageSize)); page = Math.min(page,total);
     const visible = new Set(matching.slice((page-1)*pageSize,page*pageSize).map(item => item.index));
     cards.forEach((card,index) => { card.hidden = !visible.has(index); if (rows[index]) rows[index].hidden = card.hidden; });
-    if(cards.length&&!matching.length&&typeof StoryState!=='undefined')StoryState.render(empty,'filter',{subject:'후기',onReset:()=>{
+    if(cards.length&&!matching.length&&typeof StoryState!=='undefined')StoryState.render(empty,'filter',{subject:'후기',reviewBoard:section.querySelector('.idgrid'),onReset:()=>{
       StoryState.resetReviews(section);section.querySelector('.dw-fco summary').focus({preventScroll:true});
     }});
     empty.hidden = !cards.length || matching.length > 0;

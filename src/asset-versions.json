@@ -30,12 +30,12 @@
       "masthead": "1016cleanup",
       "navigation-mobile": "1016nav",
       "presentation": "1029local-fonts",
-      "site": "1102footer-logos",
+      "site": "1102footer-align",
       "tokens": "1029pretendard-subset"
     },
     "js": {
       "availability": "1030offline-art60",
-      "site-layout": "1102public-footer-logos",
+      "site-layout": "1102public-footer-align",
       "site": "1027lnb-page-start2",
       "track": "1027admin-views",
       "ui": "1028shared-controls"

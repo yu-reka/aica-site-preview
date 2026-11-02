@@ -80,21 +80,31 @@ const SiteLayout = ({ $, ROOT, href, current, subnavOn, sideNav, html }) => {
   function renderFooter(){
     const el = $('#siteFooter');
     if (!el || el.firstElementChild) return;
-    // 연락처 · 저작권 문구는 공식 교육플랫폼(support.gj-aischool.or.kr) 푸터와 같게(이용약관 · 이메일무단수집거부 · 기관 로고는 뺌). '홈페이지'는 공식 홈페이지 링크(좁은 화면에선 헤더에서 숨김)
+    // 연락처 · 저작권 문구와 로고는 공식 교육플랫폼(support.gj-aischool.or.kr) 푸터와 같게(이용약관 · 이메일무단수집거부 · 광주광역시 로고는 뺌). '홈페이지'는 공식 홈페이지 링크(좁은 화면에선 헤더에서 숨김)
+    // 11-02 기관 로고: 학교 BI(국문 가로형) + 기관 한 줄(링크 없음). 푸터 바탕이 모든 페이지에서 어두워(#2B2D31) 흰 글자판(태극 · nipa 점은 원색)
+    // 11-02 순서도 공식 푸터처럼: 링크 줄 → 가는 선 → 기관 로고 줄 → 학교 BI 왼쪽 + 연락처 · 저작권 오른쪽 칸(편집기 페이지 메모는 저작권 뒤에 붙어 같은 칸에 남음)
+    const brand = (file, alt, w, h) => `<img class="${file}" src="${text(ROOT)}common/assets/brand/${file}-white.svg" alt="${alt}" width="${w}" height="${h}" loading="lazy" decoding="async">`;
     el.innerHTML = `
     <div class="wrap">
-      <div class="footer-top">
-        <a class="logo" href="${text(ROOT + SITE_HOME)}">${logo()}</a>
-        <ul class="footer-links">
-          <li><a href="#privacy" data-toast="${text(SITE_INFO.privacyNote)}"><strong>개인정보처리방침</strong></a></li>
-          <li>유관 사이트 <a href="${text(SITE_INFO.relatedSiteUrl)}" target="_blank" rel="noopener">${text(SITE_INFO.relatedSiteLabel)}</a></li>
-        </ul>
+      <ul class="footer-links">
+        <li><a href="#privacy" data-toast="${text(SITE_INFO.privacyNote)}"><strong>개인정보처리방침</strong></a></li>
+        <li>유관 사이트 <a href="${text(SITE_INFO.relatedSiteUrl)}" target="_blank" rel="noopener">${text(SITE_INFO.relatedSiteLabel)}</a></li>
+      </ul>
+      <ul class="footer-orgs">
+        <li>${brand('org-msit', '과학기술정보통신부', 134, 26)}</li>
+        <li>${brand('org-nipa', '정보통신산업진흥원', 150, 21)}</li>
+        <li>${brand('org-aica', '인공지능산업융합사업단', 182, 17)}</li>
+      </ul>
+      <div class="footer-main">
+        <a class="logo" href="${text(ROOT + SITE_HOME)}">${brand('school-bi', '인공지능사관학교', 191, 30)}</a>
+        <div class="footer-info">
+          <address>
+            <ul><li>${text(SITE_INFO.name)}</li><li>주소 : ${text(SITE_INFO.address)}</li><li>전화문의 : ${text(SITE_INFO.phone)}</li><li>E-Mail : ${text(SITE_INFO.email)}</li></ul>
+            <ul><li>카카오톡 채널 : ${text(SITE_INFO.kakaoChannel)}</li><li><a ${ext('official')}>공식 홈페이지</a></li><li>상담시간 : ${text(SITE_INFO.hours)}</li></ul>
+          </address>
+          <p class="footer-copy">${text(SITE_INFO.copyright)}</p>
+        </div>
       </div>
-      <address>
-        <ul><li>${text(SITE_INFO.name)}</li><li>주소 : ${text(SITE_INFO.address)}</li><li>전화문의 : ${text(SITE_INFO.phone)}</li><li>E-Mail : ${text(SITE_INFO.email)}</li></ul>
-        <ul><li>카카오톡 채널 : ${text(SITE_INFO.kakaoChannel)}</li><li><a ${ext('official')}>공식 홈페이지</a></li><li>상담시간 : ${text(SITE_INFO.hours)}</li></ul>
-      </address>
-      <p class="footer-copy">${text(SITE_INFO.copyright)}</p>
     </div>`;
     // 10-14: 푸터 맨 아래 페이지 메모(data-note)는 보이지 않게 함(그리던 코드 삭제, 속성은 메모로 남김)
   }

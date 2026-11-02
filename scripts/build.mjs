@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRenderer, richText, safeUrl, youtubeId } from './template.mjs';
@@ -97,8 +97,19 @@ export function deriveContent(content) {
     if (!group) throw new Error(`Unknown facility floor: ${item.floorKey}`);
     group.push(item);
   }
+  // Culture photos list their smaller copies (long edge 640 · 1280, beside the photo) in srcset; the backoffice writes the same markup (LifeCultureService).
+  // The square card crops a landscape photo to its height, so sizes asks for the box width times the photo's width/height.
+  const cultureSizes = [640, 1280];
   for (const group of content.life.culture) {
-    group.photos.forEach((photo, index) => { photo.view = group.view.photos[index]; });
+    group.photos.forEach((photo, index) => {
+      const edge = Math.max(photo.width, photo.height), wide = Math.max(1, photo.width / photo.height);
+      const copies = cultureSizes.filter(size => size < edge)
+        .map(size => [photo.image.replace(/(\.[a-z]+)$/, `-${size}$1`), Math.round(photo.width * size / edge)])
+        .filter(([file]) => existsSync(join(root, 'life', file)));
+      photo.view = { ...group.view.photos[index],
+        srcset: [...copies, [photo.image, photo.width]].map(([file, width]) => `${file} ${width}w`).join(', '),
+        sizes: `(max-width:640px) ${Math.round(82 * wide)}vw, ${Math.round(480 * wide)}px` };
+    });
   }
   content.life.leisureGroups = { walk: [], near: [], far: [] };
   for (const item of content.life.leisure) {

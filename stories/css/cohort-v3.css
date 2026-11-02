@@ -95,7 +95,7 @@
 .cv3-save[aria-pressed="true"] svg{fill:#262626}
 .cv3-m-meta{display:flex;align-items:center;flex-wrap:wrap;min-width:0;gap:2px 8px}
 .cv3-m-meta time{font:400 12px/1.5 var(--ff-sans);white-space:nowrap;color:var(--text-secondary)}
-.cv3-m-meta time::before{content:"·";margin-right:8px}
+.cv3-m-meta time::before{content:"·";margin-right:8px;visibility:hidden}
 .cv3-m-nav{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;padding:8px;border-radius:999px;background:#14233F;box-shadow:0 10px 24px -10px rgba(0,0,0,.5)}
 .cv3-m-nav button{height:40px;padding:0 16px;border:0;border-radius:999px;background:none;color:#fff;font:700 14px/1 var(--ff-sans);cursor:pointer}
 .cv3-m-nav button:disabled{opacity:.4;cursor:default}

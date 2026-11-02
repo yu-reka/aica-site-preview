@@ -97,6 +97,9 @@ export function deriveContent(content) {
     if (!group) throw new Error(`Unknown facility floor: ${item.floorKey}`);
     group.push(item);
   }
+  for (const group of content.life.culture) {
+    group.photos.forEach((photo, index) => { photo.view = group.view.photos[index]; });
+  }
   content.life.leisureGroups = { walk: [], near: [], far: [] };
   for (const item of content.life.leisure) {
     const group = content.life.leisureGroups[item.group];

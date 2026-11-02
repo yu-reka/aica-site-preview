@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { existsSync, readFileSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import vm from 'node:vm';
@@ -105,6 +105,24 @@ test('footer reads editable channel and copyright settings', () => {
   assert.ok(footer.innerHTML.includes('변경한 저작권 문구'));
   // 공식 홈페이지 같은 바깥 사이트는 새 창에서(2026-10-23)
   assert.ok(footer.innerHTML.includes(`href="${context.site.links.official.url}" target="_blank" rel="noopener noreferrer"`));
+});
+
+test('footer shows the school BI and one logo per agency, each with alt text and no agency links (2026-11-02)', () => {
+  const context = loadContent();
+  const factory = vm.runInNewContext(readFileSync(join(root, 'common/js/site-layout.js'), 'utf8') + '\nSiteLayout', {
+    SITE_HOME: context.site.home, SITE_MENU: context.site.menu, SITE_LINKS: context.site.links, SITE_INFO: context.site.organization
+  });
+  const footer = { firstElementChild: null, innerHTML: '' };
+  factory({ $: selector => selector === '#siteFooter' ? footer : null, ROOT: '../', href: () => '', current: null, html: {}, sideNav: false, subnavOn: false }).renderFooter();
+  const logos = [...footer.innerHTML.matchAll(/<img class="([\w-]+)" src="([^"]+)" alt="([^"]+)"/g)].map(m => [m[1], m[2], m[3]]);
+  assert.deepEqual(logos, [
+    ['school-bi', '../common/assets/brand/school-bi-white.svg', '인공지능사관학교'],
+    ['org-msit', '../common/assets/brand/org-msit-white.svg', '과학기술정보통신부'],
+    ['org-nipa', '../common/assets/brand/org-nipa-white.svg', '정보통신산업진흥원'],
+    ['org-aica', '../common/assets/brand/org-aica-white.svg', '인공지능산업융합사업단']
+  ]);
+  for (const [, src] of logos) assert.ok(existsSync(join(root, src.replace('../', ''))), src);
+  assert.doesNotMatch(footer.innerHTML.match(/<ul class="footer-orgs">[\s\S]*?<\/ul>/)[0], /<a\b/);
 });
 
 test('rich text rejects executable markup, handlers and unsafe link schemes', () => {

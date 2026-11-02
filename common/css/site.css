@@ -100,7 +100,16 @@
 .site-footer .footer-links{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;margin:0;padding:0}
 .site-footer .footer-links a{text-decoration:none;color:var(--ink);font-weight:500}
 .site-footer .footer-links a:hover{color:var(--primary)}
-.site-footer .footer-copy{margin:12px 0 1em;font-size:13px}
+/* 11-02 기관 로고: 학교 BI는 위 줄 로고 자리, 기관은 연락처 아래 가는 선 다음 한 줄(좁으면 줄바꿈). 높이는 기관 글자 높이가 약 11.5px로 같아 보이게.
+   푸터는 모든 페이지가 어두운 바탕으로 덮어써서(home.css · presentation.css · privacy.css) 흰 글자판 로고 · 밝은 선.
+   높이 · 폭을 여기서 정함: 페이지 CSS의 전체 img 규칙(about.css img{width:100%})이 width 속성을 덮음 */
+.site-footer :is(.school-bi,.footer-orgs img){display:block;width:auto;max-width:100%;object-fit:contain}
+.site-footer .school-bi{height:30px}
+.site-footer .org-msit{height:26px}
+.site-footer .org-nipa{height:21px}
+.site-footer .org-aica{height:17px}
+.site-footer .footer-orgs{display:flex;flex-wrap:wrap;align-items:center;gap:16px 36px;list-style:none;margin:28px 0 0;padding:24px 0 0;border-top:1px solid rgba(255,255,255,.12)}
+.site-footer .footer-copy{margin:18px 0 1em;font-size:13px}
 
 /* =========================================================
    플로팅 버튼(FAB): 맨 위로 — 모든 페이지 오른쪽 아래(지원하기는 헤더 · 모바일 메뉴에) · 안내 토스트
@@ -166,6 +175,7 @@
   .site-footer :is(.footer-links,address) a{display:inline-flex;align-items:center;min-height:44px;min-width:44px}
   .site-footer address ul{display:block}
   .site-footer address li+li::before{display:none}
+  .site-footer .footer-orgs{gap:14px 28px;margin-top:22px;padding-top:22px}
 }
 @media (max-width:860px){
   .site-header,.drawer,.floating{font-size:16px}

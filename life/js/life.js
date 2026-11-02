@@ -15,6 +15,17 @@ var NARROW = matchMedia('(max-width: 860px)');   // 폰 · 태블릿: 목록 안
 var MAIN = $('.life-page');
 if (!MAIN) return;
 
+/* 개요 카드도 게시된 공간의 첫 사진을 사용한다. 모바일 뷰는 이 카드를 복제한다. */
+$$('.lo-pj[data-fac]').forEach(function(card){
+  var photo = $('#bx9s-' + card.dataset.fac + ' .bx9-sl'), preview = $('.lo-ph img', card);
+  if (!photo || !preview) return;
+  var background = getComputedStyle(photo).backgroundImage;
+  var source = /^url\(["']?(.+?)["']?\)$/.exec(background);
+  if (!source) return;
+  preview.setAttribute('src', source[1]);
+  preview.removeAttribute('srcset');
+});
+
 /* Prefer structured source fields; keep combined text compatible with the existing editor. */
 $$('#fdList .fdc').forEach(function(card){
   var raw = $('.fdc-m', card); if (!raw) return;

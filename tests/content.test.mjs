@@ -116,13 +116,13 @@ test('footer shows the school BI and one logo per agency, each with alt text and
   factory({ $: selector => selector === '#siteFooter' ? footer : null, ROOT: '../', href: () => '', current: null, html: {}, sideNav: false, subnavOn: false }).renderFooter();
   const logos = [...footer.innerHTML.matchAll(/<img class="([\w-]+)" src="([^"]+)" alt="([^"]+)"/g)].map(m => [m[1], m[2], m[3]]);
   assert.deepEqual(logos, [
+    ['school-bi', '../common/assets/brand/school-bi-white.svg', '인공지능사관학교'],
     ['org-msit', '../common/assets/brand/org-msit-white.svg', '과학기술정보통신부'],
     ['org-nipa', '../common/assets/brand/org-nipa-white.svg', '정보통신산업진흥원'],
-    ['org-aica', '../common/assets/brand/org-aica-white.svg', '인공지능산업융합사업단'],
-    ['school-bi', '../common/assets/brand/school-bi-white.svg', '인공지능사관학교']
+    ['org-aica', '../common/assets/brand/org-aica-white.svg', '인공지능산업융합사업단']
   ]);
-  // 공식 푸터 순서(11-02): 링크 줄 → 기관 로고 줄 → 학교 BI + 연락처 · 저작권 칸
-  const order = ['footer-links', 'footer-orgs', 'footer-main', 'footer-info', 'footer-copy'].map(name => footer.innerHTML.indexOf(`class="${name}"`));
+  // 브랜드·정책 첫 줄 → 연락처 → 기관 로고 → 저작권 순서
+  const order = ['footer-top', 'footer-links', 'footer-main', 'footer-info', 'footer-orgs', 'footer-copy'].map(name => footer.innerHTML.indexOf(`class="${name}"`));
   assert.deepEqual([...order].sort((a, b) => a - b), order);
   assert.ok(order[0] >= 0);
   for (const [, src] of logos) assert.ok(existsSync(join(root, src.replace('../', ''))), src);

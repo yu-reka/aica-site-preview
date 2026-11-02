@@ -42,8 +42,8 @@ test('all four exported collection pages share states and failure contract witho
     const html=artifacts.get('templates/public-site/'+kind+'.html');
     assert.equal((html.match(/data-story-list-state/g)||[]).length,1,kind);
     assert.ok(html.includes('data-public-content-unavailable=${publicContentUnavailable == true}'),kind);
-    assert.ok(html.includes('/stories/js/story-state.js?v=1102review-dropdown-close'),kind);
-    assert.ok(html.includes('/stories/css/story-state.css?v=1020states'),kind);
+    assert.ok(html.includes('/stories/js/story-state.js?v=1102loading-history'),kind);
+    assert.ok(html.includes('/stories/css/story-state.css?v=1102loading-history'),kind);
     assert.ok(html.indexOf('story-state.js')<html.indexOf(kind==='cohorts'?'cohort-v3.js':kind==='projects'?'projects-filter.js':kind==='interviews'?'stories-sections.js':'stories-m-reviews.js'));
   }
 });
@@ -126,4 +126,24 @@ test('review filter notice lives on the review board and keeps its reset action'
   assert.equal(placed,host);
   assert.equal(host.children[1].textContent,'조건에 맞는 후기가 없습니다.');
   host.children[3].events.click();assert.equal(resets,1);
+});
+
+
+test('hub distinguishes all-empty, both sources failed, and a single empty section',()=>{
+  for(const [data,failed,expected] of [
+    [{reviews:[],interviews:[],projects:[],cohorts:[]},false,'empty'],
+    [undefined,true,'error'],
+    [{reviews:[{id:1}],interviews:[],projects:[],cohorts:[]},false,null]
+  ]){
+    const host=new Element('div'),body=new Element('div');host.hidden=true;
+    const groups=Object.fromEntries(['interviews','reviews','projects','cohorts'].map(key=>['#hub-'+key,new Element('section')]));
+    const page={querySelector:s=>s==='[data-story-list-state]'?host:s==='.hb'?body:groups[s]};
+    const document={readyState:'complete',body:{dataset:failed?{publicContentUnavailable:'true'}:{}},documentElement:{dataset:{sub:'overview'}},querySelector:()=>page,createElement:tag=>new Element(tag)};
+    const window={STORIES_DATA:data,AicaPublicContentStatus:{storiesApiFailed:failed}};
+    vm.runInNewContext(readFileSync(new URL('../stories/js/story-state.js',import.meta.url),'utf8'),{window,document,location:{reload(){}}});
+    assert.equal(host.dataset.storyState,expected||undefined);
+    assert.equal(host.hidden,!expected);
+    if(expected)assert.equal(body.hidden,true);
+    else {assert.notEqual(groups['#hub-reviews'].hidden,true);assert.equal(groups['#hub-interviews'].hidden,true);}
+  }
 });

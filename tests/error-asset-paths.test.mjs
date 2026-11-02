@@ -6,6 +6,7 @@ import {build} from '../scripts/build.mjs';
 for (const page of ['404.html', '500.html', 'offline.html']) {
   test(`${page} defers the stylesheet request until its hosting root is known`, () => {
     const html = build().get(page);
+    assert.match(html, /<base href="\/aica-site-preview\/">/, 'without JavaScript recovery links use the public Pages project root');
     // A static href can be fetched by the browser's speculative parser before the base script runs.
     assert.doesNotMatch(html, /<link\b[^>]*rel="stylesheet"[^>]*href=/i);
     const script = /<script>([\s\S]*?)<\/script>/.exec(html)[1];

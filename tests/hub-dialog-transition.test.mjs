@@ -44,7 +44,7 @@ function start(zoomed = false) {
     addEventListener(type, fn) { events.set(type, [...(events.get(type) || []), fn]); },
     CustomEvent: class { constructor(type) { this.type = type; } },
     hubModal: true, root: { closest: () => page }, M: cohort, Z: zoom, modalVisited: [], last: card,
-    changePhoto() {}, history: { replaceState() {} } });
+    modalEntry:false, modalScroll:0, window:{scrollTo(){}}, changePhoto() {}, history: { replaceState() {} } });
   vm.runInContext(readFileSync(new URL('../common/js/ui.js', import.meta.url), 'utf8'), context);
   const cohortScope = context.SiteUI.createDialogScope();
   context.isolateDialog = dialog => dialog ? cohortScope.activate(dialog) : cohortScope.release();

@@ -4,16 +4,14 @@ import { assetVersion } from './asset-versions.mjs';
 // build()가 만든 디자인 그대로의 페이지에 백오피스 연결 줄을 넣고, 백오피스 글이 그려질 자리의 시안 글을 비워요.
 // - npm run build / npm run check만 이 결과를 씁니다(scripts/build.mjs). build() 자체와 Spring 내보내기(export-spring.mjs)는
 //   디자인 원본 그대로라 Spring 템플릿 · seed는 바뀌지 않아요.
-// - 줄 순서는 팀 규칙 그대로: stories-data.js → ../api/public/stories.js → stories-render.js → story-state.js,
+// - 이야기는 JSON API 우선·실패 때만 사본. 공통 탐색이 준비되면 render → state → 페이지별 스크립트를 원래 순서로 실행합니다.
 //   FAQ는 faq-data.js → ../api/public/faq.js → faq-render.js(check.js보다 먼저), 내용 페이지마다 site.js 다음 줄에 track.js.
 // - 공개 API 주소는 상대 경로(../api/public/…)로 둬요. 팀 사이트 서버 · 관리자 미리보기가 이 경로를 백오피스 API로 넘겨요.
 // - 디자인이 바뀌어 기대한 자리를 못 찾으면 조용히 넘어가지 않고 빌드를 멈춰요.
 
 const TRACK = `<script src="../common/js/track.js?v=${assetVersion('common.js.track')}" defer></script>`;
 const STORY_SCRIPTS = [
-  '<!-- 글은 백오피스 DB에서(게시물 관리): 사본(백오피스가 꺼져 있을 때) → 공개 API(DB의 지금 글, 불러오면 사본을 덮어씀) → 그리기. 디자이너 스크립트보다 먼저 -->',
-  `<script src="js/stories-data.js?v=${assetVersion('stories.js.stories-data')}" defer></script>`,
-  '<script src="../api/public/stories.js" defer></script>',
+  '<!-- Story consumers are collected below; the API-first loader requests the snapshot only on failure. -->',
   `<script src="js/stories-render.js?v=${assetVersion('stories.js.stories-render')}" defer></script>`
 ];
 const STORY_STATE_NOTE = '<!-- 빈 목록 · 필터 결과 없음 안내(aica-site PR #27): 글을 다 그린 뒤 판단하도록 글 그리기 다음에 -->';
@@ -105,7 +103,7 @@ const PAGES = {
   'about/index.html': withTracking,
   'life/index.html': withTracking,
   'check/index.html': (html, path) => {
-    html = insertBefore(html, '<script src="../common/js/menu.js"', FAQ_SCRIPTS, path);
+    html = insertBefore(html, '<script src="../common/js/menu.js', FAQ_SCRIPTS, path);
     return withTracking(html, path);
   },
   'stories/index.html': (html, path) => {
@@ -157,15 +155,17 @@ const PAGES = {
 };
 
 // stories-render.js는 디자이너 스크립트(js/…)와 story-state.js보다 먼저 실행돼야 해요(defer는 적힌 순서대로)
-function checkOrder(html, path) {
-  const scripts = [...html.matchAll(/<script src="([^"]+)"/g)].map(m => m[1].replace(/\?.*$/, ''));
-  const at = name => scripts.indexOf(name);
-  const data = at('js/stories-data.js'), api = at('../api/public/stories.js'), render = at('js/stories-render.js');
-  if (!(data >= 0 && data < api && api < render)) throw new Error(`backoffice-site: ${path} 이야기 스크립트 순서가 틀렸어요.`);
-  const early = new Set(['js/stories-data.js', '../api/public/stories.js', 'js/stories-render.js', 'js/old-hash.js']);
-  scripts.forEach((src, i) => {
-    if (src.startsWith('js/') && !early.has(src) && i < render) throw new Error(`backoffice-site: ${path}의 ${src}이(가) stories-render.js보다 먼저예요.`);
+function withStoryLoader(html, path) {
+  const consumers = [];
+  html = html.replace(/<script src="(js\/[^"<>]+)" defer><\/script>\s*/g, (tag, src) => {
+    if (src.startsWith('js/old-hash.js')) return tag;
+    consumers.push(src); return '';
   });
+  if (!consumers[0]?.startsWith('js/stories-render.js?')) throw new Error(`backoffice-site: ${path} story renderer must run first`);
+  if (!consumers.some(src => src.startsWith('js/story-state.js?'))) throw new Error(`backoffice-site: ${path} needs story states`);
+  const scripts = JSON.stringify(consumers).replace(/&/g, '&amp;').replace(/'/g, '&#39;');
+  const loader = `<script src="../common/js/stories-loader.js?v=${assetVersion('common.js.stories-loader')}" defer data-api="../api/public/stories" data-fallback="js/stories-data.js?v=${assetVersion('stories.js.stories-data')}" data-scripts='${scripts}'></script>`;
+  return html.replace('</head>', loader + '\n</head>');
 }
 
 export function connectBackoffice(outputs) {
@@ -173,8 +173,8 @@ export function connectBackoffice(outputs) {
   for (const [path, connect] of Object.entries(PAGES)) {
     const html = outputs.get(path);
     if (html == null) throw new Error(`backoffice-site: ${path}이(가) 빌드 결과에 없어요.`);
-    const connected = connect(html, path);
-    if (path.startsWith('stories/')) checkOrder(connected, path);
+    let connected = connect(html, path);
+    if (path.startsWith('stories/')) connected = withStoryLoader(connected, path);
     result.set(path, connected);
   }
   return result;

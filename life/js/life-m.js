@@ -2,8 +2,21 @@
    source content and generated markup belong to life-m-view.js. */
 (() => {
   'use strict';
+  const mobileWidth = matchMedia('(max-width:600px)');
+  const desktopMap = document.querySelector('.housing-basemap[data-desktop-src]');
+  const syncDesktopMap = () => {
+    if (!mobileWidth.matches && desktopMap && !desktopMap.hasAttribute('href')) desktopMap.setAttribute('href', desktopMap.dataset.desktopSrc);
+  };
+  syncDesktopMap();
+  mobileWidth.addEventListener('change', syncDesktopMap);
+  let mounted = false;
+  const mountMobile = () => {
+  if (mounted || !mobileWidth.matches) return;
+  mounted = true;
   const host = document.querySelector('#main');
-  const source = host.cloneNode(true);
+  const template = document.createElement('template');
+  template.innerHTML = host.innerHTML;
+  const source = template.content;
   const state = {
     page: 'overview',
     chosenFloor: '1',
@@ -260,4 +273,7 @@
   }
   addEventListener('hashchange', render);
   render();
+  };
+  mobileWidth.addEventListener('change', mountMobile);
+  mountMobile();
 })();

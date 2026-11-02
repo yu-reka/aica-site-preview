@@ -129,3 +129,15 @@ test('project and cohort hub photos select candidates for card and mosaic slots'
   assert.match(mosaic[1],/sizes="[^"]*308px"/);
   assert.doesNotMatch(out.projectHub+out.cohortHub,/104px, 140px/);
 });
+
+
+test('backoffice default-avatar copies reuse the verified small public variants without changing the original',()=>{
+  const src='assets/uploads/post-avatar-card-01-1080.webp';
+  const out=render({interviews:[{id:1,anchor:'iv-p1',title:'First',img:{src,w:1080,h:675}},{id:2,anchor:'iv-p2',title:'Second',img:{src,w:1080,h:675}}]});
+  assert.match(out.interviews,/src="assets\/uploads\/post-avatar-card-01-1080.webp\?v=1026avatars10"/);
+  assert.match(out.interviews,/srcset="assets\/interview-avatars\/avatar-card-01-160.webp\?v=1026avatars10 160w/);
+  assert.match(out.hubHero,/loading="eager" fetchpriority="high"/);
+  assert.match(out.hubList,/loading="lazy"/);
+  const custom=render({interviews:[{id:2,anchor:'iv-p2',title:'Custom',img:{src:'assets/uploads/custom-avatar.webp',w:1080,h:675}}]});
+  assert.doesNotMatch(custom.interviews,/avatar-card-02-160/);
+});

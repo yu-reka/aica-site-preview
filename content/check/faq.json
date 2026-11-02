@@ -19,7 +19,7 @@
         "tag": "a",
         "attrs": {
           "class": "text-link",
-          "href": "../stories/index.html#reviews"
+          "href": "../stories/reviews.html"
         },
         "children": [
           "선배 후기"
@@ -273,7 +273,7 @@
         "tag": "a",
         "attrs": {
           "class": "text-link",
-          "href": "../stories/index.html#reviews"
+          "href": "../stories/reviews.html"
         },
         "children": [
           "선배 후기"

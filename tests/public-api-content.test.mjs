@@ -34,3 +34,11 @@ test('owner-defined legacy IDs resolve only to existing migrated records, preser
   // 삭제된 인터뷰(새 6번, 옛 68번): 대상 글이 없으면 옛 주소를 바꾸지 않고 그대로 둔다
   assert.equal(alias('#iv-p68'),'#iv-p68');assert.equal(alias('#iv-p6'),'#iv-p6');
 });
+
+
+test('known old collection links go directly to their own pages without rewriting external URLs',()=>{
+  const safe=start().window.AicaPublicContent;
+  assert.equal(safe.url('../stories/index.html#reviews',false),'../stories/reviews.html');
+  assert.equal(safe.url('../stories/index.html#projects',false),'../stories/projects.html');
+  assert.equal(safe.url('https://other.test/stories/index.html#reviews',false),'https://other.test/stories/index.html#reviews');
+});

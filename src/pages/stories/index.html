@@ -1,7 +1,7 @@
 <!doctype html>
 <html data-inline-story-modals="true" lang="ko" data-menu="stories" data-sub="overview" data-nav="side" data-subnav="off" data-theme="light">
 <head>
-  <script src="../common/js/public-content.js"></script>
+  <script src="../common/js/public-content.js?v={{v.common.js.public-content}}"></script>
   <meta charset="UTF-8">
   <meta name="robots" content="noindex, nofollow">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -22,7 +22,7 @@
   <!-- 옛 주소(#reviews · #iv-3 · #r-life-0 …)는 그려지기 전에 나뉜 페이지로 보냄: defer 없이 가장 먼저 -->
   <script src="js/old-hash.js?v={{v.stories.js.old-hash}}"></script>
   <link rel="stylesheet" href="../common/css/tokens.css?v={{v.common.css.tokens}}">
-  <link rel="stylesheet" href="../common/css/base.css">
+  <link rel="stylesheet" href="../common/css/base.css?v={{v.common.css.base}}">
   <link rel="stylesheet" href="../common/css/site.css?v={{v.common.css.site}}">
   <link rel="stylesheet" href="css/stories.css?v={{v.stories.css.stories}}">
   <link rel="stylesheet" href="css/detail-navigation.css?v={{v.stories.css.detail-navigation}}">
@@ -30,16 +30,18 @@
   <link rel="stylesheet" href="css/hub.css?v={{v.stories.css.hub}}">
   <link rel="stylesheet" href="../common/css/presentation.css?v={{v.common.css.presentation}}">
   <link rel="stylesheet" href="css/presentation.css?v={{v.stories.css.presentation.hub}}">
-  <link rel="stylesheet" href="../common/css/lnb.css">
+  <link rel="stylesheet" href="../common/css/lnb.css?v={{v.common.css.lnb}}">
   <link rel="stylesheet" href="../common/css/masthead.css?v={{v.common.css.masthead}}">
   <link rel="stylesheet" href="css/stories-m.css?v={{v.stories.css.stories-m.default}}">
   <link rel="stylesheet" href="../common/css/components.css?v={{v.common.css.components}}">
 <link rel="stylesheet" href="../common/css/navigation-mobile.css?v={{v.common.css.navigation-mobile}}">
-  <script src="js/mast-fix.js" defer></script>
+  <script src="js/mast-fix.js?v={{v.stories.js.mast-fix}}" defer></script>
 <link rel="stylesheet" href="../common/css/availability.css?v={{v.common.css.availability}}">
 <script src="../common/js/availability.js?v={{v.common.js.availability}}" defer></script>
+  <link rel="stylesheet" href="css/story-state.css?v={{v.stories.css.story-state}}">
+  <script src="js/story-state.js?v={{v.stories.js.story-state}}" defer></script>
   <script src="js/stories-m.js?v={{v.stories.js.stories-m}}" defer></script>
-  <script src="js/hub.js" defer></script>
+  <script src="js/hub.js?v={{v.stories.js.hub}}" defer></script>
   <script src="js/stories.js?v={{v.stories.js.stories}}" defer></script>
   <script src="js/story-detail-title.js?v={{v.stories.js.story-detail-title}}" defer></script>
   <script src="js/cohort-v3.js?v={{v.stories.js.cohort-v3}}" defer></script>
@@ -59,6 +61,7 @@
      .hb 밖(main 바로 아래)에 둬서 site.js가 메뉴를 이 뒤에 그림 — 좁은 화면에서 제목 → 알약 줄 순서 -->
 {{> stories/masthead}}
 {{> stories/navigation storyNavigation.overview}}
+<div data-story-list-state hidden></div>
 <div class="hb">
   <!-- 01 인터뷰: 우수 수료생 대표 1개와 일반 인터뷰 3개 -->
   <section class="hb-sec hb-iv" id="hub-interviews" data-honors-feature aria-labelledby="hub-interviews-t">

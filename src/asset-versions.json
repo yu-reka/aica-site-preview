@@ -7,7 +7,7 @@
     },
     "js": {
       "about-m": "1026dockrepeat",
-      "about": "1028iframe-policy"
+      "about": "1102loading-history"
     }
   },
   "check": {
@@ -19,7 +19,7 @@
     "js": {
       "check-m": "1016integrated",
       "check": "1030benefits-anchor",
-      "faq-data": "design-20261022",
+      "faq-data": "design-20261102-direct-links",
       "faq-render": "1020"
     }
   },
@@ -31,14 +31,19 @@
       "navigation-mobile": "1016nav",
       "presentation": "1029local-fonts",
       "site": "1102footer-brand-policy",
-      "tokens": "1029pretendard-subset"
+      "tokens": "1029pretendard-subset",
+      "base": "1102loading-history",
+      "lnb": "1102loading-history"
     },
     "js": {
       "availability": "1030offline-art60",
       "site-layout": "1102public-footer-brand-policy",
       "site": "1027lnb-page-start2",
       "track": "1027admin-views",
-      "ui": "1028shared-controls"
+      "ui": "1028shared-controls",
+      "menu": "1102loading-history",
+      "public-content": "1102loading-history",
+      "stories-loader": "1102loading-history"
     }
   },
   "home": {
@@ -59,8 +64,8 @@
       "culture": "1102culture-public-responsive"
     },
     "js": {
-      "life-m-view": "1102facility-inline-photo",
-      "life-m": "1030address-toast",
+      "life-m-view": "1102loading-history",
+      "life-m": "1102loading-history",
       "life": "1102facility-preview-photo",
       "culture": "1102culture-smooth-fold"
     }
@@ -86,16 +91,18 @@
       "stories-render": "1027demo-video",
       "stories-sections": {
         "interviews": "1027detail-word-wrap",
-        "projects": "1102project-demo-label"
+        "projects": "1102project-demo-label",
+        "reviews": "1102loading-history",
+        "cohorts": "1102loading-history"
       },
       "stories": "1028review-filter-pages",
-      "story-state": "1020states",
+      "story-state": "1102loading-history",
       "interview-honors": "1102uploaded-avatar-fit",
       "project-video": "1027prep-always"
     },
     "js": {
       "cohort-modal-scroll": "1022swipereading",
-      "cohort-v3": "1027feed-photo-sizes",
+      "cohort-v3": "1102loading-history",
       "detail-navigation": "1027story-list-return",
       "old-hash": "1022hubmodals",
       "project-reading": "1027list-markers",
@@ -107,14 +114,16 @@
         "legacyLoader": "1102review-empty-note"
       },
       "stories-m": "1102review-empty-note",
-      "stories-render": "1029hub-honors-feature",
+      "stories-render": "1102loading-history",
       "stories-sections": "1023cardrows",
-      "stories": "1028clean-list-hash-main",
-      "story-state": "1102review-dropdown-close",
+      "stories": "1102loading-history",
+      "story-state": "1102loading-history",
       "interview-honors": "1026honors-checked",
       "cohort-month-navigation": "1026month-navigation",
       "project-video": "1027photo-first-hero",
-      "story-detail-title": "1027all-details"
+      "story-detail-title": "1027all-details",
+      "mast-fix": "1102loading-history",
+      "hub": "1102loading-history"
     }
   }
 }

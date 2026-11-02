@@ -340,6 +340,7 @@ if (activityGallery) {
   let currentSlides = [];
   let dotButtons = [];
   let visibleSlide;
+  let galleryNear = !('IntersectionObserver' in window);
   let renderSequence = 0;
   let preparingSequence = 0;
   let transitionLayer;
@@ -358,7 +359,7 @@ if (activityGallery) {
     const previous = currentSlides[(index - 1 + currentSlides.length) % currentSlides.length];
     const next = currentSlides[(index + 1) % currentSlides.length];
     // Decode before replacing the central image; stale requests never commit.
-    for (const slide of [current, previous, next]) slide.querySelector('img').loading = 'eager';
+    if (galleryNear) for (const slide of [current, previous, next]) slide.querySelector('img').loading = 'eager';
     if (visibleSlide && visibleSlide !== current) {
       preparingSequence = sequence;
       await current.querySelector('img').decode().catch(() => {});
@@ -428,7 +429,7 @@ if (activityGallery) {
       slide.setAttribute('aria-hidden', String(!active));
       slide.inert = !active;
     }
-    current.querySelector('img').loading = 'eager';
+    current.querySelector('img').loading = galleryNear ? 'eager' : 'lazy';
     caption.textContent = current.dataset.title;
     description.textContent = current.dataset.description;
     categoryLabel.textContent = names[category];
@@ -509,6 +510,15 @@ if (activityGallery) {
     reducedMotion.addEventListener('change', () => { clearTransition(); });
     document.addEventListener('visibilitychange', () => { if (document.hidden) { clearTransition(); } });
     selectCategory(category);
+    if (!galleryNear) {
+      const galleryObserver = new IntersectionObserver(entries => {
+        if (!entries.some(entry => entry.isIntersecting)) return;
+        galleryNear = true; galleryObserver.disconnect();
+        const index = positions[category];
+        for (const offset of [-1, 0, 1]) currentSlides[(index + offset + currentSlides.length) % currentSlides.length].querySelector('img').loading = 'eager';
+      }, {rootMargin: '200px'});
+      galleryObserver.observe(activityGallery);
+    }
   }
 }
 

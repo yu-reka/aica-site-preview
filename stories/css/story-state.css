@@ -13,3 +13,8 @@
   .stories-page .story-state{min-height:280px;margin:20px 0;padding:32px 20px;border-radius:20px}
   .stories-page .story-state--desktop{display:none}
 }
+
+/* Reserve the first list viewport while the API or its fallback is pending. */
+.stories-page[data-story-loading] .idgrid,.stories-page[data-story-loading] .pjgrid,.stories-page[data-story-loading] .cv3-grid{min-block-size:min(70vh,700px)}
+.stories-page[data-story-loading] .hb-ivg{min-block-size:420px}
+.stories-page[data-story-loading] .idgrid:empty::before,.stories-page[data-story-loading] .pjgrid:empty::before,.stories-page[data-story-loading] .cv3-grid:empty::before{content:"";display:block;min-block-size:300px;border-radius:16px;background:var(--g50,#F5F6F6)}

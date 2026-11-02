@@ -7,7 +7,7 @@ window.FAQ_DATA = {
     {
       "cat": "준비사항",
       "question": "[시안] 비전공자인데 수업을 따라갈 수 있을까요?",
-      "answer": "전공은 지원 자격에 해당하지 않아서 <mark class=\"hl\">비전공자도 지원할 수 있어요</mark>. 수업은 AI 기초 역량부터 단계적으로 진행해요. 비전공자로 시작한 선배들의 이야기는 <a class=\"text-link\" href=\"../stories/index.html#reviews\">선배 후기</a>에서 볼 수 있어요."
+      "answer": "전공은 지원 자격에 해당하지 않아서 <mark class=\"hl\">비전공자도 지원할 수 있어요</mark>. 수업은 AI 기초 역량부터 단계적으로 진행해요. 비전공자로 시작한 선배들의 이야기는 <a class=\"text-link\" href=\"../stories/reviews.html\">선배 후기</a>에서 볼 수 있어요."
     },
     {
       "cat": "준비사항",
@@ -67,7 +67,7 @@ window.FAQ_DATA = {
     {
       "cat": "생활",
       "question": "[시안] 내향적인 편인데 적응할 수 있을까요?",
-      "answer": "팀으로 함께 만드는 수업이 많아요. 처음엔 낯설었지만 적응했다는 선배들의 이야기는 <a class=\"text-link\" href=\"../stories/index.html#reviews\">선배 후기</a>에서 볼 수 있어요."
+      "answer": "팀으로 함께 만드는 수업이 많아요. 처음엔 낯설었지만 적응했다는 선배들의 이야기는 <a class=\"text-link\" href=\"../stories/reviews.html\">선배 후기</a>에서 볼 수 있어요."
     },
     {
       "cat": "생활",

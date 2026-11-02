@@ -12,13 +12,13 @@
 .stories-page #p-rev .idc>.in>p,.hb .hb-pi p,.stories-page .sm-review-preview{display:block;overflow:hidden}
 .note-excerpt{display:block}
 .note-excerpt[hidden]{display:none}
-/* Mobile listing uses the same square card geometry as the All review rail. */
+/* Mobile squares use the desktop note type scale and avoid oversized paper. */
 @media(max-width:600px){
   .stories-page .sm-review-board{padding:50px 16px 38px;gap:16px}
-  .stories-page .sm-review-note{aspect-ratio:1;contain:size;box-sizing:border-box;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;align-self:start;gap:0;font-family:var(--ff-text);line-height:1.75;letter-spacing:-.01em}
+  .stories-page .sm-review-note{flex-basis:min(84%,240px);aspect-ratio:1;contain:size;box-sizing:border-box;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;align-self:start;gap:0;padding:18px 18px 16px;font-family:var(--ff-text);line-height:1.75;letter-spacing:-.01em}
   .stories-page .sm-review-summary{display:contents}
-  .stories-page .sm-review-summary h3{margin:10px 0 0;font-family:var(--ff-text)}
-  .stories-page .sm-review-preview{min-height:0;font-family:var(--ff-sans);word-break:keep-all}
+  .stories-page .sm-review-stage:not(.is-list) .sm-review-summary h3{margin:8px 0 0;min-height:50px;font:600 17px/25px var(--ff-text)}
+  .stories-page .sm-review-preview{min-height:0;margin:8px 0 0;font:400 14px/21px var(--ff-sans);word-break:keep-all}
   .stories-page .sm-review-by{box-sizing:border-box;margin:0;padding:12px 0 0;min-height:0;flex-wrap:nowrap;gap:6px;line-height:1.3}
   .stories-page .sm-review-by b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .stories-page .sm-review-card-arrow{padding-left:12px}
@@ -93,37 +93,43 @@
 .stories-hub .ov .sd-nav{margin-top:0;padding-block:20px}
 .stories-hub .ov .sd-nav .sd-list{margin-block:0}
 
-/* Compact mobile utilities: text select + rectangular icon controls, separate
-   from the rounded cohort filters above. */
+/* Mobile utilities share the desktop capsule view-switch component. */
 @media(max-width:600px){
   .stories-page .sm-review-toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:12px 0 14px;min-width:0}
   .stories-page .sm-review-toolbar .sm-review-count{flex:none;margin:0}
   .stories-page .sm-review-tools{display:flex;align-items:center;gap:10px;min-width:0}
-  .stories-page .sm-review-filter-row{display:flex;align-items:center;gap:8px;position:relative;z-index:31;margin:12px 0 0}
-  .stories-page .sm-review-filter-row .sm-cohort-chips{flex:1 1 auto;min-width:0;flex-wrap:nowrap;gap:4px;overflow-x:auto;margin:0;padding:3px 0;scrollbar-width:none}
-  .stories-page .sm-review-filter-row .sm-cohort-chips button{padding-inline:9px}
-  .stories-page .sm-review-filter-row .sm-cohort-chips::-webkit-scrollbar{display:none}
-  .stories-page .sm-review-tag-dropdown{flex:none;max-width:112px}
+  .stories-page .sm-review-filter-row{display:flex;justify-content:flex-start;align-items:center;gap:8px;position:relative;z-index:31;margin:12px 0 0;min-width:0}
+  .stories-page .sm-review-cohort-dropdown{flex:none}
+  .stories-page .sm-review-cohort-dropdown summary{height:38px;padding:0 12px;border:1px solid var(--l-line);border-radius:999px;background:#fff;box-sizing:border-box;font:600 12px/38px var(--ff-sans)}
+  .stories-page .sm-review-cohort-dropdown summary svg{flex:none}
+  .stories-page .sm-review-cohort-dropdown[open] summary{position:relative;z-index:38}
+  .stories-page .sm-review-cohort-dropdown[open] summary::after{display:none}
+  .stories-page .sm-reviews .sm-review-cohort-dropdown .sm-cohort-chips{left:0;right:auto;margin:0;gap:0;overflow:visible;border-bottom:0}
+  .stories-page .sm-reviews .sm-review-cohort-dropdown .sm-cohort-chips button{display:block;flex:none;width:100%;height:auto;min-height:40px;margin:0;padding:10px 12px;border:0;border-radius:8px;background:#fff;color:var(--g600);font:400 14px/1.5 var(--ff-sans);text-align:left}
+  .stories-page .sm-reviews .sm-review-cohort-dropdown .sm-cohort-chips button[aria-pressed="true"]{color:var(--primary);font-weight:700;background:#F2F5FF}
+  .stories-page :is(.sm-review-cohort-dropdown,.sm-review-tag-dropdown).is-active summary{background:var(--g900);border-color:var(--g900);color:#fff}
+  .stories-page .sm-review-cohort-dropdown :is(summary,button):focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+  .stories-page .rev .sm-review-filter-row .sm-review-views{margin-left:auto;flex:none}
+  .stories-page .sm-review-tag-dropdown{flex:0 1 auto;min-width:0;max-width:104px}
   .stories-page .sm-review-tag-dropdown summary{height:38px;padding:0 12px;border:1px solid var(--l-line);border-radius:999px;background:#fff;max-width:100%;box-sizing:border-box;font:600 12px/38px var(--ff-sans)}
   .stories-page .sm-review-tag-dropdown summary b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .stories-page .sm-review-tag-dropdown summary svg{flex:none}
   .stories-page .sm-review-tag-dropdown[open] summary{position:relative;z-index:38}
   .stories-page .sm-review-tag-dropdown[open] summary::after{display:none}
   .stories-page .sm-review-tag-options{position:absolute;right:0;top:calc(100% + 8px);z-index:39;display:flex;flex-direction:column;min-width:220px;max-width:calc(100vw - 40px);padding:8px;background:#fff;border:1px solid var(--l-line);border-radius:16px;box-shadow:0 12px 32px rgba(20,35,63,.12)}
+  .stories-page .sm-review-tag-dropdown .sm-review-tag-options{left:50%;right:auto;transform:translateX(-50%)}
   .stories-page .sm-review-tag-options button{padding:10px 12px;min-height:40px;border:0;border-radius:8px;background:#fff;color:var(--g600);font:400 14px/1.5 var(--ff-sans);text-align:left;cursor:pointer}
   .stories-page .sm-review-tag-options button:hover{background:var(--g50);color:var(--g900)}
   .stories-page .sm-review-tag-options button[aria-pressed="true"]{color:var(--primary);font-weight:700;background:#F2F5FF}
   .stories-page .sm-review-tag-dropdown :is(summary,button):focus-visible{outline:2px solid var(--primary);outline-offset:3px}
-  .stories-page .sm-review-views{display:flex;gap:2px}
-  .stories-page .sm-review-views button{display:grid;place-items:center;width:36px;min-height:44px;padding:0;border:0;border-radius:6px;background:transparent;color:var(--sm-muted);cursor:pointer}
-  .stories-page .sm-review-views button[aria-pressed="true"]{background:#EAF0FF;color:var(--sm-blue)}
+  .stories-page .rev .sm-review-views button[aria-pressed="true"]{background:var(--g900);color:#fff}
   .stories-page .sm-review-views svg{display:block;width:16px;height:16px}
   .stories-page .sm-review-tools :is(select,button):focus-visible{outline:2px solid var(--sm-blue);outline-offset:2px}
   .stories-page .sm-review-stage.is-list{overflow:visible;background:none;box-shadow:none;border-radius:0}
   .stories-page #p-rev .sm-review-stage.is-list::after{content:none}
   .stories-page .sm-review-stage.is-list .sm-review-board{display:grid;grid-template-columns:minmax(0,1fr);gap:0;padding:0;overflow:visible;scroll-snap-type:none}
   .stories-page .sm-review-list-meta,.stories-page .sm-review-tag-empty{display:none}
-  .stories-page .sm-review-stage.is-list .sm-review-note{aspect-ratio:auto;contain:none;display:grid;grid-template-columns:5px 64px minmax(0,1fr) 62px;align-items:center;gap:7px;min-width:0;min-height:72px;padding:14px 4px;border-radius:0;background:#fff;box-shadow:none;transform:none;border-bottom:1px solid #E8EDF4}
+  .stories-page .sm-review-stage.is-list .sm-review-note{aspect-ratio:auto;contain:none;display:grid;grid-template-columns:5px 64px minmax(0,1fr) 62px;grid-template-rows:minmax(0,1fr);align-items:center;gap:7px;min-width:0;min-height:72px;padding:14px 4px;border-radius:0;background:#fff;box-shadow:none;transform:none;border-bottom:1px solid #E8EDF4}
   .stories-page .sm-review-stage.is-list .sm-review-note::before{content:"";grid-column:1;grid-row:1;width:5px;height:5px;border-radius:50%;background:var(--sm-line)}
   .stories-page .sm-review-stage.is-list :is(.sm-review-summary,.sm-review-by){display:contents}
   .stories-page .sm-review-stage.is-list :is(.cbar,.sm-review-preview,.sm-review-by b,.sm-review-card-arrow){display:none}

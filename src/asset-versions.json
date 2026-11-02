@@ -1,24 +1,24 @@
 {
   "about": {
     "css": {
-      "about-m": "1029local-fonts",
+      "about-m": "1102news-rail-fit",
       "about": "1102footer-compact",
       "presentation": "1102footer-compact"
     },
     "js": {
-      "about-m": "1026dockrepeat",
+      "about-m": "1102news-rail-fit",
       "about": "1102loading-history"
     }
   },
   "check": {
     "css": {
       "check-m": "1030faq-chevron-pagination",
-      "check": "1026noselfcheck",
+      "check": "1102faq-review-pagination",
       "presentation": "1026noselfcheck"
     },
     "js": {
       "check-m": "1016integrated",
-      "check": "1030benefits-anchor",
+      "check": "1102all-chapter-alignment",
       "faq-data": "design-20261102-direct-links",
       "faq-render": "1020"
     }
@@ -57,15 +57,15 @@
   },
   "life": {
     "css": {
-      "life-m": "1030building-title",
+      "life-m": "1102culture-compact",
       "life": "1028eyebrow-lh",
       "presentation": "1028topic-top-chips",
       "housing-map": "20261028-map-credit-center",
       "culture": "1102culture-public-responsive"
     },
     "js": {
-      "life-m-view": "1102loading-history",
-      "life-m": "1102loading-history",
+      "life-m-view": "1102culture-compact",
+      "life-m": "1102mobile-density-merge",
       "life": "1102facility-preview-photo",
       "culture": "1102culture-smooth-fold"
     }
@@ -73,20 +73,20 @@
   "stories": {
     "css": {
       "cohort-v3": {
-        "cohorts": "1030modal-date-gap",
+        "cohorts": "1102month-rail-alignment",
         "hub": "1030modal-date-gap"
       },
       "detail-navigation": "1020outsidegrid",
-      "hub": "1102mosaic-admin-fit",
+      "hub": "1102cohort-mosaic-meta-only",
       "presentation": {
         "hub": "1030review-ssul-small",
         "default": "1030review-ssul-small"
       },
       "projects-grid": "1021listbadges",
-      "review-notes": "1102review-empty-level",
+      "review-notes": "1102review-list-row-center",
       "stories-m": {
-        "default": "1030review-carousel",
-        "cohorts": "1030review-carousel"
+        "default": "1102mobile-review-list-pager",
+        "cohorts": "1102cohort-stat-size"
       },
       "stories-render": "1027demo-video",
       "stories-sections": {
@@ -95,14 +95,14 @@
         "reviews": "1102loading-history",
         "cohorts": "1102loading-history"
       },
-      "stories": "1028review-filter-pages",
-      "story-state": "1102loading-history",
-      "interview-honors": "1102uploaded-avatar-fit",
+      "stories": "1102shared-review-view-toggle",
+      "story-state": "1102cohort-stable-loading",
+      "interview-honors": "1102honors-natural-title",
       "project-video": "1027prep-always"
     },
     "js": {
       "cohort-modal-scroll": "1022swipereading",
-      "cohort-v3": "1102loading-history",
+      "cohort-v3": "1102mobile-density-merge",
       "detail-navigation": "1027story-list-return",
       "old-hash": "1022hubmodals",
       "project-reading": "1027list-markers",
@@ -110,16 +110,16 @@
       "review-notes": "1102honors-closing-quote",
       "stories-data": "design-20261029-hub-honors",
       "stories-m-reviews": {
-        "default": "1102review-empty-note",
-        "legacyLoader": "1102review-empty-note"
+        "default": "1102mobile-review-list-pager",
+        "legacyLoader": "1102mobile-review-list-pager"
       },
-      "stories-m": "1102review-empty-note",
-      "stories-render": "1102loading-history",
+      "stories-m": "1102mobile-review-list-pager",
+      "stories-render": "1102mobile-density-merge",
       "stories-sections": "1023cardrows",
       "stories": "1102loading-history",
-      "story-state": "1102loading-history",
-      "interview-honors": "1026honors-checked",
-      "cohort-month-navigation": "1026month-navigation",
+      "story-state": "1102hub-empty-action",
+      "interview-honors": "1102centered-ellipsis",
+      "cohort-month-navigation": "1102month-rail-alignment",
       "project-video": "1027photo-first-hero",
       "story-detail-title": "1027all-details",
       "mast-fix": "1102loading-history",

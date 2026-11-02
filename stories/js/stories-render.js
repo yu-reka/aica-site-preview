@@ -598,7 +598,7 @@
       if (rows[index]) rows[index].setAttribute('data-review-visible', shown);
     });
     radios.forEach(function (radio) { radio.checked = radio.id === 'pgn' + page; });
-    count.textContent = matching.length + '개의 후기' + (matching.length ? ' · ' + ((page - 1) * pageSize + 1) + '–' + Math.min(page * pageSize, matching.length) : '');
+    count.textContent = matching.length + '개의 후기';
     // StoryState also toggles `hidden`; this result count keeps a single-page pager
     // suppressed after its empty-state check, without changing the shared owner.
     section.setAttribute('data-review-pages', matching.length ? total : 0);

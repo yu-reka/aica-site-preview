@@ -22,6 +22,10 @@ const LifeMobileView = (() => {
       photoLabel:pick('.fdc-ph',p).getAttribute('aria-label'),image:pick('img',p).getAttribute('src'),
       category:value('.fdc-cat',p),name:value('h3',p),menu:value('.fdc-menu',p)||value('.fdc-m',p),location:value('.fdc-location',p),groupLabel:value('.fdc-g',p),walkLabel:value('.fdc-wk',p)
      })),
+     culture:all('#tp-fun .cf-g').map(p=>({
+      name:value('.cf-intro h4',p), description:pick('.cf-intro p',p)?.innerText||value('.cf-intro p',p),
+      photos:all('.cf-card',p).map(n=>({src:pick('img',n)?.getAttribute('src')||'',alt:pick('img',n)?.getAttribute('alt')||'',caption:value('figcaption',n)}))
+     })),
      leisure:all('.fsg .fsc').map(p=>({group:p.closest('.fsg').dataset.k,name:value('.fsc-b>b',p),distance:value('.fsc-b>small',p),fee:value('.fsc-t',p),summary:value('.fsc-d',p),photoLabel:pick('.fsc-ph',p).getAttribute('aria-label'),view:{card:{photoClass:pick('.fsc-ph',p).className}}}))
     };
     const map=pick('.hzmap2').cloneNode(true);
@@ -89,12 +93,11 @@ const LifeMobileView = (() => {
     function food(){return `<section class="section first">${topicHeading('근처 먹거리',text('#tp-food .sh h2'),'tp-food')}<div class="food-controls"><div class="food-kind underline-tabs" role="group" aria-label="먹거리 종류">${[['food','식당'],['cafe','카페']].map(([k,t])=>`<button data-kind="${k}" aria-pressed="${k===state.foodType}">${t}<span>${life.food.filter(f=>f.type===k).length}</span></button>`).join('')}</div><div class="food-filters" role="group" aria-label="먹거리 거르기">${[['all','전체'],['solo',state.foodType==='cafe'?'혼자':'혼밥'],['group','여럿이']].map(([g,t])=>`<button data-food-group="${g}" aria-pressed="${g===state.foodGroup}">${t}</button>`).join('')}</div></div><p id="food-count" class="list-count" role="status"></p><div id="food-results"></div><nav class="pagination" aria-label="먹거리 페이지"></nav><p class="caption">${esc(text('.fdisc'))}</p></section>`;}
     
     function culturePage(){
-      const gallery=pick('#tp-fun .cf')?.cloneNode(true);
-      if(gallery){
-        gallery.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));
-        gallery.querySelectorAll('[aria-labelledby]').forEach(n=>{n.setAttribute('aria-label',value('h3',n));n.removeAttribute('aria-labelledby');});
-      }
-      return `<section class="section first">${topicHeading('문화 · 여가',text('#tp-fun .sh h2'),'tp-fun')}${gallery?.outerHTML||''}</section>`;
+      return `<section class="section first">${topicHeading('문화 · 여가',text('#tp-fun .sh h2'),'tp-fun')}<div class="culture-list">${life.culture.map((place,i)=>`<button type="button" class="culture-row" data-culture-open="${i}" aria-haspopup="dialog">${image(place.photos[0]?.src,place.photos[0]?.alt)}<span><b>${esc(place.name)}</b><small>${esc(place.description)}</small></span>${arrow}</button>`).join('')}</div></section>`;
+    }
+    function cultureDetail(index){
+      const place=life.culture[index];
+      return `<div class="culture-sheet-body"><header><h2 id="lm-culture-title">${esc(place.name)}</h2><button type="button" data-culture-close aria-label="닫기" autofocus>×</button></header><div class="culture-photos" aria-label="${esc(place.name)} 사진">${place.photos.map(photo=>`<figure>${image(photo.src,photo.alt)}</figure>`).join('')}</div><div class="culture-photo-controls"><p class="culture-photo-caption" aria-live="polite">${esc(place.photos[0]?.caption)}</p><button type="button" data-culture-photo="-1" aria-label="이전 사진">${arrow}</button><button type="button" data-culture-photo="1" aria-label="다음 사진">${arrow}</button></div><p class="culture-description">${esc(place.description)}</p></div>`;
     }
     
     function routeCard(){let article=$$('.rt3 article',src)[state.departure];return `<div class="route-steps"><h4>${esc($('h3',article).textContent)}</h4>${$('ol',article).outerHTML}${$('.rtr',article).outerHTML}</div>`;}
@@ -104,7 +107,7 @@ const LifeMobileView = (() => {
     function foodResults(matches){return matches.length?`<div class="food-list">${matches.slice((state.foodPage-1)*8,state.foodPage*8).map(f=>`<article class="food-card"><div class="food-card-top">${image(f.image,f.photoLabel)}<div><span class="food-meta">${esc(f.category)} <b>${esc(f.walkLabel)}</b></span><div class="food-card-info"><h3>${esc(f.name)}</h3><p class="food-menu">${esc(f.menu)}</p></div><div class="food-card-bottom"><small>${esc(f.groupLabel)}</small>${f.location?`<p class="food-location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>${esc(f.location)}</span></p>`:''}</div></div></div></article>`).join('')}</div>`:`<div class="empty">${esc(text('.fdempty-t'))}<button data-reset-food>거르기 풀기</button></div>`;}
     function foodPagination(pages){return pages>1?`<button data-food-page="${state.foodPage-1}" aria-label="이전 페이지" ${state.foodPage===1?'disabled':''}>←</button>${Array.from({length:pages},(_,i)=>`<button data-food-page="${i+1}" aria-label="${i+1}페이지" ${state.foodPage===i+1?'aria-current="page"':''}>${i+1}</button>`).join('')}<button data-food-page="${state.foodPage+1}" aria-label="다음 페이지" ${state.foodPage===pages?'disabled':''}>→</button>`:'';}
     
-    return { data: life, screens: renders, text, routeCard, foodResults, foodPagination };
+    return { data: life, screens: renders, text, routeCard, foodResults, foodPagination, cultureDetail };
   }
   return { create };
 })();

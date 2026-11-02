@@ -14,7 +14,7 @@ var StoryState = (function(){
   function render(host,kind,options){
     options=options||{};var subject=options.subject||'이야기';
     var title=kind==='error'?'이야기를 불러오지 못했습니다.':kind==='filter'?'조건에 맞는 '+subject+'가 없습니다.':'아직 등록된 '+subject+'가 없습니다.';
-    var description=kind==='error'?'잠시 후 다시 시도해 주세요.':kind==='filter'?'선택한 조건을 바꾸거나 필터를 초기화해 주세요.':'다른 선배들의 이야기도 둘러보세요.';
+    var description=kind==='error'?'잠시 후 다시 시도해 주세요.':kind==='filter'?'선택한 조건을 바꾸거나 필터를 초기화해 주세요.':options.overview?'새로운 이야기가 등록되면 이곳에서 확인할 수 있습니다.':'다른 선배들의 이야기도 둘러보세요.';
     host.classList.add('story-state');host.dataset.storyState=kind;host.setAttribute('role','status');
     var icon=node('span','story-state__icon');icon.setAttribute('aria-hidden','true');
     // Fixed artwork only. Content/DB strings are always assigned with textContent.
@@ -23,8 +23,8 @@ var StoryState = (function(){
     if(kind==='error'||(kind==='filter'&&options.onReset)){
       action=node('button','story-state__action',kind==='error'?'다시 시도':'필터 초기화');action.type='button';
       action.addEventListener('click',kind==='error'?function(){location.reload();}:options.onReset);
-    }else{action=node('a','story-state__action','이야기 전체 보기');action.href='index.html';}
-    host.replaceChildren(icon,heading,copy,action);
+    }else if(!options.overview){action=node('a','story-state__action','이야기 전체 보기');action.href='index.html';}
+    host.replaceChildren.apply(host,action?[icon,heading,copy,action]:[icon,heading,copy]);
     if(kind==='filter'&&options.reviewBoard){
       host.classList.add('review-empty-note');options.reviewBoard.appendChild(host);
     }
@@ -59,7 +59,7 @@ var StoryState = (function(){
         if(section&&!count){section.hidden=true;section.setAttribute('data-story-state-hidden','');}
       });
       if(failed()||!total){
-        render(hubHost,failed()?'error':'empty');hubHost.hidden=false;
+        render(hubHost,failed()?'error':'empty',{overview:true});hubHost.hidden=false;
         var body=page.querySelector('.hb');if(body){body.hidden=true;body.setAttribute('data-story-state-hidden','');}
       }
       return;

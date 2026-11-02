@@ -28,3 +28,18 @@ test('a month without posts in the chosen cohort shows the filter state',()=>{
   assert.deepEqual(rendered,{target:host,kind:'filter'});
   assert.equal(host.hidden,false);assert.equal(grid.hidden,true);assert.equal(pager.hidden,true);
 });
+
+test('video-empty photo records offer photos without resetting the selected month',()=>{
+  const title={},copy={},action={},pager={hidden:false,replaceChildren(){}},grid={innerHTML:'',hidden:false};
+  const host={hidden:false,querySelector:s=>({'.story-state__title':title,'.story-state__copy':copy,'.story-state__action':action})[s]};
+  const st={coh:'3-5',pg:1,mo:202206,v:'video'};let options,drawn=0;
+  const selectors={'.cv3-grid':grid,'.cv3-pg':pager,'.cv3-gt':{},'[data-cohort-filter-empty]':host};
+  const context={D:[{coh:3,date:'2022-06-01',yt:''}],PER:9,st,$:s=>selectors[s],inC:()=>true,ym:()=>202206,lab:c=>c,list:()=>[],pinOn:()=>false,
+    root:{querySelector:()=>null},draw(){drawn++;},StoryState:{render:(target,kind,opts)=>{options=opts;}}};
+  vm.runInNewContext(source.slice(source.indexOf('  function grid()'),source.indexOf('  function draw()'))+'\ngrid();',context);
+  assert.equal(title.textContent,'등록된 영상이 없어요.');
+  assert.match(copy.textContent,/사진으로만/);
+  assert.equal(action.textContent,'사진 보기');
+  options.onReset();
+  assert.equal(st.v,'all');assert.equal(st.mo,202206);assert.equal(st.coh,'3-5');assert.equal(drawn,1);
+});

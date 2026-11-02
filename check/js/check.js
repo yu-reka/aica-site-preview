@@ -41,7 +41,7 @@
       const gap = chapter ? 0 : (mobile.matches ? 16 : 64);
       y = layoutTop(pick) - ((header ? header.offsetHeight : 0) + tools + gap);
     }
-    scrollToY(Math.max(0, Math.round(y)), instant);
+    scrollToY(Math.max(0, mobile.matches ? y : Math.round(y)), instant);
     // 접근성: 이동한 섹션 제목으로 초점
     const h = el.querySelector('h1, h2');
     if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
@@ -84,7 +84,7 @@
       if (!moved && document.getElementById(Site.decodeHash(location.hash.slice(1))) === first) jumpTo(first, true);
     };
     const again = () => {
-      if (mobile.matches && first.id === 'benefits') {
+      if (mobile.matches && first.matches('.v3-sec')) {
         // Cross-page fragment scrolling can finish after load/pageshow on mobile.
         // Measure the chapter after layout and the browser's own anchor move settle.
         requestAnimationFrame(() => requestAnimationFrame(align));
@@ -93,7 +93,7 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(again);
     if (document.readyState === 'complete') again(); else addEventListener('load', again, { once: true });
     addEventListener('pageshow', event => {
-      if (!event.persisted && mobile.matches && first.id === 'benefits') again();
+      if (!event.persisted && mobile.matches && first.matches('.v3-sec')) again();
     }, { once: true });
   }
 

@@ -72,7 +72,7 @@
 </div></section>
 
 <section id="benefits" class="v3-sec" aria-labelledby="h-benefits"><div class="cm-chapter cm-only" aria-hidden="true"><span>03</span><div><small>BENEFITS</small><b>지원 혜택</b></div></div><div class="wrap">
-  <div class="s-head k-head rv"><p class="k-label">지원 혜택</p><h2 id="h-benefits"><span class="cm-desktop">들어오면 이런 걸 지원받아요</span><span class="cm-only">배우는 동안,<br>이런 지원을 받아요</span></h2></div>
+  <div class="s-head k-head rv"><p class="k-label">지원 혜택</p><h2 id="h-benefits">들어오면 이런 걸 지원받아요</h2></div>
   <p class="cm-caption cm-only">지원금부터 학습 장비와 취·창업 지원까지.</p>
   <div class="ben2 rv">
     {{#each check.benefits}}{{> @view.item.template}}{{/each}}
@@ -84,9 +84,9 @@
 </div></section>
 
 <section id="faq" class="v3-sec" aria-labelledby="h-faq"><div class="cm-chapter cm-only" aria-hidden="true"><span>04</span><div><small>FAQ</small><b>자주 묻는 질문</b></div></div><div class="wrap">
-  <div class="s-head k-head rv"><p class="k-label">자주 묻는 질문</p><h2 id="h-faq"><span class="cm-desktop">물어보기 애매했던 것들, 여기 다 모았어요</span><span class="cm-only">궁금한 점,<br>바로 찾아보세요</span></h2></div>
+  <div class="s-head k-head rv"><p class="k-label">자주 묻는 질문</p><h2 id="h-faq">물어보기 애매했던 것들,<br class="cm-only"> 여기 다 모았어요</h2></div>
   <div class="faq rv">
-    <div class="cm-search cm-only"><label for="faqSearch">궁금한 내용 검색</label><div class="cm-search-field"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input type="search" id="faqSearch" placeholder="예: 코딩 테스트, 지원금" autocomplete="off"><button type="button" id="faqClear" aria-label="검색어 지우기" hidden>×</button></div></div>
+    <div class="cm-search cm-only"><label for="faqSearch">궁금한 것을 물어보세요</label><div class="cm-search-field"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input type="search" id="faqSearch" placeholder="예: 코딩 테스트, 지원금" autocomplete="off"><button type="button" id="faqClear" aria-label="검색어 지우기" hidden>×</button></div></div>
     <div class="faq-tools">
       <div class="faq-tabs" role="group" aria-label="질문 분류">
         {{#each check.categories}}{{> check/faq/category}}{{/each}}
@@ -106,7 +106,7 @@
   </div>
 </div></section>
 
-<footer class="cm-end cm-only"><p class="cm-end-title">이제 지원을 준비해 볼까요?</p><a class="cm-apply" data-site-link="apply">지원하기 <span aria-hidden="true">↗</span></a><p>모집 조건과 지원 내용은 공식 모집 공고를 기준으로 확인해 주세요.</p><a class="cm-back" href="../about/index.html">인사교 알아보기로 돌아가기 ↗</a></footer>
+<footer class="cm-end cm-only"><p class="cm-end-title">이제 지원을 준비해 볼까요?</p><a class="cm-apply" data-site-link="kakao">문의하기 <span aria-hidden="true">↗</span></a><p>모집 조건과 지원 내용은 공식 모집 공고를 기준으로 확인해 주세요.</p><a class="cm-back" href="../about/index.html">인사교 알아보기로 돌아가기 ↗</a></footer>
 <nav class="cm-dock" hidden aria-label="지원 전 체크 하단 목차"><div class="cm-seg"><a href="#eligibility" aria-current="true">모집 대상</a><a href="#schedule">전형</a><a href="#benefits">혜택</a><a href="#faq">FAQ</a></div></nav>
 </main>
 <footer class="site-footer" id="siteFooter"></footer>

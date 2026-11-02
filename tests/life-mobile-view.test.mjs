@@ -108,3 +108,19 @@ test('desktop overview resolves the published first photo before the mobile sour
   assert.equal(attrs.src, 'https://example.test/life/assets/uploads/first-fixture.webp');
   assert.equal(attrs.srcset, undefined);
 });
+
+test('compact culture list keeps source descriptions and every photo in the detail view', () => {
+  const photos=Array.from({length:8},(_,i)=>({
+    querySelector: selector=>selector==='img'?{getAttribute:name=>name==='src'?`assets/photo-${i}.webp`:'원본 사진'}:{textContent:`사진 ${i}`}
+  }));
+  const place={querySelector:selector=>({textContent:selector.includes('h4')?'장소 <이름>':'전체 소개 문구'}),
+    querySelectorAll:selector=>selector==='.cf-card'?photos:[]};
+  const {view}=createView(initialState(),{'#tp-fun .cf-g':[place]});
+  const list=view.screens['tp-fun'](), detail=view.cultureDetail(0);
+  assert.equal((list.match(/class="culture-row"/g)||[]).length,1);
+  assert.match(list,/장소 &lt;이름&gt;/);
+  assert.equal((detail.match(/<figure>/g)||[]).length,8);
+  assert.match(detail,/assets\/photo-7.webp/);
+  assert.match(detail,/전체 소개 문구/);
+  assert.doesNotMatch(detail,/cf-tg|fs-walk-t/);
+});

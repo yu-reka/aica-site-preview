@@ -235,10 +235,8 @@ html.school-about main#main .cohort-doodle path{stroke:#8CC3FF;}
 
 html.school-about main#main .cohort-doodle b{color:#8CC3FF;text-shadow:0 1px 2px rgba(11,16,32,.35)}
 
-/* 알아보기 푸터 = 랜딩 푸터와 같은 틀(10-14): 색 · 위 선도 같게(10-14 오후), 폭 · 여백 · 요소는 같게. 알아보기 자체 .wrap(1360) · .footer-top(아래 선 + 35px) 규칙이 푸터까지 닿던 것을 되돌림 */
+/* 알아보기 푸터 = 랜딩 푸터와 같은 틀(10-14): 색 · 위 선도 같게(10-14 오후), 폭 · 여백 · 요소는 같게. 알아보기 자체 .wrap(1360) 규칙이 푸터까지 닿던 것을 되돌림(11-02: 푸터에서 안 쓰는 .footer-top 규칙은 about.css와 같이 뺌) */
 html.school-about .site-footer .wrap{width:auto}
-
-html.school-about .site-footer .footer-top{padding-bottom:0;border-bottom:0}
 
 /* 7기 체크 낙서: 체크를 "Check!" 왼쪽으로(10-14) — 가로 배치, 글자는 체크 아래끝에 맞춤 */
 html.school-about main#main .cohort-doodle{flex-direction:row;align-items:flex-end;gap:2px;top:-30px;right:-24px}

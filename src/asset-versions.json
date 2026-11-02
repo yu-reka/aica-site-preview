@@ -2,8 +2,8 @@
   "about": {
     "css": {
       "about-m": "1029local-fonts",
-      "about": "1029local-fonts",
-      "presentation": "1029local-fonts"
+      "about": "1102footer-compact",
+      "presentation": "1102footer-compact"
     },
     "js": {
       "about-m": "1026dockrepeat",
@@ -30,7 +30,7 @@
       "masthead": "1016cleanup",
       "navigation-mobile": "1016nav",
       "presentation": "1029local-fonts",
-      "site": "1102footer-align",
+      "site": "1102footer-fab",
       "tokens": "1029pretendard-subset"
     },
     "js": {

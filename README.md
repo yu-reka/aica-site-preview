@@ -123,3 +123,5 @@ The public fixture generator and privacy checks remain preview-only. `content/pr
 ## 문화·여가 갤러리의 공개 시안
 
 갤러리의 묶음·선택자·펼치기 동작은 통합본과 맞춥니다. 새 사용자 사진 30장은 공개 근거를 확인하지 못해 복사하지 않았습니다. `content/preview/culture-images.json`에 기록한 기존 공개 이미지 6종을 재사용하며, 화면에 `[시안]`·`사진 예시`를 표시합니다. 실제 이야기 사본·업로드와 비공개 QA 캡처는 포함하지 않습니다.
+
+문화·여가의 `img`·`srcset`·`sizes`는 통합본과 같은 빌드 규칙을 사용합니다. 공개 시안의 이미지 크기는 실제 공개 WebP 파일에서 확인한 값이며, 별도 작은 사본을 추가하지 않아 `srcset`에는 존재하는 원본만 들어갑니다. 비공개 사진과 그 640px 사본은 계속 제외합니다.

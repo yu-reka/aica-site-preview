@@ -114,7 +114,7 @@
         "legacyLoader": "1103shared-helpers"
       },
       "stories-m": "1103shared-helpers",
-      "stories-render": "1103shared-helpers",
+      "stories-render": "1103demo-segment",
       "stories-sections": "1103shared-helpers",
       "stories": "1102loading-history",
       "story-state": "1102hub-empty-action",

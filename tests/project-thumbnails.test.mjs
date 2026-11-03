@@ -163,6 +163,34 @@ test('pressing play swaps the poster for a privacy-friendly YouTube player, and 
   assert.equal(box.innerHTML,'<span class="ivtag">자연어처리B</span><img><button class="ivplay"></button>');
 });
 
+test('a demo that is one section of a long video plays only from its start to its end',()=>{
+  // 2026-11-03: 1시간짜리 영상 하나에 여러 팀 시연이 이어져 있어 video.start · end(초)로 팀마다 제 구간만
+  const out=render([
+    {id:1,anchor:'pj-p1',title:'구간',video:{yt:'dQw4w9WgXcQ',start:754,end:1130}},
+    {id:2,anchor:'pj-p2',title:'시작만',video:{yt:'dQw4w9WgXcQ',start:1130}},
+    {id:3,anchor:'pj-p3',title:'이상한 구간',video:{yt:'dQw4w9WgXcQ',start:'"><b>',end:-5}},
+    {id:4,anchor:'pj-p4',title:'끝이 앞',video:{yt:'dQw4w9WgXcQ',start:900,end:600}}]);
+  assert.match(detail(out.details,1),/data-pj-yt="dQw4w9WgXcQ" data-pj-start="754" data-pj-end="1130"><span class="ivtag">/);
+  assert.match(detail(out.details,2),/data-pj-yt="dQw4w9WgXcQ" data-pj-start="1130"><span/);
+  assert.match(detail(out.details,3),/data-pj-yt="dQw4w9WgXcQ"><span/);   // 숫자가 아닌 값은 버림
+  assert.match(detail(out.details,4),/data-pj-yt="dQw4w9WgXcQ" data-pj-start="900"><span/);
+  const play=attrs=>{
+    const listeners={},made=[];
+    const document={querySelector:()=>null,querySelectorAll:()=>[],addEventListener(type,fn){(listeners[type]||=[]).push(fn);},
+      createElement:tag=>{const el={tagName:tag,focus(){}};made.push(el);return el;}};
+    const box={innerHTML:'',getAttribute:n=>attrs[n]??null,querySelector:()=>null,replaceChildren(){},appendChild(){}};
+    const button={closest:s=>s==='.pjvid .ivplay'?button:s==='.pjvid'?box:null};
+    vm.runInContext(renderer,vm.createContext({window:{},document,location:{hash:''},setTimeout,clearTimeout,matchMedia:()=>({matches:false})}));
+    listeners.click.forEach(fn=>fn({target:button,preventDefault(){}}));
+    return made.find(e=>e.tagName==='iframe').src;
+  };
+  const base='https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0&playsinline=1';
+  assert.equal(play({'data-pj-yt':'dQw4w9WgXcQ','data-pj-start':'754','data-pj-end':'1130'}),base+'&start=754&end=1130');
+  assert.equal(play({'data-pj-yt':'dQw4w9WgXcQ','data-pj-start':'1130'}),base+'&start=1130');
+  assert.equal(play({'data-pj-yt':'dQw4w9WgXcQ','data-pj-end':'600'}),base+'&end=600');
+  assert.equal(play({'data-pj-yt':'dQw4w9WgXcQ','data-pj-start':'x&mute=1'}),base);
+});
+
 test('the project detail shows an escaped service introduction only when present, directly below its subject',()=>{
   const out=render([
     {id:1,anchor:'pj-p1',title:'공개 프로젝트',summary:'공개 시안 요약',serviceIntro:'공개 샘플 안내\n<b>서식</b> 확인',tags:['#예시']},

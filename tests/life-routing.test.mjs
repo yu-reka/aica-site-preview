@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -37,13 +38,13 @@ function start(hash, withNav = true) {
     setTimeout(fn) { timers.push(fn); }, dispatchEvent() {}, Event: class {},
     window: { scrollTo() {} }, history: { replaceState() {} },
   });
-  vm.runInContext(source('../common/js/ui.js'), context);
-  vm.runInContext(source('../common/js/site.js'), context);
-  vm.runInContext(source('../life/js/life.js'), context);
+  runInContext(source('../common/js/ui.js'), context);
+  runInContext(source('../common/js/site.js'), context);
+  runInContext(source('../life/js/life.js'), context);
   const initializedTopic = tips.dataset.topic;
   // The mobile script changes text before the deferred LNB initializer runs.
   timers.splice(0).forEach(fn => fn());
-  return { tips, pages, nav, initializedTopic, decode: value => vm.runInContext(`Site.decodeHash(${JSON.stringify(value)})`, context) };
+  return { tips, pages, nav, initializedTopic, decode: value => runInContext(`Site.decodeHash(${JSON.stringify(value)})`, context) };
 }
 
 for (const id of ['tp-house', 'tp-food', 'tp-fun']) {

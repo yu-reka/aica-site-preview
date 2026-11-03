@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -18,7 +19,7 @@ function render(interviews){
   const window={STORIES_DATA:{interviews},addEventListener(){},removeEventListener(){}};
   const document={baseURI:'https://example.test/stories/interviews.html',querySelector:()=>page,getElementById:()=>null,addEventListener(){},createElement:()=>({innerHTML:'',content:{childNodes:[],children:[]}})};
   const context=vm.createContext({window,document,URL,Set,location:{hash:''}});
-  vm.runInContext(content,context);vm.runInContext(renderer,context);
+  runInContext(content,context);runInContext(renderer,context);
   return {grid:grid.innerHTML,dots:dots.innerHTML,details:list.inserted,honors:track.innerHTML,label:holder.attributes['aria-label']};
 }
 const iv=(id,extra)=>Object.assign({id,anchor:'iv-p'+id,title:'인터뷰 '+id,summary:'요약 '+id,cohort:6,author:'김○○',track:'AI 서비스',qa:[{q:'질문',a:'답'}],img:{src:'assets/uploads/post-'+id+'.webp',w:800,h:500}},extra);

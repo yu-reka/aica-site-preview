@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
@@ -16,7 +17,7 @@ function start({api=data(),fallback=data(),failure=false,pending=false}={}){
     }}};
   const context=vm.createContext({window,document,Promise,AbortController,setTimeout,clearTimeout,
     fetch:async(url,options)=>{requests.push({url,options});if(failure)throw Error('offline');return{ok:true,json:async()=>api};}});
-  vm.runInContext(code,context);
+  runInContext(code,context);
   return{window,document,scripts,requests,attributes,domReady:()=>events.DOMContentLoaded?.()};
 }
 test('valid API including a successful empty result never requests the snapshot and preserves consumer order',async()=>{

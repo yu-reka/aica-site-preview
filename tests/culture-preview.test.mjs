@@ -27,7 +27,7 @@ test('public culture gallery uses the approved example image bytes and labels', 
     group.photos.forEach((photo, index) => {
       const approved = manifest.find(item => item.id === group.id + '-' + (index + 1));
       assert.ok(approved); assert.equal(photo.image, approved.image); assert.equal(photo.caption, approved.caption);
-      assert.match(photo.image, /^assets\/(?:cafest|yl_tmp|park_tmp|riverp|acc_tmp|plaza_tmp)\.webp$/);
+      assert.match(photo.image, /^assets\/(?:cafest|leisure-yangnim-village|leisure-jungoe-park|riverp|leisure-acc|leisure-may18-square)\.webp$/);
       assert.match(photo.caption, /사진 예시/);
       assert.equal(createHash('sha256').update(bytes('life/' + photo.image)).digest('hex'), approved.sha256);
     });

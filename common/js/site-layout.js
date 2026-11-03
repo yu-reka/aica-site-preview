@@ -1,7 +1,7 @@
 /* 공통 화면 구조: 헤더 · 모바일 메뉴 · 푸터 · LNB · 플로팅 버튼.
    내용은 content/site.json, 이벤트와 상태는 site.js에서 관리합니다. */
 const SiteLayout = ({ $, ROOT, href, current, subnavOn, sideNav, html }) => {
-  const text = value => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+  const text = SiteUI.escapeAttribute;
   const ICON = {
     chev:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>'
   };

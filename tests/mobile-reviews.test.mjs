@@ -1,3 +1,5 @@
+import {assetVersion} from '../scripts/asset-versions.mjs';
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -50,7 +52,7 @@ function startReviews(classes) {
     querySelectorAll: () => [], getElementById: () => null,
     createElement: tag => { const node = new Element(tag); created.push(node); return node; },
   };
-  vm.runInNewContext(uiSource + '\n' + readFileSync(new URL('../stories/js/stories-m-reviews.js', import.meta.url), 'utf8') + '\nStoriesMobileReviews.init();', {
+  runInNewContext(uiSource + '\n' + readFileSync(new URL('../stories/js/stories-m-reviews.js', import.meta.url), 'utf8') + '\nStoriesMobileReviews.init();', {
     document, location, matchMedia: () => ({ matches: true }),
     addEventListener(name, fn) { listeners[name] = fn; }, setTimeout() {}, requestAnimationFrame(fn) { fn(); },
   });
@@ -129,11 +131,11 @@ test('legacy Spring entry loads reviews only on a review page', () => {
     };
     const context = vm.createContext({ document, URL, location: { hash: '' },
       matchMedia: () => ({ matches: true }), addEventListener() {}, setTimeout() {} });
-    vm.runInContext(uiSource, context);
-    vm.runInContext(readFileSync(new URL('../stories/js/stories-m.js', import.meta.url), 'utf8'), context);
+    runInContext(uiSource, context);
+    runInContext(readFileSync(new URL('../stories/js/stories-m.js', import.meta.url), 'utf8'), context);
     assert.equal(appended.length, hasReviews ? 1 : 0);
     if (hasReviews) {
-      assert.equal(appended[0].src, 'https://site.example/stories/js/stories-m-reviews.js?v=1102mobile-review-list-pager');
+      assert.equal(appended[0].src, 'https://site.example/stories/js/stories-m-reviews.js?v='+assetVersion('stories.js.stories-m-reviews.legacyLoader'));
       let initialized = 0;
       context.StoriesMobileReviews = { init() { initialized++; } };
       appended[0].onload();

@@ -1417,35 +1417,35 @@
     "leisure-4": {
       "card": {
         "style": "--i:3;--rt:4deg;--z:1",
-        "photoClass": "fsc-ph im-yl_tmp",
+        "photoClass": "fsc-ph im-leisure-yangnim-village",
         "template": "life/leisure/card"
       }
     },
     "leisure-5": {
       "card": {
         "style": "--i:0;--rt:-5deg;--z:4",
-        "photoClass": "fsc-ph im-acc_tmp",
+        "photoClass": "fsc-ph im-leisure-acc",
         "template": "life/leisure/card"
       }
     },
     "leisure-6": {
       "card": {
         "style": "--i:1;--rt:3deg;--z:3",
-        "photoClass": "fsc-ph im-plaza_tmp",
+        "photoClass": "fsc-ph im-leisure-may18-square",
         "template": "life/leisure/card"
       }
     },
     "leisure-7": {
       "card": {
         "style": "--i:2;--rt:-2deg;--z:2",
-        "photoClass": "fsc-ph im-cj_tmp",
+        "photoClass": "fsc-ph im-leisure-chungjang-street",
         "template": "life/leisure/card"
       }
     },
     "leisure-8": {
       "card": {
         "style": "--i:3;--rt:4deg;--z:1",
-        "photoClass": "fsc-ph im-mkt_tmp",
+        "photoClass": "fsc-ph im-leisure-daein-market",
         "template": "life/leisure/card"
       }
     },
@@ -1459,28 +1459,28 @@
     "leisure-10": {
       "card": {
         "style": "--i:1;--rt:3deg;--z:4",
-        "photoClass": "fsc-ph im-std_tmp",
+        "photoClass": "fsc-ph im-leisure-champions-field",
         "template": "life/leisure/card"
       }
     },
     "leisure-11": {
       "card": {
         "style": "--i:2;--rt:-2deg;--z:3",
-        "photoClass": "fsc-ph im-park_tmp",
+        "photoClass": "fsc-ph im-leisure-jungoe-park",
         "template": "life/leisure/card"
       }
     },
     "leisure-12": {
       "card": {
         "style": "--i:3;--rt:4deg;--z:2",
-        "photoClass": "fsc-ph im-mud_tmp",
+        "photoClass": "fsc-ph im-leisure-mudeungsan",
         "template": "life/leisure/card"
       }
     },
     "leisure-13": {
       "card": {
         "style": "--i:4;--rt:-3deg;--z:1",
-        "photoClass": "fsc-ph im-sj_tmp",
+        "photoClass": "fsc-ph im-leisure-songjeong-market",
         "template": "life/leisure/card"
       }
     }

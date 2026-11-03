@@ -11,11 +11,8 @@
   }
   function script(src) {
     return new Promise(function (resolve, reject) {
-      var element = document.createElement('script');
-      element.src = src; element.async = false;
-      element.onload = resolve;
-      element.onerror = function () { reject(new Error('Story resource unavailable')); };
-      document.head.appendChild(element);
+      SiteUI.loadScript(src, {async: false, onload: resolve,
+        onerror: function () { reject(new Error('Story resource unavailable')); }});
     });
   }
   var ready = document.readyState === 'loading' ? new Promise(function (resolve) {

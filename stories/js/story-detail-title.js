@@ -3,9 +3,7 @@
   'use strict';
   var listTitle = document.title;
   function syncTitle() {
-    var id;
-    try { id = decodeURIComponent(location.hash.slice(1)); }
-    catch (_) { id = ''; }
+    var id = Site.decodeHash(location.hash.slice(1));
     var target = document.getElementById(id);
     var detail = target && target.closest('.ivd, .pjd, .ov');
     var heading = detail && detail.querySelector(detail.matches('.ov') ? '.mtop h3' : 'h2');

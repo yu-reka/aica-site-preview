@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
@@ -30,7 +31,7 @@ function gallery(){
   const context=vm.createContext({document,Map,Promise,matchMedia:()=>({matches:true}),
     getComputedStyle:()=>({paddingLeft:'0',paddingRight:'0'}),addEventListener(){},removeEventListener(){},
     MutationObserver:class{observe(){}},window:{},setTimeout,clearTimeout});
-  vm.runInContext(readFileSync(new URL('../life/js/culture.js',import.meta.url),'utf8'),context);
+  runInContext(readFileSync(new URL('../life/js/culture.js',import.meta.url),'utf8'),context);
   return nodes;
 }
 

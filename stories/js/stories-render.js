@@ -86,9 +86,8 @@
   PJ = PJ.map(function (item) { return publicItem(item,'pj-p'); });
   CO = CO.map(function (item) { return publicItem(item,'st-'); });
 
-  function esc(t) { return String(t == null ? '' : t).replace(/[&<>"]/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]; }); }
-  function $(s, r) { return (r || page).querySelector(s); }
-  function $$(s, r) { return [].slice.call((r || page).querySelectorAll(s)); }
+  function esc(t) { return SiteUI.escapeText(t); }
+  var queries = SiteUI.selectors(page, true), $ = queries.$, $$ = queries.$$;
   function pad2(n) { return (n < 10 ? '0' : '') + n; }
   function coh(n) { return esc(n) + '<i>기</i>'; }
   function cat(r) { return CAT[r.cat] || CAT.life; }
@@ -535,8 +534,8 @@
   var originalHash = location.hash;
   var hash = safe ? safe.legacyHash(originalHash) : originalHash;
   if (hash && hash.length > 1) {
-    var target = null;
-    try { target = document.getElementById(decodeURIComponent(hash.slice(1))); } catch (e) {}
+    var id = Site.decodeHash(hash.slice(1));
+    var target = id ? document.getElementById(id) : null;
     if (target && (target.classList.contains('ov') || target.classList.contains('ivd') || target.classList.contains('pjd'))) {
       history.replaceState(null, '', location.pathname + location.search);
       location.replace(hash); // 방문 기록은 늘리지 않고 다시 짚기
@@ -575,7 +574,7 @@
       var current = pager.querySelector('button[aria-current="page"]');
       if (current) current.focus({ preventScroll: true });
       var filters = section.querySelector('.filters');
-      if (filters) filters.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      if (filters) filters.scrollIntoView({ block: 'start', behavior: SiteUI.motion().matches ? 'auto' : 'smooth' });
     });
     return node;
   }

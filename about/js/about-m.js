@@ -4,9 +4,8 @@
    '왜 인사교' 아코디언 · 옆으로 넘기는 줄(뉴스 · 프로젝트 · 활동 사진)의 화살표. 웹(601px 이상)은 그대로. */
 (function(){
   var mq = matchMedia('(max-width: 600px)');
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)');
-  var $ = function(s, c){ return (c || document).querySelector(s); };
-  var $$ = function(s, c){ return [].slice.call((c || document).querySelectorAll(s)); };
+  var reduce = SiteUI.motion();
+  var queries = SiteUI.selectors(document, true), $ = queries.$, $$ = queries.$$;
   var root = document.documentElement;
   var ARROW = { prev: 'm14 5-7 7 7 7', next: 'm10 5 7 7-7 7' };
 

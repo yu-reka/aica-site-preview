@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -27,7 +28,7 @@ function fixture({documentary = true} = {}) {
   });
   const box = new Element('button'); box.dataset.yt = 'sJzqrR93duI'; box.setAttribute('aria-label', 'EBS 영상 재생');
   page.append(...projects, ...(documentary ? [box] : []));
-  vm.runInNewContext(controller, {
+  runInNewContext(controller, {
     URL, location:{protocol:'https:',origin:'https://example.test',href:'https://example.test/about/index.html'},
     document:{querySelectorAll:() => projects, querySelector:() => documentary ? box : null, createElement:tag => new Element(tag)},
   });

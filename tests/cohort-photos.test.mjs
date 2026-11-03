@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -18,7 +19,7 @@ function start() {
   }
   const document = { createElement: tag => new Element(tag), querySelectorAll: () => hosts };
   const source = readFileSync(new URL('../stories/js/cohort-v3.js', import.meta.url), 'utf8');
-  const api = vm.runInNewContext(source.slice(source.indexOf('  function galleryPhotos('), source.indexOf('  function ym(')) + '\n({galleryPhotos,changePhoto,gallery})', { document, Date });
+  const api = runInNewContext(source.slice(source.indexOf('  function galleryPhotos('), source.indexOf('  function ym(')) + '\n({galleryPhotos,changePhoto,gallery})', { document, Date });
   const photo = src => { const img = new Element('img'); img.setAttribute('src', src); return img; };
   const record = { title: '사진 게시물', illu: photo('cover.jpg'), photos: [photo('cover.jpg'), photo('second.jpg'), photo('third.jpg')] };
   const mount = (data, tag = 'div') => { const host = new Element(tag); hosts.push(host); api.gallery(host, data); return host; };
@@ -141,7 +142,7 @@ test('closing the detail restores visited posts to their covers without changing
     modalVisited:[ui.record],changePhoto:ui.changePhoto,isolateDialog(){},last:null,
     document:{documentElement:{classList:{remove(){}}}}
   };
-  vm.runInNewContext(source.slice(begin,end)+'\ncloseM();',state);
+  runInNewContext(source.slice(begin,end)+'\ncloseM();',state);
   assert.equal(state.M.hidden,true);
   assert.equal(state.Z.hidden,true);
   assert.equal(ui.control(feed,'cv3-photo-stack').getAttribute('aria-label'),'사진 3장 · 1번째 사진');
@@ -183,7 +184,7 @@ test('fullscreen cohort zoom upgrades responsive sizing without retaining lazy l
   const source=readFileSync(new URL('../stories/js/cohort-v3.js',import.meta.url),'utf8');
   const state={list:()=>[ui.record],cur:0,galleryPhotos:ui.galleryPhotos,document:{activeElement:null},
     Z:{querySelector:s=>s==='figcaption'?caption:box},bindPhotoSwipe(){},closeZ(){throw Error('unexpected close');}};
-  vm.runInNewContext(source.slice(source.indexOf('  function zfill()'),source.indexOf('  function openZ()'))+'\nzfill();',state);
+  runInNewContext(source.slice(source.indexOf('  function zfill()'),source.indexOf('  function openZ()'))+'\nzfill();',state);
   const img=box.children[0];
   assert.equal(img.getAttribute('sizes'),'(max-width: 1328px) calc(100vw - 48px), 1280px');
   assert.equal(img.getAttribute('loading'),null);assert.equal(img.getAttribute('decoding'),'async');

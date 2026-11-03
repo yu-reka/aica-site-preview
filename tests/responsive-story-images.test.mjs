@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
@@ -19,8 +20,8 @@ function render(data) {
     getElementById:s=>({'hub-review-dialogs':reviews,'cv3-data':cohorts}[s]||null),addEventListener(){},
     createElement:()=>({innerHTML:'',content:{childNodes:[],children:[]}})};
   const context=vm.createContext({window,document,URL,Set,location:{hash:''}});
-  vm.runInContext(code('common/js/public-content.js'),context);
-  vm.runInContext(code('stories/js/stories-render.js'),context);
+  runInContext(code('common/js/public-content.js'),context);
+  runInContext(code('stories/js/stories-render.js'),context);
   return {cards:projectGrid.innerHTML,details:projectList.inserted,projectHub:projectHub.innerHTML,
     interviews:interviewGrid.innerHTML,interviewDetails:interviewList.inserted,hubHero:interviewHero.inserted,
     hubList:interviewHub.inserted,reviews:reviews.innerHTML,cohorts:cohorts.innerHTML,cohortHub:cohortHub.innerHTML};

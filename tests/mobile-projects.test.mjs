@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -41,7 +42,7 @@ function start({ staticFilters = false } = {}) {
       : selector === '#p-pr .pj-filter-row' && staticFilters ? new Element() : null,
     querySelectorAll: () => [], createElement: tag => new Element(tag),
   };
-  vm.runInNewContext(uiSource + '\n' + readFileSync(new URL('../stories/js/stories-m.js', import.meta.url), 'utf8'), {
+  runInNewContext(uiSource + '\n' + readFileSync(new URL('../stories/js/stories-m.js', import.meta.url), 'utf8'), {
     document, URL, matchMedia: () => ({ matches: true }), addEventListener() {}, setTimeout() {},
   });
   const filters = projection.children.find(node => node.className === 'sm-filter-tabs');

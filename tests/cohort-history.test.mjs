@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
@@ -12,9 +13,9 @@ function start(){
     list:()=>records.filter(d=>state.v!=='video'||d.yt),fill(){},isolateDialog(){},changePhoto(){},modalVisited:[],hubModal:false,root:{closest:()=>({addEventListener(){}})},
     addEventListener:(type,fn)=>events[type]=fn,COHS:[1],D:records,st:state,draw(){}});
   const begin=source.indexOf('  var modalScroll=0;'),end=source.indexOf("  M.querySelector('.pv').onclick",begin);
-  vm.runInContext(source.slice(begin,end),context);
+  runInContext(source.slice(begin,end),context);
   const tail=source.slice(source.indexOf('  function hashOpen()'),source.lastIndexOf('\n})();'));
-  vm.runInContext('(function(){'+tail+'})()',context);
+  runInContext('(function(){'+tail+'})()',context);
   return{context,M,location,history,calls,events};
 }
 test('card opens one history entry and Back closes without leaving the page, then Forward reopens',()=>{

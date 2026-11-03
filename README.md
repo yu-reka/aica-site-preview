@@ -62,7 +62,7 @@ V30 공개 화면은 정적 HTML 틀에 JavaScript가 공개 API 응답을 그�
 
 기존 `common/css/unify.css`의 페이지별 규칙은 `about/`, `check/`, `life/`, `stories/`의 `css/presentation.css`로 나눴습니다. 공통 팔레트·폰트·푸터 규칙만 `common/css/presentation.css`에 둡니다. 이야기·라이프 모바일 PR의 수정 위치와 CSS 적용 순서는 [CSS 관리 기준](docs/css-ownership.md)을 참고하세요.
 
-이야기·라이프 공통 배너는 `common/css/masthead.css`가 관리합니다. 이야기 세부 페이지의 반복된 head 선언은 `src/components/stories/head-*.html`로 공유합니다. 라이프 모바일은 `life-m-view.js`가 데이터 읽기·마크업을, `life-m.js`가 상태·이벤트를 맡습니다. 후기 모바일 목록은 `stories-m-reviews.js`로 분리했습니다. 로딩 순서와 이전 Spring 템플릿 호환 방식은 [프론트 유지보수 구조](docs/frontend-structure.md)에 정리했습니다.
+이야기·라이프 공통 배너는 `common/css/masthead.css`가 관리합니다. 이야기 세부 페이지의 반복된 head 선언은 `src/components/stories/head-*.html`로 공유합니다. 라이프 모바일은 `life-m-view.js`가 데이터 읽기·마크업을, `life-m.js`가 상태·이벤트를 맡습니다. 후기 모바일 목록은 `stories-m-reviews.js`로 분리했습니다. 로딩 순서와 현재 API 연결 방식은 [프론트 유지보수 구조](docs/frontend-structure.md)에 정리했습니다.
 
 루트의 HTML과 `common/js/menu.js`는 **생성 결과물**입니다. 직접 수정하면 다음 빌드에서 덮어씁니다. 원본을 수정하고 `npm run build`를 실행하세요. CSS 분리는 기존 선언과 페이지 내 적용 순서를 보존하며, 이미지·폰트 파일은 변경하지 않았습니다.
 
@@ -74,11 +74,11 @@ V30 공개 화면은 정적 HTML 틀에 JavaScript가 공개 API 응답을 그�
 
 기수별 기록의 사진은 대표 이미지와 추가 `photos`를 합해 게시물당 최대 10장입니다. 같은 이미지 주소는 중복 계산하지 않습니다. 정적 콘텐츠가 제한을 넘으면 빌드가 중단되며, 실제 업로드·저장 제한은 백오피스 담당 범위입니다.
 
-`id`·해시·선택자·`data-*`는 화면과 백엔드가 공유하는 계약입니다. 로딩 순서, 상태 안내, 주소 호환과 담당 파일은 [프론트 유지보수 구조](docs/frontend-structure.md)를 참고하세요. 이전 서버 렌더링과 `export:spring`은 [과거 연동 안내](docs/spring-integration.md)에 보존하며 현재 V30 배포 절차로 사용하지 않습니다.
+`id`·해시·선택자·`data-*`는 화면과 백엔드가 공유하는 계약입니다. 로딩 순서, 상태 안내, 주소 호환과 담당 파일은 [프론트 유지보수 구조](docs/frontend-structure.md)를 참고하세요. 옛 Spring 내보내기와 독립 offline 페이지는 제거했습니다. 이전 연결 방식은 [과거 연동 기록](docs/spring-integration.md)에서만 참고합니다.
 
 ## 검수 반영과 공통 UI
 
-디자인 검수 반영 범위, PR #28 기준 보존 사항과 검증 결과는 [검수 통합 기록](docs/inspection-integration-2026-10-21.md)에 정리했습니다. 색상·타이포·선택 상태·클릭 영역·레이어·모션 규칙과 토큰 다운로드는 [디자인 시스템](docs/design-system/index.html)을 참고하세요.
+디자인 검수 반영 범위, PR #28 기준 보존 사항과 검증 결과는 [검수 통합 기록](docs/inspection-integration-2026-10-21.md)에 정리했습니다. 현재 스타일의 수정 위치는 [CSS 관리 기준](docs/css-ownership.md)을 참고하세요.
 
 ## 404 안내 연결
 
@@ -86,7 +86,7 @@ V30 공개 화면은 정적 HTML 틀에 JavaScript가 공개 API 응답을 그�
 
 `npm run preview`는 같은 문서를 사용하는 로컬 서버입니다. 사용 중인 서버를 종료하지 않고 `npm run preview -- --port 4191`처럼 다른 포트로 확인할 수 있습니다. 기존 `python3 -m http.server` 프로세스에는 이 변경이 자동 적용되지 않습니다.
 
-500·오프라인 원본은 `src/pages/500.html`, `src/pages/offline.html`이며 루트의 정적 문서로 빌드합니다. 정상 페이지에는 연결 끊김 안내와 느린 페이지 이동의 로딩 표시가 연결되어 있습니다. 실제 서버의 HTTP 500 응답 연결은 백엔드 담당 범위입니다. 첫 방문 오프라인 캐시 지원은 포함하지 않습니다.
+500 오류 원본은 `src/pages/500.html`이며 루트의 정적 문서로 빌드합니다. 정상 페이지에는 연결 끊김 안내와 느린 페이지 이동의 로딩 표시가 연결되어 있습니다. 실제 서버의 HTTP 500 응답 연결은 백엔드 담당 범위입니다. 첫 방문 오프라인 캐시 지원은 포함하지 않습니다.
 
 
 ## 공개 프리뷰 데이터 경계

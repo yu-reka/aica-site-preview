@@ -3,7 +3,6 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { build, root } from '../scripts/build.mjs';
-import { springArtifacts } from '../scripts/export-spring.mjs';
 
 const styles = html => [...html.matchAll(/<link\b[^>]*rel="stylesheet"[^>]*href="([^"]+)"/g)].map(match => match[1].split('?')[0]);
 
@@ -36,28 +35,7 @@ test('moved presentation assets resolve from their owning stylesheet', () => {
   }
 });
 
-test('Spring public templates retain both presentation stylesheets', () => {
-  const templates = [...springArtifacts()].filter(([file]) => /templates\/public-site\/(?:stories|interviews|reviews|projects|cohorts)\.html$/.test(file));
-  assert.equal(templates.length, 5);
-  for (const [file, html] of templates) {
-    const links = styles(html).map(link => new URL(link, 'https://site.example/stories/index.html').pathname);
-    assert.ok(links.includes('/common/css/presentation.css'), file);
-    assert.ok(links.includes('/stories/css/presentation.css'), file);
-    assert.ok(!links.some(link => link.includes('unify.css')), file);
-  }
-});
-
-test('older Spring story templates can resolve their legacy stylesheet URL', () => {
-  const legacy = join(root, 'common/css/unify.css');
-  const imports = [...readFileSync(legacy, 'utf8').matchAll(/@import url\("([^"]+)"\)/g)].map(match => match[1].split('?')[0]);
-  assert.deepEqual(imports.map(url => resolve(dirname(legacy), url)), [
-    join(root, 'common/css/presentation.css'), join(root, 'stories/css/presentation.css'),
-  ]);
-  for (const url of imports) assert.ok(existsSync(resolve(dirname(legacy), url)), url);
-});
-
-
-test('Stories and Life own one shared masthead with a legacy Spring entry', () => {
+test('Stories and Life own one shared masthead', () => {
   for (const [page, html] of build()) {
     if (!/^(life|stories)\//.test(page)) continue;
     const links = styles(html);
@@ -65,7 +43,5 @@ test('Stories and Life own one shared masthead with a legacy Spring entry', () =
     assert.ok(!links.some(link => /(?:^|\/)mast\.css$/.test(link)), page);
     assert.ok(links.indexOf('../common/css/masthead.css') < links.indexOf('../common/css/navigation-mobile.css'), page);
   }
-  const legacy = join(root, 'stories/css/mast.css');
-  const imported = /@import url\("([^"?]+)/.exec(readFileSync(legacy, 'utf8'))[1];
-  assert.equal(resolve(dirname(legacy), imported), join(root, 'common/css/masthead.css'));
+
 });

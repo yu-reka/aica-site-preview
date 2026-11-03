@@ -77,7 +77,7 @@ var SiteUI = (() => {
     observer.observe(document.documentElement,{childList:true,subtree:true});
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>enhance());else enhance();
   }
-  return { element, cloneWithoutIds, toggleButton, buttonGroup, enhance, focusable, trapFocus, createDialogScope, railState, syncRail, railKeys };
+  return { element, cloneWithoutIds, toggleButton, buttonGroup, enhance, trapFocus, createDialogScope, railState, syncRail, railKeys };
 })();
 
 /* Restore view choices only for a reload of this exact URL. Links and browser

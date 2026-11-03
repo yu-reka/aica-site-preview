@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {build} from '../scripts/build.mjs';
 
-for (const page of ['404.html', '500.html', 'offline.html']) {
+for (const page of ['404.html', '500.html']) {
   test(`${page} defers the stylesheet request until its hosting root is known`, () => {
     const html = build().get(page);
     assert.match(html, /<base href="\/aica-site-preview\/">/, 'without JavaScript recovery links use the public Pages project root');

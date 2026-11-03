@@ -42,7 +42,7 @@ html:where(:not([data-menu="stories"]))[data-menu="life"] body,
 /* 알아보기 */
 :where(html:not([data-menu="stories"])) .ov .mbody p,
 .life-page :is(
-  .lh-s, .note, .fdisc, .hzmw-ds, .park2-d,
+  .note, .fdisc, .hzmw-ds, .park2-d,
   .adt li p, .fsc-d
 ){
   font-family:var(--ff-sans);
@@ -84,7 +84,7 @@ html:where(:not([data-menu="stories"]))[data-menu="life"] body,
 
 .life-page .fdc:is(a,li){transition:transform .25s cubic-bezier(.22,.61,.36,1),border-color .2s,box-shadow .25s}
 
-.life-page :is(.adlk,a.hac:not(.main)):hover{border-color:var(--primary)!important;transform:translateY(-2px)}
+.life-page :is(a.hac:not(.main)):hover{border-color:var(--primary)!important;transform:translateY(-2px)}
 
 .life-page .bx9-ph{border-radius:20px!important}
 

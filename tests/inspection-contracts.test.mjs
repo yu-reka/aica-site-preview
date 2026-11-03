@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { build, loadContent } from '../scripts/build.mjs';
-import { springArtifacts } from '../scripts/export-spring.mjs';
+
+import { connectBackoffice } from '../scripts/backoffice-site.mjs';
 
 const uiSource = readFileSync(new URL('../common/js/ui.js', import.meta.url), 'utf8');
 
@@ -44,8 +45,8 @@ test('shared mobile controls keep text, clone IDs, group labels and click callba
   assert.deepEqual(removed, ['root:id', 'child:id']);
 });
 
-test('all shared-runtime consumers load it first, including early cohort initialization and Spring pages', () => {
-  const pages = [...build(), ...springArtifacts()];
+test('all shared-runtime consumers load it first, including early cohort initialization and connected pages', () => {
+  const pages = [...build(), ...connectBackoffice(build())];
   for (const [path, html] of pages) {
     if (!path.endsWith('.html') || !html.includes('common/js/site.js')) continue;
     const scripts = [...html.matchAll(/<script\b[^>]*src="([^"]+)"/g)].map(m => m[1].split('?')[0]);
@@ -78,7 +79,7 @@ test('dialog isolation restores pre-existing inert state when switching a nested
   assert.equal(modal.inert, false);
 });
 
-test('the unified review detail preserves every tag with escaped content in static and Spring output', () => {
+test('the unified review detail preserves every tag with escaped content in static output', () => {
   const html = build().get('stories/reviews.html');
   for (const record of loadContent().stories.reviews.filter(r => r.tags.length > 1)) {
     const start = html.indexOf('id="' + record.id + '"');
@@ -86,9 +87,6 @@ test('the unified review detail preserves every tag with escaped content in stat
     const detail = html.slice(start, next < 0 ? undefined : next);
     for (const tag of record.tags) assert.ok(detail.includes('href="' + tag.href + '"'), record.id);
   }
-  const spring = springArtifacts().get('templates/public-site/review-fragments.html');
-  assert.ok(spring.includes('th:each="tag : ${r.tags}"'));
-  assert.ok(!spring.includes('th:utext'));
 });
 
 test('semantic small-text colors meet AA on all inspected surfaces, including previous-cohort gray', () => {

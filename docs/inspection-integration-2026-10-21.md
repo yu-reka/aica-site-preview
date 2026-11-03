@@ -32,7 +32,7 @@
 - C03: 후기 상세의 두 변형이 기본 detail 부분 템플릿을 호출하며, `tag.html`로 태그를 반복합니다. 정적 escape와 Spring `th:each`/`th:text`를 유지합니다.
 - C04: `common/js/ui.js`의 `SiteUI.syncRail`과 `railKeys`로 유한 레일 끝 상태와 키보드 보조 처리를 공유합니다. 인터뷰의 무한 순환은 유지합니다.
 - C05: 메뉴·후기·기수 사진·사진 확대의 초점 가두기와 기존 inert 상태 복원을 `SiteUI`로 공유합니다. 이전/다음 상세 탐색과 URL은 유지합니다.
-- D01~D07: 색 역할, 기존 서체의 역할과 크기, 상태 표시, 44px 클릭 영역, 기존 반응형 경계, 레이어·모션 규칙을 공통 토큰과 [디자인 시스템 가이드](design-system/index.html)에 정리했습니다. 다운로드 토큰과 SHA-256 source manifest도 갱신했습니다.
+- D01~D07: 색 역할, 기존 서체의 역할과 크기, 상태 표시, 44px 클릭 영역, 기존 반응형 경계, 레이어·모션 규칙을 공통 토큰과 당시 디자인 시스템 가이드(현재 제거됨)에 정리했습니다. 다운로드 토큰과 SHA-256 source manifest도 갱신했습니다.
 - `README.md`, `docs/css-ownership.md`, `docs/frontend-structure.md`에 로딩 순서와 소유 파일을 기록했습니다.
 
 ## 검증 결과

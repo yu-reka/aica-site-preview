@@ -61,9 +61,7 @@
 .life-page .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
 .life-page .chip.tg[aria-pressed="true"]::before{content:"✓";font-size:13px;font-weight:700}
 .life-page .chip:focus-visible{border-radius:999px}
-.life-page .chip-sep{width:1px;height:22px;margin:0 6px;background:var(--line)}
-@media (max-width:600px){
-.life-page .chip-sep{flex-basis:100%;width:auto;height:0;margin:0}   /* 좁은 화면: 두 묶음을 각각 한 줄로(한 칩만 다음 줄로 떨어지지 않게) */}
+
 .life-page .bdg{display:inline-flex;align-items:center;gap:calc(.4*var(--lr));font-size:calc(1.1*var(--lr));padding:calc(.2*var(--lr)) calc(.8*var(--lr));line-height:1.6;white-space:nowrap}
 .life-page .bdg.ex{background:transparent;border:1px dashed var(--ink3);color:var(--ink3)}
 /* '무료' 표시: 초록 대신 카테고리 청록을 연하게 */
@@ -100,8 +98,7 @@
 @media (max-width:760px){
 .life-page .way{grid-template-columns:1fr}
 }
-@media (max-width:600px){   /* 폰: 주차 상자 글 칸이 좁아 줄마다 끊기던 것 → P 표시 위, 글 아래로 쌓음 */
-}
+
 .life-page .bx-ex{background:rgba(6,16,36,.72);color:#fff;font-size:calc(1.15*var(--lr));font-weight:700;border-radius:calc(.6*var(--lr));padding:calc(.3*var(--lr)) calc(.9*var(--lr))}
 /* 소메뉴 바(사이트에서는 생활 꿀팁 화면의 바로가기 막대만 남음). 861px 이상: 공통 하위 메뉴 바 바로 아래에 붙음.
    860px 이하: 붙지 않음 — 폰 위 고정 막대는 헤더 + 하위 메뉴 바 두 겹까지(2026-10-08 디자인 기준 6) */
@@ -378,7 +375,7 @@
 /* 더미 · 펼침 */
 .life-page .fsd{position:relative;min-width:0;cursor:pointer}
 .life-page .fsg.is-open .fsd{cursor:default}
-.life-page .fsl{display:flex;align-items:flex-start;list-style:none;margin:0;padding:10px 0 10px 6px}
+
 .life-page .fsc{position:relative;z-index:var(--z);flex:0 0 200px;min-width:0;margin-left:-172px;display:flex;flex-direction:column;overflow:hidden;border-radius:12px;background:var(--card);border:4px solid #fff;box-shadow:0 10px 24px -12px rgba(20,35,63,.45);transform:rotate(var(--rt));transition:flex .55s cubic-bezier(.22,.61,.36,1),margin .55s cubic-bezier(.22,.61,.36,1),transform .55s cubic-bezier(.22,.61,.36,1),border-width .3s,box-shadow .3s}
 .life-page .fsc:first-child{margin-left:0}
 .life-page .fsd:hover .fsc{transform:rotate(calc(var(--rt) * 1.6)) translateX(calc(var(--i) * 6px))}
@@ -388,7 +385,7 @@
 .life-page .fsg.is-open .fsh{grid-template-columns:auto minmax(0,1fr) auto;align-items:center}
 .life-page .fsg.is-open .fsn{grid-row:auto}
 .life-page .fsg.is-open .fs-tg{grid-column:3;margin-top:0}
-.life-page .fsg.is-open .fsl{align-items:stretch;gap:16px;padding:0;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin}   /* 10-20: 펼친 줄은 글 길이와 상관없이 카드 높이를 같게 */
+   /* 10-20: 펼친 줄은 글 길이와 상관없이 카드 높이를 같게 */
 .life-page .fsg.is-open .fsc{flex:1 1 0;min-width:200px;margin-left:0;transform:none;border-width:1px;border-color:var(--bline);box-shadow:none;scroll-snap-align:start}
 .life-page .fsg.is-open .fsc-b{flex-direction:column;gap:2px;padding:12px 14px 14px;opacity:1;transition-delay:.25s}
 .life-page .fsc-b b{font-size:15.5px;font-weight:700;line-height:1.35}
@@ -407,21 +404,15 @@
 .life-page .fsc,.life-page .fsc-b{transition:none}}
 /* ===== 문화·여가 v10b: 접힌 카드 = 사진만 · 덱 옆에 장소 이름 미리보기 ===== */
 .life-page .fsd{display:flex;align-items:center;gap:20px 36px}
-.life-page .fsl{flex:none}
+
 .life-page .fsc-b{display:none}
 .life-page .fsg.is-open .fsd{display:block}
 .life-page .fsg.is-open .fsc-b{display:flex;}
 @keyframes fsIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.life-page .fs-side{display:flex;flex-direction:column;align-items:flex-start;gap:14px;min-width:0}
-.life-page .fs-names{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
-.life-page .fs-names li{position:relative;padding-left:14px;font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.45}
-.life-page .fs-names li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--nc)}
-.life-page .fsg.is-open .fs-side{display:none}
+
 @media (max-width:600px){
 .life-page .fsd{flex-direction:column;align-items:flex-start}
-.life-page .fs-side{flex-direction:row;flex-wrap:wrap;align-items:center;gap:10px}
-.life-page .fs-names{flex-direction:row;flex-wrap:wrap;gap:4px 12px}
-.life-page .fs-names li{font-size:13px}
+
 }
 @media (max-width:860px){.life-page .fsg.is-open{padding:20px}}
 
@@ -483,13 +474,11 @@
 /* ===== 문화·여가 v30: 펼치기 · 접기 FLIP(JS) — 움직이는 동안 CSS 전환 끄기 · 잘림 방지 ===== */
 .life-page .fsg.fs-flip{transition:none;overflow:hidden}
 .life-page .fsg.fs-flip .fsc{transition:none!important}
-.life-page .fsg.fs-flip .fsl{overflow:visible!important}
+
 .life-page .fsg.fs-flip .fsd:hover .fsc{transform:rotate(var(--rt))}
 .life-page .fsg.is-open.fs-flip .fsd:hover .fsc{transform:none}
 .life-page .fsg.is-open .fsc-b{animation:fsIn .32s .36s both}
-.life-page .fsg:not(.is-open) .fs-side{animation:fsSide .3s .3s both}
-@keyframes fsSide{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){.life-page .fsg:not(.is-open) .fs-side{animation:none}}
+
 .life-page .fsg.fs-flip .fsc{background-color:transparent;border-color:transparent;box-shadow:none}
 .life-page .fsg:not(.fs-flip) .fsc{transition:flex .55s cubic-bezier(.22,.61,.36,1),margin .55s cubic-bezier(.22,.61,.36,1),transform .55s cubic-bezier(.22,.61,.36,1),border-width .3s,box-shadow .3s,background-color .3s,border-color .3s}
 .life-page .fsg.fs-flip .fsc-ph{box-shadow:0 10px 24px -12px rgba(20,35,63,.45);border-radius:8px}
@@ -514,25 +503,7 @@
 .life-page .hzmw{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:0;border:1px solid var(--bline);border-radius:var(--r-card);background:var(--card);box-shadow:var(--soft);overflow:hidden}
 .life-page .hzmw-map{position:relative;min-width:0;background:#F3F5F2}
 .life-page .hzmap2{display:block;width:100%;height:auto;}
-.life-page .hm-bg{fill:#F3F5F2}
-.life-page .hm-rd{fill:none;stroke:#fff;stroke-width:58;stroke-linecap:round;stroke-linejoin:round}
-.life-page .hm-rdc{fill:none;stroke:#D7DCE1;stroke-width:3;stroke-dasharray:22 18}
-.life-page .hm-rd2{fill:none;stroke:#fff;stroke-width:48;stroke-linecap:round}
-.life-page .hm-rd2c{fill:none;stroke:#D7DCE1;stroke-width:3;stroke-dasharray:22 18}
-.life-page .hm-st circle{fill:#fff;stroke:#2E6FD0;stroke-width:9}
-.life-page .hm-st text{font-weight:800;fill:#1d3f7a}
-.life-page .hm-lm rect,.life-page .hm-lm circle{fill:#fff;stroke:#B9C2CB;stroke-width:4}
-.life-page .hm-lm text{font-weight:700;fill:#5B6573}
-.life-page .hm-lm text.b{font-weight:900;fill:#2A3440}
-.life-page .hm-lm text.h{font-size:44px;font-weight:900;fill:#D2453A}
-.life-page .hm-lm.t text{font-weight:800;fill:#7A6A4E;font-style:italic}
 
-.life-page .hm-me .p{fill:color-mix(in srgb,var(--citron,#E8F15A) 35%,transparent);animation:hmPulse 2.4s ease-out infinite;}
-.life-page .hm-me rect{fill:var(--citron,#E8F15A);stroke:#0A1020;stroke-width:6}
-.life-page .hm-me text{font-weight:800;fill:#0A1020}
-.life-page .hm-me text.b{font-weight:900}
-@keyframes hmPulse{0%{transform:scale(.7);opacity:.9}100%{transform:scale(1.6);opacity:0}}
-.life-page .hm-no path{fill:#2A2F38}.life-page .hm-no text{font-weight:800;fill:#2A2F38}
 .life-page .hzmap-d{cursor:pointer;outline:none}
 .life-page .hzmap-d .a{fill:color-mix(in srgb,var(--primary) 24%,transparent);stroke:color-mix(in srgb,var(--primary) 55%,#fff);stroke-dasharray:none;stroke-width:4;transition:stroke .2s}
 .life-page .hzmap-d.lv3 .a{fill:color-mix(in srgb,var(--primary) 62%,transparent);stroke:var(--primary);stroke-dasharray:none}
@@ -576,47 +547,24 @@
 .life-page .hzmap2{max-width:none;}
 .life-page .hzmw-side{border-left:0;border-top:1px solid var(--line)}
 }
-@media (prefers-reduced-motion:reduce){.life-page .hm-me .p{animation:none;opacity:.5}}
+
 .life-page .hzmap2{max-height:none}
-.life-page .hm-st text{font-size:40px}
-.life-page .hm-lm text{font-size:38px}
-.life-page .hm-lm text.b{font-size:44px}
-.life-page .hm-lm text.s{font-size:32px}
-.life-page .hm-lm.t text{font-size:40px}
-.life-page .hm-me text{font-size:34px}
-.life-page .hm-me text.b{font-size:48px}
+
 .life-page .hzmap-d .nn{font-size:44px}
 .life-page .hzmap-d .dn{font-size:48px}
 .life-page .hzmap-d .dt{font-size:36px}
-.life-page .hm-no text{font-size:36px}
+
 @media (max-width:860px){.life-page .hzmap2{width:720px}}
 .life-page .hzl-ord{margin:0 4px -6px;text-align:right;font-size:12.5px;font-weight:700;color:var(--ink3)}
-.life-page .hzmw-hint{display:none}
-@media (max-width:860px){.life-page .hzmw-hint{display:block;margin:-6px 0 2px;font-size:12px;font-weight:700;color:var(--primary)}.life-page .hzmw-hint::before{content:"↔ "}}
+
 /* v36: 횡단보도 · 교차 도로 · 로터리 */
-.life-page .hm-rd3{fill:none;stroke:#fff;stroke-width:46;stroke-linecap:round;stroke-linejoin:round}
-.life-page .hm-zb rect{fill:#AEB8C2}
-.life-page .hm-rring{fill:none;stroke:#fff;stroke-width:46}
-.life-page .hm-risl{fill:#DDE6D8;stroke:#C9D0D6;stroke-width:3}
-.life-page .hm-rd,.life-page .hm-rd2,.life-page .hm-rd3,.life-page .hm-rring{filter:drop-shadow(0 0 1.5px rgba(120,135,150,.55))}
+
 /* v37: 교육장 = 제봉로 동쪽(짝수 번지) 실제 자리 건물 + 이름표 */
-.life-page .hm-me .bd{fill:var(--citron,#E8F15A);stroke:#0A1020;stroke-width:6}
-.life-page .hm-me .lb{fill:var(--citron,#E8F15A);stroke:#0A1020;stroke-width:6}
-.life-page .hm-me .ln{fill:none;stroke:#0A1020;stroke-width:5}
-.life-page .hm-me .p{transform-box:fill-box;transform-origin:center}
 
 /* ===== 주거 v38: 지도 옆 '동별 주거 정보'(카드 목록 대신) ===== */
 .life-page .hzmw-side{gap:14px}
 @media (min-width:861px){.life-page .hzmw{grid-template-columns:minmax(0,1.75fr) minmax(0,1fr)}}
 /* v41: 대표 건물 점(구청 · 학교 · 시장 · 병원) */
-.life-page .hm-pt circle{fill:#fff;stroke-width:5}
-.life-page .hm-pt .i{font-size:30px;font-weight:900}
-.life-page .hm-pt .l{font-size:34px;font-weight:700;fill:#4F5A67;paint-order:stroke;stroke:#F3F5F2;stroke-width:9px;stroke-linejoin:round}
-.life-page .hm-pt.h circle{stroke:#D2453A}.life-page .hm-pt.h .i{fill:#D2453A}
-.life-page .hm-pt.s circle{stroke:#3A6BC4}.life-page .hm-pt.s .i{fill:#3A6BC4}
-.life-page .hm-pt.m circle{stroke:#C77A1E}.life-page .hm-pt.m .i{fill:#C77A1E}
-.life-page .hm-pt.g circle{stroke:#4F5A67}.life-page .hm-pt.g .i{fill:#4F5A67}
-.life-page .hm-rd4{fill:none;stroke:#fff;stroke-width:26;stroke-linecap:round}
 
 /* ===== 오시는 길 v46: 주거 지도와 같은 바탕 · 문화전당역 → 교육장 걷는 길 ===== */
 .life-page #pg-way .wmap-v .wymap{width:100%;height:100%;display:block}
@@ -768,16 +716,15 @@
 /* 시설 둘러보기: 인트로 한 줄만큼 사진 높이 계산에 더함 */
 .life-page .bx9{--bxc:390px}
 /* 글이 긴 곳 → 프리텐다드(히어로 설명 · 패널 설명 · 주거비 지원 설명 · 고시원 설명 · 이동 경로 단계 설명) */
-.life-page :is(.rt3 li span,.hzmw-hint){font-family:var(--ff-sans)!important;letter-spacing:-.005em}
+.life-page :is(.rt3 li span){font-family:var(--ff-sans)!important;letter-spacing:-.005em}
 
 /* v58 오시는 길 지도 단순화: 길(제봉로 · 서남로) · 출발(문화전당역) · 걷는 길 · 건너는 횡단보도 하나 · 도착(교육장)만.
    viewBox를 이 범위에 맞추고 meet로 그려 모바일에서도 잘리지 않음(남는 칸은 바탕 · 길이 이어져 보임) */
-.life-page #pg-way .hm-st text{font-size:31px}
+
 @media (max-width:860px){
 .life-page #pg-way .wmap-v .wymap{height:auto;}
 
-.life-page #pg-way .hm-st text{font-size:40px}
-.life-page #pg-way .hm-no{display:none}}
+}
 @media (max-width:860px){.life-page #pg-way .wmap-v .wymap{aspect-ratio:800/500}}
 
 /* v59 시설 둘러보기: 사진을 오른쪽 칸 끝(공간 탭 끝)까지 넓힘. 높이는 16:9와 '한 화면에 들어오는 높이' 중 작은 값 → 넓은 화면에선 조금 더 가로로 긴 비율 */

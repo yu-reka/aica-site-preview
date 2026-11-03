@@ -1,8 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
+import {build} from '../scripts/build.mjs';
+import {connectBackoffice} from '../scripts/backoffice-site.mjs';
 import {readFileSync} from 'node:fs';
-import {springArtifacts} from '../scripts/export-spring.mjs';
 class Element {
   constructor(tag){this.tagName=tag;this.children=[];this.dataset={};this.attrs={};this.classList={add:()=>{}};this.events={};}
   setAttribute(key,value){this.attrs[key]=value;}
@@ -29,21 +30,19 @@ test('filter reset invokes the real owner callback and DB/user text stays litera
   assert.equal(host.children[1].innerHTML,undefined);
   host.children[3].events.click();assert.equal(resets,1);
 });
-test('load failure is distinct from empty, gives retry, and uses the explicit Spring flag only',()=>{
-  const ui=start(),host=new Element('div');assert.equal(ui.state.failed(),false);
-  ui.document.body.dataset.publicContentUnavailable='true';assert.equal(ui.state.failed(),true);
+test('load failure is distinct from empty and its retry reloads the current page',()=>{
+  const ui=start(),host=new Element('div');
   ui.state.render(host,'error');assert.equal(host.dataset.storyState,'error');
   assert.equal(host.children[1].textContent,'이야기를 불러오지 못했습니다.');
   host.children[3].events.click();assert.equal(ui.reloads,1);
 });
-test('all four exported collection pages share states and failure contract without expanding Spring output paths',()=>{
-  const artifacts=springArtifacts();assert.equal(artifacts.size,12);
+test('all four connected collection pages load shared states before their controllers',()=>{
+  const pages=connectBackoffice(build());
   for(const kind of ['reviews','interviews','projects','cohorts']){
-    const html=artifacts.get('templates/public-site/'+kind+'.html');
+    const html=pages.get('stories/'+kind+'.html');
     assert.equal((html.match(/data-story-list-state/g)||[]).length,1,kind);
-    assert.ok(html.includes('data-public-content-unavailable=${publicContentUnavailable == true}'),kind);
-    assert.ok(html.includes('/stories/js/story-state.js?v=1102hub-empty-action'),kind);
-    assert.ok(html.includes('/stories/css/story-state.css?v=1102cohort-stable-loading'),kind);
+    assert.match(html,/stories\/js\/story-state.js|js\/story-state.js/,kind);
+    assert.ok(html.includes('css/story-state.css?v='),kind);
     assert.ok(html.indexOf('story-state.js')<html.indexOf(kind==='cohorts'?'cohort-v3.js':kind==='projects'?'projects-filter.js':kind==='interviews'?'stories-sections.js':'stories-m-reviews.js'));
   }
 });
@@ -65,10 +64,13 @@ test('API failure uses a valid snapshot and distinguishes unavailable data from 
     {failed:true,items:[{id:1}],unavailable:false},
     {failed:false,items:[],unavailable:false}
   ]){
-    const ui=start({window:{AicaPublicContentStatus:{storiesApiFailed:scenario.failed},STORIES_DATA:{reviews:scenario.items}}});
-    ui.document.documentElement={dataset:{sub:'reviews'}};
-    assert.equal(ui.state.failed(),scenario.unavailable);
-    assert.equal(ui.document.body.dataset.publicContentUnavailable==='true',scenario.unavailable);
+    const host=new Element('div');host.hidden=true;
+    const section={querySelector:()=>host,querySelectorAll:()=>[]};
+    const document={readyState:'complete',body:{dataset:{}},documentElement:{dataset:{sub:'projects'}},createElement:tag=>new Element(tag),querySelector:()=>section};
+    const window={AicaPublicContentStatus:{storiesApiFailed:scenario.failed},STORIES_DATA:{projects:scenario.items}};
+    vm.runInNewContext(readFileSync(new URL('../stories/js/story-state.js',import.meta.url),'utf8'),{window,document,location:{}});
+    assert.equal(host.dataset.storyState,scenario.unavailable?'error':'empty');
+    assert.equal(document.body.dataset.publicContentUnavailable==='true',scenario.unavailable);
   }
 });
 

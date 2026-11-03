@@ -102,5 +102,5 @@ var StoryState = (function(){
     }
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-  return {render:render,failed:failed,resetReviews:resetReviews};
+  return {render:render,resetReviews:resetReviews};
 })();

@@ -256,20 +256,22 @@ if (commonCourseCards.length && !reducedMotion.matches && 'IntersectionObserver'
   });
 }
 
-// Count education hours once when each summary/card enters the viewport.
-const educationHourNumbers = [...document.querySelectorAll('#education-hours .education-hours-number[data-count-to]')];
+// Count hours and graduate figures once when their numbers enter the viewport.
+const educationHourNumbers = [...document.querySelectorAll('#education-hours .education-hours-number[data-count-to], .graduate-stats .graduate-number[data-count-to]')];
 if (educationHourNumbers.length && !reducedMotion.matches && 'IntersectionObserver' in window) {
-  const educationHoursFormatter = new Intl.NumberFormat('ko-KR');
   const educationHoursCounters = educationHourNumbers.map(number => ({
     number,
     target: Number(number.dataset.countTo),
+    suffix: number.textContent.trim().endsWith('%') ? '%' : '',
+    decimals: Number(number.dataset.countDecimals || 0),
+    formatter: new Intl.NumberFormat('ko-KR', { minimumFractionDigits: Number(number.dataset.countDecimals || 0), maximumFractionDigits: Number(number.dataset.countDecimals || 0) }),
     frame: 0,
     state: 'waiting',
-    container: number.closest('.education-hours-summary, .education-time-stages > li')
+    container: number.classList.contains('graduate-number') ? number : number.closest('.education-hours-summary, .education-time-stages > li')
   }));
   const finishEducationCounter = counter => {
     cancelAnimationFrame(counter.frame);
-    counter.number.textContent = educationHoursFormatter.format(counter.target);
+    counter.number.textContent = counter.formatter.format(counter.target) + counter.suffix;
     counter.number.dataset.countState = 'complete';
     counter.state = 'complete';
     educationHoursObserver.unobserve(counter.container);
@@ -282,7 +284,7 @@ if (educationHourNumbers.length && !reducedMotion.matches && 'IntersectionObserv
       if (startedAt === undefined) startedAt = now;
       const progress = Math.min((now - startedAt) / 2200, 1);
       const eased = progress < .5 ? 4 * progress ** 3 : 1 - ((-2 * progress + 2) ** 3) / 2;
-      counter.number.textContent = educationHoursFormatter.format(Math.round(counter.target * eased));
+      counter.number.textContent = counter.formatter.format(Number((counter.target * eased).toFixed(counter.decimals))) + counter.suffix;
       if (progress < 1) counter.frame = requestAnimationFrame(tick);
       else finishEducationCounter(counter);
     };

@@ -80,7 +80,7 @@ const SiteLayout = ({ $, ROOT, href, current, subnavOn, sideNav, html }) => {
   function renderFooter(){
     const el = $('#siteFooter');
     if (!el || el.firstElementChild) return;
-    // 연락처 · 저작권 문구와 로고는 공식 교육플랫폼(support.gj-aischool.or.kr) 푸터와 같게(이용약관 · 이메일무단수집거부 · 광주광역시 로고는 뺌). '홈페이지'는 공식 홈페이지 링크(좁은 화면에선 헤더에서 숨김)
+    // 연락처 · 저작권 문구와 로고는 공식 교육플랫폼(support.gj-aischool.or.kr) 푸터와 같게(이용약관 · 이메일무단수집거부는 뺌; 11-03 요청으로 전남광주통합특별시 BI를 기관 줄 맨 앞에 추가). '홈페이지'는 공식 홈페이지 링크(좁은 화면에선 헤더에서 숨김)
     // 11-02 기관 로고: 학교 BI(국문 가로형) + 기관 한 줄(링크 없음). 푸터 바탕이 모든 페이지에서 어두워(#2B2D31) 흰 글자판(태극 · nipa 점은 원색)
     // 브랜드와 개인정보처리방침을 첫 줄에 묶고, 연락처 → 유관 사이트 → 기관 로고 → 저작권 순으로 정리합니다.
     const brand = (file, alt, w, h) => `<img class="${file}" src="${text(ROOT)}common/assets/brand/${file}-white.svg" alt="${alt}" width="${w}" height="${h}" loading="lazy" decoding="async">`;
@@ -102,6 +102,7 @@ const SiteLayout = ({ $, ROOT, href, current, subnavOn, sideNav, html }) => {
             <li>유관 사이트 <a href="${text(SITE_INFO.relatedSiteUrl)}" target="_blank" rel="noopener">${text(SITE_INFO.relatedSiteLabel)}</a></li>
           </ul>
           <ul class="footer-orgs">
+            <li><img class="org-jngj" src="${text(ROOT)}common/assets/brand/org-jngj-white.png" alt="전남광주통합특별시" width="168" height="18" loading="lazy" decoding="async"></li>
             <li>${brand('org-msit', '과학기술정보통신부', 134, 26)}</li>
             <li>${brand('org-nipa', '정보통신산업진흥원', 150, 21)}</li>
             <li>${brand('org-aica', '인공지능산업융합사업단', 182, 17)}</li>

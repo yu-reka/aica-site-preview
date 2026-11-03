@@ -3,7 +3,6 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
 import {build} from '../scripts/build.mjs';
-import {springArtifacts} from '../scripts/export-spring.mjs';
 const source = readFileSync(new URL('../common/js/availability.js', import.meta.url), 'utf8');
 function harness(online = true) {
   const handlers = {}, elements = [], timers = new Map(); let id = 0, reloads = 0, focused = 0;
@@ -65,13 +64,10 @@ test('navigation loading is delayed, cancellable and cleared on back/forward res
   assert.equal(loading.hidden,true); assert.equal(h.api.busy,false);
   h.api.begin(); h.handlers.offline(); assert.equal(h.api.busy,false);
 });
-test('all regular pages include availability assets and Spring exports error documents', () => {
+test('all regular pages include availability assets', () => {
   const pages=build();
-  for (const [path,html] of pages) if(path.endsWith('.html') && !['index.html','404.html','500.html','offline.html'].includes(path)) {
+  for (const [path,html] of pages) if(path.endsWith('.html') && !['index.html','404.html','500.html'].includes(path)) {
     assert.match(html,/common\/js\/availability.js/,path);
     assert.match(html,/common\/css\/availability.css/,path);
   }
-  const artifacts=springArtifacts();
-  assert.equal(artifacts.get('templates/error/500.html'),pages.get('500.html'));
-  assert.equal(artifacts.get('static/offline.html'),pages.get('offline.html'));
 });

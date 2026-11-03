@@ -2,8 +2,7 @@ import { assetVersion } from './asset-versions.mjs';
 
 // 팀 백오피스(공개 API)와 연결되는 정적 사이트판.
 // build()가 만든 디자인 그대로의 페이지에 백오피스 연결 줄을 넣고, 백오피스 글이 그려질 자리의 시안 글을 비워요.
-// - npm run build / npm run check만 이 결과를 씁니다(scripts/build.mjs). build() 자체와 Spring 내보내기(export-spring.mjs)는
-//   디자인 원본 그대로라 Spring 템플릿 · seed는 바뀌지 않아요.
+// - npm run build / npm run check만 이 결과를 씁니다(scripts/build.mjs). build() 자체는 디자인 원본을 반환합니다.
 // - 이야기는 JSON API 우선·실패 때만 사본. 공통 탐색이 준비되면 render → state → 페이지별 스크립트를 원래 순서로 실행합니다.
 //   FAQ는 faq-data.js → ../api/public/faq.js → faq-render.js(check.js보다 먼저), 내용 페이지마다 site.js 다음 줄에 track.js.
 // - 공개 API 주소는 상대 경로(../api/public/…)로 둬요. 팀 사이트 서버 · 관리자 미리보기가 이 경로를 백오피스 API로 넘겨요.

@@ -49,13 +49,10 @@ test('design and connected output URLs use declared versions for the correspondi
   }
 });
 
-test('standalone JS loaders and legacy CSS imports retain their explicit compatibility tokens', () => {
+test('standalone JS loaders retain their explicit compatibility tokens', () => {
   const references = [
     ['home/js/ticker-render.js', '../stories/js/stories-data.js', 'stories.js.stories-data'],
-    ['stories/js/stories-m.js', 'stories-m-reviews.js', 'stories.js.stories-m-reviews.legacyLoader'],
-    ['stories/css/mast.css', '../../common/css/masthead.css', 'common.css.masthead'],
-    ['common/css/unify.css', 'presentation.css', 'common.css.presentation'],
-    ['common/css/unify.css', '../../stories/css/presentation.css', 'stories.css.presentation.hub']
+    ['stories/js/stories-m.js', 'stories-m-reviews.js', 'stories.js.stories-m-reviews.legacyLoader']
   ];
   for (const [file, asset, key] of references) {
     assert.ok(read(file).includes(`${asset}?v=${assetVersion(key)}`), `${file}: update the standalone compatibility token with ${key}`);

@@ -4,15 +4,13 @@ import {spawn} from 'node:child_process';
 import {once} from 'node:events';
 import {readFileSync} from 'node:fs';
 import {build} from '../scripts/build.mjs';
-import {springArtifacts} from '../scripts/export-spring.mjs';
 
-test('404 document is generated and exported to the Spring default error path', () => {
+test('404 document is generated with recovery links and noindex', () => {
   const page = build().get('404.html');
   assert.match(page, /찾을 수 없어요/);
   assert.match(page, /name="robots" content="noindex,nofollow"/);
   assert.match(page, /href="home\/index.html"/);
   assert.match(page, /href="about\/index.html"/);
-  assert.equal(springArtifacts().get('templates/error/404.html'), page);
   assert.equal(readFileSync(new URL('../404.html', import.meta.url), 'utf8'), page);
 });
 

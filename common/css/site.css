@@ -106,6 +106,7 @@
 /* 실제 브랜드 자산·원래 비율을 유지합니다. */
 .site-footer :is(.school-bi,.footer-orgs img){display:block;width:auto;max-width:100%;object-fit:contain}
 .site-footer .school-bi{height:30px}
+.site-footer .org-jngj{height:18px}
 .site-footer .org-msit{height:26px}
 .site-footer .org-nipa{height:21px}
 .site-footer .org-aica{height:17px}

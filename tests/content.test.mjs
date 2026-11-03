@@ -118,6 +118,7 @@ test('footer shows the school BI and one logo per agency, each with alt text and
   const logos = [...footer.innerHTML.matchAll(/<img class="([\w-]+)" src="([^"]+)" alt="([^"]+)"/g)].map(m => [m[1], m[2], m[3]]);
   assert.deepEqual(logos, [
     ['school-bi', '../common/assets/brand/school-bi-white.svg', '인공지능사관학교'],
+    ['org-jngj', '../common/assets/brand/org-jngj-white.png', '전남광주통합특별시'],
     ['org-msit', '../common/assets/brand/org-msit-white.svg', '과학기술정보통신부'],
     ['org-nipa', '../common/assets/brand/org-nipa-white.svg', '정보통신산업진흥원'],
     ['org-aica', '../common/assets/brand/org-aica-white.svg', '인공지능산업융합사업단']

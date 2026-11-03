@@ -5,6 +5,7 @@
   const page=document.querySelector('.stories-page');
   if(!page)return;
   const kinds=[
+    {key:'review',hub:true,unit:'후기',cards:'#hub-review-dialogs .ov',detail:'.ov',title:'.mtop h3',host:'.mscroll',list:'reviews.html'},
     {key:'review',unit:'후기',cards:'#p-rev .idgrid .idc',detail:'.ov',title:'.mtop h3',host:'.mscroll',list:'#p-rev'},
     {key:'interview',unit:'인터뷰',cards:'#p-iv .ivgrid a.iv',detail:'.ivd',title:'h2',host:'.ivwrap',list:'#p-iv'},
     {key:'project',unit:'프로젝트',cards:'#p-pr .pjgrid a.pjc',detail:'.pjd',title:'h2',host:'.ivwrap',list:'#p-pr'}
@@ -22,7 +23,7 @@
   kinds.forEach(kind=>{
     const seen=new Set(),items=[];
     page.querySelectorAll(kind.cards).forEach(card=>{
-      const hash=card.getAttribute('href')||'';
+      const hash=kind.hub?'#'+card.id:card.getAttribute('href')||'';
       if(!hash.startsWith('#'))return;
       const detail=document.getElementById(hash.slice(1));
       if(!detail||!detail.matches(kind.detail)||seen.has(detail.id))return;
@@ -51,12 +52,13 @@
     }
     const nav=node('nav','sd-nav');nav.setAttribute('aria-label',kind.unit+' 이전 글 다음 글');
     const pair=node('div','sd-pair');pair.append(direction(items[index-1],true,kind),direction(items[index+1],false,kind));
-    const back=node('a','sd-list',kind.unit+' 목록');back.href=kind.list;back.dataset.storyList=kind.key;
+    const back=node('a','sd-list',kind.unit+' 목록');back.href=kind.list;if(!kind.hub)back.dataset.storyList=kind.key;
     nav.append(pair,back);const old=item.detail.querySelector('.sd-nav');
     if(old)old.replaceWith(nav);else if(kind.key==='review')item.host.append(nav);else item.host.after(nav);
   }
   let tag='';
   function matching(group){
+    if(group.kind.hub)return group.items;
     if(group.kind.key==='review'){
       const section=document.querySelector('#p-rev'),sm=section.querySelector('.sm-reviews');
       const mobile=sm&&getComputedStyle(sm).display!=='none';

@@ -89,9 +89,6 @@
 /* The hub opens on the dialog heading; keyboard focus on close stays visible. */
 .stories-hub .ov .mtop h3[tabindex="-1"]:focus{outline:none}
 
-/* The hub has one footer link, with equal space above and below it. */
-.stories-hub .ov .sd-nav{margin-top:0;padding-block:20px}
-.stories-hub .ov .sd-nav .sd-list{margin-block:0}
 
 /* Mobile utilities share the desktop capsule view-switch component. */
 @media(max-width:600px){

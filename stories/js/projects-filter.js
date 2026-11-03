@@ -79,7 +79,7 @@
       if(current)button.setAttribute('aria-current','page');
       button.addEventListener('click',()=>{
         page=to;refresh();pager.querySelector('[aria-current="page"]').focus({preventScroll:true});
-        section.querySelector('.pj-filter-row').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth'});
+        section.querySelector('.pj-filter-row').scrollIntoView({block:'start',behavior:SiteUI.motion().matches?'instant':'smooth'});
       });return button;
     }
     function refresh(reset=false){

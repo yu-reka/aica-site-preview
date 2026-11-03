@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -24,8 +25,8 @@ function runtime(selectors = {}, hash = malformed) {
     addEventListener(name, handler) { (events[name] ||= []).push(handler); },
     setTimeout() {}, requestAnimationFrame(handler) { handler(); },
   });
-  vm.runInContext(source('../common/js/ui.js'), context);
-  vm.runInContext(source('../common/js/site.js'), context);
+  runInContext(source('../common/js/ui.js'), context);
+  runInContext(source('../common/js/site.js'), context);
   return { context, document, events, documentEvents };
 }
 
@@ -39,7 +40,7 @@ test('malformed direct Check URL still initializes the chapter jump buttons', ()
     addEventListener() {},
   };
   const { context } = runtime({ '.check-page': main });
-  vm.runInContext(source('../check/js/check.js'), context);
+  runInContext(source('../check/js/check.js'), context);
   assert.equal(clicks.length, 1);
 });
 
@@ -52,7 +53,7 @@ test('malformed Stories URL still registers modal Escape and focus handling', ()
   };
   const { context, document, events, documentEvents } = runtime({ '.stories-page': page });
   context.history={state:null,replaceState(){},back(){}};
-  vm.runInContext(source('../stories/js/stories.js'), context);
+  runInContext(source('../stories/js/stories.js'), context);
   const close = { focus() { document.activeElement = close; }, click() { closed = true; } };
   const modal = { contains: () => false, querySelector: selector => selector === '.x' ? close : null };
   const original = { href: '#r-life-0', closest: () => null, getClientRects: () => [1], focus() { document.activeElement = original; } };
@@ -84,7 +85,7 @@ test('early legacy router ignores malformed hashes but keeps encoded canonical l
       location: { hash, replace(url) { redirects.push(url); } },
       addEventListener(name, handler) { events[name] = handler; },
     });
-    vm.runInContext(source('../stories/js/old-hash.js'), context);
+    runInContext(source('../stories/js/old-hash.js'), context);
     events.hashchange();
     assert.deepEqual(redirects, hash === '#q%2D1%2D2' ? ['interviews.html#q-1-2', 'interviews.html#q-1-2'] : []);
   }
@@ -93,7 +94,7 @@ test('early legacy router ignores malformed hashes but keeps encoded canonical l
 test('hub modal anchors stay on All while legacy routes keep redirecting',()=>{
   for(const [hash,expected] of [['#r-p26',[]],['#st-1',[]],['#r-life-0',['reviews.html#r-life-0']],['#iv-p14',['interviews.html#iv-p14']]]){
     const redirects=[];
-    vm.runInNewContext(source('../stories/js/old-hash.js'),{
+    runInNewContext(source('../stories/js/old-hash.js'),{
       document:{documentElement:{getAttribute:()=> 'true'}},
       location:{hash,replace:url=>redirects.push(url)},addEventListener(){}
     });

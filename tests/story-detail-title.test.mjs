@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
@@ -17,7 +18,7 @@ function start(hash=''){
   details['p-iv']={closest:()=>null};
   const document={title:listTitle,getElementById:id=>details[id]||null};
   const location={hash};
-  vm.runInNewContext(source,{document,location,addEventListener:(type,fn)=>events[type]=fn});
+  runInNewContext(source,{document,location,addEventListener:(type,fn)=>events[type]=fn});
   return {document,go(hash,event='hashchange'){location.hash=hash;events[event]();}};
 }
 test('direct interview and question links use the interview heading, including honors',()=>{
@@ -36,7 +37,7 @@ test('projects and review modals use their own heading and restore each listing 
     const detail={matches:s=>s==='.ov'&&hash.startsWith('#r-'),closest:()=>detail,
       querySelector:s=>{assert.equal(s,selector);return {textContent:title};}};
     const document={title:original,getElementById:id=>id===hash.slice(1)||id==='section-anchor'?detail:null};
-    vm.runInNewContext(source,{document,location,addEventListener:(t,f)=>events[t]=f});
+    runInNewContext(source,{document,location,addEventListener:(t,f)=>events[t]=f});
     assert.equal(document.title,title+' — '+original);
     location.hash='#section-anchor';events.hashchange();
     assert.equal(document.title,title+' — '+original);

@@ -1,3 +1,5 @@
+import {assetVersion} from '../scripts/asset-versions.mjs';
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync} from 'node:fs';
@@ -35,7 +37,7 @@ test('public fixtures restore approved design content with masked names and exis
   }
   for (const source of previewFiles().values()) {
     const context = {window: {}};
-    vm.runInNewContext(source, context);
+    runInNewContext(source, context);
     assert.equal(Object.values(context.window)[0].previewSample, true);
   }
 });
@@ -63,7 +65,7 @@ test('public HTML and home fallback request a new snapshot cache version', () =>
     assert.match(readFileSync(new URL('stories/' + file, root), 'utf8'), /data-fallback="js\/stories-data\.js\?v=design-20261029-hub-honors"/);
   }
   assert.match(readFileSync(new URL('check/index.html', root), 'utf8'), /src="js\/faq-data\.js\?v=design-20261102-direct-links"/);
-  assert.match(readFileSync(new URL('home/index.html', root), 'utf8'), /src="js\/ticker-render\.js\?v=design-20261029-hub-honors"/);
+  assert.ok(readFileSync(new URL('home/index.html', root), 'utf8').includes('src="js/ticker-render.js?v='+assetVersion('home.js.ticker-render')+'"'));
   assert.match(readFileSync(new URL('home/js/ticker-render.js', root), 'utf8'), /stories-data\.js\?v=design-20261029-hub-honors/);
 });
 

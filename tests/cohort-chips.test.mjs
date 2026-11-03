@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
@@ -9,7 +10,7 @@ test('cohort chips come only from published posts; cohort info and an old upcomi
   const root={getAttribute:k=>k==='data-upcoming-cohorts'?'8':null};
   const chips=D=>{
     const context={root,D,STORIES_DATA};
-    vm.runInNewContext(source.slice(source.indexOf('  var COH_KEY='),source.indexOf('  function inC('))+'\nvar all=COHS.join();',context);
+    runInNewContext(source.slice(source.indexOf('  var COH_KEY='),source.indexOf('  function inC('))+'\nvar all=COHS.join();',context);
     return context;
   };
   const posted=chips([{coh:6},{coh:4},{coh:6}]);
@@ -24,7 +25,7 @@ test('a month without posts in the chosen cohort shows the filter state',()=>{
   const st={coh:'7',pg:1,mo:202605,v:'all'};let rendered;
   const context={D:[{coh:7}],COHS:['7'],PER:9,st,$:s=>selectors[s],inC:(d,c)=>String(d.coh)===c,lab:c=>c,list:()=>[],pinOn:()=>false,draw(){},document:{createElement:element},
     StoryState:{render:(target,kind)=>{rendered={target,kind}}}};
-  vm.runInNewContext(source.slice(source.indexOf('  function grid()'),source.indexOf('  function draw()'))+'\ngrid();',context);
+  runInNewContext(source.slice(source.indexOf('  function grid()'),source.indexOf('  function draw()'))+'\ngrid();',context);
   assert.deepEqual(rendered,{target:host,kind:'filter'});
   assert.equal(host.hidden,false);assert.equal(grid.hidden,true);assert.equal(pager.hidden,true);
 });
@@ -36,7 +37,7 @@ test('video-empty photo records offer photos without resetting the selected mont
   const selectors={'.cv3-grid':grid,'.cv3-pg':pager,'.cv3-gt':{},'[data-cohort-filter-empty]':host};
   const context={D:[{coh:3,date:'2022-06-01',yt:''}],PER:9,st,$:s=>selectors[s],inC:()=>true,ym:()=>202206,lab:c=>c,list:()=>[],pinOn:()=>false,
     root:{querySelector:()=>null},draw(){drawn++;},StoryState:{render:(target,kind,opts)=>{options=opts;}}};
-  vm.runInNewContext(source.slice(source.indexOf('  function grid()'),source.indexOf('  function draw()'))+'\ngrid();',context);
+  runInNewContext(source.slice(source.indexOf('  function grid()'),source.indexOf('  function draw()'))+'\ngrid();',context);
   assert.equal(title.textContent,'등록된 영상이 없어요.');
   assert.match(copy.textContent,/사진으로만/);
   assert.equal(action.textContent,'사진 보기');

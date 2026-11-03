@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -28,7 +29,7 @@ function fixture() {
   const source = readFileSync(new URL('../life/js/life.js', import.meta.url), 'utf8');
   const start = source.indexOf('(function(){\n  var q=function(s){return document.querySelector(s)};\n  var bar=');
   const end = source.indexOf('/* 선배 손글씨 포스트잇 */', start);
-  vm.runInNewContext(source.slice(start, end), {
+  runInNewContext(source.slice(start, end), {
     document, Math, MutationObserver: class { observe() {} },
     setTimeout(fn) { timers.set(++serial, fn); return serial; },
     clearTimeout(id) { timers.delete(id); },

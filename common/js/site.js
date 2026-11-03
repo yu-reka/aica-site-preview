@@ -25,14 +25,11 @@
    다시 그리지 않고 동작만 붙입니다. 그때는 menu.js가 없어도 됩니다(현재 위치는 그려진 링크로 판단).
    ========================================================= */
 const Site = (() => {
-  const $ = (s, el = document) => el.querySelector(s);
-  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const { $, $$ } = SiteUI.selectors();
+  const reduce = SiteUI.motion().matches;
   const html = document.documentElement;
   // A pasted URL can contain an incomplete percent escape. Treat it as the default screen.
-  function decodeHash(hash){
-    try { return decodeURIComponent(hash); } catch { return ''; }
-  }
+  const decodeHash = SiteUI.decodeHash;
 
   /* 지금 페이지에서 사이트 폴더(site/)까지의 상대 경로 — 페이지가 어느 폴더 깊이에 있어도 링크가 맞게 */
   const ROOT = (() => {

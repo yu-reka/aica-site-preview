@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -15,7 +16,7 @@ test('shared mobile controls keep text, clone IDs, group labels and click callba
     appendChild(node) { this.children.push(node); },
     addEventListener(name, action) { this.events[name] = action; },
   }) } };
-  vm.runInNewContext(uiSource, context);
+  runInNewContext(uiSource, context);
   const ui = context.SiteUI;
   const zero = ui.element('span', '', 0);
   assert.equal(zero.textContent, 0);
@@ -53,7 +54,7 @@ test('all shared-runtime consumers load it first, including early cohort initial
     const ui = scripts.findIndex(s => s.endsWith('/common/js/ui.js'));
     assert.ok(ui >= 0, path);
     assert.equal(scripts.filter(s => s.endsWith('/common/js/ui.js')).length, 1, path);
-    for (const name of ['site.js', 'cohort-v3.js', 'stories.js', 'stories-m.js', 'stories-m-reviews.js', 'life-m.js', 'about-m.js']) {
+    for (const name of ['stories-loader.js', 'ticker-render.js', 'faq-render.js', 'stories-render.js', 'story-detail-title.js', 'stories-sections.js', 'site.js', 'cohort-v3.js', 'stories.js', 'stories-m.js', 'stories-m-reviews.js', 'life-m.js', 'life-m-view.js', 'life.js', 'culture.js', 'home.js', 'about.js', 'about-m.js', 'check.js', 'cohort-month-navigation.js', 'interview-honors.js']) {
       const consumer = scripts.findIndex(s => s.endsWith('/' + name));
       if (consumer >= 0) assert.ok(ui < consumer, path + ': ' + name);
     }
@@ -65,7 +66,7 @@ test('dialog isolation restores pre-existing inert state when switching a nested
   const node = (parent, inert = false) => { const n = { parentElement: parent, children: [], tagName: 'DIV', inert }; parent.children.push(n); return n; };
   const page = node(body), blocked = node(body, true), modal = node(body), zoom = node(body);
   const context = vm.createContext({ document: { body } });
-  vm.runInContext(uiSource, context);
+  runInContext(uiSource, context);
   const scope = context.SiteUI.createDialogScope();
   scope.activate(modal);
   assert.equal(page.inert, true);

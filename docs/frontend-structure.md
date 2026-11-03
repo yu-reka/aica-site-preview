@@ -8,6 +8,8 @@
 
 인터뷰·후기·프로젝트·기수별 기록 페이지는 `src/components/stories/head-base.html`, `head-presentation.html`, `head-scripts.html`을 공유합니다. 페이지 전용 CSS·JS의 기존 로딩 위치를 사이에 유지합니다. 별도 구성을 쓰는 이야기 허브까지 같은 head 순서로 강제하지 않습니다.
 
+home·about·check·life·이야기 허브의 자산 목록은 각 페이지 `head-assets` 컴포넌트에서 관리합니다. 순서와 바이트가 같은 구간만 `shared/head-*`로 공유하며, 기존 들여쓰기와 초기 실행 위치가 다른 구간은 페이지에 남깁니다. 404·500의 공통 레이아웃·반응형 CSS는 `shared/error-*-style`에서 관리하고 색상·버튼 차이는 각 오류 문서에 둡니다.
+
 ## CSS 경계
 
 - 공통 헤더·드로어·모바일 메뉴: `common/css/site.css`, `navigation-mobile.css`
@@ -86,3 +88,11 @@ FAQ는 `faq-render.js`가 목록과 분류 수를 만들고 `check.js`가 검색
 브라우저 단독 호환 로더(`ticker-render.js`, `stories-m.js`)에는 실행 시 JSON을 추가로 불러오지 않습니다. 기존 리터럴을 유지하고 `tests/asset-versions.test.mjs`가 버전 표와의 일치를 검사합니다. 해당 버전을 갱신할 때는 테스트가 지목한 호환 줄도 함께 확인합니다.
 
 이야기 배너의 장식과 바로가기 링크는 `src/components/stories/masthead-decoration.html`, `masthead-navigation.html`에서 공유합니다. 두 배너 wrapper의 기존 h1/p 의미는 유지합니다. 라이프 배너는 선택자와 SVG를 그대로 옮긴 `src/components/life/masthead.html`을 사용합니다.
+
+## 공통 값 처리와 로딩
+
+`SiteUI`는 `ui.js`에서 이스케이프·범위별 선택자·스크립트 삽입·모션 질의·해시 디코딩을 제공합니다. 텍스트는 빈 값을 공백 문자열로 처리하고, 속성은 입력을 문자열로 바꾼 뒤 작은따옴표까지 이스케이프합니다. 라이프의 속성 입력은 기존대로 빈 값을 먼저 정리합니다.
+
+선택자 팩토리는 각 페이지의 원래 루트와 null 대체 규칙을 유지합니다. `loadScript()`는 노드를 추가할 뿐이며 호출부가 순서·중복 방지·실패 후 재시도를 담당합니다. 모션 이벤트를 구독하는 곳은 `motion()`의 MediaQueryList를 사용하고, `Site.reduce`의 초기 boolean 계약은 유지합니다. `Site.decodeHash()`는 공통 디코더를 그대로 노출합니다.
+
+활성 소비자보다 `ui.js`가 먼저 실행되어야 합니다. FAQ 데이터·API·렌더러도 공통 UI 뒤, `site.js`와 FAQ 동작 스크립트 앞에서 같은 순서로 실행합니다. 초기 주소 이동용 `old-hash.js`는 공통 초기화 이전의 독립 실행을 유지합니다. 새 공통 API를 추가하면 소비자와 공통 파일의 캐시 버전을 함께 갱신합니다.

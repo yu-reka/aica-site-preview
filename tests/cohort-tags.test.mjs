@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -13,7 +14,7 @@ function start(){
     querySelectorAll(){return this.children.filter(child=>'extraStory' in child.dataset);}
   }
   const node=(tag,cls,text)=>Object.assign(new Element(tag),{className:cls||'',textContent:text||''});
-  const api=vm.runInNewContext(source.slice(source.indexOf('  function captionParts('),source.indexOf('  function fill(){'))+'\n({captionParts,renderCaption})',{node});
+  const api=runInNewContext(source.slice(source.indexOf('  function captionParts('),source.indexOf('  function fill(){'))+'\n({captionParts,renderCaption})',{node});
   const box=new Element('div');box.appendChild(node('h3','','title'));box.appendChild(node('p','','summary'));
   return {...api,box};
 }
@@ -65,7 +66,7 @@ test('optional tags cross the shipped API renderer as escaped hidden text, never
   const template={innerHTML:''},page={classList:{contains:()=>false},querySelector:()=>null,querySelectorAll:()=>[]};
   const window={STORIES_DATA:{cohorts:[{id:1,cohort:7,title:'테스트',body:['본문'],tags:[0,7,'기업탐방','<img onerror=alert(1)>']} ]}};
   const document={querySelector:()=>page,getElementById:id=>id==='cv3-data'?template:null,addEventListener(){}};
-  vm.runInNewContext(readFileSync(new URL('../stories/js/stories-render.js',import.meta.url),'utf8'),{window,document,Set,location:{hash:''}});
+  runInNewContext(readFileSync(new URL('../stories/js/stories-render.js',import.meta.url),'utf8'),{window,document,Set,location:{hash:''}});
   assert.match(template.innerHTML,/<div data-story-tags hidden><span>기업탐방<\/span><span>&lt;img onerror=alert\(1\)&gt;<\/span><\/div>/);
   assert.doesNotMatch(template.innerHTML,/<span>[07]<\/span>|<img onerror/);
   assert.match(template.innerHTML,/<p data-field="body">본문<\/p>/);

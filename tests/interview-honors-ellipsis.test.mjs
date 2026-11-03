@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -8,7 +9,7 @@ function setup(text,width){
   const el={textContent:text,clientWidth:width,clientHeight:48,setAttribute(){},
     get scrollHeight(){return Math.ceil(Array.from(this.textContent).length/this.clientWidth)*24;}};
   const context=vm.createContext({track:{querySelectorAll:()=>[el]},document:{},addEventListener(){},cancelAnimationFrame(){},requestAnimationFrame(){}});
-  vm.runInContext(fitting,context);return {el,fit:()=>vm.runInContext('fitSummaries()',context)};
+  runInContext(fitting,context);return {el,fit:()=>runInContext('fitSummaries()',context)};
 }
 test('overflowing honors excerpt ends in a centered ellipsis and fits two lines',()=>{
   const s=setup('가'.repeat(60),20);s.fit();

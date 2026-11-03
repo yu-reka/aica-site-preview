@@ -2,9 +2,8 @@
    Owns category/cohort/tag filters, ten-card pages and canonical modal links.
    Loaded before stories-m.js on new pages; the legacy entry can load it on demand. */
 const StoriesMobileReviews = (() => {
-  const $ = (selector, parent = document) => parent.querySelector(selector);
-  const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const { $, $$ } = SiteUI.selectors();
+  const reduce = SiteUI.motion();
 
   var el = SiteUI.element, cleanClone = SiteUI.cloneWithoutIds, tabButton = SiteUI.toggleButton;
   function tabs(label){ return SiteUI.buttonGroup(label, 'sm-filter-tabs'); }

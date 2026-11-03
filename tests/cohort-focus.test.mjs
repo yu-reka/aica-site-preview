@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -28,7 +29,7 @@ function start() {
     body: { appendChild() {} },
     addEventListener(name, handler) { if (name === 'keydown') keydown = handler; },
   });
-  vm.runInNewContext(readFileSync(new URL('../common/js/ui.js', import.meta.url), 'utf8') + '\n' + readFileSync(new URL('../stories/js/cohort-v3.js', import.meta.url), 'utf8'), {
+  runInNewContext(readFileSync(new URL('../common/js/ui.js', import.meta.url), 'utf8') + '\n' + readFileSync(new URL('../stories/js/cohort-v3.js', import.meta.url), 'utf8'), {
     document, getComputedStyle: () => ({ visibility: 'visible' }),
   });
   modal.hidden = false;

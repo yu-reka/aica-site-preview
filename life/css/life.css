@@ -186,23 +186,23 @@
 /* 8F 배식대 공개 사진 예시 */
 .life-page .im-fac_8f_cafeteria_02{background-image:url(../assets/fac_8f_cafeteria_02.webp)}
 /* ACC 사진(확대) */
-.life-page .im-acc_tmp{background-image:url("../assets/acc_tmp.webp");background-position:40% 50%}
+.life-page .im-leisure-acc{background-image:url("../assets/leisure-acc.webp");background-position:40% 50%}
 /* 무등산 임시 사진 */
-.life-page .im-mud_tmp{background-image:url("../assets/mud_tmp.webp");background-position:60% 30%}
+.life-page .im-leisure-mudeungsan{background-image:url("../assets/leisure-mudeungsan.webp");background-position:60% 30%}
 /* 5·18민주광장 사진 */
-.life-page .im-plaza_tmp{background-image:url("../assets/plaza_tmp.webp");background-position:50% 45%}
+.life-page .im-leisure-may18-square{background-image:url("../assets/leisure-may18-square.webp");background-position:50% 45%}
 /* 대인시장 사진 */
-.life-page .im-mkt_tmp{background-image:url("../assets/mkt_tmp.webp");background-position:40% 35%}
+.life-page .im-leisure-daein-market{background-image:url("../assets/leisure-daein-market.webp");background-position:40% 35%}
 /* 중외공원 사진 */
-.life-page .im-park_tmp{background-image:url("../assets/park_tmp.webp");background-position:50% 55%}
+.life-page .im-leisure-jungoe-park{background-image:url("../assets/leisure-jungoe-park.webp");background-position:50% 55%}
 /* 챔피언스 필드 사진 */
-.life-page .im-std_tmp{background-image:url("../assets/std_tmp.webp");background-position:50% 55%}
+.life-page .im-leisure-champions-field{background-image:url("../assets/leisure-champions-field.webp");background-position:50% 55%}
 /* 충장로 사진 */
-.life-page .im-cj_tmp{background-image:url("../assets/cj_tmp.webp");background-position:50% 50%}
+.life-page .im-leisure-chungjang-street{background-image:url("../assets/leisure-chungjang-street.webp");background-position:50% 50%}
 /* 양림마을 사진 */
-.life-page .im-yl_tmp{background-image:url("../assets/yl_tmp.webp");background-position:45% 45%}
+.life-page .im-leisure-yangnim-village{background-image:url("../assets/leisure-yangnim-village.webp");background-position:45% 45%}
 /* 송정역시장 사진 */
-.life-page .im-sj_tmp{background-image:url("../assets/sj_tmp.webp");background-position:30% 45%}
+.life-page .im-leisure-songjeong-market{background-image:url("../assets/leisure-songjeong-market.webp");background-position:30% 45%}
 /* ===== 오시는 길: 지하철 · 버스 카드 여백 정리 ===== */
 .life-page #pg-way .route{border:0;box-shadow:none;background:none;padding:0;margin-top:calc(1.8*var(--lr))}
 .life-page #pg-way .route li{grid-template-columns:calc(3.2*var(--lr)) minmax(0,1fr);gap:calc(.2*var(--lr)) calc(1.4*var(--lr));padding-bottom:calc(2.4*var(--lr))}

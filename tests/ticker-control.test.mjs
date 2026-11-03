@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
@@ -16,7 +17,7 @@ function start(reduced, mobile = false) {
   const context = { Site: { reduce: reduced, menu: () => null }, location: { hash: '' },
     document: { querySelector: selector => selector === '.tk' ? ticker : selector === '#main' ? main : null },
     matchMedia: query => query.includes('prefers-reduced-motion') ? preference : { matches: mobile } };
-  vm.runInNewContext(readFileSync(new URL('../home/js/home.js', import.meta.url), 'utf8'), context);
+  runInNewContext(readFileSync(new URL('../home/js/home.js', import.meta.url), 'utf8'), context);
   return { classes, icon, button, click: () => handlers.click(), tapArea: () => areaHandlers.click(), preference: value => preferenceChange({ matches: value }) };
 }
 

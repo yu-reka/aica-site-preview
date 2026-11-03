@@ -102,7 +102,7 @@ const PAGES = {
   'about/index.html': withTracking,
   'life/index.html': withTracking,
   'check/index.html': (html, path) => {
-    html = insertBefore(html, '<script src="../common/js/menu.js', FAQ_SCRIPTS, path);
+    html = insertBefore(html, '<script src="../common/js/site.js', FAQ_SCRIPTS, path);
     return withTracking(html, path);
   },
   'stories/index.html': (html, path) => {

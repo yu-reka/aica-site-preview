@@ -6,7 +6,7 @@
     active.forEach(function(dispose, group){ if(!group.isConnected){ dispose(); active.delete(group); } });
     [].forEach.call((root||document).querySelectorAll('.cf-g'), function(group){ if(!active.has(group)) bind(group); });
   }
-  var RMQ = matchMedia('(prefers-reduced-motion: reduce)'), EASE = 'cubic-bezier(.22,.8,.24,1)', DUR = 600, CLOSE_DUR = 360;
+  var RMQ = SiteUI.motion(), EASE = 'cubic-bezier(.22,.8,.24,1)', DUR = 600, CLOSE_DUR = 360;
   function bind(g){
     active.set(g, function(){});
     var pile = g.querySelector('.cf-pile'), yb = g.querySelector('.cf-yb'), tg = g.querySelector('.cf-tg');

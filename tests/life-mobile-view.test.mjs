@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -27,8 +28,8 @@ function createView(state, fixtures = {}) {
     querySelectorAll: selector => fixtures[selector] || [],
   };
   const context = vm.createContext({ source, state });
-  vm.runInContext(readFileSync(new URL('../life/js/life-m-view.js', import.meta.url), 'utf8'), context);
-  return { view: vm.runInContext('LifeMobileView.create(source, state)', context), originalMap };
+  runInContext(readFileSync(new URL('../life/js/life-m-view.js', import.meta.url), 'utf8'), context);
+  return { view: runInContext('LifeMobileView.create(source, state)', context), originalMap };
 }
 const initialState = () => ({ housingIndex: 0, foodPage: 1 });
 
@@ -103,7 +104,7 @@ test('desktop overview resolves the published first photo before the mobile sour
   const attrs = { src: 'assets/old.webp', srcset: 'assets/stale.webp 640w' };
   const preview = { setAttribute: (name, value) => { attrs[name] = value; }, removeAttribute: name => { delete attrs[name]; } };
   const card = { dataset: { fac: '1-0' } }, photo = {};
-  vm.runInNewContext(block, { $$: () => [card], $: selector => selector === '#bx9s-1-0 .bx9-sl' ? photo : preview,
+  runInNewContext(block, { $$: () => [card], $: selector => selector === '#bx9s-1-0 .bx9-sl' ? photo : preview,
     getComputedStyle: () => ({ backgroundImage: 'url("https://example.test/life/assets/uploads/first-fixture.webp")' }) });
   assert.equal(attrs.src, 'https://example.test/life/assets/uploads/first-fixture.webp');
   assert.equal(attrs.srcset, undefined);

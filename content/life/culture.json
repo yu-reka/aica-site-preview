@@ -39,7 +39,7 @@
       },
       {
         "caption": "문화·여가 사진 예시 2",
-        "image": "assets/yl_tmp.webp",
+        "image": "assets/leisure-yangnim-village.webp",
         "width": 547,
         "height": 365,
         "position": "45% 50%"
@@ -53,7 +53,7 @@
       },
       {
         "caption": "문화·여가 사진 예시 4",
-        "image": "assets/yl_tmp.webp",
+        "image": "assets/leisure-yangnim-village.webp",
         "width": 547,
         "height": 365,
         "position": "50% 55%"
@@ -67,7 +67,7 @@
       },
       {
         "caption": "문화·여가 사진 예시 6",
-        "image": "assets/yl_tmp.webp",
+        "image": "assets/leisure-yangnim-village.webp",
         "width": 547,
         "height": 365,
         "position": "35% 55%"
@@ -81,7 +81,7 @@
       },
       {
         "caption": "문화·여가 사진 예시 8",
-        "image": "assets/yl_tmp.webp",
+        "image": "assets/leisure-yangnim-village.webp",
         "width": 547,
         "height": 365,
         "position": "40% 40%"
@@ -121,7 +121,7 @@
     "photos": [
       {
         "caption": "문화·여가 사진 예시 1",
-        "image": "assets/park_tmp.webp",
+        "image": "assets/leisure-jungoe-park.webp",
         "width": 547,
         "height": 365,
         "position": "55% 70%"
@@ -135,7 +135,7 @@
       },
       {
         "caption": "문화·여가 사진 예시 3",
-        "image": "assets/park_tmp.webp",
+        "image": "assets/leisure-jungoe-park.webp",
         "width": 547,
         "height": 365,
         "position": "50% 40%"
@@ -149,7 +149,7 @@
       },
       {
         "caption": "문화·여가 사진 예시 5",
-        "image": "assets/park_tmp.webp",
+        "image": "assets/leisure-jungoe-park.webp",
         "width": 547,
         "height": 365,
         "position": "40% 55%"
@@ -163,7 +163,7 @@
       },
       {
         "caption": "문화·여가 사진 예시 7",
-        "image": "assets/park_tmp.webp",
+        "image": "assets/leisure-jungoe-park.webp",
         "width": 547,
         "height": 365,
         "position": "35% 55%"
@@ -210,56 +210,56 @@
     "photos": [
       {
         "caption": "문화·여가 사진 예시 1",
-        "image": "assets/acc_tmp.webp",
+        "image": "assets/leisure-acc.webp",
         "width": 1600,
         "height": 931,
         "position": "50% 60%"
       },
       {
         "caption": "문화·여가 사진 예시 2",
-        "image": "assets/acc_tmp.webp",
+        "image": "assets/leisure-acc.webp",
         "width": 1600,
         "height": 931,
         "position": "50% 50%"
       },
       {
         "caption": "문화·여가 사진 예시 3",
-        "image": "assets/acc_tmp.webp",
+        "image": "assets/leisure-acc.webp",
         "width": 1600,
         "height": 931,
         "position": "50% 55%"
       },
       {
         "caption": "문화·여가 사진 예시 4",
-        "image": "assets/acc_tmp.webp",
+        "image": "assets/leisure-acc.webp",
         "width": 1600,
         "height": 931,
         "position": "50% 55%"
       },
       {
         "caption": "문화·여가 사진 예시 5",
-        "image": "assets/acc_tmp.webp",
+        "image": "assets/leisure-acc.webp",
         "width": 1600,
         "height": 931,
         "position": "50% 60%"
       },
       {
         "caption": "문화·여가 사진 예시 6",
-        "image": "assets/acc_tmp.webp",
+        "image": "assets/leisure-acc.webp",
         "width": 1600,
         "height": 931,
         "position": "50% 40%"
       },
       {
         "caption": "문화·여가 사진 예시 7",
-        "image": "assets/acc_tmp.webp",
+        "image": "assets/leisure-acc.webp",
         "width": 1600,
         "height": 931,
         "position": "55% 60%"
       },
       {
         "caption": "문화·여가 사진 예시 8",
-        "image": "assets/acc_tmp.webp",
+        "image": "assets/leisure-acc.webp",
         "width": 1600,
         "height": 931,
         "position": "60% 45%"
@@ -299,42 +299,42 @@
     "photos": [
       {
         "caption": "문화·여가 사진 예시 1",
-        "image": "assets/plaza_tmp.webp",
+        "image": "assets/leisure-may18-square.webp",
         "width": 500,
         "height": 333,
         "position": "45% 65%"
       },
       {
         "caption": "문화·여가 사진 예시 2",
-        "image": "assets/plaza_tmp.webp",
+        "image": "assets/leisure-may18-square.webp",
         "width": 500,
         "height": 333,
         "position": "50% 60%"
       },
       {
         "caption": "문화·여가 사진 예시 3",
-        "image": "assets/plaza_tmp.webp",
+        "image": "assets/leisure-may18-square.webp",
         "width": 500,
         "height": 333,
         "position": "45% 50%"
       },
       {
         "caption": "문화·여가 사진 예시 4",
-        "image": "assets/plaza_tmp.webp",
+        "image": "assets/leisure-may18-square.webp",
         "width": 500,
         "height": 333,
         "position": "65% 60%"
       },
       {
         "caption": "문화·여가 사진 예시 5",
-        "image": "assets/plaza_tmp.webp",
+        "image": "assets/leisure-may18-square.webp",
         "width": 500,
         "height": 333,
         "position": "50% 40%"
       },
       {
         "caption": "문화·여가 사진 예시 6",
-        "image": "assets/plaza_tmp.webp",
+        "image": "assets/leisure-may18-square.webp",
         "width": 500,
         "height": 333,
         "position": "60% 45%"

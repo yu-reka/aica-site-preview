@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -12,7 +13,7 @@ function setup(){
     addEventListener:(type,fn)=>{(events[type] ||= []).push(fn);},
     setPointerCapture:()=>{captured=true;},hasPointerCapture:()=>captured,releasePointerCapture:()=>{captured=false;},
     scrollTo:({left})=>{track.scrollLeft=left;}};
-  vm.runInNewContext(gesture,{mobileSwipeView:{matches:true},mobileSwipe:null,track,timer:0,clearTimeout(){},
+  runInNewContext(gesture,{mobileSwipeView:{matches:true},mobileSwipe:null,track,timer:0,clearTimeout(){},
     performance:{now:()=>now},cards:Array.from({length:5},()=>({offsetWidth:300})),
     nearest:()=>Math.round(track.scrollLeft/312),align:(...args)=>alignments.push(args),suppressClickUntil:0});
   function fire(type,x,y=20,time=now){now=time;let prevented=false;

@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -35,7 +36,7 @@ async function open(hash, delayedFonts, mobile = false) {
     setTimeout(fn, delay) { timers.push({ fn, at: now + delay }); },
     dispatchEvent() {}, Event: class {}, addEventListener() {},
   };
-  vm.runInNewContext(routers + '\nroute();\ntopic();', context);
+  runInNewContext(routers + '\nroute();\ntopic();', context);
   const scheduledDelays = timers.map(timer => timer.at);
   const flush = async () => {
     await Promise.resolve();

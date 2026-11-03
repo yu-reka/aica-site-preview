@@ -5,11 +5,10 @@
 (() => {
   const main = document.querySelector('.check-page');
   if (!main) return;
-  const $ = (s, el = document) => el.querySelector(s);
-  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const { $, $$ } = SiteUI.selectors();
   const mobile = matchMedia('(max-width:600px)');
   let revealFAQ = () => {};
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduce = SiteUI.motion().matches;
   const root = document.documentElement;
   const header = $('#siteHeader');
 

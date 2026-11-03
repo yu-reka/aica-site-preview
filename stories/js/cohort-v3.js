@@ -58,7 +58,7 @@
   function inC(d,k){ return k==='3-5'?(d.coh>=3&&d.coh<=5):String(d.coh)===k; }
   function lab(k){ return k==='3-5'?'3–5':k; }
   var PER=9, st={coh:COHS[0], mo:0, pg:1, diff:false, v:'all'};   // v: 보기 방식(모바일 '영상만' 탭, js/stories-m.js). 웹은 늘 'all'
-  var $=function(s){return root.querySelector(s)};
+  var $=SiteUI.selectors(root).$;
   function acc(c){return 'aica_'+String(c).replace('-','to')+'th'}
   function media(d,large){
     var n=d.illu.cloneNode(true); n.removeAttribute('loading'); n.setAttribute('alt','');

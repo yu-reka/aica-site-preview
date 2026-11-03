@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -27,9 +28,9 @@ function projectsPage(hash) {
     addEventListener(name, handler) { (events[name] ||= []).push(handler); },
     setTimeout(handler) { handler(); }, requestAnimationFrame(handler) { handler(); }, scrollTo() {},
   });
-  vm.runInContext(source('../common/js/ui.js'), context);
-  vm.runInContext(source('../common/js/site.js'), context);
-  vm.runInContext(source('../stories/js/stories.js'), context);
+  runInContext(source('../common/js/ui.js'), context);
+  runInContext(source('../common/js/site.js'), context);
+  runInContext(source('../stories/js/stories.js'), context);
   const fire = name => (events[name] || []).forEach(handler => handler());
   return { location, replaced, fire };
 }

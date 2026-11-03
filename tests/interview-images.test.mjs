@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -15,7 +16,7 @@ function render(interviews){
   const window={STORIES_DATA:{interviews},addEventListener(){},removeEventListener(){}};
   const document={baseURI:'https://example.test/stories/interviews.html',querySelector:()=>page,getElementById:()=>null,addEventListener(){},createElement:()=>({innerHTML:'',content:{childNodes:[],children:[]}})};
   const context=vm.createContext({window,document,URL,Set,location:{hash:''}});
-  vm.runInContext(content,context);vm.runInContext(renderer,context);
+  runInContext(content,context);runInContext(renderer,context);
   return {cards:grid.innerHTML,details:list.inserted,hubHero:hero.inserted,hubList:hub.inserted};
 }
 function card(html,id){return html.match(new RegExp('href="#iv-p'+id+'"([\\s\\S]*?)</a>'))?.[1]||'';}

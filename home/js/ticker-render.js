@@ -13,7 +13,7 @@
   var tk = document.querySelector('.tk');
   if (!tk) return;
   var MAX = 12;
-  function esc(t) { return String(t == null ? '' : t).replace(/[&<>"]/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]; }); }
+  function esc(t) { return SiteUI.escapeText(t); }
   // 한눈에 보기(stories/js/stories-render.js)와 같은 규칙
   function firstSentence(t) { var m = String(t || '').match(/^.*?[.!?。](\s|$)/); return (m ? m[0] : String(t || '')).trim(); }
 
@@ -32,11 +32,10 @@
   }
 
   function load(src, onError) {
-    var s = document.createElement('script');
-    s.src = src;
-    s.onload = function () { if (window.STORIES_DATA) render(); else if (onError) onError(); else render(); };
-    s.onerror = function () { if (onError) onError(); else render(); };
-    document.head.appendChild(s);
+    SiteUI.loadScript(src, {
+      onload: function () { if (window.STORIES_DATA) render(); else if (onError) onError(); else render(); },
+      onerror: function () { if (onError) onError(); else render(); }
+    });
   }
   load('../api/public/stories.js', function () { load('../stories/js/stories-data.js?v=design-20261029-hub-honors'); });
 })();

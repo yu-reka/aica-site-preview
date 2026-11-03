@@ -55,9 +55,9 @@ const LifeMobileView = (() => {
     }
     const mapMarkup=map.outerHTML;
     const mapCredit=pick('.housing-map-credit')?.outerHTML||'';
-    const $=(s,r=src)=>r.querySelector(s), $$=(s,r=src)=>[...r.querySelectorAll(s)];
+    const { $, $$ } = SiteUI.selectors(src);
     const text=s=>$(s,src)?.textContent.trim()||'';
-    const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const esc=v=>SiteUI.escapeAttribute(v??'');
     const arrow='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>';
     const image=(path,alt='',cls='')=>`<img class="${cls}" src="${esc(path)}" alt="${esc(alt)}" loading="lazy">`;
     const heading=(k,t,lead='')=>`<div class="section-heading"><p class="kicker">${esc(k)}</p><h2>${esc(t)}</h2>${lead?`<p class="lead">${esc(lead)}</p>`:''}</div>`;

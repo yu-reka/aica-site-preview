@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -16,7 +17,7 @@ function render(projects){
   const window={STORIES_DATA:{projects},addEventListener(){},removeEventListener(){}};
   const document={baseURI:'https://example.test/stories/projects.html',querySelector:()=>page,getElementById:()=>null,addEventListener(){},createElement:()=>({innerHTML:'',content:{childNodes:[],children:[]}})};
   const context=vm.createContext({window,document,URL,Set,location:{hash:''}});
-  vm.runInContext(content,context);vm.runInContext(renderer,context);
+  runInContext(content,context);runInContext(renderer,context);
   return {cards:grid.innerHTML,details:list.inserted,hub:hubBox.innerHTML};
 }
 function card(html,id){return html.match(new RegExp('href="#pj-p'+id+'"([\\s\\S]*?)</a>'))?.[1]||'';}
@@ -109,7 +110,7 @@ test('a picture with no transparent pixel fills the thumbnail box; transparent o
   const document={querySelector:()=>null,querySelectorAll:sel=>sel==='.pjthumb-i'?[photo,art,foreign,loading]:[],createElement:()=>canvas,
     addEventListener(type,fn,capture){(listeners[type]||=[]).push(fn);}};
   const context=vm.createContext({window:{},document,setTimeout,clearTimeout,matchMedia:()=>({matches:false})});
-  vm.runInContext(renderer,context);
+  runInContext(renderer,context);
   assert.deepEqual([photo.parentNode.attrs['data-fit'],[...photo.parentNode.classes]],['full',['pjthumb-full']]);
   assert.deepEqual([art.parentNode.attrs['data-fit'],[...art.parentNode.classes]],['art',[]]);
   assert.deepEqual([foreign.parentNode.attrs['data-fit'],[...foreign.parentNode.classes]],['art',[]]);
@@ -145,7 +146,7 @@ test('pressing play swaps the poster for a privacy-friendly YouTube player, and 
     replaceChildren(){box.kids=[];},appendChild(k){box.kids.push(k);},closest:s=>s==='.pjd'?{id:'pj-p1'}:null};
   const button={closest:s=>s==='.pjvid .ivplay'?button:s==='.pjvid'?box:null};
   const context=vm.createContext({window:{addEventListener(type,fn){(listeners['win:'+type]||=[]).push(fn);}},document,location:{hash:'#pj-p1'},setTimeout,clearTimeout,matchMedia:()=>({matches:false})});
-  vm.runInContext(renderer,context);
+  runInContext(renderer,context);
   let prevented=false;
   listeners['doc:click'].forEach(fn=>fn({target:button,preventDefault(){prevented=true;}}));
   const frame=made.find(e=>e.tagName==='iframe');

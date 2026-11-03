@@ -12,7 +12,7 @@
   'use strict';
   var D = window.FAQ_DATA, list = document.getElementById('faqList');
   if (!D || !Array.isArray(D.items) || !list) return;
-  function esc(t) { return String(t == null ? '' : t).replace(/[&<>"]/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]; }); }
+  function esc(t) { return SiteUI.escapeText(t); }
   var ARROW = '<span class="faq-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></span>';
   list.innerHTML = D.items.map(function (it, i) {
     return '<li id="faq-' + (i + 1) + '" class="faq-item" data-cat="' + esc(it.cat) + '">'

@@ -1,5 +1,33 @@
 /* Shared interaction contracts. No content or route ownership lives here. */
 var SiteUI = (() => {
+  // Text and attributes keep their existing nullish and apostrophe contracts.
+  function escapeMarkup(value, apostrophe) {
+    return String(value).replace(apostrophe ? /[&<>"']/g : /[&<>"]/g,
+      char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  }
+  function escapeText(value) { return escapeMarkup(value == null ? '' : value, false); }
+  function escapeAttribute(value) { return escapeMarkup(value, true); }
+  function selectors(scope = document, nullFallback = false) {
+    const root = parent => nullFallback ? parent || scope : parent === undefined ? scope : parent;
+    return {
+      $: (selector, parent) => root(parent).querySelector(selector),
+      $$: (selector, parent) => [...root(parent).querySelectorAll(selector)]
+    };
+  }
+  // Callers still own ordering, retries and deduplication.
+  function loadScript(src, options = {}) {
+    const script = document.createElement('script');
+    script.src = src;
+    if (options.async !== undefined) script.async = options.async;
+    script.onload = options.onload;
+    script.onerror = options.onerror;
+    document.head.appendChild(script);
+    return script;
+  }
+  function decodeHash(hash) {
+    try { return decodeURIComponent(hash); } catch { return ''; }
+  }
+  function motion() { return matchMedia('(prefers-reduced-motion: reduce)'); }
   function element(tag, cls, text) {
     const node = document.createElement(tag);
     if (cls) node.className = cls;
@@ -77,7 +105,7 @@ var SiteUI = (() => {
     observer.observe(document.documentElement,{childList:true,subtree:true});
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>enhance());else enhance();
   }
-  return { element, cloneWithoutIds, toggleButton, buttonGroup, enhance, trapFocus, createDialogScope, railState, syncRail, railKeys };
+  return { escapeText, escapeAttribute, selectors, loadScript, motion, decodeHash, element, cloneWithoutIds, toggleButton, buttonGroup, enhance, trapFocus, createDialogScope, railState, syncRail, railKeys };
 })();
 
 /* Restore view choices only for a reload of this exact URL. Links and browser

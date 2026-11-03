@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -65,7 +66,7 @@ function start(rows, { live = true, infos } = {}) {
   const context = vm.createContext({ document, matchMedia: () => ({ matches: false, addEventListener() {} }),
     ...(infos ? { STORIES_DATA: { cohortInfos: infos } } : {}) });
   const source = readFileSync(new URL('../stories/js/projects-filter.js', import.meta.url), 'utf8');
-  vm.runInContext(source, context);
+  runInContext(source, context);
   const choose = (group, key, value) => {
     const target = group.children.find(node => node.dataset[key] === value);
     assert.ok(target, 'missing ' + key + ': ' + value); target.click();
@@ -77,7 +78,7 @@ function start(rows, { live = true, infos } = {}) {
     subject(value) { choose(options, 'subject', value); },
     shown() { return cards.filter(card => !card.hidden).length; },
     page(value) { pager.children.find(node => node.attrs['aria-label'] === value + '페이지').click(); },
-    rerun() { const previous = pager; vm.runInContext(source, context); assert.equal(pager, previous); },
+    rerun() { const previous = pager; runInContext(source, context); assert.equal(pager, previous); },
   };
 }
 

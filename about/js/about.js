@@ -3,7 +3,7 @@
 (() => {
 'use strict';
 
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const reducedMotion = SiteUI.motion();
 
 // Run connector motion only while its diagram is on screen.
 const partnerNetwork = document.querySelector('.partner-network');

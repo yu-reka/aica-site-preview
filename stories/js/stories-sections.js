@@ -106,7 +106,7 @@
 /* 인터뷰 본문 위치와 질문 목차를 동기화합니다. 문서 대신 목차만 스크롤합니다. */
 (function(){
   var states=[],frame=0,keyboardIntent=false;
-  var reduced=matchMedia('(prefers-reduced-motion: reduce)');
+  var reduced=SiteUI.motion();
   var mobile=matchMedia('(max-width: 600px)');
   document.querySelectorAll('.ivd .sidebox > ol').forEach(function(list){
     var detail=list.closest('.ivd');
@@ -145,7 +145,8 @@
       });
       return;
     }
-    var target;try{target=document.getElementById(decodeURIComponent(location.hash.slice(1)))}catch(e){}
+    var id=Site.decodeHash(location.hash.slice(1));
+    var target=id?document.getElementById(id):null;
     var detail=target&&target.closest('.ivd');
     var state=states.find(function(s){return s.detail===detail});
     if(!state||!detail.getClientRects().length)return;

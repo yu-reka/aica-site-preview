@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -47,7 +48,7 @@ function start(classes, { hash = '', spring = false } = {}) {
   };
   // An unenhanced source intentionally leaves the category results unpaged,
   // reproducing the original 22-card regression rather than testing a model helper.
-  if (controller) vm.runInNewContext('/* Desktop review paging:' + controller, {
+  if (controller) runInNewContext('/* Desktop review paging:' + controller, {
     document, location, matchMedia: () => ({ matches: false }),
     addEventListener(name, callback) { (listeners[name] ||= []).push(callback); },
   });

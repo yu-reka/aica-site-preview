@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
@@ -50,7 +51,7 @@ function runtime(options = {}) {
     setTimeout(fn){timers.set(++timerId,fn);return timerId;}, clearTimeout(id){timers.delete(id);},
     SiteUI:{createDialogScope:()=>({activate(){modalActive=true;},release(){modalActive=false;}}),trapFocus(){}},
     SiteLayout:()=>Object.fromEntries(['renderHeader','renderLnb','renderFooter','renderFloating'].map(k=>[k,()=>{}]))};
-  vm.runInNewContext(readFileSync(new URL('../common/js/site.js',import.meta.url),'utf8'),context);
+  runInNewContext(readFileSync(new URL('../common/js/site.js',import.meta.url),'utf8'),context);
   return {document,header,drawer,dim,menu,close,topLink,gnb,events,sublinks,sections,
     navigate(hash){context.location.hash=hash;(events.hashchange || []).forEach(fn=>fn());},
     boundary:media.get('(min-width:1081px)'),

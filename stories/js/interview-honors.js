@@ -68,7 +68,7 @@
     cards = Array.from(track.querySelectorAll('.sm-ivf-c'));
   }
   var first = originals.length > 1 ? 1 : 0;
-  var reduce = matchMedia('(prefers-reduced-motion:reduce)'), current = first, timer, frame, destination = null, lastMove = 0;
+  var reduce = SiteUI.motion(), current = first, timer, frame, destination = null, lastMove = 0;
   track.tabIndex = 0;
   track.setAttribute('role', 'group');
   track.setAttribute('aria-label', '우수 수료생 인터뷰 ' + originals.length + '개, 좌우 방향키로 넘기기');

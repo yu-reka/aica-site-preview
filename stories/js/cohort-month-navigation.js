@@ -5,7 +5,7 @@
   const track = root?.querySelector('.cv3-hl');
   if (!track) return;
   const desktop = matchMedia('(min-width:601px)');
-  const reduce = matchMedia('(prefers-reduced-motion:reduce)');
+  const reduce = SiteUI.motion();
   const box = document.createElement('div');
   box.className = 'cv3-month-nav';
   const content = track.closest('.sm-rail-box--hl') || track;

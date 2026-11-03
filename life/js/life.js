@@ -8,9 +8,8 @@
    ========================================================= */
 (function(){
 'use strict';
-var $ = function(s, r){ return (r || document).querySelector(s); };
-var $$ = function(s, r){ return [].slice.call((r || document).querySelectorAll(s)); };
-var RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+var queries = SiteUI.selectors(document, true), $ = queries.$, $$ = queries.$$;
+var RM = SiteUI.motion().matches;
 var NARROW = matchMedia('(max-width: 860px)');   // 폰 · 태블릿: 목록 안 스크롤 없음 · 꿀팁 바로가기 막대 안 붙음(life.css와 같은 경계)
 var MAIN = $('.life-page');
 if (!MAIN) return;
@@ -254,7 +253,7 @@ if (cA) cA.addEventListener('click', function(){
    펼치기 · 접기는 FLIP: 바뀌기 전 자리를 재고 → 클래스를 바꾼 뒤 새 자리를 재고 → 옛 자리에서 새 자리로 transform만 움직임(사진은 4:3 그대로라 늘어나 보이지 않음).
    묶음 높이 · 제목 줄 · 버튼도 같은 시간 · 같은 곡선으로. 움직임 줄이기 설정이면 바로 바뀜 ---------- */
 (function(){
-  var RMQ = matchMedia('(prefers-reduced-motion: reduce)'), EASE = 'cubic-bezier(.22,.8,.24,1)', DUR = 560;
+  var RMQ = SiteUI.motion(), EASE = 'cubic-bezier(.22,.8,.24,1)', DUR = 560;
   $$('.fs .fsg', MAIN).forEach(function(g){
     var b = g.querySelector('.fs-tg'), d = g.querySelector('.fsd'), cards = [].slice.call(g.querySelectorAll('.fsc'));
     var heads = [g.querySelector('.fsn'), g.querySelector('.fsh > div'), b], busy = false;

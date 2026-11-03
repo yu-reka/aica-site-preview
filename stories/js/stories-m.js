@@ -7,9 +7,8 @@
    웹(601px 이상)은 그대로. */
 (function(){
   var mq = matchMedia('(max-width: 600px)');
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)');
-  var $ = function(s, c){ return (c || document).querySelector(s); };
-  var $$ = function(s, c){ return [].slice.call((c || document).querySelectorAll(s)); };
+  var reduce = SiteUI.motion();
+  var queries = SiteUI.selectors(document, true), $ = queries.$, $$ = queries.$$;
   var root = document.documentElement;
   var ARROW = { prev: 'm14 5-7 7 7 7', next: 'm10 5 7 7-7 7' };
   var SHORT = { overview: '전체', cohorts: '기수 기록' };
@@ -238,7 +237,7 @@
 
   // Older Spring templates only load this entry. Keep their review UI working
   // while new templates explicitly preload the page-owned review initializer.
-  var reviewScript = new URL('stories-m-reviews.js?v=1102mobile-review-list-pager', document.currentScript.src).href;
+  var reviewScript = new URL('stories-m-reviews.js?v=1103shared-helpers', document.currentScript.src).href;
   var reviewLoading = false;
   function initReviews(){
     if (!$('#p-rev')) return;
@@ -246,11 +245,10 @@
       StoriesMobileReviews.init();
     } else if (!reviewLoading) {
       reviewLoading = true;
-      var script = document.createElement('script');
-      script.src = reviewScript;
-      script.onload = function(){ StoriesMobileReviews.init(); };
-      script.onerror = function(){ reviewLoading = false; };
-      document.head.appendChild(script);
+      SiteUI.loadScript(reviewScript, {
+        onload: function(){ StoriesMobileReviews.init(); },
+        onerror: function(){ reviewLoading = false; }
+      });
     }
   }
 

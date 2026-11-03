@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -45,22 +46,22 @@ function start(zoomed = false) {
     CustomEvent: class { constructor(type) { this.type = type; } },
     hubModal: true, root: { closest: () => page }, M: cohort, Z: zoom, modalVisited: [], last: card,
     modalEntry:false, modalScroll:0, window:{scrollTo(){}}, changePhoto() {}, history: { replaceState() {} } });
-  vm.runInContext(readFileSync(new URL('../common/js/ui.js', import.meta.url), 'utf8'), context);
+  runInContext(readFileSync(new URL('../common/js/ui.js', import.meta.url), 'utf8'), context);
   const cohortScope = context.SiteUI.createDialogScope();
   context.isolateDialog = dialog => dialog ? cohortScope.activate(dialog) : cohortScope.release();
   const stories = readFileSync(new URL('../stories/js/stories.js', import.meta.url), 'utf8');
   const begin = stories.indexOf('  (function(){\n    var opener = null, link = null;');
   const end = stories.indexOf('  /* ---------- 숨은 라디오', begin);
-  vm.runInContext(stories.slice(begin, end), context);
+  runInContext(stories.slice(begin, end), context);
   const cohorts = readFileSync(new URL('../stories/js/cohort-v3.js', import.meta.url), 'utf8');
   const closeBegin = cohorts.indexOf('  function closeM(');
   const closeEnd = cohorts.indexOf("  M.querySelector('.pv').onclick", closeBegin);
-  vm.runInContext(cohorts.slice(closeBegin, closeEnd), context);
+  runInContext(cohorts.slice(closeBegin, closeEnd), context);
   // cohort-v3 registers its hash listener after stories.js on the hub.
   const hashBegin = cohorts.indexOf("addEventListener('hashchange',function(){", cohorts.indexOf('  function hashOpen()'));
   const hashEnd = cohorts.indexOf('\n})();', hashBegin);
   context.hashOpen = () => {};
-  vm.runInContext(cohorts.slice(hashBegin, hashEnd), context);
+  runInContext(cohorts.slice(hashBegin, hashEnd), context);
   function activateCohort() {
     cohort.hidden = false; zoom.hidden = !zoomed;
     cohortScope.activate(zoomed ? zoom : cohort); active = close;

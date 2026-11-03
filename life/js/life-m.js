@@ -33,9 +33,8 @@
   const main = document.createElement('div');
   main.className = 'lm-content';
   host.append(main);
-  const $ = (selector, parent = main) => parent.querySelector(selector);
-  const $$ = (selector, parent = main) => [...parent.querySelectorAll(selector)];
-  const reduce = matchMedia('(prefers-reduced-motion:reduce)');
+  const { $, $$ } = SiteUI.selectors(main);
+  const reduce = SiteUI.motion();
   const railObservers = [];
   document.addEventListener('click', event => {
     $$('.topic-picker[open]').forEach(picker => {

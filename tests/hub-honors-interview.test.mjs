@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -16,7 +17,7 @@ function render(interviews,featured=true){
     hubVisual:v=>'<img src="'+esc(v.img?.src||'default.webp')+'">',
     $:(selector,root)=>root===card?fields[selector]||null:root===box?(selector==='.hb-ivf'?card:null):selector==='.hb-ivg'?box:selector==='#hub-interviews[data-honors-feature]'&&featured?{}:null,
     $$:()=>[]};
-  vm.runInNewContext(hub,context);
+  runInNewContext(hub,context);
   return {box,card,photo,title,summary,by,label};
 }
 

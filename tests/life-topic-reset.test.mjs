@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -23,7 +24,7 @@ function watch(topic, hash) {
   const controller = source.match(new RegExp('var ' + states[topic] + '\\s*=[\\s\\S]+?\\n  *\\}\\);'))?.[0];
   assert.ok(controller, topic + ' reset controller exists');
   const foodHelper = topic === 'food' ? source.match(/function onFoodPage\(hash\)\{[^\n]+\}/)?.[0] || '' : '';
-  vm.runInNewContext(helper + '\n' + foodHelper + '\n' + controller, context);
+  runInNewContext(helper + '\n' + foodHelper + '\n' + controller, context);
   return {resets, context, change:hash=>handlers.forEach(fn=>fn({newURL:'https://site.test/life/index.html' + hash}))};
 }
 

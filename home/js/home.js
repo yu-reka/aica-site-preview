@@ -3,8 +3,7 @@
    포스터 마크업 · 사진 · 링크는 home/index.html에 있습니다(서버 템플릿으로 그대로 옮길 수 있게 JS로 그리지 않음).
    헤더 · 메뉴 · 푸터는 공통 틀(common/js/site.js).
    ========================================================= */
-const $ = (s, el = document) => el.querySelector(s);
-const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const { $, $$ } = SiteUI.selectors();
 const { reduce } = Site;
 
 /* --- 홈: 카테고리 하이라이트 · 마우스 패럴랙스 · 진입 애니메이션 --- */
@@ -49,7 +48,7 @@ function setupHome(main){
 (function setupTicker(){
   const ticker=document.querySelector('.tk'), button=ticker?.querySelector('.tk-toggle');
   if(!button)return;
-  const preference=matchMedia('(prefers-reduced-motion: reduce)');
+  const preference=SiteUI.motion();
   const touchArea=matchMedia('(max-width:860px), (hover:none)');
   let paused=preference.matches;
   const paint=()=>{

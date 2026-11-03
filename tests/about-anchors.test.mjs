@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -10,7 +11,7 @@ test('rapid chapter taps cancel animation and use the last target, then restore 
   let now = 1000, y = 0, nextFrame = 0;
   const frames = new Map();
   const tops = { 'am-ch1': 1000, 'am-ch2': 4000, 'am-ch3': 6000, 'am-ch4': 7000 };
-  vm.runInNewContext(chapterController, {
+  runInNewContext(chapterController, {
     Date: { now: () => now }, mq: {matches:true}, reduce: {matches:false},
     btns: [1, 2, 3, 4].map(k => ({dataset:{jump:String(k)}, addEventListener:(_, fn) => handlers.push(fn)})),
     document: {readyState:'loading', addEventListener() {}, getElementById:id => ({getBoundingClientRect:()=>({top:tops[id] - y})})},
@@ -44,7 +45,7 @@ for (const pathname of ['/aica-site-preview/about', '/aica-site-preview/about/',
     const location = { origin: 'https://example.test', pathname, hash: '#learning', href: `https://example.test${pathname}#learning` };
     const targetPath = pathname.startsWith('/admin/') ? '/admin/pages/site/about/index.html' : '/aica-site-preview/about/index.html';
     const link = { href: `https://example.test${targetPath}#learning` };
-    vm.runInNewContext(chapterController, {
+    runInNewContext(chapterController, {
       URL, location, mq: {matches:true}, reduce: {matches:true}, btns:[], scrollY:0,
       document: { readyState:'loading', getElementById: id => id === 'am-ch2' ? {getBoundingClientRect:()=>({top:500})} : null,
         addEventListener: (type, fn) => { if(type === 'click') click = fn; } },
@@ -64,7 +65,7 @@ for (const pathname of ['/aica-site-preview/about', '/aica-site-preview/about/',
 test('chapter scroll completion corrects layout shifts and manual scrolling cancels correction', () => {
   const handlers = [], events = {}, scrolls = [];
   let y = 0, chapterTop = 4000;
-  vm.runInNewContext(chapterController, {
+  runInNewContext(chapterController, {
     Date, mq: {matches:true}, reduce: {matches:false},
     btns: [{dataset:{jump:'2'}, addEventListener:(_, fn) => handlers.push(fn)}],
     document: {readyState:'loading', addEventListener() {}, getElementById:()=>({getBoundingClientRect:()=>({top:chapterTop-y})})},

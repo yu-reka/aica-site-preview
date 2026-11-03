@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
@@ -19,7 +20,7 @@ test('cohort info elements are built from STORIES_DATA.cohortInfos as plain text
     {cohort:'8',account:'aica_8th',tag:'',bio:{title:'',text:''},tracks:[],label:'',rows:[{item:'프로젝트',before:'720시간',after:'준비 중'},{item:''}]}
   ]};
   const context={STORIES_DATA,root:{},D:[],document:{createElement:tag=>new El(tag)},lab:k=>k==='3-5'?'3–5':k,acc:c=>'aica_'+String(c).replace('-','to')+'th'};
-  vm.runInNewContext(source.slice(source.indexOf('  var COH_KEY='),source.indexOf('  /* 기수 칩 ='))+'\nvar seven=info("7"),eight=info("8"),nine=info("9"),name=accName(7);',context);
+  runInNewContext(source.slice(source.indexOf('  var COH_KEY='),source.indexOf('  /* 기수 칩 ='))+'\nvar seven=info("7"),eight=info("8"),nine=info("9"),name=accName(7);',context);
   const {seven,eight,nine}=context;
   assert.equal(seven.has,true);
   assert.equal(seven.pin.className,'cv3-pin');

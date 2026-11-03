@@ -1,3 +1,4 @@
+import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
@@ -35,7 +36,7 @@ test('all generated pages and site settings render from source', () => {
     }
   }
   const site = loadContent().site;
-  const generated = vm.runInNewContext(outputs.get('common/js/menu.js') + '\nJSON.stringify({home:SITE_HOME,menu:SITE_MENU,links:SITE_LINKS,organization:SITE_INFO})');
+  const generated = runInNewContext(outputs.get('common/js/menu.js') + '\nJSON.stringify({home:SITE_HOME,menu:SITE_MENU,links:SITE_LINKS,organization:SITE_INFO})');
   assert.deepEqual(JSON.parse(generated), site);
 });
 
@@ -95,7 +96,7 @@ test('unmapped filter categories fail instead of silently hiding content', () =>
 test('footer reads editable channel and copyright settings', () => {
   const context = loadContent();
   const info = { ...context.site.organization, kakaoChannel: '@changed-channel', copyright: '변경한 저작권 문구' };
-  const factory = vm.runInNewContext(readFileSync(join(root, 'common/js/site-layout.js'), 'utf8') + '\nSiteLayout', {
+  const factory = runInNewContext(readFileSync(join(root, 'common/js/site-layout.js'), 'utf8') + '\nSiteLayout', {
     SITE_HOME: context.site.home, SITE_MENU: context.site.menu, SITE_LINKS: context.site.links, SITE_INFO: info
   });
   const footer = { firstElementChild: null, innerHTML: '' };
@@ -109,7 +110,7 @@ test('footer reads editable channel and copyright settings', () => {
 
 test('footer shows the school BI and one logo per agency, each with alt text and no agency links (2026-11-02)', () => {
   const context = loadContent();
-  const factory = vm.runInNewContext(readFileSync(join(root, 'common/js/site-layout.js'), 'utf8') + '\nSiteLayout', {
+  const factory = runInNewContext(readFileSync(join(root, 'common/js/site-layout.js'), 'utf8') + '\nSiteLayout', {
     SITE_HOME: context.site.home, SITE_MENU: context.site.menu, SITE_LINKS: context.site.links, SITE_INFO: context.site.organization
   });
   const footer = { firstElementChild: null, innerHTML: '' };

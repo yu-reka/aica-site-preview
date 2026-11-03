@@ -143,10 +143,13 @@
   }
   // 프로젝트 시연 영상(2026-10-27): 유튜브 번호가 있으면 상세 맨 위(대표 이미지 자리)에 대표 그림(썸네일 · 대표 사진) + 재생 단추.
   // 누르면 그 자리에서 재생해요(이 파일 끝 '프로젝트 시연 영상'). data-yt 가 아니라 data-pj-yt — 인터뷰용 재생(stories-sections.js)과 겹치지 않게
+  // 시연 구간(2026-11-03): 1시간짜리 영상 하나에 여러 팀 시연이 이어져 있어 video.start · end(초)가 있으면 그 구간만 재생(data-pj-start · data-pj-end)
   function pjVideo(x) {
     var yt = x.video && x.video.yt;
     if (!yt) return '';
-    return '<div class="ivhero pjhero ivvid pjvid" data-pj-yt="' + esc(yt) + '"><span class="ivtag">' + esc(pjSubject(x)) + '</span>'
+    var sec = function (v) { return typeof v === 'number' && v > 0 && v <= 86400 ? Math.floor(v) : 0; }, start = sec(x.video.start), end = sec(x.video.end);
+    return '<div class="ivhero pjhero ivvid pjvid" data-pj-yt="' + esc(yt) + '"' + (start ? ' data-pj-start="' + start + '"' : '')
+      + (end > start ? ' data-pj-end="' + end + '"' : '') + '><span class="ivtag">' + esc(pjSubject(x)) + '</span>'
       + (hasThumb(x) ? pjThumb(x, 'illu', PHOTO_DETAIL_SIZES) : visual(x, { hidden: true, sizes: PHOTO_DETAIL_SIZES }))
       + '<button class="ivplay" type="button" aria-label="' + esc(x.title) + ' 시연 영상 재생"><i></i></button></div>';
   }
@@ -683,7 +686,9 @@
     e.preventDefault();
     box.pjPoster = box.pjPoster || box.innerHTML;
     var f = document.createElement('iframe');
-    f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1';
+    var start = +box.getAttribute('data-pj-start') || 0, end = +box.getAttribute('data-pj-end') || 0;   // 시연 구간(2026-11-03)
+    f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1'
+      + (start > 0 ? '&start=' + Math.floor(start) : '') + (end > start ? '&end=' + Math.floor(end) : '');
     f.title = '프로젝트 시연 영상'; f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true;
     var tag = box.querySelector('.ivtag');
     box.replaceChildren(); if (tag) box.appendChild(tag); box.appendChild(f); f.focus();

@@ -37,7 +37,7 @@
     },
     "js": {
       "availability": "1030offline-art60",
-      "site-layout": "1103public-footer-jngj18",
+      "site-layout": "1104footer-logo-order-public",
       "site": "1103shared-helpers",
       "track": "1027admin-views",
       "ui": "1103shared-helpers",
@@ -48,7 +48,7 @@
   },
   "home": {
     "css": {
-      "home": "1102check-box-center"
+      "home": "1104mobile-story-keywords-right"
     },
     "js": {
       "home": "1103shared-helpers",

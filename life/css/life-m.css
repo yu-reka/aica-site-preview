@@ -304,7 +304,8 @@ html[data-menu=life] body.lm-docked .floating{bottom:calc(100px + env(safe-area-
 .lm-content .culture-row{display:grid;grid-template-columns:82px minmax(0,1fr) 18px;gap:12px;align-items:center;width:100%;min-height:106px;padding:15px 0;border:0;border-bottom:1px solid var(--line);background:none;text-align:left}
 .lm-content .culture-row>img{width:82px;height:76px;object-fit:cover;border-radius:12px}
 .lm-content .culture-row b{display:block;font-size:16px;line-height:1.4;margin-bottom:5px;word-break:keep-all}
-.lm-content .culture-row small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:12px;line-height:1.6;color:var(--muted)}
+.lm-content .culture-row small{display:block;max-height:3.2em;overflow:hidden;font-size:12px;line-height:1.6;color:var(--muted)}
+.lm-content .culture-row small>span{display:block}
 .lm-culture-sheet{box-sizing:border-box;position:fixed;inset:auto 0 0;margin:0;width:100%;max-width:none;max-height:85dvh;padding:0;border:0;border-radius:22px 22px 0 0;background:#fff;color:var(--ink);font:400 14px/1.8 Pretendard,sans-serif;overscroll-behavior:contain}
 .lm-culture-sheet::backdrop{background:#14233f66}
 .culture-sheet-body{padding:18px 20px calc(24px + env(safe-area-inset-bottom))}
@@ -321,5 +322,5 @@ html[data-menu=life] body.lm-docked .floating{bottom:calc(100px + env(safe-area-
 .culture-photo-caption{flex:1;min-width:0;margin:0;font-size:12px;color:#566175;line-height:1.5}
 .culture-photo-controls svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2}
 .culture-photo-controls [data-culture-photo="-1"] svg{transform:rotate(180deg)}
-.culture-description{margin:0;white-space:pre-line}
+.culture-description{margin:0;white-space:pre-line;word-break:break-all;overflow-wrap:anywhere;text-wrap:wrap}
 }

@@ -255,6 +255,7 @@
     fitSummaries();
   }
   function syncLayout() {
+    if (!track.clientWidth) return;
     cancelAnimationFrame(frame); clearTimeout(timer); destination = null;
     drag = null; mobileSwipe = null; track.classList.remove('is-swiping');
     track.classList.remove('is-dragging'); track.style.removeProperty('--honors-drag-x');
@@ -279,6 +280,7 @@
     }, 0);
   }
   function paint() {
+    if (!track.clientWidth) return;
     if (desktopFan.matches) { paintFan(); return; }
     current = nearest();
     if (originals.length > 1 && (current === 0 || current === cards.length - 1)) {
@@ -293,6 +295,7 @@
     fitSummaries();
   }
   function align(index, instant) {
+    if (!track.clientWidth) return;
     if (desktopFan.matches) { paintFan(); return; }
     cancelAnimationFrame(frame);
     clearTimeout(timer);
@@ -357,5 +360,16 @@
   addEventListener('resize', function () {
     if (desktopFan.matches) paintFan(); else align(current, true);
   });
-  requestAnimationFrame(syncLayout);
+  // A direct detail URL (including the All-page feature) hides the list at startup.
+  // Remember its real card instead of measuring the hidden loop copies.
+  function restoreHonors() {
+    var index = originals.findIndex(function (card) { return card.getAttribute('href') === location.hash; });
+    if (index >= 0) {
+      current = index + first;
+      fanIndex = fanCursor = index;
+    }
+    requestAnimationFrame(function () { requestAnimationFrame(syncLayout); });
+  }
+  addEventListener('hashchange', restoreHonors);
+  restoreHonors();
 })();

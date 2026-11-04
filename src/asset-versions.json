@@ -57,7 +57,7 @@
   },
   "life": {
     "css": {
-      "life-m": "1102culture-compact",
+      "life-m": "1103culture-detail-wrap",
       "life": "1103address-label-remove",
       "presentation": "1028topic-top-chips",
       "housing-map": "20261028-map-credit-center",
@@ -65,7 +65,7 @@
     },
     "js": {
       "life-m-view": "1103address-label-remove-integrated",
-      "life-m": "1103shared-helpers",
+      "life-m": "1103culture-centered-ellipsis",
       "life": "1103shared-helpers",
       "culture": "1103shared-helpers"
     }
@@ -77,25 +77,25 @@
         "hub": "1103cohort-modal-borderless"
       },
       "detail-navigation": "1020outsidegrid",
-      "hub": "1102cohort-mosaic-meta-only",
+      "hub": "1103honors-list-gap",
       "presentation": {
         "hub": "1030review-ssul-small",
         "default": "1030review-ssul-small"
       },
       "projects-grid": "1021listbadges",
-      "review-notes": "1103hub-review-navigation",
+      "review-notes": "1103review-meta-align",
       "stories-m": {
-        "default": "1102mobile-review-list-pager",
-        "cohorts": "1102cohort-stat-size"
+        "default": "1103project-toggle-right",
+        "cohorts": "1103project-toggle-right"
       },
       "stories-render": "1027demo-video",
       "stories-sections": {
         "interviews": "1027detail-word-wrap",
-        "projects": "1102project-demo-label",
+        "projects": "1103project-name-size",
         "reviews": "1102loading-history",
         "cohorts": "1102loading-history"
       },
-      "stories": "1102shared-review-view-toggle",
+      "stories": "1103interview-detail-wrap",
       "story-state": "1102cohort-stable-loading",
       "interview-honors": "1102honors-natural-title",
       "project-video": "1027prep-always"
@@ -113,12 +113,12 @@
         "default": "1103shared-helpers",
         "legacyLoader": "1103shared-helpers"
       },
-      "stories-m": "1103shared-helpers",
-      "stories-render": "1103demo-segment",
+      "stories-m": "1103project-white-separated",
+      "stories-render": "1103review-tags-demo-integrated",
       "stories-sections": "1103shared-helpers",
       "stories": "1102loading-history",
       "story-state": "1102hub-empty-action",
-      "interview-honors": "1103shared-helpers",
+      "interview-honors": "1103honors-detail-return",
       "cohort-month-navigation": "1103shared-helpers",
       "project-video": "1027photo-first-hero",
       "story-detail-title": "1103shared-helpers",

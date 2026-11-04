@@ -154,17 +154,6 @@
     "id": "bx9s-8-0",
     "caption": "구내식당 전경",
     "name": "구내식당",
-    "note2RichText": [
-      {
-        "tag": "a",
-        "attrs": {
-          "href": "../check/index.html#benefits"
-        },
-        "children": [
-          "식비 지원은 지원 혜택에서 →"
-        ]
-      }
-    ],
     "galleryLabel": "구내식당 사진 2장",
     "floorKey": "8",
     "spaceKey": "0",

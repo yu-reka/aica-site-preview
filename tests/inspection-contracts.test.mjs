@@ -86,7 +86,11 @@ test('the unified review detail preserves every tag with escaped content in stat
     const start = html.indexOf('id="' + record.id + '"');
     const next = html.indexOf('<div class="ov', start + 1);
     const detail = html.slice(start, next < 0 ? undefined : next);
-    for (const tag of record.tags) assert.ok(detail.includes('href="' + tag.href + '"'), record.id);
+    for (const tag of record.tags) {
+      const label = tag.label.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+      assert.ok(detail.includes('<span class="t" data-field="tag">' + label + '</span>'), record.id);
+    }
+    assert.ok(detail.indexOf('class="mtags"') < detail.indexOf('class="mbody"'), record.id);
   }
 });
 

@@ -142,10 +142,12 @@
   // 프로젝트 썸네일(2026-10-26): 흰 바탕에 관리자가 고른 그림(thumb, 투명 배경)만 크게. 글자는 넣지 않아요(사용자 요청 — 주제는 카드 글로)
   // 사진처럼 꽉 찬 그림은 그림이 오면 칸 크기에 맞춰 채워요(이 파일 끝 '썸네일 그림 맞추기')
   function hasThumb(item) { return !!(item.thumb && item.thumb.src); }
-  function pjThumb(item, cls, sizes) {
-    var t = item.thumb;
+  // 보일 위치 · 확대(2026-11-05, 관리 화면 발행 창에서 끌어 맞춤 — thumb.fit): 카드 · 한눈에 보기(card)에서만, 사진처럼 꽉 찬 썸네일(pjthumb-full)일 때 CSS 가 써요
+  function pjThumb(item, cls, sizes, card) {
+    var t = item.thumb, f = card && t.fit;
+    var pos = f ? ' data-pos style="--fx:' + num(f.x, 50) + '%;--fy:' + num(f.y, 50) + '%;--z:' + num(f.z, 1) + '"' : '';
     return '<div class="pjthumb' + (cls ? ' ' + cls : '') + '" aria-hidden="true">'
-      + '<img class="pjthumb-i" src="' + esc(t.src) + '" alt="" loading="lazy" decoding="async"' + sourceSet(t,sizes || PHOTO_CARD_SIZES) + (t.w && t.h ? ' width="' + t.w + '" height="' + t.h + '"' : '') + '></div>';
+      + '<img class="pjthumb-i"' + pos + ' src="' + esc(t.src) + '" alt="" loading="lazy" decoding="async"' + sourceSet(t,sizes || PHOTO_CARD_SIZES) + (t.w && t.h ? ' width="' + t.w + '" height="' + t.h + '"' : '') + '></div>';
   }
   // 프로젝트 시연 영상(2026-10-27): 유튜브 번호가 있으면 상세 맨 위(대표 이미지 자리)에 대표 그림(썸네일 · 대표 사진) + 재생 단추.
   // 누르면 그 자리에서 재생해요(이 파일 끝 '프로젝트 시연 영상'). data-yt 가 아니라 data-pj-yt — 인터뷰용 재생(stories-sections.js)과 겹치지 않게
@@ -351,7 +353,7 @@
     // 주제가 없는 예전 글은 서비스 이름을 큰 글씨로. 회색 요약 줄은 주제와 같은 글이라 두지 않아요
     if (pjgrid) pjgrid.innerHTML = PJ.map(function (x) {
       var topic = pjTopic(x);
-      return '<a data-cohort="' + esc(pjCohort(x)) + '" data-subject="' + esc(courseOf(x)) + '" class="pjc" href="#' + esc(x.anchor) + '"><div class="ph">' + (hasThumb(x) ? pjThumb(x, 'illu') : visual(x, { fit: true })) + '<span class="pjc-type" data-field="subject">' + esc(pjSubject(x)) + '</span></div>'
+      return '<a data-cohort="' + esc(pjCohort(x)) + '" data-subject="' + esc(courseOf(x)) + '" class="pjc" href="#' + esc(x.anchor) + '"><div class="ph">' + (hasThumb(x) ? pjThumb(x, 'illu', null, true) : visual(x, { fit: true })) + '<span class="pjc-type" data-field="subject">' + esc(pjSubject(x)) + '</span></div>'
         + '<div class="pjc-tx">' + (topic ? '<p class="pjname">' + esc(projectName(x)) + '</p><h3 data-field="summary">' + esc(topic) + '</h3>' : '<h3 data-field="title">' + esc(projectName(x)) + '</h3>')
         + '<div class="tags">' + (x.tags || []).map(function (t) { return '<span data-field="tag">' + esc(t) + '</span>'; }).join('') + '</div>'
         + '<p class="team" data-field="team">' + esc(x.team) + '</p></div></a>';
@@ -515,7 +517,7 @@
       PJ.forEach(function (x) { if (three.length < 3 && !types[x.type]) { types[x.type] = 1; three.push(x); } });
       PJ.forEach(function (x) { if (three.length < 3 && three.indexOf(x) < 0) three.push(x); });
       pjBox.innerHTML = three.map(function (x) {
-        return '<a class="hb-pjc" href="projects.html#' + esc(x.anchor) + '"><span class="hb-pjc-ph">' + (hasThumb(x) ? pjThumb(x) : hubVisual(x, {sizes:PHOTO_CARD_SIZES})) + '<span class="hb-pjc-type">' + esc(subjectOf(x)) + '</span></span>'
+        return '<a class="hb-pjc" href="projects.html#' + esc(x.anchor) + '"><span class="hb-pjc-ph">' + (hasThumb(x) ? pjThumb(x, null, null, true) : hubVisual(x, {sizes:PHOTO_CARD_SIZES})) + '<span class="hb-pjc-type">' + esc(subjectOf(x)) + '</span></span>'
           + '<div class="hb-pjc-tx">' + (pjTopic(x) ? '<p class="hb-pjc-nm">' + esc(projectName(x)) + '</p><h3>' + esc(pjTopic(x)) + '</h3>' : '<h3>' + esc(projectName(x)) + '</h3>')
           + '<span class="hb-pjc-tm">' + esc(x.team) + '</span></div></a>';   // 프로젝트 카드와 같게: 서비스 이름 · 프로젝트 주제 · 팀
       }).join('');

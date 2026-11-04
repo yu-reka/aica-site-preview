@@ -48,7 +48,7 @@
   },
   "home": {
     "css": {
-      "home": "1104mobile-story-keywords-right"
+      "home": "1104home-hand-css-cleanup"
     },
     "js": {
       "home": "1103shared-helpers",

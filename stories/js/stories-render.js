@@ -150,6 +150,8 @@
   // 프로젝트 시연 영상(2026-10-27): 유튜브 번호가 있으면 상세 맨 위(대표 이미지 자리)에 대표 그림(썸네일 · 대표 사진) + 재생 단추.
   // 누르면 그 자리에서 재생해요(이 파일 끝 '프로젝트 시연 영상'). data-yt 가 아니라 data-pj-yt — 인터뷰용 재생(stories-sections.js)과 겹치지 않게
   // 시연 구간(2026-11-03): 1시간짜리 영상 하나에 여러 팀 시연이 이어져 있어 video.start · end(초)가 있으면 그 구간만 재생(data-pj-start · data-pj-end)
+  // 영상 구간 시간(초): 하루 안의 양수만, 아니면 0(인터뷰 영상 구간 2026-11-05)
+  function ytSec(v) { return typeof v === 'number' && v > 0 && v <= 86400 ? Math.floor(v) : 0; }
   function pjVideo(x) {
     var yt = x.video && x.video.yt;
     if (!yt) return '';
@@ -308,8 +310,11 @@
     var details = IV.map(function (v) {
       var id = esc(v.anchor), no = anchorNo(v.anchor, id), vid = v.video && v.video.yt;
       var tag = '<span class="ivtag">' + esc(v.cohort) + '기 · ' + esc(v.track) + '</span>';
+      // 영상 구간(2026-11-05): video.start · end(초)가 있으면 재생 단추가 그 구간만 재생(data-yt-start · data-yt-end → stories-sections.js)
+      var ytFrom = vid ? ytSec(v.video.start) : 0, ytTo = vid ? ytSec(v.video.end) : 0;
       var hero = vid
-        ? '<div class="ivhero ivvid ivhero-avatar" data-yt="' + esc(v.video.yt) + '">' + tag + visual(v, { large: true, alt: false, hidden: true })
+        ? '<div class="ivhero ivvid ivhero-avatar" data-yt="' + esc(v.video.yt) + '"' + (ytFrom ? ' data-yt-start="' + ytFrom + '"' : '')
+          + (ytTo > ytFrom ? ' data-yt-end="' + ytTo + '"' : '') + '>' + tag + visual(v, { large: true, alt: false, hidden: true })
           + '<button class="ivplay" type="button" aria-label="인터뷰 영상 재생"><i></i></button><span class="dur">' + esc(v.video.dur || '') + '</span></div>'
         : '<div class="ivhero ivhero-avatar">' + tag + visual(v, { large: true, alt: false, field: 'thumbnail' })
           + '<svg class="ivhero-bubble" viewBox="0 0 100 80" aria-hidden="true" focusable="false"><path d="M20 8h60q13 0 13 13v29q0 13-13 13H48L30 76l3-13H20Q7 63 7 50V21Q7 8 20 8Z" fill="white"/><g fill="#6c95dd"><circle cx="33" cy="36" r="4"/><circle cx="50" cy="36" r="4"/><circle cx="67" cy="36" r="4"/></g></svg></div>';
@@ -325,7 +330,7 @@
       if (vid) {
         var mm = /^(\d+):(\d{1,2})$/.exec(v.video.dur || ''), len = mm ? (+mm[1] ? +mm[1] + '분 ' : '') + (+mm[2]) + '초' : (v.video.dur || '');
         side = '<h3>이 영상</h3><dl class="ivmeta">' + (len ? '<div><dt>길이</dt><dd>' + esc(len) + '</dd></div>' : '') + '<div><dt>기수</dt><dd>' + esc(v.cohort) + '기</dd></div><div><dt>직군</dt><dd>' + esc(v.track) + '</dd></div></dl>'
-          + '<a class="ivyt" href="https://www.youtube.com/watch?v=' + esc(v.video.yt) + '" target="_blank" rel="noopener">유튜브에서 보기 ↗</a>';
+          + '<a class="ivyt" href="https://www.youtube.com/watch?v=' + esc(v.video.yt) + (ytFrom ? '&amp;t=' + ytFrom + 's' : '') + '" target="_blank" rel="noopener">유튜브에서 보기 ↗</a>';
       } else {
         side = '<h3>이 인터뷰에서 묻는 것</h3><ol>' + (v.qa || []).map(function (q, k) { return '<li><a href="#q-' + no + '-' + (k + 1) + '">' + esc(q.toc || q.q) + '</a></li>'; }).join('') + '</ol>';
       }
@@ -405,7 +410,10 @@
       var pic = !hasPhoto(c) && yt
         ? '<img class="illu" src="https://i.ytimg.com/vi/' + esc(yt[1]) + '/hqdefault.jpg" alt="" loading="lazy" decoding="async" width="480" height="360" data-field="thumbnail">'
         : visual(c, { fit: true, field: 'thumbnail' });
+      // 영상 구간(2026-11-05): video.start · end(초)가 있으면 글 창의 재생 단추가 그 구간만(data-yt-start · data-yt-end → cohort-v3.js)
+      var ytFrom = vid ? ytSec(c.video.start) : 0, ytTo = vid ? ytSec(c.video.end) : 0;
       return '<a class="st c' + esc(c.cohort) + '" href="#"' + (c.anchor ? ' id="' + esc(c.anchor) + '"' : '') + (vid ? ' data-yt="' + esc(c.video.url) + '"' : '')
+        + (ytFrom ? ' data-yt-start="' + ytFrom + '"' : '') + (ytTo > ytFrom ? ' data-yt-end="' + ytTo + '"' : '')
         + ' style="--c:' + (COH_COLOR[c.cohort] || '#2B2D31') + '"><div class="ph">' + pic + (vid ? '<span class="play"><i></i></span>' + (c.video.dur ? '<span class="dur">' + esc(c.video.dur) + '</span>' : '') : '') + '</div>'
         + '<h3 data-field="title">' + esc(c.title) + '</h3><p data-field="body">' + esc(body[0] || '') + '</p>'
         + '<div class="mt"><span class="cg" data-field="cohort">' + esc(c.cohort) + '기</span><span class="dt" data-field="date">' + esc(c.date || '') + '</span></div>'

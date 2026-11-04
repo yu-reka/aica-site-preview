@@ -3,6 +3,6 @@
         <div class="in">
           <h3>{{title}}</h3>
           <p>{{summary}}</p>
-          <div class="who"><b>{{author}}</b><em>{{track}}</em><span class="tg">{{tags.0.label}}</span></div>
+          <div class="who"><b>{{author}}</b><em>{{track}}</em>{{#each firstTags}}<span class="tg">{{label}}</span>{{/each}}</div>
         </div>
       </a>

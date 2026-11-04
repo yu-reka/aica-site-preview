@@ -43,7 +43,7 @@ const StoriesMobileReviews = (() => {
     var lastView = '';
     var empty = el('div', 'sm-review-empty', '선택한 조건에 맞는 후기가 없습니다.');
     var pager = el('nav', 'sm-review-pager cpager'); pager.setAttribute('aria-label', '후기 페이지');
-    var category = 'all', cohort = '', page = 1, tag = '', pageSize = 10;
+    var category = 'all', cohort = '', page = 1, pageSize = 10;
     var entries = cards.map(function(card){
       var note = el('a', 'sm-review-note');
       note.href = card.getAttribute('href'); note.setAttribute('aria-haspopup', 'dialog');
@@ -55,7 +55,7 @@ const StoriesMobileReviews = (() => {
       var footer = el('div', 'sm-review-by');
       footer.appendChild(el('b', '', ($('.who b', card) || {}).textContent || ''));
       var tg = $('.who .tg', card);
-      footer.appendChild(el('span', tg ? 'sm-review-tag' : 'sm-review-tag sm-review-tag-empty', tg ? tg.textContent : '태그 없음'));
+      if (tg) footer.appendChild(el('span', 'sm-review-tag', tg.textContent));
       var cohortText = ($('.cbar span', card) || {}).textContent || '';
       footer.appendChild(el('span', 'sm-review-list-meta', cohortText.replace(/\s+/g, '') + ' · ' + (($('.who b', card) || {}).textContent || '')));
       var arrow = el('span', 'sm-review-card-arrow', '→'); arrow.setAttribute('aria-hidden', 'true');
@@ -72,35 +72,14 @@ const StoriesMobileReviews = (() => {
     cohortSummary.setAttribute('aria-label', '후기 기수 선택'); cohortSummary.appendChild(cohortLabel);
     var cohortChevron = cleanClone($('.dw-fco summary svg', section));
     if (cohortChevron) cohortSummary.appendChild(cohortChevron);
-    cohorts.classList.add('sm-review-tag-options');
+    cohorts.classList.add('sm-review-cohort-options');
     cohortSelect.append(cohortSummary, cohorts);
     document.addEventListener('click', function(event){ if (!cohortSelect.contains(event.target)) cohortSelect.open = false; });
     cohortSelect.addEventListener('keydown', function(event){
       if (event.key === 'Escape'){ cohortSelect.open = false; cohortSummary.focus({preventScroll:true}); }
     });
     cohortSelect.addEventListener('focusout', function(event){ if (!cohortSelect.contains(event.relatedTarget)) cohortSelect.open = false; });
-    var tagSelect = el('details', 'sm-review-tag-dropdown dw');
-    tagSelect.setAttribute('name', 'mobile-review-filter');
-    var tagSummary = el('summary', ''), tagLabel = el('b', '', '태그');
-    tagSummary.setAttribute('aria-label', '후기 태그'); tagSummary.appendChild(tagLabel);
-    var tagChevron = cleanClone($('.dw-ftg summary svg', section));
-    if (tagChevron) tagSummary.appendChild(tagChevron);
-    var tagOptions = el('div', 'sm-review-tag-options');
-    $$('.dw-ftg .dwin a', section).forEach(function(link){
-      var match = /^#tg-([0-6])$/.exec(link.getAttribute('href'));
-      var option = el('button', '', match ? link.textContent : '전체'); option.type = 'button';
-      option.dataset.value = match ? match[1] : '';
-      option.addEventListener('click', function(){
-        tag = option.dataset.value; page = 1; tagSelect.open = false; refresh();
-        tagSummary.focus({preventScroll:true});
-      }); tagOptions.appendChild(option);
-    });
-    tagSelect.append(tagSummary, tagOptions); filterRow.append(cohortSelect, tagSelect);
-    document.addEventListener('click', function(event){ if (!tagSelect.contains(event.target)) tagSelect.open = false; });
-    tagSelect.addEventListener('keydown', function(event){
-      if (event.key === 'Escape'){ tagSelect.open = false; tagSummary.focus({preventScroll:true}); }
-    });
-    tagSelect.addEventListener('focusout', function(event){ if (!tagSelect.contains(event.relatedTarget)) tagSelect.open = false; });
+    filterRow.appendChild(cohortSelect);
     var views = el('div', 'sm-review-views'); views.setAttribute('role', 'group'); views.setAttribute('aria-label', '후기 보기 방식');
     var view = 'card';
     ['card', 'list'].forEach(function(mode){
@@ -147,16 +126,12 @@ const StoriesMobileReviews = (() => {
       $$('button', cohorts).forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.value === cohort)); });
       cohortLabel.textContent = cohort ? cohort + '기' : '기수';
       cohortSelect.classList.toggle('is-active', !!cohort);
-      tagSelect.classList.toggle('is-active', !!tag);
       var matching = entries.filter(function(e){
-        return (category === 'all' || e.classes.indexOf('cat-' + category) >= 0) && (!cohort || e.cohort === cohort) && (!tag || e.classes.indexOf('tg' + tag) >= 0);
+        return (category === 'all' || e.classes.indexOf('cat-' + category) >= 0) && (!cohort || e.cohort === cohort);
       });
       var total = Math.max(1, Math.ceil(matching.length / pageSize)); page = Math.min(page, total);
       count.textContent = matching.length + '개의 후기';
-      $$('button', tagOptions).forEach(function(button){ button.setAttribute('aria-pressed', String(button.dataset.value === tag)); });
-      var selectedTag = $$('button', tagOptions).find(function(button){ return button.dataset.value === tag; });
-      tagLabel.textContent = tag && selectedTag ? selectedTag.textContent : '태그';
-      var key = [category, cohort, tag, page, view].join('|');
+      var key = [category, cohort, page, view].join('|');
       var left = key === lastView ? board.scrollLeft : 0; lastView = key;
       board.replaceChildren();
       var shown = view === 'list' ? matching.slice((page - 1) * pageSize, page * pageSize) : matching;
@@ -177,11 +152,6 @@ const StoriesMobileReviews = (() => {
         pager.appendChild(pageButton('→', page + 1, page === total));
       }
     }
-    function fromHash(){
-      var hash = /^#tg-([0-6])$/.exec(location.hash);
-      if (hash){ tag = hash[1]; page = 1; }
-      refresh();
-    }
     box.append(categories, filterRow, toolbar, stage, empty, pager); source.before(box);
     // Hide the legacy controls as a group on mobile, including integration-only pager styles.
     ['.filters', '.idgrid', '.rvlist', '.pager'].forEach(function(selector){
@@ -190,11 +160,11 @@ const StoriesMobileReviews = (() => {
       var wrapper = el('div', 'sm-review-source'); original.before(wrapper); wrapper.appendChild(original);
     });
     section.classList.add('sm-review-ready');
-    section.addEventListener('reviews:reset',function(){category='all';cohort='';tag='';page=1;refresh();});
+    section.addEventListener('reviews:reset',function(){category='all';cohort='';page=1;refresh();});
     section.addEventListener('change', function(e){
       if (e.target.name === 'rc'){ category = e.target.id.slice(3); page = 1; refresh(); }
     });
-    addEventListener('hashchange', fromHash); fromHash();
+    addEventListener('hashchange', refresh); refresh();
   }
 
   return { init: initReviews };

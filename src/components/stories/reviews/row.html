@@ -1,6 +1,6 @@
 <a class="{{view.row.className}}" href="#{{id}}">
         <span class="cg" style="{{view.row.cgStyle}}">{{category}}</span>
         <span class="tt">{{title}}</span>
-        <span class="tg" style="{{view.row.tgStyle}}">{{tags.0.label}}</span>
+        {{#each firstTags}}<span class="tg" style="{{view.row.tgStyle}}">{{label}}</span>{{/each}}
         <span class="mt">{{cohort}}기 · {{author}}</span>
       </a>

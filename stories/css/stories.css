@@ -160,7 +160,6 @@ body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:i
   line-height:21px;color:var(--g600);white-space:nowrap;transition:var(--ease)}
 .stories-page .dwin label:hover,
 .stories-page .dwin a:hover{background:var(--g50);color:var(--g900)}
-.stories-page .tgt{display:block;height:0;scroll-margin-top:16px}
 .stories-page .tgt2{display:block}
 .stories-page .rev:has(#rc_all:checked) .chips label[for=rc_all]{background:var(--g900);color:#fff}
 .stories-page .chips label[for=rc_life]{--dot:#22D3EE}
@@ -207,53 +206,8 @@ body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:i
 .stories-page .rev:has(#fco_4:checked) .dw-fco summary{background:var(--g900);color:#fff}
 .stories-page .rev:has(#fco_4:checked) .dw-fco label[for=fco_4]{color:var(--g900);font-weight:600}
 .stories-page .rev:has(#fco_all:checked) .dw-fco label[for=fco_all]{color:var(--g900);font-weight:600}
-.stories-page .rev:has(#tg-0:target) .idc:not(.tg0),
-.stories-page .rev:has(#tg-0:target) .rvr:not(.tg0){display:none}
-.stories-page .rev:has(#tg-0:target) .dw-ftg summary{background:var(--g900);color:#fff}
-.stories-page .rev:has(#tg-0:target) .dw-ftg summary b{display:none}
-.stories-page .rev:has(#tg-0:target) .dw-ftg summary u::after{content:"#비전공자"}
-.stories-page .rev:has(#tg-0:target) .dw-ftg a[href="#tg-0"]{color:var(--g900);font-weight:600}
-.stories-page .rev:has(#tg-1:target) .idc:not(.tg1),
-.stories-page .rev:has(#tg-1:target) .rvr:not(.tg1){display:none}
-.stories-page .rev:has(#tg-1:target) .dw-ftg summary{background:var(--g900);color:#fff}
-.stories-page .rev:has(#tg-1:target) .dw-ftg summary b{display:none}
-.stories-page .rev:has(#tg-1:target) .dw-ftg summary u::after{content:"#타지출신"}
-.stories-page .rev:has(#tg-1:target) .dw-ftg a[href="#tg-1"]{color:var(--g900);font-weight:600}
-.stories-page .rev:has(#tg-2:target) .idc:not(.tg2),
-.stories-page .rev:has(#tg-2:target) .rvr:not(.tg2){display:none}
-.stories-page .rev:has(#tg-2:target) .dw-ftg summary{background:var(--g900);color:#fff}
-.stories-page .rev:has(#tg-2:target) .dw-ftg summary b{display:none}
-.stories-page .rev:has(#tg-2:target) .dw-ftg summary u::after{content:"#직장인출신"}
-.stories-page .rev:has(#tg-2:target) .dw-ftg a[href="#tg-2"]{color:var(--g900);font-weight:600}
-.stories-page .rev:has(#tg-3:target) .idc:not(.tg3),
-.stories-page .rev:has(#tg-3:target) .rvr:not(.tg3){display:none}
-.stories-page .rev:has(#tg-3:target) .dw-ftg summary{background:var(--g900);color:#fff}
-.stories-page .rev:has(#tg-3:target) .dw-ftg summary b{display:none}
-.stories-page .rev:has(#tg-3:target) .dw-ftg summary u::after{content:"#졸업생"}
-.stories-page .rev:has(#tg-3:target) .dw-ftg a[href="#tg-3"]{color:var(--g900);font-weight:600}
-.stories-page .rev:has(#tg-4:target) .idc:not(.tg4),
-.stories-page .rev:has(#tg-4:target) .rvr:not(.tg4){display:none}
-.stories-page .rev:has(#tg-4:target) .dw-ftg summary{background:var(--g900);color:#fff}
-.stories-page .rev:has(#tg-4:target) .dw-ftg summary b{display:none}
-.stories-page .rev:has(#tg-4:target) .dw-ftg summary u::after{content:"#적응"}
-.stories-page .rev:has(#tg-4:target) .dw-ftg a[href="#tg-4"]{color:var(--g900);font-weight:600}
-.stories-page .rev:has(#tg-5:target) .idc:not(.tg5),
-.stories-page .rev:has(#tg-5:target) .rvr:not(.tg5){display:none}
-.stories-page .rev:has(#tg-5:target) .dw-ftg summary{background:var(--g900);color:#fff}
-.stories-page .rev:has(#tg-5:target) .dw-ftg summary b{display:none}
-.stories-page .rev:has(#tg-5:target) .dw-ftg summary u::after{content:"#팀활동"}
-.stories-page .rev:has(#tg-5:target) .dw-ftg a[href="#tg-5"]{color:var(--g900);font-weight:600}
-.stories-page .rev:has(#tg-6:target) .idc:not(.tg6),
-.stories-page .rev:has(#tg-6:target) .rvr:not(.tg6){display:none}
-.stories-page .rev:has(#tg-6:target) .dw-ftg summary{background:var(--g900);color:#fff}
-.stories-page .rev:has(#tg-6:target) .dw-ftg summary b{display:none}
-.stories-page .rev:has(#tg-6:target) .dw-ftg summary u::after{content:"#취업연계"}
-.stories-page .rev:has(#tg-6:target) .dw-ftg a[href="#tg-6"]{color:var(--g900);font-weight:600}
-.stories-page .rev:not(:has(.tgt:target)) .dw-ftg a[href="#p-rev"]{color:var(--g900);font-weight:600}
-/* 모달 태그 — 누르면 창이 닫히며 그 태그의 후기만 남는다 */
-.stories-page .ov .mtags .t{
-  line-height:28px;transition:var(--ease)}
-.stories-page .ov .mtags .hint{width:100%;margin-top:8px;line-height:19px}
+.stories-page .ov .mtags:empty{display:none}
+.stories-page .ov .mtags .t{line-height:28px}
 /* 섹션 머리 오른쪽에 보기 전환 */
 .stories-page .sh-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-end}
 .stories-page .vtoggle{display:inline-flex;gap:2px}
@@ -269,22 +223,21 @@ body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:i
 .stories-page .rev:has(#vm-list:checked) .idgrid{display:none}
 .stories-page .rev:not(:has(#vm-list:checked)) .rvlist{display:none}
 /* 스크립트 미적용 시 유지하는 기존 쪽 번호·필터 규칙 */
-.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn1:checked) .idc:not(.pg1),
-.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn1:checked) .rvr:not(.pg1){display:none}
-.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn2:checked) .idc:not(.pg2),
-.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn2:checked) .rvr:not(.pg2){display:none}
-.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn3:checked) .idc:not(.pg3),
-.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn3:checked) .rvr:not(.pg3){display:none}
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):has(#pgn1:checked) .idc:not(.pg1),
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):has(#pgn1:checked) .rvr:not(.pg1){display:none}
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):has(#pgn2:checked) .idc:not(.pg2),
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):has(#pgn2:checked) .rvr:not(.pg2){display:none}
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):has(#pgn3:checked) .idc:not(.pg3),
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):has(#pgn3:checked) .rvr:not(.pg3){display:none}
 .stories-page .rev:has(#pgn3:checked) .pager label[for=pgn3]{background:var(--g900);color:#fff}
-.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn4:checked) .idc:not(.pg4),
-.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn4:checked) .rvr:not(.pg4){display:none}
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):has(#pgn4:checked) .idc:not(.pg4),
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):has(#pgn4:checked) .rvr:not(.pg4){display:none}
 .stories-page .rev:has(#pgn4:checked) .pager label[for=pgn4]{background:var(--g900);color:#fff}
-.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn5:checked) .idc:not(.pg5),
-.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn5:checked) .rvr:not(.pg5){display:none}
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):has(#pgn5:checked) .idc:not(.pg5),
+.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):has(#pgn5:checked) .rvr:not(.pg5){display:none}
 .stories-page .rev:has(#pgn5:checked) .pager label[for=pgn5]{background:var(--g900);color:#fff}
 .stories-page .rev:not([data-review-paging]):not(:has(#rc_all:checked)) .pager,
-.stories-page .rev:not([data-review-paging]):not(:has(#fco_all:checked)) .pager,
-.stories-page .rev:not([data-review-paging]):has(.tgt:target) .pager{display:none}
+.stories-page .rev:not([data-review-paging]):not(:has(#fco_all:checked)) .pager{display:none}
 .stories-page .pager{margin-top:40px;display:flex;justify-content:center;align-items:center;gap:6px}
 /* 리스트 보기 — 한 줄에 한 편 */
 .stories-page .rvlist{border-top:1px solid var(--g200)}
@@ -524,7 +477,7 @@ body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:i
 .stories-page .idc .cbar, .stories-page .idc:hover .cbar{background:var(--bg)}
 .stories-page .idc .cbar b, .stories-page .idc .cbar span, .stories-page .idc:hover .cbar b, .stories-page .idc:hover .cbar span{color:var(--dk)}
 .stories-page .idc:hover h3{color:var(--l-blue)}
-.stories-page .idc .who .tg{flex:none;margin-left:auto;display:inline-flex;align-items:center;height:22px;
+.stories-page .idc .who .tg{flex:0 1 auto;min-width:0;max-width:45%;margin-left:auto;display:block;overflow:hidden;text-overflow:ellipsis;height:22px;
   padding:0 8px;background:var(--g100);font-size:12px;font-weight:600;
   line-height:22px;color:var(--g600);white-space:nowrap;border-radius:999px}
 /* ================= 인터뷰: 저자 한마디 슬라이더 ================= */
@@ -663,8 +616,6 @@ body .stories-page .st h3{font-size:16px}
 .stories-page .ov .mbody p{line-height:1.8;color:var(--graphite)}
 .stories-page .ov .mtags{margin-top:24px;padding-top:20px;border-top:1px solid #ECEEF1;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .stories-page .ov .mtags .t{height:30px;padding:0 12px;border-radius:999px;background:#F1F2F4;color:var(--graphite);font-size:13px;font-weight:700;display:inline-flex;align-items:center}
-.stories-page .ov .mtags .t:hover{background:#2B2D31;color:#fff}
-.stories-page .ov .mtags .hint{font-size:12.5px;color:var(--muted)}
 @media (max-width:640px){
 .stories-page .ov .sheet{border-radius:0}
 .stories-page .ov .mtop, .stories-page .ov .mbody{padding-left:20px;padding-right:20px}
@@ -731,14 +682,6 @@ body .stories-page .st h3{font-size:16px}
 .stories-page .rev:has(#fco_2:checked) .dw-fco .dwin label[for="fco_2"]{background:#F2F5FF;color:var(--primary);font-weight:700}
 .stories-page .rev:has(#fco_3:checked) .dw-fco .dwin label[for="fco_3"]{background:#F2F5FF;color:var(--primary);font-weight:700}
 .stories-page .rev:has(#fco_4:checked) .dw-fco .dwin label[for="fco_4"]{background:#F2F5FF;color:var(--primary);font-weight:700}
-.stories-page .rev:has(#tg-0:target) .dw-ftg .dwin a[href="#tg-0"]{background:#F2F5FF;color:var(--primary);font-weight:700}
-.stories-page .rev:has(#tg-1:target) .dw-ftg .dwin a[href="#tg-1"]{background:#F2F5FF;color:var(--primary);font-weight:700}
-.stories-page .rev:has(#tg-2:target) .dw-ftg .dwin a[href="#tg-2"]{background:#F2F5FF;color:var(--primary);font-weight:700}
-.stories-page .rev:has(#tg-3:target) .dw-ftg .dwin a[href="#tg-3"]{background:#F2F5FF;color:var(--primary);font-weight:700}
-.stories-page .rev:has(#tg-4:target) .dw-ftg .dwin a[href="#tg-4"]{background:#F2F5FF;color:var(--primary);font-weight:700}
-.stories-page .rev:has(#tg-5:target) .dw-ftg .dwin a[href="#tg-5"]{background:#F2F5FF;color:var(--primary);font-weight:700}
-.stories-page .rev:has(#tg-6:target) .dw-ftg .dwin a[href="#tg-6"]{background:#F2F5FF;color:var(--primary);font-weight:700}
-.stories-page .rev:not(:has(.tgt:target)) .dw-ftg .dwin a[href="#p-rev"],
 html[data-review-source="spring"] .stories-page .rev .dw-fco .dwin button[aria-pressed="true"]{background:#F2F5FF;color:var(--primary);font-weight:700}
 @media(max-width:600px){.stories-page .rev .dw .dwin{min-width:min(220px,calc(100vw - 40px));max-width:calc(100vw - 40px)}}
 

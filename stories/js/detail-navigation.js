@@ -56,7 +56,6 @@
     nav.append(pair,back);const old=item.detail.querySelector('.sd-nav');
     if(old)old.replaceWith(nav);else if(kind.key==='review')item.host.append(nav);else item.host.after(nav);
   }
-  let tag='';
   function matching(group){
     if(group.kind.hub)return group.items;
     if(group.kind.key==='review'){
@@ -72,7 +71,7 @@
         const label=radio&&section.querySelector('label[for="'+radio.id+'"]');
         cohort=((live||label)?.textContent.match(/(\d+)기/)||[])[1]||'';
       }
-      return group.items.filter(item=>(category==='all'||item.card.classList.contains('cat-'+category))&&(!cohort||item.card.classList.contains('coh'+cohort))&&(!tag||item.card.classList.contains('tg'+tag)));
+      return group.items.filter(item=>(category==='all'||item.card.classList.contains('cat-'+category))&&(!cohort||item.card.classList.contains('coh'+cohort)));
     }
     if(group.kind.key==='interview'){
       const selected=document.querySelector('#iv-all [data-f="coh"] [aria-pressed="true"]');
@@ -94,7 +93,6 @@
     return group.items;
   }
   function refreshCurrent(){
-    const hash=/^#tg-([0-6])$/.exec(location.hash);if(hash)tag=hash[1];else if(!/^#r-/.test(location.hash))tag='';
     groups.forEach(group=>{const item=group.items.find(item=>'#'+item.detail.id===location.hash);if(!item)return;let items=matching(group);if(!items.includes(item))items=group.items;paint(group.kind,item,items,items.indexOf(item));});
   }
   setTimeout(refreshCurrent,0);

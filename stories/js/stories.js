@@ -149,9 +149,7 @@
         }
         reviewEntry=false;
         if (!opener) return;
-        // 창 안 태그 링크(#tg-…)로 나가면 화면이 태그 목록 자리로 가므로 연 카드로 돌려주지 않음(다음 Tab은 브라우저가 그 자리부터)
-        var to = document.getElementById(Site.decodeHash(location.hash.slice(1)));
-        if (!(to && to.classList.contains('tgt')) && document.contains(opener) && opener.getClientRects().length) opener.focus({ preventScroll: true });
+        if (document.contains(opener) && opener.getClientRects().length) opener.focus({ preventScroll: true });
         opener = null;
       }
     });

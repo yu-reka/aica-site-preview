@@ -104,36 +104,30 @@
   .stories-page .sm-reviews .sm-review-cohort-dropdown .sm-cohort-chips{left:0;right:auto;margin:0;gap:0;overflow:visible;border-bottom:0}
   .stories-page .sm-reviews .sm-review-cohort-dropdown .sm-cohort-chips button{display:block;flex:none;width:100%;height:auto;min-height:40px;margin:0;padding:10px 12px;border:0;border-radius:8px;background:#fff;color:var(--g600);font:400 14px/1.5 var(--ff-sans);text-align:left}
   .stories-page .sm-reviews .sm-review-cohort-dropdown .sm-cohort-chips button[aria-pressed="true"]{color:var(--primary);font-weight:700;background:#F2F5FF}
-  .stories-page :is(.sm-review-cohort-dropdown,.sm-review-tag-dropdown).is-active summary{background:var(--g900);border-color:var(--g900);color:#fff}
+  .stories-page .sm-review-cohort-dropdown.is-active summary{background:var(--g900);border-color:var(--g900);color:#fff}
   .stories-page .sm-review-cohort-dropdown :is(summary,button):focus-visible{outline:2px solid var(--primary);outline-offset:3px}
   .stories-page .rev .sm-review-filter-row .sm-review-views{margin-left:auto;flex:none}
-  .stories-page .sm-review-tag-dropdown{flex:0 1 auto;min-width:0;max-width:104px}
-  .stories-page .sm-review-tag-dropdown summary{height:38px;padding:0 12px;border:1px solid var(--l-line);border-radius:999px;background:#fff;max-width:100%;box-sizing:border-box;font:600 12px/38px var(--ff-sans)}
-  .stories-page .sm-review-tag-dropdown summary b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .stories-page .sm-review-tag-dropdown summary svg{flex:none}
-  .stories-page .sm-review-tag-dropdown[open] summary{position:relative;z-index:38}
-  .stories-page .sm-review-tag-dropdown[open] summary::after{display:none}
-  .stories-page .sm-review-tag-options{position:absolute;right:0;top:calc(100% + 8px);z-index:39;display:flex;flex-direction:column;min-width:220px;max-width:calc(100vw - 40px);padding:8px;background:#fff;border:1px solid var(--l-line);border-radius:16px;box-shadow:0 12px 32px rgba(20,35,63,.12)}
-  .stories-page .sm-review-tag-dropdown .sm-review-tag-options{left:50%;right:auto;transform:translateX(-50%)}
-  .stories-page .sm-review-tag-options button{padding:10px 12px;min-height:40px;border:0;border-radius:8px;background:#fff;color:var(--g600);font:400 14px/1.5 var(--ff-sans);text-align:left;cursor:pointer}
-  .stories-page .sm-review-tag-options button:hover{background:var(--g50);color:var(--g900)}
-  .stories-page .sm-review-tag-options button[aria-pressed="true"]{color:var(--primary);font-weight:700;background:#F2F5FF}
-  .stories-page .sm-review-tag-dropdown :is(summary,button):focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+  .stories-page .sm-review-cohort-options{position:absolute;right:0;top:calc(100% + 8px);z-index:39;display:flex;flex-direction:column;min-width:220px;max-width:calc(100vw - 40px);padding:8px;background:#fff;border:1px solid var(--l-line);border-radius:16px;box-shadow:0 12px 32px rgba(20,35,63,.12)}
+  .stories-page .sm-review-cohort-options button{padding:10px 12px;min-height:40px;border:0;border-radius:8px;background:#fff;color:var(--g600);font:400 14px/1.5 var(--ff-sans);text-align:left;cursor:pointer}
+  .stories-page .sm-review-cohort-options button:hover{background:var(--g50);color:var(--g900)}
+  .stories-page .sm-review-cohort-options button[aria-pressed="true"]{color:var(--primary);font-weight:700;background:#F2F5FF}
   .stories-page .rev .sm-review-views button[aria-pressed="true"]{background:var(--g900);color:#fff}
   .stories-page .sm-review-views svg{display:block;width:16px;height:16px}
   .stories-page .sm-review-tools :is(select,button):focus-visible{outline:2px solid var(--sm-blue);outline-offset:2px}
+  .stories-page .sm-review-list-meta{display:none}
   .stories-page .sm-review-stage.is-list{overflow:visible;background:none;box-shadow:none;border-radius:0}
   .stories-page #p-rev .sm-review-stage.is-list::after{content:none}
   .stories-page .sm-review-stage.is-list .sm-review-board{display:grid;grid-template-columns:minmax(0,1fr);gap:0;padding:0;overflow:visible;scroll-snap-type:none}
-  .stories-page .sm-review-list-meta,.stories-page .sm-review-tag-empty{display:none}
   .stories-page .sm-review-stage.is-list .sm-review-note{aspect-ratio:auto;contain:none;display:grid;grid-template-columns:5px 64px minmax(0,1fr) 62px;grid-template-rows:minmax(0,1fr);align-items:center;gap:7px;min-width:0;min-height:72px;padding:14px 4px;border-radius:0;background:#fff;box-shadow:none;transform:none;border-bottom:1px solid #E8EDF4}
   .stories-page .sm-review-stage.is-list .sm-review-note::before{content:"";grid-column:1;grid-row:1;width:5px;height:5px;border-radius:50%;background:var(--sm-line)}
   .stories-page .sm-review-stage.is-list :is(.sm-review-summary,.sm-review-by){display:contents}
   .stories-page .sm-review-stage.is-list :is(.cbar,.sm-review-preview,.sm-review-by b,.sm-review-card-arrow){display:none}
   .stories-page .sm-review-stage.is-list .sm-review-summary h3{grid-column:3;grid-row:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:0;font:700 13px/1.5 var(--ff-text);letter-spacing:-.02em}
   .stories-page .sm-review-stage.is-list .sm-review-tag{grid-column:2;grid-row:1;display:block;max-width:64px;overflow:hidden;text-overflow:ellipsis;padding:0 5px;background:#E8EEFF;color:var(--sm-blue);font:600 10px/22px var(--ff-sans);text-align:center;white-space:nowrap}
-  .stories-page .sm-review-stage.is-list .sm-review-tag-empty{background:#F0F3F6;color:var(--sm-muted)}
   .stories-page .sm-review-stage.is-list .sm-review-list-meta{grid-column:4;grid-row:1;display:block;color:var(--sm-muted);font:400 10.5px/1.5 var(--ff-sans);white-space:nowrap;text-align:right}
+  .stories-page .sm-review-stage.is-list .sm-review-note:not(:has(.sm-review-tag)){grid-template-columns:5px minmax(0,1fr) 62px}
+  .stories-page .sm-review-stage.is-list .sm-review-note:not(:has(.sm-review-tag)) .sm-review-summary h3{grid-column:2}
+  .stories-page .sm-review-stage.is-list .sm-review-note:not(:has(.sm-review-tag)) .sm-review-list-meta{grid-column:3}
   .stories-page .sm-review-stage.is-list .sm-review-note:hover{background:#F5F7F6}
   .stories-page .sm-review-stage.is-list .sm-review-note:hover h3{color:var(--sm-blue)}
 

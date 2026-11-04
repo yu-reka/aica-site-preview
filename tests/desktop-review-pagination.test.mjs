@@ -95,7 +95,7 @@ test('22 desktop category results paginate 12 + 10 in both views with real keybo
   assert.equal(ui.pager.hidden, true);
 });
 
-test('cohort/category/tag intersections reset pages, retain modal state and clear tags on list return', () => {
+test('cohort/category filters retain modal state and ignore removed legacy tag hashes', () => {
   const ui = start([...entries(25), ...entries(13, ['cat-class', 'coh8', 'tg1']), ...entries(3, ['cat-life', 'coh8', 'tg0'])]);
   ui.page(3);
   ui.change('fco_c8');
@@ -113,9 +113,9 @@ test('cohort/category/tag intersections reset pages, retain modal state and clea
   ui.hash('#p-rev');
   assert.equal(ui.count, '13개의 후기');
   ui.hash('#tg-0');
-  assert.equal(ui.count, '0개의 후기');
-  assert.equal(ui.shown().length, 0);
-  assert.equal(ui.pager.hidden, true);
+  assert.equal(ui.count, '13개의 후기');
+  assert.equal(ui.shown().length, 1);
+  assert.equal(ui.pager.hidden, false);
   ui.change('rc_life');
   assert.equal(ui.count, '3개의 후기');
   ui.hash('#p-rev'); ui.change('rc_all'); ui.change('fco_all'); ui.section.emit('reviews:reset');
@@ -124,6 +124,7 @@ test('cohort/category/tag intersections reset pages, retain modal state and clea
 
 test('paging clamps legacy radio requests and scales beyond the old five-page CSS limit', () => {
   const ui = start(entries(85), { hash: '#tg-0' });
+  assert.equal(ui.count, '85개의 후기', 'legacy tag URLs open the whole list');
   ui.page(3); ui.page(5); ui.page(7);
   assert.deepEqual(ui.shown(), [72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83]);
   ui.change('rc_life');

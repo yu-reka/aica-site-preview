@@ -477,7 +477,7 @@ body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:i
 .stories-page .idc .cbar, .stories-page .idc:hover .cbar{background:var(--bg)}
 .stories-page .idc .cbar b, .stories-page .idc .cbar span, .stories-page .idc:hover .cbar b, .stories-page .idc:hover .cbar span{color:var(--dk)}
 .stories-page .idc:hover h3{color:var(--l-blue)}
-.stories-page .idc .who .tg{flex:0 1 auto;min-width:0;max-width:45%;margin-left:auto;display:block;overflow:hidden;text-overflow:ellipsis;height:22px;
+.stories-page .idc .who .tg{flex:0 1 auto;min-width:0;max-width:60%;margin-left:auto;display:block;overflow:hidden;text-overflow:ellipsis;height:22px;
   padding:0 8px;background:var(--g100);font-size:12px;font-weight:600;
   line-height:22px;color:var(--g600);white-space:nowrap;border-radius:999px}
 /* ================= 인터뷰: 저자 한마디 슬라이더 ================= */

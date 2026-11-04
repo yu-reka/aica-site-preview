@@ -251,7 +251,7 @@
 
   // Older Spring templates only load this entry. Keep their review UI working
   // while new templates explicitly preload the page-owned review initializer.
-  var reviewScript = new URL('stories-m-reviews.js?v=1103shared-helpers', document.currentScript.src).href;
+  var reviewScript = new URL('stories-m-reviews.js?v=1104review-tags-display', document.currentScript.src).href;
   var reviewLoading = false;
   function initReviews(){
     if (!$('#p-rev')) return;

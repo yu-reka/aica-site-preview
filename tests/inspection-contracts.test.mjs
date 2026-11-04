@@ -91,6 +91,7 @@ test('the unified review detail preserves every tag with escaped content in stat
       assert.ok(detail.includes('<span class="t" data-field="tag">' + label + '</span>'), record.id);
     }
     assert.ok(detail.indexOf('class="mtags"') < detail.indexOf('class="mbody"'), record.id);
+    assert.doesNotMatch(detail, /href="#tg-|태그를 누르면/);
   }
 });
 

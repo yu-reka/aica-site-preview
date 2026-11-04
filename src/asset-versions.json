@@ -77,13 +77,13 @@
         "hub": "1103cohort-modal-borderless"
       },
       "detail-navigation": "1020outsidegrid",
-      "hub": "1103honors-list-gap",
+      "hub": "1104review-tags-display",
       "presentation": {
-        "hub": "1030review-ssul-small",
-        "default": "1030review-ssul-small"
+        "hub": "1104review-tags-display",
+        "default": "1104review-tags-display"
       },
       "projects-grid": "1021listbadges",
-      "review-notes": "1103review-meta-align",
+      "review-notes": "1104review-tags-display",
       "stories-m": {
         "default": "1103project-toggle-right",
         "cohorts": "1103project-toggle-right"
@@ -95,7 +95,7 @@
         "reviews": "1102loading-history",
         "cohorts": "1102loading-history"
       },
-      "stories": "1103interview-detail-wrap",
+      "stories": "1104review-tags-display",
       "story-state": "1102cohort-stable-loading",
       "interview-honors": "1102honors-natural-title",
       "project-video": "1027prep-always"
@@ -103,20 +103,20 @@
     "js": {
       "cohort-modal-scroll": "1022swipereading",
       "cohort-v3": "1103shared-helpers",
-      "detail-navigation": "1103hub-review-navigation",
+      "detail-navigation": "1104review-tags-display",
       "old-hash": "1022hubmodals",
       "project-reading": "1027list-markers",
       "projects-filter": "1103shared-helpers",
       "review-notes": "1102honors-closing-quote",
       "stories-data": "design-20261029-hub-honors",
       "stories-m-reviews": {
-        "default": "1103shared-helpers",
-        "legacyLoader": "1103shared-helpers"
+        "default": "1104review-tags-display",
+        "legacyLoader": "1104review-tags-display"
       },
-      "stories-m": "1103project-white-separated",
-      "stories-render": "1103review-tags-demo-integrated",
+      "stories-m": "1104review-tags-display",
+      "stories-render": "1104review-tags-display",
       "stories-sections": "1103shared-helpers",
-      "stories": "1102loading-history",
+      "stories": "1104review-tags-display",
       "story-state": "1102hub-empty-action",
       "interview-honors": "1103honors-detail-return",
       "cohort-month-navigation": "1103shared-helpers",

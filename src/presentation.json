@@ -2,1008 +2,1008 @@
   "stories/reviews": {
     "r-life-0": {
       "card": {
-        "className": "idc cat-life coh7 fld3 tg4 pg1",
+        "className": "idc cat-life coh7 fld3 pg1",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/card"
       },
       "row": {
-        "className": "rvr cat-life coh7 fld3 tg4 pg1",
+        "className": "rvr cat-life coh7 fld3 pg1",
         "cgStyle": "background:#22D3EE",
         "tgStyle": "background:#DFF8FC;color:#0B5563",
         "template": "stories/reviews/row-2"
       },
       "detail": {
-        "className": "ov cat-life coh7 fld3 tg4",
+        "className": "ov cat-life coh7 fld3",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/detail"
       }
     },
     "r-class-0": {
       "card": {
-        "className": "idc cat-class coh6 fld0 tg4 pg1",
+        "className": "idc cat-class coh6 fld0 pg1",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-class coh6 fld0 tg4 pg1",
+        "className": "rvr cat-class coh6 fld0 pg1",
         "cgStyle": "background:#FFE600",
         "tgStyle": "background:#FFF8C2;color:#5A4F00",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-class coh6 fld0 tg4",
+        "className": "ov cat-class coh6 fld0",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-proj-0": {
       "card": {
-        "className": "idc cat-proj coh6 fld1 tg5 tg6 pg1",
+        "className": "idc cat-proj coh6 fld1 pg1",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-proj coh6 fld1 tg5 tg6 pg1",
+        "className": "rvr cat-proj coh6 fld1 pg1",
         "cgStyle": "background:#8CFF3F",
         "tgStyle": "background:#ECFFD9;color:#2F5A12",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-proj coh6 fld1 tg5 tg6",
+        "className": "ov cat-proj coh6 fld1",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/detail-3"
       }
     },
     "r-career-0": {
       "card": {
-        "className": "idc cat-career cat-job coh6 fld1 tg4 tg6 pg1",
+        "className": "idc cat-career cat-job coh6 fld1 pg1",
         "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-career cat-job coh6 fld1 tg4 tg6 pg1",
+        "className": "rvr cat-career cat-job coh6 fld1 pg1",
         "cgStyle": "background:#2457F5",
         "tgStyle": "background:#DCE5F7;color:#15368F",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-career cat-job coh6 fld1 tg4 tg6",
+        "className": "ov cat-career cat-job coh6 fld1",
         "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
         "template": "stories/reviews/detail-3"
       }
     },
     "r-life-1": {
       "card": {
-        "className": "idc cat-life coh7 fld1 tg5 pg1",
+        "className": "idc cat-life coh7 fld1 pg1",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-life coh7 fld1 tg5 pg1",
+        "className": "rvr cat-life coh7 fld1 pg1",
         "cgStyle": "background:#22D3EE",
         "tgStyle": "background:#DFF8FC;color:#0B5563",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-life coh7 fld1 tg5",
+        "className": "ov cat-life coh7 fld1",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-class-1": {
       "card": {
-        "className": "idc cat-class coh5 fld1 tg5 pg1",
+        "className": "idc cat-class coh5 fld1 pg1",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-class coh5 fld1 tg5 pg1",
+        "className": "rvr cat-class coh5 fld1 pg1",
         "cgStyle": "background:#FFE600",
         "tgStyle": "background:#FFF8C2;color:#5A4F00",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-class coh5 fld1 tg5",
+        "className": "ov cat-class coh5 fld1",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-proj-1": {
       "card": {
-        "className": "idc cat-proj coh5 fld2 tg5 pg1",
+        "className": "idc cat-proj coh5 fld2 pg1",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-proj coh5 fld2 tg5 pg1",
+        "className": "rvr cat-proj coh5 fld2 pg1",
         "cgStyle": "background:#8CFF3F",
         "tgStyle": "background:#ECFFD9;color:#2F5A12",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-proj coh5 fld2 tg5",
+        "className": "ov cat-proj coh5 fld2",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-career-1": {
       "card": {
-        "className": "idc cat-career cat-path coh7 fld2 tg4 pg1",
+        "className": "idc cat-career cat-path coh7 fld2 pg1",
         "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-career cat-path coh7 fld2 tg4 pg1",
+        "className": "rvr cat-career cat-path coh7 fld2 pg1",
         "cgStyle": "background:#2457F5",
         "tgStyle": "background:#DCE5F7;color:#15368F",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-career cat-path coh7 fld2 tg4",
+        "className": "ov cat-career cat-path coh7 fld2",
         "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-life-2": {
       "card": {
-        "className": "idc cat-life coh6 fld2 tg5 pg1",
+        "className": "idc cat-life coh6 fld2 pg1",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-life coh6 fld2 tg5 pg1",
+        "className": "rvr cat-life coh6 fld2 pg1",
         "cgStyle": "background:#22D3EE",
         "tgStyle": "background:#DFF8FC;color:#0B5563",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-life coh6 fld2 tg5",
+        "className": "ov cat-life coh6 fld2",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-class-2": {
       "card": {
-        "className": "idc cat-class coh4 fld2 tg5 tg6 pg1",
+        "className": "idc cat-class coh4 fld2 pg1",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-class coh4 fld2 tg5 tg6 pg1",
+        "className": "rvr cat-class coh4 fld2 pg1",
         "cgStyle": "background:#FFE600",
         "tgStyle": "background:#FFF8C2;color:#5A4F00",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-class coh4 fld2 tg5 tg6",
+        "className": "ov cat-class coh4 fld2",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/detail-3"
       }
     },
     "r-proj-2": {
       "card": {
-        "className": "idc cat-proj coh6 fld0 tg5 pg1",
+        "className": "idc cat-proj coh6 fld0 pg1",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-proj coh6 fld0 tg5 pg1",
+        "className": "rvr cat-proj coh6 fld0 pg1",
         "cgStyle": "background:#8CFF3F",
         "tgStyle": "background:#ECFFD9;color:#2F5A12",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-proj coh6 fld0 tg5",
+        "className": "ov cat-proj coh6 fld0",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-career-2": {
       "card": {
-        "className": "idc cat-career cat-job coh5 fld1 tg4 pg1",
+        "className": "idc cat-career cat-job coh5 fld1 pg1",
         "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-career cat-job coh5 fld1 tg4 pg1",
+        "className": "rvr cat-career cat-job coh5 fld1 pg1",
         "cgStyle": "background:#2457F5",
         "tgStyle": "background:#DCE5F7;color:#15368F",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-career cat-job coh5 fld1 tg4",
+        "className": "ov cat-career cat-job coh5 fld1",
         "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-life-3": {
       "card": {
-        "className": "idc cat-life coh6 fld3 tg1 tg5 pg2",
+        "className": "idc cat-life coh6 fld3 pg2",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-life coh6 fld3 tg1 tg5 pg2",
+        "className": "rvr cat-life coh6 fld3 pg2",
         "cgStyle": "background:#22D3EE",
         "tgStyle": "background:#DFF8FC;color:#0B5563",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-life coh6 fld3 tg1 tg5",
+        "className": "ov cat-life coh6 fld3",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/detail-3"
       }
     },
     "r-class-3": {
       "card": {
-        "className": "idc cat-class coh7 fld0 tg4 pg2",
+        "className": "idc cat-class coh7 fld0 pg2",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-class coh7 fld0 tg4 pg2",
+        "className": "rvr cat-class coh7 fld0 pg2",
         "cgStyle": "background:#FFE600",
         "tgStyle": "background:#FFF8C2;color:#5A4F00",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-class coh7 fld0 tg4",
+        "className": "ov cat-class coh7 fld0",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-proj-3": {
       "card": {
-        "className": "idc cat-proj coh5 fld0 tg4 pg2",
+        "className": "idc cat-proj coh5 fld0 pg2",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-proj coh5 fld0 tg4 pg2",
+        "className": "rvr cat-proj coh5 fld0 pg2",
         "cgStyle": "background:#8CFF3F",
         "tgStyle": "background:#ECFFD9;color:#2F5A12",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-proj coh5 fld0 tg4",
+        "className": "ov cat-proj coh5 fld0",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-career-3": {
       "card": {
-        "className": "idc cat-career cat-path coh6 fld3 tg6 pg2",
+        "className": "idc cat-career cat-path coh6 fld3 pg2",
         "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-career cat-path coh6 fld3 tg6 pg2",
+        "className": "rvr cat-career cat-path coh6 fld3 pg2",
         "cgStyle": "background:#2457F5",
         "tgStyle": "background:#DCE5F7;color:#15368F",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-career cat-path coh6 fld3 tg6",
+        "className": "ov cat-career cat-path coh6 fld3",
         "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-life-4": {
       "card": {
-        "className": "idc cat-life coh6 fld1 tg5 pg2",
+        "className": "idc cat-life coh6 fld1 pg2",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-life coh6 fld1 tg5 pg2",
+        "className": "rvr cat-life coh6 fld1 pg2",
         "cgStyle": "background:#22D3EE",
         "tgStyle": "background:#DFF8FC;color:#0B5563",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-life coh6 fld1 tg5",
+        "className": "ov cat-life coh6 fld1",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-class-4": {
       "card": {
-        "className": "idc cat-class coh6 fld2 tg5 pg2",
+        "className": "idc cat-class coh6 fld2 pg2",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-class coh6 fld2 tg5 pg2",
+        "className": "rvr cat-class coh6 fld2 pg2",
         "cgStyle": "background:#FFE600",
         "tgStyle": "background:#FFF8C2;color:#5A4F00",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-class coh6 fld2 tg5",
+        "className": "ov cat-class coh6 fld2",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-proj-4": {
       "card": {
-        "className": "idc cat-proj coh7 fld0 tg5 pg2",
+        "className": "idc cat-proj coh7 fld0 pg2",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-proj coh7 fld0 tg5 pg2",
+        "className": "rvr cat-proj coh7 fld0 pg2",
         "cgStyle": "background:#8CFF3F",
         "tgStyle": "background:#ECFFD9;color:#2F5A12",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-proj coh7 fld0 tg5",
+        "className": "ov cat-proj coh7 fld0",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-career-4": {
       "card": {
-        "className": "idc cat-career cat-path coh7 fld0 tg6 pg2",
+        "className": "idc cat-career cat-path coh7 fld0 pg2",
         "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-career cat-path coh7 fld0 tg6 pg2",
+        "className": "rvr cat-career cat-path coh7 fld0 pg2",
         "cgStyle": "background:#2457F5",
         "tgStyle": "background:#DCE5F7;color:#15368F",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-career cat-path coh7 fld0 tg6",
+        "className": "ov cat-career cat-path coh7 fld0",
         "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-life-5": {
       "card": {
-        "className": "idc cat-life coh4 fld2 tg4 pg2",
+        "className": "idc cat-life coh4 fld2 pg2",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-life coh4 fld2 tg4 pg2",
+        "className": "rvr cat-life coh4 fld2 pg2",
         "cgStyle": "background:#22D3EE",
         "tgStyle": "background:#DFF8FC;color:#0B5563",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-life coh4 fld2 tg4",
+        "className": "ov cat-life coh4 fld2",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-class-5": {
       "card": {
-        "className": "idc cat-class coh5 fld1 tg0 pg2",
+        "className": "idc cat-class coh5 fld1 pg2",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-class coh5 fld1 tg0 pg2",
+        "className": "rvr cat-class coh5 fld1 pg2",
         "cgStyle": "background:#FFE600",
         "tgStyle": "background:#FFF8C2;color:#5A4F00",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-class coh5 fld1 tg0",
+        "className": "ov cat-class coh5 fld1",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-proj-5": {
       "card": {
-        "className": "idc cat-proj coh7 fld3 tg5 pg2",
+        "className": "idc cat-proj coh7 fld3 pg2",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-proj coh7 fld3 tg5 pg2",
+        "className": "rvr cat-proj coh7 fld3 pg2",
         "cgStyle": "background:#8CFF3F",
         "tgStyle": "background:#ECFFD9;color:#2F5A12",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-proj coh7 fld3 tg5",
+        "className": "ov cat-proj coh7 fld3",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-career-5": {
       "card": {
-        "className": "idc cat-career cat-job coh4 fld2 tg4 tg6 pg2",
+        "className": "idc cat-career cat-job coh4 fld2 pg2",
         "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-career cat-job coh4 fld2 tg4 tg6 pg2",
+        "className": "rvr cat-career cat-job coh4 fld2 pg2",
         "cgStyle": "background:#2457F5",
         "tgStyle": "background:#DCE5F7;color:#15368F",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-career cat-job coh4 fld2 tg4 tg6",
+        "className": "ov cat-career cat-job coh4 fld2",
         "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
         "template": "stories/reviews/detail-3"
       }
     },
     "r-life-6": {
       "card": {
-        "className": "idc cat-life coh5 fld2 tg2 pg3",
+        "className": "idc cat-life coh5 fld2 pg3",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-life coh5 fld2 tg2 pg3",
+        "className": "rvr cat-life coh5 fld2 pg3",
         "cgStyle": "background:#22D3EE",
         "tgStyle": "background:#DFF8FC;color:#0B5563",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-life coh5 fld2 tg2",
+        "className": "ov cat-life coh5 fld2",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-class-6": {
       "card": {
-        "className": "idc cat-class coh3 fld3 tg6 pg3",
+        "className": "idc cat-class coh3 fld3 pg3",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-class coh3 fld3 tg6 pg3",
+        "className": "rvr cat-class coh3 fld3 pg3",
         "cgStyle": "background:#FFE600",
         "tgStyle": "background:#FFF8C2;color:#5A4F00",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-class coh3 fld3 tg6",
+        "className": "ov cat-class coh3 fld3",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-proj-6": {
       "card": {
-        "className": "idc cat-proj coh4 fld0 tg4 tg6 pg3",
+        "className": "idc cat-proj coh4 fld0 pg3",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-proj coh4 fld0 tg4 tg6 pg3",
+        "className": "rvr cat-proj coh4 fld0 pg3",
         "cgStyle": "background:#8CFF3F",
         "tgStyle": "background:#ECFFD9;color:#2F5A12",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-proj coh4 fld0 tg4 tg6",
+        "className": "ov cat-proj coh4 fld0",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/detail-3"
       }
     },
     "r-career-6": {
       "card": {
-        "className": "idc cat-career cat-job coh5 fld1 tg6 pg3",
+        "className": "idc cat-career cat-job coh5 fld1 pg3",
         "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-career cat-job coh5 fld1 tg6 pg3",
+        "className": "rvr cat-career cat-job coh5 fld1 pg3",
         "cgStyle": "background:#2457F5",
         "tgStyle": "background:#DCE5F7;color:#15368F",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-career cat-job coh5 fld1 tg6",
+        "className": "ov cat-career cat-job coh5 fld1",
         "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-life-7": {
       "card": {
-        "className": "idc cat-life coh7 fld2 tg4 pg3",
+        "className": "idc cat-life coh7 fld2 pg3",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-life coh7 fld2 tg4 pg3",
+        "className": "rvr cat-life coh7 fld2 pg3",
         "cgStyle": "background:#22D3EE",
         "tgStyle": "background:#DFF8FC;color:#0B5563",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-life coh7 fld2 tg4",
+        "className": "ov cat-life coh7 fld2",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-class-7": {
       "card": {
-        "className": "idc cat-class coh6 fld3 tg1 tg5 pg3",
+        "className": "idc cat-class coh6 fld3 pg3",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-class coh6 fld3 tg1 tg5 pg3",
+        "className": "rvr cat-class coh6 fld3 pg3",
         "cgStyle": "background:#FFE600",
         "tgStyle": "background:#FFF8C2;color:#5A4F00",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-class coh6 fld3 tg1 tg5",
+        "className": "ov cat-class coh6 fld3",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/detail-3"
       }
     },
     "r-proj-7": {
       "card": {
-        "className": "idc cat-proj coh7 fld1 tg4 pg3",
+        "className": "idc cat-proj coh7 fld1 pg3",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-proj coh7 fld1 tg4 pg3",
+        "className": "rvr cat-proj coh7 fld1 pg3",
         "cgStyle": "background:#8CFF3F",
         "tgStyle": "background:#ECFFD9;color:#2F5A12",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-proj coh7 fld1 tg4",
+        "className": "ov cat-proj coh7 fld1",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-career-7": {
       "card": {
-        "className": "idc cat-career cat-job coh3 fld3 tg5 tg6 pg3",
+        "className": "idc cat-career cat-job coh3 fld3 pg3",
         "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-career cat-job coh3 fld3 tg5 tg6 pg3",
+        "className": "rvr cat-career cat-job coh3 fld3 pg3",
         "cgStyle": "background:#2457F5",
         "tgStyle": "background:#DCE5F7;color:#15368F",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-career cat-job coh3 fld3 tg5 tg6",
+        "className": "ov cat-career cat-job coh3 fld3",
         "style": "--c:#2457F5;--bg:#DCE5F7;--dk:#15368F",
         "template": "stories/reviews/detail-3"
       }
     },
     "r-life-8": {
       "card": {
-        "className": "idc cat-life coh5 fld1 tg4 pg3",
+        "className": "idc cat-life coh5 fld1 pg3",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-life coh5 fld1 tg4 pg3",
+        "className": "rvr cat-life coh5 fld1 pg3",
         "cgStyle": "background:#22D3EE",
         "tgStyle": "background:#DFF8FC;color:#0B5563",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-life coh5 fld1 tg4",
+        "className": "ov cat-life coh5 fld1",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-class-8": {
       "card": {
-        "className": "idc cat-class coh4 fld0 tg4 pg3",
+        "className": "idc cat-class coh4 fld0 pg3",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-class coh4 fld0 tg4 pg3",
+        "className": "rvr cat-class coh4 fld0 pg3",
         "cgStyle": "background:#FFE600",
         "tgStyle": "background:#FFF8C2;color:#5A4F00",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-class coh4 fld0 tg4",
+        "className": "ov cat-class coh4 fld0",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-proj-8": {
       "card": {
-        "className": "idc cat-proj coh6 fld1 tg0 tg5 pg3",
+        "className": "idc cat-proj coh6 fld1 pg3",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-proj coh6 fld1 tg0 tg5 pg3",
+        "className": "rvr cat-proj coh6 fld1 pg3",
         "cgStyle": "background:#8CFF3F",
         "tgStyle": "background:#ECFFD9;color:#2F5A12",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-proj coh6 fld1 tg0 tg5",
+        "className": "ov cat-proj coh6 fld1",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/detail-3"
       }
     },
     "r-life-9": {
       "card": {
-        "className": "idc cat-life coh3 fld0 tg3 tg4 pg3",
+        "className": "idc cat-life coh3 fld0 pg3",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-life coh3 fld0 tg3 tg4 pg3",
+        "className": "rvr cat-life coh3 fld0 pg3",
         "cgStyle": "background:#22D3EE",
         "tgStyle": "background:#DFF8FC;color:#0B5563",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-life coh3 fld0 tg3 tg4",
+        "className": "ov cat-life coh3 fld0",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/detail-3"
       }
     },
     "r-class-9": {
       "card": {
-        "className": "idc cat-class coh7 fld1 tg4 pg4",
+        "className": "idc cat-class coh7 fld1 pg4",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-class coh7 fld1 tg4 pg4",
+        "className": "rvr cat-class coh7 fld1 pg4",
         "cgStyle": "background:#FFE600",
         "tgStyle": "background:#FFF8C2;color:#5A4F00",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-class coh7 fld1 tg4",
+        "className": "ov cat-class coh7 fld1",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-proj-9": {
       "card": {
-        "className": "idc cat-proj coh3 fld0 tg5 pg4",
+        "className": "idc cat-proj coh3 fld0 pg4",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-proj coh3 fld0 tg5 pg4",
+        "className": "rvr cat-proj coh3 fld0 pg4",
         "cgStyle": "background:#8CFF3F",
         "tgStyle": "background:#ECFFD9;color:#2F5A12",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-proj coh3 fld0 tg5",
+        "className": "ov cat-proj coh3 fld0",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-life-10": {
       "card": {
-        "className": "idc cat-life coh7 fld0 tg5 pg4",
+        "className": "idc cat-life coh7 fld0 pg4",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-life coh7 fld0 tg5 pg4",
+        "className": "rvr cat-life coh7 fld0 pg4",
         "cgStyle": "background:#22D3EE",
         "tgStyle": "background:#DFF8FC;color:#0B5563",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-life coh7 fld0 tg5",
+        "className": "ov cat-life coh7 fld0",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-class-10": {
       "card": {
-        "className": "idc cat-class coh5 fld3 tg5 tg6 pg4",
+        "className": "idc cat-class coh5 fld3 pg4",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-class coh5 fld3 tg5 tg6 pg4",
+        "className": "rvr cat-class coh5 fld3 pg4",
         "cgStyle": "background:#FFE600",
         "tgStyle": "background:#FFF8C2;color:#5A4F00",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-class coh5 fld3 tg5 tg6",
+        "className": "ov cat-class coh5 fld3",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/detail-3"
       }
     },
     "r-proj-10": {
       "card": {
-        "className": "idc cat-proj coh5 fld2 tg5 pg4",
+        "className": "idc cat-proj coh5 fld2 pg4",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-proj coh5 fld2 tg5 pg4",
+        "className": "rvr cat-proj coh5 fld2 pg4",
         "cgStyle": "background:#8CFF3F",
         "tgStyle": "background:#ECFFD9;color:#2F5A12",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-proj coh5 fld2 tg5",
+        "className": "ov cat-proj coh5 fld2",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-life-11": {
       "card": {
-        "className": "idc cat-life coh6 fld1 tg0 tg4 pg4",
+        "className": "idc cat-life coh6 fld1 pg4",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-life coh6 fld1 tg0 tg4 pg4",
+        "className": "rvr cat-life coh6 fld1 pg4",
         "cgStyle": "background:#22D3EE",
         "tgStyle": "background:#DFF8FC;color:#0B5563",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-life coh6 fld1 tg0 tg4",
+        "className": "ov cat-life coh6 fld1",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/detail-3"
       }
     },
     "r-class-11": {
       "card": {
-        "className": "idc cat-class coh7 fld2 tg2 pg4",
+        "className": "idc cat-class coh7 fld2 pg4",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-class coh7 fld2 tg2 pg4",
+        "className": "rvr cat-class coh7 fld2 pg4",
         "cgStyle": "background:#FFE600",
         "tgStyle": "background:#FFF8C2;color:#5A4F00",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-class coh7 fld2 tg2",
+        "className": "ov cat-class coh7 fld2",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-proj-11": {
       "card": {
-        "className": "idc cat-proj coh7 fld2 tg5 pg4",
+        "className": "idc cat-proj coh7 fld2 pg4",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-proj coh7 fld2 tg5 pg4",
+        "className": "rvr cat-proj coh7 fld2 pg4",
         "cgStyle": "background:#8CFF3F",
         "tgStyle": "background:#ECFFD9;color:#2F5A12",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-proj coh7 fld2 tg5",
+        "className": "ov cat-proj coh7 fld2",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-life-12": {
       "card": {
-        "className": "idc cat-life coh6 fld3 tg5 pg4",
+        "className": "idc cat-life coh6 fld3 pg4",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-life coh6 fld3 tg5 pg4",
+        "className": "rvr cat-life coh6 fld3 pg4",
         "cgStyle": "background:#22D3EE",
         "tgStyle": "background:#DFF8FC;color:#0B5563",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-life coh6 fld3 tg5",
+        "className": "ov cat-life coh6 fld3",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-class-12": {
       "card": {
-        "className": "idc cat-class coh7 fld0 tg4 tg5 pg4",
+        "className": "idc cat-class coh7 fld0 pg4",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-class coh7 fld0 tg4 tg5 pg4",
+        "className": "rvr cat-class coh7 fld0 pg4",
         "cgStyle": "background:#FFE600",
         "tgStyle": "background:#FFF8C2;color:#5A4F00",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-class coh7 fld0 tg4 tg5",
+        "className": "ov cat-class coh7 fld0",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/detail-3"
       }
     },
     "r-proj-12": {
       "card": {
-        "className": "idc cat-proj coh7 fld0 tg6 pg4",
+        "className": "idc cat-proj coh7 fld0 pg4",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-proj coh7 fld0 tg6 pg4",
+        "className": "rvr cat-proj coh7 fld0 pg4",
         "cgStyle": "background:#8CFF3F",
         "tgStyle": "background:#ECFFD9;color:#2F5A12",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-proj coh7 fld0 tg6",
+        "className": "ov cat-proj coh7 fld0",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-life-13": {
       "card": {
-        "className": "idc cat-life coh4 fld1 tg4 pg4",
+        "className": "idc cat-life coh4 fld1 pg4",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-life coh4 fld1 tg4 pg4",
+        "className": "rvr cat-life coh4 fld1 pg4",
         "cgStyle": "background:#22D3EE",
         "tgStyle": "background:#DFF8FC;color:#0B5563",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-life coh4 fld1 tg4",
+        "className": "ov cat-life coh4 fld1",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-class-13": {
       "card": {
-        "className": "idc cat-class coh6 fld1 tg5 pg5",
+        "className": "idc cat-class coh6 fld1 pg5",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-class coh6 fld1 tg5 pg5",
+        "className": "rvr cat-class coh6 fld1 pg5",
         "cgStyle": "background:#FFE600",
         "tgStyle": "background:#FFF8C2;color:#5A4F00",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-class coh6 fld1 tg5",
+        "className": "ov cat-class coh6 fld1",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-proj-13": {
       "card": {
-        "className": "idc cat-proj coh6 fld2 tg5 pg5",
+        "className": "idc cat-proj coh6 fld2 pg5",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-proj coh6 fld2 tg5 pg5",
+        "className": "rvr cat-proj coh6 fld2 pg5",
         "cgStyle": "background:#8CFF3F",
         "tgStyle": "background:#ECFFD9;color:#2F5A12",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-proj coh6 fld2 tg5",
+        "className": "ov cat-proj coh6 fld2",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-life-14": {
       "card": {
-        "className": "idc cat-life coh7 fld2 tg4 pg5",
+        "className": "idc cat-life coh7 fld2 pg5",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-life coh7 fld2 tg4 pg5",
+        "className": "rvr cat-life coh7 fld2 pg5",
         "cgStyle": "background:#22D3EE",
         "tgStyle": "background:#DFF8FC;color:#0B5563",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-life coh7 fld2 tg4",
+        "className": "ov cat-life coh7 fld2",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-class-14": {
       "card": {
-        "className": "idc cat-class coh5 fld2 tg4 pg5",
+        "className": "idc cat-class coh5 fld2 pg5",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-class coh5 fld2 tg4 pg5",
+        "className": "rvr cat-class coh5 fld2 pg5",
         "cgStyle": "background:#FFE600",
         "tgStyle": "background:#FFF8C2;color:#5A4F00",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-class coh5 fld2 tg4",
+        "className": "ov cat-class coh5 fld2",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-proj-14": {
       "card": {
-        "className": "idc cat-proj coh5 fld0 tg5 pg5",
+        "className": "idc cat-proj coh5 fld0 pg5",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-proj coh5 fld0 tg5 pg5",
+        "className": "rvr cat-proj coh5 fld0 pg5",
         "cgStyle": "background:#8CFF3F",
         "tgStyle": "background:#ECFFD9;color:#2F5A12",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-proj coh5 fld0 tg5",
+        "className": "ov cat-proj coh5 fld0",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-life-15": {
       "card": {
-        "className": "idc cat-life coh5 fld1 tg0 pg5",
+        "className": "idc cat-life coh5 fld1 pg5",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-life coh5 fld1 tg0 pg5",
+        "className": "rvr cat-life coh5 fld1 pg5",
         "cgStyle": "background:#22D3EE",
         "tgStyle": "background:#DFF8FC;color:#0B5563",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-life coh5 fld1 tg0",
+        "className": "ov cat-life coh5 fld1",
         "style": "--c:#22D3EE;--bg:#DFF8FC;--dk:#0B5563",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-class-15": {
       "card": {
-        "className": "idc cat-class coh3 fld3 tg4 pg5",
+        "className": "idc cat-class coh3 fld3 pg5",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-class coh3 fld3 tg4 pg5",
+        "className": "rvr cat-class coh3 fld3 pg5",
         "cgStyle": "background:#FFE600",
         "tgStyle": "background:#FFF8C2;color:#5A4F00",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-class coh3 fld3 tg4",
+        "className": "ov cat-class coh3 fld3",
         "style": "--c:#FFE600;--bg:#FFF8C2;--dk:#5A4F00",
         "template": "stories/reviews/detail-2"
       }
     },
     "r-proj-15": {
       "card": {
-        "className": "idc cat-proj coh4 fld0 tg4 pg5",
+        "className": "idc cat-proj coh4 fld0 pg5",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/card-2"
       },
       "row": {
-        "className": "rvr cat-proj coh4 fld0 tg4 pg5",
+        "className": "rvr cat-proj coh4 fld0 pg5",
         "cgStyle": "background:#8CFF3F",
         "tgStyle": "background:#ECFFD9;color:#2F5A12",
         "template": "stories/reviews/row"
       },
       "detail": {
-        "className": "ov cat-proj coh4 fld0 tg4",
+        "className": "ov cat-proj coh4 fld0",
         "style": "--c:#8CFF3F;--bg:#ECFFD9;--dk:#2F5A12",
         "template": "stories/reviews/detail-2"
       }

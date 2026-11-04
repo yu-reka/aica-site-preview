@@ -41,10 +41,7 @@ function startReviews(classes) {
   });
   source.querySelectorAll = selector => selector === '.idc' ? records : [];
   section.querySelector = selector => selector === '.idgrid' ? source : null;
-  section.querySelectorAll = selector => selector === '.dw-ftg .dwin a' ? ['', '0', '5'].map(value => {
-    const link = new Element('a'); link.attrs.href = value ? '#tg-' + value : '#p-rev';
-    link.textContent = value ? '#태그' + value : '전체'; return link;
-  }) : [];
+  section.querySelectorAll = () => [];
   const document = {
     addEventListener() {},
     readyState: 'complete', documentElement: new Element(),
@@ -66,7 +63,6 @@ function startReviews(classes) {
 
   return { categories, cohorts, board, count, empty, pager, choose, listeners, location,
     tagSelect: created.find(node => node.className === 'sm-review-tag-dropdown dw'),
-    tagOptions: created.find(node => node.className === 'sm-review-tag-options'),
     views: created.find(node => node.className === 'sm-review-views'),
     stage: created.find(node => node.className === 'sm-review-stage') };
 }
@@ -111,7 +107,7 @@ test('mobile grid exposes all matching reviews while the shared list pager keeps
   assert.equal(board.children.length, 1);
   assert.equal(board.children[0].href, '#r-10');
   location.hash = '#tg-4'; listeners.hashchange();
-  assert.equal(board.children.length, 10);
+  assert.equal(board.children.length, 1, 'an old tag hash does not change page 2');
   assert.equal(count.textContent, '11개의 후기');
   views.children[0].events.click();
   assert.equal(board.children.length, 11);
@@ -159,24 +155,16 @@ test('mobile review rail keeps its position across modal open and close', () => 
   assert.equal(board.scrollLeft, 0);
 });
 
-test('mobile tag selection filters both views and survives modal close', () => {
-  const { tagSelect, tagOptions, views, stage, board, count, location, listeners } = startReviews([
+test('mobile omits tag controls and ignores old tag hashes in either view', () => {
+  const { tagSelect, views, board, count, location, listeners } = startReviews([
     ['cat-life', 'coh7', 'tg0'], ['cat-class', 'coh7', 'tg5'],
   ]);
-  tagSelect.open = true;
-  tagOptions.children.find(button => button.dataset.value === '5').events.click();
-  assert.equal(tagSelect.open, false);
-  assert.equal(count.textContent, '1개의 후기');
-  assert.equal(board.children[0].href, '#r-1');
+  assert.equal(tagSelect, undefined);
+  location.hash = '#tg-5'; listeners.hashchange();
+  assert.equal(count.textContent, '2개의 후기');
+  assert.equal(board.children.length, 2);
   views.children[1].events.click();
-  assert.equal(stage.classList.has('is-list'), true);
-  assert.equal(views.children[1].attrs['aria-pressed'], 'true');
   location.hash = '#r-1'; listeners.hashchange();
   location.hash = '#p-rev'; listeners.hashchange();
-  assert.equal(tagOptions.children.find(button => button.dataset.value === '5').attrs['aria-pressed'], 'true');
-  assert.equal(board.children.length, 1);
-  views.children[0].events.click();
-  assert.equal(stage.classList.has('is-list'), false);
-  tagOptions.children.find(button => button.dataset.value === '').events.click();
   assert.equal(board.children.length, 2);
 });

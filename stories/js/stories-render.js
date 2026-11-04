@@ -25,7 +25,7 @@
   var REV = D.reviews || [], IV = D.interviews || [], PJ = D.projects || [], CO = D.cohorts || [];
   var PER = 12;           // 후기 한 쪽에 12개
   var CSS_PAGES = 5;      // stories.css에 넘김 규칙이 있는 쪽 수(pgn1~pgn5). 6쪽부터는 아래에서 규칙을 만들어요
-  var TAGS = ['#비전공자', '#타지출신', '#직장인출신', '#졸업생', '#적응', '#팀활동', '#취업연계'];
+  var LEGACY_REVIEW_TAGS = ['#비전공자', '#타지출신', '#직장인출신', '#졸업생', '#적응', '#팀활동', '#취업연계'];
   var LIFE = { c: '#22D3EE', bg: '#DFF8FC', dk: '#0B5563' }, CAREER = { c: '#2457F5', bg: '#DCE5F7', dk: '#15368F' };
   var CAT = {
     life: { name: '생활', cls: 'cat-life', c: LIFE.c, bg: LIFE.bg, dk: LIFE.dk },
@@ -66,7 +66,8 @@
     out.photos = (Array.isArray(item.photos) ? item.photos : []).map(image).filter(Boolean);
     out.art = safe ? safe.svg(item.art) : '';
     out.links = (Array.isArray(item.links) ? item.links : []).map(function (link) { return link && Object.assign({}, link,{url:safe ? safe.url(link.url,false) : ''}); }).filter(function (link) { return link && link.url; });
-    out.tags = (Array.isArray(item.tags) ? item.tags : []).filter(function (tag) { return (prefix === 'st-' && typeof tag === 'string') || (Number.isInteger(tag) && tag >= 0 && tag < TAGS.length); });
+    var tags = Array.isArray(item.tags) ? item.tags : [];
+    out.tags = prefix === 'r-p' ? tags.map(reviewTag).filter(Boolean) : tags.filter(function (tag) { return (prefix === 'st-' && typeof tag === 'string') || (Number.isInteger(tag) && tag >= 0 && tag < LEGACY_REVIEW_TAGS.length); });
     if (item.video) out.video = Object.assign({}, item.video,{url:safe ? safe.url(item.video.url,false) : '',yt:/^[A-Za-z0-9_-]{6,20}$/.test(item.video.yt || '') ? item.video.yt : ''});
     if (!new RegExp('^'+prefix+'[0-9]{1,18}$').test(out.anchor || '')) out.anchor = prefix + String(item.id || '').replace(/[^0-9]/g,'').slice(0,18);
     return out;
@@ -93,8 +94,12 @@
   function cat(r) { return CAT[r.cat] || CAT.life; }
   function catKey(r) { return r.cat === 'career' ? 'job' : (CAT[r.cat] ? r.cat : 'life'); }
   function fld(r) { return FIELD[r.track] == null ? '' : ' fld' + FIELD[r.track]; }
-  function firstTag(r) { return r.tags && r.tags.length ? TAGS[r.tags[0]] : ''; }
-  function tagClasses(list, prefix) { return (list || []).map(function (t) { return ' ' + prefix + t; }).join(''); }
+  // Number tags are retained only for older API responses and cached snapshots.
+  function reviewTag(tag) {
+    if (typeof tag === 'string') return tag.trim() ? tag : '';
+    return Number.isInteger(tag) && tag >= 0 && tag < LEGACY_REVIEW_TAGS.length ? LEGACY_REVIEW_TAGS[tag] : '';
+  }
+  function firstTag(r) { return r.tags && r.tags.length ? r.tags[0] : ''; }
   function firstSentence(t) { var m = String(t || '').match(/^.*?[.!?。](\s|$)/); return (m ? m[0] : String(t || '')).trim(); }
   function num(v, d) { v = Number(v); return isFinite(v) ? v : d; }
   function hasPhoto(item) { return !!(item.img && item.img.src); }
@@ -197,8 +202,8 @@
   function reviewDialogs(hub) {
     return REV.map(function (r) {
       var c = cat(r), id = esc(r.anchor);
-      var tags = (r.tags || []).map(function (t) { return '<span class="t" data-field="tag">' + esc(TAGS[t]) + '</span>'; }).join('');
-      return '<div class="ov ' + c.cls + ' coh' + esc(r.cohort) + fld(r) + tagClasses(r.tags, 'tg') + '" id="' + id + '" style="--c:' + c.c + ';--bg:' + c.bg + ';--dk:' + c.dk + '" role="dialog" aria-modal="true" aria-labelledby="' + id + '-t">'
+      var tags = (r.tags || []).map(function (t) { return '<span class="t" data-field="tag">' + esc(t) + '</span>'; }).join('');
+      return '<div class="ov ' + c.cls + ' coh' + esc(r.cohort) + fld(r) + '" id="' + id + '" style="--c:' + c.c + ';--bg:' + c.bg + ';--dk:' + c.dk + '" role="dialog" aria-modal="true" aria-labelledby="' + id + '-t">'
         + '<a class="back" href="' + (hub ? '#hub-reviews' : '#p-rev') + '" aria-label="닫기"></a><div class="sheet"><a class="x" href="' + (hub ? '#hub-reviews' : '#p-rev') + '" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></a><div class="mscroll">'
         + '<div class="mtop"><div class="review-heading-meta"><div class="mcat" data-field="category">' + c.name + '</div>' + (tags ? '<div class="mtags">' + tags + '</div>' : '') + '</div><h3 id="' + id + '-t" data-field="title">' + esc(r.title) + '</h3>'
         + '<div class="mby"><span class="mav" data-field="cohort">' + coh(r.cohort) + '</span><div><b data-field="author">' + esc(r.author) + '</b>' + (r.track ? '<em data-field="track">' + esc(r.track) + '</em>' : '') + '</div></div></div>'
@@ -229,7 +234,7 @@
     }
     var cards = '', rows = '';
     REV.forEach(function (r, i) {
-      var c = cat(r), pg = Math.floor(i / PER) + 1, cls = c.cls + ' coh' + esc(r.cohort) + fld(r) + tagClasses(r.tags, 'tg');
+      var c = cat(r), pg = Math.floor(i / PER) + 1, cls = c.cls + ' coh' + esc(r.cohort) + fld(r);
       var tag = firstTag(r);
       cards += '<a class="idc ' + cls + ' pg' + pg + '" href="#' + esc(r.anchor) + '" style="--c:' + c.c + ';--bg:' + c.bg + ';--dk:' + c.dk + '">'
         + '<div class="cbar"><b data-field="category">' + c.name + '</b><span data-field="cohort">' + coh(r.cohort) + '</span></div>'
@@ -239,7 +244,7 @@
       rows += '<a class="rvr ' + cls + ' pg' + pg + '" href="#' + esc(r.anchor) + '">'
         + '<span class="cg" style="background:' + c.c + '" data-field="category">' + c.name + '</span>'
         + '<span class="tt" data-field="title">' + esc(r.title) + '</span>'
-        + (tag ? '<span class="tg" style="background:' + c.bg + ';color:' + c.dk + '" data-field="tag">' + esc(tag) + '</span>' : '<span class="tg tg-general">태그 없음</span>')
+        + (tag ? '<span class="tg" style="background:' + c.bg + ';color:' + c.dk + '" data-field="tag">' + esc(tag) + '</span>' : '')
         + '<span class="mt">' + esc([r.cohort ? r.cohort + '기' : '', r.author].filter(Boolean).join(' · ')) + '</span></a>';
     });
     var grid = $('.idgrid', rev), list = $('.rvlist', rev);
@@ -251,7 +256,7 @@
     insertAfter($('.st-main'), ovs);
     // 쪽 번호 넘김 규칙이 모자라면 더 만들어요(CSS에는 7쪽까지)
     for (var k = CSS_PAGES + 1; k <= pages; k++) {
-      var on = '.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):not(:has(.tgt:target)):has(#pgn' + k + ':checked)';
+      var on = '.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):has(#pgn' + k + ':checked)';
       css += on + ' .idc:not(.pg' + k + '),' + on + ' .rvr:not(.pg' + k + '){display:none}'
         + '.stories-page .rev:has(#pgn' + k + ':checked) .pager.cpager label[for=pgn' + k + ']{background:#2B2D31;border-color:#2B2D31;color:#fff}';   // 1~5쪽과 같은 지금 쪽 표시(presentation.css)
     }
@@ -559,7 +564,7 @@
   var pager = section.querySelector('.pager');
   if (!cards.length || !pager) return; // Shared published-empty/error states own an empty collection.
   var radios = [].slice.call(section.querySelectorAll('input[name="pgn"]'));
-  var page = 1, tag = '', pageSize = 12;
+  var page = 1, pageSize = 12;
   var count = document.createElement('p');
   count.className = 'review-count story-state--desktop'; count.setAttribute('role', 'status');
   section.querySelector('.idgrid').before(count);
@@ -589,7 +594,7 @@
     cohort = known ? String(7 - Number(known[1])) : extra ? extra[1] : '';
     var matching = cards.map(function (card, index) { return { card: card, index: index }; }).filter(function (entry) {
       return (category === 'all' || entry.card.classList.contains('cat-' + category)) &&
-        (!cohort || entry.card.classList.contains('coh' + cohort)) && (!tag || entry.card.classList.contains('tg' + tag));
+        (!cohort || entry.card.classList.contains('coh' + cohort));
     });
     var total = Math.max(1, Math.ceil(matching.length / pageSize));
     page = Math.max(1, Math.min(page, total));
@@ -611,19 +616,13 @@
       pager.appendChild(button('→', page + 1, page === total));
     }
   }
-  function fromHash() {
-    var hash = /^#tg-([0-6])$/.exec(location.hash);
-    var nextTag = hash ? hash[1] : /^#r-/.test(location.hash) ? tag : '';
-    if (nextTag !== tag) { tag = nextTag; page = 1; }
-    refresh();
-  }
   section.addEventListener('change', function (event) {
     if (event.target.name === 'rc' || event.target.name === 'fco') { page = 1; refresh(); }
     else if (event.target.name === 'pgn') { page = Number(event.target.id.slice(3)) || 1; refresh(); }
   });
-  section.addEventListener('reviews:reset', function () { tag = ''; page = 1; refresh(); });
-  addEventListener('hashchange', fromHash);
-  fromHash();
+  section.addEventListener('reviews:reset', function () { page = 1; refresh(); });
+  addEventListener('hashchange', refresh);
+  refresh();
 })();
 /* End desktop review paging. */
 

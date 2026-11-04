@@ -117,6 +117,8 @@ export function deriveContent(content) {
     if (!group) throw new Error(`Unknown leisure group: ${item.group}`);
     group.push(item);
   }
+  // Review previews show one tag; empty collections render no badge.
+  for (const review of content.stories.reviews) review.firstTags = review.tags.slice(0, 1);
   // Render the shared menu from the same route data as the runtime fallback.
   const storyMenu = content.site.menu.find(menu => menu.id === 'stories');
   content.storyNavigation = Object.fromEntries(storyMenu.children.map(current => [current.id, {

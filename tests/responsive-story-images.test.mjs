@@ -9,9 +9,10 @@ function element() { return {innerHTML:'',inserted:'',querySelector(){return nul
 function render(data) {
   const projectGrid=element(),projectList=element(),projectPane=element(),projectHub=element();
   const interviewGrid=element(),interviewList=element(),interviewPane=element(),interviewHub=element(),interviewHero=element();
-  const reviews=element(),cohorts=element(),cohortHub=element(),page=element();
+  const reviews=element(),cohorts=element(),cohortHub=element(),page=element(),honors=element();
+  honors.parentNode=element();
   projectPane.querySelector=s=>({'.pjgrid':projectGrid,'.pjlist':projectList}[s]||null);
-  interviewPane.querySelector=s=>({'.ivgrid':interviewGrid,'.ivlist':interviewList}[s]||null);
+  interviewPane.querySelector=s=>({'.ivgrid':interviewGrid,'.ivlist':interviewList,'.iv-honors .sm-ivf-track':honors}[s]||null);
   interviewHub.querySelector=s=>s==='.hb-ivf'?interviewHero:null;
   page.querySelector=s=>({'#p-pr':projectPane,'#p-iv':interviewPane,'.hb-pjs':projectHub,'.hb-ivg':interviewHub,'.hb-mos':cohortHub}[s]||null);
   page.classList={contains:s=>s==='stories-hub'};
@@ -23,7 +24,7 @@ function render(data) {
   runInContext(code('common/js/public-content.js'),context);
   runInContext(code('stories/js/stories-render.js'),context);
   return {cards:projectGrid.innerHTML,details:projectList.inserted,projectHub:projectHub.innerHTML,
-    interviews:interviewGrid.innerHTML,interviewDetails:interviewList.inserted,hubHero:interviewHero.inserted,
+    honors:honors.innerHTML,interviews:interviewGrid.innerHTML,interviewDetails:interviewList.inserted,hubHero:interviewHero.inserted,
     hubList:interviewHub.inserted,reviews:reviews.innerHTML,cohorts:cohorts.innerHTML,cohortHub:cohortHub.innerHTML};
 }
 function photo(extra={}) { return {src:'/media/full.jpg',w:1280,h:720,alt:'Example image',
@@ -141,4 +142,20 @@ test('backoffice default-avatar copies reuse the verified small public variants 
   assert.match(out.hubList,/loading="lazy"/);
   const custom=render({interviews:[{id:2,anchor:'iv-p2',title:'Custom',img:{src:'assets/uploads/custom-avatar.webp',w:1080,h:675}}]});
   assert.doesNotMatch(custom.interviews,/avatar-card-02-160/);
+});
+
+
+test('honors cards honor their slot sizes for API photos, fallback avatars and copied avatars while lists stay small',()=>{
+  const slot='(max-width: 390px) calc(100vw - 90px), (max-width: 600px) 300px, (max-width: 1080px) 320px, 350px';
+  for(const img of [photo(),undefined,{src:'assets/uploads/post-avatar-card-01-1080.webp',w:1080,h:675}]) {
+    const data={interviews:[{id:1,anchor:'iv-p1',title:'Honors example',honors:true,img},
+      {id:2,anchor:'iv-p2',title:'List example',img}]};
+    const before=JSON.stringify(data),out=render(data);
+    assert.equal(images(out.honors).length,1);
+    assert.ok(images(out.honors)[0].includes('sizes="'+slot+'"'));
+    assert.match(images(out.honors)[0],/srcset="[^"]*(1080w|1280w)/);
+    assert.match(images(out.interviews)[0],/sizes="\(max-width: 640px\) 64px, 304px"/);
+    assert.match(out.interviewDetails,/sizes="[^"]*720px"/);
+    assert.equal(JSON.stringify(data),before,'slot selection must not change image data');
+  }
 });

@@ -125,7 +125,8 @@
     opts = opts || {};
     var m = opts.large && item.imgLarge ? item.imgLarge : item.img;
     var sizes = opts.large ? '(max-width: 1000px) calc(100vw - 40px), 720px' : null;
-    if (m && m.srcset && m.srcset.length) sizes = opts.sizes || (opts.large ? sizes : PHOTO_CARD_SIZES);
+    sizes = opts.sizes || sizes;
+    if (!sizes && m && m.srcset && m.srcset.length) sizes = PHOTO_CARD_SIZES;
     if (m && m.src) return imgTag(opts.alt === false ? Object.assign({},m,{alt:''}) : m, 'illu', true, opts.fit && m === item.img, opts.field, sizes);
     if (item.art) return opts.hidden && !/^<svg\b[^>]*\saria-hidden=/.test(item.art) ? item.art.replace(/^<svg\b/, '<svg aria-hidden="true"') : item.art;
     return '<svg class="illu" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"' + (opts.hidden ? ' aria-hidden="true"' : '') + '><rect width="100%" height="100%" fill="#E4E9F7"/></svg>';
@@ -289,7 +290,7 @@
       honorsTrack.innerHTML = honors.map(function (v, i) {
         var vid = v.video && v.video.yt;
         return '<a class="sm-ivf-c' + (i ? '' : ' is-on') + '" href="#' + esc(v.anchor) + '" aria-label="' + esc(v.title) + ' 상세보기">'
-          + '<div class="ph">' + visual(v, { alt: false, fit: true, sizes: '(max-width: 640px) 64px, 304px' }) + (vid ? '<span class="play"><i></i></span>' : '') + '</div>'
+          + '<div class="ph">' + visual(v, { alt: false, fit: true, sizes: '(max-width: 390px) calc(100vw - 90px), (max-width: 600px) 300px, (max-width: 1080px) 320px, 350px' }) + (vid ? '<span class="play"><i></i></span>' : '') + '</div>'
           + '<div class="sm-ivf-tx"><b>' + esc(v.title) + '</b><p class="sm-ivf-summary">' + esc(v.summary) + '</p><span>' + esc(who(v)) + '</span></div></a>';
       }).join('');
       honorsTrack.parentNode.setAttribute('aria-label', '우수 수료생 인터뷰');

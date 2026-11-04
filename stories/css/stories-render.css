@@ -52,5 +52,7 @@
 /* 사진처럼 투명한 곳이 없는 그림(stories-render.js 가 그림이 온 뒤 확인해 pjthumb-full): 썸네일 칸 크기에 맞춰 꽉 채워요
    (비율이 달라도 칸을 다 덮고, 넘치는 가장자리는 잘림 — 2026-10-27 사용자 요청: 뒤 흐린 배경 없이 확대돼도 괜찮게). 투명 그림은 위처럼 흰 바탕 여백 안에 */
 .stories-page .pjthumb-full .pjthumb-i,.stories-page a:hover .ph .pjthumb-full .pjthumb-i{left:0;top:0;width:100%;height:100%;object-fit:cover}
+/* 프로젝트 카드 · 한눈에 보기 썸네일의 보일 위치 · 확대(2026-11-05, thumb.fit → data-pos): 사진처럼 꽉 찬 썸네일만. 상세 · 모바일 펼침 그림은 그대로 */
+.stories-page .pjc .pjthumb-full .pjthumb-i[data-pos],.stories-page a.pjc:hover .ph .pjthumb-full .pjthumb-i[data-pos],.stories-page .hb-pjc .pjthumb-full .pjthumb-i[data-pos]{object-position:var(--fx,50%) var(--fy,50%);transform-origin:var(--fx,50%) var(--fy,50%);scale:var(--z,1)}
 /* 카드 큰 글씨가 프로젝트 주제(글쓰기 화면 '프로젝트 주제')라 길 수 있어 세 줄까지 */
 .stories-page .pjc-tx h3[data-field="summary"],.hb-pjc .hb-pjc-nm + h3{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}

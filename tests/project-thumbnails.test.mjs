@@ -201,3 +201,19 @@ test('the project detail shows an escaped service introduction only when present
   assert.match(body(2),/<p class="lead">주제만 있는 글<\/p><div class="pjtags">/);
   assert.doesNotMatch(out.cards+out.hub,/서비스 소개|pjintro/);
 });
+
+// 썸네일 보일 위치 · 확대(2026-11-05 사용자 요청): 관리 화면 발행 창에서 끌어 맞춘 thumb.fit 은 카드 · 한눈에 보기에서만, 사진처럼 꽉 찬 썸네일일 때 CSS 가 써요
+test('a thumbnail position set in the editor moves the card and hub thumbnails only, not the detail picture',()=>{
+  const out=render([
+    {id:1,anchor:'pj-p1',title:'맞춘 사진',thumb:{src:'assets/uploads/post-photo.webp',w:1600,h:1200,fit:{x:30,y:80,z:1.5}}},
+    {id:2,anchor:'pj-p2',title:'이상한 값',thumb:{src:'assets/uploads/post-photo2.webp',fit:{x:'"><b>',y:20,z:2}}},
+    {id:3,anchor:'pj-p3',title:'안 맞춘 그림',thumb:{src:'assets/uploads/post-art.webp'}}]);
+  assert.match(card(out.cards,1),/<img class="pjthumb-i" data-pos style="--fx:30%;--fy:80%;--z:1\.5" src="assets\/uploads\/post-photo\.webp"/);
+  assert.match(card(out.cards,2),/data-pos style="--fx:50%;--fy:20%;--z:2"/,'숫자가 아닌 값은 가운데로');
+  assert.match(card(out.cards,3),/<img class="pjthumb-i" src=/);
+  assert.match(out.hub,/class="pjthumb-i" data-pos style="--fx:30%;--fy:80%;--z:1\.5"/);
+  assert.doesNotMatch(detail(out.details,1),/data-pos/,'상세 맨 위 그림은 그대로');
+  assert.doesNotMatch(out.cards+out.hub,/<b>/);
+  // CSS: 사진처럼 꽉 찬 썸네일(pjthumb-full)일 때만, 카드 · 카드에 마우스를 올렸을 때 · 한눈에 보기
+  assert.match(css,/\.stories-page \.pjc \.pjthumb-full \.pjthumb-i\[data-pos\],\.stories-page a\.pjc:hover \.ph \.pjthumb-full \.pjthumb-i\[data-pos\],\.stories-page \.hb-pjc \.pjthumb-full \.pjthumb-i\[data-pos\]\{object-position:var\(--fx,50%\) var\(--fy,50%\);transform-origin:var\(--fx,50%\) var\(--fy,50%\);scale:var\(--z,1\)\}/);
+});

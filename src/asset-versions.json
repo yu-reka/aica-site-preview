@@ -88,7 +88,7 @@
         "default": "1103project-toggle-right",
         "cohorts": "1103project-toggle-right"
       },
-      "stories-render": "1027demo-video",
+      "stories-render": "1105thumb-fit",
       "stories-sections": {
         "interviews": "1027detail-word-wrap",
         "projects": "1103project-name-size",
@@ -114,7 +114,7 @@
         "legacyLoader": "1104review-tags-display"
       },
       "stories-m": "1104review-tags-display",
-      "stories-render": "1105video-segment",
+      "stories-render": "1105thumb-fit",
       "stories-sections": "1105interview-segment",
       "stories": "1104review-tags-display",
       "story-state": "1102hub-empty-action",

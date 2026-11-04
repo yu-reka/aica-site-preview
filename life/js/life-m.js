@@ -108,11 +108,49 @@
     main.dataset.screen = state.page;
     wireRails();
     wireFacilities();
+    if (state.page === 'tp-fun') fitCultureExcerpts();
     if (state.page === 'tp-house') wireHousing();
     if (state.page === 'tp-food') renderFood();
     syncNav();
     // The original body remains available until rendering and binding succeed.
     host.classList.add('lm-ready');
+  }
+
+  // CSS line-clamp supplies a baseline ellipsis; fit the two-line preview with ⋯ instead.
+  // Only the list preview is shortened. The detail sheet keeps the complete description.
+  function fitCultureExcerpts() {
+    const segmenter = typeof Intl.Segmenter === 'function' ? new Intl.Segmenter('ko', {granularity:'grapheme'}) : null;
+    $$('.culture-row small').forEach(element => {
+      const source = element.textContent;
+      const characters = segmenter ? Array.from(segmenter.segment(source), part => part.segment) : Array.from(source);
+      const copy = document.createElement('span');
+      copy.textContent = source;
+      element.replaceChildren(copy);
+      let previousKey = '';
+      const fit = () => {
+        if (!element.isConnected || !element.clientWidth) return;
+        const style = getComputedStyle(element);
+        const key = [element.clientWidth, style.font, style.letterSpacing].join('|');
+        if (key === previousKey) return;
+        previousKey = key;
+        const allowed = parseFloat(style.lineHeight) * 2;
+        copy.textContent = source;
+        if (copy.offsetHeight <= allowed + .5) return;
+        let low = 0, high = characters.length;
+        while (low < high) {
+          const middle = Math.ceil((low + high) / 2);
+          copy.textContent = characters.slice(0, middle).join('').trimEnd() + '⋯';
+          if (copy.offsetHeight <= allowed + .5) low = middle;
+          else high = middle - 1;
+        }
+        copy.textContent = characters.slice(0, low).join('').trimEnd() + '⋯';
+      };
+      const observer = new ResizeObserver(fit);
+      observer.observe(element);
+      railObservers.push(observer);
+      document.fonts.ready.then(() => { previousKey = ''; fit(); });
+      fit();
+    });
   }
 
   function wireRails() {

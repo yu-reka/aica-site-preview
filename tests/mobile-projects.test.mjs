@@ -29,6 +29,9 @@ function start({ staticFilters = false } = {}) {
     const card = new Element('a'), badge = new Element('span'), title = new Element('strong');
     badge.textContent = type; title.textContent = 'Project ' + index;
     card.queries['.pjc-type'] = badge; card.queries['.pjname'] = title;
+    const description=new Element('h3'),team=new Element('span');
+    description.textContent='서비스 설명 '+index;team.textContent='팀 '+index+' · 5명';
+    card.queries['.pjc-tx h3']=description;card.queries['.pjc-tx .team']=team;
     card.setAttribute('href', '#pj-db-' + (100 + index)); return card;
   });
   const grid = new Element();
@@ -114,4 +117,16 @@ test('closed mobile cards expand first; open cards navigate except the toggle', 
   fire('link');
   assert.equal(opened, 1);
   assert.equal(prevented, 3);
+});
+
+test('closed mobile project summaries keep the desktop service description and team metadata',()=>{
+  const ui=start();
+  ui.items.forEach((item,i)=>{
+    item.open=false;
+    const heading=item.children[0].children.find(n=>n.className==='sm-project-heading');
+    assert.equal(heading.children.find(n=>n.className==='sm-project-description').textContent,'서비스 설명 '+i);
+    const team=heading.children.find(n=>n.className==='sm-project-team');
+    assert.equal(team.children.map(n=>n.textContent).join(''),'팀 '+i+' · 5명');
+    assert.equal(team.children.find(n=>n.className==='sm-project-team-count').textContent,'5명');
+  });
 });

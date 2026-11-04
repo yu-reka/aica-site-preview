@@ -191,15 +191,29 @@
       titleLink.href = card.getAttribute('href');
       titleLink.appendChild(el('strong', '', ($('.pjname', card) || $('.pjc-tx h3', card) || {}).textContent || ''));
       tx.appendChild(titleLink);
+      var service = ($('.pjc-tx h3', card) || {}).textContent || '';
+      var name = ($('.pjname', card) || {}).textContent || '';
+      if (name && service && service.trim() !== name.trim()) tx.appendChild(el('span', 'sm-project-description', service));
+      var team = ($('.pjc-tx .team', card) || {}).textContent || '';
+      if (team) {
+        var teamLine = el('span', 'sm-project-team');
+        var teamParts = /^(.*?)\s*([·•]\s*\d+\s*명)\s*$/.exec(team);
+        if (teamParts) {
+          teamLine.appendChild(el('span', 'sm-project-team-name', teamParts[1].trimEnd()));
+          teamLine.appendChild(el('span', 'sm-project-team-separator', ' · '));
+          teamLine.appendChild(el('span', 'sm-project-team-count', teamParts[2].replace(/^[·•]\s*/, '')));
+        } else teamLine.appendChild(el('span', 'sm-project-team-name', team));
+        tx.appendChild(teamLine);
+      }
       summary.appendChild(tx);
       var toggle = el('span', 'sm-project-toggle'); toggle.setAttribute('aria-hidden', 'true');
       summary.appendChild(toggle); item.appendChild(summary);
       var body = el('div', 'sm-project-body');
       var artwork = cleanClone($('.ph .illu', card) || $('.ph img, .ph svg', card));
       if (artwork){
-        var media = el('div', 'sm-project-media');
+        var media = el('span', 'sm-project-media');
         if (artwork.tagName.toLowerCase() === 'img'){ artwork.loading = 'lazy'; artwork.decoding = 'async'; }
-        media.appendChild(artwork); body.appendChild(media);
+        media.appendChild(artwork); summary.appendChild(media);
       }
       var link = el('a', 'sm-project-link', '프로젝트 자세히 보기 →');
       link.href = card.getAttribute('href'); body.appendChild(link); item.appendChild(body);

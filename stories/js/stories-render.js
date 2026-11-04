@@ -197,15 +197,14 @@
   function reviewDialogs(hub) {
     return REV.map(function (r) {
       var c = cat(r), id = esc(r.anchor);
-      var tags = (r.tags || []).map(function (t) { return '<a class="t" href="' + (hub ? 'reviews.html' : '') + '#tg-' + t + '" data-field="tag">' + esc(TAGS[t]) + '</a>'; }).join('');
+      var tags = (r.tags || []).map(function (t) { return '<span class="t" data-field="tag">' + esc(TAGS[t]) + '</span>'; }).join('');
       return '<div class="ov ' + c.cls + ' coh' + esc(r.cohort) + fld(r) + tagClasses(r.tags, 'tg') + '" id="' + id + '" style="--c:' + c.c + ';--bg:' + c.bg + ';--dk:' + c.dk + '" role="dialog" aria-modal="true" aria-labelledby="' + id + '-t">'
         + '<a class="back" href="' + (hub ? '#hub-reviews' : '#p-rev') + '" aria-label="닫기"></a><div class="sheet"><a class="x" href="' + (hub ? '#hub-reviews' : '#p-rev') + '" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></a><div class="mscroll">'
-        + '<div class="mtop"><div class="mcat" data-field="category">' + c.name + '</div><h3 id="' + id + '-t" data-field="title">' + esc(r.title) + '</h3>'
+        + '<div class="mtop"><div class="review-heading-meta"><div class="mcat" data-field="category">' + c.name + '</div>' + (tags ? '<div class="mtags">' + tags + '</div>' : '') + '</div><h3 id="' + id + '-t" data-field="title">' + esc(r.title) + '</h3>'
         + '<div class="mby"><span class="mav" data-field="cohort">' + coh(r.cohort) + '</span><div><b data-field="author">' + esc(r.author) + '</b>' + (r.track ? '<em data-field="track">' + esc(r.track) + '</em>' : '') + '</div></div></div>'
         + '<div class="mbody"><p class="lead" data-field="summary">' + esc(r.summary) + '</p>'
         + photos(r, r.title)
         + (r.body || []).map(function (b) { return '<p data-field="body">' + esc(b) + '</p>'; }).join('')
-        + (tags ? '<div class="mtags">' + tags + '<span class="hint">태그를 누르면 창이 닫히고 그 태그의 후기만 모여요</span></div>' : '')
         + '</div>' + (hub ? '<nav class="sd-nav" aria-label="후기 더 보기"><a class="sd-list" href="reviews.html">후기 더 보기 →</a></nav>' : '') + '</div></div></div>';
     }).join('');
   }

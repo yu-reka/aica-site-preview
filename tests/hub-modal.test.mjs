@@ -9,7 +9,8 @@ test('hub review detail keeps escaped content with a more-reviews footer and loc
   const fn=runInNewContext(source.slice(source.indexOf('  function reviewDialogs('),source.indexOf('  var hubDialogs='))+'\nreviewDialogs',context);
   const hub=fn(true),listing=fn(false);
   assert.ok(hub.includes('href="#hub-reviews"'));assert.ok(hub.includes('후기 더 보기 →'));
-  assert.ok(hub.includes('href="reviews.html#tg-0"'));assert.ok(hub.includes('&lt;unsafe&gt;'));assert.ok(hub.includes('본문'));
+  assert.ok(hub.includes('<span class="t" data-field="tag">#태그</span>'));
+  for(const html of [hub,listing]){assert.ok(html.indexOf('class="mtags"')<html.indexOf('<h3'));assert.ok(html.includes('class="review-heading-meta"'));assert.ok(!html.includes('#tg-'));assert.ok(!html.includes('태그를 누르면'));}assert.ok(hub.includes('&lt;unsafe&gt;'));assert.ok(hub.includes('본문'));
   assert.ok(!hub.includes('sd-pair'));assert.ok(listing.includes('href="#p-rev"'));assert.ok(!listing.includes('후기 더 보기'));
 });
 

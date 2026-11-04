@@ -127,8 +127,8 @@ html[data-nav="side"] .stories-hub{background:var(--surface)}
 .hb-ivf-tx em{display:inline-flex;align-items:center;height:26px;padding:0 11px;border-radius:999px;background:var(--primary);color:#fff;font-style:normal;font-size:12.5px;font-weight:700}
 /* 카드 제목 3단계(10-13 다듬기): 대표 21~24 · 카드 18 · 작은 카드 16.5. 보조 줄은 13 하나 */
 .hb-ivf h3{margin-top:12px;font-size:clamp(21px,1.7vw,24px);font-weight:700;line-height:1.35;letter-spacing:-.025em;text-wrap:balance}
-.hb-ivf-q{margin-top:10px;max-width:48ch;font-family:var(--ff-sans);font-size:15px;line-height:1.65;letter-spacing:-.01em;color:var(--graphite);
-  display:block;overflow:hidden;max-height:3.3em}
+.hb-ivf-q{margin-top:10px;max-width:none;font-family:var(--ff-sans);font-size:15px;line-height:1.65;letter-spacing:-.01em;color:var(--graphite);
+  display:block;overflow:hidden;max-height:3.3em;word-break:break-all;overflow-wrap:anywhere;text-wrap:wrap}
 .hb-ivf-q[hidden]{display:none}
 .hb-ivf-q::before,.hb-ivf-q::after{content:none}
 .hb-ivf-q .note-quote{color:var(--primary-bright)}
@@ -325,6 +325,12 @@ html[data-nav="side"] .stories-hub{background:var(--surface)}
 @container hub (max-width:800px){
   .hb-ivg::after{content:none}
   .hb-ivf-tx{position:relative;padding-right:138px;min-height:84px}
+  .hb-ivf-q{margin-right:-138px}
   .hb-ivf-tx::after{content:"Real\A   interview";white-space:pre;position:absolute;right:4px;top:14px;width:120px;pointer-events:none;font-family:"Caveat",cursive;font-weight:400;font-size:34px;line-height:.9;letter-spacing:.02em;color:#8CC3FF;text-shadow:0 1px 2px rgba(11,16,32,.35);transform:rotate(-9deg) skewX(-8deg)}
 }
+}
+
+/* Give the featured honors interview a clearer break before the mobile list. */
+@media (max-width:600px){
+  [data-honors-feature] .hb-ivg{row-gap:40px}
 }

@@ -357,6 +357,7 @@ body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:i
   font-size:14px;font-weight:700;line-height:32px;letter-spacing:-.01em;box-shadow:0 2px 10px rgba(16,17,22,.12)}
 .stories-page .ivd h2{font-size:32px;line-height:46.4px}
 .stories-page .ivd .lead{margin-top:10px;font-size:17px;line-height:27.2px;color:var(--g600)}
+.stories-page .ivd :is(h2,.lead,.qa .q>span,.qa .a,.qa .a p,.qa .a li,.qa .a blockquote){word-break:break-all;overflow-wrap:anywhere;text-wrap:wrap}
 .stories-page .ivd .who2{margin-top:16px;display:flex;align-items:center;gap:10px}
 .stories-page .ivd .who2 .av{flex:none;width:36px;height:36px;border-radius:50%;display:flex;
   align-items:baseline;justify-content:center;gap:1px;

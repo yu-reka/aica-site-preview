@@ -9,7 +9,7 @@
     var dt=(a.querySelector('.dt')||{}).textContent||'', m=dt.match(/(\d{4})\.\s*(\d{2})\.\s*(\d{2})/);
     return {id:a.id||'', tags:[].slice.call(a.querySelectorAll('[data-story-tags] span')).map(function(t){return t.textContent}), body:[].slice.call(a.querySelectorAll('[data-story-body] p')).map(function(p){return p.textContent}), photos:[].slice.call(a.querySelectorAll('[data-story-photos] img')), coh:parseInt((a.querySelector('.cg')||{}).textContent,10)||0, date:dt.trim(), y:m?+m[1]:0, mo:m?+m[2]:0,
       title:(a.querySelector('h3')||{}).textContent||'', sum:(a.querySelector('p')||{}).textContent||'',
-      illu:a.querySelector('.illu'), yt:a.getAttribute('data-yt')||''};
+      illu:a.querySelector('.illu'), yt:a.getAttribute('data-yt')||'', ytFrom:a.getAttribute('data-yt-start'), ytTo:a.getAttribute('data-yt-end')};
   });
   /* 기수 정보(2026-10-22): 관리자 '기수 정보' 화면(DB cohort_infos)의 내용을 STORIES_DATA.cohortInfos(공개 API · stories-data.js)로 받아
      기수마다 교육과정 카드 · 계정 · 꼬리표 · 달라진 점 버튼 이름 · 소개 · 달라진 점 표 요소를 한 번 만들어 두고 화면 자리로 옮겨요(글자는 textContent로만).
@@ -314,6 +314,11 @@
       caption.tags.forEach(function(tag){line.appendChild(node('span','', '#'+tag))});box.appendChild(line);
     }
   }
+  // 영상 구간(2026-11-05): 카드의 data-yt-start · data-yt-end(초)가 있으면 그 구간만 재생(유튜브 start · end)
+  function ytEmbed(id,d){
+    var sec=function(n){n=+n;return n>0&&n<=86400?Math.floor(n):0},from=sec(d.ytFrom),to=sec(d.ytTo);
+    return 'https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1'+(from?'&start='+from:'')+(to>from?'&end='+to:'');
+  }
   function fill(){
     var L=list(), d=L[cur]; if(!d) return;
     if(modalVisited.indexOf(d)<0)modalVisited.push(d);
@@ -326,7 +331,7 @@
       if(!id || !/^[A-Za-z0-9_-]{11}$/.test(id)) id=null;
       var p=document.createElement('button'); p.type='button'; p.className='cv3-play'; p.setAttribute('aria-label','영상 재생'); p.innerHTML='<i></i>';
       p.onclick=function(){ if(!id) return;
-        var frame=document.createElement('iframe'); frame.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1';
+        var frame=document.createElement('iframe'); frame.src=ytEmbed(id,d);
         frame.title=d.title; frame.allow='autoplay; encrypted-media; picture-in-picture; fullscreen'; frame.allowFullscreen=true;
         md.replaceChildren(frame); };
       if(id) md.appendChild(p); }

@@ -347,6 +347,8 @@ body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:i
 .stories-page .ph .dur{position:absolute;right:10px;bottom:10px;z-index:2;height:24px;padding:0 8px;
   border-radius:7px;background:rgba(12,22,38,.76);color:#fff;font-size:12px;
   line-height:24px}
+/* 길이가 없는 영상(2026-11-05: 인터뷰 길이는 재생 구간에서만 정해져요)은 빈 길이 칸을 숨겨요. 칸은 남겨 둬야 영상 거르기(stories-sections.js)가 알아봐요 */
+.stories-page .ph .dur:empty,.stories-page .ivvid .dur:empty{display:none}
 .stories-page .footnote{margin-top:64px;padding-top:24px;border-top:1px solid var(--g200);
   font-size:14px;line-height:22px;color:var(--g500)}
 @media (max-width:1100px){

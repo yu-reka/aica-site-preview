@@ -93,8 +93,11 @@
   document.querySelectorAll('.ivvid[data-yt]').forEach(function(box){
     var id=box.dataset.yt;if(!/^[A-Za-z0-9_-]{11}$/.test(id))return;
     var orig=box.innerHTML,detail=box.closest('.ivd');
+    // 영상 구간(2026-11-05): data-yt-start · data-yt-end(초)가 있으면 그 구간만(유튜브 start · end)
+    function sec(n){n=+n;return n>0&&n<=86400?Math.floor(n):0}
+    var from=sec(box.getAttribute('data-yt-start')),to=sec(box.getAttribute('data-yt-end'));
     function bind(){var b=box.querySelector('.ivplay');if(b)b.onclick=function(){
-      var f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1';
+      var f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1'+(from?'&start='+from:'')+(to>from?'&end='+to:'');
       f.title=(detail.querySelector('h2')||{}).textContent||'인터뷰 영상';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;
       var tag=box.querySelector('.ivtag');box.replaceChildren();if(tag)box.appendChild(tag);box.appendChild(f);f.focus();
     }}

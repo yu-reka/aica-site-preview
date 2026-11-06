@@ -33,12 +33,12 @@
       "site": "1103footer-jngj-18",
       "tokens": "1029pretendard-subset",
       "base": "1102loading-history",
-      "lnb": "1102loading-history"
+      "lnb": "1106sticky-title-visible"
     },
     "js": {
       "availability": "1030offline-art60",
       "site-layout": "1104footer-logo-order-public",
-      "site": "1103shared-helpers",
+      "site": "1106sticky-title-visible",
       "track": "1027admin-views",
       "ui": "1103shared-helpers",
       "menu": "1102loading-history",

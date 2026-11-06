@@ -61,10 +61,10 @@
 <link rel="stylesheet" href="../common/css/navigation-mobile.css?v=1016nav">
   <link rel="stylesheet" href="../common/css/availability.css?v=1026loading-soft-backdrop">
 <script src="../common/js/availability.js?v=1030offline-art60" defer></script>
-  <link rel="stylesheet" href="css/story-state.css?v=1102cohort-stable-loading">
+  <link rel="stylesheet" href="css/story-state.css?v=1106loading-height-clip">
   <link rel="stylesheet" href="css/review-notes.css?v=1104review-tags-display">
 <link rel="stylesheet" href="css/stories-render.css?v=1105thumb-fit">
-<script src="../common/js/stories-loader.js?v=1103shared-helpers" defer data-api="../api/public/stories" data-fallback="js/stories-data.js?v=design-20261029-hub-honors" data-scripts='["js/stories-render.js?v=1105thumb-fit","js/mast-fix.js?v=1102loading-history","js/story-state.js?v=1102hub-empty-action","js/detail-navigation.js?v=1104review-tags-display","js/stories-m.js?v=1104review-tags-display","js/hub.js?v=1102loading-history","js/stories.js?v=1104review-tags-display","js/story-detail-title.js?v=1103shared-helpers","js/cohort-v3.js?v=1105video-segment","js/cohort-modal-scroll.js?v=1022swipereading","js/review-notes.js?v=1102honors-closing-quote"]'></script>
+<script src="../common/js/stories-loader.js?v=1106loading-height" defer data-page="stories/index.html" data-api="../api/public/stories" data-fallback="js/stories-data.js?v=design-20261029-hub-honors" data-scripts='["js/stories-render.js?v=1105thumb-fit","js/mast-fix.js?v=1102loading-history","js/story-state.js?v=1102hub-empty-action","js/detail-navigation.js?v=1104review-tags-display","js/stories-m.js?v=1104review-tags-display","js/hub.js?v=1102loading-history","js/stories.js?v=1104review-tags-display","js/story-detail-title.js?v=1103shared-helpers","js/cohort-v3.js?v=1105video-segment","js/cohort-modal-scroll.js?v=1022swipereading","js/review-notes.js?v=1102honors-closing-quote"]'></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
@@ -73,7 +73,7 @@
      글은 모두 각 페이지 마크업에서 그대로 옮김(지어 쓴 글 없음). 미리보기를 누르면 그 페이지의 글 창 · 상세(reviews.html#r-… · interviews.html#iv-N · projects.html#pj-N) 또는 기수 목록
      이 페이지 안 id는 hub- 로 시작: js/old-hash.js가 reviews · interviews · r- · iv- · q- · pj- · tg- 같은 주소를 다른 페이지로 보내기 때문
      모양은 css/hub.css. 머리(.sh · .sh-k)는 다른 이야기 페이지와 같은 규칙(presentation.css)을 받음 -->
-<main id="main" class="stories-page stories-hub" tabindex="-1">
+<main data-story-loading id="main" class="stories-page stories-hub" tabindex="-1">
 <!-- 제목 줄(10-13 사본, 사용자 결정 '1번'): 이야기 5페이지에 같은 큰 제목 줄(css/mast.css). 1200 이상은 왼쪽 메뉴 위로 화면 폭 전체, 메뉴는 그 아래서 따라옴.
      .hb 밖(main 바로 아래)에 둬서 site.js가 메뉴를 이 뒤에 그림 — 좁은 화면에서 제목 → 알약 줄 순서 -->
 <div class="wrap st-mh">

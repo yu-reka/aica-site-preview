@@ -54,7 +54,7 @@
   <link rel="stylesheet" href="css/presentation.css?v=1104review-tags-display">
   <link rel="stylesheet" href="../common/css/lnb.css?v=1102loading-history">
   <link rel="stylesheet" href="../common/css/masthead.css?v=1016cleanup">
-  <link rel="stylesheet" href="css/story-state.css?v=1102cohort-stable-loading">
+  <link rel="stylesheet" href="css/story-state.css?v=1106loading-height-clip">
   <!-- Story consumers are collected below; the API-first loader requests the snapshot only on failure. -->
   <!-- 빈 목록 · 필터 결과 없음 안내(aica-site PR #27): 글을 다 그린 뒤 판단하도록 글 그리기 다음에 -->
   <link rel="stylesheet" href="css/stories-m.css?v=1103project-toggle-right">
@@ -65,7 +65,7 @@
 
   <link rel="stylesheet" href="css/interview-honors.css?v=1102honors-natural-title">
   <link rel="stylesheet" href="css/stories-render.css?v=1105thumb-fit">
-<script src="../common/js/stories-loader.js?v=1103shared-helpers" defer data-api="../api/public/stories" data-fallback="js/stories-data.js?v=design-20261029-hub-honors" data-scripts='["js/stories-render.js?v=1105thumb-fit","js/story-state.js?v=1102hub-empty-action","js/interview-honors.js?v=1103honors-detail-return","js/stories-sections.js?v=1105interview-segment","js/mast-fix.js?v=1102loading-history","js/detail-navigation.js?v=1104review-tags-display","js/stories-m.js?v=1104review-tags-display","js/stories.js?v=1104review-tags-display","js/story-detail-title.js?v=1103shared-helpers"]'></script>
+<script src="../common/js/stories-loader.js?v=1106loading-height" defer data-page="stories/interviews.html" data-api="../api/public/stories" data-fallback="js/stories-data.js?v=design-20261029-hub-honors" data-scripts='["js/stories-render.js?v=1105thumb-fit","js/story-state.js?v=1102hub-empty-action","js/interview-honors.js?v=1103honors-detail-return","js/stories-sections.js?v=1105interview-segment","js/mast-fix.js?v=1102loading-history","js/detail-navigation.js?v=1104review-tags-display","js/stories-m.js?v=1104review-tags-display","js/stories.js?v=1104review-tags-display","js/story-detail-title.js?v=1103shared-helpers"]'></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
@@ -74,7 +74,7 @@
      각 페이지는 옛 탭 라디오(t1~t4) 중 자기 것만 checked — CSS(stories.css .pane)와 js/stories.js가 그대로 동작. 다른 페이지 글 주소는 그 페이지.html#글id로 고쳐 둠
      반복 단위(첫 항목에만 data-field 표시, 나머지는 같은 구조): 후기 카드 .idc · 후기 리스트 행 .rvr · 글 창 .ov · 인터뷰 카드 .iv · 인터뷰 상세 .ivd · 프로젝트 .pp · 기수 카드 a.st
      칸 이름: title · summary · body · category · cohort · tag · thumbnail · author · date(common 게시판과 같음) + track · duration · question · answer · team · type -->
-<main id="main" class="stories-page" tabindex="-1">
+<main data-story-loading id="main" class="stories-page" tabindex="-1">
 <h1 class="sr">인터뷰 — 선배들의 이야기</h1>   <!-- 10-13 사본: 나눈 페이지 제목(화면엔 안 보임, 원본 h1.sr과 같은 방식) -->
 <div class="wrap st-mh">   <!-- 10-13 사본: 이야기 5페이지 같은 제목 줄(stories/css/mast.css). 이 페이지 제목은 위 h1.sr -->
   <div class="mhb mhb5">

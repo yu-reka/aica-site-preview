@@ -20,7 +20,12 @@ test('home and eligibility pages link directly to the target story collection',(
   }
 });
 
-test('cohort API page reserves its loading view in initial HTML before deferred scripts run',()=>{
-  const html=connectBackoffice(build()).get('stories/cohorts.html');
-  assert.match(html,/<main[^>]*data-story-loading[^>]*aria-busy="true"/);
+test('every story page reserves its loading view before deferred scripts run',()=>{
+  const pages=connectBackoffice(build());
+  for(const page of ['index','interviews','reviews','projects','cohorts']){
+    const path='stories/'+page+'.html',html=pages.get(path);
+    assert.match(html,/<main[^>]*data-story-loading/);
+    assert.doesNotMatch(html,/<main[^>]*aria-busy/);
+    assert.ok(html.includes('data-page="'+path+'"'));
+  }
 });

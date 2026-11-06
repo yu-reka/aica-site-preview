@@ -14,6 +14,8 @@
   .stories-page .story-state--desktop{display:none}
 }
 
+/* With scripts disabled, keep the original static content visible. */
+@media (scripting: enabled){
 /* Reserve the first list viewport while the API or its fallback is pending. */
 .stories-page[data-story-loading] .idgrid,.stories-page[data-story-loading] .pjgrid{min-block-size:min(70vh,700px)}
 .stories-page[data-story-loading] .hb-ivg{min-block-size:420px}
@@ -25,3 +27,25 @@
 .stories-page[data-story-loading] #cv3{position:relative;min-block-size:min(80vh,720px)}
 .stories-page[data-story-loading] #cv3 > *{visibility:hidden}
 .stories-page[data-story-loading] #cv3::before{content:"기수 이야기를 불러오는 중…";position:absolute;inset:0 0 auto;box-sizing:border-box;min-block-size:min(80vh,720px);padding:24px;border-radius:16px;background:var(--g50,#F5F6F6);color:var(--graphite,#566175);font:400 15px/1.8 var(--ff-sans);text-align:center}
+
+/* Cold-load reservations approximate each collection's first page. Warm tab
+   navigation reuses its last completed main height at the same viewport width.
+   These bounds and placeholders disappear for every success/empty/error result. */
+.stories-page:has(#p-iv){--story-loading-default:2300px}
+.stories-page:has(#p-rev){--story-loading-default:1700px}
+.stories-page:has(#p-pr){--story-loading-default:2700px}
+.stories-page:has(#p-coh){--story-loading-default:2100px}
+.stories-page.stories-hub{--story-loading-default:3000px}
+.stories-page[data-story-loading]{position:relative;box-sizing:border-box;block-size:var(--story-loading-height,var(--story-loading-default,2100px));overflow:clip}
+.stories-page[data-story-loading]>:is(.st-main,.hb){visibility:hidden}
+.stories-page[data-story-loading]::after{content:"이야기를 불러오는 중…";position:absolute;inset:360px max(24px,calc((100% - 1200px)/2)) auto;block-size:240px;padding:24px;box-sizing:border-box;border-radius:16px;background:var(--g50,#F5F6F6);color:var(--graphite,#566175);font:400 15px/1.8 var(--ff-sans);text-align:center}
+@media(min-width:1360px){.stories-page:has(#p-pr){--story-loading-default:2200px}}
+@media(max-width:600px){
+  .stories-page:has(#p-iv){--story-loading-default:1890px}
+  .stories-page:has(#p-rev){--story-loading-default:1150px}
+  .stories-page:has(#p-pr){--story-loading-default:3050px}
+  .stories-page:has(#p-coh){--story-loading-default:1600px}
+  .stories-page.stories-hub{--story-loading-default:3280px}
+  .stories-page[data-story-loading]::after{inset:310px 20px auto;block-size:280px}
+}
+}

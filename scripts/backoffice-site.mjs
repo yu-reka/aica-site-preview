@@ -150,7 +150,7 @@ const PAGES = {
   'stories/cohorts.html': (html, path) => {
     html = storyHead(html, path, '<script src="js/story-state.js');
     // Reserve the loading view before defer/API execution, including on a slow connection.
-    html = html.replace('<main id="main" class="stories-page"', '<main id="main" class="stories-page" data-story-loading aria-busy="true"');
+    html = html.replace('<main id="main" class="stories-page"', '<main id="main" class="stories-page" data-story-loading');
     return withTracking(html, path);
   }
 };
@@ -158,6 +158,7 @@ const PAGES = {
 // stories-render.js는 디자이너 스크립트(js/…)와 story-state.js보다 먼저 실행돼야 해요(defer는 적힌 순서대로)
 function withStoryLoader(html, path) {
   const consumers = [];
+  html = html.replace(/<main\b[^>]*>/, tag => tag.includes('data-story-loading') ? tag : tag.replace('<main ', '<main data-story-loading '));
   html = html.replace(/<script src="(js\/[^"<>]+)" defer><\/script>\s*/g, (tag, src) => {
     if (src.startsWith('js/old-hash.js')) return tag;
     consumers.push(src); return '';
@@ -165,7 +166,7 @@ function withStoryLoader(html, path) {
   if (!consumers[0]?.startsWith('js/stories-render.js?')) throw new Error(`backoffice-site: ${path} story renderer must run first`);
   if (!consumers.some(src => src.startsWith('js/story-state.js?'))) throw new Error(`backoffice-site: ${path} needs story states`);
   const scripts = JSON.stringify(consumers).replace(/&/g, '&amp;').replace(/'/g, '&#39;');
-  const loader = `<script src="../common/js/stories-loader.js?v=${assetVersion('common.js.stories-loader')}" defer data-api="../api/public/stories" data-fallback="js/stories-data.js?v=${assetVersion('stories.js.stories-data')}" data-scripts='${scripts}'></script>`;
+  const loader = `<script src="../common/js/stories-loader.js?v=${assetVersion('common.js.stories-loader')}" defer data-page="${path}" data-api="../api/public/stories" data-fallback="js/stories-data.js?v=${assetVersion('stories.js.stories-data')}" data-scripts='${scripts}'></script>`;
   return html.replace('</head>', loader + '\n</head>');
 }
 

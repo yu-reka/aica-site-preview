@@ -43,7 +43,7 @@
       "ui": "1103shared-helpers",
       "menu": "1102loading-history",
       "public-content": "1102loading-history",
-      "stories-loader": "1103shared-helpers"
+      "stories-loader": "1106loading-height"
     }
   },
   "home": {
@@ -96,7 +96,7 @@
         "cohorts": "1102loading-history"
       },
       "stories": "1105empty-duration",
-      "story-state": "1102cohort-stable-loading",
+      "story-state": "1106loading-height-clip",
       "interview-honors": "1102honors-natural-title",
       "project-video": "1027prep-always"
     },

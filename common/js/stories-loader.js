@@ -6,6 +6,14 @@
   if (!boot || !main) return;
   main.setAttribute('data-story-loading', '');
   main.setAttribute('aria-busy', 'true');
+  // Cache only a layout measurement, scoped to this tab/page and viewport width.
+  // A cold visit uses CSS reservations; a blocked/full storage never delays data.
+  var heightKey = 'aica:story-height:v1:' + boot.dataset.page + ':' + window.innerWidth;
+  try {
+    var savedHeight = Number(window.sessionStorage.getItem(heightKey));
+    if (savedHeight >= 400 && savedHeight <= 20000) main.style.setProperty('--story-loading-height', savedHeight + 'px');
+  } catch (_) {}
+
   function valid(data) {
     return data && ['reviews', 'interviews', 'projects', 'cohorts'].every(function (key) { return Array.isArray(data[key]); });
   }
@@ -46,5 +54,10 @@
     }
     main.removeAttribute('data-story-loading');
     main.removeAttribute('aria-busy');
+    main.style?.removeProperty('--story-loading-height');
+    try {
+      var finalHeight = Math.ceil(main.getBoundingClientRect().height);
+      if (finalHeight >= 400 && finalHeight <= 20000) window.sessionStorage.setItem(heightKey, String(finalHeight));
+    } catch (_) {}
   })();
 })();

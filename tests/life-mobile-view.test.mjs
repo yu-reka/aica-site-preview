@@ -112,7 +112,7 @@ test('desktop overview resolves the published first photo before the mobile sour
 
 test('compact culture list keeps source descriptions and every photo in the detail view', () => {
   const photos=Array.from({length:8},(_,i)=>({
-    querySelector: selector=>selector==='img'?{getAttribute:name=>name==='src'?`assets/photo-${i}.webp`:'원본 사진'}:{textContent:`사진 ${i}`}
+    querySelector: selector=>selector==='img'?{getAttribute:name=>name==='src'?`assets/photo-${i}.webp`:name==='alt'?'원본 사진':null}:{textContent:`사진 ${i}`}
   }));
   const place={querySelector:selector=>({textContent:selector.includes('h4')?'장소 <이름>':'전체 소개 문구'}),
     querySelectorAll:selector=>selector==='.cf-card'?photos:[]};
@@ -124,4 +124,47 @@ test('compact culture list keeps source descriptions and every photo in the deta
   assert.match(detail,/assets\/photo-7.webp/);
   assert.match(detail,/전체 소개 문구/);
   assert.doesNotMatch(detail,/cf-tg|fs-walk-t/);
+});
+
+const cropStyle = 'object-position:30% 70%;transform-origin:30% 70%;transform:scale(1.5);clip-path:inset(23.333% 23.333% 10% 10%)';
+function publishedImage(src, style = '') {
+  const attrs = { src, alt: '사진 "설명"', style };
+  return { getAttribute: name => attrs[name] ?? null };
+}
+function culturePlace(images) {
+  return {
+    querySelector: selector => ({ textContent: selector.includes('h4') ? '검증 장소' : '소개' }),
+    querySelectorAll: selector => selector === '.cf-card' ? images.map(img => ({
+      querySelector: selector => selector === 'img' ? img : { textContent: '사진 설명' },
+    })) : [],
+  };
+}
+test('mobile food retains the published photo position and zoom on every page without changing its source', () => {
+  const img = publishedImage('assets/food.webp', cropStyle);
+  const card = { dataset: { t: 'food', g: 'solo', w: '5' }, querySelector: selector =>
+    selector === 'img' ? img : selector === '.fdc-ph' ? { getAttribute: () => '음식' } : { textContent: '식당' } };
+  const { view } = createView(initialState(), { '.fdg .fdc': [card] });
+  assert.equal(view.data.food[0].imageStyle, cropStyle);
+  assert.match(view.foodResults(view.data.food), /style="object-position:30% 70%;transform-origin:30% 70%;transform:scale\(1\.5\);clip-path:inset\(23\.333% 23\.333% 10% 10%\)"/);
+  assert.equal(img.getAttribute('style'), cropStyle);
+});
+test('mobile culture carries each published crop into both the list and the full photo gallery', () => {
+  const positionOnly = 'object-position:20% 80%';
+  const { view } = createView(initialState(), { '#tp-fun .cf-g': [culturePlace([
+    publishedImage('assets/culture-1.webp', cropStyle), publishedImage('assets/culture-2.webp', positionOnly), publishedImage('assets/culture-3.webp'),
+  ])] });
+  assert.match(view.screens['tp-fun'](), /transform:scale\(1\.5\)/);
+  const detail = view.cultureDetail(0);
+  assert.ok(detail.includes(`style="${cropStyle}"`));
+  assert.match(detail, /src="assets\/culture-2.webp"[^>]*style="object-position:20% 80%"/);
+  assert.match(detail, /src="assets\/culture-3.webp" alt="사진 &quot;설명&quot;" loading="lazy"/);
+  assert.equal((detail.match(/style=/g) || []).length, 2);
+});
+test('mobile photo styles remain inside an escaped attribute and absent styles keep the original markup', () => {
+  const { view } = createView(initialState());
+  const food = imageStyle => view.foodResults([{ image: 'assets/food.webp', photoLabel: '음식', imageStyle }]);
+  assert.doesNotMatch(food(''), /style=/);
+  const markup = food('object-position:50% 50%;" onload="bad');
+  assert.match(markup, /style="object-position:50% 50%;&quot; onload=&quot;bad"/);
+  assert.doesNotMatch(markup, /" onload="/);
 });

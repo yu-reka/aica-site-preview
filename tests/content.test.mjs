@@ -95,17 +95,27 @@ test('unmapped filter categories fail instead of silently hiding content', () =>
 
 test('footer reads editable channel and copyright settings', () => {
   const context = loadContent();
-  const info = { ...context.site.organization, kakaoChannel: '@changed-channel', copyright: '변경한 저작권 문구' };
-  const factory = runInNewContext(readFileSync(join(root, 'common/js/site-layout.js'), 'utf8') + '\nSiteLayout', {
-    SITE_HOME: context.site.home, SITE_MENU: context.site.menu, SITE_LINKS: context.site.links, SITE_INFO: info
-  });
-  const footer = { firstElementChild: null, innerHTML: '' };
-  const layout = factory({ $: selector => selector === '#siteFooter' ? footer : null, ROOT: '../', href: () => '', current: null, html: {}, sideNav: false, subnavOn: false });
-  layout.renderFooter();
-  assert.ok(footer.innerHTML.includes('@changed-channel'));
-  assert.ok(footer.innerHTML.includes('변경한 저작권 문구'));
-  // 공식 홈페이지 같은 바깥 사이트는 새 창에서(2026-10-23)
-  assert.ok(footer.innerHTML.includes(`href="${context.site.links.official.url}" target="_blank" rel="noopener noreferrer"`));
+  const info = { ...context.site.organization, kakaoChannel: '@changed<&', copyright: '변경한 저작권 문구' };
+  const source = readFileSync(join(root, 'common/js/site-layout.js'), 'utf8') + '\nSiteLayout';
+  function renderFooter(url) {
+    const links = { ...context.site.links, kakao: { ...context.site.links.kakao, url } };
+    const factory = runInNewContext(source, {
+      SITE_HOME: context.site.home, SITE_MENU: context.site.menu, SITE_LINKS: links, SITE_INFO: info
+    });
+    const footer = { firstElementChild: null, innerHTML: '' };
+    factory({ $: selector => selector === '#siteFooter' ? footer : null, ROOT: '../', href: () => '', current: null, html: {}, sideNav: false, subnavOn: false }).renderFooter();
+    return footer.innerHTML;
+  }
+
+  const plain = renderFooter('');
+  assert.ok(plain.includes('<li>카카오톡 채널 : @changed&lt;&amp;</li>'));
+  assert.ok(plain.includes('변경한 저작권 문구'));
+  assert.ok(plain.includes(`href="${context.site.links.official.url}" target="_blank" rel="noopener noreferrer"`));
+  assert.match(plain, /href="#privacy" data-toast="[^"]+"/);
+
+  const linked = renderFooter('https://example.test/kakao?a=1&b=2');
+  assert.ok(linked.includes('<li>카카오톡 채널 : <a href="https://example.test/kakao?a=1&amp;b=2" target="_blank" rel="noopener noreferrer">@changed&lt;&amp;</a></li>'));
+  assert.match(linked, /href="#privacy" data-toast="[^"]+"/);
 });
 
 test('footer shows the school BI and one logo per agency, each with alt text and no agency links (2026-11-02)', () => {

@@ -37,7 +37,7 @@
     },
     "js": {
       "availability": "1106porcelain-states",
-      "site-layout": "1104footer-logo-order-public",
+      "site-layout": "1109public-footer-channel",
       "site": "1106sticky-title-visible",
       "track": "1109story-qa",
       "ui": "1106circular-review-rail",

@@ -96,7 +96,7 @@ const SiteLayout = ({ $, ROOT, href, current, subnavOn, sideNav, html }) => {
         <div class="footer-info">
           <address>
             <ul><li>${text(SITE_INFO.name)}</li><li>주소 : ${text(SITE_INFO.address)}</li><li>전화문의 : ${text(SITE_INFO.phone)}</li><li>E-Mail : ${text(SITE_INFO.email)}</li></ul>
-            <ul><li>카카오톡 채널 : ${text(SITE_INFO.kakaoChannel)}</li><li><a ${ext('official')}>공식 홈페이지</a></li><li>상담시간 : ${text(SITE_INFO.hours)}</li></ul>
+            <ul><li>카카오톡 채널 : ${SITE_LINKS.kakao?.url ? `<a ${ext('kakao')}>${text(SITE_INFO.kakaoChannel)}</a>` : text(SITE_INFO.kakaoChannel)}</li><li><a ${ext('official')}>공식 홈페이지</a></li><li>상담시간 : ${text(SITE_INFO.hours)}</li></ul>
           </address>
           <ul class="footer-links footer-related">
             <li>유관 사이트 <a href="${text(SITE_INFO.relatedSiteUrl)}" target="_blank" rel="noopener">${text(SITE_INFO.relatedSiteLabel)}</a></li>

@@ -40,7 +40,10 @@
     var controller = new AbortController();
     var headerTimer = setTimeout(function () { controller.abort(); }, HEADER_TIMEOUT_MS), bodyTimer;
     try {
-      var response = await fetch(boot.dataset.api, {signal: controller.signal, credentials: 'same-origin', cache: 'no-cache'});
+      var api = boot.dataset.api;
+      // The admin preview replaces this URL with a full data: payload.
+      if (api === '../api/public/stories') api += '/summary';
+      var response = await fetch(api, {signal: controller.signal, credentials: 'same-origin', cache: 'no-cache'});
       clearTimeout(headerTimer);
       if (!response.ok) throw new Error('Story API unavailable');
       // Give slow valid bodies 30 seconds after headers, but never wait forever.

@@ -33,7 +33,7 @@ test('common navigation initializes before the published-data script without cha
     assert.ok(at('../common/js/ui.js') < at('../common/js/site.js'), path);
     assert.ok(at('../common/js/site.js') < at('../common/js/stories-loader.js'), path);
     const consumers=JSON.parse(/data-scripts='([^']+)'/.exec(html)[1].replaceAll('&amp;','&')).map(src=>src.split('?')[0]);
-    assert.equal(consumers[0],'js/stories-render.js');
+    assert.deepEqual(consumers.slice(0,3),['js/story-details.js','js/stories-render.js','js/text-fit.js'],path);
     assert.ok(consumers.indexOf('js/story-state.js')>0,path);
     assert.ok(consumers.indexOf('js/stories-m.js')>consumers.indexOf('js/story-state.js'),path);
   }

@@ -109,7 +109,7 @@
     var opener = null, link = null;
     var reviewEntry=false, reviewScroll=0, restoreScroll=false;
     var dialogScope = SiteUI.createDialogScope();
-    function open(){ return page.querySelector('.ov:target'); }
+    function open(){ return page.querySelector('.ov:target') || page.querySelector('.ov[data-story-active]'); }
     // 연 링크: 주소 이동 때 브라우저가 포커스를 비우기도 해서 누른 순간에 기억해 둠
     document.addEventListener('click', function(e){
       link = e.target.closest && e.target.closest('a[href^="#"]');
@@ -150,6 +150,11 @@
         reviewEntry=false;
         if (!opener) return;
         if (document.contains(opener) && opener.getClientRects().length) opener.focus({ preventScroll: true });
+        else if (typeof StoryDetails !== 'undefined') {
+          const href = opener.getAttribute('href');
+          const replacement = Array.from(page.querySelectorAll('a[href^="#"]')).find(a => a.getAttribute('href') === href && a.getClientRects().length);
+          replacement?.focus({ preventScroll: true });
+        }
         opener = null;
       }
     });
@@ -187,7 +192,7 @@
 
 /* 후기 숫자 페이지(10-13): 기수별 이모저모 페이지 넘김과 같은 모양 — 앞뒤에 ← → 버튼을 붙이고 끝에서는 흐리게 */
 (function(){
-  var pager = document.querySelector('#p-rev .pager'); if (!pager || pager.closest('[data-review-paging]')) return;
+  var pager = document.querySelector('#p-rev .pager'); if (!pager || pager.closest('[data-review-paging]') || typeof StoryDetails !== 'undefined' && StoryDetails.entries('review')) return;
   var radios = [].slice.call(document.querySelectorAll('input[name="pgn"]')); if (!radios.length) return;
   pager.classList.add('cpager');
   function cur(){ for (var i = 0; i < radios.length; i++) if (radios[i].checked) return i; return 0; }

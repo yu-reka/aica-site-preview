@@ -50,6 +50,12 @@
     counted[m[0]] = true;
     send('posts/' + KIND[m[1]] + '/' + m[2] + '/view', {});
   }
-  postView();
-  addEventListener('hashchange', postView);
+  if (window.AicaStoryReady) {
+    document.addEventListener('stories:detail-shown', function (event) {
+      if ('#' + event.detail.id === location.hash) postView();
+    });
+  } else {
+    postView();
+    addEventListener('hashchange', postView);
+  }
 })();

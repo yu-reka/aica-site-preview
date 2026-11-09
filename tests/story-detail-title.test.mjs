@@ -16,7 +16,7 @@ function start(hash=''){
   interview('iv-p14','공개 시안 인터뷰','q-p14-1');
   interview('iv-honors-1','우수 수료생 인터뷰 준비 중','q-honors-1-1');
   details['p-iv']={closest:()=>null};
-  const document={title:listTitle,getElementById:id=>details[id]||null};
+  const document={title:listTitle,getElementById:id=>details[id]||null,addEventListener:(type,fn)=>events[type]=fn};
   const location={hash};
   runInNewContext(source,{document,location,addEventListener:(type,fn)=>events[type]=fn});
   return {document,go(hash,event='hashchange'){location.hash=hash;events[event]();}};
@@ -36,7 +36,7 @@ test('projects and review modals use their own heading and restore each listing 
     const original=kind+' — 인공지능사관학교',events={},location={hash};
     const detail={matches:s=>s==='.ov'&&hash.startsWith('#r-'),closest:()=>detail,
       querySelector:s=>{assert.equal(s,selector);return {textContent:title};}};
-    const document={title:original,getElementById:id=>id===hash.slice(1)||id==='section-anchor'?detail:null};
+    const document={title:original,getElementById:id=>id===hash.slice(1)||id==='section-anchor'?detail:null,addEventListener:(type,fn)=>events[type]=fn};
     runInNewContext(source,{document,location,addEventListener:(t,f)=>events[t]=f});
     assert.equal(document.title,title+' — '+original);
     location.hash='#section-anchor';events.hashchange();

@@ -6,10 +6,18 @@
   var track = section.querySelector('.sm-ivf-track');
   var cards = Array.from(track.querySelectorAll('.sm-ivf-c'));
   // These draft details belong only to the preview cards; checked interviews open their own detail (.ivd).
+  var catalog = typeof StoryDetails === 'undefined' ? undefined : StoryDetails.entries('interview');
+  var sample = document.querySelector('.ivd:not(.ivd-honors) .qa');
+  var questionCount = sample?.children.length || catalog?.find(item => item.record.qa?.length)?.record.qa.length || 13;
+  var placeholders = [];
   cards.forEach(function (card, index) {
     if (!/^#iv-honors-/.test(card.getAttribute('href') || '')) return;
+    placeholders.push({anchor:'iv-honors-' + (index + 1), card, index, questionCount});
+  });
+  function placeholderDetail(item) {
+    var card = item.card, index = item.index;
     var detail = document.createElement('div');
-    detail.className = 'ivd ivd-honors'; detail.id = 'iv-honors-' + (index + 1);
+    detail.className = 'ivd ivd-honors'; detail.id = item.anchor;
     var back = document.createElement('a'); back.className = 'ivback';
     back.href = '#iv-honors-title'; back.textContent = '← 우수 수료생 인터뷰 목록';
     var wrap = document.createElement('div'); wrap.className = 'ivwrap';
@@ -18,6 +26,14 @@
     var photo = card.querySelector('img').cloneNode(true); photo.className = 'illu'; hero.appendChild(photo);
     var tag = document.createElement('span'); tag.className = 'ivtag'; tag.textContent = '준비 중'; hero.prepend(tag);
     var bubble = document.querySelector('.ivd:not(.ivd-honors) .ivhero-bubble');
+    if (!bubble) {
+      var sampleItem = catalog?.find(item => !item.record.video?.yt);
+      if (sampleItem) {
+        var template = document.createElement('template');
+        template.innerHTML = sampleItem.render(sampleItem.record, sampleItem.index);
+        bubble = template.content.querySelector('.ivhero-bubble');
+      }
+    }
     if (bubble) hero.appendChild(bubble.cloneNode(true));
     var heading = document.createElement('h2'); heading.tabIndex = -1;
     heading.textContent = '우수 수료생 인터뷰 준비 중';
@@ -33,22 +49,26 @@
     var side = document.createElement('aside'); side.className = 'sidebox';
     var sideHeading = document.createElement('h3'); sideHeading.textContent = '이 인터뷰에서 묻는 것';
     var list = document.createElement('ol');
-    var sample = document.querySelector('.ivd:not(.ivd-honors) .qa');
-    var questionCount = sample ? sample.children.length : 13;
-    for (var n = 1; n <= questionCount; n++) {
-      var item = document.createElement('div'); item.id = 'q-honors-' + (index + 1) + '-' + n;
+    for (var n = 1; n <= item.questionCount; n++) {
+      var questionNode = document.createElement('div'); questionNode.id = 'q-honors-' + (index + 1) + '-' + n;
       var question = document.createElement('div'); question.className = 'q';
       var number = document.createElement('i'); number.textContent = n;
       var questionText = document.createElement('span'); questionText.textContent = '준비 중';
       question.append(number, questionText);
       var answer = document.createElement('p'); answer.className = 'a'; answer.textContent = '준비 중';
-      item.append(question, answer); qa.appendChild(item);
+      questionNode.append(question, answer); qa.appendChild(questionNode);
       var li = document.createElement('li'), link = document.createElement('a');
-      link.href = '#' + item.id; link.textContent = '준비 중'; li.appendChild(link); list.appendChild(li);
+      link.href = '#' + questionNode.id; link.textContent = '준비 중'; li.appendChild(link); list.appendChild(li);
     }
     main.appendChild(qa); side.append(sideHeading, list); wrap.append(main, side);
-    detail.append(back, wrap); document.getElementById('p-iv').appendChild(detail);
-  });
+    detail.append(back, wrap);
+    return detail;
+  }
+  var pane = document.getElementById('p-iv');
+  if (catalog && placeholders.length) {
+    StoryDetails.register('honors-placeholder', placeholders, pane, 'beforeend', placeholderDetail);
+    StoryDetails.sync();
+  } else placeholders.forEach(item => pane.appendChild(placeholderDetail(item)));
   function focusDetail() {
     var detail = document.getElementById(location.hash.slice(1));
     if (detail && detail.classList.contains('ivd-honors')) detail.querySelector('h2').focus({preventScroll:true});

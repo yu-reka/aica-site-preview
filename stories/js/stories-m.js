@@ -207,18 +207,24 @@
   var el = SiteUI.element, cleanClone = SiteUI.cloneWithoutIds, tabButton = SiteUI.toggleButton;
   function tabs(label){ return SiteUI.buttonGroup(label, 'sm-filter-tabs'); }
 
+  var projectBox;
+  var projectSource = typeof window === 'undefined' ? undefined : window.StoryProjectLayout;
+  var reviewSource = typeof window === 'undefined' ? undefined : window.StoryReviewCards;
   function initProjects(){
+    if (projectSource && !mq.matches) { projectBox?.remove(); return; }
     var grid = $('#p-pr .pjgrid');
     if (!grid || $('.sm-projects')) return;
-    var cards = $$('.pjc', grid);
+    if (projectBox) { grid.before(projectBox); return; }
+    var cards = projectSource ? projectSource.items : $$('.pjc', grid);
     if (!cards.length) return;
     var box = el('section', 'sm-projects'); box.setAttribute('aria-label', '프로젝트');
     // Spring omits the static cohort/subject row until its public DTO supports it.
     // Preserve its existing type controls without duplicating the preview filters.
     var filters = $('#p-pr .pj-filter-row') ? null : tabs('프로젝트 유형');
     var list = el('div', 'sm-project-list');
-    var items = cards.map(function(card, i){
-      var type = ($('.pjc-type', card) || {}).textContent || '';
+    var items = [];
+    function makeItem(card, i){
+      var type = projectSource ? card.type || '' : ($('.pjc-type', card) || {}).textContent || '';
       var item = el('details', 'sm-project'); item.dataset.type = type.trim();
       var summary = el('summary', 'sm-project-summary');
       summary.appendChild(el('span', 'sm-project-no', String(i + 1).padStart(2, '0')));
@@ -227,13 +233,14 @@
       badge.dataset.type = type.trim(); tx.appendChild(badge);
       // 서비스 이름: 카드의 작은 파란 글씨(.pjname), 주제가 없는 글은 카드 제목(h3)
       var titleLink = el('a', 'sm-project-card-link');
-      titleLink.href = card.getAttribute('href');
-      titleLink.appendChild(el('strong', '', ($('.pjname', card) || $('.pjc-tx h3', card) || {}).textContent || ''));
+      var href = projectSource ? '#' + card.anchor : card.getAttribute('href');
+      titleLink.href = href;
+      titleLink.appendChild(el('strong', '', projectSource ? card.name : ($('.pjname', card) || $('.pjc-tx h3', card) || {}).textContent || ''));
       tx.appendChild(titleLink);
-      var service = ($('.pjc-tx h3', card) || {}).textContent || '';
-      var name = ($('.pjname', card) || {}).textContent || '';
+      var service = projectSource ? card.topic : ($('.pjc-tx h3', card) || {}).textContent || '';
+      var name = projectSource ? card.name : ($('.pjname', card) || {}).textContent || '';
       if (name && service && service.trim() !== name.trim()) tx.appendChild(el('span', 'sm-project-description', service));
-      var team = ($('.pjc-tx .team', card) || {}).textContent || '';
+      var team = projectSource ? card.team : ($('.pjc-tx .team', card) || {}).textContent || '';
       if (team) {
         var teamLine = el('span', 'sm-project-team');
         var teamParts = /^(.*?)\s*([·•]\s*\d+\s*명)\s*$/.exec(team);
@@ -248,14 +255,14 @@
       var toggle = el('span', 'sm-project-toggle'); toggle.setAttribute('aria-hidden', 'true');
       summary.appendChild(toggle); item.appendChild(summary);
       var body = el('div', 'sm-project-body');
-      var artwork = cleanClone($('.ph .illu', card) || $('.ph img, .ph svg', card));
+      var artwork = cleanClone(projectSource ? projectSource.artwork(card) : $('.ph .illu', card) || $('.ph img, .ph svg', card));
       if (artwork){
         var media = el('span', 'sm-project-media');
         if (artwork.tagName.toLowerCase() === 'img'){ artwork.loading = 'lazy'; artwork.decoding = 'async'; }
         media.appendChild(artwork); summary.appendChild(media);
       }
       var link = el('a', 'sm-project-link', '프로젝트 자세히 보기 →');
-      link.href = card.getAttribute('href'); body.appendChild(link); item.appendChild(body);
+      link.href = href; body.appendChild(link); item.appendChild(body);
       item.open = i === 0;
       item.addEventListener('click', function(event){
         if (!mq.matches || event.defaultPrevented || event.target.closest('.sm-project-toggle')) return;
@@ -271,8 +278,22 @@
       item.addEventListener('toggle', function(){
         if (item.open) items.forEach(function(other){ if (other !== item) other.open = false; });
       });
-      list.appendChild(item); return item;
-    });
+      return item;
+    }
+    if (projectSource) {
+      box.showProjectPage = function(cardsOnPage){
+        var shown = cardsOnPage.map(function(card){
+          var i = card.index;
+          return items[i] || (items[i] = makeItem(card,i));
+        });
+        list.replaceChildren(...shown);
+        if (shown.length && !shown.some(function(item){ return item.open; })) shown[0].open = true;
+        box.hidden = !shown.length;
+      };
+    } else {
+      items = cards.map(makeItem);
+      items.forEach(function(item){ list.appendChild(item); });
+    }
     if (filters){
       var types = ['전체'].concat(Array.from(new Set(['기업연계', '실증', '창업'].concat(items.map(function(n){ return n.dataset.type; })))));
       types.forEach(function(type){
@@ -286,16 +307,18 @@
       box.appendChild(filters);
     }
     box.appendChild(list); grid.before(box); grid.classList.add('sm-project-source');
+    if (projectSource) projectBox = box;
   }
 
   // Older Spring templates only load this entry. Keep their review UI working
   // while new templates explicitly preload the page-owned review initializer.
-  var reviewScript = new URL('stories-m-reviews.js?v=1106review-edge-arrow', document.currentScript.src).href;
+  var reviewScript = new URL('stories-m-reviews.js?v=1109review-resize', document.currentScript.src).href;
   var reviewLoading = false;
   function initReviews(){
     if (!$('#p-rev')) return;
     if (typeof StoriesMobileReviews !== 'undefined') {
-      StoriesMobileReviews.init();
+      if (reviewSource && !mq.matches) StoriesMobileReviews.unmount();
+      else StoriesMobileReviews.init();
     } else if (!reviewLoading) {
       reviewLoading = true;
       SiteUI.loadScript(reviewScript, {
@@ -314,6 +337,7 @@
     rail($('.hb-pjs'), 'pjs', '프로젝트');
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+  if (mq.addEventListener) mq.addEventListener('change', function(){ initProjects(); initReviews(); });
   /* 메뉴를 늦게 그리는 경우 대비 */
   setTimeout(initTabs, 300);
 })();

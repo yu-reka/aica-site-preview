@@ -177,6 +177,7 @@ function withStoryLoader(html, path) {
   if (!consumers[0]?.startsWith('js/stories-render.js?')) throw new Error(`backoffice-site: ${path} story renderer must run first`);
   if (!consumers.some(src => src.startsWith('js/story-state.js?'))) throw new Error(`backoffice-site: ${path} needs story states`);
   consumers.splice(1, 0, 'js/text-fit.js?v=' + assetVersion('stories.js.text-fit'));
+  consumers.unshift('js/story-details.js?v=' + assetVersion('stories.js.story-details'));
   const scripts = JSON.stringify(consumers).replace(/&/g, '&amp;').replace(/'/g, '&#39;');
   const loader = `<script src="../common/js/stories-loader.js?v=${assetVersion('common.js.stories-loader')}" data-page="${path}" data-api="../api/public/stories" data-fallback="js/stories-data.js?v=${assetVersion('stories.js.stories-data')}" data-scripts='${scripts}'></script>`;
   return html.replace('</head>', loader + '\n</head>');

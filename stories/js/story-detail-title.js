@@ -11,6 +11,7 @@
     document.title = title ? title + ' — ' + listTitle : listTitle;
   }
   addEventListener('hashchange', syncTitle);
+  document.addEventListener('stories:detail-created', syncTitle);
   addEventListener('pageshow', syncTitle);
   syncTitle();
 })();

@@ -10,7 +10,7 @@ function start(){
   const history={state:null,pushState(state,_,hash){this.state=state;location.hash=hash;calls.push('push:'+hash);},replaceState(state,_,url){this.state=state;location.hash=url.startsWith('#')?url:'';},back(){calls.push('back');location.hash='';events.popstate();}};
   const context=vm.createContext({M,Z,location,history,window:{scrollY:745,scrollTo:options=>calls.push('scroll:'+options.top)},
     document:{activeElement:{focus(){calls.push('opener');}},documentElement:{classList:{add(){},remove(){}}},contains:()=>true},
-    list:()=>records.filter(d=>state.v!=='video'||d.yt),fill(){},isolateDialog(){},changePhoto(){},modalVisited:[],hubModal:false,root:{closest:()=>({addEventListener(){}})},
+    list:()=>records.filter(d=>state.v!=='video'||d.yt),fill(){},isolateDialog(){},changePhoto(){},loadVersion:0,modalVisited:[],hubModal:false,root:{closest:()=>({addEventListener(){}})},
     addEventListener:(type,fn)=>events[type]=fn,COHS:[1],D:records,st:state,draw(){}});
   const begin=source.indexOf('  var modalScroll=0;'),end=source.indexOf("  M.querySelector('.pv').onclick",begin);
   runInContext(source.slice(begin,end),context);

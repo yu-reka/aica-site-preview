@@ -7,45 +7,39 @@
   const segmenter = typeof Intl.Segmenter === 'function' ? new Intl.Segmenter('ko', {granularity:'grapheme'}) : null;
   let measurements = new WeakMap();
   let frame;
-  function fit(element) {
-    const state = seen.get(element);
-    if (!state) return;
-    const navigationTitle = element.matches('.ov .sd-title');
-    const quotedSummary = element.matches('.hb-ivf-q');
-    if (navigationTitle && !matchMedia('(max-width:600px)').matches) {
-      state.excerpt.textContent = state.source;
-      measurements.delete(element);
-      return;
-    }
-    if (!element.clientWidth || !element.clientHeight) return;
-    const style = getComputedStyle(element);
-    const line = parseFloat(style.lineHeight);
-    if (!(line > 0)) return;
-    const key = [element.clientWidth, element.clientHeight, style.font, style.letterSpacing].join('|');
-    if (measurements.get(element) === key) return;
-    measurements.set(element, key);
-    const lines = navigationTitle || quotedSummary ? 2 : Math.floor(element.clientHeight / line);
-    state.excerpt.hidden = lines < 1;
-    if (lines < 1) return;
-    const allowed = lines * line;
-    const write = text => { if (state.copy.textContent !== text) state.copy.textContent = text; };
-    write(state.source);
-    // Line-clamped navigation spans expose the full text only through scrollHeight.
-    const height = () => navigationTitle ? state.excerpt.scrollHeight : state.excerpt.offsetHeight;
-    if (height() <= allowed + .5) return;
-    const characters = segmenter ? Array.from(segmenter.segment(state.source), part => part.segment) : Array.from(state.source);
-    let low = 0, high = characters.length;
-    while (low < high) {
-      const middle = Math.ceil((low + high) / 2);
-      write(characters.slice(0, middle).join('').trimEnd() + '⋯');
-      if (height() <= allowed + .5) low = middle;
-      else high = middle - 1;
-    }
-    write(characters.slice(0, low).join('').trimEnd() + '⋯');
+  function fitAll(elements) {
+    const items = [];
+    elements.forEach(element => {
+      const state = seen.get(element);
+      if (!state) return;
+      const navigationTitle = element.matches('.ov .sd-title');
+      const quotedSummary = element.matches('.hb-ivf-q');
+      if (navigationTitle && !matchMedia('(max-width:600px)').matches) {
+        if (state.copy.textContent !== state.source) state.copy.textContent = state.source;
+        measurements.delete(element);
+        return;
+      }
+      const width = element.clientWidth, height = element.clientHeight;
+      if (!width || !height) return;
+      const style = getComputedStyle(element), line = parseFloat(style.lineHeight);
+      if (!(line > 0)) return;
+      const key = [width, height, style.font, style.letterSpacing].join('|');
+      if (measurements.get(element) === key) return;
+      measurements.set(element, key);
+      const lines = navigationTitle || quotedSummary ? 2 : Math.floor(height / line);
+      state.excerpt.hidden = lines < 1;
+      if (lines < 1) return;
+      items.push({source:state.source, allowed:lines * line + .5,
+        write:text => { if (state.copy.textContent !== text) state.copy.textContent = text; },
+        height:() => navigationTitle ? state.excerpt.scrollHeight : state.excerpt.offsetHeight,
+        characters:() => state.characters || (state.characters = segmenter ? Array.from(segmenter.segment(state.source), part => part.segment) : Array.from(state.source))});
+    });
+    StoryTextFit(items);
   }
-  const resize = new ResizeObserver(entries => entries.forEach(entry => fit(entry.target)));
+  const resize = new ResizeObserver(entries => fitAll(entries.map(entry => entry.target)));
   function scan() {
-    document.querySelectorAll(selector).forEach(element => {
+    const elements = document.querySelectorAll(selector);
+    elements.forEach(element => {
       if (!seen.has(element) || seen.get(element).excerpt.parentNode !== element) {
         const source = element.textContent;
         const excerpt = document.createElement('span');
@@ -63,8 +57,8 @@
         element.replaceChildren(excerpt);
         resize.observe(element);
       }
-      fit(element);
     });
+    fitAll(elements);
   }
   function schedule() { cancelAnimationFrame(frame); frame = requestAnimationFrame(scan); }
   new MutationObserver(records => {
@@ -81,6 +75,7 @@
   const initialized = new WeakSet();
   const refreshers = new Set();
   function enhance() {
+    const added = [];
     document.querySelectorAll('.stories-page .ov .sheet').forEach(sheet => {
       if (initialized.has(sheet)) return;
       const scroller = sheet.querySelector('.mscroll');
@@ -154,8 +149,10 @@
         sync();
       }).observe(scroller, {childList:true, subtree:true, characterData:true});
       refreshers.add(sync);
-      sync();
+      added.push(sync);
     });
+    // Finish installing rails before the first layout read, including hidden dialogs.
+    added.forEach(sync => sync());
   }
   enhance();
   new MutationObserver(enhance).observe(document.querySelector('main'), {childList:true, subtree:true});

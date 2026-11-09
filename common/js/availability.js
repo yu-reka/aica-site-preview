@@ -5,12 +5,12 @@
   loading.className = 'site-loading';
   loading.hidden = true;
   loading.setAttribute('role', 'status');
-  loading.innerHTML = '<div class="site-loading__content"><p class="site-loading__brand">광주인공지능사관학교</p><h2>페이지를 불러오고 있어요.</h2>' +
-    '<p class="site-loading__copy">잠시만 기다려 주세요.</p><div class="site-loading__line" aria-hidden="true"><span></span></div></div>';
+  loading.innerHTML = '<div class="site-loading__content aica-state"><p class="site-loading__brand aica-state__badge">불러오는 중</p><h2 class="aica-state__title">페이지를 불러오고 있어요.</h2>' +
+    '<p class="site-loading__copy aica-state__copy">잠시만 기다려 주세요.</p><div class="site-loading__line aica-state__progress" aria-hidden="true"><span></span></div></div>';
   const offline = document.createElement('dialog');
   offline.className = 'site-offline';
   offline.setAttribute('aria-labelledby', 'site-offline-title');
-  offline.innerHTML = '<section class="site-offline__card"><div><p class="site-offline__kicker">연결을 다시 확인해 주세요</p><h2 id="site-offline-title">인터넷 연결이<br>잠시 끊겼어요.</h2><p class="site-offline__copy" role="status">Wi-Fi나 모바일 데이터 연결을 확인한 뒤<br>다시 시도해 주세요.</p><button type="button">연결 다시 확인 →</button><button type="button" class="site-offline__close">현재 화면 계속 보기</button></div><div class="site-offline__art" aria-hidden="true"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240"><path d="M40 91c57-54 143-54 200 0M70 125c40-38 100-38 140 0m-105 34c21-21 49-21 70 0" fill="none" stroke="#14233F" stroke-width="13" stroke-linecap="round"/><circle cx="140" cy="194" r="10" fill="#2457F5"/><path d="M65 40l150 170" stroke="white" stroke-width="22" stroke-linecap="round"/><path d="M65 40l150 170" stroke="#2457F5" stroke-width="10" stroke-linecap="round"/></svg><span>OFFLINE</span></div></section>';
+  offline.innerHTML = '<section class="site-offline__card aica-state"><p class="site-offline__kicker aica-state__badge">인터넷 연결 끊김</p><h2 class="aica-state__title" id="site-offline-title">인터넷 연결이 잠시 끊겼어요.</h2><p class="site-offline__copy aica-state__copy" role="status">Wi-Fi나 모바일 데이터 연결을 확인한 뒤 다시 시도해 주세요.</p><button type="button" class="aica-state__action">연결 다시 확인 →</button><button type="button" class="site-offline__close aica-state__secondary">현재 화면 계속 보기</button></section>';
   document.body.append(loading, offline);
   let delay, timeout, previousFocus, busy = false;
   function end() {

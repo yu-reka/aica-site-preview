@@ -21,16 +21,41 @@ const StoriesMobileReviews = (() => {
     var board = el('div', 'sm-review-board');
     board.tabIndex = 0; board.setAttribute('aria-label', '후기 카드 가로 목록');
     function railButton(label, direction){
-      var button = el('button', 'sm-arrow sm-review-arrow', direction < 0 ? '‹' : '›');
+      var button = el('button', 'sm-review-control ui-rail-arrow', '');
+      // Same rail-arrow SVG as about-m.js, stories-m.js and the cohort dialog.
+      var path = direction < 0 ? 'm14 5-7 7 7 7' : 'm10 5 7 7-7 7';
+      button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + path + '"/></svg>';
       button.type = 'button'; button.setAttribute('aria-label', label);
       button.classList.add(direction < 0 ? 'is-prev' : 'is-next');
       button.addEventListener('click', function(){ move(direction); });
       return button;
     }
     var previous = railButton('이전 후기 카드', -1), next = railButton('다음 후기 카드', 1);
+    var navigation = el('div', 'sm-review-navigation');
+    navigation.setAttribute('role', 'group'); navigation.setAttribute('aria-label', '후기 카드 넘기기');
+    var progress = el('div', 'sm-review-progress'), fill = el('span', '');
+    progress.setAttribute('role', 'progressbar'); progress.setAttribute('aria-label', '후기 목록 탐색 위치');
+    progress.setAttribute('aria-valuemin', '0'); progress.setAttribute('aria-valuemax', '100');
+    progress.appendChild(fill); navigation.append(progress, previous, next);
+    var loop = SiteUI.circularRail(board);
+    var railWidth = 0;
     function syncRail(){
-      SiteUI.syncRail(board, previous, next);
-      if (view === 'list' || stage.classList.contains('is-empty')) { previous.hidden = true; next.hidden = true; }
+      if (board.clientWidth && board.clientWidth !== railWidth){
+        railWidth = board.clientWidth;
+        var cardWidth = Math.min(240, (railWidth - 32) * .84);
+        board.style.setProperty('--review-card-size', cardWidth + 'px');
+        board.style.setProperty('--review-card-inset', (railWidth - cardWidth) / 2 + 'px');
+      }
+      if (board.firstElementChild && board.firstElementChild.getBoundingClientRect){
+        var rect = board.firstElementChild.getBoundingClientRect();
+        stage.style.setProperty('--review-control-y', rect.top + rect.height / 2 - stage.getBoundingClientRect().top + 'px');
+      }
+      var state = SiteUI.railState(board);
+      navigation.hidden = view === 'list' || stage.classList.contains('is-empty') || state.max <= 4;
+      previous.disabled = !loop.active && state.atStart; next.disabled = !loop.active && state.atEnd;
+      var value = board.scrollWidth ? Math.min(100, Math.max(0, (board.scrollLeft + board.clientWidth) / board.scrollWidth * 100)) : 100;
+      if (loop.active) value = loop.position();
+      fill.style.width = value + '%'; progress.setAttribute('aria-valuenow', String(Math.round(value)));
     }
     function move(direction){
       var card = board.firstElementChild;
@@ -38,8 +63,8 @@ const StoriesMobileReviews = (() => {
     }
     board.addEventListener('scroll', syncRail, {passive:true});
     board.addEventListener('keydown', function(event){ SiteUI.railKeys(event, move); });
-    addEventListener('resize', function(){ if (view === 'list') refresh(); else syncRail(); });
-    stage.append(board, previous, next);
+    addEventListener('resize', function(){ if (view === 'list') refresh(); else { syncRail(); loop.enable(board.clientWidth > 0 && board.clientWidth <= 600); syncRail(); } });
+    stage.append(board, navigation);
     var lastView = '';
     var empty = el('div', 'sm-review-empty', '선택한 조건에 맞는 후기가 없습니다.');
     var pager = el('nav', 'sm-review-pager cpager'); pager.setAttribute('aria-label', '후기 페이지');
@@ -132,6 +157,7 @@ const StoriesMobileReviews = (() => {
       var total = Math.max(1, Math.ceil(matching.length / pageSize)); page = Math.min(page, total);
       count.textContent = matching.length + '개의 후기';
       var key = [category, cohort, page, view].join('|');
+      if (key === lastView && view === 'card') { syncRail(); return; }
       var left = key === lastView ? board.scrollLeft : 0; lastView = key;
       board.replaceChildren();
       var shown = view === 'list' ? matching.slice((page - 1) * pageSize, page * pageSize) : matching;
@@ -142,7 +168,9 @@ const StoriesMobileReviews = (() => {
       empty.hidden = matching.length > 0;
       stage.classList.toggle('is-empty', !matching.length);
       board.tabIndex = matching.length ? 0 : -1;
-      board.scrollLeft = left; requestAnimationFrame(syncRail);
+      board.scrollLeft = left;
+      syncRail(); loop.reset(view === 'card' && board.clientWidth > 0 && board.clientWidth <= 600);
+      requestAnimationFrame(syncRail);
       pager.replaceChildren(); pager.hidden = view !== 'list' || !matching.length;
       if (view === 'list' && matching.length){
         pager.appendChild(pageButton('←', page - 1, page === 1));

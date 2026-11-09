@@ -34,10 +34,10 @@
 </style>
 <link rel="preload" href="../common/assets/fonts/Giants-Bold.woff2" as="font" type="font/woff2" crossorigin>
 
-<script src="../common/js/ui.js?v=1103shared-helpers" defer></script>
+<script src="../common/js/ui.js?v=1106circular-review-rail" defer></script>
   <script src="../common/js/menu.js?v=1102loading-history" defer></script>
   <script src="../common/js/site-layout.js?v=1104footer-logo-order-public" defer></script>
-<script src="../common/js/site.js?v=1103shared-helpers" defer></script>
+<script src="../common/js/site.js?v=1106sticky-title-visible" defer></script>
 <script src="../common/js/track.js?v=1027admin-views" defer></script>
 
 
@@ -50,21 +50,21 @@
   <link rel="stylesheet" href="../common/css/site.css?v=1103footer-jngj-18">
   <link rel="stylesheet" href="css/stories.css?v=1105empty-duration">
   <link rel="stylesheet" href="css/detail-navigation.css?v=1020outsidegrid">
-  <link rel="stylesheet" href="css/cohort-v3.css?v=1103cohort-modal-borderless">
-  <link rel="stylesheet" href="css/hub.css?v=1104review-tag-name-safe">
+  <link rel="stylesheet" href="css/cohort-v3.css?v=1106cohort-wider-mobile">
+  <link rel="stylesheet" href="css/hub.css?v=1106porcelain-states">
   <link rel="stylesheet" href="../common/css/presentation.css?v=1029local-fonts">
-  <link rel="stylesheet" href="css/presentation.css?v=1104review-tags-display">
-  <link rel="stylesheet" href="../common/css/lnb.css?v=1102loading-history">
+  <link rel="stylesheet" href="css/presentation.css?v=1106content-title-keep">
+  <link rel="stylesheet" href="../common/css/lnb.css?v=1106sticky-title-visible">
   <link rel="stylesheet" href="../common/css/masthead.css?v=1016cleanup">
-  <link rel="stylesheet" href="css/stories-m.css?v=1103project-toggle-right">
+  <link rel="stylesheet" href="css/stories-m.css?v=1106cohort-profile-measured">
   <link rel="stylesheet" href="../common/css/components.css?v=1028housing-no-rent">
 <link rel="stylesheet" href="../common/css/navigation-mobile.css?v=1016nav">
-  <link rel="stylesheet" href="../common/css/availability.css?v=1026loading-soft-backdrop">
-<script src="../common/js/availability.js?v=1030offline-art60" defer></script>
-  <link rel="stylesheet" href="css/story-state.css?v=1106loading-height-clip">
-  <link rel="stylesheet" href="css/review-notes.css?v=1104review-tags-display">
+  <link rel="stylesheet" href="../common/css/availability.css?v=1106porcelain-states">
+<script src="../common/js/availability.js?v=1106porcelain-states" defer></script>
+  <link rel="stylesheet" href="css/story-state.css?v=1106porcelain-content-title">
+  <link rel="stylesheet" href="css/review-notes.css?v=1106porcelain-states">
 <link rel="stylesheet" href="css/stories-render.css?v=1105thumb-fit">
-<script src="../common/js/stories-loader.js?v=1106loading-height" defer data-page="stories/index.html" data-api="../api/public/stories" data-fallback="js/stories-data.js?v=design-20261029-hub-honors" data-scripts='["js/stories-render.js?v=1105thumb-fit","js/mast-fix.js?v=1102loading-history","js/story-state.js?v=1102hub-empty-action","js/detail-navigation.js?v=1104review-tags-display","js/stories-m.js?v=1104review-tags-display","js/hub.js?v=1102loading-history","js/stories.js?v=1104review-tags-display","js/story-detail-title.js?v=1103shared-helpers","js/cohort-v3.js?v=1105video-segment","js/cohort-modal-scroll.js?v=1022swipereading","js/review-notes.js?v=1102honors-closing-quote"]'></script>
+<script src="../common/js/stories-loader.js?v=1106loading-retry-card" data-page="stories/index.html" data-api="../api/public/stories" data-fallback="js/stories-data.js?v=design-20261029-hub-honors" data-scripts='["js/stories-render.js?v=1106porcelain-states","js/text-fit.js?v=1106batch-fit-main313","js/mast-fix.js?v=1102loading-history","js/story-state.js?v=1106porcelain-states","js/detail-navigation.js?v=1104review-tags-display","js/stories-m.js?v=1106cohort-profile-measured","js/hub.js?v=1102loading-history","js/stories.js?v=1104review-tags-display","js/story-detail-title.js?v=1103shared-helpers","js/cohort-v3.js?v=1106modal-photo-isolation","js/cohort-modal-scroll.js?v=1106cohort-wider-mobile","js/review-notes.js?v=1106batch-fit-main313"]'></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
@@ -103,14 +103,28 @@
   </div>
 </nav>
 
-<div data-story-list-state hidden></div>
+
+
+<section class="story-overview-state" data-story-overview-state hidden aria-labelledby="story-overview-state-title">
+  <div class="wrap">
+    <div class="sh sh-row"><div><p class="sh-k">전체 이야기</p><h2 id="story-overview-state-title">선배들의 이야기를 한곳에 모았어요</h2></div></div>
+    <div data-story-list-state hidden></div>
+  </div>
+</section>
 <div class="hb">
   <!-- 01 인터뷰: 우수 수료생 대표 1개와 일반 인터뷰 3개 -->
   <section class="hb-sec hb-iv" id="hub-interviews" data-honors-feature aria-labelledby="hub-interviews-t">
     <div class="wrap hb-in">
-      <div class="sh hb-hd"><p class="sh-k">인터뷰</p><h2 id="hub-interviews-t">여덟 달을 먼저 지나온 선배들에게 물어봤어요</h2></div>
+      <div class="sh hb-hd" data-story-loading-heading><p class="sh-k">인터뷰</p><h2 id="hub-interviews-t">여덟 달을 먼저 지나온 선배들에게 물어봤어요</h2></div>
       <a class="hb-more" href="interviews.html"><span class="hb-sr">인터뷰 </span>전체 보기<span aria-hidden="true">→</span></a>
-      <div class="hb-body hb-ivg">
+      <div class="hb-body hb-ivg" data-story-loading-content><section class="story-loading-shell" data-story-loading-shell data-story-loading-kind="index" hidden>
+    <div class="story-state story-state--loading aica-state" data-story-loading-card role="status">
+      <span class="story-state__icon aica-state__badge">불러오는 중</span>
+      <h3 class="story-state__title aica-state__title">이야기를 불러오고 있어요</h3>
+      <p class="story-state__copy aica-state__copy">잠시만 기다려 주세요.</p>
+      <button type="button" class="story-state__action aica-state__action" data-story-loading-retry>다시 시도</button>
+    </div>
+</section>
         <a class="hb-ivf" href="interviews.html">
           <span class="hb-ivf-ph honors-placeholder" aria-hidden="true">“</span>
           <div class="hb-ivf-tx"><em>우수 수료생 인터뷰</em><h3></h3><p class="hb-ivf-q">인터뷰 내용을 자세히 살펴보세요.</p><span class="hb-by" hidden></span></div>
@@ -187,9 +201,9 @@
     <div class="cv3-m-media"></div>
     <div class="cv3-m-side">
       <div class="cv3-m-body" role="region" aria-label="기수별 기록 본문" tabindex="0"><h3 id="cv3m-t"></h3><p></p></div>
-      <div class="cv3-m-ft"><div class="cv3-m-act"><button type="button" class="cv3-like" aria-pressed="false" aria-label="좋아요"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.3s-8-4.9-9.4-10C1.6 6.6 4 3.7 7.2 3.7c2.2 0 3.7 1.2 4.8 3 1.1-1.8 2.6-3 4.8-3 3.2 0 5.6 2.9 4.6 6.6C20 15.4 12 20.3 12 20.3z"/></svg></button><button type="button" class="cv3-save" aria-pressed="false" aria-label="저장"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg></button></div></div>
+      <div class="cv3-m-ft"><div class="cv3-m-act"><button type="button" class="cv3-like" aria-pressed="false" aria-label="좋아요"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.3s-8-4.9-9.4-10C1.6 6.6 4 3.7 7.2 3.7c2.2 0 3.7 1.2 4.8 3 1.1-1.8 2.6-3 4.8-3 3.2 0 5.6 2.9 4.6 6.6C20 15.4 12 20.3 12 20.3z"/></svg></button><button type="button" class="cv3-save" aria-pressed="false" aria-label="저장"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg></button><div class="cv3-m-nav" role="group" aria-label="게시물 넘기기"><button type="button" class="pv" aria-label="이전 게시물"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg><span>이전</span></button><span class="cv3-post-count" aria-live="polite" aria-atomic="true"><span>게시물</span> <b class="no"></b></span><button type="button" class="nx" aria-label="다음 게시물"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg><span>다음</span></button></div></div></div>
     </div>
-    <div class="cv3-m-nav"><button type="button" class="pv" aria-label="이전 게시물"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg><span>← 이전</span></button><b class="no"></b><button type="button" class="nx" aria-label="다음 게시물"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg><span>다음 →</span></button></div>
+
   </div>
 </div>
 

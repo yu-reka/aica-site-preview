@@ -12,20 +12,20 @@
   },
   "check": {
     "css": {
-      "check-m": "1030faq-chevron-pagination",
+      "check-m": "1106porcelain-states",
       "check": "1102faq-review-pagination",
       "presentation": "1026noselfcheck"
     },
     "js": {
       "check-m": "1016integrated",
-      "check": "1103shared-helpers",
+      "check": "1106faq-independent",
       "faq-data": "design-20261102-direct-links",
-      "faq-render": "1103shared-helpers"
+      "faq-render": "1106faq-independent"
     }
   },
   "common": {
     "css": {
-      "availability": "1026loading-soft-backdrop",
+      "availability": "1106porcelain-states",
       "components": "1028housing-no-rent",
       "masthead": "1016cleanup",
       "navigation-mobile": "1016nav",
@@ -33,17 +33,18 @@
       "site": "1103footer-jngj-18",
       "tokens": "1029pretendard-subset",
       "base": "1102loading-history",
-      "lnb": "1102loading-history"
+      "lnb": "1106sticky-title-visible"
     },
     "js": {
-      "availability": "1030offline-art60",
+      "availability": "1106porcelain-states",
       "site-layout": "1104footer-logo-order-public",
-      "site": "1103shared-helpers",
+      "site": "1106sticky-title-visible",
       "track": "1027admin-views",
-      "ui": "1103shared-helpers",
+      "ui": "1106circular-review-rail",
       "menu": "1102loading-history",
       "public-content": "1102loading-history",
-      "stories-loader": "1106loading-height"
+      "stories-loader": "1106loading-retry-card",
+      "faq-loader": "1106faq-independent"
     }
   },
   "home": {
@@ -57,14 +58,14 @@
   },
   "life": {
     "css": {
-      "life-m": "1103culture-detail-wrap",
-      "life": "1103address-label-remove",
+      "life-m": "1106porcelain-states",
+      "life": "1106porcelain-states",
       "presentation": "1028topic-top-chips",
       "housing-map": "20261028-map-credit-center",
       "culture": "1102culture-public-responsive"
     },
     "js": {
-      "life-m-view": "1105mobile-photo-fit",
+      "life-m-view": "1106porcelain-states",
       "life-m": "1103culture-centered-ellipsis",
       "life": "1103shared-helpers",
       "culture": "1103shared-helpers"
@@ -73,57 +74,58 @@
   "stories": {
     "css": {
       "cohort-v3": {
-        "cohorts": "1103cohort-modal-borderless",
-        "hub": "1103cohort-modal-borderless"
+        "cohorts": "1106cohort-wider-mobile",
+        "hub": "1106cohort-wider-mobile"
       },
       "detail-navigation": "1020outsidegrid",
-      "hub": "1104review-tag-name-safe",
+      "hub": "1106porcelain-states",
       "presentation": {
-        "hub": "1104review-tags-display",
-        "default": "1104review-tags-display"
+        "hub": "1106content-title-keep",
+        "default": "1106content-title-keep"
       },
-      "projects-grid": "1021listbadges",
-      "review-notes": "1104review-tags-display",
+      "projects-grid": "1106porcelain-states",
+      "review-notes": "1106porcelain-states",
       "stories-m": {
-        "default": "1103project-toggle-right",
-        "cohorts": "1103project-toggle-right"
+        "default": "1106cohort-profile-measured",
+        "cohorts": "1106cohort-profile-measured"
       },
       "stories-render": "1105thumb-fit",
       "stories-sections": {
-        "interviews": "1027detail-word-wrap",
-        "projects": "1103project-name-size",
-        "reviews": "1102loading-history",
-        "cohorts": "1102loading-history"
+        "interviews": "1106porcelain-states",
+        "projects": "1106porcelain-states",
+        "reviews": "1106porcelain-states",
+        "cohorts": "1106porcelain-states"
       },
       "stories": "1105empty-duration",
-      "story-state": "1106loading-height-clip",
-      "interview-honors": "1102honors-natural-title",
-      "project-video": "1027prep-always"
+      "story-state": "1106porcelain-content-title",
+      "interview-honors": "1106honors-review-glass",
+      "project-video": "1106porcelain-states"
     },
     "js": {
-      "cohort-modal-scroll": "1022swipereading",
-      "cohort-v3": "1105video-segment",
+      "cohort-modal-scroll": "1106cohort-wider-mobile",
+      "cohort-v3": "1106modal-photo-isolation",
       "detail-navigation": "1104review-tags-display",
       "old-hash": "1022hubmodals",
       "project-reading": "1027list-markers",
       "projects-filter": "1103shared-helpers",
-      "review-notes": "1102honors-closing-quote",
+      "review-notes": "1106batch-fit-main313",
       "stories-data": "design-20261029-hub-honors",
       "stories-m-reviews": {
-        "default": "1104review-tags-display",
-        "legacyLoader": "1104review-tags-display"
+        "default": "1106review-edge-arrow",
+        "legacyLoader": "1106review-edge-arrow"
       },
-      "stories-m": "1104review-tags-display",
-      "stories-render": "1105thumb-fit",
-      "stories-sections": "1105interview-segment",
+      "stories-m": "1106cohort-profile-measured",
+      "stories-render": "1106porcelain-states",
+      "stories-sections": "1106batch-fit-main313",
       "stories": "1104review-tags-display",
-      "story-state": "1102hub-empty-action",
-      "interview-honors": "1103honors-detail-return",
+      "story-state": "1106porcelain-states",
+      "interview-honors": "1106batch-fit-main313",
       "cohort-month-navigation": "1103shared-helpers",
-      "project-video": "1027photo-first-hero",
+      "project-video": "1106porcelain-states",
       "story-detail-title": "1103shared-helpers",
       "mast-fix": "1102loading-history",
-      "hub": "1102loading-history"
+      "hub": "1102loading-history",
+      "text-fit": "1106batch-fit-main313"
     }
   }
 }

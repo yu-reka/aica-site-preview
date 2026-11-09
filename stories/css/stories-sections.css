@@ -121,7 +121,7 @@
 .stories-page .sidebox .ivyt{display:inline-block;margin:14px 8px 0;padding:0;background:none!important;font-size:14px;font-weight:600;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
 .stories-page .sidebox .ivyt::before{display:none}
 .stories-page .sidebox .ivyt:hover{color:var(--ink)}
-.stories-page .ivnote{margin:28px 0 0;padding:16px 18px;border-radius:14px;background:#F6F7F9;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.stories-page .ivnote{margin:28px 0 0}
 
 /* 프로젝트 상세(#pj-N): 인터뷰 상세처럼 목록을 감추고 한 프로젝트만 보여 줌(2026-10-08) */
 /* 프로젝트 카드 높이 고정: 여섯 카드를 한 칸에 겹쳐 두고 고른 것만 보이게 → 가장 긴 내용에 맞춘 같은 높이(2026-10-08) */

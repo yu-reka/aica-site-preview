@@ -20,7 +20,7 @@ for (const page of ['404.html', '500.html']) {
       vm.runInNewContext(script, {document, location: {pathname}});
       const root = pathname.startsWith('/aica-site-preview/') ? '/aica-site-preview/' : '/';
       assert.equal(base.href, root);
-      assert.deepEqual(requests, [{rel: 'stylesheet', href: root + 'common/css/tokens.css'}]);
+      assert.deepEqual(requests, [{rel: 'stylesheet', href: root + 'common/css/tokens.css'}, {rel:'stylesheet',href:root+'common/css/availability.css?v=1106porcelain-states'}]);
       assert.ok(html.indexOf('<script>') < html.indexOf('<body>'));
     }
   });

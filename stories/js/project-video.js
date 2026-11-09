@@ -26,8 +26,11 @@
     const video = existing || document.createElement('video');
     const stage = document.createElement('div');
     stage.className = 'pj-video-stage';
+    const status = document.createElement('div');
+    status.className = 'pj-video-status aica-state aica-state--compact';
+    const badge = document.createElement('span'); badge.className = 'aica-state__badge';
     const message = document.createElement('p');
-    message.className = 'pj-video-message';
+    message.className = 'pj-video-message aica-state__title';
     message.setAttribute('role', 'status');
     const start = document.createElement('button');
     start.type = 'button'; start.className = 'pj-video-start';
@@ -38,7 +41,8 @@
     video.defaultMuted = true;
     video.preload = 'none';
     video.setAttribute('aria-label', '프로젝트 시연 영상');
-    stage.append(video, message, start);
+    status.append(badge, message);
+    stage.append(video, status, start);
     hero.insertBefore(stage, hero.firstChild);
     hero.classList.add('pj-video');
     const player = {video, stage, source: null, state: ''};
@@ -46,6 +50,8 @@
     function state(value) {
       player.state = value;
       stage.dataset.state = value;
+      badge.textContent = value === 'error' ? '불러오기 실패' : value === 'loading' ? '불러오는 중' : '준비 중';
+      status.hidden = value === 'ready';
       message.textContent = messages[value] || '';
       message.hidden = !message.textContent;
       video.hidden = value === 'empty' || value === 'error';

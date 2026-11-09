@@ -16,13 +16,14 @@ var tokens=document.createElement('link');
 tokens.rel='stylesheet';
 tokens.href=root+'common/css/tokens.css';
 document.head.appendChild(tokens);
+var states=document.createElement('link');states.rel='stylesheet';states.href=root+'common/css/availability.css?v={{v.common.css.availability}}';document.head.appendChild(states);
 </script>
-<style>{{> shared/error-layout-style}}.primary{font-family:inherit;background:#fff;color:#14233F;cursor:pointer}.primary:focus-visible{outline:3px solid #2457F5;outline-offset:5px}.primary span{color:#2457F5}.secondary{font-size:13px;text-underline-offset:4px}.art{position:relative;display:grid;place-items:center;padding:14px}.paper{position:absolute;width:230px;height:230px;border:3px solid #14233F;border-radius:24px;background:#FFBCE0;transform:rotate(7deg);box-shadow:5px 6px 0 #0B0B0C}.art svg{position:relative;width:min(280px,100%);height:240px}.code{position:absolute;left:10%;bottom:0;background:#fff;border:2px solid #0B0B0C;padding:1px 12px;transform:rotate(-7deg);font-size:13px;font-weight:800}footer{padding:18px 32px;font-size:12px;background:white;border-top:1px solid #D3D9E1}
-{{> shared/error-responsive-style}}</style>
+<noscript><style>@import url("common/css/availability.css?v={{v.common.css.availability}}");</style></noscript>
+<style>{{> shared/error-layout-style}}{{> shared/error-responsive-style}}</style>
 </head>
 <body>
 <header class="error-header"><a class="error-brand" href="home/index.html"><img src="common/assets/brand/symbol-white.png" alt="" loading="lazy">인공지능사관학교</a><span>인사교 AI-Log</span></header>
-<main id="main"><section class="error-card" aria-labelledby="error-title"><div><p class="kicker">잠깐, 쉬어 가는 중</p><h1 id="error-title">지금은 페이지를<br>열 수 없어요.</h1><p class="description">일시적인 문제가 생겼어요.<br>잠시 후 다시 시도해 주세요.</p><div class="actions"><button class="primary" type="button" id="retry">다시 시도 <span aria-hidden="true">→</span></button><a class="secondary" href="home/index.html">첫 화면으로</a></div></div><div class="art" aria-hidden="true"><div class="paper"></div><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240"><rect x="54" y="40" width="174" height="62" rx="12" fill="white" stroke="#14233F" stroke-width="5"/><rect x="54" y="114" width="174" height="62" rx="12" fill="white" stroke="#14233F" stroke-width="5"/><circle cx="78" cy="70" r="7" fill="#2457F5"/><circle cx="78" cy="144" r="7" fill="#2457F5"/><path d="M102 70h70m-70 74h42M141 177v26m-37 0h74" stroke="#14233F" stroke-width="5" stroke-linecap="round"/><circle cx="214" cy="161" r="36" fill="#FFE600" stroke="#0B0B0C" stroke-width="5"/><path d="M214 142v22m0 12v2" stroke="#14233F" stroke-width="6" stroke-linecap="round"/></svg><span class="code">500</span></div></section></main>
+<main id="main"><section class="error-card aica-state" aria-labelledby="error-title"><div class="error-message"><p class="kicker aica-state__badge">서버 오류 · 500</p><h1 class="aica-state__title" id="error-title">지금은 페이지를<br>열 수 없어요.</h1><p class="description aica-state__copy">일시적인 문제가 생겼어요.<br>잠시 후 다시 시도해 주세요.</p><div class="actions"><button class="primary aica-state__action" type="button" id="retry">다시 시도 <span aria-hidden="true">→</span></button><a class="secondary aica-state__secondary" href="home/index.html">첫 화면으로</a></div></div></section></main>
 <footer>인공지능사관학교</footer>
 <script>document.getElementById("retry").addEventListener("click",function(){location.reload();});</script>
 </body>

@@ -164,10 +164,6 @@
   #main .faq-pb .cm-only,#main #cmFaqPosition{display:none}
   #main .faq-pn[aria-current="page"]{background:#2B2D31;border-color:#2B2D31;color:#fff}
   #main .faq-pb:disabled{opacity:.35;cursor:default}
-  #main .cm-faq-empty{padding:24px 16px;text-align:center;border-radius:16px;background:var(--cm-surface);color:var(--cm-muted)}
-  #main .cm-faq-empty p{margin:0;font-weight:700;color:var(--cm-ink)}
-  #main .cm-faq-empty span{display:block;margin-top:8px;font-size:13px;line-height:1.55}
-  #main #cmFaqReset{min-height:48px;margin-top:16px;padding:10px 16px;border:2px solid var(--cm-ink);border-radius:40px;background:var(--cm-white);color:var(--cm-ink);font:700 15px/1.5 var(--cm-body)}
 
   #main .cm-end{padding:36px 20px 48px}
   #main .cm-end-title{margin:0 0 16px;font:600 22px/1.35 var(--cm-heading);letter-spacing:-.025em}

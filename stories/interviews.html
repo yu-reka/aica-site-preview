@@ -34,10 +34,10 @@
 </style>
 <link rel="preload" href="../common/assets/fonts/Giants-Bold.woff2" as="font" type="font/woff2" crossorigin>
 
-<script src="../common/js/ui.js?v=1103shared-helpers" defer></script>
+<script src="../common/js/ui.js?v=1106circular-review-rail" defer></script>
   <script src="../common/js/menu.js?v=1102loading-history" defer></script>
   <script src="../common/js/site-layout.js?v=1104footer-logo-order-public" defer></script>
-<script src="../common/js/site.js?v=1103shared-helpers" defer></script>
+<script src="../common/js/site.js?v=1106sticky-title-visible" defer></script>
 <script src="../common/js/track.js?v=1027admin-views" defer></script>
 
 
@@ -49,23 +49,23 @@
   <link rel="stylesheet" href="css/detail-navigation.css?v=1020outsidegrid">
 
   <link rel="stylesheet" href="css/stories.css?v=1105empty-duration">
-  <link rel="stylesheet" href="css/stories-sections.css?v=1027detail-word-wrap">
+  <link rel="stylesheet" href="css/stories-sections.css?v=1106porcelain-states">
   <link rel="stylesheet" href="../common/css/presentation.css?v=1029local-fonts">
-  <link rel="stylesheet" href="css/presentation.css?v=1104review-tags-display">
-  <link rel="stylesheet" href="../common/css/lnb.css?v=1102loading-history">
+  <link rel="stylesheet" href="css/presentation.css?v=1106content-title-keep">
+  <link rel="stylesheet" href="../common/css/lnb.css?v=1106sticky-title-visible">
   <link rel="stylesheet" href="../common/css/masthead.css?v=1016cleanup">
-  <link rel="stylesheet" href="css/story-state.css?v=1106loading-height-clip">
+  <link rel="stylesheet" href="css/story-state.css?v=1106porcelain-content-title">
   <!-- Story consumers are collected below; the API-first loader requests the snapshot only on failure. -->
   <!-- 빈 목록 · 필터 결과 없음 안내(aica-site PR #27): 글을 다 그린 뒤 판단하도록 글 그리기 다음에 -->
-  <link rel="stylesheet" href="css/stories-m.css?v=1103project-toggle-right">
+  <link rel="stylesheet" href="css/stories-m.css?v=1106cohort-profile-measured">
   <link rel="stylesheet" href="../common/css/components.css?v=1028housing-no-rent">
 <link rel="stylesheet" href="../common/css/navigation-mobile.css?v=1016nav">
-  <link rel="stylesheet" href="../common/css/availability.css?v=1026loading-soft-backdrop">
-<script src="../common/js/availability.js?v=1030offline-art60" defer></script>
+  <link rel="stylesheet" href="../common/css/availability.css?v=1106porcelain-states">
+<script src="../common/js/availability.js?v=1106porcelain-states" defer></script>
 
-  <link rel="stylesheet" href="css/interview-honors.css?v=1102honors-natural-title">
+  <link rel="stylesheet" href="css/interview-honors.css?v=1106honors-review-glass">
   <link rel="stylesheet" href="css/stories-render.css?v=1105thumb-fit">
-<script src="../common/js/stories-loader.js?v=1106loading-height" defer data-page="stories/interviews.html" data-api="../api/public/stories" data-fallback="js/stories-data.js?v=design-20261029-hub-honors" data-scripts='["js/stories-render.js?v=1105thumb-fit","js/story-state.js?v=1102hub-empty-action","js/interview-honors.js?v=1103honors-detail-return","js/stories-sections.js?v=1105interview-segment","js/mast-fix.js?v=1102loading-history","js/detail-navigation.js?v=1104review-tags-display","js/stories-m.js?v=1104review-tags-display","js/stories.js?v=1104review-tags-display","js/story-detail-title.js?v=1103shared-helpers"]'></script>
+<script src="../common/js/stories-loader.js?v=1106loading-retry-card" data-page="stories/interviews.html" data-api="../api/public/stories" data-fallback="js/stories-data.js?v=design-20261029-hub-honors" data-scripts='["js/stories-render.js?v=1106porcelain-states","js/text-fit.js?v=1106batch-fit-main313","js/story-state.js?v=1106porcelain-states","js/interview-honors.js?v=1106batch-fit-main313","js/stories-sections.js?v=1106batch-fit-main313","js/mast-fix.js?v=1102loading-history","js/detail-navigation.js?v=1104review-tags-display","js/stories-m.js?v=1106cohort-profile-measured","js/stories.js?v=1104review-tags-display","js/story-detail-title.js?v=1103shared-helpers"]'></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
@@ -110,11 +110,20 @@
 <span class="tgt2" id="go-iv"></span>
 <span class="tgt2" id="go-pr"></span>
 <span class="tgt2" id="go-coh"></span>
+
+
 <div class="st-main">
   <section class="wrap pane" id="p-iv">
     <div class="ivlist">
       <section class="iv-honors" aria-labelledby="iv-honors-title">
-        <div class="sh sh-row"><div><p class="sh-k">우수 수료생</p><h2 id="iv-honors-title">배움을 성과로 이어간 선배들을 만나봐요</h2></div></div>
+        <div class="sh sh-row" data-story-loading-heading><div><p class="sh-k">우수 수료생</p><h2 id="iv-honors-title">배움을 성과로 이어간 선배들을 만나봐요</h2></div></div><section class="story-loading-shell" data-story-loading-shell data-story-loading-kind="interviews" hidden>
+    <div class="story-state story-state--loading aica-state" data-story-loading-card role="status">
+      <span class="story-state__icon aica-state__badge">불러오는 중</span>
+      <h3 class="story-state__title aica-state__title">이야기를 불러오고 있어요</h3>
+      <p class="story-state__copy aica-state__copy">잠시만 기다려 주세요.</p>
+      <button type="button" class="story-state__action aica-state__action" data-story-loading-retry>다시 시도</button>
+    </div>
+</section>
         <div class="sm-ivf" aria-label="우수 수료생 인터뷰 준비 중">
           <div class="sm-ivf-track">
             <a class="sm-ivf-c is-on" href="#iv-honors-1" aria-label="우수 수료생 인터뷰 1 상세보기">

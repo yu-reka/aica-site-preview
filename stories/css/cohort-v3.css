@@ -289,22 +289,27 @@
   .cv3-caption-track{left:14px}
 }
 
-/* Post navigation: viewport edges on PC, photo edges inside the mobile card. */
+/* Post navigation: viewport edges on PC, existing reaction row on mobile. */
 .stories-page .cv3-m-nav{position:fixed;inset:50% 12px auto;transform:none;display:flex;align-items:flex-start;justify-content:space-between;height:0;padding:0;border-radius:0;background:none;box-shadow:none;pointer-events:none;z-index:4}
 .stories-page .cv3-m-nav button{display:grid;place-items:center;width:44px;height:44px;padding:0;border-radius:50%;background:#fff;color:#14233F;box-shadow:0 2px 10px #0002;transform:translateY(-50%);pointer-events:auto}
 .stories-page .cv3-m-nav button:disabled{opacity:.3}
 .stories-page .cv3-m-nav button:focus-visible{outline:3px solid #8AA9FF;outline-offset:4px}
 .stories-page .cv3-m-nav button:hover:not(:disabled){background:#edf2ff}
-.stories-page .cv3-m-nav button span,.stories-page .cv3-m-nav .no{display:none}
+.stories-page .cv3-m-nav button span,.stories-page .cv3-post-count{display:none}
 .cv3-m-nav svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 @media(max-width:760px){
-  .stories-page .cv3-m{padding:24px 44px}
-  .stories-page .cv3-m-nav{position:absolute;inset:var(--cohort-nav-top,50%) -44px auto}
-  .stories-page .cv3-m-nav button{position:relative;background:transparent;box-shadow:none;color:#fff}
-  .stories-page .cv3-m-nav button::before{content:"";position:absolute;inset:9px;border:0;border-radius:50%;background:rgba(11,16,32,.48);box-shadow:none}
-  .stories-page .cv3-m-nav button svg{position:relative;width:14px;height:14px;stroke-width:1.8}
-  .stories-page .cv3-m-nav button:hover:not(:disabled){background:transparent}
-  .stories-page .cv3-m-nav button:hover:not(:disabled)::before{background:rgba(11,16,32,.64)}
+  .stories-page .cv3-m{padding:24px}
+  .stories-page .cv3-m-ft{padding:12px 16px}
+  .stories-page .cv3-m-act{height:36px;align-items:center;justify-content:flex-start}
+  .stories-page .cv3-m-nav{position:static;inset:auto;transform:none;display:grid;grid-template-columns:64px 64px;align-items:center;justify-content:end;gap:0;height:44px;margin:-4px -6px -4px auto;pointer-events:auto}
+  .stories-page .cv3-m-nav button{display:flex;align-items:center;justify-content:center;gap:4px;width:64px;height:44px;box-sizing:border-box;border-radius:8px;background:transparent;box-shadow:none;color:#14233F;transform:none;font:500 12px/1 var(--ff-sans)}
+  .stories-page .cv3-m-nav button span{display:inline}
+  .stories-page .cv3-m-nav .nx svg{order:1}
+  .stories-page .cv3-m-nav button svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.8}
+  .stories-page .cv3-m-nav .pv svg path{transform:translateX(1.5px)}
+  .stories-page .cv3-m-nav .nx svg path{transform:translateX(-1.5px)}
+  .stories-page .cv3-m-nav button:hover:not(:disabled){background:#f6f8fb}
+  .stories-page .cv3-m-nav button:focus-visible{outline:2px solid #2457F5;outline-offset:-2px}
 }
 
 /* Mobile Instagram treatment: dots on white paper below the photo; count on the image. */

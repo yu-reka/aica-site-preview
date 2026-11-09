@@ -334,3 +334,9 @@ html[data-nav="side"] .stories-hub{background:var(--surface)}
 @media (max-width:600px){
   [data-honors-feature] .hb-ivg{row-gap:40px}
 }
+
+.stories-page .hb-ivf.aica-state{display:flex;justify-content:center;padding:24px 18px;text-decoration:none}
+.stories-page .hb-ivf.aica-state .hb-ivf-ph{display:none}
+.stories-page .hb-ivf.aica-state .hb-ivf-tx{padding:0;min-height:0}
+.stories-page .hb-ivf.aica-state .hb-ivf-tx::after,.stories-page .hb-ivf.aica-state .hb-ivf-tx em{display:none}
+.stories-page .hb-ivf.aica-state .hb-ivf-q{margin-right:0}

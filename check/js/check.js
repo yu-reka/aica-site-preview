@@ -137,96 +137,101 @@
   }));
 
   /* ---------- FAQ: original records, mobile search and 5-item pages ---------- */
-  const fl = $('#faqList', main);
-  if (fl) {
-    const items = $$('.faq-item', fl), tabs = $$('.faq-tab', main), cnt = $('#faqCount', main);
-    const pager = $('#faqPager', main), pagesEl = $('#faqPages', main), prev = $('#faqPrev', main), next = $('#faqNext', main);
-    const search = $('#faqSearch', main), clear = $('#faqClear', main), empty = $('#cmFaqEmpty', main), position = $('#cmFaqPosition', main);
-    const normalize = value => value.toLocaleLowerCase('ko').replace(/\s+/g, ' ').trim();
-    const index = new Map(items.map(item => [item, normalize(item.textContent)]));
-    const perPage = () => mobile.matches ? 5 : 8;
-    let cat = 'all', page = 0, query = '', results = items;
-    const setOpen = (item, open) => {
-      item.classList.toggle('is-open', open);
-      $('.faq-q', item).setAttribute('aria-expanded', String(open));
-      $('.faq-a', item).inert = !open;
-    };
-    const closeAll = () => items.forEach(item => setOpen(item, false));
-    const apply = () => {
-      const words = mobile.matches ? normalize(query).split(' ').filter(Boolean) : [];
-      results = items.filter(item => (cat === 'all' || item.dataset.cat === cat) && words.every(word => index.get(item).includes(word)));
-      const per = perPage(), pages = Math.max(1, Math.ceil(results.length / per));
-      page = Math.min(page, pages - 1);
-      const start = page * per;
-      items.forEach(item => { const k = results.indexOf(item); item.hidden = k < start || k >= start + per; });
-      pager.classList.toggle('is-off', pages <= 1); pager.setAttribute('aria-hidden', String(pages <= 1));
-      pagesEl.innerHTML = Array.from({length:pages}, (_, k) => `<button type="button" class="faq-pn" data-p="${k}"${k === page ? ' aria-current="page"' : ''} aria-label="${k + 1}페이지">${k + 1}</button>`).join('');
-      prev.disabled = page === 0; next.disabled = page === pages - 1;
-      const label = cat === 'all' ? '전체' : cat;
-      cnt.textContent = mobile.matches ? `${label} ${normalize(query) ? '검색 결과 ' : ''}${results.length}개${pages > 1 ? ` · ${start + 1}–${Math.min(start + per, results.length)}번째` : ''}` : cat !== 'all' ? results.length + '개의 질문' : '';
-      position.textContent = `${page + 1} / ${pages}`;
-      position.setAttribute('aria-label', `전체 ${pages}페이지 중 ${page + 1}페이지`);
-      clear.hidden = !query;
-      empty.hidden = !mobile.matches || results.length > 0;
-    };
-    const alignResults = () => {
-      const gap = (header?.offsetHeight || 0) + $('.faq-tools', main).offsetHeight + 12;
-      scrollToY(Math.max(0, layoutTop(cnt) - gap), true);
-    };
-    const goPage = (k, event) => {
-      if (k < 0 || k >= Math.ceil(results.length / perPage())) return;
-      page = k; closeAll(); apply();
-      if (mobile.matches) {
-        alignResults();
-        if (event?.detail === 0) $('.faq-q', results[page * perPage()])?.focus({preventScroll:true});
-      } else {
-        const top = $('.faq-tools', main).getBoundingClientRect().top;
-        if (top < (header?.offsetHeight || 0) || top > innerHeight * .5) jumpTo($('#faq', main));
-      }
-    };
-    pagesEl.addEventListener('click', event => { const b = event.target.closest('.faq-pn'); if (b) goPage(+b.dataset.p, event); });
-    prev.addEventListener('click', event => goPage(page - 1, event));
-    next.addEventListener('click', event => goPage(page + 1, event));
-    const selectCategory = value => { cat = value; tabs.forEach(tab => tab.setAttribute('aria-pressed', String(tab.dataset.cat === cat))); };
-    tabs.forEach(tab => tab.addEventListener('click', () => { selectCategory(tab.dataset.cat); page = 0; closeAll(); apply(); }));
-    const searchChanged = () => { query = search.value; page = 0; closeAll(); apply(); };
-    search.addEventListener('input', event => { if (!event.isComposing) searchChanged(); });
-    search.addEventListener('compositionend', searchChanged);
-    clear.addEventListener('click', () => { search.value = ''; searchChanged(); search.focus({preventScroll:true}); });
-    $('#cmFaqReset', main).addEventListener('click', () => { selectCategory('all'); search.value = ''; searchChanged(); search.focus({preventScroll:true}); });
-    $$('.faq-q', fl).forEach(button => button.addEventListener('click', () => {
-      const item = button.closest('.faq-item'), open = !item.classList.contains('is-open');
-      const top = button.getBoundingClientRect().top;
-      closeAll(); setOpen(item, open);
-      if (mobile.matches) {
-        const shift = button.getBoundingClientRect().top - top;
-        if (shift) scrollToY(scrollY + shift, true);
+  function initFAQ() {
+    const fl = $('#faqList', main);
+    if (fl) {
+      const items = $$('.faq-item', fl), tabs = $$('.faq-tab', main), cnt = $('#faqCount', main);
+      const pager = $('#faqPager', main), pagesEl = $('#faqPages', main), prev = $('#faqPrev', main), next = $('#faqNext', main);
+      const search = $('#faqSearch', main), clear = $('#faqClear', main), empty = $('#cmFaqEmpty', main), position = $('#cmFaqPosition', main);
+      const normalize = value => value.toLocaleLowerCase('ko').replace(/\s+/g, ' ').trim();
+      const index = new Map(items.map(item => [item, normalize(item.textContent)]));
+      const perPage = () => mobile.matches ? 5 : 8;
+      let cat = 'all', page = 0, query = '', results = items;
+      const setOpen = (item, open) => {
+        item.classList.toggle('is-open', open);
+        $('.faq-q', item).setAttribute('aria-expanded', String(open));
+        $('.faq-a', item).inert = !open;
+      };
+      const closeAll = () => items.forEach(item => setOpen(item, false));
+      const apply = () => {
+        const words = mobile.matches ? normalize(query).split(' ').filter(Boolean) : [];
+        results = items.filter(item => (cat === 'all' || item.dataset.cat === cat) && words.every(word => index.get(item).includes(word)));
+        const per = perPage(), pages = Math.max(1, Math.ceil(results.length / per));
+        page = Math.min(page, pages - 1);
+        const start = page * per;
+        items.forEach(item => { const k = results.indexOf(item); item.hidden = k < start || k >= start + per; });
+        pager.classList.toggle('is-off', pages <= 1); pager.setAttribute('aria-hidden', String(pages <= 1));
+        pagesEl.innerHTML = Array.from({length:pages}, (_, k) => `<button type="button" class="faq-pn" data-p="${k}"${k === page ? ' aria-current="page"' : ''} aria-label="${k + 1}페이지">${k + 1}</button>`).join('');
+        prev.disabled = page === 0; next.disabled = page === pages - 1;
+        const label = cat === 'all' ? '전체' : cat;
+        cnt.textContent = mobile.matches ? `${label} ${normalize(query) ? '검색 결과 ' : ''}${results.length}개${pages > 1 ? ` · ${start + 1}–${Math.min(start + per, results.length)}번째` : ''}` : cat !== 'all' ? results.length + '개의 질문' : '';
+        position.textContent = `${page + 1} / ${pages}`;
+        position.setAttribute('aria-label', `전체 ${pages}페이지 중 ${page + 1}페이지`);
+        clear.hidden = !query;
+        empty.hidden = !mobile.matches || results.length > 0;
+      };
+      const alignResults = () => {
         const gap = (header?.offsetHeight || 0) + $('.faq-tools', main).offsetHeight + 12;
-        if (button.getBoundingClientRect().top < gap) scrollToY(layoutTop(button) - gap, true);
-      }
-    }));
-    const sizeList = () => {
-      if (mobile.matches) fl.style.minHeight = '';
-      else {
-        items.forEach(item => item.hidden = false);
-        const height = Math.max(...items.map(item => $('h3', item).offsetHeight)) + 1;
-        fl.style.minHeight = (height * perPage() + 2) + 'px';
-      }
-      apply();
-    };
-    revealFAQ = id => {
-      const item = items.find(item => item.id === id || $('.faq-q', item).id === id || $('.faq-a', item).id === id);
-      if (!item) return;
-      query = ''; search.value = ''; selectCategory('all');
-      page = Math.floor(items.indexOf(item) / perPage());
-      closeAll(); apply(); setOpen(item, true);
-    };
-    closeAll(); sizeList();
-    document.fonts?.ready.then(sizeList);
-    let resize; addEventListener('resize', () => { clearTimeout(resize); resize = setTimeout(sizeList, 150); });
-    mobile.addEventListener('change', () => { page = 0; closeAll(); sizeList(); });
-    if (location.hash) { const target = targetOf(location.hash); if (target) jumpTo(target, true); }
+        scrollToY(Math.max(0, layoutTop(cnt) - gap), true);
+      };
+      const goPage = (k, event) => {
+        if (k < 0 || k >= Math.ceil(results.length / perPage())) return;
+        page = k; closeAll(); apply();
+        if (mobile.matches) {
+          alignResults();
+          if (event?.detail === 0) $('.faq-q', results[page * perPage()])?.focus({preventScroll:true});
+        } else {
+          const top = $('.faq-tools', main).getBoundingClientRect().top;
+          if (top < (header?.offsetHeight || 0) || top > innerHeight * .5) jumpTo($('#faq', main));
+        }
+      };
+      pagesEl.addEventListener('click', event => { const b = event.target.closest('.faq-pn'); if (b) goPage(+b.dataset.p, event); });
+      prev.addEventListener('click', event => goPage(page - 1, event));
+      next.addEventListener('click', event => goPage(page + 1, event));
+      const selectCategory = value => { cat = value; tabs.forEach(tab => tab.setAttribute('aria-pressed', String(tab.dataset.cat === cat))); };
+      tabs.forEach(tab => tab.addEventListener('click', () => { selectCategory(tab.dataset.cat); page = 0; closeAll(); apply(); }));
+      const searchChanged = () => { query = search.value; page = 0; closeAll(); apply(); };
+      search.addEventListener('input', event => { if (!event.isComposing) searchChanged(); });
+      search.addEventListener('compositionend', searchChanged);
+      clear.addEventListener('click', () => { search.value = ''; searchChanged(); search.focus({preventScroll:true}); });
+      $('#cmFaqReset', main).addEventListener('click', () => { selectCategory('all'); search.value = ''; searchChanged(); search.focus({preventScroll:true}); });
+      $$('.faq-q', fl).forEach(button => button.addEventListener('click', () => {
+        const item = button.closest('.faq-item'), open = !item.classList.contains('is-open');
+        const top = button.getBoundingClientRect().top;
+        closeAll(); setOpen(item, open);
+        if (mobile.matches) {
+          const shift = button.getBoundingClientRect().top - top;
+          if (shift) scrollToY(scrollY + shift, true);
+          const gap = (header?.offsetHeight || 0) + $('.faq-tools', main).offsetHeight + 12;
+          if (button.getBoundingClientRect().top < gap) scrollToY(layoutTop(button) - gap, true);
+        }
+      }));
+      const sizeList = () => {
+        if (mobile.matches) fl.style.minHeight = '';
+        else {
+          items.forEach(item => item.hidden = false);
+          const height = Math.max(...items.map(item => $('h3', item).offsetHeight)) + 1;
+          fl.style.minHeight = (height * perPage() + 2) + 'px';
+        }
+        apply();
+      };
+      revealFAQ = id => {
+        const item = items.find(item => item.id === id || $('.faq-q', item).id === id || $('.faq-a', item).id === id);
+        if (!item) return;
+        query = ''; search.value = ''; selectCategory('all');
+        page = Math.floor(items.indexOf(item) / perPage());
+        closeAll(); apply(); setOpen(item, true);
+      };
+      closeAll(); sizeList();
+      document.fonts?.ready.then(sizeList);
+      let resize; addEventListener('resize', () => { clearTimeout(resize); resize = setTimeout(sizeList, 150); });
+      mobile.addEventListener('change', () => { page = 0; closeAll(); sizeList(); });
+      if (location.hash) { const target = targetOf(location.hash); if (target) jumpTo(target, true); }
+    }
   }
+  // FAQ data never delays the shared header or the rest of this page.
+  if (window.AicaFaqReady) window.AicaFaqReady.then(initFAQ);
+  else initFAQ();
 
   /* ---------- 모집 프로세스: 단계 차례로 켜기 ---------- */
   const pf = $('#procFlow', main);

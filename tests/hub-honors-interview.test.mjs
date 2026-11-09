@@ -9,11 +9,11 @@ const start=renderer.indexOf("    // 우수 수료생 대표는",renderer.indexO
 const hub=renderer.slice(start,renderer.indexOf('    // 후기:',start));
 const esc=value=>String(value??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const iv=(id,extra={})=>({anchor:'iv-p'+id,title:'인터뷰 '+id,summary:'요약 '+id,author:'시험 작성자 '+id,img:{src:'assets/uploads/test-'+id+'.webp'},...extra});
-function node(text=''){return {textContent:text,hidden:false,innerHTML:'',inserted:'',attributes:{},classList:{remove(){}},setAttribute(k,v){this.attributes[k]=v;},insertAdjacentHTML(_,html){this.inserted+=html;}};}
+function node(text=''){return {textContent:text,hidden:false,innerHTML:'',inserted:'',attributes:{},classList:{remove(){},add(){}},prepend(child){this.badge=child;},setAttribute(k,v){this.attributes[k]=v;},insertAdjacentHTML(_,html){this.inserted+=html;}};}
 function render(interviews,featured=true){
   const box=node(),card=node(),photo=node(),title=node(),summary=node(),by=node(),label=node('우수 수료생 인터뷰');
   const fields={'.hb-ivf-ph':photo,h3:title,'.hb-ivf-q':summary,'.hb-by':by,em:label};
-  const context={IV:interviews,photoIV:interviews.filter(v=>v.img?.src),hasPhoto:v=>!!v.img?.src,esc,who:v=>v.author,
+  const context={document:{createElement:()=>node()},IV:interviews,photoIV:interviews.filter(v=>v.img?.src),hasPhoto:v=>!!v.img?.src,esc,who:v=>v.author,
     hubVisual:v=>'<img src="'+esc(v.img?.src||'default.webp')+'">',
     $:(selector,root)=>root===card?fields[selector]||null:root===box?(selector==='.hb-ivf'?card:null):selector==='.hb-ivg'?box:selector==='#hub-interviews[data-honors-feature]'&&featured?{}:null,
     $$:()=>[]};
@@ -36,7 +36,7 @@ test('without an honors interview the existing placeholder stays alongside norma
   const out=render([iv(14),iv(13),iv(12)]);
   assert.equal(out.card.attributes.href,'interviews.html#iv-honors-1');
   assert.equal(out.title.textContent,'우수 수료생 인터뷰를 준비하고 있어요');
-  assert.match(out.photo.innerHTML,/avatar-card-10-1080.webp/);
+  assert.equal(out.photo.hidden,true);assert.equal(out.card.badge.textContent,'준비 중');
   assert.equal(out.by.hidden,true);assert.equal(out.by.textContent,'');
   assert.equal((out.box.inserted.match(/<li>/g)||[]).length,3);
 });

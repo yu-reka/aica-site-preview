@@ -187,8 +187,6 @@
 .lm-content .pagination:empty{display:none}
 .lm-content .pagination button{width:40px;height:40px;border:1px solid var(--line);background:#fff;border-radius:50%;font-size:13px;font-weight:700}
 .lm-content .pagination button[aria-current]{background:#2b2d31;color:#fff;border-color:#2b2d31}
-.lm-content .empty{padding:40px 12px;text-align:center;color:var(--muted);font-size:13px}
-.lm-content .empty button{display:block;margin:15px auto 0;padding:10px;background:#fff;border:1px solid var(--line);border-radius:20px}
 
 .lm-content .culture-group>h3{font:800 18px/1.5 Paperlogy,sans-serif}
 .lm-content .culture-group>.caption{margin:5px 0 18px}

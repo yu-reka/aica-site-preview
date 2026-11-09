@@ -217,3 +217,17 @@ test('a thumbnail position set in the editor moves the card and hub thumbnails o
   // CSS: 사진처럼 꽉 찬 썸네일(pjthumb-full)일 때만, 카드 · 카드에 마우스를 올렸을 때 · 한눈에 보기
   assert.match(css,/\.stories-page \.pjc \.pjthumb-full \.pjthumb-i\[data-pos\],\.stories-page a\.pjc:hover \.ph \.pjthumb-full \.pjthumb-i\[data-pos\],\.stories-page \.hb-pjc \.pjthumb-full \.pjthumb-i\[data-pos\]\{object-position:var\(--fx,50%\) var\(--fy,50%\);transform-origin:var\(--fx,50%\) var\(--fy,50%\);scale:var\(--z,1\)\}/);
 });
+
+test('empty project sections never publish draft placeholders or the design notice',()=>{
+  for(const sections of [undefined,[],[{p:''},{p:'   '},{h:'Custom'}]]){
+    const projects=[{id:80,title:'Empty',sections}],before=JSON.stringify(projects),out=render(projects);
+    assert.doesNotMatch(out.details,/class="pjsec"|class="ivnote"|들어갈 자리|시안이라 본문/);
+    assert.equal(JSON.stringify(projects),before);
+  }
+});
+test('only filled project sections render and retain escaped text and heading defaults',()=>{
+  const projects=[{id:81,title:'Partial',sections:[{h:'Custom',p:'<keep>'},{p:'  '},{p:'Full body'}]}];
+  const out=render(projects);assert.match(out.details,/<section><h3>Custom<\/h3><p class="pjph-t">&lt;keep&gt;<\/p><\/section>/);
+  assert.match(out.details,/<section><h3>기술 설명<\/h3><p class="pjph-t">Full body<\/p><\/section>/);
+  assert.doesNotMatch(out.details,/들어갈 자리|시안이라 본문|<h3>주요 기능/);
+});

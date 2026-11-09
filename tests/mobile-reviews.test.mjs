@@ -15,9 +15,14 @@ class Element {
     this.classList.contains = name => this.classList.has(name);
     this.classList.toggle = (name, enabled) => enabled ? this.classList.add(name) : this.classList.delete(name);
     this.scrollLeft = 0; this.clientWidth = 300; this.scrollWidth = 300;
-    this.dataset = {}; this.attrs = {}; this.events = {}; this.textContent = '';
+    this.dataset = {}; this.attrs = {}; this.events = {}; this.textContent = ''; this.style = {setProperty(key, value) { this[key] = value; }};
   }
-  appendChild(node) { this.children.push(node); return node; }
+  get firstElementChild() { return this.children[0]; }
+  scrollBy(options) { this.lastScroll = options; }
+  get lastElementChild() { return this.children[this.children.length - 1]; }
+  scrollTo(options) { this.scrollLeft = options.left; }
+  insertBefore(node, reference) { this.children = this.children.filter(child => child !== node); this.children.splice(this.children.indexOf(reference), 0, node); }
+  appendChild(node) { this.children = this.children.filter(child => child !== node); this.children.push(node); return node; }
   append(...nodes) { nodes.forEach(node => this.appendChild(node)); }
   replaceChildren(...nodes) { this.children = nodes; }
   setAttribute(key, value) { this.attrs[key] = value; }
@@ -30,7 +35,7 @@ class Element {
   querySelectorAll(selector) { return selector === 'button' ? this.children.filter(node => node.tagName === 'button') : []; }
 }
 
-function startReviews(classes) {
+function startReviews(classes, reducedMotion = true) {
   const created = [], listeners = {};
   const location = { hash: '' };
   const section = new Element();
@@ -50,8 +55,8 @@ function startReviews(classes) {
     createElement: tag => { const node = new Element(tag); created.push(node); return node; },
   };
   runInNewContext(uiSource + '\n' + readFileSync(new URL('../stories/js/stories-m-reviews.js', import.meta.url), 'utf8') + '\nStoriesMobileReviews.init();', {
-    document, location, matchMedia: () => ({ matches: true }),
-    addEventListener(name, fn) { listeners[name] = fn; }, setTimeout() {}, requestAnimationFrame(fn) { fn(); },
+    document, location, matchMedia: () => ({ matches: reducedMotion }),
+    addEventListener(name, fn) { listeners[name] = fn; }, clearTimeout() {}, setTimeout() {}, requestAnimationFrame(fn) { fn(); },
   });
   const categories = created.find(node => node.attrs['aria-label'] === '후기 카테고리');
   const cohorts = created.find(node => node.attrs['aria-label'] === '후기 기수');
@@ -62,6 +67,8 @@ function startReviews(classes) {
   const choose = (group, value) => group.children.find(node => node.dataset.value === value).events.click();
 
   return { categories, cohorts, board, count, empty, pager, choose, listeners, location,
+    navigation: created.find(node => node.className === 'sm-review-navigation'),
+    progress: created.find(node => node.className === 'sm-review-progress'),
     tagSelect: created.find(node => node.className === 'sm-review-tag-dropdown dw'),
     views: created.find(node => node.className === 'sm-review-views'),
     stage: created.find(node => node.className === 'sm-review-stage') };
@@ -167,4 +174,60 @@ test('mobile omits tag controls and ignores old tag hashes in either view', () =
   location.hash = '#r-1'; listeners.hashchange();
   location.hash = '#p-rev'; listeners.hashchange();
   assert.equal(board.children.length, 2);
+});
+
+// Navigation follows native scrolling, including swipes; it never rebuilds cards.
+test('review navigation tracks scroll bounds and hides for lists and nonoverflowing results', () => {
+  const {board, navigation, progress, views} = startReviews([['cat-life','coh7'],['cat-life','coh7']]);
+  const previous = navigation.children[1], next = navigation.children[2];
+  assert.equal(navigation.hidden, true);
+  board.scrollWidth = 900; board.events.scroll();
+  assert.equal(navigation.hidden, false);
+  assert.equal(previous.disabled, false); assert.equal(next.disabled, false);
+  assert.ok(Number(progress.attrs['aria-valuenow']) > 0);
+  board.scrollLeft = 300; board.events.scroll();
+  assert.equal(previous.disabled, false); assert.equal(next.disabled, false);
+  assert.ok(Number(progress.attrs['aria-valuenow']) <= 100);
+  board.scrollLeft = 600; board.events.scroll();
+  assert.equal(next.disabled, false);
+  views.children[1].events.click(); assert.equal(navigation.hidden, true);
+});
+
+test('review navigation requests a smooth card step and respects reduced motion', () => {
+  for (const reducedMotion of [false,true]) {
+    const {board,navigation} = startReviews([['cat-life','coh7'],['cat-life','coh7']], reducedMotion);
+    board.children[0].offsetWidth = 240;
+    navigation.children[2].events.click();
+    assert.equal(board.lastScroll.left, 256);
+    assert.equal(board.lastScroll.behavior, reducedMotion ? 'auto' : 'smooth');
+    assert.equal(board.children.length, 2);
+  }
+});
+
+test('circular rail reuses cards at either edge and restores desktop order', () => {
+  const context = vm.createContext({setTimeout() {},clearTimeout() {}});
+  runInContext(uiSource, context);
+  const track = new Element();
+  const cards = Array.from({length:4},()=>new Element('a'));
+  cards.forEach(card=>{card.offsetWidth=240;track.appendChild(card)});
+  track.scrollWidth=1068; track.clientWidth=300;
+  const loop = context.SiteUI.circularRail(track);
+  loop.reset(true);
+  assert.equal(track.children.length,4);
+  assert.equal(track.children[0], cards[3]);
+  assert.equal(track.children[1], cards[0]);
+  assert.equal(track.scrollLeft,256);
+  assert.equal(loop.position(),25);
+  track.scrollLeft=0; track.events.scrollend();
+  assert.equal(track.children[1],cards[3]);
+  assert.equal(track.scrollLeft,256);
+  assert.equal(loop.position(),100);
+  assert.equal(cards[3].dataset.railSlot,'4');
+  track.scrollLeft=768; track.events.scrollend();
+  assert.equal(track.scrollLeft,512);
+  assert.equal(track.children.length,4);
+  loop.enable(false);
+  assert.deepEqual(track.children,cards);
+  assert.equal(track.scrollLeft,0);
+  assert.equal(loop.active,false);
 });

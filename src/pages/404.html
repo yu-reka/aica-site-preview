@@ -16,13 +16,14 @@ var tokens=document.createElement('link');
 tokens.rel='stylesheet';
 tokens.href=root+'common/css/tokens.css';
 document.head.appendChild(tokens);
+var states=document.createElement('link');states.rel='stylesheet';states.href=root+'common/css/availability.css?v={{v.common.css.availability}}';document.head.appendChild(states);
 </script>
-<style>{{> shared/error-layout-style}}.primary span{color:#2457F5}.secondary{font-size:13px;text-underline-offset:4px}.art{position:relative;display:grid;place-items:center;padding:14px}.paper{position:absolute;width:230px;height:230px;border:3px solid #14233F;border-radius:24px;background:#FFE600;transform:rotate(7deg);box-shadow:5px 6px 0 #0B0B0C}.art svg{position:relative;width:min(280px,100%);height:240px}.code{position:absolute;left:10%;bottom:0;background:#fff;border:2px solid #0B0B0C;padding:1px 12px;transform:rotate(-7deg);font-size:13px;font-weight:800}footer{padding:18px 32px;font-size:12px;background:white;border-top:1px solid #D3D9E1}
-{{> shared/error-responsive-style}}</style>
+<noscript><style>@import url("common/css/availability.css?v={{v.common.css.availability}}");</style></noscript>
+<style>{{> shared/error-layout-style}}{{> shared/error-responsive-style}}</style>
 </head>
 <body>
 <header class="error-header"><a class="error-brand" href="home/index.html"><img src="common/assets/brand/symbol-white.png" alt="" loading="lazy">인공지능사관학교</a><span>인사교 AI-Log</span></header>
-<main id="main"><section class="error-card" aria-labelledby="error-title"><div><p class="kicker">길을 다시 찾아볼까요?</p><h1 id="error-title">앗, 이 페이지는<br>찾을 수 없어요.</h1><p class="description">주소가 바뀌었거나 사라진 페이지예요.<br>인사교 첫 화면에서 다시 시작해 보세요.</p><div class="actions"><a class="primary" href="home/index.html">첫 화면으로 <span aria-hidden="true">→</span></a><a class="secondary" href="about/index.html">인사교 알아보기</a></div></div><div class="art" aria-hidden="true"><div class="paper"></div><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240"><path d="M34 52l70-18 72 22 68-18v154l-68 18-72-22-70 18z" fill="white" stroke="#14233F" stroke-width="5" stroke-linejoin="round"/><path d="M104 34v154M176 56v154" stroke="#D3D9E1" stroke-width="4"/><path d="M59 157l43-51 38 27 54-65" stroke="#2457F5" stroke-width="6" stroke-linecap="round" stroke-dasharray="9 10" fill="none"/><circle cx="195" cy="70" r="29" fill="#2457F5" stroke="#0B0B0C" stroke-width="5"/><path d="M185 60l20 20m0-20-20 20" stroke="white" stroke-width="5" stroke-linecap="round"/></svg><span class="code">404</span></div></section></main>
+<main id="main"><section class="error-card aica-state" aria-labelledby="error-title"><div class="error-message"><p class="kicker aica-state__badge">페이지 없음 · 404</p><h1 class="aica-state__title" id="error-title">앗, 이 페이지는<br>찾을 수 없어요.</h1><p class="description aica-state__copy">주소가 바뀌었거나 사라진 페이지예요.<br>인사교 첫 화면에서 다시 시작해 보세요.</p><div class="actions"><a class="primary aica-state__action" href="home/index.html">첫 화면으로 <span aria-hidden="true">→</span></a><a class="secondary aica-state__secondary" href="about/index.html">인사교 알아보기</a></div></div></section></main>
 <footer>인공지능사관학교</footer>
 </body>
 </html>

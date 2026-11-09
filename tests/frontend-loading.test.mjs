@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {connectBackoffice} from '../scripts/backoffice-site.mjs';
 import {build} from '../scripts/build.mjs';
+import {readFileSync} from 'node:fs';
 
 test('all page CSS and JavaScript tags have cache tokens, including dynamically ordered story consumers',()=>{
   for(const [path,html] of connectBackoffice(build())){
@@ -49,6 +50,19 @@ test('story API loader runs in the head before defer navigation and never duplic
 });
 
 
+test('loading and failed/empty story cards share one top on every story page',()=>{
+  const css=file=>readFileSync(new URL('../stories/css/'+file,import.meta.url),'utf8');
+  const state=css('story-state.css'),hub=css('hub.css');
+  // The absolute loading card cannot collapse its top margin into the title gap like the in-flow state card.
+  assert.match(state,/\[data-story-loading\] \[data-story-loading-card\]\{position:absolute;[^}]*\bmargin:0;/);
+  // Hub failed/empty card: margin-less title, then the first section's .hb-body gap (desktop and 640 container).
+  assert.ok(hub.includes('.stories-hub .story-overview-state{container:hub / inline-size}'));
+  assert.ok(hub.includes('.stories-hub .story-overview-state .sh,.stories-hub .story-overview-state .sh h2{margin:0}'));
+  const gap=/\.hb-body\{grid-area:body;margin-top:([^}]+)\}/.exec(hub)?.[1];assert.ok(gap);
+  assert.ok(hub.includes('.stories-hub .story-overview-state .story-state{margin-top:'+gap+'}'));
+  assert.ok(hub.includes('  .hb-body{margin-top:24px}'));
+  assert.ok(hub.includes('@container hub (max-width:640px){.stories-hub .story-overview-state .story-state{margin-top:24px}}'));
+});
 test('all five pending pages put one accessible loading card after the real first heading without cloning a title',()=>{
   const rawPages=build(),pages=connectBackoffice(rawPages);
   for(const kind of ['index','interviews','reviews','projects','cohorts']){

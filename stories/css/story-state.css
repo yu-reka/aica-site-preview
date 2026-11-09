@@ -15,17 +15,18 @@
 .stories-page .story-overview-state[hidden]{display:none}
 
 /* Keep original section titles visible; the overlay belongs only to content.
-   Zero-height/absolute placement preserves layout measurements and hash targets. */
+   Zero-height/absolute placement preserves layout measurements and hash targets.
+   An absolute card does not collapse its top margin into the title gap like the
+   in-flow failed/empty card does, so it carries none: both cards share one top. */
 .stories-page .story-loading-shell{display:none}
 @media (scripting: enabled){
 .stories-page[data-story-loading] :is(.st-main,.hb,.story-overview-state){visibility:hidden}
 .stories-page[data-story-loading] [data-story-loading-heading],
 .stories-page[data-story-loading] [data-story-loading-heading] + .hb-more{visibility:visible}
 .stories-page[data-story-loading] .story-loading-shell{display:block;position:relative;block-size:0;visibility:visible}
-.stories-page[data-story-loading] [data-story-loading-card]{position:absolute;inset-inline:0;top:0;opacity:0;animation:story-loading-reveal 0s linear .7s forwards}
+.stories-page[data-story-loading] [data-story-loading-card]{position:absolute;inset-inline:0;top:0;margin:0;opacity:0;animation:story-loading-reveal 0s linear .7s forwards}
 .stories-page[data-story-loading] [data-story-loading-content]{position:relative}
 .stories-page[data-story-loading] [data-story-loading-content] > .story-loading-shell{position:absolute;inset:0}
-.stories-page[data-story-loading] [data-story-loading-content] [data-story-loading-card]{margin:0}
 @keyframes story-loading-reveal{to{opacity:1}}
 
 /* Cold visits reserve each collection; warm navigation reuses the same width's

@@ -78,7 +78,7 @@
         "hub": "1106cohort-wider-mobile"
       },
       "detail-navigation": "1020outsidegrid",
-      "hub": "1106porcelain-states",
+      "hub": "1109card-align",
       "presentation": {
         "hub": "1106content-title-keep",
         "default": "1106content-title-keep"
@@ -97,7 +97,7 @@
         "cohorts": "1106porcelain-states"
       },
       "stories": "1105empty-duration",
-      "story-state": "1106porcelain-content-title",
+      "story-state": "1109card-align",
       "interview-honors": "1106honors-review-glass",
       "project-video": "1106porcelain-states"
     },

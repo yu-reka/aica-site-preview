@@ -95,21 +95,19 @@
     return {el:el, text:el.textContent};
   });
   function fitSummaries() {
+    var items = [];
     summaries.forEach(function (entry) {
-      var el = entry.el;
-      if (!el.clientWidth || entry.width === el.clientWidth) return;
-      entry.width = el.clientWidth;
-      el.setAttribute('data-honors-summary-fit', '');
-      el.textContent = entry.text;
-      if (el.scrollHeight <= el.clientHeight + 1) return;
-      var chars = Array.from(entry.text), low = 0, high = chars.length;
-      while (low < high) {
-        var mid = Math.ceil((low + high) / 2);
-        el.textContent = chars.slice(0, mid).join('').trimEnd() + '⋯';
-        if (el.scrollHeight <= el.clientHeight + 1) low = mid; else high = mid - 1;
-      }
-      el.textContent = chars.slice(0, low).join('').trimEnd() + '⋯';
+      var el = entry.el, width = el.clientWidth;
+      if (!width || entry.width === width) return;
+      entry.width = width;
+      items.push({element:el, source:entry.text,
+        write:function(text) { if (el.textContent !== text) el.textContent = text; },
+        height:function() { return el.scrollHeight; },
+        characters:function() { return entry.characters || (entry.characters = Array.from(entry.text)); }});
     });
+    items.forEach(function(item) { item.element.setAttribute('data-honors-summary-fit', ''); });
+    items.forEach(function(item) { item.allowed = item.element.clientHeight + 1; });
+    StoryTextFit(items);
   }
   var summaryFrame;
   function scheduleSummaries() {

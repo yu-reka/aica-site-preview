@@ -62,27 +62,56 @@
     box.className = 'sm-rail-box sm-rail-box--' + kind;
     scroller.parentNode.insertBefore(box, scroller);
     box.appendChild(scroller);
-    arrows(box, scroller, label, function(){ return scroller.clientWidth * 0.8; });
+    arrows(box, scroller, label, function(){ return kind === 'pis' && scroller.firstElementChild ? scroller.firstElementChild.offsetWidth + 16 : scroller.clientWidth * 0.8; }, kind === 'pis');
   }
 
   /* 화살표(알아보기 모바일과 같은 모양): 오른쪽에 더 있으면 다음, 넘기면 이전 */
-  function arrows(box, scroller, label, step){
+  function arrows(box, scroller, label, step, reviewRail){
     var mk = function(dir){
       var b = document.createElement('button');
-      b.type = 'button'; b.className = 'sm-arrow sm-arrow--' + dir;
+      b.type = 'button'; b.className = reviewRail ? 'sm-review-control ui-rail-arrow is-' + dir : 'sm-arrow sm-arrow--' + dir;
       b.setAttribute('aria-label', (dir === 'prev' ? '이전 ' : '다음 ') + label);
       b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + ARROW[dir] + '"/></svg>';
       b.addEventListener('click', function(){
         scroller.scrollBy({ left: (dir === 'prev' ? -1 : 1) * step(), behavior: reduce.matches ? 'auto' : 'smooth' });
       });
-      box.appendChild(b); return b;
+      if (!reviewRail) box.appendChild(b); return b;
     };
     var p = mk('prev'), n = mk('next');
+    var navigation, progress, fill;
+    if (reviewRail){
+      navigation = document.createElement('div'); navigation.className = 'sm-review-navigation';
+      navigation.setAttribute('role', 'group'); navigation.setAttribute('aria-label', '후기 카드 넘기기');
+      progress = document.createElement('div'); progress.className = 'sm-review-progress';
+      progress.setAttribute('role', 'progressbar'); progress.setAttribute('aria-label', '후기 목록 탐색 위치');
+      progress.setAttribute('aria-valuemin', '0'); progress.setAttribute('aria-valuemax', '100');
+      fill = document.createElement('span'); progress.appendChild(fill);
+      navigation.append(progress, p, n); box.appendChild(navigation);
+    }
+    var loop = reviewRail ? SiteUI.circularRail(scroller) : null;
+    var railWidth = 0;
     var upd = function(){
-      SiteUI.syncRail(scroller, p, n);
+      if (reviewRail && mq.matches && scroller.clientWidth && scroller.clientWidth !== railWidth){
+        railWidth = scroller.clientWidth;
+        var cardWidth = Math.min(300, (railWidth - 32) * .84);
+        scroller.style.setProperty('--review-card-size', cardWidth + 'px');
+        scroller.style.setProperty('--review-card-inset', (railWidth - cardWidth) / 2 + 'px');
+      }
+      if (!reviewRail) { SiteUI.syncRail(scroller, p, n); return; }
+      loop.enable(mq.matches);
+      if (scroller.firstElementChild){
+        var rect = scroller.firstElementChild.getBoundingClientRect();
+        box.style.setProperty('--review-control-y', rect.top + rect.height / 2 - box.getBoundingClientRect().top + 'px');
+      }
+      var state = SiteUI.railState(scroller);
+      navigation.hidden = state.max <= 4;
+      p.disabled = !loop.active && state.atStart; n.disabled = !loop.active && state.atEnd;
+      var value = scroller.scrollWidth ? Math.min(100, Math.max(0, (scroller.scrollLeft + scroller.clientWidth) / scroller.scrollWidth * 100)) : 100;
+      if (loop.active) value = loop.position();
+      fill.style.width = value + '%'; progress.setAttribute('aria-valuenow', String(Math.round(value)));
     };
     scroller.addEventListener('scroll', upd, { passive: true });
-    scroller.addEventListener('keydown', function(event){ if(event.target===scroller) SiteUI.railKeys(event, function(dir){scroller.scrollBy({left:dir*scroller.clientWidth*.8,behavior:reduce.matches?'auto':'smooth'});}); });
+    scroller.addEventListener('keydown', function(event){ if(event.target===scroller) SiteUI.railKeys(event, function(dir){scroller.scrollBy({left:dir*step(),behavior:reduce.matches?'auto':'smooth'});}); });
     addEventListener('resize', upd); upd(); setTimeout(upd, 600);
   }
   // 일반 인터뷰는 모바일 리스트만 표시합니다. 우수 수료생 카드는 별도 섹션에서 관리합니다.
@@ -90,6 +119,12 @@
   /* 4) 기수 기록(cohort-v3.js가 그린 화면을 600px 이하에서만 시안 배치로) */
   var BADGE = '<svg class="sm-cv-badge" viewBox="0 0 24 24" aria-label="공식 계정" role="img"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>';
   var ICON = { all: 'M3 3h4v5H3zM10 3h4v5h-4zM17 3h4v5h-4zM3 10h4v5H3zM10 10h4v5h-4zM17 10h4v5h-4zM3 17h4v5H3zM10 17h4v5h-4zM17 17h4v5h-4z', video: 'M8 3h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8a5 5 0 0 1 5-5zM10 8l6 4-6 4z' };
+  function alignCohortAccount(prof){
+    if (!mq.matches || !prof) return;
+    var top=prof.querySelector('.sm-cv-top'), stat=prof.querySelector('.cv3-stat'), count=prof.querySelector('.cv3-stat b');
+    if (!top || !stat || !count) return;
+    top.style.paddingLeft=Math.max(0,count.getBoundingClientRect().left-stat.getBoundingClientRect().left)+'px';
+  }
   function initCohorts(){
     var root = $('#cv3');
     if (!root || !root.cv3View || root.dataset.sm) return;
@@ -97,6 +132,9 @@
     var official = (typeof SITE_LINKS !== 'undefined' && SITE_LINKS.official && SITE_LINKS.official.url) || 'https://support.gj-aischool.or.kr/fo/main';
     var view = 'all', busy = false;
     var hlDone = null;
+    var alignAccount = function(){ alignCohortAccount($('.cv3-prof', root)); };
+    addEventListener('resize', alignAccount);
+    if (document.fonts) document.fonts.ready.then(alignAccount);
     var lay = function(){
       if (!mq.matches){ var pf = $('.cv3-prof', root); if (pf) pf.classList.remove('sm-cv-prof'); return; }
       if (busy) return;
@@ -155,6 +193,7 @@
       var hl = $('.cv3-hl', root);
       if (hl && hlDone !== hl){ hlDone = hl; rail(hl, 'hl', '고정 스토리'); }
       if (hl) hl.dispatchEvent(new Event('scroll'));
+      alignAccount();
       busy = false;
     };
     root.addEventListener('cv3:draw', function(event){view=event.detail.v;lay();});
@@ -251,7 +290,7 @@
 
   // Older Spring templates only load this entry. Keep their review UI working
   // while new templates explicitly preload the page-owned review initializer.
-  var reviewScript = new URL('stories-m-reviews.js?v=1104review-tags-display', document.currentScript.src).href;
+  var reviewScript = new URL('stories-m-reviews.js?v=1106review-edge-arrow', document.currentScript.src).href;
   var reviewLoading = false;
   function initReviews(){
     if (!$('#p-rev')) return;

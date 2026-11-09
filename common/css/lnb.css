@@ -1,7 +1,7 @@
 /* =========================================================
    왼쪽 하위 메뉴(10-13 사본, 사용자 결정 '섞어서': 한눈에 보기 허브는 넓게 · 후기 · 인터뷰 · 프로젝트 · 이모저모 페이지는 왼쪽 메뉴)
    페이지가 <html data-nav="side">면 site.js가 위쪽 바를 그리지 않고(data-subnav="off" → --sub 0) main 맨 앞에 nav.lnb#siteLnb를 그림.
-   1200px 이상: 본문 왼쪽 세로 메뉴(스크롤해도 헤더 아래 붙어 있음, 낮은 창은 제목 빼고 링크만) · 미만: 본문 위 가로 알약 줄
+   1200px 이상: 본문 왼쪽 세로 메뉴(스크롤해도 헤더 아래 붙어 있음, 낮은 창도 제목 유지 · 목록만 스크롤) · 미만: 본문 위 가로 알약 줄
    (1024 근처는 본문 칸이 730px까지 줄어 후기 판 · 격자가 답답해 알약 줄로. 10-13)
    셀렉터는 html[data-nav="side"] #siteLnb 아래로 묶음 — 라이프의 .life-page .lnb와 이름이 같아 섞이지 않게.
    ========================================================= */
@@ -26,32 +26,29 @@ html[data-nav="side"] .stories-page:has(> .st-main){background:#fff}
   html[data-nav="side"] main#main{position:relative;padding-left:calc(var(--lnb-x) + var(--lnb-w) + var(--lnb-gap));padding-right:var(--lnb-x)}
   html[data-nav="side"] #siteLnb{position:absolute;top:calc(var(--hdr) + var(--sub));bottom:0;left:var(--lnb-x);width:var(--lnb-w)}
   /* 첫 줄(STORIES)이 본문 첫 섹션 머리(— 후기)와 같은 높이에서 시작, 스크롤하면 헤더 아래 32px에 붙음 */
-  html[data-nav="side"] #siteLnb .lnb-in{position:sticky;top:calc(var(--hdr) + 32px);margin-top:var(--lnb-top,calc(var(--sec-y-first) + 4px))}   /* 탭 내용(.st-main) 위 여백과 같은 식. 머리 여백이 다른 페이지는 main에 --lnb-top */
-  html[data-nav="side"] #siteLnb .lnb-head{display:flex;flex-direction:column;gap:10px;margin:0;padding:0 0 20px}
+  html[data-nav="side"] #siteLnb .lnb-in{position:sticky;top:calc(var(--hdr) + 32px);display:flex;flex-direction:column;max-height:var(--lnb-available,calc(100dvh - var(--hdr) - 48px));margin-top:var(--lnb-top,calc(var(--sec-y-first) + 4px))}   /* 탭 내용(.st-main) 위 여백과 같은 식. 머리 여백이 다른 페이지는 main에 --lnb-top */
+  html[data-nav="side"] #siteLnb .lnb-head{display:flex;flex:none;flex-direction:column;gap:10px;margin:0;padding:0 0 20px}
   html[data-nav="side"] #siteLnb .lnb-title{font:700 24px/1.2 var(--ff-title);color:var(--ink);word-break:keep-all}
-  html[data-nav="side"] #siteLnb .lnb-list{padding:0;border-top:2px solid var(--ink)}   /* 제목 아래 굵은 선은 목록 쪽에 — 낮은 창에서 제목을 빼도 선이 남게 */
+  html[data-nav="side"] #siteLnb .lnb-list{min-height:0;overflow-y:auto;scroll-padding-block:4px;padding:0;border-top:2px solid var(--ink)}   /* 공간이 부족하면 제목 아래 목록만 스크롤. 키보드 초점도 목록 안에서 따라옴 */
   html[data-nav="side"] #siteLnb .lnb-list a{display:flex;align-items:center;gap:10px;padding:15px 2px;border-bottom:1px solid var(--line);font-size:16px;font-weight:500}
   /* 지금 항목: 메인 색 · 굵게 + 섹션 머리(— 후기)와 같은 짧은 선 */
   html[data-nav="side"] #siteLnb .lnb-list a[aria-current]{color:var(--primary);font-weight:700}
   html[data-nav="side"] #siteLnb .lnb-list a[aria-current]::before{content:"";flex:none;width:14px;height:2px;background:currentColor}
   html[data-nav="side"] #siteLnb .lnb-list a:focus-visible{outline:2px solid var(--primary);outline-offset:-2px;border-radius:2px}
 
+  /* 푸터와 헤더 사이가 특히 좁으면 중복 배너 대신 메뉴 제목을 우선 표시. */
+  html[data-nav="side"] main.lnb-compact #siteLnb .lnb-head{padding-bottom:8px}
+  html[data-nav="side"]:has(main.lnb-compact) .st-mhf{visibility:hidden}
+
   /* 본문 칸 안: 탭 내용(.wrap)의 최대 폭 · 좌우 여백은 main 안쪽 여백이 대신함(겹치면 본문이 두 번 들어감) */
   html[data-nav="side"] .stories-page .wrap{width:auto;max-width:none;padding-left:0;padding-right:0}
   /* 프로젝트 차콜 바탕: 원래 화면 폭(50vw)으로 퍼져 왼쪽 메뉴를 덮음 → 본문 칸 폭으로, 칸 안의 판처럼 모서리를 둥글게 */
   html[data-nav="side"] .stories-page .proj::before{left:calc(50% - 50cqw);right:calc(50% - 50cqw);border-radius:var(--r-card)}
 }
-/* 낮은 창(10-13 검토): 페이지 맨 끝에서 sticky 메뉴는 본문 끝(= 푸터 위)에 밀려 같이 올라감. 헤더 + 메뉴(약 340) + 푸터가 한 화면에 안 들어가면
-   메뉴 윗부분(STORIES · 제목)이 고정 헤더 뒤로 들어가 잘려 보임 → 이때는 제목을 빼고 링크 사이를 줄여(한 줄 44px) 링크 목록만 붙임. 1200 미만 알약 줄과 같은 판단.
-   기준 높이: 1080 넘는 폭의 푸터 293px → 72 + 340 + 293 ≈ 705 → 720 */
+/* 낮은 창에서도 제목과 sticky를 유지하고 링크 간격만 줄임.
+   site.js가 본문 끝(푸터 시작)과 헤더 사이의 높이를 --lnb-available로 맞춤. */
 @media (min-width:1200px) and (max-height:719.98px){
-  html[data-nav="side"] #siteLnb .lnb-head{position:absolute;visibility:hidden}   /* 흐름에서 빼고 숨김: 목록 위 선이 본문 첫 머리(— 후기)와 같은 높이에서 시작 */
   html[data-nav="side"] #siteLnb .lnb-list a{padding-top:11px;padding-bottom:11px}
-}
-/* 링크 목록(229)도 못 들어가는 아주 낮은 창(600 미만): 따라오지 않고 본문 맨 위에 그대로 둠.
-   붙여 두면 페이지 끝에서 첫 링크가 헤더 뒤로 들어감. 이동은 헤더 메뉴로 */
-@media (min-width:1200px) and (max-height:599.98px){
-  html[data-nav="side"] #siteLnb .lnb-in{position:static}
 }
 
 /* ---------- 1200px 미만: 본문 위 가로 알약 줄(위쪽 하위 메뉴 바 자리) ----------

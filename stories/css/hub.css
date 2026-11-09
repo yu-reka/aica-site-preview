@@ -312,6 +312,12 @@ html[data-nav="side"] .stories-hub{background:var(--surface)}
 .stories-hub{font:inherit;font-synthesis-weight:inherit}
 .stories-hub button{font:inherit;color:inherit}
 .stories-hub .hb-hd.sh,.stories-hub .hb-hd.sh h2{margin:0}
+/* Failed/empty overview card follows the same rhythm as the loading card in the first
+   section: title without margins, then the .hb-body gap (24px in the 640 container). */
+.stories-hub .story-overview-state{container:hub / inline-size}
+.stories-hub .story-overview-state .sh,.stories-hub .story-overview-state .sh h2{margin:0}
+.stories-hub .story-overview-state .story-state{margin-top:clamp(28px,3vw,40px)}
+@container hub (max-width:640px){.stories-hub .story-overview-state .story-state{margin-top:24px}}
 .stories-hub .hb ::before,.stories-hub .hb ::after{box-sizing:border-box}
 /* Retain the shared dialog base without inheriting the hub's body leading. */
 .stories-hub .ov{font-family:var(--f);font-size:16px;line-height:16px;font-synthesis-weight:auto}
@@ -334,3 +340,9 @@ html[data-nav="side"] .stories-hub{background:var(--surface)}
 @media (max-width:600px){
   [data-honors-feature] .hb-ivg{row-gap:40px}
 }
+
+.stories-page .hb-ivf.aica-state{display:flex;justify-content:center;padding:24px 18px;text-decoration:none}
+.stories-page .hb-ivf.aica-state .hb-ivf-ph{display:none}
+.stories-page .hb-ivf.aica-state .hb-ivf-tx{padding:0;min-height:0}
+.stories-page .hb-ivf.aica-state .hb-ivf-tx::after,.stories-page .hb-ivf.aica-state .hb-ivf-tx em{display:none}
+.stories-page .hb-ivf.aica-state .hb-ivf-q{margin-right:0}

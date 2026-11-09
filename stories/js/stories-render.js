@@ -327,7 +327,7 @@
         + '<div class="ivintro-meta"><span data-field="cohort">' + coh(v.cohort) + '</span><span aria-hidden="true"> · </span><span data-field="author">' + esc(v.author) + '</span><span aria-hidden="true"> · </span><span data-field="track">' + esc(v.track) + '</span></div></header>'
         + (vid ? slides(v, v.title) : '')
         + (qa ? '<div class="qa">' + qa + '</div>' : '')
-        + (vid && !qa ? '<p class="ivnote">영상 인터뷰예요. 위 화면에서 바로 재생됩니다. 영상 내용을 글로 옮긴 요약이 준비되면 이 아래에 함께 실어요.</p>' : '');
+        + (vid && !qa ? '<div class="ivnote aica-state aica-state--compact"><span class="aica-state__badge">요약 준비 중</span><p class="aica-state__copy">영상 인터뷰예요. 위 화면에서 바로 재생됩니다. 영상 내용을 글로 옮긴 요약이 준비되면 이 아래에 함께 실어요.</p></div>' : '');
       var side;
       if (vid) {
         var mm = /^(\d+):(\d{1,2})$/.exec(v.video.dur || ''), len = mm ? (+mm[1] ? +mm[1] + '분 ' : '') + (+mm[2]) + '초' : (v.video.dur || '');
@@ -369,7 +369,7 @@
     pjChoices($('.pj-cohort-filters', prPane), 'cohort', pjUnique(PJ.map(pjCohort)).sort(function (a, b) { return b - a; }), function (v) { return v + '기'; });
     pjChoices($('.pj-subject-options', prPane), 'subject', pjUnique(PJ.map(courseOf)).sort(function (a, b) { return a.localeCompare(b, 'ko'); }), function (v) { return v; });
     $$('.pjd', prPane).forEach(function (d) { d.remove(); });
-    var SECS = [['문제 정의', '어떤 문제를, 누구를 위해 풀었는지 들어갈 자리예요.'], ['주요 기능', '서비스가 무엇을 해 주는지 들어갈 자리예요.'], ['기술 설명', '어떤 데이터 · 모델 · 기술로 만들었는지 들어갈 자리예요.']];
+    var SECS = ['문제 정의', '주요 기능', '기술 설명'];
     // 칸의 글은 최신 디자인(PR #33)처럼 p.pjph-t 한 문단 그대로. • 로 시작하는 목록은 project-reading.js가 번호 목록(ol.pj-feature-list)으로 바꿔요
     // 프로젝트 정보: 비어 있는 줄은 빼요
     var meta = function (rows) {
@@ -377,10 +377,11 @@
     };
     var pjd = PJ.map(function (x, i) {
       var id = esc(x.anchor), prev = PJ[(i - 1 + n) % n], next = PJ[(i + 1) % n];
-      var given = x.sections || [], filled = given.some(function (s) { return s.p; });
+      var given = x.sections || [];
       var secs = SECS.map(function (s, k) {
         var g = given[k] || {};
-        return '<section><h3>' + esc(g.h || s[0]) + '</h3><p class="pjph-t">' + (g.p ? esc(g.p) : s[1]) + '</p></section>';
+        if (!String(g.p || '').trim()) return '';
+        return '<section><h3>' + esc(g.h || s) + '</h3><p class="pjph-t">' + esc(g.p) + '</p></section>';
       }).join('');
       var links = (x.links || []).filter(function (l) { return l && l.url; }).map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label || '자료 보기') + ' ↗</a>'; }).join('');
       return '<div class="pjd" id="' + id + '"><a class="ivback" href="#p-pr">← 프로젝트 목록</a><div class="ivwrap"><div>'
@@ -389,9 +390,8 @@
         // 서비스 소개(2026-10-27, 글쓰기 화면 '서비스 소개'): 프로젝트 주제 바로 아래, 다른 칸과 같은 카드(파란 윗선)
         + (x.serviceIntro ? '<section class="pjintro"><h3>서비스 소개</h3><p class="pjph-t" data-field="serviceIntro">' + esc(x.serviceIntro) + '</p></section>' : '')
         + '<div class="pjtags">' + (x.tags || []).map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div>'
-        + '<div class="pjsec">' + secs + '</div>'
+        + (secs ? '<div class="pjsec">' + secs + '</div>' : '')
         + (links ? '<div class="pjlinks">' + links + '</div>' : '')
-        + (filled ? '' : '<p class="ivnote">시안이라 본문은 자리만 잡아 두었어요. 관리자가 프로젝트를 올리면 이 자리에 내용과 시연 영상 · 발표 자료 링크가 들어갑니다.</p>')
         + '</div><aside class="sidebox pjside"><h3>프로젝트 정보</h3><dl class="ivmeta">' + meta([['팀', x.team], ['과정', courseOf(x) || pjSubject(x)], ['전공', courseOf(x) ? pjSubject(x) : ''], ['기수·반', x.term]]) + '</dl>'
         + (n > 1 ? '<div class="pjnav"><a href="#' + esc(prev.anchor) + '"><small>이전 프로젝트</small>' + esc(prev.title) + '</a><a href="#' + esc(next.anchor) + '"><small>다음 프로젝트</small>' + esc(next.title) + '</a></div>' : '')
         + '</aside></div></div>';
@@ -452,7 +452,12 @@
           honorsPhoto.classList.remove('honors-placeholder');
           honorsPhoto.innerHTML = '<img class="hb-ph" src="assets/interview-avatars/avatar-card-10-1080.webp" alt="" width="1080" height="675" loading="eager" fetchpriority="high" decoding="async">';
         }
+        card.classList.add('aica-state','aica-state--compact');
+        if(honorsPhoto)honorsPhoto.hidden=true;
+        var badge=document.createElement('span');badge.className='aica-state__badge';badge.textContent='준비 중';card.prepend(badge);
         var honorsTitle = $('h3', card), honorsQuote = $('.hb-ivf-q', card);
+        if(honorsTitle)honorsTitle.classList.add('aica-state__title');
+        if(honorsQuote)honorsQuote.classList.add('aica-state__copy');
         if (honorsTitle) honorsTitle.textContent = '우수 수료생 인터뷰를 준비하고 있어요';
         if (honorsQuote) honorsQuote.textContent = '배움 이후의 도전과 성장을 곧 전해드릴게요.';
         var honorsBy = $('.hb-by', card);

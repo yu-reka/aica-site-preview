@@ -26,10 +26,10 @@ npm run preview     # Python 3 로컬 서버: http://127.0.0.1:4173
 
 ## 현재 데이터 흐름
 
-V30 공개 화면은 정적 HTML 틀에 JavaScript가 공개 API 응답을 그립니다. 이야기는 JSON API를 먼저 읽고 실패할 때만 합성 샘플 사본을 읽습니다. FAQ는 기존 사본 → API 순서를 유지합니다. GitHub Pages는 합성 샘플로 디자인을 확인하며 실제 DB에 연결하지 않습니다.
+V30 공개 화면은 정적 HTML 틀에 JavaScript가 공개 API 응답을 그립니다. 이야기는 JSON API를 먼저 읽고 실패할 때만 합성 샘플 사본을 읽습니다. FAQ는 공통 메뉴와 별도로 JSON API를 읽고 실패하면 합성 샘플을 사용합니다. GitHub Pages는 합성 샘플로 디자인을 확인하며 실제 DB에 연결하지 않습니다.
 
-- 이야기: `common/js/stories-loader.js` → `../api/public/stories`(실패·불량 응답·8초 초과 때만 `stories-data.js`) → 공통 탐색 준비 → `stories-render.js`·`story-state.js`·화면 동작
-- FAQ: `faq-data.js` → `../api/public/faq.js` → `faq-render.js` → `check.js`
+- 이야기: `common/js/stories-loader.js` → `../api/public/stories`(헤더 8초·본문 30초 제한, 실패·불량 응답 시 `stories-data.js`) → 공통 탐색 준비 → `stories-render.js`·`text-fit.js`·`story-state.js`·화면 동작
+- FAQ: `common/js/faq-loader.js` → `../api/public/faq`(실패 시 `faq-data.js`) → `faq-render.js` → FAQ 이벤트 연결
 - `common/js/public-content.js`는 API보다 먼저 로드되어 URL·HTML·SVG 출력과 이야기 API 실패 신호를 관리합니다. 홈 전광판은 `home/js/ticker-render.js`가 관리합니다.
 - `scripts/backoffice-site.mjs`가 빌드 결과에 연결 줄을 넣습니다. 생성 HTML에서 스크립트 순서를 직접 고치지 않습니다.
 

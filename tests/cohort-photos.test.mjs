@@ -19,7 +19,7 @@ function start() {
   }
   const document = { createElement: tag => new Element(tag), querySelectorAll: () => hosts };
   const source = readFileSync(new URL('../stories/js/cohort-v3.js', import.meta.url), 'utf8');
-  const api = runInNewContext(source.slice(source.indexOf('  function galleryPhotos('), source.indexOf('  function ym(')) + '\n({galleryPhotos,changePhoto,gallery})', { document, Date });
+  const api = runInNewContext(source.slice(source.indexOf('  function galleryPhotos('), source.indexOf('  function ym(')) + '\n({galleryPhotos,modalPhotoRecord,changePhoto,gallery})', { document, Date });
   const photo = src => { const img = new Element('img'); img.setAttribute('src', src); return img; };
   const record = { title: '사진 게시물', illu: photo('cover.jpg'), photos: [photo('cover.jpg'), photo('second.jpg'), photo('third.jpg')] };
   const mount = (data, tag = 'div') => { const host = new Element(tag); hosts.push(host); api.gallery(host, data); return host; };
@@ -130,23 +130,25 @@ test('photo arrows synchronize galleries, stop card opening, and wrap across bot
 });
 
 
-test('closing the detail restores visited posts to their covers without changing other feed posts', () => {
+test('closing detail discards its cursor without changing the feed selection', () => {
   const ui=start(),feed=ui.mount(ui.record,'article');
   const other={title:'다른 게시물',illu:ui.photo('a.jpg'),photos:[ui.photo('b.jpg')]};
-  ui.mount(other);ui.changePhoto(ui.record,2);ui.changePhoto(other,1);
+  ui.mount(other);ui.changePhoto(ui.record,1);ui.changePhoto(other,1);
+  const detail=ui.modalPhotoRecord(ui.record);ui.mount(detail);ui.changePhoto(detail,2);
   const source=readFileSync(new URL('../stories/js/cohort-v3.js',import.meta.url),'utf8');
   const begin=source.indexOf('  function closeM(');
   const end=source.indexOf("  M.querySelector('.cv3-m-x').onclick",begin);
   const state={
     modalEntry:false,location:{hash:''},hubModal:false,Z:{hidden:false},M:{hidden:false,querySelector:()=>({innerHTML:''})},
-    modalVisited:[ui.record],changePhoto:ui.changePhoto,isolateDialog(){},last:null,
+    modalVisited:[detail],changePhoto:ui.changePhoto,isolateDialog(){},last:null,
     document:{documentElement:{classList:{remove(){}}}}
   };
   runInNewContext(source.slice(begin,end)+'\ncloseM();',state);
   assert.equal(state.M.hidden,true);
   assert.equal(state.Z.hidden,true);
-  assert.equal(ui.control(feed,'cv3-photo-stack').getAttribute('aria-label'),'사진 3장 · 1번째 사진');
-  assert.equal(ui.record.photoIndex,0);
+  assert.equal(ui.control(feed,'cv3-photo-stack').getAttribute('aria-label'),'사진 3장 · 2번째 사진');
+  assert.equal(ui.record.photoIndex,1);
+  assert.equal(detail.photoIndex,0);
   assert.equal(other.photoIndex,1);
   assert.equal(state.modalVisited.length,0);
 });
@@ -182,7 +184,7 @@ test('fullscreen cohort zoom upgrades responsive sizing without retaining lazy l
   ui.record.photos=[];const before=JSON.stringify(cover.attrs);
   const box={children:[],contains(){return false;},appendChild(n){this.children.push(n);}},caption={};
   const source=readFileSync(new URL('../stories/js/cohort-v3.js',import.meta.url),'utf8');
-  const state={list:()=>[ui.record],cur:0,galleryPhotos:ui.galleryPhotos,document:{activeElement:null},
+  const state={M:{querySelector:()=>({cv3Record:ui.record})},list:()=>[ui.record],cur:0,galleryPhotos:ui.galleryPhotos,document:{activeElement:null},
     Z:{querySelector:s=>s==='figcaption'?caption:box},bindPhotoSwipe(){},closeZ(){throw Error('unexpected close');}};
   runInNewContext(source.slice(source.indexOf('  function zfill()'),source.indexOf('  function openZ()'))+'\nzfill();',state);
   const img=box.children[0];
@@ -191,4 +193,24 @@ test('fullscreen cohort zoom upgrades responsive sizing without retaining lazy l
   assert.equal(img.getAttribute('srcset'),cover.getAttribute('srcset'));
   assert.equal(img.getAttribute('width'),null);assert.equal(img.getAttribute('height'),null);
   assert.equal(JSON.stringify(cover.attrs),before);
+});
+
+
+test('modal photo changes leave all feed thumbnails fixed, including while changing posts',()=>{
+  const ui=start(),feed=ui.mount(ui.record,'article');
+  const other={title:'다른 게시물',illu:ui.photo('a.jpg'),photos:[ui.photo('b.jpg')]};
+  const otherFeed=ui.mount(other,'article');
+  ui.changePhoto(ui.record,1);
+  const original=feed.children[0].children[0].getAttribute('src');
+  const otherOriginal=otherFeed.children[0].children[0].getAttribute('src');
+  const detail=ui.modalPhotoRecord(ui.record),detailHost=ui.mount(detail);
+  assert.equal(detail.photoIndex,0);
+  ui.changePhoto(detail,2);
+  assert.equal(detailHost.children[0].children[0].getAttribute('src'),'third.jpg');
+  const next=ui.modalPhotoRecord(other);ui.mount(next);ui.changePhoto(next,1);
+  assert.equal(feed.children[0].children[0].getAttribute('src'),original);
+  assert.equal(otherFeed.children[0].children[0].getAttribute('src'),otherOriginal);
+  assert.equal(ui.record.photoIndex,1);
+  assert.equal(other.photoIndex,undefined);
+  assert.equal(ui.modalPhotoRecord(ui.record).photoIndex,0);
 });

@@ -318,7 +318,6 @@
 .life-page .lnb+.tp-sec{scroll-margin-top:calc(var(--lnb-h) + 24px - var(--sec-y-first))}
 
 /* ===== 시안10 추가(2026-10-08): 근처 식당 음식 종류 거르기 · 빈 상태, 주차 안내 제목 뺀 뒤 문장 ===== */
-.life-page .fdempty{display:grid;justify-items:center;gap:12px;padding:40px 20px;border:1px dashed var(--line-s);border-radius:var(--r-card);background:var(--card);text-align:center;color:var(--ink2);font-weight:600}
 .life-page .fdempty[hidden]{display:none!important}
 /* 시안10 v4: 생활 꿀팁 바로가기 막대(.lnb)를 통째로 뺌 — 막대 높이 0, 히어로 바로 다음 섹션 위 여백은 다른 화면과 같게 */
 .life-page{--lnb-h:0px}

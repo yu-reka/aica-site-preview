@@ -88,6 +88,44 @@ var SiteUI = (() => {
     previous.hidden = state.atStart; next.hidden = state.atEnd;
     return state;
   }
+  // Rotate existing cards at settled edges; no duplicate links or IDs.
+  function circularRail(track) {
+    let cards = [...track.children], active = false, timer;
+    const step = () => (track.firstElementChild?.offsetWidth || 240) + 16;
+    function reset(enabled) {
+      cards = [...track.children];
+      cards.forEach((card, index) => { card.dataset.railSlot = String(index % 6 + 1); });
+      active = enabled && cards.length > 1;
+      if (active) {
+        track.insertBefore(cards[cards.length - 1], cards[0]);
+        track.scrollLeft = step();
+      }
+    }
+    function enable(enabled) {
+      if (active === (enabled && cards.length > 1)) return;
+      track.append(...cards); track.scrollLeft = 0; reset(enabled);
+    }
+    function settle() {
+      clearTimeout(timer);
+      if (!active || track.scrollWidth <= track.clientWidth + 4) return;
+      const left = track.scrollLeft, max = track.scrollWidth - track.clientWidth;
+      if (left <= 2) {
+        track.insertBefore(track.lastElementChild, track.firstElementChild);
+        track.scrollTo({left: left + step(), behavior: 'instant'});
+      } else if (left >= max - 2) {
+        track.appendChild(track.firstElementChild);
+        track.scrollTo({left: left - step(), behavior: 'instant'});
+      }
+    }
+    track.addEventListener('scrollend', settle);
+    track.addEventListener('scroll', () => {
+      clearTimeout(timer); timer = setTimeout(settle, 180);
+    }, {passive:true});
+    return { reset, enable, get active() { return active; }, position() {
+      const card = track.children[Math.max(0, Math.min(cards.length - 1, Math.round(track.scrollLeft / step())))];
+      return (cards.indexOf(card) + 1) / Math.max(1, cards.length) * 100;
+    } };
+  }
   function railKeys(event, move) {
     if (!['ArrowLeft', 'ArrowRight'].includes(event.key) || event.target.closest('input,select,textarea')) return;
     event.preventDefault(); move(event.key === 'ArrowLeft' ? -1 : 1);
@@ -105,7 +143,7 @@ var SiteUI = (() => {
     observer.observe(document.documentElement,{childList:true,subtree:true});
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>enhance());else enhance();
   }
-  return { escapeText, escapeAttribute, selectors, loadScript, motion, decodeHash, element, cloneWithoutIds, toggleButton, buttonGroup, enhance, trapFocus, createDialogScope, railState, syncRail, railKeys };
+  return { escapeText, escapeAttribute, selectors, loadScript, motion, decodeHash, element, cloneWithoutIds, toggleButton, buttonGroup, enhance, trapFocus, createDialogScope, railState, syncRail, circularRail, railKeys };
 })();
 
 /* Restore view choices only for a reload of this exact URL. Links and browser

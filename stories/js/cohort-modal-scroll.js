@@ -58,8 +58,6 @@
   }
   function sync() {
     if (dialog.hidden || !scroller.clientHeight) return;
-    const mediaBounds = media.getBoundingClientRect();
-    box.style.setProperty('--cohort-nav-top', mediaBounds.bottom - box.getBoundingClientRect().top - box.clientTop + 'px');
     const max = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
     control.hidden = max < 1;
     const bounds = scroller.getBoundingClientRect();

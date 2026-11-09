@@ -54,6 +54,7 @@
 <span class="tgt2" id="go-iv"></span>
 <span class="tgt2" id="go-pr"></span>
 <span class="tgt2" id="go-coh"></span>
+{{> stories/loading-state}}
 <div class="st-main">
   <section class="wrap pane proj" id="p-pr">
     <div class="pjlist">
@@ -85,11 +86,11 @@
         </div>
       </details>
     </div>
-    <section class="pj-filter-empty" aria-labelledby="pj-empty-title" hidden>
-      <span class="pj-empty-badge">준비 중</span>
-      <h3 id="pj-empty-title">7기 선배 프로젝트를 정리하고 있어요</h3>
-      <p>그동안 6기 선배들이 만든 프로젝트를 먼저 살펴보세요.</p>
-      <button class="pj-empty-back" type="button">6기 프로젝트 보기 →</button>
+    <section class="pj-filter-empty aica-state" aria-labelledby="pj-empty-title" hidden>
+      <span class="pj-empty-badge aica-state__badge">준비 중</span>
+      <h3 id="pj-empty-title" class="aica-state__title">7기 선배 프로젝트를 정리하고 있어요</h3>
+      <p class="aica-state__copy">그동안 6기 선배들이 만든 프로젝트를 먼저 살펴보세요.</p>
+      <button class="pj-empty-back aica-state__action" type="button">6기 프로젝트 보기 →</button>
     </section>
     <div class="pj-subject-empty" hidden></div>
     <div class="pjgrid">

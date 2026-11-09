@@ -155,3 +155,23 @@ test('hub distinguishes all-empty, both sources failed, and a single empty secti
     else {assert.notEqual(groups['#hub-reviews'].hidden,true);assert.equal(groups['#hub-interviews'].hidden,true);}
   }
 });
+
+
+test('the hub final unavailable view reveals its own heading-and-state wrapper',()=>{
+  const host=new Element('div'),body=new Element('div'),wrapper=new Element('section');wrapper.hidden=true;
+  const page={querySelector:s=>s==='[data-story-list-state]'?host:s==='[data-story-overview-state]'?wrapper:s==='.hb'?body:null};
+  const document={readyState:'complete',body:{dataset:{publicContentUnavailable:'true'}},documentElement:{dataset:{sub:'overview'}},querySelector:()=>page,createElement:t=>new Element(t)};
+  vm.runInNewContext(readFileSync(new URL('../stories/js/story-state.js',import.meta.url),'utf8'),{window:{},document,location:{}});
+  assert.equal(wrapper.hidden,false);assert.equal(host.hidden,false);assert.equal(body.hidden,true);assert.equal(host.dataset.storyState,'error');
+});
+
+
+test('empty and unavailable interviews hide data-dependent honors and reveal the final collection state',()=>{
+  for(const [failed,cards,expected] of [[false,[],'empty'],[true,[],'error'],[false,[{}],null]]){
+    const host=new Element('div'),honors=new Element('section');host.hidden=true;honors.hidden=false;
+    const section={querySelector:()=>host,querySelectorAll:s=>s.includes('[href^=')?cards:s.includes('.iv-honors')?[honors]:[]};
+    const document={readyState:'complete',body:{dataset:failed?{publicContentUnavailable:'true'}:{}},documentElement:{dataset:{sub:'interviews'}},querySelector:()=>section,createElement:t=>new Element(t)};
+    vm.runInNewContext(readFileSync(new URL('../stories/js/story-state.js',import.meta.url),'utf8'),{window:{},document,location:{}});
+    assert.equal(honors.hidden,!!expected);assert.equal(host.hidden,!expected);assert.equal(host.dataset.storyState,expected||undefined);
+  }
+});

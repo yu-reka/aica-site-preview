@@ -79,7 +79,7 @@
     <ul class="faq-list" id="faqList">
       {{#each check.faq}}{{> @view.item.template}}{{/each}}
     </ul>
-    <div class="cm-faq-empty cm-only" id="cmFaqEmpty" hidden><p>해당하는 질문을 찾지 못했어요.</p><span>다른 검색어를 입력하거나 전체 질문을 확인해 주세요.</span><button type="button" id="cmFaqReset">전체 질문 보기</button></div>
+    <div class="cm-faq-empty cm-only aica-state aica-state--compact" id="cmFaqEmpty" hidden><span class="aica-state__badge">검색 결과 없음</span><p class="aica-state__title">해당하는 질문을 찾지 못했어요.</p><span class="aica-state__copy">다른 검색어를 입력하거나 전체 질문을 확인해 주세요.</span><button type="button" id="cmFaqReset" class="aica-state__action">전체 질문 보기</button></div>
     <nav class="faq-pager" id="faqPager" aria-label="자주 묻는 질문 페이지" aria-hidden="false">
       <button type="button" class="fp-btn faq-pb" id="faqPrev" aria-controls="faqList" aria-label="이전 페이지" disabled=""><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg><span class="cm-only">이전</span></button>
       <span class="cm-only" id="cmFaqPosition"></span>

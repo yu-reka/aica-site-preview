@@ -24,29 +24,29 @@
   // 후기 카드처럼 실제 두 줄에 들어가는 글자 수를 재고 가운데 세 점을 씁니다.
   var excerpts=new WeakMap();
   var segmenter=typeof Intl.Segmenter==='function'?new Intl.Segmenter('ko',{granularity:'grapheme'}):null;
-  function fitExcerpt(el){
-    var state=excerpts.get(el);if(!state||!el.clientWidth)return;
-    function write(text){if(state.span.textContent!==text)state.span.textContent=text}
-    write(state.source);
-    if(view!=='grid'||matchMedia('(max-width:600px)').matches||!el.clientHeight)return;
-    var line=parseFloat(getComputedStyle(el).lineHeight),allowed=state.lines*line;
-    if(!(line>0)||state.span.offsetHeight<=allowed+.5)return;
-    var chars=segmenter?Array.from(segmenter.segment(state.source),function(p){return p.segment}):Array.from(state.source);
-    var low=0,high=chars.length;
-    while(low<high){
-      var mid=Math.ceil((low+high)/2);write(chars.slice(0,mid).join('').trimEnd()+'⋯');
-      if(state.span.offsetHeight<=allowed+.5)low=mid;else high=mid-1;
-    }
-    write(chars.slice(0,low).join('').trimEnd()+'⋯');
+  function fitExcerpts(elements){
+    var items=[];
+    (elements||out.querySelectorAll('h4,p,.by')).forEach(function(el){
+      var state=excerpts.get(el);if(!state||!el.clientWidth)return;
+      var style=getComputedStyle(el),line=parseFloat(style.lineHeight);
+      var enabled=view==='grid'&&!matchMedia('(max-width:600px)').matches&&el.clientHeight&&line>0;
+      var key=[el.clientWidth,el.clientHeight,style.font,style.letterSpacing,enabled].join('|');
+      if(state.measurement===key)return;state.measurement=key;
+      if(!enabled){if(state.span.textContent!==state.source)state.span.textContent=state.source;return;}
+      items.push({source:state.source,allowed:state.lines*line+.5,
+        write:function(text){if(state.span.textContent!==text)state.span.textContent=text},
+        height:function(){return state.span.offsetHeight},
+        characters:function(){return state.characters||(state.characters=segmenter?Array.from(segmenter.segment(state.source),function(p){return p.segment}):Array.from(state.source))}});
+    });
+    StoryTextFit(items);
   }
-  var excerptResize=new ResizeObserver(function(entries){entries.forEach(function(entry){fitExcerpt(entry.target)})});
+  var excerptResize=new ResizeObserver(function(entries){fitExcerpts(entries.map(function(entry){return entry.target}))});
   function excerpt(el,text,lines){
     var span=document.createElement('span');span.className='iva-excerpt';span.textContent=text;el.replaceChildren(span);
     excerpts.set(el,{source:text,span:span,lines:lines||2});excerptResize.observe(el);
   }
-  function fitExcerpts(){out.querySelectorAll('h4,p,.by').forEach(fitExcerpt)}
-  document.fonts.ready.then(fitExcerpts);
-  addEventListener('resize',fitExcerpts);
+  document.fonts.ready.then(function(){out.querySelectorAll('h4,p,.by').forEach(function(el){var state=excerpts.get(el);if(state)state.measurement=null});fitExcerpts()});
+  addEventListener('resize',function(){fitExcerpts()});
   function card(d){
     var a=document.createElement('a');a.className='iva-c';a.href=d.a.getAttribute('href');
     if(d.a.target){a.target=d.a.target;a.rel='noopener'}

@@ -34,10 +34,10 @@
 </style>
 <link rel="preload" href="../common/assets/fonts/Giants-Bold.woff2" as="font" type="font/woff2" crossorigin>
 
-<script src="../common/js/ui.js?v=1103shared-helpers" defer></script>
+<script src="../common/js/ui.js?v=1106circular-review-rail" defer></script>
   <script src="../common/js/menu.js?v=1102loading-history" defer></script>
   <script src="../common/js/site-layout.js?v=1104footer-logo-order-public" defer></script>
-<script src="../common/js/site.js?v=1103shared-helpers" defer></script>
+<script src="../common/js/site.js?v=1106sticky-title-visible" defer></script>
 <script src="../common/js/track.js?v=1027admin-views" defer></script>
 
 
@@ -49,24 +49,24 @@
   <link rel="stylesheet" href="css/detail-navigation.css?v=1020outsidegrid">
 
   <link rel="stylesheet" href="css/stories.css?v=1105empty-duration">
-  <link rel="stylesheet" href="css/stories-sections.css?v=1103project-name-size">
+  <link rel="stylesheet" href="css/stories-sections.css?v=1106porcelain-states">
   <link rel="stylesheet" href="../common/css/presentation.css?v=1029local-fonts">
-  <link rel="stylesheet" href="css/presentation.css?v=1104review-tags-display">
-  <link rel="stylesheet" href="../common/css/lnb.css?v=1102loading-history">
+  <link rel="stylesheet" href="css/presentation.css?v=1106content-title-keep">
+  <link rel="stylesheet" href="../common/css/lnb.css?v=1106sticky-title-visible">
   <link rel="stylesheet" href="../common/css/masthead.css?v=1016cleanup">
-  <link rel="stylesheet" href="css/story-state.css?v=1106loading-height-clip">
+  <link rel="stylesheet" href="css/story-state.css?v=1109card-align">
   <!-- Story consumers are collected below; the API-first loader requests the snapshot only on failure. -->
   <!-- 빈 목록 · 필터 결과 없음 안내(aica-site PR #27): 글을 다 그린 뒤 판단하도록 글 그리기 다음에 -->
-  <link rel="stylesheet" href="css/project-video.css?v=1027prep-always">
-  <link rel="stylesheet" href="css/projects-grid.css?v=1021listbadges">
-  <link rel="stylesheet" href="css/stories-m.css?v=1103project-toggle-right">
+  <link rel="stylesheet" href="css/project-video.css?v=1106porcelain-states">
+  <link rel="stylesheet" href="css/projects-grid.css?v=1106porcelain-states">
+  <link rel="stylesheet" href="css/stories-m.css?v=1106cohort-profile-measured">
   <link rel="stylesheet" href="../common/css/components.css?v=1028housing-no-rent">
 <link rel="stylesheet" href="../common/css/navigation-mobile.css?v=1016nav">
-  <link rel="stylesheet" href="../common/css/availability.css?v=1026loading-soft-backdrop">
-<script src="../common/js/availability.js?v=1030offline-art60" defer></script>
+  <link rel="stylesheet" href="../common/css/availability.css?v=1106porcelain-states">
+<script src="../common/js/availability.js?v=1106porcelain-states" defer></script>
 
   <link rel="stylesheet" href="css/stories-render.css?v=1105thumb-fit">
-<script src="../common/js/stories-loader.js?v=1106loading-height" defer data-page="stories/projects.html" data-api="../api/public/stories" data-fallback="js/stories-data.js?v=design-20261029-hub-honors" data-scripts='["js/stories-render.js?v=1105thumb-fit","js/story-state.js?v=1102hub-empty-action","js/mast-fix.js?v=1102loading-history","js/detail-navigation.js?v=1104review-tags-display","js/stories-m.js?v=1104review-tags-display","js/stories.js?v=1104review-tags-display","js/story-detail-title.js?v=1103shared-helpers","js/projects-filter.js?v=1103shared-helpers","js/project-video.js?v=1027photo-first-hero","js/project-reading.js?v=1027list-markers"]'></script>
+<script src="../common/js/stories-loader.js?v=1106loading-retry-card" data-page="stories/projects.html" data-api="../api/public/stories" data-fallback="js/stories-data.js?v=design-20261029-hub-honors" data-scripts='["js/stories-render.js?v=1106porcelain-states","js/text-fit.js?v=1106batch-fit-main313","js/story-state.js?v=1106porcelain-states","js/mast-fix.js?v=1102loading-history","js/detail-navigation.js?v=1104review-tags-display","js/stories-m.js?v=1106cohort-profile-measured","js/stories.js?v=1104review-tags-display","js/story-detail-title.js?v=1103shared-helpers","js/projects-filter.js?v=1103shared-helpers","js/project-video.js?v=1106porcelain-states","js/project-reading.js?v=1027list-markers"]'></script>
 </head>
 <body>
 <header class="site-header" id="siteHeader"></header>
@@ -112,12 +112,21 @@
 <span class="tgt2" id="go-iv"></span>
 <span class="tgt2" id="go-pr"></span>
 <span class="tgt2" id="go-coh"></span>
+
+
 <div class="st-main">
   <section class="wrap pane proj" id="p-pr">
     <div class="pjlist">
-    <div class="sh sh-row">
+    <div class="sh sh-row" data-story-loading-heading>
       <div><p class="sh-k">프로젝트</p><h2>선배들은 여기서 이런 걸 만들었어요</h2></div>
+    </div><section class="story-loading-shell" data-story-loading-shell data-story-loading-kind="projects" hidden>
+    <div class="story-state story-state--loading aica-state" data-story-loading-card role="status">
+      <span class="story-state__icon aica-state__badge">불러오는 중</span>
+      <h3 class="story-state__title aica-state__title">이야기를 불러오고 있어요</h3>
+      <p class="story-state__copy aica-state__copy">잠시만 기다려 주세요.</p>
+      <button type="button" class="story-state__action aica-state__action" data-story-loading-retry>다시 시도</button>
     </div>
+</section>
     <div data-story-list-state hidden></div>
     <!-- 10-13 사본: 한 번에 하나만 보이던 캐러셀(라디오 pr0~pr5 · 화살표 · 썸네일) → 여섯 개를 한눈에 훑는 카드 격자(사용자 '캐러셀 배치가 별로').
          카드 글은 캐러셀 무대에 있던 것 그대로. 기간(TERM, 모두 도약과정 720H)은 카드마다 같아 빼고 상세에만 둠. 누르면 아래 상세(#pj-N)
@@ -143,11 +152,11 @@
         </div>
       </details>
     </div>
-    <section class="pj-filter-empty" aria-labelledby="pj-empty-title" hidden>
-      <span class="pj-empty-badge">준비 중</span>
-      <h3 id="pj-empty-title">7기 선배 프로젝트를 정리하고 있어요</h3>
-      <p>그동안 6기 선배들이 만든 프로젝트를 먼저 살펴보세요.</p>
-      <button class="pj-empty-back" type="button">6기 프로젝트 보기 →</button>
+    <section class="pj-filter-empty aica-state" aria-labelledby="pj-empty-title" hidden>
+      <span class="pj-empty-badge aica-state__badge">준비 중</span>
+      <h3 id="pj-empty-title" class="aica-state__title">7기 선배 프로젝트를 정리하고 있어요</h3>
+      <p class="aica-state__copy">그동안 6기 선배들이 만든 프로젝트를 먼저 살펴보세요.</p>
+      <button class="pj-empty-back aica-state__action" type="button">6기 프로젝트 보기 →</button>
     </section>
     <div class="pj-subject-empty" hidden></div>
     <div class="pjgrid"></div>

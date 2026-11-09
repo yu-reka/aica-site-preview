@@ -164,6 +164,48 @@ const Site = (() => {
     document.fonts?.ready.then(all);
   }
 
+  /* 왼쪽 sticky 제목을 유지하며 푸터 위 남은 공간에 목록을 맞춤.
+     sticky 상자의 높이도 함께 줄여 본문 끝에서 헤더 뒤로 밀려 올라가지 않게 함. */
+  function setupLnbHeight(){
+    const panel = $('#siteLnb .lnb-in'), main = $('#main');
+    if (!panel || !main) return;
+    const desktop = matchMedia('(min-width:1200px)');
+    let frame;
+    const update = () => {
+      frame = null;
+      if (!desktop.matches) {
+        panel.style.removeProperty('--lnb-available');
+        panel.style.removeProperty('top');
+        main.classList.remove('lnb-compact');
+        return;
+      }
+      panel.style.removeProperty('top');
+      let top = parseFloat(getComputedStyle(panel).top);
+      const bottom = Math.min(innerHeight, main.getBoundingClientRect().bottom);
+      // 푸터가 올라와 제목 + 한 링크도 못 담으면 중복된 고정 배너를 비우고 헤더 바로 아래로.
+      const compact = bottom - top < $('.lnb-title', panel).offsetHeight + 20 + 44 + 16;
+      main.classList.toggle('lnb-compact', compact);
+      if (compact) {
+        top = $('#siteHeader').getBoundingClientRect().bottom + 8;
+        panel.style.top = top + 'px';
+      }
+      panel.style.setProperty('--lnb-available', Math.max(0, bottom - top - (compact ? 8 : 16)) + 'px');
+    };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+    addEventListener('scroll', schedule, { passive:true });
+    addEventListener('resize', schedule);
+    addEventListener('pageshow', schedule);
+    document.fonts?.ready.then(schedule);
+    // 배너가 지나가면 mh-stuck이 sticky 기준 높이를 바꾸므로 같은 프레임 뒤 다시 계산.
+    new MutationObserver(schedule).observe(html, { attributes:true, attributeFilter:['class'] });
+    if ('ResizeObserver' in window) {
+      const observer = new ResizeObserver(schedule);
+      observer.observe(main);
+      if ($('#siteFooter')) observer.observe($('#siteFooter'));
+    }
+    update();
+  }
+
   /* ---------- 본문의 바깥 연결처 링크: <a data-site-link="apply"> → SITE_LINKS 주소, 없으면 안내 토스트(헤더 지원하기와 같음) ----------
      10-14 지금 본문에 쓰는 곳은 없음(Spring 본문 링크 계약으로 남김) */
   function linkSiteLinks(){
@@ -400,6 +442,7 @@ const Site = (() => {
     bind();
     setupScrollSpy();
     setupScrollFade();
+    setupLnbHeight();
     if ($('#siteLnb')) { syncSubnav(); document.fonts?.ready.then(syncSubnav); }   // 왼쪽 메뉴는 바로(첫 화면에 지금 항목이 비어 보이지 않게). 좁은 화면 가로 줄 위치는 글꼴이 자리 잡은 뒤 다시
     if ($('#subnav') || $('#drawer a[data-sub]')) requestAnimationFrame(syncSubnav);
   }

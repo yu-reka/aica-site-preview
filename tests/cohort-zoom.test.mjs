@@ -28,7 +28,7 @@ function zoom() {
   const source=readFileSync(new URL('../stories/js/cohort-v3.js',import.meta.url),'utf8');
   const album=source.slice(source.indexOf('  function galleryPhotos('),source.indexOf('  function ym('));
   const fill=source.slice(source.indexOf('  function zfill('),source.indexOf('  function openZ('));
-  const api=runInNewContext(album+fill+'\n({zfill})',{document,Z,list:()=>[record],cur:0,closeZ(){},Date});
+  const api=runInNewContext(album+fill+'\n({zfill})',{document,Z,M:{querySelector:()=>({cv3Record:record})},list:()=>[record],cur:0,closeZ(){},Date});
   api.zfill();
   const activate=button=>{button.focus();button.onclick({preventDefault(){},stopPropagation(){}});};
   return {record,host,close,document,activate};

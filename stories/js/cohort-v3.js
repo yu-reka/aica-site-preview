@@ -76,6 +76,8 @@
       if(src)seen.push(src);result.push(photo);
     });return result.slice(0,10);
   }
+  // Detail/zoom share a private album cursor; feed thumbnails keep their own cursor.
+  function modalPhotoRecord(d){ return Object.assign({},d,{photoIndex:0}); }
   function changePhoto(d,index){
     d.photoIndex=Math.max(0,Math.min(galleryPhotos(d).length-1,index));
     document.querySelectorAll('.cv3-photo-gallery').forEach(function(host){
@@ -321,7 +323,8 @@
   }
   function fill(){
     var L=list(), d=L[cur]; if(!d) return;
-    if(modalVisited.indexOf(d)<0)modalVisited.push(d);
+    d=modalPhotoRecord(d);
+    modalVisited.push(d);
     var md=M.querySelector('.cv3-m-media'); md.innerHTML=''; md.classList.remove('can-zoom','cv3-photo-gallery');md.cv3Record=null;
     if(d.yt)md.appendChild(media(d,true));else gallery(md,d);
     if(d.yt){ var id=null;
@@ -354,7 +357,7 @@
   var Z=document.createElement('div'); Z.className='cv3-zv'; Z.hidden=true; Z.setAttribute('role','dialog'); Z.setAttribute('aria-modal','true'); Z.setAttribute('aria-label','사진 크게 보기');
   Z.innerHTML='<button type="button" class="cv3-zv-x" aria-label="크게 보기 닫기">&times;</button><figure><div class="cv3-zv-im"></div><figcaption></figcaption></figure>';
   document.body.appendChild(Z);
-  function zfill(){ var d=list()[cur]; if(!d||d.yt){ closeZ(); return; } var n=galleryPhotos(d)[d.photoIndex||0].cloneNode(true);
+  function zfill(){ var d=M.querySelector('.cv3-m-media').cv3Record; if(!d||d.yt){ closeZ(); return; } var n=galleryPhotos(d)[d.photoIndex||0].cloneNode(true);
     if(n.tagName==='IMG'){ n.removeAttribute('loading'); n.setAttribute('decoding','async'); if(n.getAttribute('srcset'))n.setAttribute('sizes','(max-width: 1328px) calc(100vw - 48px), 1280px'); var sm=n.getAttribute('src'); if(/-sm\.(jpe?g|png|webp)$/i.test(sm)){ n.src=sm.replace(/-sm(\.[a-z]+)$/i,'$1'); n.onerror=function(){ n.onerror=null; n.src=sm; }; } n.removeAttribute('width'); n.removeAttribute('height'); }
     n.setAttribute('alt',n.getAttribute('alt')||d.title); var b=Z.querySelector('.cv3-zv-im');
     // Rebuilding the album must preserve the keyboard control that changed it.
@@ -391,7 +394,7 @@
   M.querySelector('.pv').onclick=function(){ if(cur>0){cur--;fill();history.replaceState(history.state,'','#'+list()[cur].id);} };
   M.querySelector('.nx').onclick=function(){ if(cur<list().length-1){cur++;fill();history.replaceState(history.state,'','#'+list()[cur].id);} };
   M.querySelectorAll('.cv3-like,.cv3-save').forEach(function(b){ b.onclick=function(){ b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true'); }; });
-  document.addEventListener('keydown',function(e){ if(M.hidden) return; if(e.key==='Tab'){ trapDialogFocus(e,Z.hidden?M:Z); return; } if(e.key==='Escape'){ if(!Z.hidden) closeZ(); else closeM(); return; } if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();var d=list()[cur];if(d&&!d.yt&&galleryPhotos(d).length>1)changePhoto(d,(d.photoIndex||0)+(e.key==='ArrowLeft'?-1:1));else M.querySelector(e.key==='ArrowLeft'?'.pv':'.nx').click();if(!Z.hidden)zfill();} });
+  document.addEventListener('keydown',function(e){ if(M.hidden) return; if(e.key==='Tab'){ trapDialogFocus(e,Z.hidden?M:Z); return; } if(e.key==='Escape'){ if(!Z.hidden) closeZ(); else closeM(); return; } if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();var d=M.querySelector('.cv3-m-media').cv3Record;if(d&&!d.yt&&galleryPhotos(d).length>1)changePhoto(d,(d.photoIndex||0)+(e.key==='ArrowLeft'?-1:1));else M.querySelector(e.key==='ArrowLeft'?'.pv':'.nx').click();if(!Z.hidden)zfill();} });
 
   function hashOpen(){
     var id=location.hash.slice(1), d=D.find(function(item){return item.id&&item.id===id});if(!d)return;

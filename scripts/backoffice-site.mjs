@@ -4,7 +4,7 @@ import { assetVersion } from './asset-versions.mjs';
 // build()가 만든 디자인 그대로의 페이지에 백오피스 연결 줄을 넣고, 백오피스 글이 그려질 자리의 시안 글을 비워요.
 // - npm run build / npm run check만 이 결과를 씁니다(scripts/build.mjs). build() 자체는 디자인 원본을 반환합니다.
 // - 이야기는 JSON API 우선·실패 때만 사본. 공통 탐색이 준비되면 render → state → 페이지별 스크립트를 원래 순서로 실행합니다.
-//   FAQ는 faq-data.js → ../api/public/faq.js → faq-render.js(check.js보다 먼저), 내용 페이지마다 site.js 다음 줄에 track.js.
+//   FAQ는 독립 JSON 로더 → 실패 시 사본 → faq-render.js → FAQ 이벤트, 내용 페이지마다 site.js 다음 줄에 track.js.
 // - 공개 API 주소는 상대 경로(../api/public/…)로 둬요. 팀 사이트 서버 · 관리자 미리보기가 이 경로를 백오피스 API로 넘겨요.
 // - 디자인이 바뀌어 기대한 자리를 못 찾으면 조용히 넘어가지 않고 빌드를 멈춰요.
 
@@ -15,12 +15,7 @@ const STORY_SCRIPTS = [
 ];
 const STORY_STATE_NOTE = '<!-- 빈 목록 · 필터 결과 없음 안내(aica-site PR #27): 글을 다 그린 뒤 판단하도록 글 그리기 다음에 -->';
 const STORY_STYLE = `<link rel="stylesheet" href="css/stories-render.css?v=${assetVersion('stories.css.stories-render')}">`;
-const FAQ_SCRIPTS = [
-  '<!-- 자주 묻는 질문: 백오피스 DB(faqs) → 사본 · 공개 API → 그리기(check.js보다 먼저) -->',
-  `<script src="js/faq-data.js?v=${assetVersion('check.js.faq-data')}" defer></script>`,
-  '<script src="../api/public/faq.js" defer></script>',
-  `<script src="js/faq-render.js?v=${assetVersion('check.js.faq-render')}" defer></script>`
-];
+const FAQ_LOADER = `<script src="../common/js/faq-loader.js?v=${assetVersion('common.js.faq-loader')}" defer data-api="../api/public/faq" data-fallback="js/faq-data.js?v=${assetVersion('check.js.faq-data')}" data-renderer="js/faq-render.js?v=${assetVersion('check.js.faq-render')}"></script>`;
 // 큰 카드의 기본 안내는 특정 DB 글에서 복사하지 않습니다. 실제 인터뷰 내용은 공개 API/사본으로 그립니다.
 const HUB_INTERVIEW_QUOTE = '인터뷰 내용을 자세히 살펴보세요.';
 
@@ -48,7 +43,6 @@ function insertAfter(html, anchor, lines, path) {
 function withTracking(html, path, extraScripts = []) {
   return insertAfter(html, '<script src="../common/js/site.js', [TRACK, ...extraScripts], path);
 }
-
 // 시작 태그(pattern)에서 짝이 맞는 닫는 태그까지. 같은 이름 태그가 안에 겹쳐 있어도 맞춰요
 function element(html, pattern, from, path) {
   pattern.lastIndex = 0;
@@ -102,7 +96,7 @@ const PAGES = {
   'about/index.html': withTracking,
   'life/index.html': withTracking,
   'check/index.html': (html, path) => {
-    html = insertBefore(html, '<script src="../common/js/site.js', FAQ_SCRIPTS, path);
+    html = insertBefore(html, '<script src="../common/js/site.js', [FAQ_LOADER], path);
     return withTracking(html, path);
   },
   'stories/index.html': (html, path) => {
@@ -155,8 +149,25 @@ const PAGES = {
   }
 };
 
-// stories-render.js는 디자이너 스크립트(js/…)와 story-state.js보다 먼저 실행돼야 해요(defer는 적힌 순서대로)
+// Head loader starts the API before DOM readiness; ordered dynamic consumers wait for data and navigation.
 function withStoryLoader(html, path) {
+  // Keep the real first section heading in place. Only its content gets a
+  // zero-height loading overlay, never a second (potentially different) title.
+  const kind = path.split('/').pop().replace('.html', '');
+  const loading = element(html, /<section class="story-loading-shell"[^>]*>/, 0, path);
+  const shell = html.slice(loading.start, loading.end).replace('data-story-loading-shell hidden', 'data-story-loading-shell data-story-loading-kind="' + kind + '" hidden');
+  html = html.slice(0, loading.start) + html.slice(loading.end);
+  const start = html.indexOf(kind === 'index' ? '<div class="hb">' : '<div class="st-main">');
+  if (start < 0) fail(path, 'story content root');
+  const heading = element(html, /<div class="sh(?: [^"<>]*)?">/, start, path);
+  const original = html.slice(heading.start, heading.end);
+  html = html.slice(0, heading.start) + original.replace(/^(<div[^>]*)(>)/, '$1 data-story-loading-heading$2')
+    + (kind === 'index' ? '' : shell) + html.slice(heading.end);
+  if (kind === 'index') {
+    const body = /<div class="hb-body hb-ivg">/;
+    if (!body.test(html)) fail(path, 'first overview content');
+    html = html.replace(body, '<div class="hb-body hb-ivg" data-story-loading-content>' + shell);
+  }
   const consumers = [];
   html = html.replace(/<main\b[^>]*>/, tag => tag.includes('data-story-loading') ? tag : tag.replace('<main ', '<main data-story-loading '));
   html = html.replace(/<script src="(js\/[^"<>]+)" defer><\/script>\s*/g, (tag, src) => {
@@ -165,8 +176,9 @@ function withStoryLoader(html, path) {
   });
   if (!consumers[0]?.startsWith('js/stories-render.js?')) throw new Error(`backoffice-site: ${path} story renderer must run first`);
   if (!consumers.some(src => src.startsWith('js/story-state.js?'))) throw new Error(`backoffice-site: ${path} needs story states`);
+  consumers.splice(1, 0, 'js/text-fit.js?v=' + assetVersion('stories.js.text-fit'));
   const scripts = JSON.stringify(consumers).replace(/&/g, '&amp;').replace(/'/g, '&#39;');
-  const loader = `<script src="../common/js/stories-loader.js?v=${assetVersion('common.js.stories-loader')}" defer data-page="${path}" data-api="../api/public/stories" data-fallback="js/stories-data.js?v=${assetVersion('stories.js.stories-data')}" data-scripts='${scripts}'></script>`;
+  const loader = `<script src="../common/js/stories-loader.js?v=${assetVersion('common.js.stories-loader')}" data-page="${path}" data-api="../api/public/stories" data-fallback="js/stories-data.js?v=${assetVersion('stories.js.stories-data')}" data-scripts='${scripts}'></script>`;
   return html.replace('</head>', loader + '\n</head>');
 }
 

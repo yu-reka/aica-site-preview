@@ -30,7 +30,13 @@
      .hb 밖(main 바로 아래)에 둬서 site.js가 메뉴를 이 뒤에 그림 — 좁은 화면에서 제목 → 알약 줄 순서 -->
 {{> stories/masthead}}
 {{> stories/navigation storyNavigation.overview}}
-<div data-story-list-state hidden></div>
+{{> stories/loading-state}}
+<section class="story-overview-state" data-story-overview-state hidden aria-labelledby="story-overview-state-title">
+  <div class="wrap">
+    <div class="sh sh-row"><div><p class="sh-k">전체 이야기</p><h2 id="story-overview-state-title">선배들의 이야기를 한곳에 모았어요</h2></div></div>
+    <div data-story-list-state hidden></div>
+  </div>
+</section>
 <div class="hb">
   <!-- 01 인터뷰: 우수 수료생 대표 1개와 일반 인터뷰 3개 -->
   <section class="hb-sec hb-iv" id="hub-interviews" data-honors-feature aria-labelledby="hub-interviews-t">

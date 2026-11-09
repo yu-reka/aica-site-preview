@@ -140,7 +140,7 @@ test('closing detail discards its cursor without changing the feed selection', (
   const end=source.indexOf("  M.querySelector('.cv3-m-x').onclick",begin);
   const state={
     modalEntry:false,location:{hash:''},hubModal:false,Z:{hidden:false},M:{hidden:false,querySelector:()=>({innerHTML:''})},
-    modalVisited:[detail],changePhoto:ui.changePhoto,isolateDialog(){},last:null,
+    loadVersion:0,modalVisited:[detail],changePhoto:ui.changePhoto,isolateDialog(){},last:null,
     document:{documentElement:{classList:{remove(){}}}}
   };
   runInNewContext(source.slice(begin,end)+'\ncloseM();',state);

@@ -127,8 +127,8 @@
 /* 프로젝트 카드 높이 고정: 여섯 카드를 한 칸에 겹쳐 두고 고른 것만 보이게 → 가장 긴 내용에 맞춘 같은 높이(2026-10-08) */
 /* 프로젝트 화살표: 글과 겹쳐 보이지 않게 카드 테두리 위로(반쯤 걸치게), 980px 이하는 기존 자리 */
 .stories-page .pjd{display:none}
-.stories-page .pjd:target{display:block;animation:paneIn .5s cubic-bezier(.22,.61,.36,1) backwards}
-.stories-page #p-pr:has(.pjd:target) .pjlist{display:none}
+.stories-page .pjd:is(:target,[data-story-active]){display:block;animation:paneIn .5s cubic-bezier(.22,.61,.36,1) backwards}
+.stories-page #p-pr:has(.pjd:is(:target,[data-story-active])) .pjlist{display:none}
 .stories-page .pjd h2{margin:32px 0 0;font-family:var(--disp);font-size:clamp(28px,3vw,36px);line-height:1.4;letter-spacing:-.02em;color:var(--ink)}
 .stories-page .pjd .lead{margin-top:25px;max-width:650px;font-size:19px;line-height:1.8;color:#566884}
 /* Long unspaced words must fit the detail column, including its grid minimum. */

@@ -43,7 +43,7 @@ home·about·check·life·이야기 허브의 자산 목록은 각 페이지 `he
 
 ## V30 공개 API와 통합 반영
 
-현재 연결 순서와 공개 샘플·비공개 DB 사본의 경계는 [README](../README.md#현재-데이터-흐름)를 기준으로 합니다. `scripts/backoffice-site.mjs`가 디자인 빌드에 API 연결을 적용하고, `stories-render.js`·`faq-render.js`가 화면 동작 스크립트보다 먼저 목록과 상세를 만듭니다. `track.js`는 콘텐츠 페이지에, `ticker-render.js`는 홈에 연결됩니다.
+현재 연결 순서와 공개 샘플·비공개 DB 사본의 경계는 [README](../README.md#현재-데이터-흐름)를 기준으로 합니다. `scripts/backoffice-site.mjs`가 디자인 빌드에 API 연결을 적용하고, `stories-render.js`·`faq-render.js`가 화면 동작 스크립트보다 먼저 목록을 준비합니다. 이야기 상세는 열 때 `story-details.js`가 만들며, 요약 API를 사용한 경우에만 상세 본문을 별도로 요청합니다. `track.js`는 콘텐츠 페이지에, `ticker-render.js`는 홈에 연결됩니다.
 
 개발 원본은 통합 저장소 `frontend/`입니다. 통합 main에서 검증한 공개 가능 공통 코드만 외부 공유본에 반영합니다. 비공개 실제 사본 두 파일과 실행 사이트의 DB 목록은 공개로 복사하지 않고, 공개 전용 더미·생성기·검사는 유지합니다. 전체 tree 일치를 요구하지 않으며 공통 변경 경로·의도적 차이·검증 근거를 기록합니다. 절차는 [README](../README.md#개발-원본과-공개-반영)를 따릅니다.
 

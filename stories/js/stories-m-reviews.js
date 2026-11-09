@@ -8,10 +8,14 @@ const StoriesMobileReviews = (() => {
   var el = SiteUI.element, cleanClone = SiteUI.cloneWithoutIds, tabButton = SiteUI.toggleButton;
   function tabs(label){ return SiteUI.buttonGroup(label, 'sm-filter-tabs'); }
 
+  var viewsBySection = new WeakMap();
   function initReviews(){
     var section = $('#p-rev'), source = section && $('.idgrid', section);
     if (!source || $('.sm-reviews', section)) return;
-    var cards = $$('.idc', source);
+    var managed = typeof window !== 'undefined' && window.StoryReviewCards;
+    var cached = viewsBySection.get(section);
+    if (cached) { cached.marker.after(cached.box); cached.restore(); return; }
+    var cards = managed || $$('.idc', source);
     if (!cards.length) return; // Keep the server's published-empty state.
     var box = el('section', 'sm-reviews'); box.setAttribute('aria-label', '후기 목록');
     var categories = tabs('후기 카테고리'), cohorts = tabs('후기 기수');
@@ -63,31 +67,58 @@ const StoriesMobileReviews = (() => {
     }
     board.addEventListener('scroll', syncRail, {passive:true});
     board.addEventListener('keydown', function(event){ SiteUI.railKeys(event, move); });
-    addEventListener('resize', function(){ if (view === 'list') refresh(); else { syncRail(); loop.enable(board.clientWidth > 0 && board.clientWidth <= 600); syncRail(); } });
+    function resizeRail(){
+      if (managed && !box.isConnected) return;
+      if (view === 'list') { refresh(); return; }
+      syncRail();
+      loop.enable(board.clientWidth > 0 && board.clientWidth <= 600);
+      syncRail();
+    }
+    addEventListener('resize', resizeRail);
     stage.append(board, navigation);
     var lastView = '';
     var empty = el('div', 'sm-review-empty', '선택한 조건에 맞는 후기가 없습니다.');
     var pager = el('nav', 'sm-review-pager cpager'); pager.setAttribute('aria-label', '후기 페이지');
     var category = 'all', cohort = '', page = 1, pageSize = 10;
-    var entries = cards.map(function(card){
+    function readDesktopFilters(){
+      var nextCategory = $('input[name="rc"]:checked', section)?.id.slice(3) || 'all';
+      var cohortId = $('input[name="fco"]:checked', section)?.id || '';
+      var known = /^fco_([0-4])$/.exec(cohortId), extra = /^fco_c(\d+)$/.exec(cohortId);
+      var nextCohort = known ? String(7 - Number(known[1])) : extra ? extra[1] : '';
+      if (category !== nextCategory || cohort !== nextCohort) page = 1;
+      category = nextCategory; cohort = nextCohort;
+    }
+    if (managed) readDesktopFilters();
+    function noteFor(card){
       var note = el('a', 'sm-review-note');
-      note.href = card.getAttribute('href'); note.setAttribute('aria-haspopup', 'dialog');
+      note.href = managed ? '#' + card.anchor : card.getAttribute('href'); note.setAttribute('aria-haspopup', 'dialog');
       var summary = el('div', 'sm-review-summary');
-      var bar = cleanClone($('.cbar', card)); if (bar) summary.appendChild(bar);
-      summary.appendChild(el('h3', '', ($('h3', card) || {}).textContent || ''));
-      summary.appendChild(el('span', 'sm-review-preview', ($('.in > p', card) || {}).textContent || ''));
+      var bar;
+      if (managed) {
+        bar = el('div', 'cbar');
+        var category = el('b', '', card.label); category.dataset.field = 'category';
+        var chip = el('span', '', card.cohort); chip.dataset.field = 'cohort';
+        chip.appendChild(el('i', '', '기')); bar.append(category, chip);
+      } else bar = cleanClone($('.cbar', card)); if (bar) summary.appendChild(bar);
+      summary.appendChild(el('h3', '', managed ? card.title : ($('h3', card) || {}).textContent || ''));
+      summary.appendChild(el('span', 'sm-review-preview', managed ? card.summary : ($('.in > p', card) || {}).textContent || ''));
       note.appendChild(summary);
       var footer = el('div', 'sm-review-by');
-      footer.appendChild(el('b', '', ($('.who b', card) || {}).textContent || ''));
-      var tg = $('.who .tg', card);
-      if (tg) footer.appendChild(el('span', 'sm-review-tag', tg.textContent));
-      var cohortText = ($('.cbar span', card) || {}).textContent || '';
-      footer.appendChild(el('span', 'sm-review-list-meta', cohortText.replace(/\s+/g, '') + ' · ' + (($('.who b', card) || {}).textContent || '')));
+      var author = managed ? card.author : ($('.who b', card) || {}).textContent || '';
+      footer.appendChild(el('b', '', author));
+      var tag = managed ? card.tag : $('.who .tg', card)?.textContent;
+      if (tag) footer.appendChild(el('span', 'sm-review-tag', tag));
+      var cohortText = managed ? card.cohort + '기' : ($('.cbar span', card) || {}).textContent || '';
+      footer.appendChild(el('span', 'sm-review-list-meta', cohortText.replace(/\s+/g, '') + ' · ' + author));
       var arrow = el('span', 'sm-review-card-arrow', '→'); arrow.setAttribute('aria-hidden', 'true');
       footer.appendChild(arrow); note.appendChild(footer);
+      return note;
+    }
+    var entries = cards.map(function(card){
+      if (managed) return {card, cohort:card.cohort, classes:['cat-' + card.category]};
       var cl = Array.from(card.classList);
       var co = cl.find(function(c){ return /^coh\d+$/.test(c); });
-      return {node:note, cohort:co ? co.slice(3) : '', classes:cl};
+      return {card, cohort:co ? co.slice(3) : '', classes:cl};
     });
     var toolbar = el('div', 'sm-review-toolbar');
     var filterRow = el('div', 'sm-review-filter-row');
@@ -133,7 +164,13 @@ const StoriesMobileReviews = (() => {
     });
     [''].concat(Array.from(new Set(entries.map(function(e){ return e.cohort; }))).filter(Boolean).sort(function(a,b){ return +b - +a; })).forEach(function(c){
       tabButton(cohorts, c ? c + '기' : '전체', c === cohort, function(){
-        cohort = c; page = 1; cohortSelect.open = false; refresh(); cohortSummary.focus({preventScroll:true});
+        cohort = c; page = 1; cohortSelect.open = false;
+        if (managed) {
+          var id = !c ? 'fco_all' : /^[3-7]$/.test(c) ? 'fco_' + (7 - Number(c)) : 'fco_c' + c;
+          var radio = $('#' + id, section);
+          if (radio) { radio.checked = true; radio.dispatchEvent(new Event('change', {bubbles:true})); }
+        }
+        refresh(); cohortSummary.focus({preventScroll:true});
       }).dataset.value = c;
     });
     function pageButton(text, value, disabled){
@@ -147,6 +184,7 @@ const StoriesMobileReviews = (() => {
       }); return b;
     }
     function refresh(){
+      if (managed && !box.isConnected) return;
       $$('button', categories).forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.value === category)); });
       $$('button', cohorts).forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.value === cohort)); });
       cohortLabel.textContent = cohort ? cohort + '기' : '기수';
@@ -161,7 +199,7 @@ const StoriesMobileReviews = (() => {
       var left = key === lastView ? board.scrollLeft : 0; lastView = key;
       board.replaceChildren();
       var shown = view === 'list' ? matching.slice((page - 1) * pageSize, page * pageSize) : matching;
-      shown.forEach(function(e){ board.appendChild(e.node); });
+      shown.forEach(function(e){ board.appendChild(e.node || (e.node = noteFor(e.card))); });
       if(!matching.length&&typeof StoryState!=='undefined')StoryState.render(empty,'filter',{subject:'후기',reviewBoard:board,onReset:function(){
         StoryState.resetReviews(section);categories.querySelector('button').focus({preventScroll:true});
       }});
@@ -180,7 +218,23 @@ const StoriesMobileReviews = (() => {
         pager.appendChild(pageButton('→', page + 1, page === total));
       }
     }
-    box.append(categories, filterRow, toolbar, stage, empty, pager); source.before(box);
+    box.append(categories, filterRow, toolbar, stage, empty, pager);
+    if (managed) {
+      var marker = document.createComment('mobile reviews');
+      source.before(marker, box);
+      viewsBySection.set(section,{
+        marker, box,
+        restore: function(){
+          readDesktopFilters(); refresh();
+          if (view === 'card') resizeRail();
+        },
+        detach: function(){
+          // Restore canonical order before detaching; resize may fire on either side of the media query.
+          loop.enable(false);
+          box.remove();
+        }
+      });
+    } else source.before(box);
     // Hide the legacy controls as a group on mobile, including integration-only pager styles.
     ['.filters', '.idgrid', '.rvlist', '.pager'].forEach(function(selector){
       var original = $(selector, section);
@@ -190,10 +244,18 @@ const StoriesMobileReviews = (() => {
     section.classList.add('sm-review-ready');
     section.addEventListener('reviews:reset',function(){category='all';cohort='';page=1;refresh();});
     section.addEventListener('change', function(e){
-      if (e.target.name === 'rc'){ category = e.target.id.slice(3); page = 1; refresh(); }
+      if (managed && (e.target.name === 'rc' || e.target.name === 'fco')){
+        readDesktopFilters(); refresh();
+      } else if (e.target.name === 'rc'){ category = e.target.id.slice(3); page = 1; refresh(); }
     });
     addEventListener('hashchange', refresh); refresh();
   }
 
-  return { init: initReviews };
+  return {
+    init: initReviews,
+    unmount: function(){
+      var view = viewsBySection.get($('#p-rev'));
+      if (view && view.box.isConnected) view.detach();
+    }
+  };
 })();

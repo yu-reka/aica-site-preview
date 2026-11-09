@@ -4,17 +4,19 @@ import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 
 const source = readFileSync(new URL('../common/js/track.js', import.meta.url), 'utf8');
-function load(page = 'https://site.test/stories/interviews.html#iv-p3', scriptUrl, fail = false) {
+function load(page = 'https://site.test/stories/interviews.html#iv-p3', scriptUrl, fail = false, managedStories = false) {
   const url = new URL(page), calls = [], listeners = {};
   const location = {protocol:url.protocol, pathname:url.pathname, hash:url.hash};
   const fetch = (url, options) => {
     calls.push({url, ...options, body:JSON.parse(options.body)});
     return fail ? Promise.reject(new Error('offline')) : Promise.resolve({ok:true});
   };
-  const document = {currentScript:{src:scriptUrl || new URL('../common/js/track.js', page).href}, body:{dataset:{}}};
+  const document = {currentScript:{src:scriptUrl || new URL('../common/js/track.js', page).href}, body:{dataset:{}},
+    addEventListener:(name, listener) => {listeners[name] = listener;}};
   const context = {document, location, URL, navigator:{userAgent:'Mozilla/5.0'}, fetch,
     localStorage:{getItem:()=> 'visitor-test-1234'},
     addEventListener:(name, listener) => {listeners[name] = listener;}};
+  if (managedStories) context.AicaStoryReady = Promise.resolve();
   context.window = context;
   vm.runInNewContext(source, context);
   return {calls, location, listeners, document};
@@ -57,4 +59,18 @@ test('admin pages and file previews remain untracked', () => {
 test('an unavailable API stays silent', async () => {
   assert.equal(load(undefined, undefined, true).calls.length, 2);
   await new Promise(resolve => setImmediate(resolve));
+});
+
+
+test('managed stories count only the current rendered detail, once', () => {
+  const {calls, location, listeners} = load(undefined, undefined, false, true);
+  const shown = listeners['stories:detail-shown'];
+  assert.equal(calls.length, 1, 'opening an unloaded address only counts a visit');
+  location.hash = '#pj-p5';
+  shown({detail:{id:'iv-p3'}});
+  assert.equal(calls.length, 1, 'a late response for the previous detail is ignored');
+  shown({detail:{id:'pj-p5'}});
+  shown({detail:{id:'pj-p5'}});
+  assert.equal(calls.length, 2);
+  assert.match(calls[1].url, /posts\/project\/5\/view$/);
 });

@@ -74,14 +74,14 @@ test('an interview video can play just one section, and the YouTube link opens a
   assert.match(detail(5),/href="https:\/\/www\.youtube\.com\/watch\?v=dQw4w9WgXcQ"/);
 
   const sections=readFileSync(new URL('../stories/js/stories-sections.js',import.meta.url),'utf8').replace(/\r\n/g,'\n');
-  const start=sections.indexOf("(function(){\n  document.querySelectorAll('.ivvid[data-yt]')");
+  const start=sections.indexOf("(function(){\n  function bindVideos(root)");
   const player=sections.slice(start,sections.indexOf('})();',start)+5);
   assert.ok(start>0);
   const play=attrs=>{
     const made=[],button={};
     const box={dataset:{yt:'dQw4w9WgXcQ'},innerHTML:'',getAttribute:n=>attrs[n]??null,closest:()=>({id:'iv-p1',querySelector:()=>({textContent:'제목'})}),
       querySelector:s=>s==='.ivplay'?button:null,replaceChildren(){},appendChild(){}};
-    const document={querySelectorAll:s=>s==='.ivvid[data-yt]'?[box]:[],createElement:tag=>{const el={tagName:tag,focus(){}};made.push(el);return el;}};
+    const document={addEventListener(){},querySelectorAll:s=>s==='.ivvid[data-yt]'?[box]:[],createElement:tag=>{const el={tagName:tag,focus(){}};made.push(el);return el;}};
     vm.runInContext(player,vm.createContext({document,addEventListener(){},location:{hash:''}}));
     button.onclick();
     return made.find(e=>e.tagName==='iframe').src;

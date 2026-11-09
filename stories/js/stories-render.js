@@ -69,7 +69,7 @@
     var tags = Array.isArray(item.tags) ? item.tags : [];
     out.tags = prefix === 'r-p' ? tags.map(reviewTag).filter(Boolean) : tags.filter(function (tag) { return (prefix === 'st-' && typeof tag === 'string') || (Number.isInteger(tag) && tag >= 0 && tag < LEGACY_REVIEW_TAGS.length); });
     if (item.video) out.video = Object.assign({}, item.video,{url:safe ? safe.url(item.video.url,false) : '',yt:/^[A-Za-z0-9_-]{6,20}$/.test(item.video.yt || '') ? item.video.yt : ''});
-    if (!new RegExp('^'+prefix+'[0-9]{1,18}$').test(out.anchor || '')) out.anchor = prefix + String(item.id || '').replace(/[^0-9]/g,'').slice(0,18);
+    if (!new RegExp('^'+prefix+'(?:[0-9]{1,18}|new)$').test(out.anchor || '')) out.anchor = prefix + String(item.id || '').replace(/[^0-9]/g,'').slice(0,18);
     return out;
   }
   REV = REV.map(function (item) { return publicItem(item,'r-p'); });
@@ -204,22 +204,35 @@
       + '<span class="hb-pi-arrow" aria-hidden="true">→</span></span>';
   }
 
-  function reviewDialogs(hub) {
-    return REV.map(function (r) {
+  function reviewDialog(r, hub, index, pending) {
       var c = cat(r), id = esc(r.anchor);
       var tags = (r.tags || []).map(function (t) { return '<span class="t" data-field="tag">' + esc(t) + '</span>'; }).join('');
-      return '<div class="ov ' + c.cls + ' coh' + esc(r.cohort) + fld(r) + '" id="' + id + '" style="--c:' + c.c + ';--bg:' + c.bg + ';--dk:' + c.dk + '" role="dialog" aria-modal="true" aria-labelledby="' + id + '-t">'
+      var slot = !hub && Number.isInteger(index) ? ' data-review-note-slot="' + (index % 8 + 1) + '"' : '';
+      return '<div class="ov ' + c.cls + ' coh' + esc(r.cohort) + fld(r) + '" id="' + id + '"' + slot + ' style="--c:' + c.c + ';--bg:' + c.bg + ';--dk:' + c.dk + '" role="dialog" aria-modal="true" aria-labelledby="' + id + '-t">'
         + '<a class="back" href="' + (hub ? '#hub-reviews' : '#p-rev') + '" aria-label="닫기"></a><div class="sheet"><a class="x" href="' + (hub ? '#hub-reviews' : '#p-rev') + '" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></a><div class="mscroll">'
         + '<div class="mtop"><div class="review-heading-meta"><div class="mcat" data-field="category">' + c.name + '</div>' + (tags ? '<div class="mtags">' + tags + '</div>' : '') + '</div><h3 id="' + id + '-t" data-field="title">' + esc(r.title) + '</h3>'
         + '<div class="mby"><span class="mav" data-field="cohort">' + coh(r.cohort) + '</span><div><b data-field="author">' + esc(r.author) + '</b>' + (r.track ? '<em data-field="track">' + esc(r.track) + '</em>' : '') + '</div></div></div>'
-        + '<div class="mbody"><p class="lead" data-field="summary">' + esc(r.summary) + '</p>'
-        + photos(r, r.title)
-        + (r.body || []).map(function (b) { return '<p data-field="body">' + esc(b) + '</p>'; }).join('')
+        + '<div class="mbody">' + (pending ? '<div data-story-detail-status></div>'
+          : '<p class="lead" data-field="summary">' + esc(r.summary) + '</p>' + photos(r, r.title)
+            + (r.body || []).map(function (b) { return '<p data-field="body">' + esc(b) + '</p>'; }).join(''))
         + '</div>' + (hub ? '<nav class="sd-nav" aria-label="후기 더 보기"><a class="sd-list" href="reviews.html">후기 더 보기 →</a></nav>' : '') + '</div></div></div>';
-    }).join('');
+  }
+  function detailGroup(kind, items, host, position, render, type, prefix) {
+    if (!host) return;
+    if (typeof StoryDetails !== 'undefined') StoryDetails.register(kind, items, host, position, render, type, function (raw, item) {
+      var result = publicItem(raw, prefix);
+      // Keep the display avatar assigned on the list when an older interview has no photo.
+      if (type === 'interviews' && !result.img) {
+        result.img = item.img;
+        result.imgLarge = item.imgLarge;
+      }
+      return result;
+    });
+    else host.insertAdjacentHTML(position, items.map((item, index) => render(item, index)).join(''));
   }
   var hubDialogs=document.getElementById('hub-review-dialogs');
-  if(hubDialogs)hubDialogs.innerHTML=reviewDialogs(true);
+  if (typeof StoryDetails !== 'undefined') detailGroup('hub-review', REV, hubDialogs, 'beforeend', (r, i, pending) => reviewDialog(r, true, i, pending), 'reviews', 'r-p');
+  else if (hubDialogs) hubDialogs.innerHTML=REV.map(r => reviewDialog(r, true)).join('');
 
   /* ── 후기(reviews.html) ── */
   var rev = $('#p-rev');
@@ -237,28 +250,53 @@
       pager.innerHTML = labels;
       pager.hidden = pages < 2;
     }
-    var cards = '', rows = '';
-    REV.forEach(function (r, i) {
-      var c = cat(r), pg = Math.floor(i / PER) + 1, cls = c.cls + ' coh' + esc(r.cohort) + fld(r);
-      var tag = firstTag(r);
-      cards += '<a class="idc ' + cls + ' pg' + pg + '" href="#' + esc(r.anchor) + '" style="--c:' + c.c + ';--bg:' + c.bg + ';--dk:' + c.dk + '">'
-        + '<div class="cbar"><b data-field="category">' + c.name + '</b><span data-field="cohort">' + coh(r.cohort) + '</span></div>'
-        + '<div class="in"><h3 data-field="title">' + esc(r.title) + '</h3><p data-field="summary">' + esc(r.summary) + '</p>'
-        + '<div class="who"><b data-field="author">' + esc(r.author) + '</b>' + (r.track ? '<em data-field="track">' + esc(r.track) + '</em>' : '')
-        + (tag ? '<span class="tg" data-field="tag">' + esc(tag) + '</span>' : '') + '</div></div></a>';
-      rows += '<a class="rvr ' + cls + ' pg' + pg + '" href="#' + esc(r.anchor) + '">'
-        + '<span class="cg" style="background:' + c.c + '" data-field="category">' + c.name + '</span>'
-        + '<span class="tt" data-field="title">' + esc(r.title) + '</span>'
-        + (tag ? '<span class="tg" style="background:' + c.bg + ';color:' + c.dk + '" data-field="tag">' + esc(tag) + '</span>' : '')
-        + '<span class="mt">' + esc([r.cohort ? r.cohort + '기' : '', r.author].filter(Boolean).join(' · ')) + '</span></a>';
-    });
     var grid = $('.idgrid', rev), list = $('.rvlist', rev);
-    if (grid) grid.innerHTML = cards;
-    if (list) list.innerHTML = rows;
+    function renderDesktopReviews() {
+      var cards = '', rows = '';
+      REV.forEach(function (r, i) {
+        var c = cat(r), pg = Math.floor(i / PER) + 1, cls = c.cls + ' coh' + esc(r.cohort) + fld(r);
+        var tag = firstTag(r);
+        cards += '<a class="idc ' + cls + ' pg' + pg + '" href="#' + esc(r.anchor) + '" style="--c:' + c.c + ';--bg:' + c.bg + ';--dk:' + c.dk + '">'
+          + '<div class="cbar"><b data-field="category">' + c.name + '</b><span data-field="cohort">' + coh(r.cohort) + '</span></div>'
+          + '<div class="in"><h3 data-field="title">' + esc(r.title) + '</h3><p data-field="summary">' + esc(r.summary) + '</p>'
+          + '<div class="who"><b data-field="author">' + esc(r.author) + '</b>' + (r.track ? '<em data-field="track">' + esc(r.track) + '</em>' : '')
+          + (tag ? '<span class="tg" data-field="tag">' + esc(tag) + '</span>' : '') + '</div></div></a>';
+        rows += '<a class="rvr ' + cls + ' pg' + pg + '" href="#' + esc(r.anchor) + '">'
+          + '<span class="cg" style="background:' + c.c + '" data-field="category">' + c.name + '</span>'
+          + '<span class="tt" data-field="title">' + esc(r.title) + '</span>'
+          + (tag ? '<span class="tg" style="background:' + c.bg + ';color:' + c.dk + '" data-field="tag">' + esc(tag) + '</span>' : '')
+          + '<span class="mt">' + esc([r.cohort ? r.cohort + '기' : '', r.author].filter(Boolean).join(' · ')) + '</span></a>';
+      });
+      if (grid) grid.innerHTML = cards;
+      if (list) list.innerHTML = rows;
+    }
+    if (typeof StoryDetails === 'undefined') renderDesktopReviews();
+    else {
+      window.StoryReviewCards = REV.map(r => ({
+        anchor:r.anchor, category:catKey(r), label:cat(r).name, cohort:String(r.cohort || ''),
+        title:r.title, summary:r.summary, author:r.author, tag:firstTag(r)
+      }));
+      var reviewViewport = matchMedia('(max-width:600px)');
+      var desktopCards, desktopRows;
+      function mountDesktopReviews() {
+        if (reviewViewport.matches) {
+          if (desktopCards) { grid.replaceChildren(); list.replaceChildren(); }
+        } else if (!desktopCards) {
+          renderDesktopReviews();
+          desktopCards = Array.from(grid.children);
+          desktopRows = Array.from(list.children);
+        } else {
+          grid.replaceChildren(...desktopCards);
+          list.replaceChildren(...desktopRows);
+        }
+        rev.dispatchEvent(new Event('stories:review-layout'));
+      }
+      reviewViewport.addEventListener('change', mountDesktopReviews);
+      mountDesktopReviews();
+    }
     // 후기 글 창(.ov)은 .st-main 바로 뒤에
     $$('.ov').forEach(function (o) { o.remove(); });
-    var ovs = reviewDialogs(false);
-    insertAfter($('.st-main'), ovs);
+    detailGroup('review', REV, $('.st-main'), 'afterend', (r, i, pending) => reviewDialog(r, false, i, pending), 'reviews', 'r-p');
     // 쪽 번호 넘김 규칙이 모자라면 더 만들어요(CSS에는 7쪽까지)
     for (var k = CSS_PAGES + 1; k <= pages; k++) {
       var on = '.stories-page .rev:not([data-review-paging]):has(#rc_all:checked):has(#fco_all:checked):has(#pgn' + k + ':checked)';
@@ -282,12 +320,17 @@
       });
   }
 
+  function pendingPage(cls, id, back, label, title) {
+    return '<div class="' + cls + '" id="' + id + '"><a class="ivback" href="' + back + '">← ' + label
+      + ' 목록</a><div class="ivwrap"><div><h2>' + esc(title) + '</h2><div data-story-detail-status></div></div></div></div>';
+  }
+
   /* ── 인터뷰(interviews.html) ── */
   var ivPane = $('#p-iv');
   if (ivPane) {
     var grid2 = $('.ivgrid', ivPane), dots = $('.ivdots', ivPane);
     // 우수 수료생(2026-10-26): 백오피스에서 체크한 인터뷰(honors)는 위 '우수 수료생' 섹션 카드로만 그리고 아래 목록 · 넘김 점에서는 빼요.
-    // 상세(.ivd)는 모두 만들어 카드가 그 글로 열려요. 체크한 글이 없으면 섹션은 페이지에 적힌 '준비 중' 카드 그대로(넘김은 interview-honors.js)
+    // 체크한 글이 없으면 섹션은 페이지에 적힌 '준비 중' 카드 그대로(넘김은 interview-honors.js).
     var honors = IV.filter(function (v) { return v.honors; }), listed = IV.filter(function (v) { return !v.honors; });
     var honorsTrack = $('.iv-honors .sm-ivf-track', ivPane);
     if (honorsTrack && honors.length) {
@@ -309,8 +352,10 @@
     }).join('');
     if (dots) dots.innerHTML = listed.map(function (v, i) { return '<button type="button" aria-label="' + (i + 1) + '번째 인터뷰"></button>'; }).join('');
     $$('.ivd', ivPane).forEach(function (d) { d.remove(); });
-    var details = IV.map(function (v) {
-      var id = esc(v.anchor), no = anchorNo(v.anchor, id), vid = v.video && v.video.yt;
+    detailGroup('interview', IV, $('.ivlist', ivPane), 'afterend', function (v, i, pending) {
+      var id = esc(v.anchor);
+      if (pending) return pendingPage('ivd', id, '#p-iv', '인터뷰', v.title);
+      var no = anchorNo(v.anchor, id), vid = v.video && v.video.yt;
       var tag = '<span class="ivtag">' + esc(v.cohort) + '기 · ' + esc(v.track) + '</span>';
       // 영상 구간(2026-11-05): video.start · end(초)가 있으면 재생 단추가 그 구간만 재생(data-yt-start · data-yt-end → stories-sections.js)
       var ytFrom = vid ? ytSec(v.video.start) : 0, ytTo = vid ? ytSec(v.video.end) : 0;
@@ -337,8 +382,7 @@
         side = '<h3>이 인터뷰에서 묻는 것</h3><ol>' + (v.qa || []).map(function (q, k) { return '<li><a href="#q-' + no + '-' + (k + 1) + '">' + esc(q.toc || q.q) + '</a></li>'; }).join('') + '</ol>';
       }
       return '<div class="ivd' + (vid ? ' ivd-v' : '') + '" id="' + id + '"><a class="ivback" href="#p-iv">← 인터뷰 목록</a><div class="ivwrap"><div>' + mainHtml + '</div><aside class="sidebox">' + side + '</aside></div></div>';
-    }).join('');
-    insertAfter($('.ivlist', ivPane), details);
+    }, 'interviews', 'iv-p');
   }
 
   /* ── 프로젝트(projects.html) ── */
@@ -351,13 +395,41 @@
     var pjSubject = subjectOf;
     // 카드(2026-10-26 사용자 요청): 썸네일(그림만) 아래에 서비스 이름(작은 파란 글씨) · 프로젝트 주제(큰 글씨) · 팀 이름 · 인원.
     // 주제가 없는 예전 글은 서비스 이름을 큰 글씨로. 회색 요약 줄은 주제와 같은 글이라 두지 않아요
-    if (pjgrid) pjgrid.innerHTML = PJ.map(function (x) {
+    function projectArt(x) {
+      return hasThumb(x) ? pjThumb(x, 'illu', null, true) : visual(x, {fit:true});
+    }
+    function projectCard(x) {
       var topic = pjTopic(x);
-      return '<a data-cohort="' + esc(pjCohort(x)) + '" data-subject="' + esc(courseOf(x)) + '" class="pjc" href="#' + esc(x.anchor) + '"><div class="ph">' + (hasThumb(x) ? pjThumb(x, 'illu', null, true) : visual(x, { fit: true })) + '<span class="pjc-type" data-field="subject">' + esc(pjSubject(x)) + '</span></div>'
+      return '<a data-cohort="' + esc(pjCohort(x)) + '" data-subject="' + esc(courseOf(x)) + '" class="pjc" href="#' + esc(x.anchor) + '"><div class="ph">' + projectArt(x) + '<span class="pjc-type" data-field="subject">' + esc(pjSubject(x)) + '</span></div>'
         + '<div class="pjc-tx">' + (topic ? '<p class="pjname">' + esc(projectName(x)) + '</p><h3 data-field="summary">' + esc(topic) + '</h3>' : '<h3 data-field="title">' + esc(projectName(x)) + '</h3>')
         + '<div class="tags">' + (x.tags || []).map(function (t) { return '<span data-field="tag">' + esc(t) + '</span>'; }).join('') + '</div>'
         + '<p class="team" data-field="team">' + esc(x.team) + '</p></div></a>';
-    }).join('');
+    }
+    // The static filter owns lazy pagination. Older templates without it keep
+    // their original card source so their mobile type controls can read it.
+    if (pjgrid && (typeof StoryDetails === 'undefined' || !$('.pj-filter-row', prPane))) {
+      pjgrid.innerHTML = PJ.map(projectCard).join('');
+    } else if (pjgrid) {
+      var items = PJ.map((x,index) => ({
+        anchor:x.anchor, cohort:pjCohort(x), subject:String(courseOf(x) || ''), type:String(pjSubject(x) || ''),
+        name:String(projectName(x) || ''), topic:String(pjTopic(x) || ''), team:String(x.team || ''), index
+      }));
+      var cards = new WeakMap();
+      function element(markup) {
+        var template = document.createElement('template');
+        template.innerHTML = markup;
+        return template.content.firstElementChild;
+      }
+      window.StoryProjectLayout = {
+        items,
+        desktop(item) {
+          if (!cards.has(item)) cards.set(item,element(projectCard(PJ[item.index])));
+          return cards.get(item);
+        },
+        artwork(item) { return element(projectArt(PJ[item.index])); }
+      };
+      pjgrid.replaceChildren();
+    }
     // 거르기 단추: DB에 있는 기수(큰 수부터) · 과정(가나다순)만. 첫 단추 '전체'
     var pjChoices = function (box, key, values, label) {
       if (!box) return;
@@ -375,8 +447,10 @@
     var meta = function (rows) {
       return rows.filter(function (r) { return r[1]; }).map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd></div>'; }).join('');
     };
-    var pjd = PJ.map(function (x, i) {
-      var id = esc(x.anchor), prev = PJ[(i - 1 + n) % n], next = PJ[(i + 1) % n];
+    detailGroup('project', PJ, $('.pjlist', prPane), 'afterend', function (x, i, pending) {
+      var id = esc(x.anchor);
+      if (pending) return pendingPage('pjd', id, '#p-pr', '프로젝트', x.title);
+      var prev = PJ[(i - 1 + n) % n], next = PJ[(i + 1) % n];
       var given = x.sections || [];
       var secs = SECS.map(function (s, k) {
         var g = given[k] || {};
@@ -395,8 +469,7 @@
         + '</div><aside class="sidebox pjside"><h3>프로젝트 정보</h3><dl class="ivmeta">' + meta([['팀', x.team], ['과정', courseOf(x) || pjSubject(x)], ['전공', courseOf(x) ? pjSubject(x) : ''], ['기수·반', x.term]]) + '</dl>'
         + (n > 1 ? '<div class="pjnav"><a href="#' + esc(prev.anchor) + '"><small>이전 프로젝트</small>' + esc(prev.title) + '</a><a href="#' + esc(next.anchor) + '"><small>다음 프로젝트</small>' + esc(next.title) + '</a></div>' : '')
         + '</aside></div></div>';
-    }).join('');
-    insertAfter($('.pjlist', prPane), pjd);
+    }, 'projects', 'pj-p');
   }
 
   /* ── 기수 기록(cohorts.html): 인스타형 화면(cohort-v3.js)이 읽는 카드 ──
@@ -405,7 +478,7 @@
      글 창 첫 문단(p) · 그림(.illu) · 유튜브(data-yt) · 나머지 문단([data-story-body] p) · 사진 여러 장([data-story-photos] img) · 주소(id st-3) */
   var cvData = document.getElementById('cv3-data');
   if (cvData) {
-    cvData.innerHTML = CO.map(function (c) {
+    function cohortCard(c) {
       var vid = c.video && c.video.url, body = Array.isArray(c.body) ? c.body : (c.body ? [c.body] : []);
       var yt = vid ? /[?&]v=([\w-]{6,20})/.exec(c.video.url) : null;
       // 사진이 없는 영상 글은 유튜브 썸네일을 그림으로
@@ -417,13 +490,23 @@
       return '<a class="st c' + esc(c.cohort) + '" href="#"' + (c.anchor ? ' id="' + esc(c.anchor) + '"' : '') + (vid ? ' data-yt="' + esc(c.video.url) + '"' : '')
         + (ytFrom ? ' data-yt-start="' + ytFrom + '"' : '') + (ytTo > ytFrom ? ' data-yt-end="' + ytTo + '"' : '')
         + ' style="--c:' + (COH_COLOR[c.cohort] || '#2B2D31') + '"><div class="ph">' + pic + (vid ? '<span class="play"><i></i></span>' + (c.video.dur ? '<span class="dur">' + esc(c.video.dur) + '</span>' : '') : '') + '</div>'
-        + '<h3 data-field="title">' + esc(c.title) + '</h3><p data-field="body">' + esc(body[0] || '') + '</p>'
+        + '<h3 data-field="title">' + esc(c.title) + '</h3><p data-field="body">' + esc((D.view === 'summary' && !body.length ? c.summary : body[0]) || '') + '</p>'
         + '<div class="mt"><span class="cg" data-field="cohort">' + esc(c.cohort) + '기</span><span class="dt" data-field="date">' + esc(c.date || '') + '</span></div>'
         + (body.length > 1 ? '<div data-story-body hidden>' + body.slice(1).map(function (b) { return '<p>' + esc(b) + '</p>'; }).join('') + '</div>' : '')
         + '<div data-story-tags hidden>' + (Array.isArray(c.tags) ? c.tags : []).filter(function (t) { return typeof t === 'string'; }).map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div>'
         + '<div data-story-photos hidden>' + photoList(c).map(function (p) { return imgTag(p, 'st-ph', true); }).join('') + '</div>'
         + '</a>';
-    }).join('');
+    }
+    cvData.innerHTML = CO.map(cohortCard).join('');
+    if (D.view === 'summary' && typeof StoryDetails !== 'undefined') {
+      cvData.loadStory = function (anchor) {
+        return StoryDetails.load(anchor, 'cohorts').then(function (item) {
+          var card = document.createElement('template');
+          card.innerHTML = cohortCard(publicItem(item, 'st-'));
+          return card.content.firstElementChild;
+        });
+      };
+    }
   }
 
   /* ── 한눈에 보기(index.html) ── */
@@ -555,7 +638,10 @@
 
   /* ── 주소(#…)가 방금 그린 글을 가리키면 다시 짚어 창이 열리게 해요(공유 링크 · 미리보기) ── */
   var originalHash = location.hash;
-  var hash = safe ? safe.legacyHash(originalHash) : originalHash;
+  var lazyDetails = typeof StoryDetails !== 'undefined';
+  var hash = lazyDetails ? StoryDetails.canonical(originalHash) : safe ? safe.legacyHash(originalHash) : originalHash;
+  if (lazyDetails) StoryDetails.sync();
+  if (lazyDetails && hash !== originalHash) return;
   if (hash && hash.length > 1) {
     var id = Site.decodeHash(hash.slice(1));
     var target = id ? document.getElementById(id) : null;
@@ -575,70 +661,77 @@
   if (document.documentElement && document.documentElement.dataset.reviewSource === 'spring') return;
   var section = document.getElementById && document.getElementById('p-rev');
   if (!section || section.hasAttribute('data-review-paging')) return;
-  var cards = [].slice.call(section.querySelectorAll('.idgrid .idc'));
-  var rows = [].slice.call(section.querySelectorAll('.rvlist .rvr'));
-  var pager = section.querySelector('.pager');
-  if (!cards.length || !pager) return; // Shared published-empty/error states own an empty collection.
-  var radios = [].slice.call(section.querySelectorAll('input[name="pgn"]'));
-  var page = 1, pageSize = 12;
-  var count = document.createElement('p');
-  count.className = 'review-count story-state--desktop'; count.setAttribute('role', 'status');
-  section.querySelector('.idgrid').before(count);
-  section.setAttribute('data-review-paging', '');
-  pager.classList.add('cpager'); pager.setAttribute('role', 'navigation'); pager.setAttribute('aria-label', '후기 페이지');
-  radios.forEach(function (radio) { radio.setAttribute('tabindex', '-1'); radio.setAttribute('aria-hidden', 'true'); });
+  function init() {
+    if (section.hasAttribute('data-review-paging')) return;
+    var cards = [].slice.call(section.querySelectorAll('.idgrid .idc'));
+    var rows = [].slice.call(section.querySelectorAll('.rvlist .rvr'));
+    var pager = section.querySelector('.pager');
+    if (!cards.length || !pager) return; // Shared published-empty/error states own an empty collection.
+    var radios = [].slice.call(section.querySelectorAll('input[name="pgn"]'));
+    var page = 1, pageSize = 12;
+    var count = document.createElement('p');
+    count.className = 'review-count story-state--desktop'; count.setAttribute('role', 'status');
+    section.querySelector('.idgrid').before(count);
+    section.setAttribute('data-review-paging', '');
+    pager.classList.add('cpager'); pager.setAttribute('role', 'navigation'); pager.setAttribute('aria-label', '후기 페이지');
+    radios.forEach(function (radio) { radio.setAttribute('tabindex', '-1'); radio.setAttribute('aria-hidden', 'true'); });
 
-  function button(label, value, disabled) {
-    var node = document.createElement('button'); node.type = 'button'; node.textContent = label; node.disabled = disabled;
-    node.setAttribute('aria-label', label === '←' ? '이전 페이지' : label === '→' ? '다음 페이지' : value + '페이지');
-    if (String(value) === label && page === value) node.setAttribute('aria-current', 'page');
-    node.addEventListener('click', function () {
-      page = value; refresh();
-      var current = pager.querySelector('button[aria-current="page"]');
-      if (current) current.focus({ preventScroll: true });
-      var filters = section.querySelector('.filters');
-      if (filters) filters.scrollIntoView({ block: 'start', behavior: SiteUI.motion().matches ? 'auto' : 'smooth' });
-    });
-    return node;
-  }
-  function refresh() {
-    var category = section.querySelector('input[name="rc"]:checked');
-    category = category ? category.id.slice(3) : 'all';
-    var cohort = section.querySelector('input[name="fco"]:checked');
-    var cohortId = cohort ? cohort.id : 'fco_all';
-    var known = /^fco_([0-4])$/.exec(cohortId), extra = /^fco_c(\d+)$/.exec(cohortId);
-    cohort = known ? String(7 - Number(known[1])) : extra ? extra[1] : '';
-    var matching = cards.map(function (card, index) { return { card: card, index: index }; }).filter(function (entry) {
-      return (category === 'all' || entry.card.classList.contains('cat-' + category)) &&
-        (!cohort || entry.card.classList.contains('coh' + cohort));
-    });
-    var total = Math.max(1, Math.ceil(matching.length / pageSize));
-    page = Math.max(1, Math.min(page, total));
-    var visible = new Set(matching.slice((page - 1) * pageSize, page * pageSize).map(function (entry) { return entry.index; }));
-    cards.forEach(function (card, index) {
-      var shown = String(visible.has(index)); card.setAttribute('data-review-visible', shown);
-      if (rows[index]) rows[index].setAttribute('data-review-visible', shown);
-    });
-    radios.forEach(function (radio) { radio.checked = radio.id === 'pgn' + page; });
-    count.textContent = matching.length + '개의 후기';
-    // StoryState also toggles `hidden`; this result count keeps a single-page pager
-    // suppressed after its empty-state check, without changing the shared owner.
-    section.setAttribute('data-review-pages', matching.length ? total : 0);
-    pager.replaceChildren(); pager.hidden = matching.length <= pageSize;
-    if (matching.length > pageSize) {
-      pager.appendChild(button('←', page - 1, page === 1));
-      var first = Math.max(1, Math.min(page - 2, total - 4));
-      for (var n = first; n <= Math.min(total, first + 4); n++) pager.appendChild(button(String(n), n, false));
-      pager.appendChild(button('→', page + 1, page === total));
+    function button(label, value, disabled) {
+      var node = document.createElement('button'); node.type = 'button'; node.textContent = label; node.disabled = disabled;
+      node.setAttribute('aria-label', label === '←' ? '이전 페이지' : label === '→' ? '다음 페이지' : value + '페이지');
+      if (String(value) === label && page === value) node.setAttribute('aria-current', 'page');
+      node.addEventListener('click', function () {
+        page = value; refresh();
+        var current = pager.querySelector('button[aria-current="page"]');
+        if (current) current.focus({ preventScroll: true });
+        var filters = section.querySelector('.filters');
+        if (filters) filters.scrollIntoView({ block: 'start', behavior: SiteUI.motion().matches ? 'auto' : 'smooth' });
+      });
+      return node;
     }
+    function refresh() {
+      if (typeof StoryDetails !== 'undefined' && !cards[0].isConnected) return;
+      var category = section.querySelector('input[name="rc"]:checked');
+      category = category ? category.id.slice(3) : 'all';
+      var cohort = section.querySelector('input[name="fco"]:checked');
+      var cohortId = cohort ? cohort.id : 'fco_all';
+      var known = /^fco_([0-4])$/.exec(cohortId), extra = /^fco_c(\d+)$/.exec(cohortId);
+      cohort = known ? String(7 - Number(known[1])) : extra ? extra[1] : '';
+      var matching = cards.map(function (card, index) { return { card: card, index: index }; }).filter(function (entry) {
+        return (category === 'all' || entry.card.classList.contains('cat-' + category)) &&
+          (!cohort || entry.card.classList.contains('coh' + cohort));
+      });
+      var total = Math.max(1, Math.ceil(matching.length / pageSize));
+      page = Math.max(1, Math.min(page, total));
+      var visible = new Set(matching.slice((page - 1) * pageSize, page * pageSize).map(function (entry) { return entry.index; }));
+      cards.forEach(function (card, index) {
+        var shown = String(visible.has(index)); card.setAttribute('data-review-visible', shown);
+        if (rows[index]) rows[index].setAttribute('data-review-visible', shown);
+      });
+      radios.forEach(function (radio) { radio.checked = radio.id === 'pgn' + page; });
+      count.textContent = matching.length + '개의 후기';
+      // StoryState also toggles `hidden`; this result count keeps a single-page pager
+      // suppressed after its empty-state check, without changing the shared owner.
+      section.setAttribute('data-review-pages', matching.length ? total : 0);
+      pager.replaceChildren(); pager.hidden = matching.length <= pageSize;
+      if (matching.length > pageSize) {
+        pager.appendChild(button('←', page - 1, page === 1));
+        var first = Math.max(1, Math.min(page - 2, total - 4));
+        for (var n = first; n <= Math.min(total, first + 4); n++) pager.appendChild(button(String(n), n, false));
+        pager.appendChild(button('→', page + 1, page === total));
+      }
+    }
+    section.addEventListener('change', function (event) {
+      if (event.target.name === 'rc' || event.target.name === 'fco') { page = 1; refresh(); }
+      else if (event.target.name === 'pgn') { page = Number(event.target.id.slice(3)) || 1; refresh(); }
+    });
+    section.addEventListener('reviews:reset', function () { page = 1; refresh(); });
+    addEventListener('hashchange', refresh);
+    section.addEventListener('stories:review-layout', refresh);
+    refresh();
   }
-  section.addEventListener('change', function (event) {
-    if (event.target.name === 'rc' || event.target.name === 'fco') { page = 1; refresh(); }
-    else if (event.target.name === 'pgn') { page = Number(event.target.id.slice(3)) || 1; refresh(); }
-  });
-  section.addEventListener('reviews:reset', function () { page = 1; refresh(); });
-  addEventListener('hashchange', refresh);
-  refresh();
+  section.addEventListener('stories:review-layout', init);
+  init();
 })();
 /* End desktop review paging. */
 
@@ -719,5 +812,11 @@
     var t = e.target;
     if (t && t.classList && t.classList.contains('pjthumb-i')) fitThumb(t);
   }, true);
-  if (document.querySelectorAll) [].forEach.call(document.querySelectorAll('.pjthumb-i'), function (img) { if (img.complete && img.naturalWidth) fitThumb(img); });
+  function fitLoadedThumbs(root) {
+    [].forEach.call(root.querySelectorAll('.pjthumb-i'), function (img) {
+      if (img.complete && img.naturalWidth) fitThumb(img);
+    });
+  }
+  document.addEventListener('stories:project-page', function (event) { fitLoadedThumbs(event.target); });
+  if (document.querySelectorAll) fitLoadedThumbs(document);
 })();

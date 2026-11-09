@@ -90,7 +90,7 @@
 })();
 
 (function(){
-  document.querySelectorAll('.ivvid[data-yt]').forEach(function(box){
+  function bindVideos(root){root.querySelectorAll('.ivvid[data-yt]').forEach(function(box){
     var id=box.dataset.yt;if(!/^[A-Za-z0-9_-]{11}$/.test(id))return;
     var orig=box.innerHTML,detail=box.closest('.ivd');
     // 영상 구간(2026-11-05): data-yt-start · data-yt-end(초)가 있으면 그 구간만(유튜브 start · end)
@@ -103,7 +103,9 @@
     }}
     bind();
     addEventListener('hashchange',function(){if(location.hash!=='#'+detail.id&&box.querySelector('iframe')){box.innerHTML=orig;bind()}});
-  });
+  });}
+  bindVideos(document);
+  document.addEventListener('stories:detail-created',event=>bindVideos(event.detail));
 })();
 
 /* 인터뷰 본문 위치와 질문 목차를 동기화합니다. 문서 대신 목차만 스크롤합니다. */
@@ -111,7 +113,8 @@
   var states=[],frame=0,keyboardIntent=false;
   var reduced=SiteUI.motion();
   var mobile=matchMedia('(max-width: 600px)');
-  document.querySelectorAll('.ivd .sidebox > ol').forEach(function(list){
+  function bindContents(root){root.querySelectorAll('.sidebox > ol').forEach(function(list){
+    if(!list.closest('.ivd'))return;
     var detail=list.closest('.ivd');
     var pairs=[].slice.call(list.querySelectorAll('a[href^="#"]')).map(function(link){
       var section=document.getElementById(link.hash.slice(1));
@@ -133,8 +136,9 @@
     list.addEventListener('keydown',function(){state.keyboard=true;pause()});
     list.addEventListener('focusin',function(){state.keyboard=keyboardIntent});
     list.addEventListener('focusout',function(e){if(!list.contains(e.relatedTarget)){state.keyboard=false;pause()}});
-  });
-  if(!states.length)return;
+  });}
+  bindContents(document);
+  document.addEventListener('stories:detail-created',function(event){bindContents(event.detail);schedule()});
   document.addEventListener('keydown',function(e){if(e.key==='Tab')keyboardIntent=true},true);
   document.addEventListener('pointerdown',function(){keyboardIntent=false},true);
   function update(){

@@ -48,11 +48,11 @@ body:not(:has(.tb:checked)):has(#go-iv:target) .stories-page div:where(.st-main)
 body:not(:has(.tb:checked)):has(#go-pr:target) .stories-page div:where(.st-main) #p-pr,
 .stories-page #t4:checked~div:where(.st-main) #p-coh,
 body:not(:has(.tb:checked)):has(#go-coh:target) .stories-page div:where(.st-main) #p-coh{display:block}
-body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:is(.ivd:target,.qa>div:target)) .stories-page #p-rev,
-body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:is(.ivd:target,.qa>div:target)) .stories-page #p-pr,
-body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:is(.ivd:target,.qa>div:target)) .stories-page #p-coh{display:none}
-body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:is(.ivd:target,.qa>div:target)) .stories-page #p-iv{display:block}
-body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:is(.ivd:target,.qa>div:target)) .stories-page .ivlist{display:none}
+body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:is(.ivd:is(:target,[data-story-active]),.qa>div:target)) .stories-page #p-rev,
+body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:is(.ivd:is(:target,[data-story-active]),.qa>div:target)) .stories-page #p-pr,
+body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:is(.ivd:is(:target,[data-story-active]),.qa>div:target)) .stories-page #p-coh{display:none}
+body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:is(.ivd:is(:target,[data-story-active]),.qa>div:target)) .stories-page #p-iv{display:block}
+body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:is(.ivd:is(:target,[data-story-active]),.qa>div:target)) .stories-page .ivlist{display:none}
 /* ───────── 섹션 머리 — 랜딩과 같은 규칙 ───────── */
 .stories-page .sh h2{margin-bottom:8px;font-family:var(--disp);font-size:clamp(28px,3.1vw,40px);
   line-height:1.12;letter-spacing:-.02em}
@@ -260,7 +260,7 @@ body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:i
 /* 후기 상세 — :target 이라 주소로 바로 열리고, 격자는 한 픽셀도 안 움직인다 */
 .stories-page .ov{position:fixed;inset:0;z-index:var(--layer-dialog,200);display:none;align-items:center;justify-content:center;
   padding:32px 20px;background:rgba(12,22,38,.5);backdrop-filter:blur(8px)}
-.stories-page .ov:target{display:flex}
+.stories-page .ov:is(:target,[data-story-active]){display:flex}
 .stories-page .ov .back{position:absolute;inset:0;z-index:0}
 .stories-page .ov .sheet{position:relative;z-index:1;width:min(680px,100%);max-height:86vh;display:flex;
   flex-direction:column}
@@ -302,7 +302,7 @@ body:not(:has(#t1:checked)):not(:has(#t3:checked)):not(:has(#t4:checked)):has(:i
 .stories-page .ivgrid{grid-template-columns:1fr}
 }
 .stories-page .ivd{display:none}
-.stories-page .ivd:target,
+.stories-page .ivd:is(:target,[data-story-active]),
 .stories-page .ivd:has(.qa>div:target){display:block;animation:paneIn .5s cubic-bezier(.22,.61,.36,1) backwards}
 .stories-page .ivwrap{margin-top:24px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:56px;
   align-items:start}

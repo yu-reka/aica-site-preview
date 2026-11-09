@@ -15,12 +15,22 @@
   function direction(item,previous,kind){
     const label=(previous?'이전 ':'다음 ')+kind.unit;
     const a=node(item?'a':'span','sd-direction '+(previous?'sd-prev':'sd-next'));
-    if(item){a.setAttribute('href','#'+item.detail.id);a.dataset.storyDirection=kind.key;a.setAttribute('aria-label',label+': '+item.title);}
+    if(item){a.setAttribute('href','#'+item.anchor);a.dataset.storyDirection=kind.key;a.setAttribute('aria-label',label+': '+item.title);}
     else{a.setAttribute('aria-disabled','true');}
     a.append(node('span','sd-label',previous?'← '+label:label+' →'),node('span','sd-title',item?item.title:'더 이상 글이 없어요'));
     return a;
   }
   kinds.forEach(kind=>{
+    const catalog=typeof StoryDetails==='undefined'?undefined:StoryDetails.entries(kind.hub?'hub-review':kind.key);
+    if(catalog){
+      const cards=new Map(Array.from(page.querySelectorAll(kind.cards),card=>[(card.getAttribute('href')||'').slice(1),card]));
+      const projects=new Map(kind.key==='project' ? (window.StoryProjectLayout?.items||[]).map(item=>[item.anchor,item]) : []);
+      const items=catalog.filter(item=>kind.key!=='interview'||!item.record.honors).map(item=>({
+        anchor:item.anchor,title:item.title,record:item.record,card:cards.get(item.anchor),project:projects.get(item.anchor)
+      }));
+      if(items.length)groups.push({kind,items,returnTo:null});
+      return;
+    }
     const seen=new Set(),items=[];
     page.querySelectorAll(kind.cards).forEach(card=>{
       const hash=kind.hub?'#'+card.id:card.getAttribute('href')||'';
@@ -29,23 +39,27 @@
       if(!detail||!detail.matches(kind.detail)||seen.has(detail.id))return;
       const heading=detail.querySelector(kind.title),host=detail.querySelector(kind.host);
       if(!heading||!host)return;
-      seen.add(detail.id);items.push({card,detail,host,heading,title:heading.textContent.trim()});
+      seen.add(detail.id);items.push({card,anchor:detail.id,detail,host,heading,title:heading.textContent.trim()});
     });
     if(!items.length)return;
     items.forEach((item,index)=>paint(kind,item,items,index));
     groups.push({kind,items,returnTo:null});
   });
   function paint(kind,item,items,index){
+    const detail=item.detail||document.getElementById(item.anchor);
+    if(!detail)return;
+    const host=item.host||detail.querySelector(kind.host);
+    if(!host)return;
     // Full-page details share the saved listing hash and scroll position.
-    const topBack=(kind.key==='interview'||kind.key==='project')&&item.detail.querySelector('.ivback');
+    const topBack=(kind.key==='interview'||kind.key==='project')&&detail.querySelector('.ivback');
     if(topBack&&topBack.getAttribute('href')===kind.list)topBack.dataset.storyList=kind.key;
-    const side=kind.key==='project'&&item.detail.querySelector('.pjnav');
+    const side=kind.key==='project'&&detail.querySelector('.pjnav');
     if(side){
       side.hidden=false;side.replaceChildren();
       [items[index-1],items[index+1]].forEach((target,direction)=>{
         const label=direction?'다음 프로젝트':'이전 프로젝트';
         const link=node(target?'a':'span',target?'':'pjnav-boundary');
-        if(target){link.setAttribute('href','#'+target.detail.id);link.dataset.storyDirection=kind.key;link.setAttribute('aria-label',label+': '+target.title);}
+        if(target){link.setAttribute('href','#'+target.anchor);link.dataset.storyDirection=kind.key;link.setAttribute('aria-label',label+': '+target.title);}
         else link.setAttribute('aria-disabled','true');
         link.append(node('small','',label),node('span','',target?target.title:'더 이상 글이 없어요'));side.append(link);
       });
@@ -53,8 +67,8 @@
     const nav=node('nav','sd-nav');nav.setAttribute('aria-label',kind.unit+' 이전 글 다음 글');
     const pair=node('div','sd-pair');pair.append(direction(items[index-1],true,kind),direction(items[index+1],false,kind));
     const back=node('a','sd-list',kind.unit+' 목록');back.href=kind.list;if(!kind.hub)back.dataset.storyList=kind.key;
-    nav.append(pair,back);const old=item.detail.querySelector('.sd-nav');
-    if(old)old.replaceWith(nav);else if(kind.key==='review')item.host.append(nav);else item.host.after(nav);
+    nav.append(pair,back);const old=detail.querySelector('.sd-nav');
+    if(old)old.replaceWith(nav);else if(kind.key==='review')host.append(nav);else host.after(nav);
   }
   function matching(group){
     if(group.kind.hub)return group.items;
@@ -71,7 +85,12 @@
         const label=radio&&section.querySelector('label[for="'+radio.id+'"]');
         cohort=((live||label)?.textContent.match(/(\d+)기/)||[])[1]||'';
       }
-      return group.items.filter(item=>(category==='all'||item.card.classList.contains('cat-'+category))&&(!cohort||item.card.classList.contains('coh'+cohort)));
+      return group.items.filter(item=>{
+        if(item.card)return (category==='all'||item.card.classList.contains('cat-'+category))&&(!cohort||item.card.classList.contains('coh'+cohort));
+        const raw=item.record.cat;
+        const cat=raw==='career'?'job':['life','class','proj','job','path'].includes(raw)?raw:'life';
+        return (category==='all'||cat===category)&&(!cohort||String(item.record.cohort)===cohort);
+      });
     }
     if(group.kind.key==='interview'){
       const selected=document.querySelector('#iv-all [data-f="coh"] [aria-pressed="true"]');
@@ -79,23 +98,35 @@
       if(value.includes('전체'))return group.items;
       const cohort=(value.match(/\d+/)||[])[0];
       if(!cohort)return group.items;
-      return group.items.filter(item=>{const c=Number.parseInt(item.card.querySelector('.by .av')?.textContent,10);return value.includes('–')||value.includes('-')?c>=3&&c<=5:c===Number(cohort);});
+      return group.items.filter(item=>{const c=Number.parseInt(item.record?.cohort??item.card.querySelector('.by .av')?.textContent,10);return value.includes('–')||value.includes('-')?c>=3&&c<=5:c===Number(cohort);});
     }
     if(group.kind.key==='project'){
       const cohort=document.querySelector('.pj-cohort-filters [aria-pressed="true"]')?.dataset.cohort;
       const subject=document.querySelector('.pj-subject-options [aria-pressed="true"]')?.dataset.subject;
-      const items=group.items.filter(item=>(!cohort||item.card.dataset.cohort===cohort)&&(!subject||item.card.dataset.subject===subject));
+      const items=group.items.filter(item=>{
+        const meta=item.project||item.card.dataset;
+        return (!cohort||meta.cohort===cohort)&&(!subject||meta.subject===subject);
+      });
       const mobile=document.querySelector('#p-pr .sm-projects');
       if(!mobile||getComputedStyle(mobile).display==='none')return items;
       const type=mobile.querySelector('.sm-filter-tabs [aria-pressed="true"]')?.textContent.trim()||'전체';
-      return type==='전체'?items:items.filter(item=>item.card.querySelector('.pjc-type')?.textContent.trim()===type);
+      return type==='전체'?items:items.filter(item=>(item.project?.type||item.card.querySelector('.pjc-type')?.textContent.trim())===type);
     }
     return group.items;
   }
   function refreshCurrent(){
-    groups.forEach(group=>{const item=group.items.find(item=>'#'+item.detail.id===location.hash);if(!item)return;let items=matching(group);if(!items.includes(item))items=group.items;paint(group.kind,item,items,items.indexOf(item));});
+    groups.forEach(group=>{
+      const item=group.items.find(item=>'#'+item.anchor===location.hash||group.kind.key==='interview'&&location.hash.startsWith('#q-'+item.anchor+'-'));
+      if(!item)return;
+      let items=matching(group);
+      if(!items.includes(item))items=group.items;
+      paint(group.kind,item,items,items.indexOf(item));
+    });
   }
   setTimeout(refreshCurrent,0);
+  document.addEventListener('stories:detail-created', event => {
+    if (event.detail.hasAttribute('data-story-active')) refreshCurrent();
+  });
   // The type tabs belong to the <=600px projection; desktop uses all projects.
   if(groups.some(group=>group.kind.key==='project'))
     matchMedia('(max-width:600px)').addEventListener('change',refreshCurrent);
@@ -116,16 +147,23 @@
     // Remember the actual listing location, not a previous detail's navigation link.
     if(a.closest('.ov,.ivd,.pjd'))return;
     groups.forEach(g=>{
-      if(g.items.some(item=>'#'+item.detail.id===a.getAttribute('href')))
+      if(g.items.some(item=>'#'+item.anchor===a.getAttribute('href')))
         g.returnTo={hash:(g.kind.key==='interview'||g.kind.key==='project')?g.kind.list:location.hash||g.kind.list,y:window.scrollY};
     });
   },true);
   addEventListener('hashchange',()=>{
     refreshCurrent();
     if(!navigating)return;navigating=false;
-    const item=groups.flatMap(g=>g.items).find(item=>'#'+item.detail.id===location.hash);
+    const item=groups.flatMap(g=>g.items).find(item=>'#'+item.anchor===location.hash);
     if(!item)return;
-    const scroll=item.detail.querySelector('.mscroll');if(scroll)scroll.scrollTop=0;
-    if(!scroll){item.heading.tabIndex=-1;requestAnimationFrame(()=>item.heading.focus({preventScroll:true}));}
+    const detail=item.detail||document.getElementById(item.anchor);
+    if(!detail)return;
+    const scroll=detail.querySelector('.mscroll');if(scroll)scroll.scrollTop=0;
+    if(!scroll)requestAnimationFrame(()=>{
+      if(location.hash!=='#'+item.anchor)return;
+      // The loading shell may have been replaced since the hash changed.
+      const heading=detail.querySelector('h2');
+      if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}
+    });
   });
 })();

@@ -6,8 +6,8 @@ import vm from 'node:vm';
 const source=readFileSync(new URL('../stories/js/stories-render.js',import.meta.url),'utf8');
 test('hub review detail keeps escaped content with a more-reviews footer and local close target',()=>{
   const context={REV:[{anchor:'r-p1',cohort:6,title:'<unsafe>',author:'선배',summary:'요약',body:['본문'],tags:['#태그']}] ,cat:()=>({cls:'cat-life',c:'#000',bg:'#fff',dk:'#000',name:'생활'}),esc:x=>String(x??'').replaceAll('<','&lt;').replaceAll('>','&gt;'),coh:c=>c+'기',fld:()=>'',tagClasses:()=>'',photos:()=>''};
-  const fn=runInNewContext(source.slice(source.indexOf('  function reviewDialogs('),source.indexOf('  var hubDialogs='))+'\nreviewDialogs',context);
-  const hub=fn(true),listing=fn(false);
+  const fn=runInNewContext(source.slice(source.indexOf('  function reviewDialog('),source.indexOf('  function detailGroup('))+'\nreviewDialog',context);
+  const hub=fn(context.REV[0],true),listing=fn(context.REV[0],false);
   assert.ok(hub.includes('href="#hub-reviews"'));assert.ok(hub.includes('후기 더 보기 →'));
   assert.ok(hub.includes('<span class="t" data-field="tag">#태그</span>'));
   for(const html of [hub,listing]){assert.ok(html.indexOf('class="mtags"')<html.indexOf('<h3'));assert.ok(html.includes('class="review-heading-meta"'));assert.ok(!html.includes('#tg-'));assert.ok(!html.includes('태그를 누르면'));}assert.ok(hub.includes('&lt;unsafe&gt;'));assert.ok(hub.includes('본문'));
@@ -16,7 +16,7 @@ test('hub review detail keeps escaped content with a more-reviews footer and loc
 
 test('hub card footer uses the real first tag, an accessible hidden arrow and escaped metadata',()=>{
   const context={firstTag:r=>r.tags[0]||'',esc:x=>String(x??'').replaceAll('<','&lt;').replaceAll('>','&gt;')};
-  const footer=runInNewContext(source.slice(source.indexOf('  function hubReviewByline('),source.indexOf('  function reviewDialogs('))+'\nhubReviewByline',context);
+  const footer=runInNewContext(source.slice(source.indexOf('  function hubReviewByline('),source.indexOf('  function reviewDialog('))+'\nhubReviewByline',context);
   const tagged=footer({author:'<이름>',track:'<과정>',tags:['#팀활동','#태그2']});
   assert.ok(tagged.includes('&lt;이름&gt;'));assert.ok(tagged.includes('&lt;과정&gt;'));assert.ok(tagged.includes('#팀활동'));
   assert.ok(!tagged.includes('#태그2'));assert.ok(tagged.includes('aria-hidden="true">→'));

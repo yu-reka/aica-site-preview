@@ -15,12 +15,15 @@
       options.querySelectorAll('button').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.subject===value)));
       summary.querySelector('b').textContent=value||'과정';
     }
-    const cards=Array.from(section.querySelectorAll('.pjgrid .pjc'));
+    const projected=typeof window==='undefined'?undefined:window.StoryProjectLayout;
+    const cards=projected ? projected.items : Array.from(section.querySelectorAll('.pjgrid .pjc'),node=>({
+      node,cohort:node.dataset.cohort,subject:node.dataset.subject
+    }));
     const live=document.documentElement.dataset.storySource==='spring';
     if(live){
       // Never derive classification from sample IDs, drafts, tags or project types.
-      const cohorts=Array.from(new Set(cards.map(card=>card.dataset.cohort).filter(value=>/^[1-9]\d?$/.test(value)))).sort((a,b)=>Number(b)-Number(a));
-      const subjects=Array.from(new Set(cards.map(card=>card.dataset.subject).filter(Boolean))).sort((a,b)=>a.localeCompare(b,'ko'));
+      const cohorts=Array.from(new Set(cards.map(card=>card.cohort).filter(value=>/^[1-9]\d?$/.test(value)))).sort((a,b)=>Number(b)-Number(a));
+      const subjects=Array.from(new Set(cards.map(card=>card.subject).filter(Boolean))).sort((a,b)=>a.localeCompare(b,'ko'));
       function choices(group,key,values,label){
         group.replaceChildren();
         [''].concat(values).forEach(value=>{
@@ -43,11 +46,11 @@
       return [];
     }
     function cardCourses(match){
-      return Array.from(new Set(cards.filter(match).map(card=>card.dataset.subject).filter(Boolean))).sort((a,b)=>a.localeCompare(b,'ko'));
+      return Array.from(new Set(cards.filter(match).map(card=>card.subject).filter(Boolean))).sort((a,b)=>a.localeCompare(b,'ko'));
     }
     function coursesFor(cohort){
       const tracks=infoTracks(cohort);
-      return tracks.concat(cardCourses(card=>card.dataset.cohort===cohort).filter(value=>!tracks.includes(value)));
+      return tracks.concat(cardCourses(card=>card.cohort===cohort).filter(value=>!tracks.includes(value)));
     }
     function courseList(cohort){
       if(cohort)return coursesFor(cohort);
@@ -70,8 +73,10 @@
     }
     fillCourses((filters.querySelector('[aria-pressed="true"]')||{dataset:{}}).dataset.cohort||'');
     function close(){dropdown.open=false;}
+    const grid=section.querySelector('.pjgrid');
+    const narrow=matchMedia('(max-width:600px)');
     const pager=document.createElement('nav');pager.className='cpager pj-pager';
-    pager.setAttribute('aria-label','프로젝트 페이지');section.querySelector('.pjgrid').after(pager);
+    pager.setAttribute('aria-label','프로젝트 페이지');grid.after(pager);
     let page=1;const pageSize=6;
     function pageButton(label,to,disabled,current){
       const button=document.createElement('button');button.type='button';button.textContent=label;
@@ -87,18 +92,23 @@
       const cohort=filters.querySelector('[aria-pressed="true"]').dataset.cohort;
       const subject=options.querySelector('[aria-pressed="true"]').dataset.subject;
       const mobile=section.querySelector('.sm-projects');
-      const eligible=cards.filter(card=>(!cohort||card.dataset.cohort===cohort)&&(!subject||card.dataset.subject===subject));
+      const eligible=cards.filter(card=>(!cohort||card.cohort===cohort)&&(!subject||card.subject===subject));
       const total=Math.max(1,Math.ceil(eligible.length/pageSize));page=Math.min(page,total);
-      const visible=new Set(eligible.slice((page-1)*pageSize,page*pageSize));
-      cards.forEach(card=>{card.hidden=!visible.has(card);});
-      if(mobile){
+      const current=eligible.slice((page-1)*pageSize,page*pageSize);
+      const visible=new Set(current);
+      if(projected){
+        grid.replaceChildren(...(narrow.matches?[]:current.map(projected.desktop)));
+        mobile?.showProjectPage(current);
+        section.dispatchEvent(new CustomEvent('stories:project-page', {bubbles:true}));
+      }else cards.forEach(card=>{card.node.hidden=!visible.has(card);});
+      if(mobile&&!projected){
         const items=Array.from(mobile.querySelectorAll('.sm-project'));
         items.forEach((item,index)=>{item.hidden=!visible.has(cards[index]);if(item.hidden)item.open=false;});
         const first=items.find(item=>!item.hidden);
         if(first&&!items.some(item=>!item.hidden&&item.open))first.open=true;
         mobile.hidden=!eligible.length;
       }
-      const upcoming=!live&&cohort==='7'&&!cards.some(card=>card.dataset.cohort==='7');
+      const upcoming=!live&&cohort==='7'&&!cards.some(card=>card.cohort==='7');
       const notice=section.querySelector('.pj-filter-empty');
       if(notice)notice.hidden=!upcoming;
       const noResults=section.querySelector('.pj-subject-empty');
@@ -128,7 +138,7 @@
       selectSubject(button.dataset.subject);
       close();summary.focus({preventScroll:true});refresh(true);
     });
-    matchMedia('(max-width:600px)').addEventListener('change',()=>{close();refresh();});
+    narrow.addEventListener('change',()=>{close();refresh();});
     document.addEventListener('click',event=>{if(!dropdown.contains(event.target))close();});
     dropdown.addEventListener('keydown',event=>{if(event.key==='Escape'){close();summary.focus();}});
     dropdown.addEventListener('focusout',event=>{if(!dropdown.contains(event.relatedTarget))close();});

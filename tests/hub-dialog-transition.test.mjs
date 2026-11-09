@@ -48,6 +48,7 @@ function start(zoomed = false) {
     modalEntry:false, modalScroll:0, window:{scrollTo(){}}, changePhoto() {}, history: { replaceState() {} } });
   runInContext(readFileSync(new URL('../common/js/ui.js', import.meta.url), 'utf8'), context);
   const cohortScope = context.SiteUI.createDialogScope();
+  context.loadVersion = 0;
   context.isolateDialog = dialog => dialog ? cohortScope.activate(dialog) : cohortScope.release();
   const stories = readFileSync(new URL('../stories/js/stories.js', import.meta.url), 'utf8');
   const begin = stories.indexOf('  (function(){\n    var opener = null, link = null;');

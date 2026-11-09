@@ -59,12 +59,12 @@
   }
   // Owner-specified V30 migration: interview 63..76 -> 1..14, project 77..118 -> 1..42.
   // Keep any existing exact target, and never infer aliases for static design slots (iv-1/pj-1).
-  function legacyHash(hash) {
+  function legacyHash(hash, hasTarget = id => document.getElementById(id)) {
     var id = String(hash || '').slice(1), match, next = '';
-    if (!id || document.getElementById(id)) return hash;
+    if (!id || hasTarget(id)) return hash;
     if ((match = /^iv-p(\d+)$/.exec(id)) && +match[1] >= 63 && +match[1] <= 76) next = 'iv-p' + (+match[1] - 62);
     else if ((match = /^pj-p(\d+)$/.exec(id)) && +match[1] >= 77 && +match[1] <= 118) next = 'pj-p' + (+match[1] - 76);
-    return next && document.getElementById(next) ? '#' + next : hash;
+    return next && hasTarget(next) ? '#' + next : hash;
   }
   window.AicaPublicContent = { url: safeUrl, html: function (value) { return clean(value, false); }, svg: function (value) { return clean(value, true); }, legacyHash: legacyHash };
 })();

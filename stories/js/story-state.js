@@ -64,7 +64,8 @@ var StoryState = (function(){
     var host=section?.querySelector('[data-story-list-state]');if(!host)return;
     var cards=kind==='cohorts'?Array.from(document.getElementById('cv3-data').content.querySelectorAll('a.st')).filter(function(card){return parseInt(card.querySelector('.cg')?.textContent,10)>0;}):section.querySelectorAll({reviews:'.idgrid .idc',interviews:'.ivgrid .iv,.iv-honors a.sm-ivf-c[href^="#iv-p"]',projects:'.pjgrid .pjc'}[kind]);
     // Cohort chips come only from posts with a cohort (cohort-v3.js), so a failed load or no such post hides the whole cohort view behind the page state.
-    if(failed()||!cards.length){
+    var catalog=typeof StoryDetails==='undefined'?undefined:StoryDetails.entries({reviews:'review',interviews:'interview',projects:'project'}[kind]);
+    if(failed()||!(catalog?.length??cards.length)){
       render(host,failed()?'error':'empty',{subject:subject});host.hidden=false;
       var selectors={reviews:'.filters,.idgrid,.rvlist,.pager,.sm-reviews,.footnote,[data-review-filter-empty]',interviews:'.iv-honors,.ivband,.ivgrid,#iv-all,.sm-ivf,.footnote',projects:'.pj-filter-row,.pjgrid,.sm-projects,.pj-filter-empty,.pj-subject-empty,.pj-pager',cohorts:'.cv3'};
       section.querySelectorAll(selectors[kind]).forEach(function(element){element.hidden=true;element.setAttribute('data-story-state-hidden','');});
@@ -81,7 +82,7 @@ var StoryState = (function(){
       function update(){
         if(matchMedia('(max-width:600px)').matches){host.hidden=true;return;}
         var listView=section.querySelector('#vm-list')?.checked;
-        var entries=listView?section.querySelectorAll('.rvlist .rvr'):cards;
+        var entries=section.querySelectorAll(listView?'.rvlist .rvr':'.idgrid .idc');
         var any=Array.from(entries).some(function(card){return getComputedStyle(card).display!=='none';});
         // Keep a pending pointer-click target alive through repeated empty updates.
         if(!any&&host.dataset.storyState!=='filter')render(host,'filter',{subject:subject,onReset:reset,reviewBoard:section.querySelector('.idgrid')});host.hidden=any;

@@ -4,13 +4,14 @@
 (function(){
   var root=document.getElementById('cv3'); if(!root) return;
   var hubModal=root.getAttribute('data-hub-modal')==='true';
-  var tpl=document.getElementById('cv3-data').content;
-  var D=[].slice.call(tpl.querySelectorAll('a.st')).map(function(a){
+  var source=document.getElementById('cv3-data');
+  function readCard(a){
     var dt=(a.querySelector('.dt')||{}).textContent||'', m=dt.match(/(\d{4})\.\s*(\d{2})\.\s*(\d{2})/);
     return {id:a.id||'', tags:[].slice.call(a.querySelectorAll('[data-story-tags] span')).map(function(t){return t.textContent}), body:[].slice.call(a.querySelectorAll('[data-story-body] p')).map(function(p){return p.textContent}), photos:[].slice.call(a.querySelectorAll('[data-story-photos] img')), coh:parseInt((a.querySelector('.cg')||{}).textContent,10)||0, date:dt.trim(), y:m?+m[1]:0, mo:m?+m[2]:0,
       title:(a.querySelector('h3')||{}).textContent||'', sum:(a.querySelector('p')||{}).textContent||'',
       illu:a.querySelector('.illu'), yt:a.getAttribute('data-yt')||'', ytFrom:a.getAttribute('data-yt-start'), ytTo:a.getAttribute('data-yt-end')};
-  });
+  }
+  var D=Array.from(source.content.querySelectorAll('a.st'),readCard);
   /* 기수 정보(2026-10-22): 관리자 '기수 정보' 화면(DB cohort_infos)의 내용을 STORIES_DATA.cohortInfos(공개 API · stories-data.js)로 받아
      기수마다 교육과정 카드 · 계정 · 꼬리표 · 달라진 점 버튼 이름 · 소개 · 달라진 점 표 요소를 한 번 만들어 두고 화면 자리로 옮겨요(글자는 textContent로만).
      기수 칩은 만들지 않아요(아래 규칙). 정보가 없는 기수는 예전처럼 기본 글로 */
@@ -284,7 +285,7 @@
   root.cv3Redraw=function(){ draw(); };
 
   /* 글 창 */
-  var M=document.querySelector('.cv3-m'), cur=0, last=null, modalVisited=[];
+  var M=document.querySelector('.cv3-m'), cur=0, last=null, modalVisited=[], loadVersion=0;
   // Isolate the active dialog, including nested photo zoom, without changing layout.
   // Restore each sibling's previous inert state when switching or closing scopes.
   var dialogScope=SiteUI.createDialogScope();
@@ -321,11 +322,15 @@
     var sec=function(n){n=+n;return n>0&&n<=86400?Math.floor(n):0},from=sec(d.ytFrom),to=sec(d.ytTo);
     return 'https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1'+(from?'&start='+from:'')+(to>from?'&end='+to:'');
   }
-  function fill(){
-    var L=list(), d=L[cur]; if(!d) return;
+  function clearMedia(){
+    var md=M.querySelector('.cv3-m-media');
+    md.replaceChildren();md.classList.remove('can-zoom','cv3-photo-gallery');md.cv3Record=null;
+    return md;
+  }
+  function fillContent(d){
     d=modalPhotoRecord(d);
     modalVisited.push(d);
-    var md=M.querySelector('.cv3-m-media'); md.innerHTML=''; md.classList.remove('can-zoom','cv3-photo-gallery');md.cv3Record=null;
+    var md=clearMedia();
     if(d.yt)md.appendChild(media(d,true));else gallery(md,d);
     if(d.yt){ var id=null;
       try { var url=new URL(d.yt), host=url.hostname.toLowerCase();
@@ -342,16 +347,35 @@
       var z=document.createElement('button'); z.type='button'; z.className='cv3-zoom'; z.setAttribute('aria-label','사진 크게 보기');
       z.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg>';
       z.onclick=openZ; md.querySelector('.cv3-photo-stage').addEventListener('click',openZ); md.classList.add('can-zoom'); md.appendChild(z); }
+    renderCaption(M.querySelector('.cv3-m-body'),d);
+  }
+  function fill(){
+    var L=list(), d=L[cur]; if(!d) return;
+    var version=++loadVersion;
     M.querySelector('.cv3-av').innerHTML='<b>'+d.coh+'</b>';
     M.querySelector('.cv3-m-acc').textContent=accName(d.coh);
     var heading=M.querySelector('h3'), account=document.createElement('b'); account.textContent=accName(d.coh);
     heading.replaceChildren(account, document.createTextNode(' '+d.title));
-    renderCaption(M.querySelector('.cv3-m-body'),d);
-
     M.querySelector('time').textContent=d.date;
     M.querySelectorAll('.cv3-like,.cv3-save').forEach(function(b){b.setAttribute('aria-pressed','false')});
     M.querySelector('.no').textContent=(cur+1)+' / '+L.length;
     M.querySelector('.pv').disabled=cur===0; M.querySelector('.nx').disabled=cur===L.length-1;
+    if (!source.loadStory) { fillContent(d); return; }
+    var md=clearMedia(), caption=M.querySelector('.cv3-m-body');
+    renderCaption(caption,{});
+    caption.querySelector('p').hidden=true;
+    function load(){
+      var retryFocused=md.contains(document.activeElement);
+      StoryDetails.status(md,'loading');
+      if(retryFocused)M.querySelector('.cv3-m-x').focus({preventScroll:true});
+      source.loadStory(d.id).then(function(card){
+        if(version===loadVersion)fillContent(readCard(card));
+      }).catch(function(error){
+        if(version!==loadVersion)return;
+        StoryDetails.status(md,error.missing?'missing':'error',error.missing?undefined:load);
+      });
+    }
+    load();
   }
   /* 크게 보기 창: 어두운 바탕 + 사진 전체(잘림 없이). ←/→로 넘기면 같이 바뀜 */
   var Z=document.createElement('div'); Z.className='cv3-zv'; Z.hidden=true; Z.setAttribute('role','dialog'); Z.setAttribute('aria-modal','true'); Z.setAttribute('aria-label','사진 크게 보기');
@@ -386,7 +410,7 @@
   function closeM(restoreFocus,fromHistory){
     if(!fromHistory&&/^#st-/.test(location.hash)&&history.state&&history.state.aicaCohort){history.back();return;}
     if(!fromHistory&&/^#st-/.test(location.hash))history.replaceState(history.state,'',location.pathname+location.search);
-    Z.hidden=true; M.hidden=true; modalVisited.forEach(function(d){changePhoto(d,0);});modalVisited=[];M.querySelector('.cv3-m-media').innerHTML=''; isolateDialog(null); document.documentElement.classList.remove('cv3-lock'); if(restoreFocus!==false&&last&&document.contains(last)) last.focus({preventScroll:true}); }
+    loadVersion++; Z.hidden=true; M.hidden=true; modalVisited.forEach(function(d){changePhoto(d,0);});modalVisited=[];M.querySelector('.cv3-m-media').innerHTML=''; isolateDialog(null); document.documentElement.classList.remove('cv3-lock'); if(restoreFocus!==false&&last&&document.contains(last)) last.focus({preventScroll:true}); }
   M.querySelector('.cv3-m-x').onclick=closeM; M.querySelector('.cv3-m-bg').onclick=closeM;
   if(hubModal)root.closest('.stories-page').addEventListener('stories:before-review-open',function(){
     if(!M.hidden)closeM(false,true);

@@ -35,7 +35,7 @@ class Element {
   querySelectorAll(selector) { return selector === 'button' ? this.children.filter(node => node.tagName === 'button') : []; }
 }
 
-function startReviews(classes, reducedMotion = true) {
+function startReviews(classes, reducedMotion = true, managed = false, initialFilters = {}) {
   const created = [], listeners = {};
   const location = { hash: '' };
   const section = new Element();
@@ -45,7 +45,35 @@ function startReviews(classes, reducedMotion = true) {
     card.attrs.href = '#r-' + index; return card;
   });
   source.querySelectorAll = selector => selector === '.idc' ? records : [];
-  section.querySelector = selector => selector === '.idgrid' ? source : null;
+  const filters = {
+    rc: { name: 'rc', id: initialFilters.rc ?? 'rc_all' },
+    fco: { name: 'fco', id: initialFilters.fco ?? 'fco_all' },
+  };
+  const changeFilter = (name, id) => {
+    filters[name].id = id;
+    section.events.change?.({ target: filters[name] });
+  };
+  let mounted = false;
+  section.querySelector = selector => {
+    if (selector === '.idgrid') return source;
+    if (selector === '.sm-reviews' && mounted) return created.find(node => node.className === 'sm-reviews');
+    if (selector === 'input[name="rc"]:checked') return filters.rc;
+    if (selector === 'input[name="fco"]:checked') return filters.fco;
+    return null;
+  };
+  function attach(box) {
+    mounted = true; box.isConnected = true;
+    created.find(node => node.className === 'sm-review-board').clientWidth = 300;
+  }
+  source.before = (marker, box) => {
+    if (!managed || !box) return;
+    attach(box);
+    marker.after = attach;
+    box.remove = () => {
+      mounted = false; box.isConnected = false;
+      created.find(node => node.className === 'sm-review-board').clientWidth = 0;
+    };
+  };
   section.querySelectorAll = () => [];
   const document = {
     addEventListener() {},
@@ -53,11 +81,19 @@ function startReviews(classes, reducedMotion = true) {
     querySelector: selector => selector === '#p-rev' ? section : null,
     querySelectorAll: () => [], getElementById: () => null,
     createElement: tag => { const node = new Element(tag); created.push(node); return node; },
+    createComment: () => ({}),
   };
-  runInNewContext(uiSource + '\n' + readFileSync(new URL('../stories/js/stories-m-reviews.js', import.meta.url), 'utf8') + '\nStoriesMobileReviews.init();', {
-    document, location, matchMedia: () => ({ matches: reducedMotion }),
+  const window = managed ? { StoryReviewCards: classes.map((values, index) => ({
+    anchor: 'r-' + index, category: values[0].slice(4), cohort: values[1].slice(3),
+  })) } : undefined;
+  const context = vm.createContext({
+    document, window, location, matchMedia: () => ({ matches: reducedMotion }),
     addEventListener(name, fn) { listeners[name] = fn; }, clearTimeout() {}, setTimeout() {}, requestAnimationFrame(fn) { fn(); },
   });
+  runInContext(uiSource + '\n' + readFileSync(new URL('../stories/js/stories-m-reviews.js', import.meta.url), 'utf8') + '\nStoriesMobileReviews.init();', context);
+  function resize(mobile) {
+    runInContext(mobile ? 'StoriesMobileReviews.init()' : 'StoriesMobileReviews.unmount()', context);
+  }
   const categories = created.find(node => node.attrs['aria-label'] === '후기 카테고리');
   const cohorts = created.find(node => node.attrs['aria-label'] === '후기 기수');
   const board = created.find(node => node.className === 'sm-review-board');
@@ -66,7 +102,7 @@ function startReviews(classes, reducedMotion = true) {
   const empty = created.find(node => node.className === 'sm-review-empty');
   const choose = (group, value) => group.children.find(node => node.dataset.value === value).events.click();
 
-  return { categories, cohorts, board, count, empty, pager, choose, listeners, location,
+  return { categories, cohorts, board, count, empty, pager, choose, listeners, location, changeFilter, resize,
     navigation: created.find(node => node.className === 'sm-review-navigation'),
     progress: created.find(node => node.className === 'sm-review-progress'),
     tagSelect: created.find(node => node.className === 'sm-review-tag-dropdown dw'),
@@ -230,4 +266,43 @@ test('circular rail reuses cards at either edge and restores desktop order', () 
   assert.deepEqual(track.children,cards);
   assert.equal(track.scrollLeft,0);
   assert.equal(loop.active,false);
+});
+
+
+test('mobile review remount picks up desktop category and cohort filters', () => {
+  const { board, count, resize, changeFilter } = startReviews([
+    ['cat-life', 'coh8'], ['cat-life', 'coh7'], ['cat-life', 'coh8'], ['cat-class', 'coh8'],
+  ], true, true, { rc: 'rc_life' });
+
+  assert.equal(count.textContent, '3개의 후기');
+  resize(false);
+  changeFilter('fco', 'fco_c8');
+  resize(true);
+  assert.equal(count.textContent, '2개의 후기');
+  assert.deepEqual(board.children.map(node => node.href).sort(), ['#r-0', '#r-2']);
+
+  resize(false);
+  changeFilter('fco', 'fco_0');
+  resize(true);
+  assert.equal(count.textContent, '1개의 후기');
+  assert.deepEqual(board.children.map(node => node.href), ['#r-1']);
+});
+
+test('mobile review rail restores the same order after a desktop round trip', () => {
+  const { board, resize, changeFilter, listeners } = startReviews([
+    ['cat-life', 'coh7'], ['cat-class', 'coh7'], ['cat-class', 'coh8'],
+  ], true, true);
+
+  for (const category of ['rc_all', 'rc_class']) {
+    changeFilter('rc', category);
+    const order = board.children.map(node => node.href);
+    const start = board.scrollLeft;
+    assert.ok(start > 0, 'the circular rail starts at the first canonical review');
+    resize(false);
+    listeners.resize();
+    listeners.resize();
+    resize(true);
+    assert.deepEqual(board.children.map(node => node.href), order);
+    assert.equal(board.scrollLeft, start);
+  }
 });

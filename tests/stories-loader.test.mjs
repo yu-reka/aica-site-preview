@@ -5,13 +5,13 @@ import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
 const code=readFileSync(new URL('../common/js/stories-loader.js',import.meta.url),'utf8');
 const data=()=>({reviews:[],interviews:[],projects:[],cohorts:[]});
-function start({api=data(),fallback=data(),failure=false,pending=false,savedHeight=null,storageError=false,width=390,page='stories/index.html',fetchImpl,noMainUntilReady=false,holdConsumers=false,setTimer=setTimeout,clearTimer=clearTimeout}={}){
+function start({api=data(),fallback=data(),failure=false,pending=false,savedHeight=null,storageError=false,width=390,page='stories/index.html',apiUrl='../api/public/stories',fetchImpl,noMainUntilReady=false,holdConsumers=false,setTimer=setTimeout,clearTimer=clearTimeout}={}){
   const scripts=[],scriptNodes=[],requests=[],events={},attributes=new Map(),window={AicaPublicContentStatus:{}};
   let mainAvailable=!noMainUntilReady, reloads=0;
   const styles=new Map(),writes=[];
   window.innerWidth=width;window.sessionStorage={getItem:()=>{if(storageError)throw Error('blocked');return savedHeight;},setItem:(key,value)=>{if(storageError)throw Error('full');writes.push({key,value});}};
   const main={hasAttribute:key=>attributes.has(key),style:{setProperty:(key,value)=>styles.set(key,value),removeProperty:key=>styles.delete(key)},getBoundingClientRect:()=>({height:1600.25}),setAttribute:(k,v)=>attributes.set(k,v),removeAttribute:k=>attributes.delete(k)};
-  const document={readyState:pending?'loading':'interactive',currentScript:{dataset:{page,api:'../api/public/stories',fallback:'js/stories-data.js?v=test',scripts:JSON.stringify(['render.js','state.js','mobile.js'])}},
+  const document={readyState:pending?'loading':'interactive',currentScript:{dataset:{page,api:apiUrl,fallback:'js/stories-data.js?v=test',scripts:JSON.stringify(['render.js','state.js','mobile.js'])}},
     body:noMainUntilReady?null:{dataset:{}},querySelector:()=>mainAvailable?main:null,addEventListener:(k,fn)=>events[k]=fn,createElement:()=>({}),head:{appendChild(script){
       scripts.push(script.src);scriptNodes.push(script);if(holdConsumers&&!script.src.startsWith('js/stories-data'))return;queueMicrotask(()=>{
         if(script.src.startsWith('js/stories-data')){if(fallback){window.STORIES_DATA=fallback;script.onload();}else script.onerror();}
@@ -27,7 +27,7 @@ test('valid API including a successful empty result never requests the snapshot 
   for(const api of [data(),{...data(),reviews:[{id:1}]}]){
     const ui=start({api});await ui.window.AicaStoryReady;
     assert.deepEqual(ui.scripts,['render.js','state.js','mobile.js']);
-    assert.equal(ui.requests.length,1);assert.equal(ui.requests[0].url,'../api/public/stories');
+    assert.equal(ui.requests.length,1);assert.equal(ui.requests[0].url,'../api/public/stories/summary');
     assert.equal(ui.window.STORIES_DATA,api);assert.equal(ui.window.AicaPublicContentStatus.storiesApiFailed,false);
     assert.equal(ui.attributes.size,0);
   }
@@ -151,4 +151,13 @@ test('loading card retry reloads only while the actual request is pending',async
   release({ok:true,json:async()=>data()});await ui.window.AicaStoryReady;
   ui.events.click(event);assert.equal(ui.reloads(),1);
   assert.equal(ui.attributes.has('data-story-loading'),false);
+});
+
+
+test('manager preview requests its full data URL without rewriting it to the summary API',async()=>{
+  const apiUrl='data:application/json;base64,e30=';
+  const ui=start({apiUrl});
+  await ui.window.AicaStoryReady;
+  assert.equal(ui.requests[0].url,apiUrl);
+  assert.equal(ui.window.STORIES_DATA.view,undefined);
 });

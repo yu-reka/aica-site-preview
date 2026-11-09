@@ -335,18 +335,26 @@ box-shadow:inset 0 0 0 1px rgba(120,86,48,.18),inset 0 2px 12px rgba(90,60,28,.1
 
 /* 포스트잇 색: 노랑 · 하늘 · 살구 · 민트 · 분홍 · 노랑 · 하늘 · 연보라(8장마다 반복) */
 .stories-page #p-rev .idc:nth-child(8n+1),
-.stories-page #p-rev .idc:nth-child(8n+6){--pi:#FFF1A6!important}
+.stories-page #p-rev .idc:nth-child(8n+6),
+.stories-page .ov[data-review-note-slot="1"],
+.stories-page .ov[data-review-note-slot="6"]{--pi:#FFF1A6!important}
 
 .stories-page #p-rev .idc:nth-child(8n+2),
-.stories-page #p-rev .idc:nth-child(8n+7){--pi:#D6ECFF!important}
+.stories-page #p-rev .idc:nth-child(8n+7),
+.stories-page .ov[data-review-note-slot="2"],
+.stories-page .ov[data-review-note-slot="7"]{--pi:#D6ECFF!important}
 
-.stories-page #p-rev .idc:nth-child(8n+3){--pi:#FFE2C2!important}
+.stories-page #p-rev .idc:nth-child(8n+3),
+.stories-page .ov[data-review-note-slot="3"]{--pi:#FFE2C2!important}
 
-.stories-page #p-rev .idc:nth-child(8n+4){--pi:#D6F5E3!important}
+.stories-page #p-rev .idc:nth-child(8n+4),
+.stories-page .ov[data-review-note-slot="4"]{--pi:#D6F5E3!important}
 
-.stories-page #p-rev .idc:nth-child(8n+5){--pi:#FFD9E8!important}
+.stories-page #p-rev .idc:nth-child(8n+5),
+.stories-page .ov[data-review-note-slot="5"]{--pi:#FFD9E8!important}
 
-.stories-page #p-rev .idc:nth-child(8n){--pi:#E7DEFF!important}
+.stories-page #p-rev .idc:nth-child(8n),
+.stories-page .ov[data-review-note-slot="8"]{--pi:#E7DEFF!important}
 
 .stories-page #p-rev .idc{border-radius:3px;box-shadow:0 1px 2px rgba(20,35,63,.10),0 10px 16px -10px rgba(20,35,63,.32)}
 
@@ -589,7 +597,7 @@ box-shadow:inset 0 0 0 1px rgba(120,86,48,.18),inset 0 2px 12px rgba(90,60,28,.1
 @media (prefers-reduced-motion:no-preference){
   .stories-page .ov{perspective:1600px}
 
-  .stories-page .ov:target .sheet{animation:piIn-st .38s cubic-bezier(.2,.8,.2,1),piBend 1.1s ease-out .1s 1,piCurl .9s cubic-bezier(.3,1.25,.5,1) .35s 1 both}
+  .stories-page .ov:is(:target,[data-story-active]) .sheet{animation:piIn-st .38s cubic-bezier(.2,.8,.2,1),piBend 1.1s ease-out .1s 1,piCurl .9s cubic-bezier(.3,1.25,.5,1) .35s 1 both}
 }
 
 @keyframes piIn-st {from{transform:translateY(16px) scale(.97);opacity:0}to{transform:none;opacity:1}}

@@ -143,6 +143,13 @@
       const items = $$('.faq-item', fl), tabs = $$('.faq-tab', main), cnt = $('#faqCount', main);
       const pager = $('#faqPager', main), pagesEl = $('#faqPages', main), prev = $('#faqPrev', main), next = $('#faqNext', main);
       const search = $('#faqSearch', main), clear = $('#faqClear', main), empty = $('#cmFaqEmpty', main), position = $('#cmFaqPosition', main);
+      // A published empty collection is not a search with zero matches.
+      const collectionEmpty = $('#faqCollectionEmpty', main);
+      if (!items.length && collectionEmpty) {
+        fl.closest('.faq').classList.add('is-empty');
+        collectionEmpty.hidden = false;
+        return;
+      }
       const normalize = value => value.toLocaleLowerCase('ko').replace(/\s+/g, ' ').trim();
       const index = new Map(items.map(item => [item, normalize(item.textContent)]));
       const perPage = () => mobile.matches ? 5 : 8;

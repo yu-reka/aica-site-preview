@@ -523,28 +523,18 @@
         return '<li><a href="interviews.html#' + esc(v.anchor) + '"><span class="hb-ivl-ph">' + hubVisual(v) + '</span>'
           + '<div><h3>' + esc(v.title) + '</h3><span class="hb-by">' + esc(who(v)) + '</span></div></a></li>';
       }).join('') + '</ul>';
+      if (!ivs.length) list = '<div class="hb-ivl-empty aica-state aica-state--compact" role="status"><span class="aica-state__badge">등록 전</span><h3 class="aica-state__title">일반 인터뷰를 준비하고 있어요</h3><p class="aica-state__copy">새로운 인터뷰가 등록되면 이곳에서 확인할 수 있어요.</p></div>';
       // 큰 카드의 꼬리표는 페이지 문구를 유지하고, 이미지·제목·요약·작성자는 같은 최신 인터뷰에서 채웁니다.
       var card = $('.hb-ivf', ivBox);
       // 페이지에 시안 사진 · 목록이 남아 있으면(빌드가 비우지 않은 페이지) 겹치지 않게 먼저 지워요
       if (card && !honorsFeature) $$(':scope > .hb-ivf-ph, :scope > .hb-ph, :scope > svg', card).forEach(function (el) { el.remove(); });
       $$('.hb-ivl', ivBox).forEach(function (el) { el.remove(); });
       if (card && honorsFeature && !f) {
-        card.setAttribute('href', 'interviews.html#iv-honors-1');
-        var honorsPhoto = $('.hb-ivf-ph', card);
-        if (honorsPhoto) {
-          honorsPhoto.classList.remove('honors-placeholder');
-          honorsPhoto.innerHTML = '<img class="hb-ph" src="assets/interview-avatars/avatar-card-10-1080.webp" alt="" width="1080" height="675" loading="eager" fetchpriority="high" decoding="async">';
-        }
-        card.classList.add('aica-state','aica-state--compact');
-        if(honorsPhoto)honorsPhoto.hidden=true;
-        var badge=document.createElement('span');badge.className='aica-state__badge';badge.textContent='준비 중';card.prepend(badge);
-        var honorsTitle = $('h3', card), honorsQuote = $('.hb-ivf-q', card);
-        if(honorsTitle)honorsTitle.classList.add('aica-state__title');
-        if(honorsQuote)honorsQuote.classList.add('aica-state__copy');
-        if (honorsTitle) honorsTitle.textContent = '우수 수료생 인터뷰를 준비하고 있어요';
-        if (honorsQuote) honorsQuote.textContent = '배움 이후의 도전과 성장을 곧 전해드릴게요.';
-        var honorsBy = $('.hb-by', card);
-        if (honorsBy) { honorsBy.textContent = ''; honorsBy.hidden = true; }
+        // Keep the image + caption footprint; a compact state must not shrink the adjacent list.
+        var featureState = document.createElement('div');
+        featureState.className = 'hb-ivf hb-ivf--empty';
+        featureState.innerHTML = '<div class="hb-ivf-empty aica-state" role="status"><span class="aica-state__badge">준비 중</span><h3 class="aica-state__title">우수 수료생 인터뷰를 준비하고 있어요</h3><p class="aica-state__copy">배움 이후의 도전과 성장을 곧 전해드릴게요.</p></div>';
+        card.replaceWith(featureState);
         ivBox.insertAdjacentHTML('beforeend', list);
       } else if (card && f) {
         card.setAttribute('href', 'interviews.html#' + f.anchor);

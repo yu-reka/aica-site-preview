@@ -65,13 +65,14 @@
   }
   function draw(){
     chips();
+    sec.querySelector('.iva-hd').hidden=!D.length;
     sec.querySelectorAll('.iva-seg button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.v===view)});
     var list=D.filter(function(d){return (coh==='all'||(coh==='3-5'?(d.c>=3&&d.c<=5):String(d.c)===coh))});
     excerptResize.disconnect();out.dataset.view=view;out.innerHTML='';
     var pages=Math.max(1,Math.ceil(list.length/STEP));if(pg>pages)pg=pages;
     list.slice((pg-1)*STEP,pg*STEP).forEach(function(d){out.appendChild(card(d))});
-    if(!list.length&&D.length&&typeof StoryState!=='undefined')StoryState.render(empty,'filter',{subject:'인터뷰',onReset:function(){coh='all';pg=1;draw();sec.querySelector('[data-f=coh] button').focus({preventScroll:true});}});
-    empty.hidden=!D.length||list.length>0;
+    if(!list.length&&typeof StoryState!=='undefined')StoryState.render(empty,D.length?'filter':'empty',{subject:D.length?'인터뷰':'일반 인터뷰',overview:!D.length,onReset:function(){coh='all';pg=1;draw();sec.querySelector('[data-f=coh] button').focus({preventScroll:true});}});
+    empty.hidden=list.length>0;
     nav.innerHTML='';nav.hidden=pages<2;
     if(pages>1){
       nav.appendChild(pbtn('←',pg-1,{dis:pg===1,aria:'이전 페이지'}));

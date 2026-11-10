@@ -13,12 +13,12 @@
   "check": {
     "css": {
       "check-m": "1106porcelain-states",
-      "check": "1102faq-review-pagination",
+      "check": "1110preview-empty-interview-faq",
       "presentation": "1026noselfcheck"
     },
     "js": {
       "check-m": "1016integrated",
-      "check": "1106faq-independent",
+      "check": "1110preview-empty-interview-faq",
       "faq-data": "design-20261102-direct-links",
       "faq-render": "1106faq-independent"
     }
@@ -78,7 +78,7 @@
         "hub": "1106cohort-wider-mobile"
       },
       "detail-navigation": "1020outsidegrid",
-      "hub": "1109card-align",
+      "hub": "1110preview-empty-interview-faq",
       "presentation": {
         "hub": "1109lazy-dom",
         "default": "1109lazy-dom"
@@ -91,10 +91,10 @@
       },
       "stories-render": "1105thumb-fit",
       "stories-sections": {
-        "interviews": "1109lazy-dom",
-        "projects": "1109lazy-dom",
-        "reviews": "1109lazy-dom",
-        "cohorts": "1109lazy-dom"
+        "interviews": "1110preview-empty-interview-faq",
+        "projects": "1110preview-empty-interview-faq",
+        "reviews": "1110preview-empty-interview-faq",
+        "cohorts": "1110preview-empty-interview-faq"
       },
       "stories": "1109lazy-dom",
       "story-state": "1109card-align",
@@ -115,8 +115,8 @@
         "legacyLoader": "1109review-resize"
       },
       "stories-m": "1109review-resize",
-      "stories-render": "1109story-summary",
-      "stories-sections": "1109lazy-dom",
+      "stories-render": "1110preview-empty-interview-faq",
+      "stories-sections": "1110preview-empty-interview-faq",
       "stories": "1109lazy-dom",
       "story-state": "1109lazy-dom",
       "interview-honors": "1109lazy-dom",

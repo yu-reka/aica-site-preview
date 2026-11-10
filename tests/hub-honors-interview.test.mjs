@@ -9,7 +9,7 @@ const start=renderer.indexOf("    // 우수 수료생 대표는",renderer.indexO
 const hub=renderer.slice(start,renderer.indexOf('    // 후기:',start));
 const esc=value=>String(value??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const iv=(id,extra={})=>({anchor:'iv-p'+id,title:'인터뷰 '+id,summary:'요약 '+id,author:'시험 작성자 '+id,img:{src:'assets/uploads/test-'+id+'.webp'},...extra});
-function node(text=''){return {textContent:text,hidden:false,innerHTML:'',inserted:'',attributes:{},classList:{remove(){},add(){}},prepend(child){this.badge=child;},setAttribute(k,v){this.attributes[k]=v;},insertAdjacentHTML(_,html){this.inserted+=html;}};}
+function node(text=''){return {textContent:text,hidden:false,innerHTML:'',inserted:'',attributes:{},classList:{remove(){},add(){}},replaceWith(child){this.replacement=child;},prepend(child){this.badge=child;},setAttribute(k,v){this.attributes[k]=v;},insertAdjacentHTML(_,html){this.inserted+=html;}};}
 function render(interviews,featured=true){
   const box=node(),card=node(),photo=node(),title=node(),summary=node(),by=node(),label=node('우수 수료생 인터뷰');
   const fields={'.hb-ivf-ph':photo,h3:title,'.hb-ivf-q':summary,'.hb-by':by,em:label};
@@ -32,12 +32,11 @@ test('honors representative and three normal photo interviews use separate pools
   assert.deepEqual([...out.box.inserted.matchAll(/href="interviews.html#(iv-p\d+)"/g)].map(m=>m[1]),['iv-p14','iv-p13','iv-p12']);
 });
 
-test('without an honors interview the existing placeholder stays alongside normal interviews',()=>{
+test('without honors a non-link full feature state stays alongside the three normal interviews',()=>{
   const out=render([iv(14),iv(13),iv(12)]);
-  assert.equal(out.card.attributes.href,'interviews.html#iv-honors-1');
-  assert.equal(out.title.textContent,'우수 수료생 인터뷰를 준비하고 있어요');
-  assert.equal(out.photo.hidden,true);assert.equal(out.card.badge.textContent,'준비 중');
-  assert.equal(out.by.hidden,true);assert.equal(out.by.textContent,'');
+  assert.equal(out.card.replacement.className,'hb-ivf hb-ivf--empty');
+  assert.match(out.card.replacement.innerHTML,/우수 수료생 인터뷰를 준비하고 있어요/);
+  assert.doesNotMatch(out.card.replacement.innerHTML,/href=|<img/);
   assert.equal((out.box.inserted.match(/<li>/g)||[]).length,3);
 });
 
@@ -45,7 +44,8 @@ test('honors-only and empty data never repeat honors in the normal list',()=>{
   const honors=render([iv(2,{honors:true}),iv(1,{honors:true})]);
   assert.equal(honors.card.attributes.href,'interviews.html#iv-p2');
   assert.doesNotMatch(honors.box.inserted,/<li>/);
-  const empty=render([]);assert.equal(empty.card.attributes.href,'interviews.html#iv-honors-1');assert.doesNotMatch(empty.box.inserted,/<li>/);
+  assert.match(honors.box.inserted,/hb-ivl-empty.*role="status"/);
+  const empty=render([]);assert.ok(empty.card.replacement);assert.doesNotMatch(empty.box.inserted,/<li>/);
 });
 
 test('a video honors interview can be featured while normal video interviews stay out of the side list',()=>{

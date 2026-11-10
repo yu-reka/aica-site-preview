@@ -76,6 +76,7 @@
       </div>
     </div>
     <p class="faq-count" id="faqCount" aria-live="polite"></p>
+    <div class="faq-collection-empty aica-state" id="faqCollectionEmpty" role="status" hidden><span class="aica-state__badge">등록 전</span><h3 class="aica-state__title">아직 등록된 질문이 없어요</h3><p class="aica-state__copy">질문과 답변이 등록되면 이곳에서 확인할 수 있어요.</p></div>
     <ul class="faq-list" id="faqList">
       {{#each check.faq}}{{> @view.item.template}}{{/each}}
     </ul>

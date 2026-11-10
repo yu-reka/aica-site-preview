@@ -21,6 +21,7 @@
 .stories-page .iva{margin-top:clamp(64px,7vw,96px)}
 .stories-page .ivband[hidden]+.iva{margin-top:0}   /* 10-13 사본: 인터뷰 페이지는 캐러셀을 숨김(목록 원본으로만 씀) → 제목 줄 바로 아래 목록, 다른 목록 페이지와 같은 간격 */
 .stories-page .iva-hd{display:flex;align-items:center;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;margin-bottom:24px}
+.stories-page #iv-all .iva-hd[hidden]{display:none}
 .stories-page .iva-hd h3{margin:0;font:700 clamp(22px,2.2vw,26px)/1.3 var(--disp,"Giants",sans-serif);color:var(--ink);letter-spacing:-.01em}
 .stories-page .iva-tools{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .stories-page .iva-chips{display:flex;gap:8px;flex-wrap:wrap}

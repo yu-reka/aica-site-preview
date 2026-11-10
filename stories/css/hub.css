@@ -341,8 +341,11 @@ html[data-nav="side"] .stories-hub{background:var(--surface)}
   [data-honors-feature] .hb-ivg{row-gap:40px}
 }
 
-.stories-page .hb-ivf.aica-state{display:flex;justify-content:center;padding:24px 18px;text-decoration:none}
-.stories-page .hb-ivf.aica-state .hb-ivf-ph{display:none}
-.stories-page .hb-ivf.aica-state .hb-ivf-tx{padding:0;min-height:0}
-.stories-page .hb-ivf.aica-state .hb-ivf-tx::after,.stories-page .hb-ivf.aica-state .hb-ivf-tx em{display:none}
-.stories-page .hb-ivf.aica-state .hb-ivf-q{margin-right:0}
+/* Reserve both the responsive 16:10 cover and its caption, including on mobile. */
+.hb-ivf--empty::before{content:"";display:block;aspect-ratio:16/10;flex:none}
+.hb-ivf--empty::after{content:"";display:block;height:190px;flex:none}
+.stories-page .hb-ivf-empty{position:absolute;inset:0;min-height:0;padding:32px 24px}
+.hb-ivg:has(.hb-ivf--empty)::after{content:none}
+.hb-ivl-empty{align-self:stretch}
+@container hub (max-width:800px){.hb-ivl-empty{min-height:180px}}
+@media(max-width:600px){.hb-ivf--empty::after{height:184px}}

@@ -30,15 +30,15 @@
       "masthead": "1016cleanup",
       "navigation-mobile": "1016nav",
       "presentation": "1029local-fonts",
-      "site": "1103footer-jngj-18",
+      "site": "1110preview-compact-footer-1695db0d",
       "tokens": "1029pretendard-subset",
       "base": "1102loading-history",
       "lnb": "1106sticky-title-visible"
     },
     "js": {
       "availability": "1106porcelain-states",
-      "site-layout": "1109public-footer-channel",
-      "site": "1106sticky-title-visible",
+      "site-layout": "1110preview-compact-footer-1695db0d",
+      "site": "1110preview-compact-footer-1695db0d",
       "track": "1109story-qa",
       "ui": "1106circular-review-rail",
       "menu": "1102loading-history",

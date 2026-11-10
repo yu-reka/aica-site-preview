@@ -82,7 +82,6 @@ const SiteLayout = ({ $, ROOT, href, current, subnavOn, sideNav, html }) => {
     if (!el || el.firstElementChild) return;
     // 연락처 · 저작권 문구와 로고는 공식 교육플랫폼(support.gj-aischool.or.kr) 푸터와 같게(이용약관 · 이메일무단수집거부는 뺌; 11-04 요청 순서: 과기정통부 · 전남광주 · NIPA · AICA). '홈페이지'는 공식 홈페이지 링크(좁은 화면에선 헤더에서 숨김)
     // 11-02 기관 로고: 학교 BI(국문 가로형) + 기관 한 줄(링크 없음). 푸터 바탕이 모든 페이지에서 어두워(#2B2D31) 흰 글자판(태극 · nipa 점은 원색)
-    // 브랜드와 개인정보처리방침을 첫 줄에 묶고, 연락처 → 유관 사이트 → 기관 로고 → 저작권 순으로 정리합니다.
     const brand = (file, alt, w, h) => `<img class="${file}" src="${text(ROOT)}common/assets/brand/${file}-white.svg" alt="${alt}" width="${w}" height="${h}" loading="lazy" decoding="async">`;
     el.innerHTML = `
     <div class="wrap">
@@ -90,6 +89,14 @@ const SiteLayout = ({ $, ROOT, href, current, subnavOn, sideNav, html }) => {
         <a class="logo" href="${text(ROOT + SITE_HOME)}">${brand('school-bi', '인공지능사관학교', 191, 30)}</a>
         <ul class="footer-links">
           <li><a href="#privacy" data-toast="${text(SITE_INFO.privacyNote)}"><strong>개인정보처리방침</strong></a></li>
+          <li>
+            <details class="footer-related">
+              <summary><span>유관 사이트</span>${ICON.chev}</summary>
+              <ul class="footer-related-list">
+                <li><a href="${text(SITE_INFO.relatedSiteUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${text(SITE_INFO.relatedSiteLabel)} (새 창)">${text(SITE_INFO.relatedSiteLabel)}</a></li>
+              </ul>
+            </details>
+          </li>
         </ul>
       </div>
       <div class="footer-main">
@@ -98,9 +105,6 @@ const SiteLayout = ({ $, ROOT, href, current, subnavOn, sideNav, html }) => {
             <ul><li>${text(SITE_INFO.name)}</li><li>주소 : ${text(SITE_INFO.address)}</li><li>전화문의 : ${text(SITE_INFO.phone)}</li><li>E-Mail : ${text(SITE_INFO.email)}</li></ul>
             <ul><li>카카오톡 채널 : ${SITE_LINKS.kakao?.url ? `<a ${ext('kakao')}>${text(SITE_INFO.kakaoChannel)}</a>` : text(SITE_INFO.kakaoChannel)}</li><li><a ${ext('official')}>공식 홈페이지</a></li><li>상담시간 : ${text(SITE_INFO.hours)}</li></ul>
           </address>
-          <ul class="footer-links footer-related">
-            <li>유관 사이트 <a href="${text(SITE_INFO.relatedSiteUrl)}" target="_blank" rel="noopener">${text(SITE_INFO.relatedSiteLabel)}</a></li>
-          </ul>
           <ul class="footer-orgs">
             <li>${brand('org-msit', '과학기술정보통신부', 134, 26)}</li>
             <li><img class="org-jngj" src="${text(ROOT)}common/assets/brand/org-jngj-white.png" alt="전남광주통합특별시" width="168" height="18" loading="lazy" decoding="async"></li>

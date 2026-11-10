@@ -89,12 +89,12 @@
 /* =========================================================
    푸터
    ========================================================= */
-.site-footer{padding:44px 0 calc(36px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:var(--paper);font-size:14.5px;color:var(--graphite)}
+.site-footer{padding:24px 0 calc(20px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:var(--paper);font-size:14px;color:var(--graphite)}
 /* 브랜드·정책 한 줄: 연락처와 기관 로고는 같은 왼쪽 기준선으로 정렬합니다. */
 .site-footer .wrap{display:block}
-.site-footer .footer-top{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px}
+.site-footer .footer-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px}
 .site-footer .footer-top .logo{display:inline-flex;align-items:center;min-height:44px;flex:none}
-.site-footer .footer-top .footer-links{border-left:1px solid rgba(255,255,255,.2);padding-left:24px}
+.site-footer .footer-top .footer-links{align-items:center;gap:10px 20px}
 .site-footer address{font-style:normal;line-height:1.75}
 .site-footer address ul{display:flex;flex-wrap:wrap;list-style:none;margin:0;padding:0}
 .site-footer address li+li::before{content:"";display:inline-block;width:1px;height:.75em;background:currentColor;opacity:.35;margin:0 12px;vertical-align:-.04em}
@@ -110,11 +110,23 @@
 .site-footer .org-msit{height:26px}
 .site-footer .org-nipa{height:21px}
 .site-footer .org-aica{height:17px}
-.site-footer .footer-orgs{display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;gap:16px 32px;list-style:none;margin:22px 0 0;padding:20px 0 0;border-top:1px solid rgba(255,255,255,.16)}
-.site-footer .footer-main{margin-top:22px}
-.site-footer .footer-related{margin-top:10px;color:inherit}
-.site-footer .footer-related a{color:inherit;font-weight:400}
-.site-footer .footer-copy{margin:14px 0 0;font-size:13px}
+.site-footer .footer-orgs{display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;gap:14px 28px;list-style:none;margin:16px 0 0;padding:14px 0 0;border-top:1px solid rgba(255,255,255,.16)}
+.site-footer .footer-orgs>li{display:flex;align-items:center;flex:0 0 auto;min-width:0;max-width:100%}
+.site-footer .footer-orgs img{max-height:26px}
+.site-footer .footer-main{margin-top:12px}
+/* 내용 폭 + 양옆 10px. 꺾쇠는 사이트 공통 아이콘을 쓰고 글자와 6px만 띄웁니다. */
+.site-footer .footer-related{position:relative;color:#e3e5e8;font-size:14px;line-height:1.5}
+.site-footer .footer-related summary{display:flex;align-items:center;justify-content:center;gap:6px;width:max-content;max-width:100%;min-height:36px;padding:7px 10px;border:1px solid rgba(255,255,255,.2);border-radius:4px;list-style:none;cursor:pointer}
+.site-footer .footer-related summary::-webkit-details-marker{display:none}
+.site-footer .footer-related summary svg{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .15s}
+.site-footer .footer-related[open] summary svg{transform:rotate(180deg)}
+.site-footer .footer-related-list{position:absolute;z-index:45;top:calc(100% + 6px);right:0;min-width:100%;width:max-content;max-width:min(280px,calc(100vw - 2 * var(--gutter)));margin:0;padding:0;list-style:none;background:#34383e;border:1px solid rgba(255,255,255,.16);border-radius:4px;box-shadow:0 8px 20px #0003}
+.site-footer .footer-related-list a{display:flex;align-items:center;min-height:34px;padding:7px 10px;border-radius:3px;color:#eceef1;font-weight:400;overflow-wrap:anywhere;word-break:normal}
+.site-footer .footer-related-list a:hover{background:rgba(255,255,255,.05)}
+.site-footer .footer-related summary:hover{color:#fff;border-color:rgba(255,255,255,.35)}
+.site-footer .footer-related :is(summary,a):focus-visible{outline:2px solid #8AA9FF;outline-offset:3px}
+.site-footer .footer-copy{margin:12px 0 0;font-size:12px}
+@media(prefers-reduced-motion:reduce){.site-footer .footer-related summary svg{transition:none}}
 
 /* =========================================================
    플로팅 버튼(FAB): 맨 위로 — 모든 페이지 오른쪽 아래(지원하기는 헤더 · 모바일 메뉴에) · 안내 토스트
@@ -178,15 +190,22 @@
   /* Give mobile footer links a full touch target without overlapping neighbours. */
   .site-footer .footer-links li{display:flex;align-items:center;flex-wrap:wrap;column-gap:4px}
   .site-footer :is(.footer-links,address) a{display:inline-flex;align-items:center;min-height:44px;min-width:44px}
-  .site-footer address ul{display:block}
+  .site-footer address ul{display:flex;gap:2px 12px}
+  .site-footer address li{display:flex;align-items:center;flex-wrap:wrap;column-gap:4px}
+  .site-footer address ul:first-child>li:nth-child(-n+2){flex-basis:100%}
   .site-footer address li+li::before{display:none}
-  .site-footer{padding-top:32px;padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
+  .site-footer{padding-top:22px;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px));font-size:13px}
   .site-footer .wrap{display:block}
   .site-footer address{line-height:1.7}
-  .site-footer .footer-orgs{gap:16px 24px;margin-top:20px;padding-top:20px}
-  .site-footer .footer-main{display:block;margin-top:24px}
-  .site-footer .footer-top{gap:8px 20px}
-  .site-footer .footer-top .footer-links{padding-left:0;border-left:0}
+  .site-footer .footer-orgs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 20px;margin-top:16px;padding-top:14px}
+  .site-footer .footer-main{display:block;margin-top:12px}
+  .site-footer .footer-top{flex-direction:column;align-items:flex-start;gap:6px}
+  .site-footer .footer-top .footer-links{gap:8px 18px}
+  .site-footer .footer-related{font-size:13px}
+  .site-footer .footer-related summary{position:relative;min-height:32px;padding:4px 8px;gap:5px}
+  .site-footer .footer-related-list a{min-height:30px;padding:4px 8px} /* 목록 테두리 2px를 더하면 선택박스와 같은 32px */
+  /* 보이는 상자는 작게, 위아래 누르는 영역은 기존 44px로 유지합니다. */
+  .site-footer .footer-related summary::before{content:"";position:absolute;inset:-6px 0}
   .site-footer .footer-copy{padding-right:48px;font-size:12.5px}   /* 맨 아래까지 내렸을 때 오른쪽 아래 맨 위로 버튼(오른쪽 16 + 40px)이 저작권 끝을 가리지 않게. 12.5px: 430px 폭에서 한 줄 */
 }
 @media (max-width:860px){

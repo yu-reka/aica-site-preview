@@ -306,6 +306,21 @@ const Site = (() => {
 
   function bind(){
     const header = $('#siteHeader'), fabTop = $('#fabTop');
+    const footerRelated = $('#siteFooter .footer-related');
+    if (footerRelated) {
+      document.addEventListener('click', e => {
+        if (!footerRelated.contains(e.target) || e.target.closest('.footer-related-list a')) footerRelated.open = false;
+      });
+      footerRelated.addEventListener('keydown', e => {
+        if (e.key !== 'Escape' || !footerRelated.open) return;
+        e.preventDefault();
+        footerRelated.open = false;
+        $('summary', footerRelated).focus();
+      });
+      footerRelated.addEventListener('focusout', e => {
+        if (!footerRelated.contains(e.relatedTarget)) footerRelated.open = false;
+      });
+    }
     $('#menuBtn').addEventListener('click', openDrawer);
     $('#drawerClose').addEventListener('click', () => closeDrawer(true));
     $('#drawerDim')?.addEventListener('click', () => closeDrawer(true));   // 딤을 눌러도 닫힘(10-15)

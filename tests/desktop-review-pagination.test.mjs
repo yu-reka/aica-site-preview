@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 
-const source = readFileSync(new URL('../stories/js/stories-render.js', import.meta.url), 'utf8');
+const source = readFileSync(new URL('../stories/js/stories-review-paging.js', import.meta.url), 'utf8');
 const controller = source.split('/* Desktop review paging:')[1]?.split('/* End desktop review paging. */')[0];
 
 class Element {

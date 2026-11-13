@@ -7,6 +7,8 @@ import vm from 'node:vm';
 // 프로젝트 썸네일(2026-10-26): 백오피스에서 고른 그림(thumb)만 크게 카드 · 한눈에 보기 · 상세 맨 위에 그리고, 프로젝트 주제(summary)는 카드 글로 보여요.
 const content=readFileSync(new URL('../common/js/public-content.js',import.meta.url),'utf8');
 const renderer=readFileSync(new URL('../stories/js/stories-render.js',import.meta.url),'utf8');
+// 썸네일 맞춤(fitThumb) · 시연 영상 재생은 렌더러 다음 파일(stories-media.js)
+const media=readFileSync(new URL('../stories/js/stories-media.js',import.meta.url),'utf8');
 const css=readFileSync(new URL('../stories/css/stories-render.css',import.meta.url),'utf8');
 function element(){return {innerHTML:'',inserted:'',attributes:{},querySelector(){return null;},querySelectorAll(){return [];},setAttribute(name,value){this.attributes[name]=value;},insertAdjacentHTML(_,html){this.inserted+=html;}};}
 function render(projects){
@@ -92,7 +94,7 @@ test('the thumbnail CSS fits the picture large on white and long subjects stop a
   assert.doesNotMatch(css,/pjthumb-t|pjthumb-xs|cqw/);
   // 사진처럼 꽉 찬 그림(pjthumb-full)은 칸 크기에 맞춰 꽉 채움(cover — 넘치는 가장자리는 잘림), 뒤 흐린 배경은 없음(2026-10-27)
   assert.match(css,/\.stories-page \.pjthumb-full \.pjthumb-i,\.stories-page a:hover \.ph \.pjthumb-full \.pjthumb-i\{left:0;top:0;width:100%;height:100%;object-fit:cover\}/);
-  assert.doesNotMatch(css+renderer,/pjthumb-bg|blur\(/);
+  assert.doesNotMatch(css+renderer+media,/pjthumb-bg|blur\(/);
   // 카드 · 한눈에 보기 그림 칸은 16:9(썸네일 그림 1600×900 이 잘리지 않게, 2026-10-27)
   assert.match(css,/\.stories-page \.pjc \.ph,\.stories-page \.hb-pjc-ph\{aspect-ratio:16\/9\}/);
   assert.match(css,/\.stories-page \.pjc-tx h3\[data-field="summary"\],\.hb-pjc \.hb-pjc-nm \+ h3\{[^}]*-webkit-line-clamp:3/);
@@ -110,7 +112,7 @@ test('a picture with no transparent pixel fills the thumbnail box; transparent o
   const document={querySelector:()=>null,querySelectorAll:sel=>sel==='.pjthumb-i'?[photo,art,foreign,loading]:[],createElement:()=>canvas,
     addEventListener(type,fn,capture){(listeners[type]||=[]).push(fn);}};
   const context=vm.createContext({window:{},document,setTimeout,clearTimeout,matchMedia:()=>({matches:false})});
-  runInContext(renderer,context);
+  runInContext(media,context);
   assert.deepEqual([photo.parentNode.attrs['data-fit'],[...photo.parentNode.classes]],['full',['pjthumb-full']]);
   assert.deepEqual([art.parentNode.attrs['data-fit'],[...art.parentNode.classes]],['art',[]]);
   assert.deepEqual([foreign.parentNode.attrs['data-fit'],[...foreign.parentNode.classes]],['art',[]]);
@@ -146,7 +148,7 @@ test('pressing play swaps the poster for a privacy-friendly YouTube player, and 
     replaceChildren(){box.kids=[];},appendChild(k){box.kids.push(k);},closest:s=>s==='.pjd'?{id:'pj-p1'}:null};
   const button={closest:s=>s==='.pjvid .ivplay'?button:s==='.pjvid'?box:null};
   const context=vm.createContext({window:{addEventListener(type,fn){(listeners['win:'+type]||=[]).push(fn);}},document,location:{hash:'#pj-p1'},setTimeout,clearTimeout,matchMedia:()=>({matches:false})});
-  runInContext(renderer,context);
+  runInContext(media,context);
   let prevented=false;
   listeners['doc:click'].forEach(fn=>fn({target:button,preventDefault(){prevented=true;}}));
   const frame=made.find(e=>e.tagName==='iframe');
@@ -180,7 +182,7 @@ test('a demo that is one section of a long video plays only from its start to it
       createElement:tag=>{const el={tagName:tag,focus(){}};made.push(el);return el;}};
     const box={innerHTML:'',getAttribute:n=>attrs[n]??null,querySelector:()=>null,replaceChildren(){},appendChild(){}};
     const button={closest:s=>s==='.pjvid .ivplay'?button:s==='.pjvid'?box:null};
-    vm.runInContext(renderer,vm.createContext({window:{},document,location:{hash:''},setTimeout,clearTimeout,matchMedia:()=>({matches:false})}));
+    vm.runInContext(media,vm.createContext({window:{},document,location:{hash:''},setTimeout,clearTimeout,matchMedia:()=>({matches:false})}));
     listeners.click.forEach(fn=>fn({target:button,preventDefault(){}}));
     return made.find(e=>e.tagName==='iframe').src;
   };

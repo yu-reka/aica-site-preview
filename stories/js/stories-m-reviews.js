@@ -1,5 +1,5 @@
 /* Mobile review projection for the published static/Spring markup.
-   Owns category/cohort/tag filters, ten-card pages and canonical modal links.
+   Owns category/cohort filters, the card rail, and the paginated review list.
    Loaded before stories-m.js on new pages; the legacy entry can load it on demand. */
 const StoriesMobileReviews = (() => {
   const { $, $$ } = SiteUI.selectors();
@@ -17,7 +17,7 @@ const StoriesMobileReviews = (() => {
     if (cached) { cached.marker.after(cached.box); cached.restore(); return; }
     var cards = managed || $$('.idc', source);
     if (!cards.length) return; // Keep the server's published-empty state.
-    var box = el('section', 'sm-reviews'); box.setAttribute('aria-label', '후기 목록');
+    var box = el('section', 'sm-reviews'); box.setAttribute('aria-label', '후기 탐색');
     var categories = tabs('후기 카테고리'), cohorts = tabs('후기 기수');
     cohorts.classList.add('sm-cohort-chips');
     var count = el('p', 'sm-review-count'); count.setAttribute('role', 'status');
@@ -55,7 +55,7 @@ const StoriesMobileReviews = (() => {
         stage.style.setProperty('--review-control-y', rect.top + rect.height / 2 - stage.getBoundingClientRect().top + 'px');
       }
       var state = SiteUI.railState(board);
-      navigation.hidden = view === 'list' || stage.classList.contains('is-empty') || state.max <= 4;
+      navigation.hidden = stage.classList.contains('is-empty') || state.max <= 4;
       previous.disabled = !loop.active && state.atStart; next.disabled = !loop.active && state.atEnd;
       var value = board.scrollWidth ? Math.min(100, Math.max(0, (board.scrollLeft + board.clientWidth) / board.scrollWidth * 100)) : 100;
       if (loop.active) value = loop.position();
@@ -69,16 +69,20 @@ const StoriesMobileReviews = (() => {
     board.addEventListener('keydown', function(event){ SiteUI.railKeys(event, move); });
     function resizeRail(){
       if (managed && !box.isConnected) return;
-      if (view === 'list') { refresh(); return; }
       syncRail();
       loop.enable(board.clientWidth > 0 && board.clientWidth <= 600);
       syncRail();
     }
     addEventListener('resize', resizeRail);
     stage.append(board, navigation);
-    var lastView = '';
+    var lastFilter, lastPage;
     var empty = el('div', 'sm-review-empty', '선택한 조건에 맞는 후기가 없습니다.');
-    var pager = el('nav', 'sm-review-pager cpager'); pager.setAttribute('aria-label', '후기 페이지');
+    var list = el('section', 'sm-review-list');
+    list.tabIndex = -1;
+    list.setAttribute('aria-label', '후기 목록');
+    var rows = el('div', 'sm-review-list-rows');
+    var pager = el('nav', 'cpager'); pager.setAttribute('aria-label', '후기 페이지');
+    list.append(rows, pager);
     var category = 'all', cohort = '', page = 1, pageSize = 10;
     function readDesktopFilters(){
       var nextCategory = $('input[name="rc"]:checked', section)?.id.slice(3) || 'all';
@@ -89,9 +93,23 @@ const StoriesMobileReviews = (() => {
       category = nextCategory; cohort = nextCohort;
     }
     if (managed) readDesktopFilters();
+    function reviewLink(card, className){
+      var link = el('a', className);
+      link.href = managed ? '#' + card.anchor : card.getAttribute('href');
+      link.setAttribute('aria-haspopup', 'dialog');
+      return link;
+    }
+    function reviewTitle(card){
+      return managed ? card.title : $('h3', card)?.textContent || '';
+    }
+    function reviewAuthor(card){
+      return managed ? card.author : $('.who b', card)?.textContent || '';
+    }
+    function reviewTag(card){
+      return managed ? card.tag : $('.who .tg', card)?.textContent;
+    }
     function noteFor(card){
-      var note = el('a', 'sm-review-note');
-      note.href = managed ? '#' + card.anchor : card.getAttribute('href'); note.setAttribute('aria-haspopup', 'dialog');
+      var note = reviewLink(card, 'sm-review-note');
       var summary = el('div', 'sm-review-summary');
       var bar;
       if (managed) {
@@ -100,19 +118,36 @@ const StoriesMobileReviews = (() => {
         var chip = el('span', '', card.cohort); chip.dataset.field = 'cohort';
         chip.appendChild(el('i', '', '기')); bar.append(category, chip);
       } else bar = cleanClone($('.cbar', card)); if (bar) summary.appendChild(bar);
-      summary.appendChild(el('h3', '', managed ? card.title : ($('h3', card) || {}).textContent || ''));
+      summary.appendChild(el('h3', '', reviewTitle(card)));
       summary.appendChild(el('span', 'sm-review-preview', managed ? card.summary : ($('.in > p', card) || {}).textContent || ''));
       note.appendChild(summary);
       var footer = el('div', 'sm-review-by');
-      var author = managed ? card.author : ($('.who b', card) || {}).textContent || '';
-      footer.appendChild(el('b', '', author));
-      var tag = managed ? card.tag : $('.who .tg', card)?.textContent;
+      footer.appendChild(el('b', '', reviewAuthor(card)));
+      var tag = reviewTag(card);
       if (tag) footer.appendChild(el('span', 'sm-review-tag', tag));
-      var cohortText = managed ? card.cohort + '기' : ($('.cbar span', card) || {}).textContent || '';
-      footer.appendChild(el('span', 'sm-review-list-meta', cohortText.replace(/\s+/g, '') + ' · ' + author));
       var arrow = el('span', 'sm-review-card-arrow', '→'); arrow.setAttribute('aria-hidden', 'true');
       footer.appendChild(arrow); note.appendChild(footer);
       return note;
+    }
+    function rowFor(entry){
+      var card = entry.card;
+      var row = reviewLink(card, 'sm-review-row');
+      var label = managed ? card.label : $('.cbar b', card)?.textContent;
+      if (label) {
+        var badge = el('span', 'sm-review-row-category', label);
+        badge.dataset.category = managed ? card.category :
+          entry.classes.find(function(name){ return /^cat-(job|path|life|class|proj)$/.test(name); })?.slice(4) || '';
+        row.appendChild(badge);
+      }
+      var copy = el('div', 'sm-review-row-copy');
+      var meta = el('div', 'sm-review-row-meta');
+      var by = [entry.cohort && entry.cohort + '기', reviewAuthor(card)].filter(Boolean).join(' · ');
+      if (by) meta.appendChild(el('span', '', by));
+      var tag = reviewTag(card);
+      if (tag) meta.appendChild(el('span', 'sm-review-row-tag', tag));
+      copy.append(el('h3', 'sm-review-row-title', reviewTitle(card)), meta);
+      row.appendChild(copy);
+      return row;
     }
     var entries = cards.map(function(card){
       if (managed) return {card, cohort:card.cohort, classes:['cat-' + card.category]};
@@ -120,7 +155,6 @@ const StoriesMobileReviews = (() => {
       var co = cl.find(function(c){ return /^coh\d+$/.test(c); });
       return {card, cohort:co ? co.slice(3) : '', classes:cl};
     });
-    var toolbar = el('div', 'sm-review-toolbar');
     var filterRow = el('div', 'sm-review-filter-row');
     var cohortSelect = el('details', 'sm-review-cohort-dropdown dw');
     cohortSelect.setAttribute('name', 'mobile-review-filter');
@@ -135,23 +169,7 @@ const StoriesMobileReviews = (() => {
       if (event.key === 'Escape'){ cohortSelect.open = false; cohortSummary.focus({preventScroll:true}); }
     });
     cohortSelect.addEventListener('focusout', function(event){ if (!cohortSelect.contains(event.relatedTarget)) cohortSelect.open = false; });
-    filterRow.appendChild(cohortSelect);
-    var views = el('div', 'sm-review-views'); views.setAttribute('role', 'group'); views.setAttribute('aria-label', '후기 보기 방식');
-    var view = 'card';
-    ['card', 'list'].forEach(function(mode){
-      var button = el('button', ''); button.type = 'button'; button.dataset.view = mode;
-      button.setAttribute('aria-label', mode === 'card' ? '카드 보기' : '목록 보기');
-      button.setAttribute('aria-pressed', String(mode === view));
-      var icon = cleanClone($('.vtoggle label[for="vm-' + mode + '"] svg', section));
-      if (icon) button.appendChild(icon);
-      button.addEventListener('click', function(){
-        view = mode; page = 1; stage.classList.toggle('is-list', mode === 'list');
-        board.setAttribute('aria-label', mode === 'list' ? '후기 목록' : '후기 카드 가로 목록');
-        $$('button', views).forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.view === view)); });
-        refresh();
-      }); views.appendChild(button);
-    });
-    filterRow.appendChild(views); toolbar.appendChild(count);
+    filterRow.append(count, cohortSelect);
     var categoryNames = [['all','전체'],['life','생활'],['class','수업'],['proj','프로젝트'],['job','취업'],['path','진로']];
     categoryNames.forEach(function(c){
       tabButton(categories, c[1], c[0] === category, function(){
@@ -179,8 +197,8 @@ const StoriesMobileReviews = (() => {
       if (String(value) === text && page === value) b.setAttribute('aria-current', 'page');
       b.addEventListener('click', function(){
         page = value; refresh();
-        var active = $('button[aria-current="page"]', pager); if (active) active.focus({preventScroll:true});
-        box.scrollIntoView({block:'start',behavior:reduce.matches ? 'auto' : 'smooth'});
+        list.focus({preventScroll:true});
+        list.scrollIntoView({block:'start',behavior:reduce.matches ? 'auto' : 'smooth'});
       }); return b;
     }
     function refresh(){
@@ -194,23 +212,32 @@ const StoriesMobileReviews = (() => {
       });
       var total = Math.max(1, Math.ceil(matching.length / pageSize)); page = Math.min(page, total);
       count.textContent = matching.length + '개의 후기';
-      var key = [category, cohort, page, view].join('|');
-      if (key === lastView && view === 'card') { syncRail(); return; }
-      var left = key === lastView ? board.scrollLeft : 0; lastView = key;
-      board.replaceChildren();
-      var shown = view === 'list' ? matching.slice((page - 1) * pageSize, page * pageSize) : matching;
-      shown.forEach(function(e){ board.appendChild(e.node || (e.node = noteFor(e.card))); });
+      var filter = category + '|' + cohort;
+      var filtersChanged = filter !== lastFilter;
+      if (!filtersChanged && page === lastPage) { syncRail(); return; }
+      if (filtersChanged) {
+        board.replaceChildren();
+        matching.forEach(function(e){ board.appendChild(e.note || (e.note = noteFor(e.card))); });
+        board.scrollLeft = 0;
+      }
+      lastFilter = filter; lastPage = page;
+      rows.replaceChildren();
+      matching.slice((page - 1) * pageSize, page * pageSize).forEach(function(e){
+        rows.appendChild(e.row || (e.row = rowFor(e)));
+      });
       if(!matching.length&&typeof StoryState!=='undefined')StoryState.render(empty,'filter',{subject:'후기',reviewBoard:board,onReset:function(){
         StoryState.resetReviews(section);categories.querySelector('button').focus({preventScroll:true});
       }});
       empty.hidden = matching.length > 0;
       stage.classList.toggle('is-empty', !matching.length);
       board.tabIndex = matching.length ? 0 : -1;
-      board.scrollLeft = left;
-      syncRail(); loop.reset(view === 'card' && board.clientWidth > 0 && board.clientWidth <= 600);
-      requestAnimationFrame(syncRail);
-      pager.replaceChildren(); pager.hidden = view !== 'list' || !matching.length;
-      if (view === 'list' && matching.length){
+      if (filtersChanged) {
+        syncRail(); loop.reset(board.clientWidth > 0 && board.clientWidth <= 600);
+        requestAnimationFrame(syncRail);
+      }
+      list.hidden = !matching.length;
+      pager.replaceChildren(); pager.hidden = total < 2;
+      if (total > 1){
         pager.appendChild(pageButton('←', page - 1, page === 1));
         var windowSize = box.clientWidth < 316 ? 4 : 5;
         var start = Math.max(1, Math.min(page - 2, total - windowSize + 1));
@@ -218,7 +245,7 @@ const StoriesMobileReviews = (() => {
         pager.appendChild(pageButton('→', page + 1, page === total));
       }
     }
-    box.append(categories, filterRow, toolbar, stage, empty, pager);
+    box.append(categories, filterRow, stage, empty, list);
     if (managed) {
       var marker = document.createComment('mobile reviews');
       source.before(marker, box);
@@ -226,7 +253,7 @@ const StoriesMobileReviews = (() => {
         marker, box,
         restore: function(){
           readDesktopFilters(); refresh();
-          if (view === 'card') resizeRail();
+          resizeRail();
         },
         detach: function(){
           // Restore canonical order before detaching; resize may fire on either side of the media query.

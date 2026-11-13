@@ -97,12 +97,13 @@ function startReviews(classes, reducedMotion = true, managed = false, initialFil
   const categories = created.find(node => node.attrs['aria-label'] === '후기 카테고리');
   const cohorts = created.find(node => node.attrs['aria-label'] === '후기 기수');
   const board = created.find(node => node.className === 'sm-review-board');
+  const rows = created.find(node => node.className === 'sm-review-list-rows');
   const count = created.find(node => node.className === 'sm-review-count');
   const pager = created.find(node => node.attrs['aria-label'] === '후기 페이지');
   const empty = created.find(node => node.className === 'sm-review-empty');
   const choose = (group, value) => group.children.find(node => node.dataset.value === value).events.click();
 
-  return { categories, cohorts, board, count, empty, pager, choose, listeners, location, changeFilter, resize,
+  return { categories, cohorts, board, rows, count, empty, pager, choose, listeners, location, changeFilter, resize,
     navigation: created.find(node => node.className === 'sm-review-navigation'),
     progress: created.find(node => node.className === 'sm-review-progress'),
     tagSelect: created.find(node => node.className === 'sm-review-tag-dropdown dw'),
@@ -111,7 +112,7 @@ function startReviews(classes, reducedMotion = true, managed = false, initialFil
 }
 
 test('mobile review tabs match specific categories even after a shared career class', () => {
-  const { board, categories, cohorts, count, empty, choose } = startReviews([
+  const { board, rows, categories, cohorts, count, empty, choose } = startReviews([
     ['cat-career', 'cat-job', 'coh6'], ['cat-career', 'cat-path', 'coh7'], ['cat-life', 'coh7'],
   ]);
 
@@ -120,12 +121,14 @@ test('mobile review tabs match specific categories even after a shared career cl
     choose(categories, category);
     assert.equal(count.textContent, '1개의 후기', category);
     assert.equal(board.children.length, 1, category);
+    assert.equal(rows.children[0].href, board.children[0].href, category);
     assert.equal(empty.hidden, true, category);
   }
   choose(categories, 'job');
   choose(cohorts, '7');
   assert.equal(count.textContent, '0개의 후기');
   assert.equal(empty.hidden, false);
+  assert.equal(rows.children.length, 0);
   choose(categories, 'path');
   assert.equal(count.textContent, '1개의 후기');
   choose(categories, 'all');
@@ -136,25 +139,25 @@ test('mobile review tabs match specific categories even after a shared career cl
 
 test('mobile grid exposes all matching reviews while the shared list pager keeps ten rows', () => {
   const classes = Array.from({ length: 11 }, () => ['cat-life', 'coh7', 'tg4']);
-  const { board, pager, count, location, listeners, views } = startReviews(classes);
+  const { board, rows, pager, count, location, listeners, views } = startReviews(classes);
   assert.equal(count.textContent, '11개의 후기');
+  assert.equal(views, undefined);
   assert.equal(board.children.length, 11);
-  assert.equal(pager.hidden, true);
-  views.children[1].events.click();
   assert.equal(pager.hidden, false);
-  assert.equal(board.children.length, 10);
-  assert.equal(board.children[0].tagName, 'a');
-  assert.equal(board.children[0].href, '#r-0');
-  assert.equal(board.children[0].attrs['aria-haspopup'], 'dialog');
+  assert.equal(rows.children.length, 10);
+  assert.equal(rows.children[0].tagName, 'a');
+  assert.equal(rows.children[0].href, '#r-0');
+  assert.equal(rows.children[0].attrs['aria-haspopup'], 'dialog');
+  assert.notEqual(rows.children[0], board.children[0]);
+  board.scrollLeft = 180;
   pager.children.find(button => button.attrs['aria-label'] === '2페이지').events.click();
-  assert.equal(board.children.length, 1);
-  assert.equal(board.children[0].href, '#r-10');
-  location.hash = '#tg-4'; listeners.hashchange();
-  assert.equal(board.children.length, 1, 'an old tag hash does not change page 2');
-  assert.equal(count.textContent, '11개의 후기');
-  views.children[0].events.click();
+  assert.equal(rows.children.length, 1);
+  assert.equal(rows.children[0].href, '#r-10');
   assert.equal(board.children.length, 11);
-  assert.equal(pager.hidden, true);
+  assert.equal(board.scrollLeft, 180);
+  location.hash = '#tg-4'; listeners.hashchange();
+  assert.equal(rows.children.length, 1, 'an old tag hash does not change page 2');
+  assert.equal(count.textContent, '11개의 후기');
 });
 
 test('legacy Spring entry loads reviews only on a review page', () => {
@@ -174,7 +177,7 @@ test('legacy Spring entry loads reviews only on a review page', () => {
     runInContext(readFileSync(new URL('../stories/js/stories-m.js', import.meta.url), 'utf8'), context);
     assert.equal(appended.length, hasReviews ? 1 : 0);
     if (hasReviews) {
-      assert.equal(appended[0].src, 'https://site.example/stories/js/stories-m-reviews.js?v='+assetVersion('stories.js.stories-m-reviews.legacyLoader'));
+      assert.equal(appended[0].src, 'https://site.example/stories/js/stories-m-reviews.js?v='+assetVersion('stories.js.stories-m-reviews'));
       let initialized = 0;
       context.StoriesMobileReviews = { init() { initialized++; } };
       appended[0].onload();
@@ -199,22 +202,22 @@ test('mobile review rail keeps its position across modal open and close', () => 
 });
 
 test('mobile omits tag controls and ignores old tag hashes in either view', () => {
-  const { tagSelect, views, board, count, location, listeners } = startReviews([
+  const { tagSelect, rows, board, count, location, listeners } = startReviews([
     ['cat-life', 'coh7', 'tg0'], ['cat-class', 'coh7', 'tg5'],
   ]);
   assert.equal(tagSelect, undefined);
   location.hash = '#tg-5'; listeners.hashchange();
   assert.equal(count.textContent, '2개의 후기');
   assert.equal(board.children.length, 2);
-  views.children[1].events.click();
   location.hash = '#r-1'; listeners.hashchange();
   location.hash = '#p-rev'; listeners.hashchange();
   assert.equal(board.children.length, 2);
+  assert.equal(rows.children.length, 2);
 });
 
 // Navigation follows native scrolling, including swipes; it never rebuilds cards.
-test('review navigation tracks scroll bounds and hides for lists and nonoverflowing results', () => {
-  const {board, navigation, progress, views} = startReviews([['cat-life','coh7'],['cat-life','coh7']]);
+test('review navigation tracks scroll bounds alongside the list', () => {
+  const {board, navigation, progress, rows, pager} = startReviews([['cat-life','coh7'],['cat-life','coh7']]);
   const previous = navigation.children[1], next = navigation.children[2];
   assert.equal(navigation.hidden, true);
   board.scrollWidth = 900; board.events.scroll();
@@ -226,7 +229,10 @@ test('review navigation tracks scroll bounds and hides for lists and nonoverflow
   assert.ok(Number(progress.attrs['aria-valuenow']) <= 100);
   board.scrollLeft = 600; board.events.scroll();
   assert.equal(next.disabled, false);
-  views.children[1].events.click(); assert.equal(navigation.hidden, true);
+  assert.equal(rows.children.length, 2);
+  assert.equal(pager.hidden, true, 'a single list page needs no pagination');
+  board.scrollWidth = 300; board.events.scroll();
+  assert.equal(navigation.hidden, true);
 });
 
 test('review navigation requests a smooth card step and respects reduced motion', () => {

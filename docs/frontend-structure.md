@@ -43,7 +43,7 @@ home·about·check·life·이야기 허브의 자산 목록은 각 페이지 `he
 
 ## V30 공개 API와 통합 반영
 
-현재 연결 순서와 공개 샘플·비공개 DB 사본의 경계는 [README](../README.md#현재-데이터-흐름)를 기준으로 합니다. `scripts/backoffice-site.mjs`가 디자인 빌드에 API 연결을 적용하고, `stories-render.js`·`faq-render.js`가 화면 동작 스크립트보다 먼저 목록을 준비합니다. 이야기 상세는 열 때 `story-details.js`가 만들며, 요약 API를 사용한 경우에만 상세 본문을 별도로 요청합니다. `track.js`는 콘텐츠 페이지에, `ticker-render.js`는 홈에 연결됩니다.
+현재 연결 순서와 공개 샘플·비공개 DB 사본의 경계는 [README](../README.md#현재-데이터-흐름)를 기준으로 합니다. `scripts/backoffice-site.mjs`가 디자인 빌드에 API 연결을 적용하고, `stories-render.js`·`faq-render.js`가 화면 동작 스크립트보다 먼저 목록을 준비합니다. 데스크톱 후기 쪽 넘김과 이야기 사진·영상은 목록 렌더러 다음에 `stories-review-paging.js`와 `stories-media.js`가 처리합니다. 인사교 알아보기의 활동 갤러리와 프로젝트 영상은 각각 `about-gallery.js`와 `about-projects.js`가 처리합니다. 이야기 상세는 열 때 `story-details.js`가 만들며, 요약 API를 사용한 경우에만 상세 본문을 별도로 요청합니다. `track.js`는 콘텐츠 페이지에, `ticker-render.js`는 홈에 연결됩니다.
 
 개발 원본은 통합 저장소 `frontend/`입니다. 통합 main에서 검증한 공개 가능 공통 코드만 외부 공유본에 반영합니다. 비공개 실제 사본 두 파일과 실행 사이트의 DB 목록은 공개로 복사하지 않고, 공개 전용 더미·생성기·검사는 유지합니다. 전체 tree 일치를 요구하지 않으며 공통 변경 경로·의도적 차이·검증 근거를 기록합니다. 절차는 [README](../README.md#개발-원본과-공개-반영)를 따릅니다.
 
@@ -81,7 +81,7 @@ FAQ는 `faq-render.js`가 목록과 분류 수를 만들고 `check.js`가 검색
 
 ## 캐시 버전과 배너 원본
 
-빌드가 넣는 CSS/JS의 `?v` 값은 `src/asset-versions.json`에서 관리합니다. 경로는 페이지 종류 → css/js → 파일 이름 순서입니다. HTML 원본은 `{{v.common.css.tokens}}`처럼 참조하고, `scripts/backoffice-site.mjs`의 연결 줄은 같은 파일을 읽는 `assetVersion()`을 씁니다. 오타나 variant 누락은 빌드 오류로 드러납니다.
+빌드가 넣는 CSS·JS의 `?v` 값은 해당 파일의 SHA-256 해시 앞 8자리입니다. HTML 원본은 `{{v.common.css.tokens}}`처럼 참조하고, `scripts/backoffice-site.mjs`는 `assetVersion()`으로 같은 값을 읽습니다. 공개 이야기·FAQ 샘플의 토큰도 공개 샘플 파일에서 계산합니다.
 
 기존 URL을 보존하려고 페이지별 값과 과거 주석의 값은 `default`, `hub`, `cohorts`, `legacyComment` 등의 명시적 variant로 남깁니다. 이 정리에서 기존 버전을 일괄 변경하지 않습니다. HTML 생성 결과는 그대로입니다.
 

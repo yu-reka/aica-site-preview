@@ -25,9 +25,9 @@
 .stories-page .iva-hd h3{margin:0;font:700 clamp(22px,2.2vw,26px)/1.3 var(--disp,"Giants",sans-serif);color:var(--ink);letter-spacing:-.01em}
 .stories-page .iva-tools{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .stories-page .iva-chips{display:flex;gap:8px;flex-wrap:wrap}
-.stories-page .iva-chips button{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 14px;border:1px solid var(--l-line);border-radius:999px;background:#fff;color:var(--g600);font-family:inherit;font-size:15px;font-weight:600;line-height:40px;cursor:pointer;transition:var(--ease)}
+.stories-page .iva-chips button{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 14px;border:1px solid var(--line-ui);border-radius:999px;background:#fff;color:var(--g600);font-family:inherit;font-size:15px;font-weight:600;line-height:40px;cursor:pointer;transition:var(--ease)}
 .stories-page .iva-chips button:hover{color:var(--ink)}
-.stories-page .iva-chips button[aria-pressed="true"]{background:var(--g900);color:#fff;box-shadow:none}
+.stories-page .iva-chips button[aria-pressed="true"]{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:none}
 .stories-page .iva-chips button:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
 /* 보기 방식 단추: 후기 탭 .vtoggle과 같은 모양 */
 .stories-page .iva-seg{display:inline-flex;align-items:center;gap:2px;height:44px;padding:3px;border:1px solid var(--l-line,rgba(16,17,22,.13));border-radius:999px;background:#fff}
@@ -42,11 +42,11 @@
 .stories-page .iva-c:hover .ph .illu{transform:scale(1.04)}
 .stories-page .iva-c h4{margin:14px 0 4px;font-size:18px;font-weight:700;line-height:1.4;color:var(--ink);transition:color .15s}
 .stories-page .iva-c:hover h4{color:var(--primary)}
-.stories-page .iva-c p{margin:0;font-size:14.5px;line-height:1.6;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.stories-page .iva-c p{margin:0;font-size:14.5px;line-height:1.6;color:var(--graphite);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .stories-page .iva-c .by{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13.5px}
 .stories-page .iva-c .by .av{display:inline-flex;align-items:center;justify-content:center;flex:none;white-space:nowrap;line-height:1;width:30px;height:30px;border-radius:50%;background:#2340C8;color:#fff;font-size:12.5px;font-weight:800}
 .stories-page .iva-c .by .av i{font-style:normal;font-size:9px}
-.stories-page .iva-c .by b{font-weight:700;color:var(--ink)}.stories-page .iva-c .by em{font-style:normal;color:var(--muted)}
+.stories-page .iva-c .by b{font-weight:700;color:var(--ink)}.stories-page .iva-c .by em{font-style:normal;color:var(--graphite)}
 .stories-page .iva-out[data-view="list"]{border-top:2px solid var(--ink)}
 .stories-page .iva-out[data-view="list"] .iva-c{display:grid;grid-template-columns:80px minmax(0,1fr) 200px;gap:24px;align-items:center;padding:18px 0;border-bottom:1px solid #E6E8EC}
 .stories-page .iva-out[data-view="list"] .iva-c .ph{width:80px;height:80px;aspect-ratio:1;border-radius:50%}
@@ -87,7 +87,7 @@
 .stories-page .ivd .sidebox ol li + li{border-top:1px solid #e8edf3}
 .stories-page .ivd .sidebox ol a{font-family:var(--ff-sans);font-size:14px;line-height:1.7;padding:12px 8px 12px 34px;color:#536175;overflow-wrap:anywhere}
 .stories-page .ivd .sidebox ol a::before{top:14px;left:6px;width:20px;height:20px;line-height:20px;font-size:11px}
-.stories-page .ivd .sidebox ol a[aria-current="location"]{background:#edf3ff;color:#204cdb;font-weight:700}
+.stories-page .ivd .sidebox ol a[aria-current="location"]{background:#edf3ff;color:var(--primary);font-weight:700}
 .stories-page .ivd .sidebox ol a[aria-current="location"]::before{background:var(--primary);color:#fff}
 .stories-page .ivd .sidebox ol a:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
 @media(max-width:600px){
@@ -96,7 +96,7 @@
   .stories-page .ivd .sidebox ol a{font-size:15px}
 }
 /* 인터뷰 상세: 번호를 잇는 선과 여백으로 질문·답변의 흐름을 정리합니다. */
-.stories-page .ivd .qa .a{font-family:var(--ff-sans);font-size:17px;line-height:1.85;color:#46546b;word-break:keep-all;overflow-wrap:break-word}
+.stories-page .ivd .qa .a{font-family:var(--ff-sans);font-size:17px;line-height:1.85;color:var(--ink);word-break:keep-all;overflow-wrap:break-word}
 .stories-page .ivd .qa .q{font-size:20px;line-height:1.6;font-weight:700;color:#14233f;word-break:keep-all;overflow-wrap:break-word}
 .stories-page .ivd .qa>div{scroll-margin-top:160px;box-shadow:none}
 .stories-page .ivd .qa .q i{font-family:var(--ff-sans);font-style:normal}
@@ -118,7 +118,7 @@
 }
 .stories-page .ivmeta{margin:10px 8px 0;font-size:14.5px}
 .stories-page .ivmeta div{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #EEF0F3}
-.stories-page .ivmeta dt{color:var(--muted)}.stories-page .ivmeta dd{margin:0;font-weight:700;color:var(--ink);text-align:right}
+.stories-page .ivmeta dt{color:var(--graphite)}.stories-page .ivmeta dd{margin:0;font-weight:700;color:var(--ink);text-align:right}
 .stories-page .sidebox .ivyt{display:inline-block;margin:14px 8px 0;padding:0;background:none!important;font-size:14px;font-weight:600;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
 .stories-page .sidebox .ivyt::before{display:none}
 .stories-page .sidebox .ivyt:hover{color:var(--ink)}
@@ -131,7 +131,7 @@
 .stories-page .pjd:is(:target,[data-story-active]){display:block;animation:paneIn .5s cubic-bezier(.22,.61,.36,1) backwards}
 .stories-page #p-pr:has(.pjd:is(:target,[data-story-active])) .pjlist{display:none}
 .stories-page .pjd h2{margin:32px 0 0;font-family:var(--disp);font-size:clamp(28px,3vw,36px);line-height:1.4;letter-spacing:-.02em;color:var(--ink)}
-.stories-page .pjd .lead{margin-top:25px;max-width:650px;font-size:19px;line-height:1.8;color:#566884}
+.stories-page .pjd .lead{margin-top:25px;max-width:650px;font-size:19px;line-height:1.8;color:var(--graphite)}
 /* Long unspaced words must fit the detail column, including its grid minimum. */
 .stories-page :is(.ivd,.pjd) :is(h2,.lead){overflow-wrap:anywhere}
 .stories-page :is(.ivd,.pjd) .ivwrap > *{min-width:0}
@@ -146,7 +146,7 @@
 .stories-page .pjnav{display:grid;gap:8px;margin-top:18px}
 .stories-page .sidebox .pjnav :is(a,.pjnav-boundary){padding:12px 14px;border:1px solid #EEF0F3;border-radius:12px;font-size:14px;font-weight:700;color:var(--ink);line-height:1.4}
 .stories-page .sidebox .pjnav a::before{display:none}
-.stories-page .pjnav small{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:2px}
+.stories-page .pjnav small{display:block;font-size:12px;font-weight:600;color:var(--graphite);margin-bottom:2px}
 /* 목록 쪽: 제목 · 사진 · 단추로 상세 이동 */
 
 /* 기수별 이모저모 거르기 — 기수 한 묶음이라 왼쪽 칸 대신 위쪽 버튼 한 줄(후기 탭 .chips와 같은 모양, 2026-10-08) */
@@ -161,7 +161,7 @@
 .stories-page .pjd .pjph-t{
   margin:19px 0 0;padding:0;border:0;border-radius:0;max-width:70ch;
   font-family:var(--ff-sans);font-size:17px;font-weight:400;line-height:1.9;
-  color:#293B57;letter-spacing:0;word-break:normal;overflow-wrap:anywhere;
+  color:var(--ink);letter-spacing:0;word-break:normal;overflow-wrap:anywhere;
 }
 .stories-page .pjd .pjsec{margin-top:36px;gap:36px}
 .stories-page .pjd .ivwrap > div > section:has(> .pjph-t){margin-top:36px}
@@ -177,7 +177,7 @@
 .stories-page .pjd .pj-feature-list li+li{margin-top:0;border-top:1px solid #E8EDF5}
 .stories-page .pjd .pj-feature-list li::before{
   content:counter(project-feature,decimal-leading-zero);position:absolute;left:0;top:20px;
-  font-size:14px;font-weight:700;line-height:24px;color:#3458FF;
+  font-size:14px;font-weight:700;line-height:24px;color:var(--primary);
 }
 @media(max-width:600px){
   .stories-page .pjd .lead{font-size:18px}

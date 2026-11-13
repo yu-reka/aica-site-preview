@@ -6,7 +6,7 @@
     "descriptionRichText": [
       "교육지원금 ",
       {
-        "tag": "b",
+        "tag": "strong",
         "attrs": {},
         "children": [
           "월 최대 50만원"
@@ -21,7 +21,7 @@
         "children": [
           "광주 시외 거주자가 광주 시내로 거주지를 이동한 경우 주거지원비 ",
           {
-            "tag": "b",
+            "tag": "strong",
             "attrs": {},
             "children": [
               "최대 35만원"
@@ -39,7 +39,7 @@
     "descriptionRichText": [
       "프로젝트 기간 동안 쾌적하게 진행할 수 있도록 ",
       {
-        "tag": "b",
+        "tag": "strong",
         "attrs": {},
         "children": [
           "지원금"
@@ -60,7 +60,7 @@
         "children": []
       },
       {
-        "tag": "b",
+        "tag": "strong",
         "attrs": {},
         "children": [
           "개별 노트북과 모니터"
@@ -81,7 +81,7 @@
         "children": []
       },
       {
-        "tag": "b",
+        "tag": "strong",
         "attrs": {},
         "children": [
           "무료"
@@ -102,7 +102,7 @@
         "children": []
       },
       {
-        "tag": "b",
+        "tag": "strong",
         "attrs": {},
         "children": [
           "현직 멘토"
@@ -123,7 +123,7 @@
         "children": []
       },
       {
-        "tag": "b",
+        "tag": "strong",
         "attrs": {},
         "children": [
           "이스트소프트 인턴십"
@@ -139,7 +139,7 @@
     "descriptionRichText": [
       "교육생의 취업과 창업을 ",
       {
-        "tag": "b",
+        "tag": "strong",
         "attrs": {},
         "children": [
           "전문가와 함께"
@@ -154,7 +154,7 @@
     "title": "자격증 취득 지원",
     "descriptionRichText": [
       {
-        "tag": "b",
+        "tag": "strong",
         "attrs": {},
         "children": [
           "AI·IT·SW 자격증"

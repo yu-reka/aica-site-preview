@@ -2,7 +2,7 @@
    Keep the full source in memory; modal content and data are never shortened. */
 (() => {
   'use strict';
-  const selector = '.idc > .in > p, .hb-pi p, .sm-review-preview, .ov .sd-title, .hb-ivf-q';
+  const selector = '.idc > .in > p, .hb-pi p, .sm-review-preview, .sm-review-row-title, .ov .sd-title, .hb-ivf-q';
   const seen = new WeakMap();
   const segmenter = typeof Intl.Segmenter === 'function' ? new Intl.Segmenter('ko', {granularity:'grapheme'}) : null;
   let measurements = new WeakMap();
@@ -14,6 +14,7 @@
       if (!state) return;
       const navigationTitle = element.matches('.ov .sd-title');
       const quotedSummary = element.matches('.hb-ivf-q');
+      const singleLineTitle = element.matches('.sm-review-row-title');
       if (navigationTitle && !matchMedia('(max-width:600px)').matches) {
         if (state.copy.textContent !== state.source) state.copy.textContent = state.source;
         measurements.delete(element);
@@ -29,9 +30,12 @@
       const lines = navigationTitle || quotedSummary ? 2 : Math.floor(height / line);
       state.excerpt.hidden = lines < 1;
       if (lines < 1) return;
-      items.push({source:state.source, allowed:lines * line + .5,
+      items.push({source:state.source, allowed:singleLineTitle ? width : lines * line + .5,
         write:text => { if (state.copy.textContent !== text) state.copy.textContent = text; },
-        height:() => navigationTitle ? state.excerpt.scrollHeight : state.excerpt.offsetHeight,
+        height:() => {
+          if (singleLineTitle) return state.excerpt.getBoundingClientRect().width;
+          return navigationTitle ? state.excerpt.scrollHeight : state.excerpt.offsetHeight;
+        },
         characters:() => state.characters || (state.characters = segmenter ? Array.from(segmenter.segment(state.source), part => part.segment) : Array.from(state.source))});
     });
     StoryTextFit(items);
@@ -52,6 +56,7 @@
           copy = document.createElement('span'); copy.textContent = source;
           excerpt.append(opening, copy, closing);
         } else excerpt.textContent = source;
+        if (element.matches('.sm-review-row-title')) element.setAttribute('aria-label', source);
         seen.set(element, {source, excerpt, copy});
         measurements.delete(element);
         element.replaceChildren(excerpt);

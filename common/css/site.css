@@ -173,8 +173,8 @@
 /* 지금 위치: 지금 카테고리 번호 · 이름은 메인 색, 지금 세부 항목은 하위 메뉴 바처럼 잉크 · 굵게 · 밑줄(site.js가 aria-current) */
 .drawer .acc-btn.is-current,.drawer .acc-btn.is-current .acc-no{color:var(--primary)}
 .drawer .acc-panel a[aria-current]{color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:7px}
-.drawer .drawer-foot{margin-top:auto;display:flex;justify-content:flex-end;padding:20px var(--gutter) calc(20px + env(safe-area-inset-bottom,0px))}   /* 10-15: 문의하기만 오른쪽 정렬(오시는 길 링크는 라이프 하위 메뉴에 있어 뺌) */
-.drawer .drawer-cta{display:inline-flex;align-items:center;gap:7px;height:44px;padding:0 18px;border-radius:44px;background:var(--cta);color:var(--ink-strong);font-size:15px;font-weight:700;text-decoration:none;border:2px solid var(--ink-strong);box-shadow:3px 3px 0 var(--ink-strong)}   /* 10-14 흰 알약. 10-15: 드로어 맨 아래 오른쪽, 글자 폭에 맞춘 칩(높이 44 · 좌우 18), 글자 검정 */
+.drawer .drawer-foot{margin-top:auto;display:flex;justify-content:flex-end;padding:20px var(--gutter) calc(20px + env(safe-area-inset-bottom,0px))}
+.drawer .drawer-cta{display:inline-flex;align-items:center;gap:7px;height:44px;padding:0 18px;border-radius:44px;background:var(--cta);color:var(--ink);font-size:15px;font-weight:700;text-decoration:none;border:2px solid var(--ink-strong);box-shadow:3px 3px 0 var(--ink-strong)}
 .drawer .drawer-cta:focus-visible{border-radius:44px}
 
 /* =========================================================

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
 const source=readFileSync(new URL('../about/js/about.js',import.meta.url),'utf8');
-const block=source.slice(source.indexOf('// Count hours and graduate figures'),source.indexOf('// activity-gallery.js'));
+const block=source.slice(source.indexOf('// Count hours and graduate figures'),source.indexOf('/* 오른쪽 플로팅 목차'));
 function setup(reduced=false){
   const nodes=[['1,216','1216','0'],['66.4%','66.4','1']].map(([textContent,target,decimals])=>({textContent,dataset:{countTo:target,countDecimals:decimals},classList:{contains:()=>true}}));
   let observer;const frames=new Map(),listeners={};let id=0;

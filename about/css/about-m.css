@@ -45,7 +45,6 @@
   html.school-about main#main .intro-feature{display:block}
   html.school-about main#main .intro-purpose{display:flex;flex-direction:column;gap:14px}
   html.school-about main#main .intro-purpose > p{margin:0;max-width:none;font-size:15px;line-height:1.75;color:#3B4A63;text-wrap:pretty}
-  html.school-about main#main .intro-purpose > p br{display:none}
   html.school-about main#main .intro-purpose > p strong{color:var(--am-ink)}
   html.school-about main#main #intro .intro-purpose > p + p{margin-top:0}
   html.school-about main#main .intro-purpose .intro-definition{font-size:13px;line-height:1.5;color:var(--am-muted)}
@@ -72,7 +71,7 @@
   html.school-about main#main .intro-platform-features article{display:grid;grid-template-columns:72px minmax(0,1fr);grid-template-rows:auto auto;column-gap:14px;row-gap:3px;align-items:center;padding:12px;border:1px solid var(--am-line);border-radius:18px;background:#fff;text-align:left}
   html.school-about main#main .intro-platform-features .platform-icon{grid-row:1/3;width:72px;height:72px;margin:0;object-fit:cover;border-radius:12px}
   html.school-about main#main .intro-platform-features h4{align-self:end;margin:0;font-size:16px;font-weight:800;line-height:1.35}
-  html.school-about main#main .intro-platform-features p{align-self:start;margin:0;font-size:13px;line-height:1.55;color:var(--am-muted)}
+  html.school-about main#main .intro-platform-features p{align-self:start;margin:0;font-size:13px;line-height:1.55;color:var(--ink)}
 
   /* 6기 / 7기: 하나만, 시안 카드 모양(굵은 테두리 · 그림자) */
   html.school-about main#main .cohort-upgrade{margin-top:var(--am-section-gap)}
@@ -185,7 +184,7 @@
   /* 교육 시간: STEP 1~3 줄 */
   html.school-about main#main .education-hours{margin-top:var(--am-section-gap);padding:0}
   html.school-about main#main .education-hours-heading{display:grid;grid-template-columns:1fr auto;align-items:end;gap:10px;margin:0 0 var(--am-heading-gap)}
-  html.school-about main#main .education-hours-heading h3 span{color:inherit}
+  html.school-about main#main .education-hours-heading h3 strong{color:inherit}
   html.school-about main#main .education-hours-year{display:none}
   html.school-about main#main .education-hours-summary{margin:0}
   html.school-about main#main .education-hours-stat{display:block;margin:0;padding:0;border:0;background:none}
@@ -203,7 +202,7 @@
   html.school-about main#main .education-phase-band{grid-area:t;margin:0;padding:0;background:none}
   html.school-about main#main .education-phase-band h4{margin:0;font-size:16px;font-weight:800;color:var(--am-ink)}
   html.school-about main#main .education-phase-body{grid-area:b;margin:0;padding:0}
-  html.school-about main#main .education-phase-body p{margin:0;font-size:13px;line-height:1.5;color:var(--am-muted)}
+  html.school-about main#main .education-phase-body p{margin:0;font-size:13px;line-height:1.5;color:var(--ink)}
   html.school-about main#main .education-phase-photo{grid-area:p;width:104px;height:70px;margin:0;padding:0;border:0;border-radius:12px;overflow:hidden;background:none}
   html.school-about main#main .education-phase-photo::before,html.school-about main#main .education-phase-photo::after{display:none}
   html.school-about main#main .education-phase-photo img{width:100%;height:100%;object-fit:cover;border-radius:12px}
@@ -265,7 +264,7 @@
   html.school-about main#main .career-stage-label{display:inline;align-self:flex-start;margin:0;padding:0;border:0;border-radius:0;background:none;font-size:12px;font-weight:700;color:#102D80}
   html.school-about main#main .career-stage-copy h3{margin:0;font-size:15px;font-weight:800;line-height:1.4;color:var(--am-ink)}
   html.school-about main#main .career-stage-copy h3 br{display:none}
-  html.school-about main#main .career-stage-copy p{margin:0;font-size:12px;line-height:1.5;color:var(--am-muted)}
+  html.school-about main#main .career-stage-copy p{margin:0;font-size:12px;line-height:1.5;color:var(--ink)}
   html.school-about main#main .career-stage-media{grid-column:1;grid-row:1;width:108px;height:76.5px;margin:0;padding:0;border-radius:12px;overflow:hidden;background:none;aspect-ratio:auto}
   html.school-about main#main .career-stage-media img{width:100%;height:100%;object-fit:cover}
   /* 웹 채널 카드의 로고·이름·안내를 그대로 축소해 사용한다. */
@@ -335,7 +334,7 @@
   html.school-about main#main :is(.intro-platform-features article,.partner-node,.eligibility-condition,.career-stage-card) :is(h3,h4){font-family:var(--ff-sans,sans-serif);font-weight:800}
   html.school-about main#main .guest-lecture-wrap{width:100%}
   html.school-about main#main .activity-project-card{filter:none}
-  html.school-about main#main .activity-project-link{display:flex;align-self:stretch;width:auto;max-width:none;min-height:44px;padding:10px 12px;border:1px solid #BBDDEB;border-radius:10px;background:#F0FAFE;color:#25344C;font-size:13px;line-height:1.4;gap:8px}
+  html.school-about main#main .activity-project-link{display:flex;align-self:stretch;width:auto;max-width:none;min-height:44px;padding:10px 12px;border:1px solid #BBDDEB;border-radius:10px;background:#F0FAFE;color:var(--ink);font-size:13px;line-height:1.4;gap:8px}
   html.school-about main#main .activity-project-link::before,html.school-about main#main .activity-project-link::after{display:none}
   html.school-about main#main .activity-project-link > svg:first-child{width:22px;height:22px}
   html.school-about main#main .activity-project-link:hover{background:#E2F5FC;color:#123951}

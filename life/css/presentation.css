@@ -67,69 +67,61 @@ html:where(:not([data-menu="stories"]))[data-menu="life"] body,
 
 :where(html:not([data-menu="stories"])) .sf-btn:focus-visible .sf-slash::before{opacity:1;background:var(--primary);width:24px}
 
-/* 시설 둘러보기: 제목 ↔ 층 안내 · 사진 여백 넓힘(10-13) */
-.life-page #pg-facility .fac-sh{margin-bottom:clamp(36px,3.6vw,52px)!important}
+.life-page #pg-facility .fac-sh{margin-bottom:clamp(36px,3.6vw,52px)}
 
-/* =========================================================
-   인사교 라이프 버튼 · 카드를 선배들의 이야기와 같게(10-13)
-   카드: 흰 바탕 · 1px #D3D9E1 테두리 · 모서리 20px · 아래로 퍼지는 옅은 그림자(.yfeat · .pjout 카드와 같음)
-   거르기 칩: 높이 40 · 1px 옅은 테두리 · 회색 글자 / 고르면 남색 바탕 흰 글자(.chips label과 같음)
-   보조 버튼: 흰 알약 · 1.5px 남색 테두리 · 남색 굵은 글자, 올리면 남색으로 채움('전체 보기' .ivall과 같음)
-   ========================================================= */
-.life-page{--st-card-sh:0 14px 30px -18px rgba(20,35,63,.28);--st-chip-line:rgba(16,17,22,.13)}
+.life-page{--st-card-sh:0 14px 30px -18px rgba(20,35,63,.28)}
 
 /* 카드 */
 .life-page :is(.hzmw,.fdc,.fsg,.wmap,.rt3 > article,.park2,.bx9-foot){
-  border:1px solid var(--line)!important;border-radius:20px!important;background:#fff!important;box-shadow:var(--st-card-sh)!important}
+  border:1px solid var(--line)!important;border-radius:20px;background:#fff;box-shadow:var(--st-card-sh)!important}
 
 .life-page .fdc:is(a,li){transition:transform .25s cubic-bezier(.22,.61,.36,1),border-color .2s,box-shadow .25s}
 
 .life-page :is(a.hac:not(.main)):hover{border-color:var(--primary)!important;transform:translateY(-2px)}
 
-.life-page .bx9-ph{border-radius:20px!important}
+.life-page .bx9-ph{border-radius:20px}
 
 .life-page .hzmw{overflow:hidden}
 
 /* 거르기 칩 */
-.life-page .chip{height:40px;border:1px solid var(--st-chip-line)!important;background:#fff;color:var(--graphite);font-size:15px;font-weight:600}
+.life-page .chip{height:40px;border:1px solid var(--line-ui)!important;background:#fff;color:var(--graphite);font-size:15px;font-weight:600}
 
 .life-page .chip:hover{border-color:var(--ink)!important;color:var(--ink)}
 
-.life-page .chip[aria-pressed="true"]{background:var(--ink)!important;border-color:var(--ink)!important;color:#fff!important}
+.life-page .chip[aria-pressed="true"]{background:var(--primary)!important;border-color:var(--primary)!important;color:#fff!important}
 
 /* 식당 · 카페 고르기: 큰 알약 탭(선배 이야기 '후기 · 인터뷰' 탭과 같음) */
 .life-page .fdk{padding:0;gap:10px;border:0;background:none;box-shadow:none}
 
-.life-page .fdk-b{height:52px;padding:0 24px;border:1px solid var(--line);background:#fff;color:var(--graphite);font-size:17px}
+.life-page .fdk-b{border:1px solid var(--line-ui);background:#fff;color:var(--graphite)}
 
-.life-page .fdk-b span{display:inline-grid;place-items:center;min-width:28px;height:24px;padding:0 8px;border-radius:999px;background:#EEF0F4;font-family:var(--ff-text);font-size:13px;font-weight:700;color:var(--graphite)}
+.life-page .fdk-b span{display:inline-grid;place-items:center;border-radius:999px;background:#EEF0F4;font-weight:700;color:var(--graphite)}
 
-.life-page .fdk-b[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.life-page .fdk-b[aria-selected="true"]{background:var(--primary);border-color:var(--primary);color:#fff}
 
 .life-page .fdk-b[aria-selected="true"] span{background:rgba(255,255,255,.18);color:#fff}
 
 /* 작은 화면의 기존 시설 공간 칩 */
 @media (max-width:860px){
-.life-page .bx9-t{border:1px solid var(--st-chip-line)!important;box-shadow:none!important;color:var(--graphite)}
+.life-page .bx9-t{border:1px solid var(--line-ui)!important;box-shadow:none!important;color:var(--graphite)}
 
-.life-page .bx9-t[aria-selected="true"]{border:1px solid var(--ink)!important;background:var(--ink)!important;color:#fff!important;padding-left:5px}
+.life-page .bx9-t[aria-selected="true"]{border:1px solid var(--primary)!important;background:var(--primary)!important;color:#fff!important}
 }
 
 /* 보조 버튼 */
-.life-page :is(.btn.is-line,.fs-tg){height:40px;padding:0 18px;border:1.5px solid var(--ink)!important;background:#fff!important;color:var(--ink)!important;font-size:14px;font-weight:700;box-shadow:none!important;transition:background .2s,color .2s}
+.life-page :is(.btn.is-line,.fs-tg){height:40px;padding:0 18px;border:1.5px solid var(--ink)!important;background:#fff!important;color:var(--ink);font-size:14px;font-weight:700;box-shadow:none;transition:background .2s,color .2s}
 
 .life-page :is(.btn.is-line,.fs-tg):hover{background:var(--ink)!important;color:#fff!important}
 
-/* 오시는 길 주차 안내(10-13): 큰 제목 없이 작은 이름 + 굵은 한 줄, 높이 낮게(덜 중요한 안내) */
-.life-page .park2{padding:16px 22px!important;gap:16px!important;align-items:center}
+.life-page .park2{padding:16px 22px!important;gap:16px;align-items:center}
 
-.life-page .park2 .P{width:44px!important;height:44px!important;font-size:22px!important;border-radius:12px!important}
+.life-page .park2 .P{width:44px!important;height:44px!important;font-size:22px;border-radius:12px}
 
-.life-page .park2 .sh-k{margin:0 0 4px!important;font-size:13px!important}
+.life-page .park2 .sh-k{margin:0 0 4px;font-size:13px}
 
 .life-page .park2 .sh-k::before{display:none}
 
-.life-page .park2 .park2-d{margin:0!important;font-family:var(--ff-text)!important;font-size:16px!important;font-weight:700!important;line-height:1.5;color:var(--ink)!important}
+.life-page .park2 .park2-d{margin:0;font-size:16px;font-weight:700;color:var(--ink)}
 
 .life-page .btn.is-line.park2-b{height:40px}
 
@@ -137,13 +129,7 @@ html:where(:not([data-menu="stories"]))[data-menu="life"] body,
 .life-page .lunch-go,
 .life-page #fdList{--cat:var(--primary);--cat-l:#E8EEFF;--cat-d:var(--primary)}
 
-:where(html:not([data-menu="stories"])) .lunch-go{display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 22px;border:0;border-radius:999px;background:var(--cat,#FFB685);color:#fff!important;font:700 16px/1 var(--ff-text);cursor:pointer;box-shadow:0 8px 18px -10px rgba(36,87,245,.7);transition:transform .2s}
-
-:where(html:not([data-menu="stories"])) .lunch-go:hover{transform:translateY(-2px) rotate(-1deg)}
-
-:where(html:not([data-menu="stories"])) .lunch-go svg{width:20px;height:20px}
-
-.life-page .fdc{transition:opacity .2s,transform .25s,box-shadow .25s;position:relative}
+.life-page .fdc{position:relative}
 
 :where(html:not([data-menu="stories"])) .fdg.rolling .fdc{opacity:.45}
 
@@ -163,12 +149,12 @@ html:where(:not([data-menu="stories"]))[data-menu="life"] body,
 /* 선배 손글씨 포스트잇 */
 :where(html:not([data-menu="stories"])) .snote-a{position:relative;height:0;z-index:6}
 
-:where(html:not([data-menu="stories"])) .snote{position:absolute;width:max-content;max-width:260px;padding:12px 16px 14px;background:#FFF1A6;border-radius:2px;
-  box-shadow:0 1px 2px rgba(20,35,63,.12),0 12px 18px -10px rgba(20,35,63,.38);transform:rotate(var(--r,-3deg));pointer-events:none}
+:where(html:not([data-menu="stories"])) .snote{position:absolute;
+  transform:rotate(var(--r,-3deg));pointer-events:none}
 
 :where(html:not([data-menu="stories"])) .snote small{display:block;margin-bottom:4px;font:700 11px/1 var(--ff-text);letter-spacing:.04em;color:#8A6A00}
 
-:where(html:not([data-menu="stories"])) .snote p{margin:0;font:400 23px/1.2 "Nanum Pen Script",cursive;color:#2A2E38;white-space:nowrap}
+:where(html:not([data-menu="stories"])) .snote p{margin:0;font:400 23px/1.2 "Nanum Pen Script",cursive}
 
 :where(html:not([data-menu="stories"])) .snote::before{content:"";position:absolute;left:50%;top:-9px;width:54px;height:18px;margin-left:-27px;background:rgba(255,255,255,.6);border:1px solid rgba(0,0,0,.05);transform:rotate(-4deg)}
 
@@ -182,7 +168,7 @@ html:where(:not([data-menu="stories"]))[data-menu="life"] body,
 .life-page #tp-house .hz2>.snote-a{position:absolute;left:0;top:0;width:100%}
 
 /* 맛집 카드 대표 메뉴 그림 */
-.life-page .fdc-ph.has-img{background:#fff!important}
+.life-page .fdc-ph.has-img{background:#fff}
 
 .life-page .fdc-ph.has-img>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:16px 12px 10px;z-index:0}
 @media(min-width:861px){
@@ -201,14 +187,11 @@ html:where(:not([data-menu="stories"]))[data-menu="life"] body,
 /* 점심 주사위: 시안 5 손글씨 스티커를 제목 옆에 */
 body .life-page #tp-food .sh h2{display:inline-flex;align-items:center;gap:22px;flex-wrap:wrap}
 
-body .life-page #tp-food .lunch-go{height:auto;padding:9px 16px 9px 12px;border:0;border-radius:8px;background:#FFE36E;color:var(--ink)!important;font:400 24px/1 "Nanum Pen Script",cursive;letter-spacing:0;gap:6px;transform:rotate(-4deg) translateY(-4px);box-shadow:0 8px 16px -8px rgba(20,35,63,.45);transition:transform .25s,box-shadow .25s}
+body .life-page #tp-food .lunch-go{height:auto;border:0;border-radius:8px;background:#FFE36E;color:var(--ink)!important;font:400 24px/1 "Nanum Pen Script",cursive;letter-spacing:0;gap:6px;transform:rotate(-4deg) translateY(-4px);box-shadow:0 8px 16px -8px rgba(20,35,63,.45);transition:transform .25s,box-shadow .25s}
 
 body .life-page #tp-food .lunch-go:hover{transform:rotate(0) translateY(-6px);box-shadow:0 12px 20px -8px rgba(20,35,63,.5)}
 
-body .life-page #tp-food .lunch-go svg{width:20px;height:20px}
-
 @media (max-width:600px){body .life-page #tp-food .sh h2{gap:12px}
-body .life-page #tp-food .lunch-go{font-size:21px}
 }
 
 body .life-page #tp-food .fdbar .r{display:flex;align-items:center;flex-wrap:wrap;gap:8px 0}
@@ -254,8 +237,6 @@ body .life-page .snote p{font-size:24px!important}
 
 @keyframes fbtTap {0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 
-@media (prefers-reduced-motion:reduce){.life-page .fbt1 svg{animation:none}
-}
 
 @media (max-width:860px){.life-page .fbt1{margin-bottom:10px}
 }
@@ -364,9 +345,7 @@ body .life-page #tp-food .snote p{font-size:25px!important;line-height:1.15!impo
 /* 근처 먹거리 숫자 페이지(10-13): 선배들의 이야기 후기 페이지 번호와 같은 모양 */
 .life-page .fdpager{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:40px}
 
-.life-page .fdpager[hidden]{display:none}
-
-.life-page .fdpager button{min-width:40px;height:40px;padding:0 6px;border:1px solid #DDE0E5;border-radius:999px;background:#fff;color:var(--graphite);font:700 14px/1 var(--ff-sans);cursor:pointer;font-variant-numeric:tabular-nums;transition:border-color .2s,color .2s}
+.life-page .fdpager button{min-width:40px;height:40px;padding:0 6px;border:1px solid var(--line-ui);border-radius:999px;background:#fff;color:var(--graphite);font:700 14px/1 var(--ff-sans);cursor:pointer;font-variant-numeric:tabular-nums;transition:border-color .2s,color .2s}
 
 .life-page .fdpager button:hover{border-color:#2B2D31;color:var(--ink)}
 
@@ -374,14 +353,13 @@ body .life-page #tp-food .snote p{font-size:25px!important;line-height:1.15!impo
 
 .life-page .fdpager button:disabled{opacity:.35;pointer-events:none}
 
-/* 점심 주사위: 포스트잇 대신 손글씨 '주사위 굴리기!' + 돼지꼬리 화살표로 주사위 가리키기(10-13) */
-body .life-page #tp-food .lunch-go{position:relative;overflow:visible}
+body .life-page #tp-food .lunch-go{overflow:visible}
 
 body .life-page #tp-food .lunch-go .cue{position:absolute;right:calc(100% - 10px);bottom:calc(100% - 12px);z-index:2;display:flex;align-items:flex-start;gap:0;pointer-events:none;color:var(--ink)}
 
 body .life-page #tp-food .lunch-go .cue em{font:400 30px/1 "Nanum Pen Script",cursive;font-style:normal;letter-spacing:0;white-space:nowrap;color:var(--ink);transform:rotate(-6deg);margin-top:-4px}
 
-body .life-page #tp-food .lunch-go .cue svg{flex:none;width:58px;height:56px;margin:16px 0 0 -4px;color:var(--ink)}
+body .life-page #tp-food .lunch-go .cue svg{flex:none;width:58px;height:56px;color:var(--ink)}
 
 @media (max-width:860px){body .life-page #tp-food .lunch-go .cue em{font-size:26px}
 }
@@ -480,8 +458,6 @@ html[data-sub="tips"] .lnb .lnb-tp{animation:lnbTpOpen .28s ease-out}
 
 @keyframes lnbTpOpen{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 
-@media (prefers-reduced-motion:reduce){html[data-sub="tips"] .lnb .lnb-tp{animation:none}
-}
 
 /* 주사위 안내 화살표(10-13): 선 끝에 화살촉을 붙이고, 시작은 '고민된다면?' 바로 옆 · 끝은 주사위를 가리키게 */
 body .life-page #tp-food .lunch-go .cue svg{overflow:visible}
@@ -505,7 +481,7 @@ body .life-page .tp-flc em{font:600 13px/1 var(--ff-text);font-style:normal;colo
 
 body .life-page .tp-flc b{font:600 20px/1.35 var(--ff-text);letter-spacing:-.02em;transition:color .2s}
 
-body .life-page .tp-flc small{font:400 14px/1.4 var(--ff-sans);color:var(--muted)}
+body .life-page .tp-flc small{font:400 14px/1.4 var(--ff-sans);color:var(--graphite)}
 
 body .life-page .tp-flc:hover b{color:var(--primary)}
 
@@ -611,7 +587,7 @@ body .life-page .lo-tr b{font:600 22px/1.35 var(--ff-text);letter-spacing:-.02em
 
 body .life-page .lo-tr:hover b{color:var(--primary)}
 
-body .life-page .lo-tr small{font:400 14px/1.4 var(--ff-sans);color:var(--muted)}
+body .life-page .lo-tr small{font:400 14px/1.4 var(--ff-sans);color:var(--graphite)}
 
 body .life-page .lo-tr .ph{display:block;}
 
@@ -650,8 +626,8 @@ body .life-page .lo-tr:hover .ph img{transform:translateY(-4px) scale(1.04)}
 /* 인사교 라이프: 섹션 보조글 · 안내 문장이 Paperlogy였던 것 → 이야기 보조글과 같은 Pretendard */
 .life-page :is(.sh-lead,p.note,.disc p,.disc .wrap>p){font-family:var(--ff-sans)!important}
 
-/* 인사교 라이프 시설 둘러보기 · 생활 꿀팁 · 오시는 길 · 전체: 배너 → 첫 구역 위 여백을 선배들의 이야기와 같게(10-14). 1200 미만 --sec-y-first, 1200 이상 --mh-gap(mast.css와 같은 규칙) */
-.life-page :is(#pg-home>.lo-sec:first-child,#pg-facility .fac-sec,#pg-tips .tp-hub,#pg-way #way-loc){padding-top:var(--sec-y-first)!important}
+/* 배너 아래 첫 구역 여백은 좁은 화면에서 --sec-y-first, 넓은 화면에서 --mh-gap을 사용한다. */
+.life-page :is(#pg-home>.lo-sec:first-child,#pg-facility .fac-sec,#pg-tips .tp-hub,#pg-way #way-loc){padding-top:var(--sec-y-first)}
 
 @media (min-width:1200px){html[data-nav="side"] .life-page :is(#pg-home>.lo-sec:first-child,#pg-facility .fac-sec,#pg-tips .tp-hub,#pg-way #way-loc){padding-top:var(--mh-gap)!important}
 }

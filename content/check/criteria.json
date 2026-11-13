@@ -4,7 +4,7 @@
     "label": "나이",
     "valueRichText": [
       {
-        "tag": "mark",
+        "tag": "strong",
         "attrs": {},
         "children": [
           "만 18~39세"
@@ -19,7 +19,7 @@
     "label": "학력",
     "valueRichText": [
       {
-        "tag": "mark",
+        "tag": "strong",
         "attrs": {},
         "children": [
           "학력"
@@ -34,7 +34,7 @@
     "label": "전공",
     "valueRichText": [
       {
-        "tag": "mark",
+        "tag": "strong",
         "attrs": {},
         "children": [
           "전공"

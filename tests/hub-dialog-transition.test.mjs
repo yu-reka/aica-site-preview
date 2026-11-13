@@ -1,7 +1,7 @@
 import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readText } from '../scripts/text.mjs';
 import vm from 'node:vm';
 
 // Run the real dialog controllers in browser listener order, sharing real inert scopes.
@@ -46,15 +46,15 @@ function start(zoomed = false) {
     CustomEvent: class { constructor(type) { this.type = type; } },
     hubModal: true, root: { closest: () => page }, M: cohort, Z: zoom, modalVisited: [], last: card,
     modalEntry:false, modalScroll:0, window:{scrollTo(){}}, changePhoto() {}, history: { replaceState() {} } });
-  runInContext(readFileSync(new URL('../common/js/ui.js', import.meta.url), 'utf8'), context);
+  runInContext(readText(new URL('../common/js/ui.js', import.meta.url)), context);
   const cohortScope = context.SiteUI.createDialogScope();
   context.loadVersion = 0;
   context.isolateDialog = dialog => dialog ? cohortScope.activate(dialog) : cohortScope.release();
-  const stories = readFileSync(new URL('../stories/js/stories.js', import.meta.url), 'utf8');
+  const stories = readText(new URL('../stories/js/stories.js', import.meta.url));
   const begin = stories.indexOf('  (function(){\n    var opener = null, link = null;');
   const end = stories.indexOf('  /* ---------- 숨은 라디오', begin);
   runInContext(stories.slice(begin, end), context);
-  const cohorts = readFileSync(new URL('../stories/js/cohort-v3.js', import.meta.url), 'utf8');
+  const cohorts = readText(new URL('../stories/js/cohort-v3.js', import.meta.url));
   const closeBegin = cohorts.indexOf('  function closeM(');
   const closeEnd = cohorts.indexOf("  M.querySelector('.pv').onclick", closeBegin);
   runInContext(cohorts.slice(closeBegin, closeEnd), context);

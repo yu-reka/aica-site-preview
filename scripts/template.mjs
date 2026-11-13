@@ -1,5 +1,5 @@
-import { readFileSync } from 'node:fs';
 import { resolve, sep } from 'node:path';
+import { readText } from './text.mjs';
 
 export const escapeHtml = value => String(value)
   .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
@@ -60,7 +60,7 @@ export function createRenderer(componentDirectory) {
     if (!/^[\w/-]+$/.test(name)) throw new Error(`Invalid component name: ${name}`);
     const file = resolve(directory, name + '.html');
     if (!file.startsWith(directory + sep)) throw new Error('Component outside source directory');
-    if (!cache.has(file)) cache.set(file, readFileSync(file, 'utf8'));
+    if (!cache.has(file)) cache.set(file, readText(file));
     return cache.get(file);
   }
   function render(source, scopes, depth = 0) {
@@ -105,4 +105,24 @@ export function createRenderer(componentDirectory) {
     return output + source.slice(cursor);
   }
   return (source, context) => render(source, [context]);
+}
+
+// Content records: validate URLs and YouTube IDs, render *RichText into *Html. Raw HTML fields are rejected.
+export function prepare(record) {
+  if (Array.isArray(record)) return record.map(prepare);
+  if (!record || typeof record !== 'object') return record;
+  const output = {};
+  for (const [key, value] of Object.entries(record)) {
+    if (key.endsWith('Html')) throw new Error(`Content cannot contain raw HTML: ${key}`);
+    if (key.endsWith('RichText')) {
+      output[key] = value;
+      output[key.slice(0, -8) + 'Html'] = richText(value);
+    } else {
+      if (typeof value === 'string' && /(^href$|Href$|Url$|^url$|^home$|^page$|^image$|^thumbnail$|^heroImage$)/.test(key)) safeUrl(value);
+      if (key === 'youtubeUrl') youtubeId(value);
+      if (key === 'youtubeId' && !/^[A-Za-z0-9_-]{11}$/.test(value)) throw new Error('Invalid YouTube video ID');
+      output[key] = prepare(value);
+    }
+  }
+  return output;
 }

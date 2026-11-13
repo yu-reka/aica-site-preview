@@ -54,7 +54,7 @@ test('all shared-runtime consumers load it first, including early cohort initial
     const ui = scripts.findIndex(s => s.endsWith('/common/js/ui.js'));
     assert.ok(ui >= 0, path);
     assert.equal(scripts.filter(s => s.endsWith('/common/js/ui.js')).length, 1, path);
-    for (const name of ['stories-loader.js', 'ticker-render.js', 'faq-render.js', 'stories-render.js', 'story-detail-title.js', 'stories-sections.js', 'site.js', 'cohort-v3.js', 'stories.js', 'stories-m.js', 'stories-m-reviews.js', 'life-m.js', 'life-m-view.js', 'life.js', 'culture.js', 'home.js', 'about.js', 'about-m.js', 'check.js', 'cohort-month-navigation.js', 'interview-honors.js']) {
+    for (const name of ['stories-loader.js', 'ticker-render.js', 'faq-render.js', 'stories-render.js', 'story-detail-title.js', 'stories-sections.js', 'site.js', 'cohort-v3.js', 'stories.js', 'stories-m.js', 'stories-m-reviews.js', 'life-m.js', 'life-m-view.js', 'life.js', 'culture.js', 'home.js', 'about.js', 'about-gallery.js', 'about-projects.js', 'about-m.js', 'check.js', 'cohort-month-navigation.js', 'interview-honors.js']) {
       const consumer = scripts.findIndex(s => s.endsWith('/' + name));
       if (consumer >= 0) assert.ok(ui < consumer, path + ': ' + name);
     }

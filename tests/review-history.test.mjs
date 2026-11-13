@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
-import {readFileSync} from 'node:fs';
-const source=readFileSync(new URL('../stories/js/stories.js',import.meta.url),'utf8');
+import {readText} from '../scripts/text.mjs';
+const source=readText(new URL('../stories/js/stories.js',import.meta.url));
 function start(initialHash='',initialState=null){
   const handlers={},documentEvents={},calls=[];
   const cls=name=>({contains:k=>name.split(' ').includes(k)});

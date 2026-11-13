@@ -1,9 +1,10 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createRenderer, richText, safeUrl, youtubeId } from './template.mjs';
+import { createRenderer, prepare } from './template.mjs';
 import { connectBackoffice } from './backoffice-site.mjs';
-import { assetVersions } from './asset-versions.mjs';
+import { assetVersions, generatedScripts, LOADER_TOKENS } from './asset-versions.mjs';
+import { readText } from './text.mjs';
 
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const readJson = file => JSON.parse(readFileSync(join(root, file), 'utf8'));
@@ -12,24 +13,6 @@ function files(directory, extension) {
     const path = join(directory, entry.name);
     return entry.isDirectory() ? files(path, extension) : path.endsWith(extension) ? [path] : [];
   });
-}
-function prepare(record) {
-  if (Array.isArray(record)) return record.map(prepare);
-  if (!record || typeof record !== 'object') return record;
-  const output = {};
-  for (const [key, value] of Object.entries(record)) {
-    if (key.endsWith('Html')) throw new Error(`Content cannot contain raw HTML: ${key}`);
-    if (key.endsWith('RichText')) {
-      output[key] = value;
-      output[key.slice(0, -8) + 'Html'] = richText(value);
-    } else {
-      if (typeof value === 'string' && /(^href$|Href$|Url$|^url$|^home$|^page$|^image$|^thumbnail$|^heroImage$)/.test(key)) safeUrl(value);
-      if (key === 'youtubeUrl') youtubeId(value);
-      if (key === 'youtubeId' && !/^[A-Za-z0-9_-]{11}$/.test(value)) throw new Error('Invalid YouTube video ID');
-      output[key] = prepare(value);
-    }
-  }
-  return output;
 }
 // The cover (including a build-owned illustration) is the first album image.
 export function validateCohortPhotos(record) {
@@ -136,14 +119,11 @@ export function build() {
   const outputs = new Map();
   for (const file of files(join(root, 'src/pages'), '.html')) {
     const target = relative(join(root, 'src/pages'), file).replaceAll('\\', '/');
-    const source = render(readFileSync(file, 'utf8').replaceAll('\r\n', '\n'), context);
+    const source = render(readText(file), context);
     outputs.set(target, source.replace(/(<!doctype html>\n)/i, `$1<!-- Generated from src/pages/${target} and content/. Run npm run build. -->\n`));
   }
-  if (context.site) {
-    const json = value => JSON.stringify(value, null, 2).replaceAll('<', '\\u003c').replaceAll('\u2028', '\\u2028').replaceAll('\u2029', '\\u2029');
-    outputs.set('common/js/menu.js', '// Generated from content/site.json. Run npm run build.\n' +
-      `const SITE_HOME = ${json(context.site.home)};\n\nconst SITE_MENU = ${json(context.site.menu)};\n\nconst SITE_LINKS = ${json(context.site.links)};\n\nconst SITE_INFO = ${json(context.site.organization)};\n`);
-  }
+  // menu.js from content/site.json; its cache token is the hash of this content (asset-versions.mjs)
+  if (generatedScripts.has('common/js/menu.js')) outputs.set('common/js/menu.js', generatedScripts.get('common/js/menu.js'));
   return outputs;
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
@@ -151,14 +131,19 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     // Render everything before writing, so invalid data cannot leave a partial build.
     // The written static site connects to the team backoffice public API; build() stays design-only.
     const outputs = connectBackoffice(build());
+    // Standalone loaders keep their source; only the ?v= of the script they load follows that file (asset-versions.mjs)
+    for (const [file] of LOADER_TOKENS) outputs.set(file, generatedScripts.get(file));
+    // Compared with LF line endings and written as LF (text.mjs). A file that differs only by CRLF is left as it is,
+    // so a build in an old Windows copy does not mark every generated file as changed.
     const check = process.argv.includes('--check');
     const stale = [];
     for (const [path, source] of outputs) {
       const destination = join(root, path);
-      if (check) {
-        try { if (readFileSync(destination, 'utf8') !== source) stale.push(path); }
-        catch { stale.push(path); }
-      } else {
+      let current;
+      try { current = readText(destination); } catch { current = null; }
+      if (current === source) continue;
+      if (check) stale.push(path);
+      else {
         mkdirSync(dirname(destination), { recursive: true });
         writeFileSync(destination, source);
       }

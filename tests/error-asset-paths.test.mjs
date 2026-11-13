@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {build} from '../scripts/build.mjs';
+import {assetVersion} from '../scripts/asset-versions.mjs';
 
 for (const page of ['404.html', '500.html']) {
   test(`${page} defers the stylesheet request until its hosting root is known`, () => {
@@ -20,7 +21,7 @@ for (const page of ['404.html', '500.html']) {
       vm.runInNewContext(script, {document, location: {pathname}});
       const root = pathname.startsWith('/aica-site-preview/') ? '/aica-site-preview/' : '/';
       assert.equal(base.href, root);
-      assert.deepEqual(requests, [{rel: 'stylesheet', href: root + 'common/css/tokens.css'}, {rel:'stylesheet',href:root+'common/css/availability.css?v=1106porcelain-states'}]);
+      assert.deepEqual(requests, [{rel: 'stylesheet', href: root + 'common/css/tokens.css'}, {rel:'stylesheet',href:root+'common/css/availability.css?v='+assetVersion('common.css.availability')}]);
       assert.ok(html.indexOf('<script>') < html.indexOf('<body>'));
     }
   });

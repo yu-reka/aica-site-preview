@@ -75,7 +75,7 @@ html[data-nav="side"] .stories-hub{background:var(--surface)}
 .hb .hb-lq-t a:focus-visible{outline-offset:-3px}   /* 높이가 같은 overflow 칸에 잘리지 않게 안쪽으로(아래 .hb a:focus-visible보다 특이도 높게) */
 /* 줄 링크 위아래 7px: 손글씨 줄(약 30px)에서도 누르는 높이 44px. 지은이는 손글씨 줄 가운데에 */
 .hb-lq-t a{flex:none;display:flex;align-items:center;gap:10px;padding:7px 48px 7px 0;border-radius:4px}
-.hb-lq-t .t{font-family:"Nanum Pen Script",var(--ff-text);font-size:clamp(22px,1.9vw,26px);line-height:1.25;letter-spacing:0;color:#5A6274;white-space:nowrap;transition:color .2s}   /* 종이 바탕 대비 5.6 : 1 */
+.hb-lq-t .t{font-family:"Nanum Pen Script",var(--ff-text);font-size:clamp(22px,1.9vw,26px);line-height:1.25;letter-spacing:0;color:var(--graphite);white-space:nowrap;transition:color .2s}   /* 종이 바탕 대비 5.6 : 1 */
 .hb-lq-t .t::before{content:"“";margin-right:2px;color:#9DB0E8}
 .hb-lq-t .t::after{content:"”";margin-left:2px;color:#9DB0E8}
 .hb-lq-t .a{font-size:13px;color:var(--graphite);white-space:nowrap}

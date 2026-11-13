@@ -37,5 +37,5 @@
       onerror: function () { if (onError) onError(); else render(); }
     });
   }
-  load('../api/public/stories.js', function () { load('../stories/js/stories-data.js?v=design-20261029-hub-honors'); });
+  load('../api/public/stories.js', function () { load('../stories/js/stories-data.js?v=4c841403'); });
 })();

@@ -83,19 +83,22 @@
   /* 기수 거르기: 밑줄 글자 탭(위아래 메뉴의 상자 탭과 구분, 후기 · 기수 기록 시안과 같은 방식) */
   .stories-page #iv-all .iva-chips{display:flex;flex-wrap:nowrap;gap:22px;padding:0 2px;border-bottom:1px solid #D3D9E1}
   .stories-page #iv-all .iva-chips button{position:relative;height:auto;min-height:44px;margin:0 0 -1px;padding:0 1px;border:0;border-bottom:3px solid transparent;border-radius:0;background:transparent;color:#566175;font-size:15px;font-weight:600;letter-spacing:-.02em;white-space:nowrap;box-shadow:none}
-  .stories-page #iv-all .iva-chips button[aria-pressed="true"]{border-bottom-color:#14233F;color:#14233F;font-weight:800;box-shadow:none}
+  .stories-page #iv-all .iva-chips button[aria-pressed="true"]{border-bottom-color:var(--primary);color:var(--primary);font-weight:800;box-shadow:none}
   .stories-page #iv-all .iva-chips button:focus-visible{outline:2px solid #2457F5;outline-offset:-2px}
   .stories-page #iv-all .iva-out .iva-c:first-child{border-top:0}
   .stories-page #iv-all .iva-out{display:flex;flex-direction:column;gap:0;margin-top:4px}
-  .stories-page #iv-all .iva-out .iva-c{display:grid;grid-template-columns:64px minmax(0,1fr);grid-template-rows:auto auto;column-gap:12px;row-gap:3px;align-items:center;min-height:84px;padding:12px 0;border-bottom:1px solid #D3D9E1;box-sizing:border-box}
+  .stories-page #iv-all .iva-out .iva-c,.stories-page .sm-review-row{display:grid;align-items:center;min-height:84px;padding:12px 0;border-bottom:1px solid var(--line);box-sizing:border-box}
+  .stories-page #iv-all .iva-out .iva-c{grid-template-columns:64px minmax(0,1fr);grid-template-rows:auto auto;column-gap:12px;row-gap:3px}
   .stories-page #iv-all .iva-out .iva-c > div:not(.by):not(.ph){display:contents}
   .stories-page #iv-all .iva-out .iva-c .ph{grid-row:1 / span 2;width:64px;height:64px;aspect-ratio:1;border-radius:50%}
   .stories-page #iv-all .iva-out .iva-c .ph img{translate:0 var(--avatar-center-y,0)}
   .stories-page #iv-all .iva-out .iva-c .ph .play i{transform:scale(.55)}
   .stories-page #iv-all .iva-out .iva-c .ph .dur{display:none}
-  .stories-page #iv-all .iva-out .iva-c h4{grid-column:2;align-self:end;margin:0;font-size:15px;font-weight:800;line-height:1.4}
+  .stories-page #iv-all .iva-out .iva-c h4{grid-column:2;align-self:end}
+  .stories-page #iv-all .iva-out .iva-c h4,.stories-page .sm-review-row h3{margin:0;font-family:var(--f);font-size:15px;font-weight:800;line-height:1.4;letter-spacing:-.01em}
   .stories-page #iv-all .iva-out .iva-c p{display:none}
-  .stories-page #iv-all .iva-out .iva-c .by{display:block;grid-column:2;align-self:start;margin:0;font-size:12px;color:#666F81}
+  .stories-page #iv-all .iva-out .iva-c .by{display:block;grid-column:2;align-self:start;margin:0}
+  .stories-page #iv-all .iva-out .iva-c .by,.stories-page .sm-review-row-meta{font-family:var(--ff-text);font-size:12px;line-height:1.4;letter-spacing:-.01em;color:var(--graphite)}
   .stories-page #iv-all .cpager{margin-top:28px}
 }
 
@@ -109,7 +112,7 @@
   html[data-nav="side"] .stories-page .cv3-chips{position:static;display:flex;flex-wrap:nowrap;gap:22px;margin:16px 0 0 !important;padding:0 2px;background:none;border-bottom:1px solid #D3D9E1}
   html[data-nav="side"] .stories-page .cv3-chips button{height:auto;min-height:44px;margin:0 0 -1px;padding:0 1px;border:0;border-bottom:3px solid transparent;border-radius:0;background:transparent;color:#566175;font:600 15px/1 var(--ff-sans,"Pretendard",sans-serif);letter-spacing:-.02em}
   html[data-nav="side"] .stories-page .cv3-chips button:hover{color:#14233F}
-  html[data-nav="side"] .stories-page .cv3-chips button[aria-pressed="true"]{border-bottom-color:#14233F;background:transparent;color:#14233F;font-weight:800}
+  html[data-nav="side"] .stories-page .cv3-chips button[aria-pressed="true"]{border-bottom-color:var(--primary);background:transparent;color:var(--primary);font-weight:800}
   html[data-nav="side"] .stories-page .cv3-chips button i{display:none}
   html[data-nav="side"] .stories-page .cv3-chips button:focus-visible{outline:2px solid #2457F5;outline-offset:-2px}
 
@@ -193,8 +196,8 @@
   .stories-page .sm-projects,.stories-page .sm-reviews{display:block;color:var(--sm-ink)}
   .stories-page .sm-filter-tabs{display:flex;gap:12px;border-bottom:1px solid var(--sm-line);margin:0 0 16px;overflow-x:auto;scrollbar-width:none}
   .stories-page .sm-filter-tabs button{flex:1;min-width:max-content;min-height:44px;padding:0 2px;border:0;border-bottom:3px solid transparent;background:transparent;color:var(--sm-muted);font:600 13px/1.2 var(--ff-sans);white-space:nowrap;cursor:pointer}
-  .stories-page .sm-filter-tabs button[aria-pressed="true"]{border-bottom-color:var(--sm-ink);color:var(--sm-ink);font-weight:800}
-  .stories-page .sm-filter-tabs button:focus-visible,.stories-page .sm-project summary:focus-visible,.stories-page .sm-review-note:focus-visible{outline:2px solid var(--sm-blue);outline-offset:-3px}
+  .stories-page .sm-filter-tabs button[aria-pressed="true"]{border-bottom-color:var(--primary);color:var(--primary);font-weight:800}
+  .stories-page .sm-filter-tabs button:focus-visible,.stories-page .sm-project summary:focus-visible,.stories-page .sm-review-row:focus-visible,.stories-page .sm-review-note:focus-visible{outline:2px solid var(--sm-blue);outline-offset:-3px}
   .stories-page .sm-project-list{display:grid;gap:10px}
   .stories-page .sm-project{position:relative;cursor:pointer;min-width:0;border:1px solid #E4E7EE;border-radius:24px;background:linear-gradient(180deg,#F3F4F8,#EEF0F4)}
   .stories-page .sm-project[hidden]{display:none}
@@ -220,18 +223,18 @@
   /* White separated variant: title, service description, and team footer. */
   .stories-page .sm-project:not([open]){border-color:#E2E8F1;border-radius:22px;background:#fff;box-shadow:0 6px 16px #17264308}
   .stories-page .sm-project:not([open]) .sm-project-summary{padding:16px 16px 0;column-gap:8px;row-gap:0}
-  .stories-page .sm-project:not([open]) .sm-project-type{background:#EEF0F4;color:#111;font-weight:600}
+  .stories-page .sm-project:not([open]) .sm-project-type{background:#EEF0F4;color:var(--ink);font-weight:600}
   .stories-page .sm-project:not([open]) .sm-project-card-link{margin-top:9px;padding-bottom:8px}
   .stories-page .sm-project:not([open]) .sm-project-heading strong{font-size:18px;font-weight:750;line-height:1.35}
   .stories-page .sm-project:not([open]) .sm-project-description{margin-inline:-16px;padding:10px 16px 14px;font-size:15px;font-weight:500;line-height:1.6}
-  .stories-page .sm-project:not([open]) .sm-project-team{display:flex;align-items:center;justify-content:flex-end;gap:0;justify-self:stretch;margin-inline:-16px;padding:12px 16px;background:#EEF0F4;border-radius:0 0 21px 21px;font-size:12px;color:#647087}
+  .stories-page .sm-project:not([open]) .sm-project-team{display:flex;align-items:center;justify-content:flex-end;gap:0;justify-self:stretch;margin-inline:-16px;padding:12px 16px;background:#EEF0F4;border-radius:0 0 21px 21px;font-size:12px;color:var(--graphite)}
   .stories-page .sm-project:not([open]) .sm-project-team-name{overflow-wrap:anywhere}
   .stories-page .sm-project:not([open]) .sm-project-team-count{flex:none}
   .stories-page .sm-project:not([open]) .sm-project-team-separator{white-space:pre}
   .stories-page .sm-project[open] .sm-project-summary{padding:14px 14px 8px;row-gap:8px}
   .stories-page .sm-project[open] .sm-project-media{display:block;grid-column:1/-1;grid-row:1}
   .stories-page .sm-project[open] .sm-project-no{display:none}
-  .stories-page .sm-project[open] .sm-project-type{position:absolute;z-index:1;grid-column:1/-1;grid-row:1;left:12px;top:12px;height:26px;padding:0 11px;background:#EEF0F4;color:#111;font-size:12px;line-height:26px;box-shadow:0 2px 8px #1011161a}
+  .stories-page .sm-project[open] .sm-project-type{position:absolute;z-index:1;grid-column:1/-1;grid-row:1;left:12px;top:12px;height:26px;padding:0 11px;background:#EEF0F4;color:var(--ink);font-size:12px;line-height:26px;box-shadow:0 2px 8px #1011161a}
   .stories-page .sm-project-media :is(img,svg){display:block;width:100%;height:100%;object-fit:contain}
   .stories-page .sm-project-media .pjthumb .pjthumb-i{left:0;top:0;width:100%;height:100%;object-fit:contain;transform:none;scale:none}
   .stories-page .sm-project-link{position:relative;display:flex;align-items:center;justify-content:center;width:fit-content;max-width:100%;min-height:32px;margin:0 auto;padding:0 12px;border:1px solid var(--sm-black);border-radius:30px;color:var(--sm-ink);font-size:12px;font-weight:800;text-decoration:none}
@@ -245,7 +248,7 @@
   /* 기수는 카테고리 밑줄 탭과 구분되는 작은 필터 버튼. */
   .stories-page :is(.sm-reviews,.pjlist) .sm-cohort-chips{gap:6px;margin:12px 0 0;padding:2px 0;border-bottom:0}
   .stories-page :is(.sm-reviews,.pjlist) .sm-cohort-chips button{flex:0 0 auto;height:38px;line-height:1.2;min-width:0;min-height:38px;padding:0 12px;border:1px solid var(--sm-line);border-radius:30px;background:#fff;color:var(--sm-muted);font-size:12px}
-  .stories-page :is(.sm-reviews,.pjlist) .sm-cohort-chips button[aria-pressed="true"]{border-color:var(--sm-ink);background:var(--sm-ink);color:#fff;font-weight:800}
+  .stories-page :is(.sm-reviews,.pjlist) .sm-cohort-chips button[aria-pressed="true"]{border-color:var(--primary);background:var(--primary);color:#fff;font-weight:800}
   .stories-page .sm-review-count{margin:16px 0 18px;font:600 12px/1.5 var(--ff-sans)}
   .stories-page .sm-review-stage{position:relative;min-width:0;overflow:hidden;border-radius:14px;background-color:#F4F5FB;background-image:linear-gradient(rgba(70,80,150,.11) 1px,transparent 1px),linear-gradient(90deg,rgba(70,80,150,.11) 1px,transparent 1px);background-size:22px 22px;background-position:-1px -1px;box-shadow:inset 0 0 0 1px rgba(20,35,63,.08)}
   .stories-page .sm-review-board{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:48px 16px 38px;scroll-padding-inline:16px}
@@ -310,7 +313,6 @@
   .stories-page .sm-review-note{scroll-snap-stop:always;scroll-snap-align:center}
   .stories-hub .hb-pis{overscroll-behavior-x:contain;padding-inline:var(--review-card-inset,var(--hb-pad));scroll-padding-inline:0}
   .stories-hub .hb-pi{flex-basis:var(--review-card-size,min(84%,300px));scroll-snap-stop:always;scroll-snap-align:center}
-  .stories-page .sm-review-stage.is-list .sm-review-navigation{display:none}
 }
 
 /* Keep the glass controls on the board's middle edge, away from the footer rail. */

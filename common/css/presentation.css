@@ -2,11 +2,7 @@
    inherited form typography and common footer. Page layouts live in
    about/life/check/stories/css/presentation.css. */
 
-:root:where(:not([data-menu="stories"])){
-  --primary-bright:#7C9CFF;
-}
-
-:root:where([data-menu="stories"]){
+:root{
   --primary-bright:#7C9CFF;
 }
 

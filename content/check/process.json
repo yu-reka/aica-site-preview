@@ -34,7 +34,7 @@
         },
         "children": [
           {
-            "tag": "b",
+            "tag": "strong",
             "attrs": {},
             "children": [
               "코딩 테스트 면제"

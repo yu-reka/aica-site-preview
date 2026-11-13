@@ -4,9 +4,9 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 
-const source = readFileSync(new URL('../about/js/about.js', import.meta.url), 'utf8');
+const source = readFileSync(new URL('../about/js/about-projects.js', import.meta.url), 'utf8');
 const start = source.indexOf('(() => {', source.indexOf('// 이전 기수 프로젝트 영상'));
-const controller = source.slice(start, source.indexOf('/* 오른쪽 플로팅 목차', start));
+const controller = source.slice(start, source.lastIndexOf('})();'));   // 마지막 줄은 파일 전체를 감싼 함수의 끝
 
 function fixture({documentary = true} = {}) {
   let focused;

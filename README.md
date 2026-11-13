@@ -19,7 +19,7 @@ npm run build       # 콘텐츠와 템플릿 → 기존 경로의 HTML 및 메�
 npm test            # 데이터 공유, 렌더링, 출력 안전성 검사
 npm run check       # 생성 결과가 소스와 일치하는지 확인
 npm run check:public # 공개 배포 전: 생성물 + 합성 샘플 사본 검사
-npm run preview     # Python 3 로컬 서버: http://127.0.0.1:4173
+npm run preview     # Python 3을 찾아 로컬 서버 실행: http://127.0.0.1:4173
 ```
 
 페이지 주소는 `home/index.html`, `about/index.html`, `stories/*.html`, `life/index.html`, `check/index.html` 그대로입니다. 생성한 결과물은 기존처럼 정적 서버에 올릴 수 있습니다.
@@ -62,7 +62,7 @@ V30 공개 화면은 정적 HTML 틀에 JavaScript가 공개 API 응답을 그�
 
 기존 `common/css/unify.css`의 페이지별 규칙은 `about/`, `check/`, `life/`, `stories/`의 `css/presentation.css`로 나눴습니다. 공통 팔레트·폰트·푸터 규칙만 `common/css/presentation.css`에 둡니다. 이야기·라이프 모바일 PR의 수정 위치와 CSS 적용 순서는 [CSS 관리 기준](docs/css-ownership.md)을 참고하세요.
 
-이야기·라이프 공통 배너는 `common/css/masthead.css`가 관리합니다. 이야기 세부 페이지의 반복된 head 선언은 `src/components/stories/head-*.html`로 공유합니다. 라이프 모바일은 `life-m-view.js`가 데이터 읽기·마크업을, `life-m.js`가 상태·이벤트를 맡습니다. 후기 모바일 목록은 `stories-m-reviews.js`로 분리했습니다. 로딩 순서와 현재 API 연결 방식은 [프론트 유지보수 구조](docs/frontend-structure.md)에 정리했습니다.
+이야기·라이프 공통 배너는 `common/css/masthead.css`가 관리합니다. 이야기 세부 페이지의 반복된 head 선언은 `src/components/stories/head-*.html`로 공유합니다. 라이프 모바일은 `life-m-view.js`가 데이터 읽기·마크업을, `life-m.js`가 상태·이벤트를 맡습니다. 모바일 후기에서는 카드 아래에 후기 목록과 쪽 번호가 이어집니다. 카드와 목록은 같은 필터를 사용합니다. 로딩 순서와 현재 API 연결 방식은 [프론트 유지보수 구조](docs/frontend-structure.md)에 정리했습니다.
 
 루트의 HTML과 `common/js/menu.js`는 **생성 결과물**입니다. 직접 수정하면 다음 빌드에서 덮어씁니다. 원본을 수정하고 `npm run build`를 실행하세요. CSS 분리는 기존 선언과 페이지 내 적용 순서를 보존하며, 이미지·폰트 파일은 변경하지 않았습니다.
 

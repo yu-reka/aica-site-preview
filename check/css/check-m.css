@@ -12,7 +12,7 @@
   #main .cm-desktop,#main [hidden]{display:none}
   #main :is(p,h1,h2,h3,h4){word-break:keep-all;overflow-wrap:break-word}
   #main :is(button,a,input){touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-  #main :is(button,a,input):focus-visible{outline:3px solid #ed961a;outline-offset:4px}
+  #main :is(button,a,input):focus-visible{outline:3px solid var(--primary);outline-offset:4px}
   #main .rv{opacity:1;transform:none;transition:none}
   #main .sec-float{display:none}
 
@@ -21,7 +21,7 @@
   #main .ckx.cb>.wrap{width:auto;max-width:none;margin:0;padding:0}
   #main .cb1 .cbx{display:block;margin:0;padding:24px 18px 26px;border:2px solid var(--cm-black);border-radius:24px;box-shadow:4px 4px 0 var(--cm-black)}
   #main .cb h1{font:700 clamp(30px,8.9vw,36px)/1.12 var(--ff-title);letter-spacing:-.01em}
-  #main .cb h1 b{color:var(--cm-lime);-webkit-text-stroke:.045em var(--cm-black)}
+  #main .cb h1 strong{color:var(--cm-lime);-webkit-text-stroke:.045em var(--cm-black)}
   #main .cb .q{margin-top:16px;font:700 18px/1.4 var(--cm-heading);letter-spacing:-.03em}
   #main.check-page .cb .d{display:none}
   #main .cb1 .cbw{margin-top:26px}
@@ -33,7 +33,7 @@
   #main .cb .bx{width:20px;height:20px;border:1.5px solid var(--cm-ink);border-radius:5px}
   #main .cb1 .cbl .ic{width:22px;height:22px}
   #main .cb1 .cbl .tx{min-width:0;gap:3px}
-  #main .cb1 .cbl b{font:700 clamp(14px,3.9vw,16px)/1.4 var(--cm-heading);letter-spacing:-.02em}
+  #main .cb1 .cbl .tx>b{font:700 clamp(14px,3.9vw,16px)/1.4 var(--cm-heading);letter-spacing:-.02em}
   /* presentation.css fixes these captions to Paperlogy with !important. */
   html body #main .cb1 .cbl small{font:400 13px/1.45 var(--cm-body)!important;color:var(--cm-muted)}
   #main .cb1 .ok{right:-7px;bottom:-10px;width:40px;height:40px;box-shadow:2px 2px 0 var(--cm-black)}
@@ -88,12 +88,12 @@
   #main .pf-card,#main .pf-col.is-on .pf-card{display:block;margin:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none}
   #main .pf-step{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
   #main .pf-card h3{display:flex;align-items:center;min-height:56px;margin:0 64px 0 0;font:700 16px/1.5 var(--cm-heading);letter-spacing:normal}
-  #main .pf-body p,#main .pf-body dd{font:400 14px/1.7 var(--cm-body);color:var(--cm-muted)}
+  #main .pf-body p,#main .pf-body dd{font:400 14px/1.7 var(--cm-body);color:var(--ink)}
   #main .pf-body dl{margin:0;gap:0}
   #main .pf-body dt{margin:12px 0 0;font:700 14px/1.7 var(--cm-heading);color:var(--cm-ink)}
   #main .pf-body dt:first-child{margin-top:0}
   #main .pf-body dd{margin:4px 0 0}
-  #main .pf-note{margin-top:12px;padding:12px;border-radius:12px;border-left:2px solid var(--cm-blue);background:var(--cm-soft);font:400 14px/1.7 var(--cm-body)!important}
+  #main .pf-note{padding:12px;border-radius:12px;border-left:2px solid var(--cm-blue);background:var(--cm-soft);font:400 14px/1.7 var(--cm-body)!important}
 
   #main .ben2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:24px}
   #main .b2{padding:16px 14px;border:0;border-radius:16px;background:var(--cm-surface);transition:none}
@@ -107,10 +107,10 @@
   #main .b2:first-child .b2-ico{margin:0}
   #main .b2:first-child h3{display:flex;align-items:center;min-height:44px;font-size:18px}
   #main .b2:first-child .b2-desc{grid-column:1/-1;margin:12px 0 0;font-size:14px;line-height:1.65}
-  #main .b2:first-child .b2-sub{grid-column:1/-1;margin:18px -18px 0;padding:18px;border-top:1px dashed #a9b3c2;font-size:13px;line-height:1.55}
+  #main .b2:first-child .b2-sub{grid-column:1/-1;margin:18px -18px 0;padding:18px;border-top:1px dashed #a9b3c2;line-height:1.55}
   #main .b2:first-child .b2-sub small{font:inherit}
-  #main .b2:first-child b{padding:0 2px;background:linear-gradient(transparent 55%,var(--cm-lime) 55%,var(--cm-lime) 92%,transparent 92%);color:var(--cm-ink);white-space:nowrap;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-  #main .b2:first-child .b2-desc b{font-size:18px}
+  #main .b2:first-child strong{padding:0 2px;background:linear-gradient(transparent 55%,var(--cm-lime) 55%,var(--cm-lime) 92%,transparent 92%);color:var(--cm-ink);white-space:nowrap;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+  #main .b2:first-child .b2-desc strong{font-size:18px}
   #main .b2:nth-child(2){display:grid;grid-template-columns:44px minmax(0,1fr);gap:0 14px;grid-column:1/-1;padding:12px;border:1px solid var(--cm-line);border-radius:18px;background:var(--cm-white)}
   #main .b2:nth-child(2) .b2-ico{grid-row:1/3;margin:0}
   #main .b2:nth-child(2) h3{min-height:0;font-size:16px;line-height:1.5}
@@ -124,7 +124,7 @@
   #main .cm-search label{display:block;margin-bottom:8px;font:700 14px/1.7 var(--cm-body)}
   #main .cm-search-field{display:flex;align-items:center;gap:12px;min-height:48px;padding-left:16px;border:1px solid var(--cm-muted);border-radius:16px;background:var(--cm-white)}
   #main .cm-search-field:focus-within{border-color:var(--cm-blue);box-shadow:0 0 0 1px var(--cm-blue)}
-  #main .cm-search-field:has(input:focus-visible){outline:3px solid #ed961a;outline-offset:4px}
+  #main .cm-search-field:has(input:focus-visible){outline:3px solid var(--primary);outline-offset:4px}
   #main .cm-search-field svg{width:20px;height:20px;flex:none;fill:none;stroke:var(--cm-muted);stroke-width:1.8;stroke-linecap:round}
   #main .cm-search input{min-width:0;flex:1;width:100%;min-height:48px;padding:8px 12px 8px 0;border:0;border-radius:12px;outline:none;background:transparent;font:400 16px/1.5 var(--cm-body);color:var(--cm-ink)}
   #main .cm-search input::-webkit-search-cancel-button{appearance:none}
@@ -133,8 +133,8 @@
   #main .faq-tools{position:sticky;top:calc(var(--hdr) + env(safe-area-inset-top,0px));z-index:4;display:block;padding:12px 0;margin-top:8px;background:var(--cm-white);box-shadow:0 1px 0 var(--cm-line)}
   #main .faq-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;width:100%;padding:4px;border:0;border-radius:14px;background:var(--cm-surface)}
   #main .faq-tab{justify-content:center;min-width:0;min-height:44px;padding:8px 4px;border:2px solid transparent;border-radius:10px;font:700 14px/1.4 var(--cm-heading);letter-spacing:-.02em;color:#657087}
-  #main .faq-tab:hover{border-color:#244cd2;box-shadow:none}
-  #main .faq-tab[aria-pressed="true"]{background:#244cd2;color:var(--cm-white);border-color:#244cd2;box-shadow:none}
+  #main .faq-tab:hover{border-color:var(--primary);box-shadow:none}
+  #main .faq-tab[aria-pressed="true"]{background:var(--primary);color:var(--cm-white);border-color:var(--primary);box-shadow:none}
   #main .faq-cnt{display:none}
   #main .faq-count{min-height:18px;margin:12px 0;font:400 12px/1.5 var(--cm-body);color:var(--cm-muted)}
   #main .faq-list{display:grid;gap:12px;min-height:0;margin:0;padding:0;border:0;overflow-anchor:none;scroll-margin-top:calc(var(--hdr) + 130px)}
@@ -149,7 +149,7 @@
   #main .faq-item:not(.is-open) .faq-a{display:none}
   #main .faq-a>div{display:block;margin:0;padding:0 16px 16px 50px;border-radius:0;background:none;overflow:visible}
   #main .faq-a .faq-qa{display:none}
-  #main .faq-at{padding:0;font:400 15px/1.75 var(--cm-body);color:var(--cm-muted)}
+  #main .faq-at{padding:0;font:400 15px/1.75 var(--cm-body);color:var(--ink)}
   #main .faq-at a{display:inline;padding:0;border:0;font:inherit;color:var(--cm-blue);text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
   #main .faq-at ul{padding-left:20px}
   #main .faq-at p+p{margin-top:12px}
@@ -157,7 +157,7 @@
   #main .faq-pager{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:28px}
   #main .faq-pager.is-off{display:none}
   #main .faq-pages{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;min-width:0}
-  #main .faq-pager button{flex:none;min-width:40px;height:40px;padding:0 6px;border:1px solid #DDE0E5;border-radius:999px;background:#fff;color:var(--cm-muted);font:700 14px/1 var(--cm-body);font-variant-numeric:tabular-nums;cursor:pointer}
+  #main .faq-pager button{flex:none;min-width:40px;height:40px;padding:0 6px;border:1px solid var(--line-ui);border-radius:999px;background:#fff;color:var(--cm-muted);font:700 14px/1 var(--cm-body);font-variant-numeric:tabular-nums;cursor:pointer}
   #main .faq-pb{display:grid;place-items:center;width:40px;min-height:40px;transform:none}
   #main .faq-pb svg{width:18px;height:18px}
   #main #faqPrev svg{transform:rotate(180deg)}

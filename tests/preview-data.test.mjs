@@ -1,4 +1,4 @@
-import {assetVersion} from '../scripts/asset-versions.mjs';
+import {assetVersion, contentToken} from '../scripts/asset-versions.mjs';
 import {runInNewContext,runInContext} from './support/runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -58,15 +58,17 @@ test('public release guard rejects substituted DB text without logging it or mod
   } finally {rmSync(root, {recursive:true, force:true});}
 });
 
-// The first clean deployment must not reuse the old snapshot URL from a browser cache.
-test('public HTML and home fallback request a new snapshot cache version', () => {
+test('public HTML and home fallback use the hash of the shipped sample bytes', () => {
   const root = new URL('../', import.meta.url);
+  const read = path => readFileSync(new URL(path, root), 'utf8');
+  const stories = contentToken(read('stories/js/stories-data.js'));
+  const faq = contentToken(read('check/js/faq-data.js'));
   for (const file of ['index.html','reviews.html','interviews.html','projects.html','cohorts.html']) {
-    assert.match(readFileSync(new URL('stories/' + file, root), 'utf8'), /data-fallback="js\/stories-data\.js\?v=design-20261029-hub-honors"/);
+    assert.ok(read('stories/' + file).includes('data-fallback="js/stories-data.js?v=' + stories + '"'));
   }
-  assert.match(readFileSync(new URL('check/index.html', root), 'utf8'), /data-fallback="js\/faq-data\.js\?v=design-20261102-direct-links"/);
-  assert.ok(readFileSync(new URL('home/index.html', root), 'utf8').includes('src="js/ticker-render.js?v='+assetVersion('home.js.ticker-render')+'"'));
-  assert.match(readFileSync(new URL('home/js/ticker-render.js', root), 'utf8'), /stories-data\.js\?v=design-20261029-hub-honors/);
+  assert.ok(read('check/index.html').includes('data-fallback="js/faq-data.js?v=' + faq + '"'));
+  assert.ok(read('home/index.html').includes('src="js/ticker-render.js?v=' + assetVersion('home.js.ticker-render') + '"'));
+  assert.ok(read('home/js/ticker-render.js').includes('stories-data.js?v=' + stories));
 });
 
 

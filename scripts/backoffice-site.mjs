@@ -9,9 +9,11 @@ import { assetVersion } from './asset-versions.mjs';
 // - 디자인이 바뀌어 기대한 자리를 못 찾으면 조용히 넘어가지 않고 빌드를 멈춰요.
 
 const TRACK = `<script src="../common/js/track.js?v=${assetVersion('common.js.track')}" defer></script>`;
+// 이야기 렌더러는 역할별 세 파일(목록 · 데스크톱 후기 넘김 · 글 안 사진과 영상)이고, 한 파일이던 때와 같은 순서로 맨 먼저 실행돼요
+const STORY_RENDERERS = ['stories-render', 'stories-review-paging', 'stories-media'];
 const STORY_SCRIPTS = [
   '<!-- Story consumers are collected below; the API-first loader requests the snapshot only on failure. -->',
-  `<script src="js/stories-render.js?v=${assetVersion('stories.js.stories-render')}" defer></script>`
+  ...STORY_RENDERERS.map(name => `<script src="js/${name}.js?v=${assetVersion(`stories.js.${name}`)}" defer></script>`)
 ];
 const STORY_STATE_NOTE = '<!-- 빈 목록 · 필터 결과 없음 안내(aica-site PR #27): 글을 다 그린 뒤 판단하도록 글 그리기 다음에 -->';
 const STORY_STYLE = `<link rel="stylesheet" href="css/stories-render.css?v=${assetVersion('stories.css.stories-render')}">`;
@@ -174,9 +176,9 @@ function withStoryLoader(html, path) {
     if (src.startsWith('js/old-hash.js')) return tag;
     consumers.push(src); return '';
   });
-  if (!consumers[0]?.startsWith('js/stories-render.js?')) throw new Error(`backoffice-site: ${path} story renderer must run first`);
+  if (!STORY_RENDERERS.every((name, i) => consumers[i]?.startsWith(`js/${name}.js?`))) throw new Error(`backoffice-site: ${path} story renderer must run first`);
   if (!consumers.some(src => src.startsWith('js/story-state.js?'))) throw new Error(`backoffice-site: ${path} needs story states`);
-  consumers.splice(1, 0, 'js/text-fit.js?v=' + assetVersion('stories.js.text-fit'));
+  consumers.splice(STORY_RENDERERS.length, 0, 'js/text-fit.js?v=' + assetVersion('stories.js.text-fit'));
   consumers.unshift('js/story-details.js?v=' + assetVersion('stories.js.story-details'));
   const scripts = JSON.stringify(consumers).replace(/&/g, '&amp;').replace(/'/g, '&#39;');
   const loader = `<script src="../common/js/stories-loader.js?v=${assetVersion('common.js.stories-loader')}" data-page="${path}" data-api="../api/public/stories" data-fallback="js/stories-data.js?v=${assetVersion('stories.js.stories-data')}" data-scripts='${scripts}'></script>`;

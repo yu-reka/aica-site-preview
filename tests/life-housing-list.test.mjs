@@ -52,8 +52,8 @@ test('the housing support notes stay as their own block below the map card', () 
 
 test('refined map keeps room-count colors and highlights selection with a pulse and information tag', () => {
   const css = read('../life/css/housing-map.css');
-  assert.match(css, /\.housing-map-refined \.hzmap-d \.a\{fill:rgb\(40 87 250 \/ 30%\)/);
-  assert.match(css, /\.housing-map-refined \.hzmap-d\.lv3 \.a\{fill:rgb\(40 87 250 \/ 70%\)/);
+  assert.match(css, /\.housing-map-refined \.hzmap-d \.a\{fill:color-mix\(in srgb, var\(--primary\) 30%, transparent\)/);
+  assert.match(css, /\.housing-map-refined \.hzmap-d\.lv3 \.a\{fill:color-mix\(in srgb, var\(--primary\) 70%, transparent\)/);
   assert.match(css, /\.housing-map-refined \.hzmap-d\.lv1 \.a\{fill:rgb\(255 255 255 \/ 12%\)[^}]*stroke-dasharray:4 3/);
   assert.match(css, /\.housing-map-refined:has\(\.hzmap-d\.on\) \.hzmap-d:not\(\.on\)[^{]*\{opacity:1\}/);
   assert.match(css, /\.housing-map-refined \.hzmap-d\.on \.pl\{animation:hz-pulse/);

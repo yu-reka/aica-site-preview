@@ -68,7 +68,7 @@ html[data-nav="side"] .st-mh{border-bottom:0!important}
 /* 배너 바로가기: 배너 오른쪽 위 테두리에 붙은 색인 탭(10-13, 배너 메뉴 시안 5 '모서리 탭') — 배너 높이는 그대로 */
 .st-mh .mhb{position:relative;margin-top:36px;overflow:visible}
 .st-mh .mhb-st{position:absolute;right:28px;top:-2px;transform:translateY(-100%);display:flex;gap:4px;align-items:flex-end}
-.st-mh .mhb-st a,body .life-page .st-mh .mhb-st a{min-width:0;height:34px;padding:0 16px;display:inline-flex;align-items:center;border:1.5px solid var(--ink-strong);border-bottom:0;border-radius:12px 12px 0 0;background:var(--c);box-shadow:none;transform:none;font:700 13.5px/1 var(--ff-text);color:var(--ink-strong);text-decoration:none;transition:height .2s}
+.st-mh .mhb-st a,body .life-page .st-mh .mhb-st a{min-width:0;height:34px;padding:0 16px;display:inline-flex;align-items:center;border:1.5px solid var(--ink-strong);border-bottom:0;border-radius:12px 12px 0 0;background:var(--c);box-shadow:none;transform:none;font:700 13.5px/1 var(--ff-text);color:var(--ink);text-decoration:none;transition:height .2s}
 .st-mh .mhb-st a:hover{height:40px;transform:none;box-shadow:none}
 @media (max-width:1100px){.st-mh .mhb{margin-top:0}}
 @media (max-width:1100px){.st-mh .mhb-st{display:none}}
@@ -81,7 +81,7 @@ html[data-nav="side"] .st-mh{border-bottom:0!important}
 html[data-menu="stories"] .st-mh .mhb{isolation:isolate;
   padding-top:clamp(28px,3.2vw,44px);padding-bottom:clamp(28px,3.2vw,44px)}
 html[data-menu="stories"] .st-mh .mhb .st-mh-t{font-size:clamp(32px,3.9vw,54px)}
-html[data-menu="stories"] .st-mh .mhb .st-mh-lead{color:#4A5466}
+html[data-menu="stories"] .st-mh .mhb .st-mh-lead{color:var(--graphite)}
 html[data-menu="stories"] .st-mh .mhb-tx{position:relative;z-index:1}
 html[data-menu="stories"] .st-mh .mhb-deco{position:absolute;inset:0;z-index:0;border-radius:inherit;overflow:hidden;pointer-events:none}
 html[data-menu="stories"] .st-mh .mhb-deco>*,html[data-menu="stories"] .st-mh .mhb-deco .dc-scrap>*{position:absolute}

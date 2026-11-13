@@ -15,7 +15,7 @@
   :is(html[data-nav="side"] .stories-page,.lm-content) .ui-filter :is(a,button){
     display:flex;align-items:center;justify-content:center;flex:0 0 auto;min-width:max-content;height:auto;min-height:var(--control-target);margin:0 0 -1px;padding:0 2px;border:0;border-bottom:3px solid transparent;border-radius:0;background:transparent;color:var(--text-support);font:600 var(--control-font)/1.2 var(--ff-sans);letter-spacing:-.02em;white-space:nowrap;box-shadow:none;cursor:pointer;text-decoration:none;
   }
-  :is(html[data-nav="side"] .stories-page,.lm-content) .ui-filter :is([aria-pressed="true"],[aria-current]){border-bottom-color:var(--ink);color:var(--ink);font-weight:800}
+  :is(html[data-nav="side"] .stories-page,.lm-content) .ui-filter :is([aria-pressed="true"],[aria-current]){border-bottom-color:var(--primary);color:var(--primary);font-weight:800}
   :is(html[data-nav="side"] .stories-page,.lm-content) .ui-filter :is(a,button):focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
   .lm-content .food-filters button,.stories-page .sm-cohort-chips button{min-height:var(--control-target)}
   .lm-content .food-filters button{border-color:var(--line-ui)}

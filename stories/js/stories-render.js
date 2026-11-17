@@ -359,7 +359,7 @@
       if (vid) {
         var mm = /^(\d+):(\d{1,2})$/.exec(v.video.dur || ''), len = mm ? (+mm[1] ? +mm[1] + '분 ' : '') + (+mm[2]) + '초' : (v.video.dur || '');
         side = '<h3>이 영상</h3><dl class="ivmeta">' + (len ? '<div><dt>길이</dt><dd>' + esc(len) + '</dd></div>' : '') + '<div><dt>기수</dt><dd>' + esc(v.cohort) + '기</dd></div><div><dt>직군</dt><dd>' + esc(v.track) + '</dd></div></dl>'
-          + '<a class="ivyt" href="https://www.youtube.com/watch?v=' + esc(v.video.yt) + (ytFrom ? '&amp;t=' + ytFrom + 's' : '') + '" target="_blank" rel="noopener">유튜브에서 보기 ↗</a>';
+          + '<a class="ivyt" href="https://www.youtube.com/watch?v=' + esc(v.video.yt) + (ytFrom ? '&amp;t=' + ytFrom + 's' : '') + '" target="_blank" rel="noopener">유튜브에서 보기</a>';
       } else {
         side = '<h3>이 인터뷰에서 묻는 것</h3><ol>' + (v.qa || []).map(function (q, k) { return '<li><a href="#q-' + no + '-' + (k + 1) + '">' + esc(q.toc || q.q) + '</a></li>'; }).join('') + '</ol>';
       }
@@ -439,7 +439,7 @@
         if (!String(g.p || '').trim()) return '';
         return '<section><h3>' + esc(g.h || s) + '</h3><p class="pjph-t">' + esc(g.p) + '</p></section>';
       }).join('');
-      var links = (x.links || []).filter(function (l) { return l && l.url; }).map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label || '자료 보기') + ' ↗</a>'; }).join('');
+      var links = (x.links || []).filter(function (l) { return l && l.url; }).map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label || '자료 보기') + '</a>'; }).join('');
       return '<div class="pjd" id="' + id + '"><a class="ivback" href="#p-pr">← 프로젝트 목록</a><div class="ivwrap"><div>'
         + (pjVideo(x) || '<div class="ivhero pjhero"><span class="ivtag">' + esc(pjSubject(x)) + '</span>' + (photos(x, x.title) || (hasThumb(x) ? pjThumb(x, 'illu', PHOTO_DETAIL_SIZES) : visual(x, { hidden: true, sizes: PHOTO_DETAIL_SIZES }))) + '</div>')
         + '<span class="pjno">' + pad2(i + 1) + '</span><h2>' + esc(x.title) + '</h2><p class="lead">' + esc(x.summary) + '</p>'

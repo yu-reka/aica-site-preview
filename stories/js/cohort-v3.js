@@ -30,7 +30,7 @@
       pin.setAttribute('role','group'); pin.setAttribute('aria-label',L+'기 교육과정');
       b.append(L+'기',document.createElement('br'),'교육과정');
       tracks.forEach(function(t){ cc.appendChild(node('span','',t)); });
-      arrow.setAttribute('aria-hidden','true'); a.target='_blank'; a.rel='noopener'; a.appendChild(arrow);
+      arrow.setAttribute('aria-hidden','true'); arrow.setAttribute('data-new-window-icon',''); a.target='_blank'; a.rel='noopener'; a.appendChild(arrow);
       ft.append(node('p','','자세한 내용은 공식 홈페이지에서 확인하세요.'),a);
       pn.src='assets/pin-white.png'; pn.alt='고정됨'; pn.width=96; pn.height=96;
       pin.append(node('span','k','CURRICULUM'),b,cc,ft,pn);

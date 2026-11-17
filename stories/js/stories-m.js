@@ -151,7 +151,7 @@
         var btns = document.createElement('div'); btns.className = 'sm-cv-btns';
         if (db) btns.appendChild(db);
         var a = document.createElement('a'); a.className = 'sm-cv-off'; a.href = official; a.target = '_blank'; a.rel = 'noopener';
-        a.innerHTML = '공식 홈페이지 <span aria-hidden="true">↗</span>';
+        a.textContent = '공식 홈페이지';
         btns.appendChild(a);
         prof.replaceChildren(top, mid, bio, btns);
         prof.classList.add('sm-cv-prof');

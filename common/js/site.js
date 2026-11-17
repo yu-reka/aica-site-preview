@@ -218,6 +218,56 @@ const Site = (() => {
     });
   }
 
+  function setupNewWindowLinks(){
+    if (typeof MutationObserver === 'undefined') return;
+    const description = document.createElement('span');
+    description.id = 'site-new-window-description';
+    description.hidden = true;
+    description.textContent = '새 창';
+    document.body.append(description);
+
+    const selector = 'a[target], a[aria-describedby]';
+    const sync = link => {
+      if (!(link instanceof HTMLAnchorElement)) return;
+      const opens = link.hasAttribute('href') && link.target.toLowerCase() === '_blank'
+        && !link.hasAttribute('download') && !link.hasAttribute('data-toast');
+      const ids = (link.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean);
+      const hasDescription = ids.includes(description.id);
+      if (opens !== hasDescription) {
+        const next = opens ? [...ids, description.id] : ids.filter(id => id !== description.id);
+        if (next.length) link.setAttribute('aria-describedby', next.join(' '));
+        else link.removeAttribute('aria-describedby');
+      }
+      const icon = link.querySelector('[data-new-window-icon]');
+      if (opens && !icon) {
+        const mark = document.createElement('span');
+        mark.className = 'site-new-window-icon';
+        mark.setAttribute('aria-hidden', 'true');
+        mark.setAttribute('data-new-window-icon', '');
+        link.append(mark);
+      }
+    };
+
+    document.querySelectorAll(selector).forEach(sync);
+    new MutationObserver(records => {
+      const links = new Set();
+      for (const record of records) {
+        const parent = record.target.closest?.(selector);
+        if (parent) links.add(parent);
+        if (record.type === 'attributes' && record.target.matches('a')) links.add(record.target);
+        for (const node of record.addedNodes) {
+          if (node.nodeType !== Node.ELEMENT_NODE) continue;
+          if (node.matches(selector)) links.add(node);
+          node.querySelectorAll(selector).forEach(link => links.add(link));
+        }
+      }
+      links.forEach(sync);
+    }).observe(document.body, {
+      subtree: true, childList: true, attributes: true,
+      attributeFilter: ['target', 'href', 'download', 'data-toast', 'aria-describedby']
+    });
+  }
+
   /* ---------- 주소 조건 ?cat=값: 본문의 분류 버튼(data-cat · aria-pressed)을 눌러 둠 ---------- */
   function applyCat(params){
     const v = params.get('cat');
@@ -308,17 +358,18 @@ const Site = (() => {
     const header = $('#siteHeader'), fabTop = $('#fabTop');
     const footerRelated = $('#siteFooter .footer-related');
     if (footerRelated) {
-      document.addEventListener('click', e => {
-        if (!footerRelated.contains(e.target) || e.target.closest('.footer-related-list a')) footerRelated.open = false;
-      });
+      // Wait for an actual outside interaction. WebKit can blur the summary
+      // before activating a tapped link; hiding it then can cancel navigation.
+      const closeRelatedFromOutside = e => {
+        if (!footerRelated.contains(e.target)) footerRelated.open = false;
+      };
+      document.addEventListener('click', closeRelatedFromOutside);
+      document.addEventListener('focusin', closeRelatedFromOutside);
       footerRelated.addEventListener('keydown', e => {
         if (e.key !== 'Escape' || !footerRelated.open) return;
         e.preventDefault();
         footerRelated.open = false;
         $('summary', footerRelated).focus();
-      });
-      footerRelated.addEventListener('focusout', e => {
-        if (!footerRelated.contains(e.relatedTarget)) footerRelated.open = false;
       });
     }
     $('#menuBtn').addEventListener('click', openDrawer);
@@ -383,7 +434,7 @@ const Site = (() => {
     // 헤더 · 모바일 메뉴 · 푸터 · 왼쪽 메뉴의 같은 페이지 링크는 새로 불러오지 않고 그 위치로 이동
     document.addEventListener('click', e => {
       const a = e.target.closest('#siteHeader a[href], #drawer a[href], #siteFooter a[href], #siteLnb a[href]');
-      if (!a || a.hasAttribute('data-toast') || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (!a || (a.target && a.target.toLowerCase() !== '_self') || a.hasAttribute('data-toast') || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       const u = new URL(a.href);
       // Keep native navigation when leaving a detail so the browser clears CSS :target.
       const storyDetail = html.dataset.menu === 'stories' &&
@@ -464,6 +515,7 @@ const Site = (() => {
     if ($('#subnav') || $('#drawer a[data-sub]')) requestAnimationFrame(syncSubnav);
   }
   linkSiteLinks();
+  setupNewWindowLinks();
   // 페이지 스크립트(defer, 이 파일 뒤)가 분류 버튼에 동작을 붙인 뒤에 누름
   if (location.search) {
     const go = () => applyCat(new URLSearchParams(location.search));

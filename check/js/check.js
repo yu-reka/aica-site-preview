@@ -56,7 +56,7 @@
   // 본문 안 같은 페이지 #링크(모집 프로세스 보러 가기 · 자주 묻는 질문 답의 링크). 연결처 미정(data-toast · data-site-link)은 공통 site.js가 안내
   main.addEventListener('click', e => {
     const a = e.target.closest('a[href^="#"]');
-    if (!a || a.hasAttribute('data-toast') || e.defaultPrevented) return;
+    if (!a || (a.target && a.target.toLowerCase() !== '_self') || a.hasAttribute('data-toast') || e.defaultPrevented) return;
     const el = targetOf(a.getAttribute('href'));
     if (!el) return;
     e.preventDefault();

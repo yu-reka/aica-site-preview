@@ -324,3 +324,7 @@
 .drawer .drawer-acc.is-open .acc-panel{grid-template-rows:1fr}
 .drawer .drawer-acc.is-open .acc-panel>div{visibility:inherit;transition:none}
 @media (prefers-reduced-motion:reduce){.drawer .acc-tog svg,.floating .fab-top{transition:none}}
+.site-new-window-icon{display:inline-block;margin-inline-start:.3em;line-height:1}
+.site-new-window-icon::before{content:"↗"}
+a:not([href][target="_blank" i]) [data-new-window-icon],
+a:is([download],[data-toast]) [data-new-window-icon]{display:none!important}

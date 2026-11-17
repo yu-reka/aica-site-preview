@@ -93,7 +93,7 @@ const SiteLayout = ({ $, ROOT, href, current, subnavOn, sideNav, html }) => {
             <details class="footer-related">
               <summary><span>유관 사이트</span>${ICON.chev}</summary>
               <ul class="footer-related-list">
-                <li><a href="${text(SITE_INFO.relatedSiteUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${text(SITE_INFO.relatedSiteLabel)} (새 창)">${text(SITE_INFO.relatedSiteLabel)}</a></li>
+                <li><a href="${text(SITE_INFO.relatedSiteUrl)}" target="_blank" rel="noopener noreferrer">${text(SITE_INFO.relatedSiteLabel)}</a></li>
               </ul>
             </details>
           </li>

@@ -346,7 +346,8 @@
       p.onclick=function(){ if(!id) return;
         var frame=document.createElement('iframe'); frame.src=ytEmbed(id,d);
         frame.title=d.title; frame.allow='autoplay; encrypted-media; picture-in-picture; fullscreen'; frame.allowFullscreen=true;
-        md.replaceChildren(frame); };
+        frame.referrerPolicy='strict-origin-when-cross-origin';
+        md.replaceChildren(frame); frame.focus(); };
       if(id) md.appendChild(p); }
     else { /* 사진 크게 보기(10-14): 오른쪽 위 버튼 · 사진 클릭 */
       var z=document.createElement('button'); z.type='button'; z.className='cv3-zoom'; z.setAttribute('aria-label','사진 크게 보기');

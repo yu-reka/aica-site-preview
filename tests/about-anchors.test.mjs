@@ -15,7 +15,7 @@ test('rapid chapter taps cancel animation and use the last target, then restore 
     Date: { now: () => now }, mq: {matches:true}, reduce: {matches:false},
     btns: [1, 2, 3, 4].map(k => ({dataset:{jump:String(k)}, addEventListener:(_, fn) => handlers.push(fn)})),
     document: {readyState:'loading', addEventListener() {}, getElementById:id => ({getBoundingClientRect:()=>({top:tops[id] - y})})},
-    addEventListener() {}, setCur() {}, hdr:()=>60,
+    addEventListener() {}, setCur() {}, header: {}, SiteUI: {headerDividerTop:()=>57},
     requestAnimationFrame: fn => { frames.set(++nextFrame, fn); return nextFrame; },
     cancelAnimationFrame: id => frames.delete(id),
     get scrollY() { return y; },
@@ -28,12 +28,12 @@ test('rapid chapter taps cancel animation and use the last target, then restore 
     now += 100;
     handlers[k - 1]();
     assert.equal(scrolls.at(-1).behavior, 'instant');
-    assert.equal(y, tops['am-ch' + k] - 60, 'each subsequent tap reaches its own target immediately');
+    assert.equal(y, tops['am-ch' + k] - 57, 'each subsequent tap reaches its own target immediately');
   }
   assert.equal(frames.size, 1, 'only the latest correction remains queued');
   y += 80; // Some browsers apply one last step from the cancelled animation.
   frames.values().next().value();
-  assert.equal(y, tops['am-ch2'] - 60, 'the next frame corrects residual movement');
+  assert.equal(y, tops['am-ch2'] - 57, 'the next frame corrects residual movement');
   now += 700;
   handlers[0]();
   assert.equal(scrolls.at(-1).behavior, 'smooth', 'isolated taps keep the original motion');
@@ -50,11 +50,11 @@ for (const pathname of ['/aica-site-preview/about', '/aica-site-preview/about/',
       document: { readyState:'loading', getElementById: id => id === 'am-ch2' ? {getBoundingClientRect:()=>({top:500})} : null,
         addEventListener: (type, fn) => { if(type === 'click') click = fn; } },
       addEventListener() {}, requestAnimationFrame: fn => fn(), cancelAnimationFrame() {},
-      setCur() {}, hdr:()=>60, scrollTo: options => scrolls.push(options),
+      setCur() {}, header: {}, SiteUI: {headerDividerTop:()=>57}, scrollTo: options => scrolls.push(options),
     });
     click({target:{closest:()=>link}});
     assert.equal(scrolls.length, 1, 'same-page aliases must use the same jump as bottom tabs');
-    assert.equal(scrolls[0].top, 440);
+    assert.equal(scrolls[0].top, 443);
     assert.equal(scrolls[0].behavior, 'auto', 'reduced motion is preserved');
     scrolls.length = 0;
     click({ctrlKey:true,target:{closest:()=>link}});
@@ -70,13 +70,13 @@ test('chapter scroll completion corrects layout shifts and manual scrolling canc
     btns: [{dataset:{jump:'2'}, addEventListener:(_, fn) => handlers.push(fn)}],
     document: {readyState:'loading', addEventListener() {}, getElementById:()=>({getBoundingClientRect:()=>({top:chapterTop-y})})},
     addEventListener:(type, fn)=>{(events[type] ||= []).push(fn);},
-    setCur() {}, hdr:()=>60, requestAnimationFrame:()=>1, cancelAnimationFrame() {},
+    setCur() {}, header: {}, SiteUI: {headerDividerTop:()=>57}, requestAnimationFrame:()=>1, cancelAnimationFrame() {},
     get scrollY(){return y;}, scrollTo:options=>{scrolls.push(options); y=options.top;},
   });
   handlers[0]();
   chapterTop += 48; // An image above the destination gains its final height.
   events.scrollend.forEach(fn=>fn());
-  assert.equal(scrolls.at(-1).top, chapterTop - 60);
+  assert.equal(scrolls.at(-1).top, chapterTop - 57);
   assert.equal(scrolls.at(-1).behavior, 'instant');
   const count = scrolls.length;
   events.wheel.forEach(fn=>fn());

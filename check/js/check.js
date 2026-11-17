@@ -38,7 +38,8 @@
       const faqItem = el.closest('.faq-item');
       const tools = faqItem && mobile.matches ? $('.faq-tools', main).offsetHeight : 0;
       const gap = chapter ? 0 : (mobile.matches ? 16 : 64);
-      y = layoutTop(pick) - ((header ? header.offsetHeight : 0) + tools + gap);
+      const top = chapter ? SiteUI.headerDividerTop(header) : (header?.offsetHeight || 0);
+      y = layoutTop(pick) - (top + tools + gap);
     }
     scrollToY(Math.max(0, mobile.matches ? y : Math.round(y)), instant);
     // 접근성: 이동한 섹션 제목으로 초점

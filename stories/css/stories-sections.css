@@ -101,11 +101,16 @@
 /* 인터뷰 상세: 번호를 잇는 선과 여백으로 질문·답변의 흐름을 정리합니다. */
 .stories-page .ivd .qa .a{font-family:var(--ff-sans);font-size:17px;line-height:1.85;color:var(--ink);word-break:keep-all;overflow-wrap:break-word}
 .stories-page .ivd .qa .q{font-size:20px;line-height:1.6;font-weight:700;color:#14233f;word-break:keep-all;overflow-wrap:break-word}
-.stories-page .ivd .qa>div{scroll-margin-top:160px;box-shadow:none}
+/* Include the fixed masthead before it appears so a cold fragment and a TOC click land together.
+   Subtract the question block’s own top padding to position its heading. */
+html[data-interview-question]:root{scroll-padding-top:calc(var(--hdr,72px) + var(--iv-masthead-height,60px) + 16px - var(--iv-question-padding,28px))}
+@media(max-width:860px){html[data-interview-question]:root{--iv-masthead-height:50px}}
+html[data-interview-question] .stories-page :is(#p-iv,.ivd[data-story-active]){animation:none}
+.stories-page .ivd .qa>div{scroll-margin-top:0;box-shadow:none}
 .stories-page .ivd .qa .q i{font-family:var(--ff-sans);font-style:normal}
 .stories-page .ivd .qa{position:relative}
 .stories-page .ivd .qa::before{content:"";position:absolute;left:15px;top:30px;bottom:30px;width:1px;background:#dce4ef}
-.stories-page .ivd .qa>div{position:relative;margin:0;padding:28px 0 30px;border:0;border-radius:0;background:transparent}
+.stories-page .ivd .qa>div{position:relative;margin:0;padding:var(--iv-question-padding,28px) 0 30px;border:0;border-radius:0;background:transparent}
 .stories-page .ivd .qa .q{display:block;position:relative;padding-left:54px}
 .stories-page .ivd .qa .q i{position:absolute;left:0;top:0;margin:0;display:grid;place-items:center;width:32px;height:32px;border:2px solid #2457f5;background:#fff;color:#2457f5;line-height:1;font-size:14px;box-sizing:border-box}
 .stories-page .ivd .qa .a{padding-left:54px;margin-top:14px}

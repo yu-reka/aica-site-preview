@@ -28,6 +28,11 @@ var SiteUI = (() => {
     try { return decodeURIComponent(hash); } catch { return ''; }
   }
   function motion() { return matchMedia('(prefers-reduced-motion: reduce)'); }
+  function headerDividerTop(header) {
+    const bar = header?.querySelector('.hdr-bar');
+    if (!bar) return header?.getBoundingClientRect().bottom ?? 60;
+    return bar.getBoundingClientRect().bottom - parseFloat(getComputedStyle(bar).borderBottomWidth);
+  }
   function element(tag, cls, text) {
     const node = document.createElement(tag);
     if (cls) node.className = cls;
@@ -162,7 +167,7 @@ var SiteUI = (() => {
     observer.observe(document.documentElement,{childList:true,subtree:true});
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>enhance());else enhance();
   }
-  return { escapeText, escapeAttribute, selectors, loadScript, motion, decodeHash, element, cloneWithoutIds, toggleButton, buttonGroup, enhance, trapFocus, createDialogScope, paginationLimit, paginationNumbers, railState, syncRail, circularRail, railKeys };
+  return { escapeText, escapeAttribute, selectors, loadScript, motion, headerDividerTop, decodeHash, element, cloneWithoutIds, toggleButton, buttonGroup, enhance, trapFocus, createDialogScope, paginationLimit, paginationNumbers, railState, syncRail, circularRail, railKeys };
 })();
 
 /* Restore view choices only for a reload of this exact URL. Links and browser

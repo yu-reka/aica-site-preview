@@ -114,6 +114,7 @@
 /* 인터뷰 본문 위치와 질문 목차를 동기화합니다. 문서 대신 목차만 스크롤합니다. */
 (function(){
   var states=[],frame=0,keyboardIntent=false;
+  var requestedQuestion=location.hash;
   var reduced=SiteUI.motion();
   var mobile=matchMedia('(max-width: 600px)');
   function bindContents(root){root.querySelectorAll('.sidebox > ol').forEach(function(list){
@@ -137,6 +138,13 @@
     addEventListener('pointerup',function(){if(state.pressed){state.pressed=false;pause()}});
     addEventListener('pointercancel',function(){state.pressed=false;pause()});
     list.addEventListener('keydown',function(){state.keyboard=true;pause()});
+    list.addEventListener('click',function(event){
+      var link=event.target.closest('a[href^="#"]');
+      if(link&&link.hash===location.hash){
+        requestedQuestion=link.hash;
+        schedule();
+      }
+    });
     list.addEventListener('focusin',function(){state.keyboard=keyboardIntent});
     list.addEventListener('focusout',function(e){if(!list.contains(e.relatedTarget)){state.keyboard=false;pause()}});
   });}
@@ -160,15 +168,19 @@
     var detail=target&&target.closest('.ivd');
     var state=states.find(function(s){return s.detail===detail});
     if(!state||!detail.getClientRects().length)return;
-    var header=document.getElementById('siteHeader');
-    var readingLine=Math.max(header?header.getBoundingClientRect().bottom+32:100,innerHeight*.25);
-    var active=state.pairs[0];
-    state.pairs.forEach(function(pair){if(pair.section.getBoundingClientRect().top<=readingLine)active=pair});
-    if(state.current!==active){
+    var readingLine=(parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop)||0)+2;
+    var requested=state.pairs.find(function(pair){return pair.section===target&&location.hash===requestedQuestion});
+    var active=requested;
+    if(!active){
+      active=state.pairs[0];
+      state.pairs.forEach(function(pair){if(pair.section.getBoundingClientRect().top<=readingLine)active=pair});
+    }
+    var changed=state.current!==active;
+    if(changed){
       state.pairs.forEach(function(pair){if(pair===active)pair.link.setAttribute('aria-current','location');else pair.link.removeAttribute('aria-current')});
       state.current=active;
     }
-    if(state.pressed||state.keyboard||performance.now()<state.pauseUntil)return;
+    if(!(requested&&changed)&&(state.pressed||state.keyboard||performance.now()<state.pauseUntil))return;
     var list=state.list,box=list.getBoundingClientRect();
     if(box.bottom<=0||box.top>=innerHeight)return;
     var item=active.link.getBoundingClientRect(),delta=0;
@@ -179,7 +191,21 @@
   function schedule(){if(!frame)frame=requestAnimationFrame(update)}
   addEventListener('scroll',schedule,{passive:true});
   addEventListener('resize',schedule);
-  addEventListener('hashchange',schedule);
+  addEventListener('hashchange',function(){requestedQuestion=location.hash;schedule()});
+  // Keep the chosen question through anchor scrolling and layout shifts.
+  // Resume reading-position highlights when the reader scrolls the article.
+  function resumeScrollTracking(event){
+    if(!event.target.closest?.('.ivd .sidebox > ol'))requestedQuestion='';
+  }
+  addEventListener('wheel',resumeScrollTracking,{passive:true});
+  addEventListener('touchmove',resumeScrollTracking,{passive:true});
+  addEventListener('pointerdown',function(event){
+    if(event.target===document.documentElement)resumeScrollTracking(event);
+  });
+  addEventListener('keydown',function(event){
+    if(['ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' '].includes(event.key))
+      resumeScrollTracking(event);
+  });
   addEventListener('pageshow',schedule);
   document.fonts&&document.fonts.ready.then(schedule);
   schedule();

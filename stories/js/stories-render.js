@@ -462,11 +462,17 @@
   if (cvData) {
     function cohortCard(c) {
       var vid = c.video && c.video.url, body = Array.isArray(c.body) ? c.body : (c.body ? [c.body] : []);
-      var yt = vid ? /[?&]v=([\w-]{6,20})/.exec(c.video.url) : null;
-      // 사진이 없는 영상 글은 유튜브 썸네일을 그림으로
-      var pic = !hasPhoto(c) && yt
-        ? '<img class="illu" src="https://i.ytimg.com/vi/' + esc(yt[1]) + '/hqdefault.jpg" alt="" loading="lazy" decoding="async" width="480" height="360" data-field="thumbnail">'
-        : visual(c, { fit: true, field: 'thumbnail' });
+      // 영상 글은 같은 사이트의 사진을 먼저 사용합니다. 외부 썸네일은 재생 전에 불러오지 않습니다.
+      var cover = c.img;
+      if (vid) {
+        var local = function (src) {
+          return new URL(src, document.baseURI).origin === location.origin;
+        };
+        cover = [c.img].concat(c.photos).find(function (photo) { return photo && local(photo.src); });
+        if (cover) cover = Object.assign({}, cover, {srcset:(cover.srcset || []).filter(function (entry) { return local(entry.src); })});
+        else cover = {src:'../common/assets/video-poster.svg',alt:'',w:640,h:360};
+      }
+      var pic = visual(Object.assign({}, c, {img:cover}), {fit:true,field:'thumbnail'});
       // 영상 구간(2026-11-05): video.start · end(초)가 있으면 글 창의 재생 단추가 그 구간만(data-yt-start · data-yt-end → cohort-v3.js)
       var ytFrom = vid ? ytSec(c.video.start) : 0, ytTo = vid ? ytSec(c.video.end) : 0;
       return '<a class="st c' + esc(c.cohort) + '" href="#"' + (c.anchor ? ' id="' + esc(c.anchor) + '"' : '') + (vid ? ' data-yt="' + esc(c.video.url) + '"' : '')
@@ -476,7 +482,7 @@
         + '<div class="mt"><span class="cg" data-field="cohort">' + esc(c.cohort) + '기</span><span class="dt" data-field="date">' + esc(c.date || '') + '</span></div>'
         + (body.length > 1 ? '<div data-story-body hidden>' + body.slice(1).map(function (b) { return '<p>' + esc(b) + '</p>'; }).join('') + '</div>' : '')
         + '<div data-story-tags hidden>' + (Array.isArray(c.tags) ? c.tags : []).filter(function (t) { return typeof t === 'string'; }).map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div>'
-        + '<div data-story-photos hidden>' + photoList(c).map(function (p) { return imgTag(p, 'st-ph', true); }).join('') + '</div>'
+        + '<div data-story-photos hidden>' + (vid ? [] : photoList(c)).map(function (p) { return imgTag(p, 'st-ph', true); }).join('') + '</div>'
         + '</a>';
     }
     cvData.innerHTML = CO.map(cohortCard).join('');

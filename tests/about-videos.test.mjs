@@ -24,7 +24,9 @@ function fixture({documentary = true} = {}) {
   }
   const page = new Element('main'), projects = [new Element('div'), new Element('div')];
   projects.forEach((p, i) => {
-    const frame = new Element('iframe'); frame.src = `https://www.youtube-nocookie.com/embed/${['HEjp95ZGBt0', 'r8o3l-JAYLo'][i]}`; frame.title = '프로젝트 ' + i; p.append(frame);
+    const poster = new Element('button'); poster.className = 'activity-project-file-video';
+    poster.dataset.yt = ['HEjp95ZGBt0', 'r8o3l-JAYLo'][i];
+    poster.setAttribute('aria-label', '프로젝트 ' + i + ' 재생'); p.append(poster);
   });
   const box = new Element('button'); box.dataset.yt = 'sJzqrR93duI'; box.setAttribute('aria-label', 'EBS 영상 재생');
   page.append(...projects, ...(documentary ? [box] : []));
@@ -40,11 +42,14 @@ test('project and documentary switches unload the old player and restore replaya
   const f = fixture();
   const play = [() => f.box.click(), ...f.projects.map(p => () => p.querySelector('.activity-project-file-video').click())];
   const oldFrames = [];
+  assert.equal(f.frames().length, 0, 'no iframe exists before playback');
   for (const index of [0, 1, 2, 0, 2, 1, 0, 1, 2, 0]) {
     oldFrames.push(...f.frames());
     play[index]();
     assert.equal(f.frames().length, 1, 'only the newest iframe stays in the page');
     assert.doesNotMatch(f.frames()[0].allow, /\bweb-share\b/);
+    assert.match(f.frames()[0].src, /^https:\/\/www\.youtube-nocookie\.com\/embed\//);
+    assert.doesNotMatch(f.frames()[0].src, /widget_referrer/);
     assert.match(f.frames()[0].allow, /autoplay/);
     assert.equal(f.frames()[0].allowFullscreen, true);
     assert.equal(f.focused(), f.frames()[0]);

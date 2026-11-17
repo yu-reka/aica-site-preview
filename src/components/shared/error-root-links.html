@@ -1,0 +1,8 @@
+<script>
+if(root!==projectRoot){
+  document.querySelectorAll('a[href^="'+projectRoot+'"],img[src^="'+projectRoot+'"]').forEach(function(element){
+    var attribute=element.matches('a')?'href':'src';
+    element.setAttribute(attribute,root+element.getAttribute(attribute).slice(projectRoot.length));
+  });
+}
+</script>

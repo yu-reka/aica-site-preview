@@ -10,8 +10,8 @@ test('404 document is generated with recovery links and noindex', () => {
   const page = build().get('404.html');
   assert.match(page, /찾을 수 없어요/);
   assert.match(page, /name="robots" content="noindex,nofollow"/);
-  assert.match(page, /href="home\/index.html"/);
-  assert.match(page, /href="about\/index.html"/);
+  assert.match(page, /href="\/aica-site-preview\/home\/index.html"/);
+  assert.match(page, /href="\/aica-site-preview\/about\/index.html"/);
   assert.equal(readText(new URL('../404.html', import.meta.url)), page);
 });
 

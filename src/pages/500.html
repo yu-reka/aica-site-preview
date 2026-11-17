@@ -5,12 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>서버 오류 · 인공지능사관학교</title>
-<base href="/aica-site-preview/">
 <script>
 // Error documents keep the requested URL, including unknown nested paths.
 // Resolve assets and recovery links from the hosting root, never that path.
-var root=location.pathname.startsWith('/aica-site-preview/')?'/aica-site-preview/':'/';
-document.querySelector('base').href=root;
+var projectRoot='/aica-site-preview/';
+var root=location.pathname.startsWith(projectRoot)?projectRoot:'/';
 // Create the stylesheet after choosing the root so speculative loading cannot use the other host's path.
 var tokens=document.createElement('link');
 tokens.rel='stylesheet';
@@ -18,13 +17,15 @@ tokens.href=root+'common/css/tokens.css';
 document.head.appendChild(tokens);
 var states=document.createElement('link');states.rel='stylesheet';states.href=root+'common/css/availability.css?v={{v.common.css.availability}}';document.head.appendChild(states);
 </script>
-<noscript><style>@import url("common/css/availability.css?v={{v.common.css.availability}}");</style></noscript>
+<noscript><style>@import url("/aica-site-preview/common/css/availability.css?v={{v.common.css.availability}}");</style></noscript>
 <style>{{> shared/error-layout-style}}{{> shared/error-responsive-style}}</style>
 </head>
 <body>
-<header class="error-header"><a class="error-brand" href="home/index.html"><img src="common/assets/brand/symbol-white.png" alt="" loading="lazy">인공지능사관학교</a><span>인사교 AI-Log</span></header>
-<main id="main"><section class="error-card aica-state" aria-labelledby="error-title"><div class="error-message"><p class="kicker aica-state__badge">서버 오류 · 500</p><h1 class="aica-state__title" id="error-title">지금은 페이지를<br>열 수 없어요.</h1><p class="description aica-state__copy">일시적인 문제가 생겼어요.<br>잠시 후 다시 시도해 주세요.</p><div class="actions"><button class="primary aica-state__action" type="button" id="retry">다시 시도 <span aria-hidden="true">→</span></button><a class="secondary aica-state__secondary" href="home/index.html">첫 화면으로</a></div></div></section></main>
+{{> shared/skip-link}}
+<header class="error-header"><a class="error-brand" href="/aica-site-preview/home/index.html"><img src="/aica-site-preview/common/assets/brand/symbol-white.png" alt="" loading="lazy">인공지능사관학교</a><span>인사교 AI-Log</span></header>
+<main id="main" tabindex="-1"><section class="error-card aica-state" aria-labelledby="error-title"><div class="error-message"><p class="kicker aica-state__badge">서버 오류 · 500</p><h1 class="aica-state__title" id="error-title">지금은 페이지를<br>열 수 없어요.</h1><p class="description aica-state__copy">일시적인 문제가 생겼어요.<br>잠시 후 다시 시도해 주세요.</p><div class="actions"><button class="primary aica-state__action" type="button" id="retry">다시 시도 <span aria-hidden="true">→</span></button><a class="secondary aica-state__secondary" href="/aica-site-preview/home/index.html">첫 화면으로</a></div></div></section></main>
 <footer>인공지능사관학교</footer>
 <script>document.getElementById("retry").addEventListener("click",function(){location.reload();});</script>
+{{> shared/error-root-links}}
 </body>
 </html>

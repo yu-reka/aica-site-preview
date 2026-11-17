@@ -21,6 +21,18 @@ test('home and eligibility pages link directly to the target story collection',(
   }
 });
 
+test('public documents provide one native skip link before the first main landmark',()=>{
+  const pages=build();
+  for(const [path,html] of pages){
+    if(!path.endsWith('.html'))continue;
+    const skip=[...html.matchAll(/<a class="skip-link" href="#main">본문으로 바로가기<\/a>/g)];
+    assert.equal(skip.length,1,path);
+    const main=/<main id="main"[^>]*tabindex="-1"/.exec(html);
+    assert.ok(main && main.index > skip[0].index,path);
+    assert.doesNotMatch(html,/href="[^"]*privacy\/index\.html/,path);
+  }
+});
+
 test('every story page reserves its loading view before deferred scripts run',()=>{
   const pages=connectBackoffice(build());
   for(const page of ['index','interviews','reviews','projects','cohorts']){

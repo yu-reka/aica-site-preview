@@ -22,13 +22,14 @@
       if (k === cur) return; cur = k;
       btns.forEach(function(b){ b.setAttribute('aria-current', String(+b.dataset.jump === k)); });
     };
-    var hdr = function(){ var h = $('#siteHeader'); return h ? h.getBoundingClientRect().bottom : 60; };
+    var header = $('#siteHeader');
+    var hdr = function(){ return header ? header.getBoundingClientRect().bottom : 60; };
     var pendingChapter = 0;
     function jumpToChapter(k, instant){
       var m = document.getElementById('am-ch' + k); if (!m) return;
       setCur(k);
       pendingChapter = instant ? 0 : k;
-      scrollTo({ top: Math.max(0, m.getBoundingClientRect().top + scrollY - hdr()), behavior: instant ? 'instant' : (reduce.matches ? 'auto' : 'smooth') });
+      scrollTo({ top: Math.max(0, m.getBoundingClientRect().top + scrollY - SiteUI.headerDividerTop(header)), behavior: instant ? 'instant' : (reduce.matches ? 'auto' : 'smooth') });
     }
     // Images/fonts above later chapters can settle while a smooth jump is running.
     // Measure once more when it ends, unless the reader takes over the scroll.

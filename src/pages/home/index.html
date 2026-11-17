@@ -34,8 +34,15 @@
     <!-- HQ 지도 -->
     <a class="tl hq-map" data-cat="5" href="../life/index.html#directions" data-depth="5" style="--d:.15s" aria-label="오시는 길 보기: 광주광역시 동구 제봉로 92">
       <div class="frame" style="--ar:1300/596;--fx:-39%">
-        <img src="assets/archive-map.jpg" alt="인공지능사관학교 주변 위성 지도">
-        <span class="ax-pin ax-pin-hq" style="left:53.3%;top:43%">여기!</span>
+        <div class="map-scene">
+          <picture>
+            <source media="(min-width:861px)" srcset="assets/archive-map.jpg 1x, assets/archive-map-2x.jpg 2x">
+            <img src="assets/archive-map.jpg" width="1300" height="596" alt="ACC와 제봉로 주변의 인공지능사관학교 위치를 표시한 위성 지도">
+          </picture>
+          <span class="ax-pin ax-pin-hq" style="left:53.3%;top:43%" aria-hidden="true">여기!</span>
+          <span class="map-landmark map-road" aria-hidden="true">제봉로</span>
+          <span class="map-landmark map-acc" aria-hidden="true">ACC</span>
+        </div>
       </div>
       <span class="map-go" aria-hidden="true">오시는 길 <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </a>
@@ -60,7 +67,6 @@
     </div>
     <div class="kw-map">
     <a class="kw kw-m1" data-cat="5" href="../life/index.html#directions" tabindex="-1" aria-hidden="true" data-depth="9">#동구 제봉로 92</a>
-    <a class="kw kw-m2" data-cat="5" href="../life/index.html#directions" tabindex="-1" aria-hidden="true" data-depth="11">#ACC</a>
     </div>
 
     <!-- 01 인사교 알아보기 : 입구 -->

@@ -9,7 +9,9 @@ const content = readFileSync(new URL('../common/js/public-content.js', import.me
 test('story details mount on demand for preview, legacy, and direct question links', () => {
   const nodes = new Map(), mounted = [], listeners = {};
   const location = {hash:'', replace(hash) { this.hash = hash; }};
+  const rootAttrs = new Set();
   const document = {
+    documentElement: {toggleAttribute: (name, present) => present ? rootAttrs.add(name) : rootAttrs.delete(name)},
     getElementById: id => nodes.get(id),
     addEventListener: (name, listener) => { listeners[name] = listener; },
     dispatchEvent() {}
@@ -33,8 +35,10 @@ test('story details mount on demand for preview, legacy, and direct question lin
   assert.deepEqual(mounted,['iv-p1']);
   assert.ok(nodes.get('iv-p1').attrs.has('data-story-active'));
   location.hash = '#q-iv-p1-1'; listeners.hashchange();
+  assert.ok(rootAttrs.has('data-interview-question'));
   assert.deepEqual(mounted,['iv-p1']);
   location.hash = '#q-iv-p1-9'; listeners.hashchange();
+  assert.ok(!rootAttrs.has('data-interview-question'));
   assert.equal(nodes.get('iv-p1').attrs.size,0);
   location.hash = '#iv-pnew'; listeners.hashchange();
   assert.deepEqual(mounted,['iv-p1','iv-pnew']);

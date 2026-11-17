@@ -60,25 +60,13 @@ const reducedMotion = SiteUI.motion();
     restoreActiveVideo = null;
   }
   document.querySelectorAll('.activity-project-player').forEach(container => {
-    const frame = container.querySelector('iframe');
-    if (!frame) return;
-    const videoId = new URL(frame.src).pathname.split('/').pop();
-    if (!/^[a-zA-Z0-9_-]{11}$/.test(videoId)) return;
-    const title = frame.title;
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'activity-project-file-video';
-    btn.setAttribute('aria-label', title + ' 재생');
-    const poster = document.createElement('img');
-    poster.src = 'https://i.ytimg.com/vi/' + videoId + '/hqdefault.jpg';
-    poster.alt = ''; poster.loading = 'lazy'; poster.decoding = 'async';
-    const play = document.createElement('span');
-    play.className = 'activity-project-file-play';
-    play.setAttribute('aria-hidden', 'true');
-    btn.append(poster, play);
+    const btn = container.querySelector('.activity-project-file-video');
+    const videoId = btn?.dataset.yt;
+    if (!videoId || !/^[a-zA-Z0-9_-]{11}$/.test(videoId)) return;
+    const title = btn.getAttribute('aria-label').replace(/ 재생$/, '');
     btn.addEventListener('click', () => {
       const f = document.createElement('iframe');
-      var org = /^https?:/.test(location.protocol) ? '&origin=' + encodeURIComponent(location.origin) + '&widget_referrer=' + encodeURIComponent(location.href.split('#')[0]) : '';
+      const org = /^https?:/.test(location.protocol) ? '&origin=' + encodeURIComponent(location.origin) : '';
       f.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?autoplay=1&rel=0&playsinline=1&hl=ko&enablejsapi=0' + org;
       f.title = title;
       f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
@@ -90,7 +78,6 @@ const reducedMotion = SiteUI.motion();
       restoreActiveVideo = () => container.replaceChildren(btn);
       f.focus();
     });
-    container.replaceChildren(btn);
   });
 
   // The daily-routine documentary shares the same single-player policy.
@@ -98,8 +85,6 @@ const reducedMotion = SiteUI.motion();
   if (!box) return;
   const id = box.dataset.yt;
   if (!/^[a-zA-Z0-9_-]{11}$/.test(id)) return;
-  const poster = box.querySelector('.drv-poster');
-  if (poster) poster.addEventListener('error', () => { poster.src = 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg'; }, { once: true });
   box.addEventListener('click', () => {
     const org = /^https?:/.test(location.protocol) ? '&origin=' + encodeURIComponent(location.origin) : '';
     const f = document.createElement('iframe');

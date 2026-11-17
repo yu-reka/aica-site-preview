@@ -74,9 +74,12 @@ const StoryDetails = (() => {
   }
   function scrollToQuestion(detail) {
     if (!location.hash.startsWith('#q-')) return;
-    const target = document.getElementById(Site.decodeHash(location.hash.slice(1)));
+    const hash = location.hash;
+    const target = document.getElementById(Site.decodeHash(hash.slice(1)));
     if (target && detail.contains(target)) requestAnimationFrame(() => {
-      if (find(canonical(location.hash))?.anchor === detail.id) target.scrollIntoView({block:'start'});
+      if (location.hash === hash && target.isConnected && find(canonical(hash))?.anchor === detail.id) {
+        target.scrollIntoView({block:'start', behavior:'instant'});
+      }
     });
   }
   function reportShown(detail) {
@@ -141,7 +144,7 @@ const StoryDetails = (() => {
   function sync() {
     const hash = canonical(location.hash);
     const item = find(hash);
-    const existing = item && document.getElementById(item.anchor);
+    document.documentElement.toggleAttribute('data-interview-question', Boolean(item && hash.startsWith('#q-')));
     const next = ensure(item);
     if (active !== next) {
       active?.removeAttribute('data-story-active');
@@ -149,9 +152,11 @@ const StoryDetails = (() => {
       active?.setAttribute('data-story-active', '');
     }
     if (hash !== location.hash) { location.replace(hash); return; }
-    // A late-mounted question did not exist during the browser's fragment scroll.
-    if (next && !existing) scrollToQuestion(next);
-    if (next && item.ready) reportShown(next);
+    if (next && item.ready) {
+      // Align after setting the header inset, even if the browser tried the fragment first.
+      scrollToQuestion(next);
+      reportShown(next);
+    }
   }
   document.addEventListener('click', event => {
     if (event.defaultPrevented || event.button || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;

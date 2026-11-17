@@ -405,7 +405,6 @@ const Site = (() => {
     addEventListener('popstate', () => closeDrawer(true));
     addEventListener('hashchange', syncSubnav);
     // 본문으로 바로가기: 주소는 그대로 두고 초점만 본문으로(탭 화면 페이지의 주소 #interviews 등이 #main으로 바뀌지 않게).
-    // <main tabindex="-1">이 아닌 페이지(알아보기)는 브라우저 기본 이동
     $('.skip-link')?.addEventListener('click', e => {
       const m = $('#main');
       if (!m || !m.hasAttribute('tabindex')) return;

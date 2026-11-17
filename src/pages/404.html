@@ -5,12 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>페이지를 찾을 수 없어요 · 인공지능사관학교</title>
-<base href="/aica-site-preview/">
 <script>
 // Error documents keep the requested URL, including unknown nested paths.
 // Resolve assets and recovery links from the hosting root, never that path.
-var root=location.pathname.startsWith('/aica-site-preview/')?'/aica-site-preview/':'/';
-document.querySelector('base').href=root;
+var projectRoot='/aica-site-preview/';
+var root=location.pathname.startsWith(projectRoot)?projectRoot:'/';
 // Create the stylesheet after choosing the root so speculative loading cannot use the other host's path.
 var tokens=document.createElement('link');
 tokens.rel='stylesheet';
@@ -18,12 +17,14 @@ tokens.href=root+'common/css/tokens.css';
 document.head.appendChild(tokens);
 var states=document.createElement('link');states.rel='stylesheet';states.href=root+'common/css/availability.css?v={{v.common.css.availability}}';document.head.appendChild(states);
 </script>
-<noscript><style>@import url("common/css/availability.css?v={{v.common.css.availability}}");</style></noscript>
+<noscript><style>@import url("/aica-site-preview/common/css/availability.css?v={{v.common.css.availability}}");</style></noscript>
 <style>{{> shared/error-layout-style}}{{> shared/error-responsive-style}}</style>
 </head>
 <body>
-<header class="error-header"><a class="error-brand" href="home/index.html"><img src="common/assets/brand/symbol-white.png" alt="" loading="lazy">인공지능사관학교</a><span>인사교 AI-Log</span></header>
-<main id="main"><section class="error-card aica-state" aria-labelledby="error-title"><div class="error-message"><p class="kicker aica-state__badge">페이지 없음 · 404</p><h1 class="aica-state__title" id="error-title">앗, 이 페이지는<br>찾을 수 없어요.</h1><p class="description aica-state__copy">주소가 바뀌었거나 사라진 페이지예요.<br>인사교 첫 화면에서 다시 시작해 보세요.</p><div class="actions"><a class="primary aica-state__action" href="home/index.html">첫 화면으로 <span aria-hidden="true">→</span></a><a class="secondary aica-state__secondary" href="about/index.html">인사교 알아보기</a></div></div></section></main>
+{{> shared/skip-link}}
+<header class="error-header"><a class="error-brand" href="/aica-site-preview/home/index.html"><img src="/aica-site-preview/common/assets/brand/symbol-white.png" alt="" loading="lazy">인공지능사관학교</a><span>인사교 AI-Log</span></header>
+<main id="main" tabindex="-1"><section class="error-card aica-state" aria-labelledby="error-title"><div class="error-message"><p class="kicker aica-state__badge">페이지 없음 · 404</p><h1 class="aica-state__title" id="error-title">앗, 이 페이지는<br>찾을 수 없어요.</h1><p class="description aica-state__copy">주소가 바뀌었거나 사라진 페이지예요.<br>인사교 첫 화면에서 다시 시작해 보세요.</p><div class="actions"><a class="primary aica-state__action" href="/aica-site-preview/home/index.html">첫 화면으로 <span aria-hidden="true">→</span></a><a class="secondary aica-state__secondary" href="/aica-site-preview/about/index.html">인사교 알아보기</a></div></div></section></main>
 <footer>인공지능사관학교</footer>
+{{> shared/error-root-links}}
 </body>
 </html>

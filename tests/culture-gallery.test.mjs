@@ -11,6 +11,8 @@ class Node {
   removeAttribute(key){delete this.attrs[key];}
   getAttribute(key){return this.attrs[key];}
   addEventListener(key,callback){this.events[key]=callback;}
+  before(){}
+  append(){}
   appendChild(){}
   insertBefore(){}
   remove(){}
@@ -27,7 +29,7 @@ function gallery(){
   group.querySelector=selector=>nodes[selector]||null;
   group.querySelectorAll=selector=>selector==='.cf-card'?[new Node()]:[];
   const document={querySelectorAll:selector=>selector==='.cf-g'?[group]:[],getElementById:()=>null,body:new Node(),
-    createDocumentFragment:()=>new Node(),activeElement:null};
+    createElement:()=>new Node(),createDocumentFragment:()=>new Node(),activeElement:null};
   const context=vm.createContext({document,Map,Promise,matchMedia:()=>({matches:true}),
     getComputedStyle:()=>({paddingLeft:'0',paddingRight:'0'}),addEventListener(){},removeEventListener(){},
     MutationObserver:class{observe(){}},window:{},setTimeout,clearTimeout});

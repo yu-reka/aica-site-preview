@@ -151,10 +151,19 @@
   function rail(scroller, label){
     if (!scroller) return;
     var box = scroller.parentNode;
+    var news = scroller.matches('.intro-news-papers');
+    var controls = box;
+    if (news){
+      controls = document.createElement('div');
+      controls.className = 'am-news-controls';
+      controls.setAttribute('role', 'group');
+      controls.setAttribute('aria-label', '기사 넘기기');
+      box.appendChild(controls);
+    }
     box.classList.add('am-rail-box');
     scroller.classList.add('am-rail');
     var moveRail = function(direction){
-      if (mq.matches && scroller.matches('.intro-news-papers')) {
+      if (mq.matches && news) {
         var items = Array.from(scroller.children); if (!items.length) return;
         var positions = items.map(function(item){ return item.offsetLeft - items[0].offsetLeft; });
         var current = positions.reduce(function(best, left, index){
@@ -171,9 +180,9 @@
       b.setAttribute('aria-label', (dir === 'prev' ? '이전 ' : '다음 ') + label);
       b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + ARROW[dir] + '"/></svg>';
       b.addEventListener('click', function(){
-        moveRail(dir === 'prev' ? -1 : 1);
+        if (b.getAttribute('aria-disabled') !== 'true') moveRail(dir === 'prev' ? -1 : 1);
       });
-      box.appendChild(b); return b;
+      controls.appendChild(b); return b;
     };
     var p = mk('prev'), n = mk('next');
     var media = $('.activity-project-player, .activity-gallery-photo', scroller);
@@ -183,13 +192,20 @@
         var frame = media.getBoundingClientRect(), bounds = box.getBoundingClientRect();
         box.style.setProperty('--am-arrow-y', (frame.top - bounds.top + frame.height / 2) + 'px');
       } else box.style.removeProperty('--am-arrow-y');
-      SiteUI.syncRail(scroller, p, n);
+      if (news){
+        var state = SiteUI.railState(scroller);
+        controls.hidden = state.max <= 4;
+        p.setAttribute('aria-disabled', String(state.atStart));
+        n.setAttribute('aria-disabled', String(state.atEnd));
+      } else SiteUI.syncRail(scroller, p, n);
     };
     scroller.addEventListener('scroll', upd, { passive: true });
     scroller.addEventListener('keydown', function(event){ if(event.target===scroller) SiteUI.railKeys(event, moveRail); });
     addEventListener('resize', upd);
-    if (media && typeof ResizeObserver !== 'undefined'){
-      var observer = new ResizeObserver(upd); observer.observe(box); observer.observe(media);
+    if (typeof ResizeObserver !== 'undefined' && (media || news)){
+      var observer = new ResizeObserver(upd);
+      observer.observe(box);
+      if (media) observer.observe(media);
     }
     upd();
     setTimeout(upd, 600);

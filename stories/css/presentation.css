@@ -417,7 +417,7 @@ html:where(:not([data-menu="stories"]))[data-menu="life"] body{background:var(--
   font:700 14px/1 var(--f);font-variant-numeric:tabular-nums;cursor:pointer;box-shadow:none;transition:border-color .15s,background .15s,color .15s}
 
 .stories-page .pager.cpager label:hover,
-.stories-page .pager.cpager button:hover{border-color:#2B2D31;background:#fff;color:var(--ink)}
+.stories-page .pager.cpager button:hover:not(:disabled){border-color:#2B2D31;background:#fff;color:var(--ink)}
 
 .stories-page .rev:has(#pgn1:checked) .pager.cpager label[for=pgn1],
 .stories-page .rev:has(#pgn2:checked) .pager.cpager label[for=pgn2],
@@ -425,7 +425,7 @@ html:where(:not([data-menu="stories"]))[data-menu="life"] body{background:var(--
 .stories-page .rev:has(#pgn4:checked) .pager.cpager label[for=pgn4],
 .stories-page .rev:has(#pgn5:checked) .pager.cpager label[for=pgn5]{background:#2B2D31;border-color:#2B2D31;color:#fff}
 
-.stories-page .pager.cpager button:disabled{opacity:.35;pointer-events:none}
+.stories-page .pager.cpager button:disabled{opacity:.35;cursor:not-allowed}
 
 .stories-page .iva .cpager{margin-top:36px}
 

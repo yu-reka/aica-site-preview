@@ -163,7 +163,7 @@
   #main #faqPrev svg{transform:rotate(180deg)}
   #main .faq-pb .cm-only,#main #cmFaqPosition{display:none}
   #main .faq-pn[aria-current="page"]{background:#2B2D31;border-color:#2B2D31;color:#fff}
-  #main .faq-pb:disabled{opacity:.35;cursor:default}
+  #main .faq-pb:disabled{opacity:.35;cursor:not-allowed}
 
   #main .cm-end{padding:36px 20px 48px}
   #main .cm-end-title{margin:0 0 16px;font:600 22px/1.35 var(--cm-heading);letter-spacing:-.025em}

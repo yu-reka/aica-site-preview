@@ -343,15 +343,15 @@ body .life-page #tp-food .snote{width:156px;padding:18px 14px;transform:rotate(-
 body .life-page #tp-food .snote p{font-size:25px!important;line-height:1.15!important}
 
 /* 근처 먹거리 숫자 페이지(10-13): 선배들의 이야기 후기 페이지 번호와 같은 모양 */
-.life-page .fdpager{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:40px}
+.life-page .fdpager{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;margin-top:40px}
 
 .life-page .fdpager button{min-width:40px;height:40px;padding:0 6px;border:1px solid var(--line-ui);border-radius:999px;background:#fff;color:var(--graphite);font:700 14px/1 var(--ff-sans);cursor:pointer;font-variant-numeric:tabular-nums;transition:border-color .2s,color .2s}
 
-.life-page .fdpager button:hover{border-color:#2B2D31;color:var(--ink)}
+.life-page .fdpager button:hover:not(:disabled){border-color:#2B2D31;color:var(--ink)}
 
 .life-page .fdpager button[aria-current="page"]{background:#2B2D31;border-color:#2B2D31;color:#fff}
 
-.life-page .fdpager button:disabled{opacity:.35;pointer-events:none}
+.life-page .fdpager button:disabled{opacity:.35;cursor:not-allowed}
 
 body .life-page #tp-food .lunch-go{overflow:visible}
 

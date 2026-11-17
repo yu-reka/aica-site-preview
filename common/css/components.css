@@ -20,9 +20,12 @@
   .lm-content .food-filters button,.stories-page .sm-cohort-chips button{min-height:var(--control-target)}
   .lm-content .food-filters button{border-color:var(--line-ui)}
   .stories-page .cv3-pin .sm-pin-more{min-height:var(--control-target);padding:8px 0;font-size:12px}
-  .ui-rail-arrow{width:44px;height:44px;min-width:44px;min-height:44px}
+  .ui-rail-arrow{width:44px;height:44px;min-width:44px;min-height:44px;touch-action:manipulation}
 }
 @media (max-width:430px){.stories-page #siteLnb .ui-segment,.sm-dock .ui-segment{--control-font:13px}}
 /* Focus and controls also cover dynamically inserted detail navigation. */
 .ov .x,.cv3-m-x,.cv3-zv-x{min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center}
 .ui-rail-arrow:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+
+/* Omitted numbers in the shared list pagination pattern. */
+.pagination-gap{display:grid;place-items:center;flex:none;width:14px;min-height:40px;color:var(--graphite);font-size:14px;line-height:1}

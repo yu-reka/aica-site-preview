@@ -276,7 +276,12 @@
     var row=document.createElement('div'); row.className='cv3-pgr';
     function pb(t,to,o){ var b=document.createElement('button'); b.type='button'; b.textContent=t; if(o.cur) b.setAttribute('aria-current','page'); if(o.dis) b.disabled=true; if(o.aria) b.setAttribute('aria-label',o.aria);
       b.onclick=function(){ st.pg=to; draw(); root.scrollIntoView({behavior:'smooth',block:'start'}); }; row.appendChild(b); }
-    pb('←',st.pg-1,{dis:st.pg===1,aria:'이전 페이지'}); for(var i=1;i<=pages;i++) pb(String(i),i,{cur:i===st.pg,aria:i+'페이지'}); pb('→',st.pg+1,{dis:st.pg===pages,aria:'다음 페이지'});
+    pb('←',st.pg-1,{dis:st.pg===1,aria:'이전 페이지'});
+    SiteUI.paginationNumbers(pages,st.pg,SiteUI.paginationLimit(pages,nav.clientWidth || undefined)).forEach(function(number){
+      if(number) pb(String(number),number,{cur:number===st.pg,aria:number+'페이지'});
+      else row.appendChild(SiteUI.element('span','pagination-gap','…'));
+    });
+    pb('→',st.pg+1,{dis:st.pg===pages,aria:'다음 페이지'});
     nav.appendChild(row);
   }
   function draw(){ if(hubModal)return; chips(); profile(); highlights(); grid(); root.dispatchEvent(new CustomEvent('cv3:draw',{detail:{v:st.v}})); }

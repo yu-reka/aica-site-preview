@@ -65,9 +65,17 @@
     cultureOpener=button; cultureIndex=Number(button.dataset.cultureOpen);
     cultureSheet.innerHTML=view.cultureDetail(cultureIndex);
     const track=cultureSheet.querySelector('.culture-photos');
+    const photos=life.culture[cultureIndex].photos;
+    const caption=cultureSheet.querySelector('.culture-photo-caption');
+    const position=cultureSheet.querySelector('.culture-photo-position');
+    const total=String(photos.length).padStart(2,'0');
+    let activeIndex=0;
     track.addEventListener('scroll',()=>{
-      const photo=life.culture[cultureIndex].photos[Math.round(track.scrollLeft/track.clientWidth)];
-      cultureSheet.querySelector('.culture-photo-caption').textContent=photo?.caption||'';
+      const index=Math.max(0,Math.min(photos.length-1,Math.round(track.scrollLeft/track.clientWidth)));
+      if (!photos[index] || index===activeIndex) return;
+      activeIndex=index;
+      caption.textContent=photos[index].caption||'';
+      if (position) position.textContent=String(index+1).padStart(2,'0')+' / '+total;
     },{passive:true});
     previousOverflow=document.body.style.overflow;
     document.body.style.overflow='hidden';
@@ -250,8 +258,9 @@
     const pages = Math.max(1, Math.ceil(matches.length / 8));
     state.foodPage = Math.min(state.foodPage, pages);
     $('#food-count').textContent = matches.length + '곳';
-    $('#food-results').innerHTML = view.foodResults(matches);
-    $('.pagination').innerHTML = view.foodPagination(pages);
+    const results = $('#food-results');
+    results.innerHTML = view.foodResults(matches);
+    $('.pagination').innerHTML = view.foodPagination(pages, results.clientWidth);
     $$('[data-kind]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.kind === state.foodType)));
     $$('[data-food-group]').forEach(button => {
       button.setAttribute('aria-pressed', String(button.dataset.foodGroup === state.foodGroup));

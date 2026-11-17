@@ -107,7 +107,7 @@
 @media(prefers-reduced-motion:reduce){.stories-page .iv-honors .honors-card-cue{transition:none}}
 
 @media(max-width:600px){
- .stories-page .iv-honors .sm-ivf-track{touch-action:pan-y}
+ .stories-page .iv-honors .sm-ivf-track{touch-action:pan-y pinch-zoom}
  .stories-page .iv-honors .sm-ivf-track.is-swiping{scroll-snap-type:none;user-select:none}
 }
 

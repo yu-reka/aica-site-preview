@@ -119,8 +119,10 @@
       pager.replaceChildren();pager.hidden=!eligible.length;
       if(eligible.length){
         pager.append(pageButton('←',page-1,page===1,false));
-        const start=Math.max(1,Math.min(page-2,total-4));
-        for(let n=start;n<=Math.min(total,start+4);n++)pager.append(pageButton(String(n),n,false,n===page));
+        const limit=SiteUI.paginationLimit(total,pager.clientWidth || undefined);
+        for(const number of SiteUI.paginationNumbers(total,page,limit)){
+          pager.append(number ? pageButton(String(number),number,false,number===page) : SiteUI.element('span','pagination-gap','…'));
+        }
         pager.append(pageButton('→',page+1,page===total,false));
       }
     }

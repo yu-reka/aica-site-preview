@@ -59,10 +59,10 @@
 .stories-page .cv3-it:is(:hover,:focus-visible) .cv3-ov{opacity:1}
 /* 페이지 */
 .stories-page .cv3-pg{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:48px}
-.stories-page .cv3-pgr{display:flex;justify-content:center;gap:6px}
+.stories-page .cv3-pgr{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
 .stories-page .cv3-pgr button{min-width:40px;height:40px;padding:0 6px;border-radius:999px;border:1px solid var(--line-ui);background:#fff;color:var(--graphite);font:700 14px/1 var(--ff-sans);cursor:pointer}
 .stories-page .cv3-pgr button[aria-current="page"]{border-color:#2B2D31;background:#2B2D31;color:#fff}
-.stories-page .cv3-pgr button:disabled{opacity:.35;cursor:default}
+.stories-page .cv3-pgr button:disabled{opacity:.35;cursor:not-allowed}
 .stories-page .cv3-pg p{margin:0;font:400 13px/1.4 var(--ff-sans);color:var(--graphite)}
 /* 글 창 */
 .cv3-lock,.cv3-lock body{overflow:hidden}
@@ -242,6 +242,16 @@
   .cv3-photo-arrow:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
 }
 
+@media(min-width:761px) and (hover:hover) and (pointer:fine){
+  .stories-page .cv3-it .cv3-photo-arrow{color:var(--ink)}
+  .cv3-it .cv3-photo-arrow::before{background-color:rgb(255 255 255 / .55)}
+  .cv3-it:where(:hover,:focus-visible,:has(.cv3-photo-arrow:focus-visible)) .cv3-photo-arrow::before{background-color:rgb(255 255 255 / .85)}
+  .cv3-it .cv3-photo-arrow:is(:hover,:focus-visible)::before{background-color:rgb(255 255 255 / .98)}
+}
+@media(min-width:761px) and (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .cv3-it .cv3-photo-arrow::before{transition:background-color .18s ease}
+}
+
 /* Bounded desktop photo dialog: media stays still while the caption scrolls. */
 .stories-page .cv3-m-box{overflow:visible}
 .stories-page .cv3-m-side{min-height:0;overflow:hidden;border-radius:0 0 16px 0;background:#fff}
@@ -304,6 +314,7 @@
   .stories-page .cv3-m-nav{position:static;inset:auto;transform:none;display:grid;grid-template-columns:64px 64px;align-items:center;justify-content:end;gap:0;height:44px;margin:-4px -6px -4px auto;pointer-events:auto}
   .stories-page .cv3-m-nav button{display:flex;align-items:center;justify-content:center;gap:4px;width:64px;height:44px;box-sizing:border-box;border-radius:8px;background:transparent;box-shadow:none;color:#14233F;transform:none;font:500 12px/1 var(--ff-sans)}
   .stories-page .cv3-m-nav button span{display:inline}
+  .stories-page .cv3-m-nav button{touch-action:manipulation}
   .stories-page .cv3-m-nav .nx svg{order:1}
   .stories-page .cv3-m-nav button svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.8}
   .stories-page .cv3-m-nav .pv svg path{transform:translateX(1.5px)}
@@ -334,7 +345,8 @@
 /* Mobile reading uses native vertical gestures, without the external desktop rail. */
 @media(max-width:760px){
   .stories-page .cv3-caption-scrollbar{display:none}
-  .stories-page .cv3-m-body{touch-action:pan-y;scrollbar-width:none}
+  .cv3-photo-stage,.cv3-zv-im{touch-action:pan-y pinch-zoom}
+  .stories-page .cv3-m-body{touch-action:pan-y pinch-zoom;scrollbar-width:none}
   .stories-page .cv3-m-body::-webkit-scrollbar{display:none}
 }
 

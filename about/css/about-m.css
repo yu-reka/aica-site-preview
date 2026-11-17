@@ -4,7 +4,7 @@
    마크업: src/pages/about/index.html(.am-*) · 동작: js/about-m.js
    ========================================================= */
 .career-channel-art{display:contents}
-.am-tabs,.am-dock,.am-ch,.am-seg,.am-more,.am-acc-h,.am-intro-photo,.am-cta,.am-arrow{display:none}
+.am-tabs,.am-dock,.am-ch,.am-seg,.am-more,.am-acc-h,.am-intro-photo,.am-cta,.am-arrow,.am-news-controls{display:none}
 
 @media (max-width:600px){
   .school-about{--about-paper:#fff;--am-ink:#14233F;--am-muted:#566175;--am-line:#D3D9E1;--am-soft:#F5F7F6;--am-blue:#2457F5;--am-black:#0B0B0C;--am-section-gap:36px;--am-chapter-gap:40px;--am-heading-gap:16px;--am-row-gap:16px;--am-card-gap:12px}
@@ -58,9 +58,12 @@
   html.school-about main#main .intro-news-papers{display:flex;gap:10px;height:auto;min-height:0;padding:0 20px 6px;position:static;transform:none}
   html.school-about main#main .intro-news-card{position:static!important;inset:auto!important;flex:0 0 100%;width:100%;min-width:0;height:auto!important;min-height:0;margin:0!important;padding:16px;border:0;border-radius:18px;background:var(--am-soft);box-shadow:none;transform:none!important;opacity:1!important;animation:none!important;rotate:none!important}
   html.school-about main#main .intro-news-card :is(.intro-news-browserbar,.intro-news-print-lines,.intro-news-photo){display:none}
-  html.school-about main#main .intro-news-body{padding:0;display:flex;flex-direction:column;gap:8px}
-  html.school-about main#main .intro-news-meta{display:flex;gap:4px;margin:0;font-size:12px;line-height:1.4;color:var(--am-muted)}
-  html.school-about main#main .intro-news-meta > span::after{content:" ·"}
+  html.school-about main#main .intro-news-body{padding:0;height:100%;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr auto;row-gap:6px}
+  html.school-about main#main .intro-news-meta{display:contents;font-size:12px;line-height:1.4;color:var(--am-muted)}
+  html.school-about main#main .intro-news-meta > span{grid-row:1;font-weight:400;background:none;padding:0;color:inherit}
+  html.school-about main#main .intro-news-body > :is(.intro-news-story,h4){grid-row:2}
+  html.school-about main#main .intro-news-meta time{grid-row:3;justify-self:end;font-size:11px}
+  html.school-about main#main .intro-news-outbound{margin-inline-start:2px;font-size:14px;line-height:1}
   html.school-about main#main .intro-news-story,html.school-about main#main .intro-news-story-copy{display:block;padding:0;margin:0}
   html.school-about main#main .intro-news-card h4{margin:0;font:800 15px/1.45 var(--ff-sans,sans-serif);letter-spacing:-.02em;color:var(--am-ink)}
   html.school-about main#main .intro-news-card h4 em{font-style:normal;color:var(--am-blue)}
@@ -315,8 +318,20 @@
   html.school-about main#main :is(.intro-news-stack,.intro-news-motion,.intro-news-papers)::before,html.school-about main#main :is(.intro-news-stack,.intro-news-motion,.intro-news-papers)::after{display:none}
   html.school-about main#main .intro-news-papers{overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:20px;width:auto;max-width:none}
   html.school-about main#main .intro-news-card{scroll-snap-align:start}
-  html.school-about main#main .intro-news-meta{justify-content:flex-start;gap:4px;padding:0;border:0;font-size:12px}
-  html.school-about main#main .intro-news-meta > span{font-weight:400;border-radius:0;background:none;padding:0;color:inherit}
+  /* 언론사 줄 오른쪽에 기사 넘김 버튼 자리를 확보한다. */
+  html.school-about main#main .intro-news-motion:has(> .am-news-controls:not([hidden])){position:relative}
+  html.school-about main#main .intro-news-motion:has(> .am-news-controls:not([hidden])) .intro-news-card{padding-top:4px}
+  html.school-about main#main .intro-news-motion:has(> .am-news-controls:not([hidden])) .intro-news-meta > span{
+    min-height:44px;align-content:center;margin-inline-end:86px;
+  }
+  html.school-about main#main .am-news-controls:not([hidden]){
+    position:absolute;top:4px;right:28px;z-index:4;display:flex;align-items:center;
+  }
+  html.school-about main#main .am-news-controls .am-arrow{
+    position:static;transform:none;width:44px;height:44px;border:0;background:transparent;box-shadow:none;
+  }
+  html.school-about main#main .am-news-controls .am-arrow svg{width:14px;height:14px}
+  html.school-about main#main .am-news-controls .am-arrow[aria-disabled="true"]{opacity:.45;cursor:default}
   html.school-about main#main .cohort-comparison.am-on .cohort-fact{flex-direction:row;min-height:0}
   html.school-about main#main .cohort-comparison.am-on .cohort-fact:first-child{flex-direction:column}
   html.school-about main#main .cohort-comparison.am-on .cohort-fact dt{margin:0}

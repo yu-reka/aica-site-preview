@@ -122,10 +122,16 @@ test('cohort/category filters retain modal state and ignore removed legacy tag h
   assert.equal(ui.count, '41개의 후기');
 });
 
-test('paging clamps legacy radio requests and scales beyond the old five-page CSS limit', () => {
+test('paging keeps both ends directly reachable and clamps legacy radio requests', () => {
   const ui = start(entries(85), { hash: '#tg-0' });
   assert.equal(ui.count, '85개의 후기', 'legacy tag URLs open the whole list');
-  ui.page(3); ui.page(5); ui.page(7);
+  assert.deepEqual(ui.pager.children.map(item => item.textContent), ['←', '1', '2', '3', '4', '…', '8', '→']);
+  ui.page(8);
+  assert.deepEqual(ui.shown(), [84]);
+  ui.page(1);
+  assert.equal(ui.shown()[0], 0);
+  ui.page(8);
+  ui.page(7);
   assert.deepEqual(ui.shown(), [72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83]);
   ui.change('rc_life');
   ui.change('pgn8');

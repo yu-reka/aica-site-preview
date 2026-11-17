@@ -215,7 +215,9 @@ if (cA) cA.addEventListener('click', function(){
     nav.innerHTML = ''; nav.hidden = pages < 2;
     if (pages > 1) {
       nav.appendChild(pbtn('←', pg - 1, { dis: pg === 1, aria: '이전 페이지' }));
-      for (var i = 1; i <= pages; i++) nav.appendChild(pbtn(String(i), i, { cur: i === pg, aria: i + '페이지' }));
+      SiteUI.paginationNumbers(pages, pg, SiteUI.paginationLimit(pages, nav.clientWidth || undefined)).forEach(function(number){
+        nav.appendChild(number ? pbtn(String(number), number, { cur: number === pg, aria: number + '페이지' }) : SiteUI.element('span', 'pagination-gap', '…'));
+      });
       nav.appendChild(pbtn('→', pg + 1, { dis: pg === pages, aria: '다음 페이지' }));
     }
   }

@@ -385,10 +385,13 @@ const Site = (() => {
       const a = e.target.closest('#siteHeader a[href], #drawer a[href], #siteFooter a[href], #siteLnb a[href]');
       if (!a || a.hasAttribute('data-toast') || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       const u = new URL(a.href);
-      // Page entries in the LNB start a fresh page visit. A synthetic hashchange
-      // after pushState does not clear the browser's CSS :target detail state.
-      if (a.closest('#siteLnb') && !u.hash) { closeDrawer(); return; }
-      if (!samePage(u)) { closeDrawer(); return; }
+      // Keep native navigation when leaving a detail so the browser clears CSS :target.
+      const storyDetail = html.dataset.menu === 'stories' &&
+        ['interviews', 'projects'].includes(html.dataset.sub) && location.hash;
+      if (!samePage(u) || (!u.hash && (a.closest('#siteLnb') || storyDetail))) {
+        closeDrawer();
+        return;
+      }
       e.preventDefault();
       closeDrawer();
       if (header.classList.contains('menu-open')) { megaHold = true; setMega(false); }

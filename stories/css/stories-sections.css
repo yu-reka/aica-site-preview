@@ -86,7 +86,10 @@
 .stories-page .ivd .sidebox ol{margin:14px 0 0;padding:0 8px 0 0;font-family:var(--ff-sans);max-height:min(480px,calc(100svh - 260px));overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#a9b6c9 #f1f4f7;scroll-padding:8px}
 .stories-page .ivd .sidebox ol li + li{border-top:1px solid #e8edf3}
 .stories-page .ivd .sidebox ol a{font-family:var(--ff-sans);font-size:14px;line-height:1.7;padding:12px 8px 12px 34px;color:#536175;overflow-wrap:anywhere}
-.stories-page .ivd .sidebox ol a::before{top:14px;left:6px;width:20px;height:20px;line-height:20px;font-size:11px}
+.stories-page .ivd .sidebox ol a::before{
+  top:14px;left:6px;width:20px;height:20px;
+  display:grid;place-items:center;font-size:11px;line-height:1;
+}
 .stories-page .ivd .sidebox ol a[aria-current="location"]{background:#edf3ff;color:var(--primary);font-weight:700}
 .stories-page .ivd .sidebox ol a[aria-current="location"]::before{background:var(--primary);color:#fff}
 .stories-page .ivd .sidebox ol a:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}

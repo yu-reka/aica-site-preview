@@ -13,6 +13,20 @@
     var cards = [].slice.call(g.querySelectorAll('.cf-card')), heads = [g.querySelector('.cf-h'), tg];
     var title = g.querySelector('.cf-intro h4').textContent, busy = false;
     var pv = g.querySelector('.pv'), nx = g.querySelector('.nx');
+    // The CMS copies the published button row, so enhance the gallery controls in the browser.
+    var controls = document.createElement('div');
+    controls.className = 'cf-photo-controls';
+    controls.setAttribute('role', 'group');
+    controls.setAttribute('aria-label', title + ' 사진 탐색');
+    var position = document.createElement('span');
+    position.className = 'cf-photo-position';
+    position.setAttribute('role', 'status');
+    pv.before(controls);
+    controls.append(pv, position, nx);
+    [pv, nx].forEach(function(button) { button.classList.add('icon-btn'); });
+    pv.querySelector('path')?.setAttribute('d', 'm14 5-7 7 7 7');
+    nx.querySelector('path')?.setAttribute('d', 'm10 5 7 7-7 7');
+    var total = String(cards.length).padStart(2, '0');
     function ph(c){ return c.querySelector('.cf-ph'); }
     function pos(e){ var r = e.getBoundingClientRect(); return {x:r.left+r.width/2, y:r.top+r.height/2, w:r.width}; }
     function snap(){ return { h:g.getBoundingClientRect().height, yb:pos(yb), heads:heads.map(pos), c:cards.map(function(c){ return pos(ph(c)); }) }; }
@@ -27,7 +41,18 @@
       cards.forEach(function(c){ var p = ph(c); c.style.transformOrigin = (p.offsetLeft+p.offsetWidth/2)+'px '+(p.offsetTop+p.offsetHeight/2)+'px'; });
       upd();
     }
-    function upd(){ if (clones.length){ pv.disabled = nx.disabled = false; return; } var m = pile.scrollWidth - pile.clientWidth; pv.disabled = pile.scrollLeft <= 2; nx.disabled = m <= 2 || pile.scrollLeft >= m - 2; }
+    function upd(){
+      if (clones.length) {
+        pv.disabled = nx.disabled = false;
+        var index = Math.round(rel() / stepW()) % cards.length;
+        var label = String(index + 1).padStart(2, '0') + ' / ' + total;
+        if (position && position.textContent !== label) position.textContent = label;
+        return;
+      }
+      var max = pile.scrollWidth - pile.clientWidth;
+      pv.disabled = pile.scrollLeft <= 2;
+      nx.disabled = max <= 2 || pile.scrollLeft >= max - 2;
+    }
     /* 순환: 펼치면 사진 묶음을 앞뒤로 한 벌씩 복제해 두고, 끝에 닿으면 같은 사진 자리로 몰래 건너뜀 */
     var clones = [], wrapT = 0;
     function stepW(){ return cards[0].offsetWidth + 12; }

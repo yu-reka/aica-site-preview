@@ -72,10 +72,15 @@ const StoriesMobileReviews = (() => {
       syncRail();
       loop.enable(board.clientWidth > 0 && board.clientWidth <= 600);
       syncRail();
+      if (pageTotal > 1 && pagerLimit(pageTotal) !== pageLimit) {
+        var keepFocus = pager.contains(document.activeElement);
+        renderPager(pageTotal);
+        if (keepFocus) pager.querySelector('[aria-current="page"]').focus({preventScroll:true});
+      }
     }
     addEventListener('resize', resizeRail);
     stage.append(board, navigation);
-    var lastFilter, lastPage;
+    var lastFilter, lastPage, pageTotal, pageLimit;
     var empty = el('div', 'sm-review-empty', '선택한 조건에 맞는 후기가 없습니다.');
     var list = el('section', 'sm-review-list');
     list.tabIndex = -1;
@@ -201,6 +206,21 @@ const StoriesMobileReviews = (() => {
         list.scrollIntoView({block:'start',behavior:reduce.matches ? 'auto' : 'smooth'});
       }); return b;
     }
+    function pagerLimit(total){
+      return SiteUI.paginationLimit(total, box.clientWidth);
+    }
+    function renderPager(total){
+      pageTotal = total;
+      pageLimit = pagerLimit(total);
+      pager.replaceChildren();
+      pager.hidden = total < 2;
+      if (pager.hidden) return;
+      pager.appendChild(pageButton('←', page - 1, page === 1));
+      SiteUI.paginationNumbers(total, page, pageLimit).forEach(function(number){
+        pager.appendChild(number ? pageButton(String(number), number, false) : el('span', 'pagination-gap', '…'));
+      });
+      pager.appendChild(pageButton('→', page + 1, page === total));
+    }
     function refresh(){
       if (managed && !box.isConnected) return;
       $$('button', categories).forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.value === category)); });
@@ -236,14 +256,7 @@ const StoriesMobileReviews = (() => {
         requestAnimationFrame(syncRail);
       }
       list.hidden = !matching.length;
-      pager.replaceChildren(); pager.hidden = total < 2;
-      if (total > 1){
-        pager.appendChild(pageButton('←', page - 1, page === 1));
-        var windowSize = box.clientWidth < 316 ? 4 : 5;
-        var start = Math.max(1, Math.min(page - 2, total - windowSize + 1));
-        for (var n = start; n <= Math.min(total, start + windowSize - 1); n++) pager.appendChild(pageButton(String(n), n, false));
-        pager.appendChild(pageButton('→', page + 1, page === total));
-      }
+      renderPager(total);
     }
     box.append(categories, filterRow, stage, empty, list);
     if (managed) {

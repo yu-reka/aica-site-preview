@@ -606,7 +606,7 @@
 .life-page .bx9-f[aria-pressed="true"] b{color:var(--primary)}
 .life-page .bx9-f[aria-pressed="true"] i{color:var(--primary)}
 .life-page .bx9-f:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
-.life-page .bx9-f.off{cursor:default;min-height:54px;color:var(--ink3);background:repeating-linear-gradient(135deg,transparent 0 7px,color-mix(in srgb,var(--ink) 7%,transparent) 7px 8px)}
+.life-page .bx9-f.off{cursor:not-allowed;min-height:54px;color:var(--ink3);background:repeating-linear-gradient(135deg,transparent 0 7px,color-mix(in srgb,var(--ink) 7%,transparent) 7px 8px)}
 .life-page .bx9-f.off b{font-size:17px;color:var(--ink3)}
 .life-page .bx9-f.off span{font-size:13px;font-weight:500;grid-column:2/-1}
 .life-page .bx9-cur{position:absolute;left:0;top:0;z-index:0;border:2px solid var(--nc);border-radius:10px;background:color-mix(in srgb,var(--nc) 12%,var(--card));pointer-events:none;transition:transform .42s cubic-bezier(.22,.8,.24,1),width .42s,height .42s}

@@ -160,6 +160,19 @@ test('mobile grid exposes all matching reviews while the shared list pager keeps
   assert.equal(count.textContent, '11개의 후기');
 });
 
+test('mobile page numbers keep the first and last review list pages reachable', () => {
+  const classes = Array.from({ length: 62 }, () => ['cat-life', 'coh7']);
+  const { rows, pager } = startReviews(classes);
+  const page = number => pager.children.find(item => item.attrs['aria-label'] === number + '페이지');
+  assert.ok(pager.children.some(item => item.textContent === '…'));
+  page(7).events.click();
+  assert.equal(rows.children[0].href, '#r-60');
+  assert.equal(pager.children.at(-1).disabled, true);
+  page(1).events.click();
+  assert.equal(rows.children[0].href, '#r-0');
+  assert.equal(pager.children[0].disabled, true);
+});
+
 test('legacy Spring entry loads reviews only on a review page', () => {
   for (const hasReviews of [false, true]) {
     const appended = [];

@@ -98,7 +98,13 @@ const LifeMobileView = (() => {
     }
     function cultureDetail(index){
       const place=life.culture[index];
-      return `<div class="culture-sheet-body"><header><h2 id="lm-culture-title">${esc(place.name)}</h2><button type="button" data-culture-close aria-label="닫기" autofocus>×</button></header><div class="culture-photos" aria-label="${esc(place.name)} 사진">${place.photos.map(photo=>`<figure>${image(photo.src,photo.alt,'',photo.style)}</figure>`).join('')}</div><div class="culture-photo-controls"><p class="culture-photo-caption" aria-live="polite">${esc(place.photos[0]?.caption)}</p><button type="button" data-culture-photo="-1" aria-label="이전 사진">${arrow}</button><button type="button" data-culture-photo="1" aria-label="다음 사진">${arrow}</button></div><p class="culture-description">${esc(place.description)}</p></div>`;
+      const total=String(place.photos.length).padStart(2,'0');
+      const navigation=place.photos.length>1 ? `<div class="culture-photo-navigation" role="group" aria-label="사진 탐색">
+        <button type="button" class="icon-btn" data-culture-photo="-1" aria-label="이전 사진"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button>
+        <span class="culture-photo-position" role="status">01 / ${total}</span>
+        <button type="button" class="icon-btn" data-culture-photo="1" aria-label="다음 사진"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg></button>
+      </div>` : '';
+      return `<div class="culture-sheet-body"><header><h2 id="lm-culture-title">${esc(place.name)}</h2><button type="button" data-culture-close aria-label="닫기" autofocus><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></header><div class="culture-photos" aria-label="${esc(place.name)} 사진">${place.photos.map(photo=>`<figure>${image(photo.src,photo.alt,'',photo.style)}</figure>`).join('')}</div><div class="culture-photo-controls"><p class="culture-photo-caption" aria-live="polite">${esc(place.photos[0]?.caption)}</p>${navigation}</div><p class="culture-description">${esc(place.description)}</p></div>`;
     }
     
     function routeCard(){let article=$$('.rt3 article',src)[state.departure];return `<div class="route-steps"><h4>${esc($('h3',article).textContent)}</h4>${$('ol',article).outerHTML}${$('.rtr',article).outerHTML}</div>`;}
@@ -106,7 +112,14 @@ const LifeMobileView = (() => {
     const renders={overview,facilities,tips,'tp-house':housing,'tp-food':food,'tp-fun':culturePage,directions};
     
     function foodResults(matches){return matches.length?`<div class="food-list">${matches.slice((state.foodPage-1)*8,state.foodPage*8).map(f=>`<article class="food-card"><div class="food-card-top">${image(f.image,f.photoLabel,'',f.imageStyle)}<div><span class="food-meta">${esc(f.category)} <b>${esc(f.walkLabel)}</b></span><div class="food-card-info"><h3>${esc(f.name)}</h3><p class="food-menu">${esc(f.menu)}</p></div><div class="food-card-bottom"><small>${esc(f.groupLabel)}</small>${f.location?`<p class="food-location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>${esc(f.location)}</span></p>`:''}</div></div></div></article>`).join('')}</div>`:`<div class="empty aica-state aica-state--compact"><span class="aica-state__badge">검색 결과 없음</span><p class="aica-state__title">${esc(text('.fdempty-t'))}</p><button class="aica-state__action" data-reset-food>거르기 풀기</button></div>`;}
-    function foodPagination(pages){return pages>1?`<button data-food-page="${state.foodPage-1}" aria-label="이전 페이지" ${state.foodPage===1?'disabled':''}>←</button>${Array.from({length:pages},(_,i)=>`<button data-food-page="${i+1}" aria-label="${i+1}페이지" ${state.foodPage===i+1?'aria-current="page"':''}>${i+1}</button>`).join('')}<button data-food-page="${state.foodPage+1}" aria-label="다음 페이지" ${state.foodPage===pages?'disabled':''}>→</button>`:'';}
+    function foodPagination(pages, width){
+      if(pages<=1)return '';
+      const numbers=SiteUI.paginationNumbers(pages,state.foodPage,SiteUI.paginationLimit(pages,width,7));
+      const pageButtons=numbers.map(number=>number
+        ? `<button data-food-page="${number}" aria-label="${number}페이지" ${state.foodPage===number?'aria-current="page"':''}>${number}</button>`
+        : '<span class="pagination-gap">…</span>').join('');
+      return `<button data-food-page="${state.foodPage-1}" aria-label="이전 페이지" ${state.foodPage===1?'disabled':''}>←</button>${pageButtons}<button data-food-page="${state.foodPage+1}" aria-label="다음 페이지" ${state.foodPage===pages?'disabled':''}>→</button>`;
+    }
     
     return { data: life, screens: renders, text, routeCard, foodResults, foodPagination, cultureDetail };
   }

@@ -61,8 +61,10 @@
       pager.replaceChildren(); pager.hidden = matching.length <= pageSize;
       if (matching.length > pageSize) {
         pager.appendChild(button('←', page - 1, page === 1));
-        var first = Math.max(1, Math.min(page - 2, total - 4));
-        for (var n = first; n <= Math.min(total, first + 4); n++) pager.appendChild(button(String(n), n, false));
+        SiteUI.paginationNumbers(total, page).forEach(function (number) {
+          if (number) pager.appendChild(button(String(number), number, false));
+          else pager.appendChild(SiteUI.element('span', 'pagination-gap', '…'));
+        });
         pager.appendChild(button('→', page + 1, page === total));
       }
     }

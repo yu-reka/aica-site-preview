@@ -41,14 +41,14 @@
 .site-header .gnb:hover>li:not(:hover)>.gnb-link[aria-current="page"]::after,.site-header .gnb:focus-within>li:not(:focus-within)>.gnb-link[aria-current="page"]::after{transform:scaleX(0)}
 
 /* 2depth 드롭다운: 메뉴에 올리면 4개 메뉴의 하위가 한 번에 펼쳐짐(황채리 원본 규칙). 펼친 바탕은 헤더 막대와 같은 색으로 이어짐 */
-.site-header .drop{position:absolute;top:100%;left:0;min-width:100%;list-style:none;margin:0;padding:22px 22px 28px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .25s,transform .3s var(--ease),visibility 0s .3s}
-.site-header.menu-open .drop{opacity:1;visibility:visible;transform:none;transition:opacity .25s,transform .3s var(--ease)}
+.site-header .drop{position:absolute;top:100%;left:0;min-width:100%;list-style:none;margin:0;padding:22px 22px 28px;opacity:0;visibility:hidden;transform:translateY(-6px);pointer-events:none;transition:opacity .18s,transform .2s var(--ease),visibility 0s .2s}
+.site-header.menu-open .drop{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity .25s,transform .3s var(--ease)}
 .site-header .drop a{display:block;padding:6px 0;font-size:15px;text-decoration:none;white-space:nowrap;transition:color .2s,transform .25s var(--ease)}
 .site-header .drop a:hover,.site-header .drop a:focus-visible{transform:translateX(3px)}
 .site-header .gnb>li:hover .drop a{color:var(--on-header)}
 .site-header .gnb>li:hover .drop a:hover{color:var(--header-accent)}
-.site-header .drop-bg{position:absolute;left:0;right:0;top:var(--hdr);height:0;overflow:hidden;transition:height .35s var(--ease);z-index:1;box-shadow:0 18px 30px -24px rgba(20,35,63,.35)}
-.site-header.menu-open .drop-bg{height:var(--drop-h,210px)}
+.site-header .drop-bg{position:absolute;left:0;right:0;top:var(--hdr);height:0;overflow:hidden;pointer-events:none;transition:height .2s var(--ease);z-index:1;box-shadow:0 18px 30px -24px rgba(20,35,63,.35)}
+.site-header.menu-open .drop-bg{height:var(--drop-h,210px);pointer-events:auto;transition-duration:.35s}
 .site-header.menu-open .hdr-bar{border-bottom-color:rgba(255,255,255,.08)}
 
 /* 헤더 오른쪽: 검색 · 공식 홈페이지 · 지원하기 · 모바일 메뉴 버튼 */

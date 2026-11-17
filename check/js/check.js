@@ -168,7 +168,10 @@
         const start = page * per;
         items.forEach(item => { const k = results.indexOf(item); item.hidden = k < start || k >= start + per; });
         pager.classList.toggle('is-off', pages <= 1); pager.setAttribute('aria-hidden', String(pages <= 1));
-        pagesEl.innerHTML = Array.from({length:pages}, (_, k) => `<button type="button" class="faq-pn" data-p="${k}"${k === page ? ' aria-current="page"' : ''} aria-label="${k + 1}페이지">${k + 1}</button>`).join('');
+        const pageNumbers = SiteUI.paginationNumbers(pages, page + 1, SiteUI.paginationLimit(pages, pager.clientWidth || undefined));
+        pagesEl.innerHTML = pageNumbers.map(number => number
+          ? `<button type="button" class="faq-pn" data-p="${number - 1}"${number === page + 1 ? ' aria-current="page"' : ''} aria-label="${number}페이지">${number}</button>`
+          : '<span class="pagination-gap">…</span>').join('');
         prev.disabled = page === 0; next.disabled = page === pages - 1;
         const label = cat === 'all' ? '전체' : cat;
         cnt.textContent = mobile.matches ? `${label} ${normalize(query) ? '검색 결과 ' : ''}${results.length}개${pages > 1 ? ` · ${start + 1}–${Math.min(start + per, results.length)}번째` : ''}` : cat !== 'all' ? results.length + '개의 질문' : '';

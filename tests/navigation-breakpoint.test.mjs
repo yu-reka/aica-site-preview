@@ -38,8 +38,9 @@ function runtime(options = {}) {
   header.querySelectorAll=s=>s==='.drop'?[{offsetHeight:150}]:[];
   const nodes={'#siteHeader':header,'#drawer':drawer,'#drawerDim':dim,'#menuBtn':menu,
     '#drawerClose':close,'#fabTop':fab,'#drawer a[data-sub]':sublinks[0]};
-  const context={document,URL,location:{href:'https://aica.test/about/index.html',origin:'https://aica.test',
-      pathname:'/about/index.html',search:'',hash:options.hash || ''},window:{},scrollY:0,innerHeight:900,
+  const pathname=options.pathname || '/about/index.html';
+  const context={document,URL,location:{href:'https://aica.test'+pathname,origin:'https://aica.test',
+      pathname,search:'',hash:options.hash || ''},window:{},scrollY:0,innerHeight:900,
     addEventListener(name,fn){(events[name] ||= []).push(fn);},
     matchMedia(query){
       if(!media.has(query))media.set(query,{matches:query.includes('max-width'),listeners:[],
@@ -89,6 +90,22 @@ test('hashless LNB page links retain native navigation to clear CSS detail targe
     preventDefault(){prevented=true;}};
   h.events.click.forEach(fn=>fn(event));
   assert.equal(prevented,false,'page navigation must not be replaced by pushState plus a synthetic hashchange');
+});
+
+test('story detail menus leave hashless list navigation to the browser',()=>{
+  for(const [sub,hash] of [['interviews','#iv-p14'],['interviews','#q-14-1'],['projects','#pj-p42']]){
+    const pathname='/stories/'+sub+'.html';
+    for(const menu of ['#siteHeader','#drawer']){
+      const h=runtime({menu:'stories',sub,hash,pathname});
+      if(menu==='#drawer'){h.menu.fire('click');h.flush();}
+      const link={href:'https://aica.test'+pathname,hasAttribute:()=>false,closest:()=>null};
+      const event={target:{closest:selector=>selector.includes(menu)?link:null},
+        preventDefault(){assert.fail('Native navigation is required to clear the detail target');}};
+      h.events.click.forEach(fn=>fn(event));
+      assert.equal(h.drawer.classList.contains('is-open'),false);
+      assert.equal(h.modalActive,false);
+    }
+  }
 });
 
 test('desktop dropdown is cleared when its focused controls become mobile-only',()=>{

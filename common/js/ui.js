@@ -79,6 +79,25 @@ var SiteUI = (() => {
       }
     } };
   }
+  function paginationLimit(total, width = Infinity, gap = 6) {
+    const fits = (buttons, omissions = 0) =>
+      width >= 40 * buttons + 14 * omissions + gap * (buttons + omissions - 1);
+    if (total <= 6 && fits(total + 2)) return 6;
+    return fits(7, Math.min(2, Math.max(1, total - 5))) ? 5 : 3;
+  }
+  function paginationNumbers(total, current, limit = paginationLimit(total)) {
+    if (total <= limit) return Array.from({ length: total }, (_, index) => index + 1);
+
+    const innerCount = limit - 2;
+    const first = Math.max(2, Math.min(current - Math.floor(innerCount / 2), total - innerCount));
+    const last = first + innerCount - 1;
+    const numbers = [1];
+    if (first > 2) numbers.push(null);
+    for (let page = first; page <= last; page++) numbers.push(page);
+    if (last < total - 1) numbers.push(null);
+    numbers.push(total);
+    return numbers;
+  }
   function railState(track, tolerance = 4) {
     const max = Math.max(0, track.scrollWidth - track.clientWidth);
     return { max, atStart: track.scrollLeft <= tolerance, atEnd: track.scrollLeft >= max - tolerance };
@@ -143,7 +162,7 @@ var SiteUI = (() => {
     observer.observe(document.documentElement,{childList:true,subtree:true});
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>enhance());else enhance();
   }
-  return { escapeText, escapeAttribute, selectors, loadScript, motion, decodeHash, element, cloneWithoutIds, toggleButton, buttonGroup, enhance, trapFocus, createDialogScope, railState, syncRail, circularRail, railKeys };
+  return { escapeText, escapeAttribute, selectors, loadScript, motion, decodeHash, element, cloneWithoutIds, toggleButton, buttonGroup, enhance, trapFocus, createDialogScope, paginationLimit, paginationNumbers, railState, syncRail, circularRail, railKeys };
 })();
 
 /* Restore view choices only for a reload of this exact URL. Links and browser

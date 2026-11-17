@@ -73,12 +73,13 @@
 .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-card figcaption small{font-size:12.5px;font-weight:700;color:var(--primary);line-height:1.5}
 .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-card figcaption .fee{align-self:flex-start;margin-top:4px;padding:1px 8px;border-radius:999px;background:#E9EEF3;font-size:11.5px;font-weight:700;color:var(--graphite,#566175);line-height:1.7}
 .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-card figcaption .d{margin-top:6px;font-size:13px;line-height:1.6;color:var(--graphite,#566175);word-break:keep-all}
-.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-nav{display:none;grid-column:1 / -1;justify-content:flex-end;gap:8px;margin-top:-4px}
-.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-g.is-open .cf-nav{display:flex}
-.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-nav button{width:40px;height:40px;padding:0;border-radius:50%;border:1.2px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;display:grid;place-items:center}
-.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-nav button:hover:not(:disabled){background:var(--ink);color:#fff}
-.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-nav button:disabled{opacity:.3;cursor:default}
-.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-nav svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-nav{display:none;grid-column:1 / -1;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:8px;margin-top:-4px}
+.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-g.is-open .cf-nav{display:grid}
+.life-page #tp-fun .cf-photo-controls{grid-column:2;display:flex;align-items:center;gap:14px}
+.life-page #tp-fun .cf-photo-position{min-width:60px;text-align:center;color:var(--graphite);font:700 14px/1 var(--ff-text);font-variant-numeric:tabular-nums}
+.life-page #tp-fun .cf-photo-controls button:disabled{opacity:.3;cursor:default}
+.life-page #tp-fun .cf-nav button:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
+.life-page #tp-fun .cf-close svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 
 @media (max-width:1100px){
   .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-pile{--s:200px}
@@ -99,7 +100,8 @@
 @media (max-width:1100px){.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-br{display:none}}
 /* Fold the open gallery from the navigation row, keeping photos unobstructed. */
 .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-g.is-open .cf-yb{display:none}
-.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-nav .cf-close{display:inline-flex;align-items:center;justify-content:center;gap:4px;width:auto;height:40px;padding:0 12px;border-radius:999px;font-size:13.5px;font-weight:600;line-height:1;white-space:nowrap}
+.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) .cf-nav .cf-close{grid-column:3;justify-self:end;display:inline-flex;align-items:center;justify-content:center;gap:4px;width:auto;height:40px;padding:0 12px;border:1.2px solid var(--ink);border-radius:999px;background:#fff;color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;white-space:nowrap}
+.life-page #tp-fun .cf-nav .cf-close:hover{background:var(--ink);color:#fff}
 .life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]).lm-content .cf-g.rev.wide .cf-intro{width:auto}
 @media (max-width:640px){.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"])#tp-fun .cf-g.rev.wide .cf-intro{width:auto}}
 @media (prefers-reduced-motion:reduce){.life-page :is(#tp-fun,.lm-content[data-screen="tp-fun"]) :is(.cf-card,.cf-yb,figcaption){transition:none;animation:none}}

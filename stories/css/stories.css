@@ -546,11 +546,11 @@ body .stories-page .st h3{font-size:16px}
 /* ↑ 2026-10-07 정렬: 두 화살표를 헤더 오른쪽 정렬선 기준으로(1240px 이하 화면에서는 전과 같은 자리). 1401px 이상에서 left:-64px로 화면 밖에 있던 이전 화살표도 다음 화살표 옆으로 */
 /* 표지 바탕 면(::before): 카테고리 색(분홍)을 연하게(2026-10-07 후보 B — 시안의 차콜 격자 대신) */
 .stories-page .cover::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:0;right:0;background-color:#FCE6F1}
-.stories-page .cpager{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:44px}
+.stories-page .cpager{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;margin-top:44px}
 .stories-page .cpager button{min-width:40px;height:40px;padding:0 6px;border:1px solid var(--line-ui);border-radius:999px;background:#fff;color:var(--graphite);font:700 14px/1 var(--f);cursor:pointer;font-variant-numeric:tabular-nums;transition:border-color .15s,background .15s,color .15s}
-.stories-page .cpager button:hover{border-color:#2B2D31;color:var(--ink)}
+.stories-page .cpager button:hover:not(:disabled){border-color:#2B2D31;color:var(--ink)}
 .stories-page .cpager button[aria-current="page"]{background:#2B2D31;border-color:#2B2D31;color:#fff}
-.stories-page .cpager button:disabled{opacity:.35;pointer-events:none}
+.stories-page .cpager button:disabled{opacity:.35;cursor:not-allowed}
 .stories-page .cpager button:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
 .stories-page .cpager[hidden]{display:none}
 .stories-page #p-rev .idgrid{align-items:stretch}
